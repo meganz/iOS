@@ -16,7 +16,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    self.megaapi = [[MEGASdk alloc] initWithAppKey:@"LdAmSQAA" userAgent:@"iOS" basePath:basePath];
+    
     return YES;
 }
 
