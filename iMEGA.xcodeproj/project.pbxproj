@@ -9,11 +9,8 @@
 /* Begin PBXBuildFile section */
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
-		137361961A6664C300B740E8 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361951A6664C300B740E8 /* FirstViewController.m */; };
-		137361991A6664C300B740E8 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361981A6664C300B740E8 /* SecondViewController.m */; };
 		1373619C1A6664C300B740E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1373619A1A6664C300B740E8 /* Main.storyboard */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		137361A11A6664C400B740E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1373619F1A6664C400B740E8 /* LaunchScreen.xib */; };
 		137361AD1A6664C400B740E8 /* iMEGATests.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361AC1A6664C400B740E8 /* iMEGATests.m */; };
 /* End PBXBuildFile section */
 
@@ -33,13 +30,8 @@
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		137361941A6664C300B740E8 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		137361951A6664C300B740E8 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		137361971A6664C300B740E8 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		137361981A6664C300B740E8 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		1373619B1A6664C300B740E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		137361A01A6664C400B740E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		137361A61A6664C400B740E8 /* iMEGATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iMEGATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		137361AB1A6664C400B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		137361AC1A6664C400B740E8 /* iMEGATests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMEGATests.m; sourceTree = "<group>"; };
@@ -86,13 +78,8 @@
 			children = (
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
-				137361941A6664C300B740E8 /* FirstViewController.h */,
-				137361951A6664C300B740E8 /* FirstViewController.m */,
-				137361971A6664C300B740E8 /* SecondViewController.h */,
-				137361981A6664C300B740E8 /* SecondViewController.m */,
 				1373619A1A6664C300B740E8 /* Main.storyboard */,
 				1373619D1A6664C300B740E8 /* Images.xcassets */,
-				1373619F1A6664C400B740E8 /* LaunchScreen.xib */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 			);
 			path = iMEGA;
@@ -205,7 +192,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1373619C1A6664C300B740E8 /* Main.storyboard in Resources */,
-				137361A11A6664C400B740E8 /* LaunchScreen.xib in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,9 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				137361991A6664C300B740E8 /* SecondViewController.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
-				137361961A6664C300B740E8 /* FirstViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,14 +240,6 @@
 				1373619B1A6664C300B740E8 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		1373619F1A6664C400B740E8 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				137361A01A6664C400B740E8 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -349,7 +325,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = iMEGA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -359,7 +337,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = iMEGA/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
