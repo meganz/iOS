@@ -38,6 +38,16 @@
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
 
     [self setViewControllers:viewControllerArray];
+    
+    UIImage *tabHighlightImage = [[UIImage imageNamed:@"tabHighlight"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    CGSize tabSize = CGSizeMake(self.view.frame.size.width/[self.tabBar.items count], self.tabBar.frame.size.height);
+    
+    UIGraphicsBeginImageContext(tabSize);
+    [tabHighlightImage drawInRect:CGRectMake(0, 0, tabSize.width, tabSize.height)];
+    UIImage *resizedHighlightImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self.tabBar setSelectionIndicatorImage:resizedHighlightImage];
 }
 
 @end
