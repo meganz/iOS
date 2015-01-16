@@ -111,7 +111,7 @@
     }
     
     cell.nameLabel.text = [node name];
-    
+
     if ([node type] == MEGANodeTypeFile) {
         struct tm *timeinfo;
         char buffer[80];
@@ -119,19 +119,34 @@
         time_t rawtime = [[node modificationTime] timeIntervalSince1970];
         timeinfo = localtime(&rawtime);
         
-        strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+        strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
         
-        cell.modificationLabel.text = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+        NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+        NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
+        
+        cell.infoLabel.text = sizeAndDate;
     } else {
-        struct tm *timeinfo;
-        char buffer[80];
+        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
+        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
-        time_t rawtime = [[node creationTime] timeIntervalSince1970];
-        timeinfo = localtime(&rawtime);
+        NSString *filesAndFolders;
         
-        strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+        if (files == 0 || files > 1) {
+            if (folders == 0 || folders > 1) {
+                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
+            } else if (folders == 1) {
+                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+            }
+        } else if (files == 1) {
+            if (folders == 0 || folders > 1) {
+                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
+            } else if (folders == 1) {
+                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
+            }
+        }
         
-        cell.modificationLabel.text = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+        cell.infoLabel.text = filesAndFolders;
     }
     
     cell.nodeHandle = [node handle];

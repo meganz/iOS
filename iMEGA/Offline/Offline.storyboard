@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -10,7 +11,7 @@
         <scene sceneID="MZy-Qo-rqg">
             <objects>
                 <tableViewController id="0p4-DV-Tt4" customClass="OfflineTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -20,41 +21,41 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OxW-nm-qxP" id="Ipo-hV-DSj">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9">
-                                            <rect key="frame" x="68" y="31" width="151" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="151" id="73D-De-Akg"/>
-                                                <constraint firstAttribute="height" constant="21" id="A2v-aX-IP9"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ine-fm-vKt">
-                                            <rect key="frame" x="68" y="8" width="532" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <rect key="frame" x="60" y="2" width="532" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.23999999463558197" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NDx-eK-6De">
-                                            <rect key="frame" x="8" y="2" width="55" height="55"/>
+                                            <rect key="frame" x="8" y="1" width="42" height="42"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="42" id="9Ok-Tg-A2g"/>
+                                                <constraint firstAttribute="width" secondItem="NDx-eK-6De" secondAttribute="height" multiplier="1:1" id="XuI-HS-DCE"/>
+                                                <constraint firstAttribute="height" constant="42" id="roS-IM-KOB"/>
+                                            </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9">
+                                            <rect key="frame" x="60" y="23" width="532" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="5" id="B9s-Nv-Ij8"/>
-                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leadingMargin" constant="60" id="Dlm-3w-iwT"/>
-                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" id="K97-lQ-JOi"/>
-                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="5" id="Y02-qN-i6j"/>
-                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ine-fm-vKt" secondAttribute="bottom" constant="2" id="YDw-sT-3fA"/>
-                                        <constraint firstItem="NDx-eK-6De" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leadingMargin" id="fbT-Og-vMw"/>
-                                        <constraint firstItem="NDx-eK-6De" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" constant="-6" id="fbx-1n-ReN"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="NDx-eK-6De" secondAttribute="bottom" constant="-5" id="j1H-s8-o3w"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ine-fm-vKt" secondAttribute="trailing" id="l5P-Rm-Pnp"/>
-                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" constant="23" id="yo0-g4-VED"/>
+                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leadingMargin" constant="52" id="1Oh-EL-Hhy"/>
+                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="width" secondItem="e5P-pC-mA9" secondAttribute="width" id="2FW-UL-HLu"/>
+                                        <constraint firstItem="NDx-eK-6De" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" constant="-7" id="5TA-Q1-hun"/>
+                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" constant="-6" id="773-CM-NZi"/>
+                                        <constraint firstItem="NDx-eK-6De" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leadingMargin" id="JPb-tc-Q24"/>
+                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leadingMargin" constant="52" id="Nfz-cy-wcv"/>
+                                        <constraint firstItem="Ine-fm-vKt" firstAttribute="trailing" secondItem="Ipo-hV-DSj" secondAttribute="trailingMargin" id="TnC-tG-RrB"/>
+                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="trailing" secondItem="Ipo-hV-DSj" secondAttribute="trailingMargin" id="a1A-Pt-DUm"/>
+                                        <constraint firstItem="e5P-pC-mA9" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="topMargin" constant="15" id="gt5-qa-p1l"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="modificationLabel" destination="e5P-pC-mA9" id="Je7-kC-nqm"/>
+                                    <outlet property="infoLabel" destination="e5P-pC-mA9" id="n8w-VC-TpJ"/>
                                     <outlet property="nameLabel" destination="Ine-fm-vKt" id="EtN-bs-ob5"/>
                                     <outlet property="thumbnailImageView" destination="NDx-eK-6De" id="APT-GW-6JC"/>
                                 </connections>
