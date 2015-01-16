@@ -1,6 +1,6 @@
 /**
  * @file LoginViewController.m
- * @brief View controller that allow login in your MEGA account
+ * @brief View controller that allows to login in your MEGA account
  *
  * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
  *
@@ -28,6 +28,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @end
 
@@ -62,7 +65,7 @@
 
 - (BOOL)validateForm {
     if (![self validateEmail:self.emailTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailIvalidFormat", @"Enter a valid email")];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
     } else if (![self validatePassword:self.passwordTextField.text]) {

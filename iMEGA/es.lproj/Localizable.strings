@@ -3,13 +3,31 @@
 "ok" = "Aceptar";
 "error" = "Error";
 
+//AppDelegate
+"accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor inicia sesión.";
+
 //LoginViewController
 "invalidMailOrPassword" = "Email o contraseña no válida.";
 
-"emailIvalidFormat" = "Introduzca un email válido";
+"emailInvalidFormat" = "Introduzca un email válido";
 "passwordInvalidFormat" = "Introduzca una contraseña válida";
 "fetchingNodes" = "Recuperando nodos";
 "preparingNodes" = "Preparando nodos";
+
+//CreateAccountViewController
+"nameInvalidFormat" = "Introduce un nombre";
+"passwordsDoNotMatch" = "La contraseña no coincide.";
+"termsCheckboxUnselected" = "Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
+
+"emailAlreadyRegistered" = "Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta con MEGA.";
+"awesome" = "¡Increíble!";
+"accountCreated" = "Por favor, comprueba tu correo y haz clic al enlace para confirmar tu cuenta.";
+
+//ConfirmAccountViewController
+"passwordWrong" = "Contraseña incorrecta";
+
+//TermsOfServiceViewController
+"errorLoadingTermsWeb" = "La carga de los Términos del Servicio de MEGA ha fallado.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud";
