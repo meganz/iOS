@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--MEGA-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewControllerID" id="vXZ-lx-hvc" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4EC-4o-G5t">
+                                <rect key="frame" x="16" y="50" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q05-sf-hPc">
+                                <rect key="frame" x="281" y="164" width="38" height="30"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapLogin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="U8H-0m-riZ"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Xkf-mm-cAV">
+                                <rect key="frame" x="16" y="100" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4EC-4o-G5t" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="5On-az-0nd"/>
+                            <constraint firstItem="4EC-4o-G5t" firstAttribute="width" secondItem="Xkf-mm-cAV" secondAttribute="width" id="FhI-hR-4Q0"/>
+                            <constraint firstItem="4EC-4o-G5t" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="XFt-6C-mAn"/>
+                            <constraint firstItem="Q05-sf-hPc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="144" id="cXD-N5-Bl5"/>
+                            <constraint firstItem="Xkf-mm-cAV" firstAttribute="top" secondItem="4EC-4o-G5t" secondAttribute="bottom" constant="20" id="q1o-wV-jEt"/>
+                            <constraint firstAttribute="centerX" secondItem="Q05-sf-hPc" secondAttribute="centerX" id="qOD-p2-uyM"/>
+                            <constraint firstItem="4EC-4o-G5t" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="rIw-qS-8jQ"/>
+                            <constraint firstItem="4EC-4o-G5t" firstAttribute="leading" secondItem="Xkf-mm-cAV" secondAttribute="leading" id="ybc-cL-TCH"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="MEGA" id="LgB-8Q-p3f"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="4EC-4o-G5t" id="JpV-f1-Wq5"/>
+                        <outlet property="passwordTextField" destination="Xkf-mm-cAV" id="VuS-rf-haD"/>
+                        <segue destination="qg7-d2-dil" kind="show" identifier="showCloudDrive" id="V5b-n9-Gry"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="454" y="-561"/>
+        </scene>
+        <!--Main Tab Bar Controller-->
+        <scene sceneID="f4i-na-naq">
+            <objects>
+                <tabBarController storyboardIdentifier="TabBarControllerID" automaticallyAdjustsScrollViewInsets="NO" id="qg7-d2-dil" customClass="MainTabBarController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="rLn-PH-T6v">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="omX-pA-utq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1221" y="-561"/>
+        </scene>
+    </scenes>
+</document>
