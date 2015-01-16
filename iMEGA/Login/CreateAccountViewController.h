@@ -1,6 +1,6 @@
 /**
- * @file LoginViewController.h
- * @brief View controller that allows to login in your MEGA account
+ * @file CreateAccountViewController.h
+ * @brief View controller that allows to create an account on MEGA
  *
  * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
  *
@@ -18,11 +18,9 @@
  * You should have received a copy of the license along with this
  * program.
  */
-
 #import <UIKit/UIKit.h>
 #import "MEGASdkManager.h"
 
-@interface LoginViewController : UIViewController <MEGARequestDelegate>
+@interface CreateAccountViewController : UIViewController 
 
 @end
-

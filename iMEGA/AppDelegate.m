@@ -23,6 +23,7 @@
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
+#import "ConfirmAccountViewController.h"
 
 #define kUserAgent @"iOS3"
 #define kAppKey @"EVtjzb7R"
@@ -49,11 +50,7 @@
         UITabBarController *tabBarVC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         self.window.rootViewController = tabBarVC;
         
-    } else {
-        UIViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        self.window.rootViewController = loginVC;
-    }
-    
+    }     
     return YES;
 }
 
@@ -77,6 +74,31 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    NSString *megaURLString = @"https://mega.co.nz/";
+    
+    NSString *afterSlashString = [[url absoluteString] substringFromIndex:7]; //"mega://" = 7 characters
+    
+    NSString *megaURLTypeString = [afterSlashString substringToIndex:2]; //"mega://#!"
+    BOOL isDownloadLink = [megaURLTypeString isEqualToString:@"#!"];
+    if (isDownloadLink) {
+        return YES;
+    }
+    
+    megaURLTypeString = [afterSlashString substringToIndex:7]; //"mega://confirm"
+    BOOL isConfirmationLink = [megaURLTypeString isEqualToString:@"confirm"];
+    if (isConfirmationLink) {
+        NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
+        megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashString];
+        
+        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString delegate:self];
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)setupAppearance {
@@ -112,11 +134,35 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+                                                            message:NSLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        
         return;
     }
     
-    if ([request type] == MEGARequestTypeLogin) {
-        [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+    switch ([request type]) {
+        case MEGARequestTypeLogin: {
+            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+            break;
+        }
+            
+        case MEGARequestTypeQuerySignUpLink: {
+            ConfirmAccountViewController *confirmAccountVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountViewControllerID"];
+            [confirmAccountVC setConfirmationLinkString:[request link]];
+            [confirmAccountVC setEmailString:[request email]];
+            
+            self.window.rootViewController = confirmAccountVC;
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
