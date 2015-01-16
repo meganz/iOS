@@ -22,6 +22,7 @@
 #import "AppDelegate.h"
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
+#import "Helper.h"
 
 #define kUserAgent @"iOS3"
 #define kAppKey @"EVtjzb7R"
@@ -34,12 +35,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
     [MEGASdkManager setAppKey:kAppKey];
     [MEGASdkManager setUserAgent:kUserAgent];
     [MEGASdkManager sharedMEGASdk];
     [MEGASdk setLogLevel:MEGALogLevelInfo];
+    
+    [self setupAppearance];
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
@@ -75,6 +77,24 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setupAppearance {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    UIColor *whiteColor = [UIColor whiteColor];
+    
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    [titleTextAttributesDictionary setValue:whiteColor forKey:NSForegroundColorAttributeName];
+    [[UINavigationBar appearance] setTitleTextAttributes:titleTextAttributesDictionary];
+    
+    [[UINavigationBar appearance] setBarTintColor:megaRed];
+    [[UINavigationBar appearance] setTintColor:whiteColor];
+    
+    [[UIBarButtonItem appearance] setTintColor:whiteColor];
+    
+    [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UITabBar appearance] setTintColor:whiteColor];
 }
 
 #pragma mark - MEGARequestDelegate
