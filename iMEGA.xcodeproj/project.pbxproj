@@ -36,6 +36,7 @@
 		4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
 		4152273C1A692F1800EC7BB6 /* libMWPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4152272A1A692EDC00EC7BB6 /* libMWPhotoBrowser.a */; };
 		4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
+		415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4152274F1A6986E000EC7BB6 /* MapKit.framework */; };
 		418851ED1A66826400FDBA15 /* libmega.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851EC1A66826400FDBA15 /* libmega.a */; };
 		418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FA1A668E2700FDBA15 /* ImageIO.framework */; };
 		418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */; };
@@ -117,6 +118,7 @@
 		415227391A692EEF00EC7BB6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		415227401A692F8D00EC7BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		415227421A692F9B00EC7BB6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4152274F1A6986E000EC7BB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		418851EC1A66826400FDBA15 /* libmega.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmega.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libmega.a"; sourceTree = "<group>"; };
 		418851FA1A668E2700FDBA15 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -137,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */,
 				4152273C1A692F1800EC7BB6 /* libMWPhotoBrowser.a in Frameworks */,
 				418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */,
 				418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */,
@@ -355,6 +358,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4152274F1A6986E000EC7BB6 /* MapKit.framework */,
 				418852041A668E5200FDBA15 /* libsqlite3.dylib */,
 				418852021A668E4B00FDBA15 /* libz.dylib */,
 				418852001A668E4400FDBA15 /* libc++.dylib */,
@@ -415,6 +419,7 @@
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = T9RH74Y7L9;
 					};
 					137361A51A6664C400B740E8 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -589,6 +594,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -623,6 +629,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -633,6 +640,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -641,6 +650,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/MWPhotoBrowser/**";
 			};
 			name = Debug;
@@ -650,6 +660,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -658,6 +670,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/MWPhotoBrowser/**";
 			};
 			name = Release;

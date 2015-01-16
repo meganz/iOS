@@ -80,12 +80,16 @@
     struct tm *timeinfo;
     char buffer[80];
     
-    time_t rawtime = [[node creationTime] timeIntervalSince1970];
+    time_t rawtime = [[node modificationTime] timeIntervalSince1970];
     timeinfo = localtime(&rawtime);
     
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+    strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
-    cell.modificationLabel.text = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+    NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
+    
+    cell.infoLabel.text = sizeAndDate;
     
     return cell;
 }
