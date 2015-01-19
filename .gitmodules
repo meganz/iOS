@@ -10,3 +10,6 @@
 [submodule "iMEGA/Vendor/sskeychain"]
 	path = iMEGA/Vendor/sskeychain
 	url = https://github.com/meganz/sskeychain.git
+[submodule "iMEGA/Vendor/GKContactImage"]
+	path = iMEGA/Vendor/GKContactImage
+	url = https://github.com/meganz/GKContactImage.git

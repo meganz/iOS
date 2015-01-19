@@ -56,9 +56,9 @@
 
 
 //UITABBARCONTROLLER (3) CONTACTS
-"noFoldersShare" = "No hay carpetas compartidas";
-"oneFolderShare" = "carpeta compartida";
-"foldersShare" = "carpetas compartidas";
+"noFoldersShare" = "Ningún fichero compartido";
+"oneFolderShare" = "Compartiendo un nodo";
+"foldersShare" = "Compartiendo %d nodos";
 
 //Rename
 "renameNodeTitle" = "Cambiar nombre";

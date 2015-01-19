@@ -44,6 +44,7 @@
 		418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852001A668E4400FDBA15 /* libc++.dylib */; };
 		418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852021A668E4B00FDBA15 /* libz.dylib */; };
 		418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852041A668E5200FDBA15 /* libsqlite3.dylib */; };
+		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D4B8931A69429200A3B2E2 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B8901A69429200A3B2E2 /* TermsOfServiceViewController.m */; };
@@ -126,6 +127,8 @@
 		418852001A668E4400FDBA15 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		418852021A668E4B00FDBA15 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		418852041A668E5200FDBA15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
+		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
 		E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAccountViewController.m; sourceTree = "<group>"; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
@@ -228,6 +231,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				41B2D4191A6D06780002E29E /* GKContactImage */,
 				415227351A692EEF00EC7BB6 /* SVProgressHUD */,
 				4152272B1A692EE600EC7BB6 /* SSKeychain */,
 				4152269C1A692EDC00EC7BB6 /* MWPhotoBrowser */,
@@ -370,6 +374,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		41B2D4191A6D06780002E29E /* GKContactImage */ = {
+			isa = PBXGroup;
+			children = (
+				41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */,
+				41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */,
+			);
+			name = GKContactImage;
+			path = Vendor/GKContactImage/Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -502,6 +516,7 @@
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				415227331A692EE600EC7BB6 /* SSKeychain.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsTableViewController.m in Sources */,
+				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
@@ -642,6 +657,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -662,6 +679,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
