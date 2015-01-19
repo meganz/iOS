@@ -18,14 +18,18 @@
  * You should have received a copy of the license along with this
  * program.
  */
+
 #import "ConfirmAccountViewController.h"
 
 #import "SVProgressHUD.h"
+#import "Helper.h"
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
 
 @end
 
@@ -35,6 +39,15 @@
     [super viewDidLoad];
     
     [self.navigationItem setTitle:@"Confirm account"];
+    
+    self.confirmAccountButton.layer.cornerRadius = 6;
+    self.confirmAccountButton.layer.masksToBounds = YES;
+    
+    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
+    self.credentialsView.layer.borderWidth = 2.0f;
+    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
+    self.credentialsView.layer.cornerRadius = 6;
+    self.credentialsView.layer.masksToBounds = YES;
     
     [self.emailTextField setText:_emailString];
 }
