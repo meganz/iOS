@@ -22,6 +22,8 @@
 #import "ContactsTableViewController.h"
 #import "ContactTableViewCell.h"
 #import "Helper.h"
+#import "UIImage+GKContact.h"
+
 
 @interface ContactsTableViewController ()
 
@@ -72,17 +74,16 @@
         cell.avatarImageView.layer.masksToBounds = YES;
     } else {
         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
+        [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
     }
     
     int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
     if (numFilesShares == 0) {
         cell.shareLabel.text = NSLocalizedString(@"noFoldersShare", @"No folders shared");
     } else  if (numFilesShares == 1 ) {
-        NSString *localizedString = NSLocalizedString(@"oneFolderShare", @" folder shared");
-        cell.shareLabel.text = [NSString stringWithFormat:@"%d %@", numFilesShares, localizedString];
+        cell.shareLabel.text = NSLocalizedString(@"oneFolderShare", @" folder shared");
     } else {
-        NSString *localizedString = NSLocalizedString(@"foldersShare", @" folders shared");
-        cell.shareLabel.text = [NSString stringWithFormat:@"%d %@", numFilesShares, localizedString];
+        cell.shareLabel.text = [NSString stringWithFormat:NSLocalizedString(@"foldersShare", @" folders shared"), numFilesShares];
     }
     
     return cell;

@@ -56,9 +56,9 @@
 
 
 //UITABBARCONTROLLER (3) CONTACTS
-"noFoldersShare" = "No folders share";
-"oneFolderShare" = "folder shared";
-"foldersShare" = "folders shared";
+"noFoldersShare" = "No files shared";
+"oneFolderShare" = "Sharing one node";
+"foldersShare" = "Sharing %d nodes";
 
 //Rename
 "renameNodeTitle" = "Rename";
