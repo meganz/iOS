@@ -23,9 +23,11 @@
 #import "CloudDriveTableViewController.h"
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
+#import "Helper.h"
 
 @interface LoginViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
@@ -38,6 +40,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.loginButton.layer.cornerRadius = 6;
+    self.loginButton.layer.masksToBounds = YES;
+    
+    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
+    self.credentialsView.layer.borderWidth = 2.0f;
+    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
+    self.credentialsView.layer.cornerRadius = 6;
+    self.credentialsView.layer.masksToBounds = YES;
+    
     [self.emailTextField becomeFirstResponder];
 }
 

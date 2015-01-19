@@ -18,12 +18,15 @@
  * You should have received a copy of the license along with this
  * program.
  */
+
 #import "CreateAccountViewController.h"
 
 #import "SVProgressHUD.h"
+#import "Helper.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -42,6 +45,15 @@
     [super viewDidLoad];
     
     [self.navigationItem setTitle:@"Create account"];
+    
+    self.createAccountButton.layer.cornerRadius = 6;
+    self.createAccountButton.layer.masksToBounds = YES;
+    
+    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
+    self.credentialsView.layer.borderWidth = 2.0f;
+    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
+    self.credentialsView.layer.cornerRadius = 6;
+    self.credentialsView.layer.masksToBounds = YES;
     
     [self.nameTextField becomeFirstResponder];
 }
