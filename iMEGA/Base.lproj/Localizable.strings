@@ -6,6 +6,21 @@
 //AppDelegate
 "accountAlreadyConfirmed" = "Account already confirmed";
 
+//TourViewController
+
+"megaSpace"="MEGA SPACE";
+"megaSpeed"="MEGA SPEED";
+"megaPrivacy"="MEGA PRIVACY";
+"megaAccess"="MEGA ACCESS";
+
+"megaSpaceText"="Register now and get 50 GB of free space.";
+"megaSpeedText"="Uploads are fast. Quickly share files with everyone.";
+"megaPrivacyText"="Keep all your files safe with MEGA's end-to-end encryption.";
+"megaAccessText"="Get fully encrypted access anywhere, anytime.";
+
+"loginButton"="Login";
+"registerButton"="Register";
+
 //LoginViewController
 "invalidMailOrPassword" = "Invalid e-mail and/or password. Please try again";
 

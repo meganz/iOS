@@ -53,6 +53,11 @@
     [self.emailTextField becomeFirstResponder];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+}
+
 #pragma mark - Private methods
 
 - (IBAction)tapLogin:(id)sender {
@@ -142,6 +147,7 @@
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
+            [self removeFromParentViewController];
             [api fetchNodesWithDelegate:self];
             break;
         }

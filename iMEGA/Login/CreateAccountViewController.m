@@ -59,7 +59,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationItem setTitle:@"Create account"];
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
 #pragma mark - Private methods

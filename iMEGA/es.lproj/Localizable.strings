@@ -6,6 +6,22 @@
 //AppDelegate
 "accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor inicia sesión.";
 
+
+//TourViewController
+
+"megaSpace"="MEGA ESPACIO";
+"megaSpeed"="MEGA VELOCIDAD";
+"megaPrivacy"="MEGA PRIVACIDAD";
+"megaAccess"="ACCESO MEGA";
+
+"megaSpaceText"="Regístrate ahora y consigue 50 GB de espacio gratis.";
+"megaSpeedText"="Las subidas son rápidas.Comparte archivos con todo el mundo.";
+"megaPrivacyText"="Mantén todos tus archivos a salvo con el encriptado punto-a-punto de MEGA.";
+"megaAccessText"="Obtén acceso totalmente encriptado en cualquier lugar, en cualquier momento.";
+
+"loginButton"="Iniciar sesión";
+"registerButton"="Crear cuenta";
+
 //LoginViewController
 "invalidMailOrPassword" = "Email o contraseña no válida.";
 

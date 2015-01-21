@@ -45,6 +45,8 @@
 		418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852021A668E4B00FDBA15 /* libz.dylib */; };
 		418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852041A668E5200FDBA15 /* libsqlite3.dylib */; };
 		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
+		41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D4241A6D925F0002E29E /* TourViewController.m */; };
+		41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D4B8931A69429200A3B2E2 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B8901A69429200A3B2E2 /* TermsOfServiceViewController.m */; };
@@ -129,6 +131,9 @@
 		418852041A668E5200FDBA15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
 		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
+		41B2D4231A6D925F0002E29E /* TourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourViewController.h; sourceTree = "<group>"; };
+		41B2D4241A6D925F0002E29E /* TourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourViewController.m; sourceTree = "<group>"; };
+		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAccountViewController.m; sourceTree = "<group>"; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
@@ -186,6 +191,9 @@
 		1373618C1A6664C300B740E8 /* iMEGA */ = {
 			isa = PBXGroup;
 			children = (
+				137361911A6664C300B740E8 /* AppDelegate.h */,
+				137361921A6664C300B740E8 /* AppDelegate.m */,
+				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
 				415226681A692ECC00EC7BB6 /* Cloud drive */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226781A692ECC00EC7BB6 /* Login */,
@@ -193,8 +201,6 @@
 				415226821A692ECC00EC7BB6 /* Settings */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
-				137361911A6664C300B740E8 /* AppDelegate.h */,
-				137361921A6664C300B740E8 /* AppDelegate.m */,
 				1373619D1A6664C300B740E8 /* Images.xcassets */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 			);
@@ -281,6 +287,8 @@
 				E8D4B8901A69429200A3B2E2 /* TermsOfServiceViewController.m */,
 				E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */,
 				E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */,
+				41B2D4231A6D925F0002E29E /* TourViewController.h */,
+				41B2D4241A6D925F0002E29E /* TourViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -491,6 +499,7 @@
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
 				415226941A692ECC00EC7BB6 /* Main.storyboard in Resources */,
+				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
 				415227271A692EDC00EC7BB6 /* MWPhotoBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,6 +538,7 @@
 				4152268E1A692ECC00EC7BB6 /* MEGAPreview.m in Sources */,
 				4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
+				41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */,
 				415227341A692EE600EC7BB6 /* SSKeychainQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
