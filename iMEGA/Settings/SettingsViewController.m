@@ -104,7 +104,7 @@
             
             [SVProgressHUD dismiss];
             UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
             
             [self presentViewController:loginVC animated:YES completion:nil];
             break;
