@@ -67,7 +67,7 @@
     self.registerButton.layer.cornerRadius = 6;
     self.registerButton.layer.backgroundColor = megaDarkGray.CGColor;
     self.registerButton.layer.masksToBounds = YES;
-    [self.registerButton setTitle:NSLocalizedString(@"register", nil) forState:UIControlStateNormal];
+    [self.registerButton setTitle:NSLocalizedString(@"registerButton", nil) forState:UIControlStateNormal];
     
     self.titleLabel.textColor = megaRed;
     self.titleLabel.numberOfLines = 0;
