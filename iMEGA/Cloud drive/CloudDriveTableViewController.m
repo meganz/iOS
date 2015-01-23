@@ -127,6 +127,7 @@
         
         cell.infoLabel.text = sizeAndDate;
     } else {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
