@@ -23,6 +23,8 @@
 #import "SVProgressHUD.h"
 #import "Helper.h"
 
+#import "MoveCopyNodeViewController.h"
+
 @interface DetailsNodeInfoViewController () {
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
@@ -82,7 +84,7 @@
     }
     timeinfo = localtime(&rawtime);
     
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+    strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
     self.modificationTimeLabel.text = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
     
@@ -105,7 +107,9 @@
     }
 }
 
-- (IBAction)tapDownload:(UIButton *)sender {
+#pragma mark - IBActions
+
+- (IBAction)touchUpInsideDownload:(UIButton *)sender {
     if ([self.node type] == MEGANodeTypeFile) {
         NSString *documentFilePath = [Helper pathForNode:self.node searchPath:NSDocumentDirectory];
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
@@ -115,11 +119,21 @@
     }
 }
 
-- (IBAction)tapGenerateLink:(UIButton *)sender {
+- (IBAction)touchUpInsideGenerateLink:(UIButton *)sender {
     [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
 }
 
-- (IBAction)tapRename:(UIButton *)sender {
+- (IBAction)touchUpInsideMove:(id)sender {
+    UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    [self presentViewController:mcnc animated:YES completion:nil];
+    
+    MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
+    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    mcnvc.node = self.node;
+    
+}
+
+- (IBAction)touchUpInsideRename:(UIButton *)sender {
     renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [renameAlertView textFieldAtIndex:0].text = [[[self.node name] lastPathComponent] stringByDeletingPathExtension];
@@ -127,7 +141,7 @@
     [renameAlertView show];
 }
 
-- (IBAction)tapDelete:(UIButton *)sender {
+- (IBAction)touchUpInsideDelete:(UIButton *)sender {
     removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeNodeTitle", @"Remove node") message:NSLocalizedString(@"removeNodeMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     [removeAlertView show];
     removeAlertView.tag = 1;
