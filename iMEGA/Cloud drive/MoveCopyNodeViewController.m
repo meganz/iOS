@@ -22,9 +22,11 @@
 #import "MoveCopyNodeViewController.h"
 #import "NodeTableViewCell.h"
 #import "Helper.h"
+#import "SVProgressHUD.h"
 
 @interface MoveCopyNodeViewController () {
     UIAlertView *folderAlertView;
+    NSUInteger remainingOperations;
 }
 
 @property (nonatomic, strong) MEGANodeList *nodes;
@@ -133,18 +135,27 @@
     
     MoveCopyNodeViewController *mcnvc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeID"];
     [mcnvc setParentNode:newParent];
-    [mcnvc setNode:self.node];
+    [mcnvc setMoveOrCopyNodes:self.moveOrCopyNodes];
+    
     [self.navigationController pushViewController:mcnvc animated:YES];
 }
 
 #pragma mark - IBAction
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:self.parentNode];
+    remainingOperations = self.moveOrCopyNodes.count;
+    
+    for (MEGANode *n in self.moveOrCopyNodes) {
+        [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+    }
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] copyNode:self.node newParent:self.parentNode];
+    remainingOperations = self.moveOrCopyNodes.count;
+    
+    for (MEGANode *n in self.moveOrCopyNodes) {
+        [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+    }
     
 }
 - (IBAction)add:(UIBarButtonItem *)sender {
@@ -176,13 +187,24 @@
     
     switch ([request type]) {
         case MEGARequestTypeMove:
-            [self dismissViewControllerAnimated:YES completion:nil];
+            remainingOperations--;
+            
+            if (remainingOperations == 0) {
+                NSString *message = (self.moveOrCopyNodes.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.moveOrCopyNodes.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
             break;
         
         case MEGARequestTypeCopy:
-            [self dismissViewControllerAnimated:YES completion:nil];
-            break;
+            remainingOperations--;
             
+            if (remainingOperations == 0) {
+                NSString *message = (self.moveOrCopyNodes.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesCopied", nil), self.moveOrCopyNodes.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+            break;
             
         default:
             break;

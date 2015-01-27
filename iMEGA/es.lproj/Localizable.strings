@@ -81,9 +81,27 @@
 "renameNodeMessage" = "Introduce otro nombre";
 "renameNodeButton" = "Renombrar";
 
-//Remove
-"removeNodeTitle" = "Eliminar";
-"removeNodeMessage" = "¿Estás seguro?";
+//Move to rubbish bin
+"moveNodeToRubbishBinTitle" = "Mover a la papelera";
+"moveNodeToRubbishBinMessage" = "¿Estás seguro de que quieres mover 1 archivo a la papelera?";
+"moveMultipleNodesToRubbishBinMessage" = "¿Estás seguro de que quieres mover %d archivos a la papelera?";
+
+//Move
+"fileMoved" = "Fichero movido";
+"filesMoved" = "%d ficheros movidos";
+
+//Copy
+"fileCopied" = "Fichero copiado";
+"filesCopied" = "%d ficheros copiados";
+
+//Generate links
+"fileName"="Nombre";
+"fileSize"="Tamaño";
+"folder"="Carpeta";
+
+// HUD messages
+"fileMovedToRubbishBin" = "1 fichero movido a la papelera";
+"filesMovedToRubbishBin" = "%d ficheros movidos a la papelera";
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Cerrando sesión...";

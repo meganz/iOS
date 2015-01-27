@@ -80,9 +80,27 @@
 "renameNodeMessage" = "Enter the new name";
 "renameNodeButton" = "Rename";
 
-//Remove
-"removeNodeTitle" = "Confirm delete";
-"removeNodeMessage" = "Are you sure?";
+//Move to rubbish bin
+"moveNodeToRubbishBinTitle" = "Move to the rubbish bin";
+"moveNodeToRubbishBinMessage" = "Are you sure you want to move 1 file to the rubbish bin?";
+"moveMultipleNodesToRubbishBinMessage" = "Are you sure you want to move %d files to the rubbish bin?";
+
+//Move
+"fileMoved" = "File moved";
+"filesMoved" = "%d files moved";
+
+//Copy
+"fileCopied" = "File copied";
+"filesCopied" = "%d files copied";
+
+//Generate links
+"fileName"="Name";
+"fileSize"="Size";
+"folder"="Folder";
+
+// HUD messages
+"fileMovedToRubbishBin" = "1 file moved to the rubbish bin";
+"filesMovedToRubbishBin" = "%d files moved to the rubbish bin";
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Logout...";

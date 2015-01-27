@@ -129,7 +129,7 @@
     
     MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.node = self.node;
+    mcnvc.moveOrCopyNodes = [NSArray arrayWithObject:self.node];
     
 }
 
@@ -142,7 +142,7 @@
 }
 
 - (IBAction)touchUpInsideDelete:(UIButton *)sender {
-    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeNodeTitle", @"Remove node") message:NSLocalizedString(@"removeNodeMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:NSLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     [removeAlertView show];
     removeAlertView.tag = 1;
     [removeAlertView show];
@@ -165,7 +165,7 @@
     }
     if (alertView.tag == 1) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+            [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
@@ -205,7 +205,14 @@
         }
         case MEGARequestTypeExport: {
             [SVProgressHUD dismiss];
-            NSArray *itemsArray = [NSArray arrayWithObjects:[request link], nil];
+            
+            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            
+            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            NSString *link = [request link];
+            
+            NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
             activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
             [self presentViewController:activityVC animated:YES completion:nil ];
