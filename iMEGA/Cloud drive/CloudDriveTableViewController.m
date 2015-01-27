@@ -27,10 +27,16 @@
 #import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
+#import "MoveCopyNodeViewController.h"
 
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
     NSInteger indexNodeSelected;
+    UIAlertView *removeAlertView;
+    
+    NSUInteger remainingOperations;
+    
+    NSMutableArray *exportLinks;
 }
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
@@ -41,6 +47,13 @@
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
+@property (nonatomic, strong) NSMutableArray *selected;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
 @end
 
 @implementation CloudDriveTableViewController
@@ -48,7 +61,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *buttonsItems = @[self.addItem];
+    NSArray *buttonsItems = @[self.editButtonItem, self.addItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
@@ -77,6 +90,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    if (self.tableView.isEditing) {
+        self.selected = nil;
+        [self setEditing:NO animated:NO];
+    }
     
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
@@ -127,7 +145,6 @@
         
         cell.infoLabel.text = sizeAndDate;
     } else {
-        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
@@ -171,6 +188,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        [self.selected addObject:node];
+        
+        [self.shareBarButtonItem setEnabled:YES];
+        [self.moveBarButtonItem setEnabled:YES];
+        [self.deleteBarButtonItem setEnabled:YES];
+        
+        return;
+    }
+    
     switch ([node type]) {
         case MEGANodeTypeFolder: {
             CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -178,6 +206,7 @@
             [self.navigationController pushViewController:cdvc animated:YES];
             break;
         }
+            
         case MEGANodeTypeFile: {
             NSString *name = [node name];
             if (isImage(name.lowercaseString.pathExtension)) {
@@ -219,8 +248,32 @@
             }
             break;
         }
+            
         default:
             break;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        
+        //tempArray avoid crash: "was mutated while being enumerated."
+        NSMutableArray *tempArray = [self.selected copy];
+        for (MEGANode *n in tempArray) {
+            if (n.handle == node.handle) {
+                [self.selected removeObject:n];
+            }
+        }
+        
+        if (self.selected.count == 0) {
+            [self.shareBarButtonItem setEnabled:NO];
+            [self.moveBarButtonItem setEnabled:NO];
+            [self.deleteBarButtonItem setEnabled:NO];
+        }
+        
+        return;
     }
 }
 
@@ -234,18 +287,23 @@
 
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
+    
+    self.selected = [NSMutableArray new];
+    [self.selected addObject:n];
+    
+    [self.shareBarButtonItem setEnabled:YES];
+    [self.moveBarButtonItem setEnabled:YES];
+    [self.deleteBarButtonItem setEnabled:YES];
     return (UITableViewCellEditingStyleDelete);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
-        [[MEGASdkManager sharedMEGASdk] removeNode:node];
+        remainingOperations = 1;
+        [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
     }
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 - (IBAction)optionAdd:(id)sender {
@@ -257,7 +315,31 @@
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
-
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self.addItem setEnabled:NO];
+        [self.navigationItem.leftBarButtonItems.firstObject setEnabled:NO];
+    } else {
+        self.selected = nil;
+        [self.addItem setEnabled:YES];
+    }
+    
+    if (!self.selected) {
+        self.selected = [NSMutableArray new];
+        [self.shareBarButtonItem setEnabled:NO];
+        [self.moveBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+    
+    [self.tabBarController.tabBar addSubview:self.toolbar];
+    
+    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+    }];
+    
+}
 
 #pragma mark - MWPhotoBrowserDelegate
 
@@ -266,8 +348,10 @@
 }
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.cloudImages.count)
+    if (index < self.cloudImages.count) {
         return [self.cloudImages objectAtIndex:index];
+    }
+    
     return nil;
 }
 
@@ -291,6 +375,15 @@
     if (alertView.tag == 1) {
         if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+        }
+    }
+    
+    if (alertView.tag == 2) {
+        if (buttonIndex == 1) {
+            remainingOperations = self.selected.count;
+            for (NSInteger i = 0; i < self.selected.count; i++) {
+                [[MEGASdkManager sharedMEGASdk] moveNode:[self.selected objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            }
         }
     }
 }
@@ -395,6 +488,35 @@
     [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
+#pragma mark - IBAction
+
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
+    exportLinks = [NSMutableArray new];
+    remainingOperations = self.selected.count;
+    
+    for (MEGANode *n in self.selected) {
+        [[MEGASdkManager sharedMEGASdk] exportNode:n];
+    }
+}
+
+- (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
+    UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    [self presentViewController:mcnc animated:YES completion:nil];
+    
+    MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
+    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    mcnvc.moveOrCopyNodes = [NSArray arrayWithArray:self.selected];
+}
+
+- (IBAction)deleteAction:(UIBarButtonItem *)sender {
+    NSString *message = (self.selected.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selected.count] :[NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    
+    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    [removeAlertView show];
+    removeAlertView.tag = 2;
+    [removeAlertView show];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -428,6 +550,40 @@
                         [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
                     }
                 }
+            }
+            break;
+        }
+            
+        case MEGARequestTypeMove: {
+            remainingOperations--;
+            if (remainingOperations == 0) {
+                NSString *message = (self.selected.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selected.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+                [self setEditing:NO animated:NO];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeExport: {
+            remainingOperations--;
+            
+            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            
+            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
+            
+            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            
+            NSString *link = [request link];
+            
+            NSArray *tempArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ \n %@ \n %@\n", name, size, link], nil];
+            [exportLinks addObjectsFromArray:tempArray];
+            
+            if (remainingOperations == 0) {
+                [SVProgressHUD dismiss];
+                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                [self presentViewController:activityVC animated:YES completion:nil ];
+                [self setEditing:NO animated:NO];
             }
             break;
         }
@@ -467,7 +623,6 @@
             NSLog(@"remove file error %@", e);
         }
     }
-    
 }
 
 -(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

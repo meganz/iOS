@@ -26,6 +26,6 @@
 @interface MoveCopyNodeViewController : UIViewController <MEGADelegate>
 
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) MEGANode *node;
+@property (nonatomic, strong) NSArray *moveOrCopyNodes;
 
 @end
