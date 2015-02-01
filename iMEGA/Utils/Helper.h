@@ -24,7 +24,13 @@
 
 @interface Helper : NSObject
 
++ (NSString *)fileTypeIconForExtension:(NSString *)extension;
+
 + (UIImage *)imageForNode:(MEGANode *)node;
+
++ (NSString *)pathForOfflineDirectory:(NSString *)directory;
+
++ (NSString *)pathForOffline;
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 

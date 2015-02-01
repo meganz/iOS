@@ -6,6 +6,16 @@
 //AppDelegate
 "accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor inicia sesión.";
 
+"invalidLink" = "Enlace incorrecto a MEGA";
+
+"fileEncrypted" = "Fichero encriptado";
+"fileEncryptedMessage" = "Esta función no esta disponible. De momento no se puede importar o descargar un fichero encriptado.";
+
+"folderLink" = "Enlace a carpeta";
+"folderLinkMessage" = "De momento los enlaces a carpeta no están soportados.";
+
+"folderEncrypted" = "Enlace a carpeta encriptada";
+"folderEncryptedMessage" = "Esta función no esta disponible. De momento no se puede importar o descargar una carpeta encriptada.";
 
 //TourViewController
 
@@ -20,7 +30,7 @@
 "megaAccessText"="Obtén acceso totalmente encriptado en cualquier lugar, en cualquier momento.";
 
 "loginButton"="Iniciar sesión";
-"registerButton"="Crear cuenta";
+"createAccountButton"="Crear cuenta";
 
 //LoginViewController
 "invalidMailOrPassword" = "Email o contraseña no válida.";
@@ -44,6 +54,20 @@
 
 //TermsOfServiceViewController
 "errorLoadingTermsWeb" = "La carga de los Términos del Servicio de MEGA ha fallado.";
+
+//FileLinkViewController
+"importButton" = "Importar a tu disco en la nube";
+"downloadButton" = "Descargar a tu aplicación de MEGA";
+
+"fileTooBig" = "Necesitas más espacio";
+"fileTooBigMessage" = "El fichero que estás intentado descargar es más grande que el espacio disponible.";
+
+"importAction" = "Importar fichero";
+"importActionMessage" = "Esta función no esta disponible. De momento no se puede importar un fichero.";
+
+//FileLinkViewController - SVProgressHUD
+"fileAlreadyExist" = "El fichero que estas intentando descargar ya existe en Offline";
+"downloadStarted" = "Descarga iniciada";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud";

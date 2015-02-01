@@ -20,7 +20,6 @@
 		415226911A692ECC00EC7BB6 /* ContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226751A692ECC00EC7BB6 /* ContactsTableViewController.m */; };
 		415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */; };
 		415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152267A1A692ECC00EC7BB6 /* LoginViewController.m */; };
-		415226941A692ECC00EC7BB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4152267B1A692ECC00EC7BB6 /* Main.storyboard */; };
 		415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */; };
 		415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4152267F1A692ECC00EC7BB6 /* Offline.storyboard */; };
 		415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226811A692ECC00EC7BB6 /* OfflineTableViewController.m */; };
@@ -48,6 +47,9 @@
 		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D4241A6D925F0002E29E /* TourViewController.m */; };
 		41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */; };
+		E8038FFD1A7A4B4400BAC43D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8038FFC1A7A4B4400BAC43D /* Main.storyboard */; };
+		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
+		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8D4B8931A69429200A3B2E2 /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B8901A69429200A3B2E2 /* TermsOfServiceViewController.m */; };
@@ -96,7 +98,6 @@
 		415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
 		415226791A692ECC00EC7BB6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4152267A1A692ECC00EC7BB6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		4152267B1A692ECC00EC7BB6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
 		4152267F1A692ECC00EC7BB6 /* Offline.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Offline.storyboard; sourceTree = "<group>"; };
@@ -137,6 +138,10 @@
 		41B2D4231A6D925F0002E29E /* TourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourViewController.h; sourceTree = "<group>"; };
 		41B2D4241A6D925F0002E29E /* TourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourViewController.m; sourceTree = "<group>"; };
 		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		E8038FFC1A7A4B4400BAC43D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E84CDB001A7292C9003F4C77 /* Links.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Links.storyboard; sourceTree = "<group>"; };
+		E85044C41A6D84620064B675 /* FileLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLinkViewController.h; sourceTree = "<group>"; };
+		E85044C51A6D84620064B675 /* FileLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLinkViewController.m; sourceTree = "<group>"; };
 		E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAccountViewController.m; sourceTree = "<group>"; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
+				E84CDAFE1A7292AA003F4C77 /* Links */,
 				415226681A692ECC00EC7BB6 /* Cloud drive */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226781A692ECC00EC7BB6 /* Login */,
@@ -281,7 +287,7 @@
 		415226781A692ECC00EC7BB6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				4152267B1A692ECC00EC7BB6 /* Main.storyboard */,
+				E8038FFC1A7A4B4400BAC43D /* Main.storyboard */,
 				4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */,
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
@@ -397,6 +403,16 @@
 			path = Vendor/GKContactImage/Classes;
 			sourceTree = "<group>";
 		};
+		E84CDAFE1A7292AA003F4C77 /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
+				E85044C51A6D84620064B675 /* FileLinkViewController.m */,
+				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
+			);
+			path = Links;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -498,14 +514,15 @@
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				415227321A692EE600EC7BB6 /* SSKeychain.strings in Resources */,
+				E8038FFD1A7A4B4400BAC43D /* Main.storyboard in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
-				415226941A692ECC00EC7BB6 /* Main.storyboard in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
 				415227271A692EDC00EC7BB6 /* MWPhotoBrowser.bundle in Resources */,
+				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +559,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				4152268E1A692ECC00EC7BB6 /* MEGAPreview.m in Sources */,
+				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */,

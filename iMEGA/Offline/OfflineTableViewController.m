@@ -64,32 +64,43 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     
-    MEGANode *node = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
-    NSString *name = [node name];
+    NSString *name = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
     
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-    if (!fileExists) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-    } else {
-        [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-    }
-    
+    name = [[MEGASdkManager sharedMEGASdk] localToName:name];
     cell.nameLabel.text = name;
     
     struct tm *timeinfo;
     char buffer[80];
     
-    time_t rawtime = [[node modificationTime] timeIntervalSince1970];
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentDirectory error:NULL];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:[directoryContents objectAtIndex:[indexPath row]]];
+    
+    NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
+    
+    time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
     timeinfo = localtime(&rawtime);
     
     strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
     NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-    NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+    NSString *size = [NSByteCountFormatter stringFromByteCount:[[filePropertiesDictionary valueForKey:NSFileSize] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
     NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
     
-    cell.infoLabel.text = sizeAndDate;
+    [cell.infoLabel setText:sizeAndDate];
+    
+    NSString *extension = [[name pathExtension] lowercaseString];
+    NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
+    
+    UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
+    [cell.imageView setImage:iconImage];
+
+    //TODO: Manage offline directories
+//    BOOL isDirectory;
+//    [[NSFileManager defaultManager ] fileExistsAtPath:path isDirectory:&isDirectory];
+//    if (isDirectory) {
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    }
     
     return cell;
 }
@@ -97,8 +108,8 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
-    NSString *name = [node name];
+    NSString *name = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
+    
     if (isImage(name.lowercaseString.pathExtension)) {
         MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
         
@@ -106,7 +117,7 @@
         browser.displayNavArrows = YES;
         browser.displaySelectionButtons = NO;
         browser.zoomPhotosToFill = YES;
-        browser.alwaysShowControls = YES;
+        browser.alwaysShowControls = NO;
         browser.enableGrid = YES;
         browser.startOnGrid = NO;
         
@@ -123,7 +134,7 @@
     } else if (isVideo(name.lowercaseString.pathExtension)) {
         NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSMutableString *filePath = [NSMutableString new];
-        [filePath appendFormat:@"%@/%@.%@", documentDirectory, [node base64Handle], [name pathExtension]];
+        [filePath appendFormat:@"%@/%@", documentDirectory, name];
         NSURL *fileURL = [NSURL fileURLWithPath:filePath];
         
         MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
@@ -158,22 +169,19 @@
     
     for (i = 0; i < (int)[directoryContent count]; i++) {
         NSString *filePath = [documentDirectory stringByAppendingPathComponent:[directoryContent objectAtIndex:i]];
-        NSString *filename = [NSString stringWithFormat:@"%@", [directoryContent objectAtIndex:i]];
+        NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContent objectAtIndex:i]];
         
-        if (![filename.lowercaseString.pathExtension isEqualToString:@"mega"]) {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[MEGASdk handleForBase64Handle:filename]];
-            
-            if (node == nil) continue;
+        if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
             
             NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
-            [tempDictionary setValue:node forKey:kMEGANode];
+            [tempDictionary setValue:fileName forKey:kMEGANode];
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
             [self.offlineDocuments addObject:tempDictionary];
             
-            if (isImage([node name].lowercaseString.pathExtension)) {
+            if (isImage(fileName.lowercaseString.pathExtension)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
-                photo.caption = [node name];
+                photo.caption = fileName;
                 [self.offlineImages addObject:photo];
             } 
         }

@@ -23,7 +23,9 @@
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
+#include "MainTabBarController.h"
 #import "ConfirmAccountViewController.h"
+#import "FileLinkViewController.h"
 
 #define kUserAgent @"iOS3"
 #define kAppKey @"EVtjzb7R"
@@ -44,12 +46,11 @@
     
     [self setupAppearance];
     
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"] delegate:self];
-        UITabBarController *tabBarVC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        self.window.rootViewController = tabBarVC;
-        
+        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        self.window.rootViewController = mainTBC;
     }     
     return YES;
 }
@@ -74,32 +75,116 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    for (NSString *file in [fileManager contentsOfDirectoryAtPath:documentDirectory error:&error]) {
+        if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+            BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentDirectory, file] error:&error];
+            if (!success || error) {
+                NSLog(@"Remove file error %@", error);
+            }
+        }
+    }
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
     NSString *megaURLString = @"https://mega.co.nz/";
     
-    NSString *afterSlashString = [[url absoluteString] substringFromIndex:7]; //"mega://" = 7 characters
+    NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
     
-    NSString *megaURLTypeString = [afterSlashString substringToIndex:2]; //"mega://#!"
-    BOOL isDownloadLink = [megaURLTypeString isEqualToString:@"#!"];
-    if (isDownloadLink) {
+    if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
         return YES;
     }
     
-    megaURLTypeString = [afterSlashString substringToIndex:7]; //"mega://confirm"
+    NSString *megaURLTypeString = [afterSlashesString substringToIndex:2]; // mega://"#!"
+    BOOL isFileLink = [megaURLTypeString isEqualToString:@"#!"];
+    if (isFileLink) {
+
+        NSString *fileLinkCodeString = [afterSlashesString substringFromIndex:2]; // mega://#!"xxxxxxxx..."
+        
+        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
+        BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
+        if (isEncryptedFileLink) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileEncrypted", @"File encrypted")
+                                                                message:NSLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            
+            [self checkingRootViewController];
+            
+        } else {
+            FileLinkViewController *fileLinkVC = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
+            
+            NSString *megaFileLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
+            [fileLinkVC setFileLinkString:megaFileLinkURLString];
+            
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:fileLinkVC];
+            self.window.rootViewController = navigationController;
+        }
+        
+        return YES;
+    }
+    
+    megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
+    BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
+    if (isFolderLink) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderLink", @"Folder link")
+                                                            message:NSLocalizedString(@"folderLinkMessage", @"For the moment folder links are not supported.")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+        [self checkingRootViewController];
+        
+        return YES;
+        
+//TODO: manage MEGA folder links.
+//        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+//            NSString *folderLinkCodeString = [afterSlashesString substringFromIndex:3]; // mega://#F!"xxxxxxxx..."
+//            
+//            NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
+//            BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
+//            if (isEncryptedFolderLink) {
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
+//                                                                    message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
+//                                                                   delegate:self
+//                                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+//                                                          otherButtonTitles:nil];
+//                [alertView show];
+//                return YES;
+//            }
+//            
+//        } else {
+//            //FolderLinkViewController
+//        }
+//        
+//        return YES;
+    }
+    
+    megaURLTypeString = [afterSlashesString substringToIndex:7]; // mega://"confirm"
     BOOL isConfirmationLink = [megaURLTypeString isEqualToString:@"confirm"];
     if (isConfirmationLink) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
-        megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashString];
+        megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
         
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString delegate:self];
         return YES;
     }
     
-    return NO;
+    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
+    return YES;
 }
+
+#pragma mark - Private
 
 - (void)setupAppearance {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -117,6 +202,21 @@
     
     [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UITabBar appearance] setTintColor:whiteColor];
+}
+
+- (void)checkingRootViewController {
+    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:mainTBC];
+//            [mainTBC setSelectedIndex:1]; //0 = Cloud, 1 = Offline, 2 = Contacts, 3 = Settings
+        }
+    } else {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
+        [self.window setRootViewController:viewController];
+    }
 }
 
 #pragma mark - MEGARequestDelegate

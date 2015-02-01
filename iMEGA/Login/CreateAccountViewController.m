@@ -44,8 +44,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:@"Create account"];
-    
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
     
@@ -60,6 +58,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar.topItem setTitle:@"Create Account"];
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
@@ -77,6 +78,7 @@
 - (IBAction)createAccountTouchUpInside:(id)sender {
     if ([self validateForm]) {
         [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
+        [self.createAccountButton setEnabled:NO];
     }
 }
 
@@ -184,6 +186,8 @@
             case MEGAErrorTypeApiEExist: {
                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailAlreadyRegistered", @"This e-mail address has already registered an account with MEGA")];
                 [self.emailTextField becomeFirstResponder];
+                
+                [self.createAccountButton setEnabled:YES];
                 break;
             }
                 

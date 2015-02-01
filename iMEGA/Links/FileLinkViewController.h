@@ -1,8 +1,8 @@
 /**
- * @file LoginViewController.h
- * @brief View controller that allows to login in your MEGA account
+ * @file FileLinkViewController.h
+ * @brief View controller that allows to see and manage MEGA file links.
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -20,12 +20,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
 
-@interface LoginViewController : UIViewController <MEGARequestDelegate>
+@interface FileLinkViewController : UIViewController
 
-@property (nonatomic, strong) MEGANode *node;
-@property (nonatomic) NSInteger loginOption;
+@property (nonatomic, strong) NSString *fileLinkString;
 
 @end
-

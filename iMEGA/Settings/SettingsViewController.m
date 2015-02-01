@@ -103,10 +103,11 @@
             }
             
             [SVProgressHUD dismiss];
-            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
             
-            [self presentViewController:loginVC animated:YES completion:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
+            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
+            
             break;
         }
             
