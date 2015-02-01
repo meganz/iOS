@@ -6,6 +6,17 @@
 //AppDelegate
 "accountAlreadyConfirmed" = "Account already confirmed";
 
+"invalidLink" = "Invalid MEGA Link";
+
+"fileEncrypted" = "File encrypted";
+"fileEncryptedMessage" = "This function is not avaliable. For the moment you can't import or download an encrypted file.";
+
+"folderLink" = "Folder link";
+"folderLinkMessage" = "For the moment folder links are not supported.";
+
+"folderEncrypted" = "Folder encrypted";
+"folderEncryptedMessage" = "This function is not avaliable. For the moment you can't import or download an encrypted folder.";
+
 //TourViewController
 
 "megaSpace"="MEGA SPACE";
@@ -19,7 +30,7 @@
 "megaAccessText"="Get fully encrypted access anywhere, anytime.";
 
 "loginButton"="Login";
-"registerButton"="Register";
+"createAccountButton"="Create account";
 
 //LoginViewController
 "invalidMailOrPassword" = "Invalid e-mail and/or password. Please try again";
@@ -43,6 +54,20 @@
 
 //TermsOfServiceViewController
 "errorLoadingTermsWeb" = "The MEGA Terms of Service web fail at loading.";
+
+//FileLinkViewController
+"importButton" = "Import to your Cloud Drive";
+"downloadButton" = "Download to your MEGA App";
+
+"fileTooBig" = "You need more free space";
+"fileTooBigMessage" = "The file you are trying to download is bigger than the available memory.";
+
+"importAction" = "Import file";
+"importActionMessage" = "This function is not available. For the moment you can't import a file.";
+
+//FileLinkViewController - SVProgressHUD
+"fileAlreadyExist" = "The file you want to download already exists on Offline";
+"downloadStarted" = "Download started";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";

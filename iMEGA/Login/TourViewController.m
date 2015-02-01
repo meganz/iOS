@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @property (strong, nonatomic) NSArray *images;
 @property (strong, nonatomic) NSArray *titles;
@@ -64,10 +64,10 @@
     self.loginButton.layer.masksToBounds = YES;
     [self.loginButton setTitle:NSLocalizedString(@"loginButton", nil) forState:UIControlStateNormal];
     
-    self.registerButton.layer.cornerRadius = 6;
-    self.registerButton.layer.backgroundColor = megaDarkGray.CGColor;
-    self.registerButton.layer.masksToBounds = YES;
-    [self.registerButton setTitle:NSLocalizedString(@"registerButton", nil) forState:UIControlStateNormal];
+    self.createAccountButton.layer.cornerRadius = 6;
+    self.createAccountButton.layer.backgroundColor = megaDarkGray.CGColor;
+    self.createAccountButton.layer.masksToBounds = YES;
+    [self.createAccountButton setTitle:NSLocalizedString(@"createAccountButton", nil) forState:UIControlStateNormal];
     
     self.titleLabel.textColor = megaRed;
     self.titleLabel.numberOfLines = 0;

@@ -20,6 +20,7 @@
  */
 
 #import "ConfirmAccountViewController.h"
+#import "MainTabBarController.h"
 
 #import "SVProgressHUD.h"
 #import "Helper.h"
@@ -80,7 +81,6 @@
 - (IBAction)loginTouchUpInside:(id)sender {
     UIViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
     [[[[UIApplication sharedApplication] delegate] window] setRootViewController:loginVC];
-    
 }
 
 
@@ -120,8 +120,8 @@
             
             [[MEGASdkManager sharedMEGASdk] loginWithEmail:[self.emailTextField text] password:[self.passwordTextField text] delegate:self];
             
-            UITabBarController *tabBarVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:tabBarVC];
+            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
         }
             
         case MEGARequestTypeLogin: {

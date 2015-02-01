@@ -111,10 +111,13 @@
 
 - (IBAction)touchUpInsideDownload:(UIButton *)sender {
     if ([self.node type] == MEGANodeTypeFile) {
-        NSString *documentFilePath = [Helper pathForNode:self.node searchPath:NSDocumentDirectory];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
+        NSString *filePath = [Helper pathForOffline];
+        NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
         if (!fileExists) {
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:documentFilePath];
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath];
+        } else {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
         }
     }
 }

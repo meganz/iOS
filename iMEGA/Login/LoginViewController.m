@@ -24,15 +24,15 @@
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
 #import "Helper.h"
+#import "MainTabBarController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @end
 
@@ -116,6 +116,60 @@
     
 }
 
+- (void)checkLoginOption {
+    switch (self.loginOption) {
+        case 1: { //IMPORT
+            //TODO: Reaction after import file without user logged
+            //    [[MEGASdkManager sharedMEGASdk] importMegaFileLink: parent:node delegate:self];
+            break;
+        }
+            
+        case 2: { //DOWNLOAD
+            
+            if ([self.node type] == MEGANodeTypeFile) {
+                NSString *filePath = [Helper pathForOffline];
+                NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
+                if (!fileExists) {
+                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath delegate:self];
+                } else {
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+                }
+            }            
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Dismiss keyboard
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    switch ([textField tag]) {
+        case 0:
+            [self.passwordTextField becomeFirstResponder];
+            break;
+            
+        case 1:
+            [self.passwordTextField resignFirstResponder];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return YES;
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -154,7 +208,13 @@
             
         case MEGARequestTypeFetchNodes: {
             [SVProgressHUD dismiss];
-            [self performSegueWithIdentifier:@"showCloudDrive" sender:self];
+            
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
+            
+            [self checkLoginOption];
+            
             break;
         }
             
@@ -177,10 +237,21 @@
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
-#pragma mark - Dismiss keyboard
+#pragma mark - MEGATransferDelegate
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+}
+
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+}
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+-(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end
