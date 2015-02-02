@@ -24,7 +24,7 @@
 #import "Helper.h"
 #import "SVProgressHUD.h"
 
-@interface MoveCopyNodeViewController () {
+@interface MoveCopyNodeViewController () <UIAlertViewDelegate> {
     UIAlertView *folderAlertView;
     NSUInteger remainingOperations;
 }
@@ -33,9 +33,13 @@
 @property (nonatomic, strong) NSMutableArray *folderNodes;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @end
 
 @implementation MoveCopyNodeViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,10 +59,13 @@
     
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Private
 
 - (void)reloadUI {
     self.folderNodes = [NSMutableArray new];
@@ -69,6 +76,17 @@
     } else {
         [self.navigationItem setTitle:[self.parentNode name]];
         self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+    }
+    
+    if (self.isPublicNode) {
+        NSString *importTitle = @"Import to ";
+        importTitle = [importTitle stringByAppendingString:[self.navigationItem title]];
+        [self.navigationItem setTitle:importTitle];
+        
+        NSMutableArray *items = [NSMutableArray arrayWithArray:self.toolbar.items];
+        
+        [[items objectAtIndex:0] setEnabled:NO];
+        [[items objectAtIndex:2] setTitle:@"Import"];
     }
     
     for (NSInteger i = 0; i < self.nodes.size.integerValue; i++) {
@@ -82,7 +100,48 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Table view data source
+#pragma mark - IBActions
+
+- (IBAction)moveNode:(UIBarButtonItem *)sender {
+    remainingOperations = self.moveOrCopyNodes.count;
+    
+    for (MEGANode *n in self.moveOrCopyNodes) {
+        [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+    }
+}
+
+- (IBAction)copyNode:(UIBarButtonItem *)sender {
+    remainingOperations = self.moveOrCopyNodes.count;
+    
+    for (MEGANode *n in self.moveOrCopyNodes) {
+        [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+    }
+    
+}
+
+- (IBAction)add:(UIBarButtonItem *)sender {
+    folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder") message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
+    [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [folderAlertView textFieldAtIndex:0].text = @"";
+    [folderAlertView show];
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
+        [folderAlertView dismissWithClickedButtonIndex:0 animated:NO];
+}];
+}
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+    }
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -128,7 +187,7 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *newParent = [self.folderNodes objectAtIndex:indexPath.row];
@@ -137,51 +196,21 @@
     [mcnvc setParentNode:newParent];
     [mcnvc setMoveOrCopyNodes:self.moveOrCopyNodes];
     
+    if(self.isPublicNode) {
+        [mcnvc setIsPublicNode:YES];
+    }
+    
     [self.navigationController pushViewController:mcnvc animated:YES];
 }
-
-#pragma mark - IBAction
-
-- (IBAction)moveNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.moveOrCopyNodes.count;
-    
-    for (MEGANode *n in self.moveOrCopyNodes) {
-        [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
-    }
-}
-
-- (IBAction)copyNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.moveOrCopyNodes.count;
-    
-    for (MEGANode *n in self.moveOrCopyNodes) {
-        [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
-    }
-    
-}
-- (IBAction)add:(UIBarButtonItem *)sender {
-    folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder") message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
-    [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [folderAlertView textFieldAtIndex:0].text = @"";
-    [folderAlertView show];
-}
-
-- (IBAction)cancel:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Alert delegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
-    }
-}
-
 
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiEOverQuota) {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
+        }
+        
         return;
     }
     
@@ -197,6 +226,12 @@
             break;
         
         case MEGARequestTypeCopy:
+            if(self.isPublicNode) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"File imported")];
+                break;
+            }
+            
             remainingOperations--;
             
             if (remainingOperations == 0) {

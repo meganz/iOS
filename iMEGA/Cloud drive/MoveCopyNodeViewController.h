@@ -28,4 +28,6 @@
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray *moveOrCopyNodes;
 
+@property (nonatomic) BOOL isPublicNode;
+
 @end
