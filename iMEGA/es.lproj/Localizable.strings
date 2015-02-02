@@ -92,6 +92,10 @@
 "newFolderMessage" = "Nombre para la carpeta";
 "createFolderButton" = "Crear";
 
+//MoveCopyNodeViewController
+"quotaExceeded"="Cuota de almacenamiento excedida";
+"fileImported"="Fichero importado";
+
 //UITABBARCONTROLLER (2) OFFLINE
 
 

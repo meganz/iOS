@@ -25,6 +25,7 @@
 #import "SSKeychain.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
+#import "MoveCopyNodeViewController.h"
 
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
@@ -119,13 +120,20 @@
 - (void)checkLoginOption {
     switch (self.loginOption) {
         case 1: { //IMPORT
-            //TODO: Reaction after import file without user logged
-            //    [[MEGASdkManager sharedMEGASdk] importMegaFileLink: parent:node delegate:self];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+            UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+            
+            MoveCopyNodeViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
+            moveCopyNodeVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            moveCopyNodeVC.moveOrCopyNodes = [NSArray arrayWithObject:self.node];
+            
+            [moveCopyNodeVC setIsPublicNode:YES];
+            
             break;
         }
             
         case 2: { //DOWNLOAD
-            
             if ([self.node type] == MEGANodeTypeFile) {
                 NSString *filePath = [Helper pathForOffline];
                 NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];

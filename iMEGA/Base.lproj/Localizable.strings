@@ -92,6 +92,10 @@
 "createFolderButton" = "Create";
 "createFolder" = "Create folder";
 
+//MoveCopyNodeViewController
+"quotaExceeded"="Storage quota exceeded";
+"fileImported"="File imported";
+
 //UITABBARCONTROLLER (2) OFFLINE
 
 

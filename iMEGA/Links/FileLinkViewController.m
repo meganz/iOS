@@ -28,6 +28,7 @@
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "FileLinkViewController.h"
+#import "MoveCopyNodeViewController.h"
 
 @interface FileLinkViewController () <MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -46,6 +47,8 @@
 @end
 
 @implementation FileLinkViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,25 +80,30 @@
 }
 
 - (IBAction)importTouchUpInside:(UIButton *)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"importAction", @"Import file")
-                                                        message:NSLocalizedString(@"importActionMessage", @"This function is not available. For the moment you can't import a file.")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                              otherButtonTitles:nil];
-    [alertView show];
-    return;
-
-    //TODO: import MEGA file link.
-//    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-//        //    [[MEGASdkManager sharedMEGASdk] importMegaFileLink: parent:node delegate:self];
-//    } else {
-//        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-//        
-//        [loginVC setLoginOption:[(UIButton *)sender tag]];
-//        [loginVC setNode:self.node];
-//        [self.navigationController pushViewController:loginVC animated:YES];
-//    }
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        
+        [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
+        
+        if ([self.node type] == MEGANodeTypeFile) {
+            UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+            UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+            
+            MoveCopyNodeViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
+            moveCopyNodeVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            moveCopyNodeVC.moveOrCopyNodes = [NSArray arrayWithObject:self.node];
+            
+            [moveCopyNodeVC setIsPublicNode:YES];
+        }
+    } else {
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+        
+        [loginVC setLoginOption:[(UIButton *)sender tag]];
+        [loginVC setNode:self.node];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
 }
 
 - (IBAction)downloadTouchUpInside:(UIButton *)sender {
