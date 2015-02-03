@@ -31,32 +31,38 @@
 
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
-    NSInteger indexNodeSelected;
     UIAlertView *removeAlertView;
     
+    NSInteger indexNodeSelected;
     NSUInteger remainingOperations;
     
     NSMutableArray *exportLinks;
+    
+    NSMutableArray *matchSearchNodes;
 }
 
-@property (nonatomic, strong) NSMutableArray *cloudImages;
-@property (nonatomic, strong) MEGANodeList *nodes;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addItem;
+
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *filesFolderLabel;
-
-@property (nonatomic) UIImagePickerController *imagePickerController;
-
-@property (nonatomic, strong) NSMutableArray *selected;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
+@property (nonatomic, strong) MEGANodeList *nodes;
+
+@property (nonatomic, strong) NSMutableArray *cloudImages;
+@property (nonatomic, strong) NSMutableArray *selected;
+
+@property (nonatomic) UIImagePickerController *imagePickerController;
+
 @end
 
 @implementation CloudDriveTableViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,6 +84,8 @@
             NSLog(@"Create directory error: %@", error);
         }
     }
+    
+    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,21 +107,36 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.nodes size] integerValue];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [matchSearchNodes count];
+    } else {
+        return [[self.nodes size] integerValue];
+    }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    static NSString *cellIdentifier = @"nodeCell";
     
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    if (cell == nil) {
+        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    MEGANode *node = nil;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
     
     NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -129,7 +152,7 @@
     }
     
     cell.nameLabel.text = [node name];
-
+    
     if ([node type] == MEGANodeTypeFile) {
         struct tm *timeinfo;
         char buffer[80];
@@ -176,18 +199,24 @@
     return YES;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.headerView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    return self.headerView;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 20.0;
+//}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20.0;
-}
-
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = nil;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
     
     if (tableView.isEditing) {
         [self.selected addObject:node];
@@ -213,16 +242,31 @@
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
-                for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
-                    
-                    MEGANode *n = [self.nodes nodeAtIndex:i];
-                    
-                    if (isImage([n name].lowercaseString.pathExtension)) {
-                        MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                        photo.caption = [n name];
-                        [self.cloudImages addObject:photo];
-                        if ([n handle] == [node handle]) {
-                            offsetIndex = (int)[self.cloudImages count] - 1;
+                
+                if (tableView == self.searchDisplayController.searchResultsTableView) {
+                    for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
+                        MEGANode *n = [matchSearchNodes objectAtIndex:i];
+                        
+                        if (isImage([n name].lowercaseString.pathExtension)) {
+                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
+                            photo.caption = [n name];
+                            [self.cloudImages addObject:photo];
+                            if ([n handle] == [node handle]) {
+                                offsetIndex = (int)[self.cloudImages count] - 1;
+                            }
+                        }
+                    }
+                } else {
+                    for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
+                        MEGANode *n = [self.nodes nodeAtIndex:i];
+                        
+                        if (isImage([n name].lowercaseString.pathExtension)) {
+                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
+                            photo.caption = [n name];
+                            [self.cloudImages addObject:photo];
+                            if ([n handle] == [node handle]) {
+                                offsetIndex = (int)[self.cloudImages count] - 1;
+                            }
                         }
                     }
                 }
@@ -278,7 +322,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = nil;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
     
     DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [nodeInfoDetailsVC setNode:node];
@@ -306,13 +356,22 @@
     }
 }
 
-- (IBAction)optionAdd:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"uploadPhoto", @"Upload photo"), nil];
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        return 44.0;
+    }
+    else {
+        return UITableViewAutomaticDimension;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        return 44.0;
+    }
+    else {
+        return UITableViewAutomaticDimension;
+    }
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -355,7 +414,7 @@
     return nil;
 }
 
-#pragma mark - Action sheet delegate
+#pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
@@ -369,7 +428,7 @@
     }
 }
 
-#pragma mark - Alert delegate
+#pragma mark - UIAlertDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) {
@@ -430,45 +489,30 @@
     NSString *filesAndFolders;
     
     if (!self.parentNode) {
+        self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    }
+    if ([[self.parentNode name] isEqualToString:@"CRYPTO_ERROR"]) {
         [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
-        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-        
-        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-        
-        if (files == 0 || files > 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
-            }
-        } else if (files == 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
-            }
-        }
-        
     } else {
         [self.navigationItem setTitle:[self.parentNode name]];
-        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-        
-        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:self.parentNode];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.parentNode];
-        
-        if (files == 0 || files > 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
-            }
-        } else if (files == 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
-            }
+    }
+    
+    self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+    
+    NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:self.parentNode];
+    NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.parentNode];
+    
+    if (files == 0 || files > 1) {
+        if (folders == 0 || folders > 1) {
+            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
+        } else if (folders == 1) {
+            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+        }
+    } else if (files == 1) {
+        if (folders == 0 || folders > 1) {
+            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
+        } else if (folders == 1) {
+            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
         }
     }
     
@@ -488,7 +532,16 @@
     [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
-#pragma mark - IBAction
+#pragma mark - IBActions
+
+- (IBAction)optionAdd:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"uploadPhoto", @"Upload photo"), nil];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+}
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     exportLinks = [NSMutableArray new];
@@ -515,6 +568,42 @@
     [removeAlertView show];
     removeAlertView.tag = 2;
     [removeAlertView show];
+}
+
+#pragma mark - Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+    
+    matchSearchNodes = [NSMutableArray new];
+    MEGANodeList *allNodeList = nil;
+    
+    if([scope isEqualToString:@"Recursive"]) {
+        allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchText recursive:YES];
+    } else {
+        allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchText recursive:NO];
+    }
+    
+    for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
+        MEGANode *n = [allNodeList nodeAtIndex:i];
+        [matchSearchNodes addObject:n];
+    }
+    
+}
+
+#pragma mark - UISearchDisplayControllerDelegate
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    [self filterContentForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    
+    return YES;
 }
 
 #pragma mark - MEGARequestDelegate
@@ -551,6 +640,18 @@
                     }
                 }
             }
+            
+            for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
+                if ([request nodeHandle] == [ntvc nodeHandle]) {
+                    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+                    if (fileExists) {
+                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                    }
+                }
+            }
+            
             break;
         }
             
