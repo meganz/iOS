@@ -104,6 +104,26 @@
 "oneFolderShare" = "Sharing one node";
 "foldersShare" = "Sharing %d nodes";
 
+"addFromEmail" = "Insert an email";
+"addFromContacts" = "Add from contacts";
+"contactTitle" = "Add a contact";
+"contactMessage" = "Enter a contact email";
+"addContactButton" = "Add";
+"adding" = "Adding...";
+"added" = "Added";
+"addContactError" = "Failed to add contact";
+"removed" = "Removed";
+
+"removeMultipleUsersMessage" = "Are you sure you want to remove %d users from your contact list?";
+"removeUserMessage" = "Are you sure you want to remove %@ from your contact list?";
+"removeUserTitle" = "Remove contact";
+
+"removedContacts" = "%d contacts removed";
+"removedContact" = "Contact %@ removed";
+
+"contactWithoutEmailTitle"="No email";
+"contactWithoutEmailMessage"="The contact does not have an email";
+
 //Rename
 "renameNodeTitle" = "Rename";
 "renameNodeMessage" = "Enter the new name";

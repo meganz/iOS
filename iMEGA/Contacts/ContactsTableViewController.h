@@ -21,7 +21,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MEGASdkManager.h"
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface ContactsTableViewController : UITableViewController <MEGARequestDelegate>
+@interface ContactsTableViewController : UITableViewController <MEGARequestDelegate, MEGAGlobalDelegate, UIActionSheetDelegate, UIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @end

@@ -10,7 +10,7 @@
         <scene sceneID="mHr-Su-iDj">
             <objects>
                 <tableViewController id="U9c-Mo-B5q" customClass="ContactsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aqm-x5-Trd">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aqm-x5-Trd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -28,6 +28,7 @@
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9J-Z8-7Ii">
                                             <rect key="frame" x="20" y="7" width="30" height="30"/>
+                                            <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="29B-pR-F9n"/>
                                                 <constraint firstAttribute="width" constant="30" id="zNH-EM-jS6"/>
@@ -51,6 +52,7 @@
                                         <constraint firstItem="w77-Fa-7cw" firstAttribute="top" secondItem="L5Q-6a-Tvq" secondAttribute="bottom" constant="-2" id="rVr-ad-96q"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="avatarImageView" destination="b9J-Z8-7Ii" id="H63-pY-GJz"/>
                                     <outlet property="nameLabel" destination="L5Q-6a-Tvq" id="lOS-aH-XNs"/>
@@ -63,9 +65,36 @@
                             <outlet property="delegate" destination="U9c-Mo-B5q" id="YS0-hk-j1o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contacts" id="rVh-YO-4Ut"/>
+                    <navigationItem key="navigationItem" title="Contacts" id="rVh-YO-4Ut">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ky0-dP-xyu">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="addContact:" destination="U9c-Mo-B5q" id="b0R-O1-xOz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addBarButtonItem" destination="Ky0-dP-xyu" id="Z1h-bw-Abl"/>
+                        <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="2ce-SJ-qvQ"/>
+                        <outlet property="toolbar" destination="jvh-Sx-iEq" id="eMJ-oc-LIo"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wLM-4l-MPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="jvh-Sx-iEq">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ab4-Tz-z6U"/>
+                        <barButtonItem enabled="NO" image="tabBarDelete" id="wgy-rg-Fjg" userLabel="Delete Bar Button Item">
+                            <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
+                            <connections>
+                                <action selector="deleteAction:" destination="U9c-Mo-B5q" id="JkE-j8-bn1"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                    <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="2556" y="-1593"/>
         </scene>
@@ -96,5 +125,6 @@
     </scenes>
     <resources>
         <image name="contactsIcon" width="64" height="49"/>
+        <image name="tabBarDelete" width="30" height="30"/>
     </resources>
 </document>

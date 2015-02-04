@@ -23,45 +23,131 @@
 #import "ContactTableViewCell.h"
 #import "Helper.h"
 #import "UIImage+GKContact.h"
+#import "SVProgressHUD.h"
 
 
-@interface ContactsTableViewController ()
+@interface ContactsTableViewController () {
+    UIAlertView *emailAlertView;
+    UIAlertView *removeAlertView;
+    
+    NSUInteger remainingOperations;
+}
 
 @property (nonatomic, strong) MEGAUserList *users;
-@property (nonatomic, strong) NSMutableArray *usersArray;
+@property (nonatomic, strong) NSMutableArray *visibleUsersArray;
+@property (nonatomic, strong) NSMutableArray *selectedUsersArray;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @end
 
 @implementation ContactsTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.usersArray = [NSMutableArray new];
+    NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
+    self.navigationItem.rightBarButtonItems = buttonsItems;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [self reloadUI];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self.addBarButtonItem setEnabled:NO];
+        [self.navigationItem.leftBarButtonItems.firstObject setEnabled:NO];
+    } else {
+        self.selectedUsersArray = nil;
+        [self.addBarButtonItem setEnabled:YES];
+    }
+    
+    if (!self.selectedUsersArray) {
+        self.selectedUsersArray = [NSMutableArray new];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+    
+    [self.tabBarController.tabBar addSubview:self.toolbar];
+    
+    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+    }];
+    
+}
+
+#pragma mark - Private
+
+- (void)reloadUI {
+    self.visibleUsersArray = [NSMutableArray new];
     
     self.users = [[MEGASdkManager sharedMEGASdk] contacts];
     for (NSInteger i = 0; i < [[self.users size] integerValue] ; i++) {
         MEGAUser *u = [self.users userAtIndex:i];
         if ([u access] == MEGAUserVisibilityVisible)
-        [self.usersArray addObject:u];
+            [self.visibleUsersArray addObject:u];
     }
+    
+    [self.tableView reloadData];
 }
 
-#pragma mark - Table view data source
+#pragma mark - IBActions
+
+- (IBAction)addContact:(UIBarButtonItem *)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"addFromEmail", nil), NSLocalizedString(@"addFromContacts", nil), nil];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    
+}
+
+- (IBAction)deleteAction:(UIBarButtonItem *)sender {
+    
+    NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:NSLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
+    
+    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    [removeAlertView show];
+    removeAlertView.tag = 1;
+    [removeAlertView show];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [self.usersArray count];
+    return  [self.visibleUsersArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
     
-    MEGAUser *user = [self.usersArray objectAtIndex:indexPath.row];
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     
     cell.nameLabel.text = [user email];
     
@@ -73,7 +159,7 @@
         cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.width/2;
         cell.avatarImageView.layer.masksToBounds = YES;
     } else {
-        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
         [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
     }
     
@@ -89,13 +175,175 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        [self.selectedUsersArray addObject:user];
+        [self.deleteBarButtonItem setEnabled:YES];
+        
+        return;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        
+        //tempArray avoid crash: "was mutated while being enumerated."
+        NSMutableArray *tempArray = [self.selectedUsersArray copy];
+        for (MEGAUser *u in tempArray) {
+            if ([u.email isEqualToString:user.email]) {
+                [self.selectedUsersArray removeObject:u];
+            }
+        }
+        
+        if (self.selectedUsersArray.count == 0) {
+            [self.deleteBarButtonItem setEnabled:NO];
+        }
+        
+        return;
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    self.selectedUsersArray = [NSMutableArray new];
+    [self.selectedUsersArray addObject:user];
+    
+    [self.deleteBarButtonItem setEnabled:YES];
+    
+    return (UITableViewCellEditingStyleDelete);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle==UITableViewCellEditingStyleDelete) {
+        remainingOperations = 1;
+        MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+        [[MEGASdkManager sharedMEGASdk] removeContactUser:user];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        emailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactTitle", nil) message:NSLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"addContactButton", nil), nil];
+        [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [emailAlertView textFieldAtIndex:0].text = @"";
+        emailAlertView.tag = 0;
+        [emailAlertView show];
+    } else if (buttonIndex == 1) {
+        ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+        contactsPickerNC.peoplePickerDelegate = self;
+        
+        [self presentViewController:contactsPickerNC animated:YES completion:nil];
+    }
+}
+
+#pragma mark - ABPeoplePickerNavigationControllerDelegate
+
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+    
+    NSString *email = nil;
+    ABMultiValueRef emails = ABRecordCopyValue(person,
+                                               kABPersonEmailProperty);
+    if (ABMultiValueGetCount(emails) > 0) {
+        email = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(emails, 0);
+    }
+    
+    if (email) {
+        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email];
+    } else {
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:@"Sin email" message:@"Este contacto no tiene email" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        noEmailAlertView.tag = 2;
+        [noEmailAlertView show];
+    }
+    
+    if (emails) {
+        CFRelease(emails);
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+                         didSelectPerson:(ABRecordRef)person {
+    
+    NSString *email = nil;
+    ABMultiValueRef emails = ABRecordCopyValue(person,
+                                                     kABPersonEmailProperty);
+    if (ABMultiValueGetCount(emails) > 0) {
+        email = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(emails, 0);
+    }
+
+    if (email) {
+        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email];
+    } else {
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        noEmailAlertView.tag = 2;
+        [noEmailAlertView show];
+    }
+    
+    if (emails) {
+        CFRelease(emails);
+    }
+}
+
+#pragma mark - UIAlertDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 0) {
+        if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text]];
+        }
+    } else if (alertView.tag == 1) {
+        if (buttonIndex == 1) {
+            remainingOperations = self.selectedUsersArray.count;
+            for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
+                [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i]];
+            }
+        }
+    } else if (alertView.tag == 2) {
+    
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeAddContact:
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"adding", nil)];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        if ([request type] == MEGARequestTypeAddContact) {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"addContactError", nil)];
+        }
         return;
     }
     
@@ -118,6 +366,20 @@
             break;
         }
             
+        case MEGARequestTypeAddContact:
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"added", nil)];
+            break;
+            
+        case MEGARequestTypeRemoveContact:
+            remainingOperations--;
+            if (remainingOperations == 0) {
+                NSString *message = (self.selectedUsersArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"removedContact", nil), [request email]] : [NSString stringWithFormat:NSLocalizedString(@"removedContacts", nil), self.selectedUsersArray.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+                [self setEditing:NO animated:NO];
+            }
+            
+            break;
+            
         default:
             break;
     }
@@ -127,6 +389,12 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    [self reloadUI];
 }
 
 @end

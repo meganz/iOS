@@ -104,6 +104,26 @@
 "oneFolderShare" = "Compartiendo un nodo";
 "foldersShare" = "Compartiendo %d nodos";
 
+"addFromEmail" = "Introducir un email";
+"addFromContacts" = "Añadir desde contactos";
+"contactTitle" = "Añadir contacto";
+"contactMessage" = "Introduzca un email";
+"addContactButton" = "Añadir";
+"adding" = "Añadiendo...";
+"added" = "Añadido";
+"addContactError" = "Error al añadir contacto";
+"removed" = "eliminado";
+
+"removeMultipleUsersMessage" = "¿Estás seguro de que deseas elimiar %d usuarios de la lista de contactos?";
+"removeUserMessage" = "¿Estás seguro de que deseas elimiar a %@ de la lista de contactos?";
+"removeUserTitle" = "Eliminar contacto";
+
+"removedContacts" = "%d contactos eliminados";
+"removedContact" = "Contacto %@ eliminado";
+
+"contactWithoutEmailTitle"="Sin email";
+"contactWithoutEmailMessage"="El contacto no tiene email";
+
 //Rename
 "renameNodeTitle" = "Cambiar nombre";
 "renameNodeMessage" = "Introduce otro nombre";
