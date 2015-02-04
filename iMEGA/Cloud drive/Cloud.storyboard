@@ -84,7 +84,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addItem" destination="ygf-3J-YTT" id="P3C-nD-wFd"/>
+                        <outlet property="addBarButtonItem" destination="ygf-3J-YTT" id="7Zl-24-bBR"/>
                         <outlet property="deleteBarButtonItem" destination="yUd-0E-SLT" id="vo9-6g-XHd"/>
                         <outlet property="filesFolderLabel" destination="KVi-G8-NCh" id="W9x-hC-T3F"/>
                         <outlet property="headerView" destination="t5L-mT-iSk" id="5ce-5g-B0o"/>
@@ -100,21 +100,21 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <items>
-                        <barButtonItem enabled="NO" image="tabBarShare" id="Rdk-Wp-1bg" userLabel="Bar Button Item - Item">
+                        <barButtonItem enabled="NO" image="tabBarShare" id="Rdk-Wp-1bg" userLabel="Share Bar Button Item">
                             <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
                             <connections>
                                 <action selector="shareLinkAction:" destination="KWY-Kr-BLD" id="i2Y-ev-jUX"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yXl-8x-t8x"/>
-                        <barButtonItem enabled="NO" image="tabBarMove" id="paI-37-wBm">
+                        <barButtonItem enabled="NO" image="tabBarMove" id="paI-37-wBm" userLabel="Move Copy Bar Button Item">
                             <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
                             <connections>
                                 <action selector="moveCopyAction:" destination="KWY-Kr-BLD" id="mlv-kz-aJ5"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fTy-0a-Q8M"/>
-                        <barButtonItem enabled="NO" image="tabBarDelete" id="yUd-0E-SLT">
+                        <barButtonItem enabled="NO" image="tabBarDelete" id="yUd-0E-SLT" userLabel="Delete Bar Button Item">
                             <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
                             <connections>
                                 <action selector="deleteAction:" destination="KWY-Kr-BLD" id="7mG-sQ-NLc"/>

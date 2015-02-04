@@ -41,7 +41,7 @@
     NSMutableArray *matchSearchNodes;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *filesFolderLabel;
@@ -54,7 +54,7 @@
 @property (nonatomic, strong) MEGANodeList *nodes;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
-@property (nonatomic, strong) NSMutableArray *selected;
+@property (nonatomic, strong) NSMutableArray *selectedNodesArray;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
@@ -67,7 +67,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *buttonsItems = @[self.editButtonItem, self.addItem];
+    NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
@@ -100,7 +100,7 @@
     [super viewWillDisappear:animated];
     
     if (self.tableView.isEditing) {
-        self.selected = nil;
+        self.selectedNodesArray = nil;
         [self setEditing:NO animated:NO];
     }
     
@@ -219,7 +219,7 @@
     }
     
     if (tableView.isEditing) {
-        [self.selected addObject:node];
+        [self.selectedNodesArray addObject:node];
         
         [self.shareBarButtonItem setEnabled:YES];
         [self.moveBarButtonItem setEnabled:YES];
@@ -304,14 +304,14 @@
     if (tableView.isEditing) {
         
         //tempArray avoid crash: "was mutated while being enumerated."
-        NSMutableArray *tempArray = [self.selected copy];
+        NSMutableArray *tempArray = [self.selectedNodesArray copy];
         for (MEGANode *n in tempArray) {
             if (n.handle == node.handle) {
-                [self.selected removeObject:n];
+                [self.selectedNodesArray removeObject:n];
             }
         }
         
-        if (self.selected.count == 0) {
+        if (self.selectedNodesArray.count == 0) {
             [self.shareBarButtonItem setEnabled:NO];
             [self.moveBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
@@ -339,8 +339,8 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
     
-    self.selected = [NSMutableArray new];
-    [self.selected addObject:n];
+    self.selectedNodesArray = [NSMutableArray new];
+    [self.selectedNodesArray addObject:n];
     
     [self.shareBarButtonItem setEnabled:YES];
     [self.moveBarButtonItem setEnabled:YES];
@@ -378,15 +378,15 @@
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        [self.addItem setEnabled:NO];
+        [self.addBarButtonItem setEnabled:NO];
         [self.navigationItem.leftBarButtonItems.firstObject setEnabled:NO];
     } else {
-        self.selected = nil;
-        [self.addItem setEnabled:YES];
+        self.selectedNodesArray = nil;
+        [self.addBarButtonItem setEnabled:YES];
     }
     
-    if (!self.selected) {
-        self.selected = [NSMutableArray new];
+    if (!self.selectedNodesArray) {
+        self.selectedNodesArray = [NSMutableArray new];
         [self.shareBarButtonItem setEnabled:NO];
         [self.moveBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
@@ -439,9 +439,9 @@
     
     if (alertView.tag == 2) {
         if (buttonIndex == 1) {
-            remainingOperations = self.selected.count;
-            for (NSInteger i = 0; i < self.selected.count; i++) {
-                [[MEGASdkManager sharedMEGASdk] moveNode:[self.selected objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            remainingOperations = self.selectedNodesArray.count;
+            for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
+                [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             }
         }
     }
@@ -545,9 +545,9 @@
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     exportLinks = [NSMutableArray new];
-    remainingOperations = self.selected.count;
+    remainingOperations = self.selectedNodesArray.count;
     
-    for (MEGANode *n in self.selected) {
+    for (MEGANode *n in self.selectedNodesArray) {
         [[MEGASdkManager sharedMEGASdk] exportNode:n];
     }
 }
@@ -558,11 +558,11 @@
     
     MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.moveOrCopyNodes = [NSArray arrayWithArray:self.selected];
+    mcnvc.moveOrCopyNodes = [NSArray arrayWithArray:self.selectedNodesArray];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selected.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selected.count] :[NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] :[NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
     
     removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     [removeAlertView show];
@@ -658,7 +658,7 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selected.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selected.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
