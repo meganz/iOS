@@ -22,6 +22,8 @@
 #import "ContactsTableViewController.h"
 #import "ContactTableViewCell.h"
 #import "Helper.h"
+#import "CloudDriveTableViewController.h"
+
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
@@ -190,6 +192,22 @@
         
         return;
     }
+    
+    if (!user) {
+        [SVProgressHUD showErrorWithStatus:@"Invalid user"];
+        return;
+    }
+    
+    if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+        CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+
+        [self.navigationController pushViewController:cloud animated:YES];
+        cloud.navigationItem.title = [user email];
+
+        [cloud setUser:user];
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {

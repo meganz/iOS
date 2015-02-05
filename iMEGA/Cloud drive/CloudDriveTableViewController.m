@@ -43,9 +43,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UILabel *filesFolderLabel;
-
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
@@ -67,8 +64,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
-    self.navigationItem.rightBarButtonItems = buttonsItems;
+    if (!self.user) {
+        NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
+        self.navigationItem.rightBarButtonItems = buttonsItems;
+    } else {
+        self.navigationItem.rightBarButtonItems = nil;
+    }
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     NSError *error;
@@ -198,14 +199,6 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    return self.headerView;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 20.0;
-//}
 
 #pragma mark - UITableViewDelegate
 
@@ -486,37 +479,22 @@
 #pragma mark - Private methods
 
 - (void)reloadUI {
-    NSString *filesAndFolders;
     
-    if (!self.parentNode) {
-        self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    }
-    if ([[self.parentNode name] isEqualToString:@"CRYPTO_ERROR"]) {
-        [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
+    if (self.user) {
+        self.nodes = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+        [self.searchDisplayController.searchBar setFrame:CGRectMake(0, 0, 0, 0)];
     } else {
-        [self.navigationItem setTitle:[self.parentNode name]];
-    }
-    
-    self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-    
-    NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:self.parentNode];
-    NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:self.parentNode];
-    
-    if (files == 0 || files > 1) {
-        if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
-        } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+        if (!self.parentNode) {
+            self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         }
-    } else if (files == 1) {
-        if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
-        } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
+        if ([[self.parentNode name] isEqualToString:@"CRYPTO_ERROR"]) {
+            [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
+        } else {
+            [self.navigationItem setTitle:[self.parentNode name]];
         }
+        
+        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
     }
-    
-    self.filesFolderLabel.text = filesAndFolders;
     
     [self.tableView reloadData];
 }
@@ -621,6 +599,12 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiEAccess) {
+            if ([request type] == MEGARequestTypeCreateFolder || [request type] == MEGARequestTypeUpload) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+        }
         return;
     }
     
@@ -716,6 +700,16 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiEAccess) {
+            if ([transfer type] ==  MEGATransferTypeUpload) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+        }
+        return;
+    }
+    
     if ([transfer type] == MEGATransferTypeUpload) {
         NSError *e = nil;
         NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];

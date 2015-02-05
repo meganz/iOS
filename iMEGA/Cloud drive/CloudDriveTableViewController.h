@@ -26,5 +26,6 @@
 @interface CloudDriveTableViewController : UITableViewController <MWPhotoBrowserDelegate, MEGADelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) MEGANode *parentNode;
+@property (nonatomic, strong) MEGAUser *user;
 
 @end
