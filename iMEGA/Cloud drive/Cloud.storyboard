@@ -86,8 +86,6 @@
                     <connections>
                         <outlet property="addBarButtonItem" destination="ygf-3J-YTT" id="7Zl-24-bBR"/>
                         <outlet property="deleteBarButtonItem" destination="yUd-0E-SLT" id="vo9-6g-XHd"/>
-                        <outlet property="filesFolderLabel" destination="KVi-G8-NCh" id="W9x-hC-T3F"/>
-                        <outlet property="headerView" destination="t5L-mT-iSk" id="5ce-5g-B0o"/>
                         <outlet property="moveBarButtonItem" destination="paI-37-wBm" id="Sj3-a8-hXZ"/>
                         <outlet property="searchDisplayController" destination="qPQ-ZD-KvF" id="5tF-An-RrW"/>
                         <outlet property="shareBarButtonItem" destination="Rdk-Wp-1bg" id="FF2-5U-Aie"/>
@@ -137,27 +135,6 @@
                         <outlet property="searchResultsDelegate" destination="KWY-Kr-BLD" id="KGX-Qs-kRt"/>
                     </connections>
                 </searchDisplayController>
-                <view contentMode="scaleToFill" id="t5L-mT-iSk">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVi-G8-NCh">
-                            <rect key="frame" x="8" y="0.0" width="584" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="21" id="TcH-Tb-7ky"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="KVi-G8-NCh" firstAttribute="top" secondItem="t5L-mT-iSk" secondAttribute="top" id="6h1-cw-376"/>
-                        <constraint firstAttribute="trailing" secondItem="KVi-G8-NCh" secondAttribute="trailing" constant="8" id="cDD-lr-eeK"/>
-                        <constraint firstItem="KVi-G8-NCh" firstAttribute="leading" secondItem="t5L-mT-iSk" secondAttribute="leading" constant="8" id="t9s-Ei-pmn"/>
-                    </constraints>
-                </view>
             </objects>
             <point key="canvasLocation" x="952" y="-3932"/>
         </scene>

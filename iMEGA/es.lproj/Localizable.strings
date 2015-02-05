@@ -96,6 +96,9 @@
 "quotaExceeded"="Cuota de almacenamiento excedida";
 "fileImported"="Fichero importado";
 
+"permissionTitle"="Error de permisisos";
+"permissionMessage"="Compruebe sus permisos sobre esta carpeta";
+
 //UITABBARCONTROLLER (2) OFFLINE
 
 

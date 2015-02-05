@@ -96,6 +96,9 @@
 "quotaExceeded"="Storage quota exceeded";
 "fileImported"="File imported";
 
+"permissionTitle"="Permissions error";
+"permissionMessage"="Check your permissions on this folder";
+
 //UITABBARCONTROLLER (2) OFFLINE
 
 

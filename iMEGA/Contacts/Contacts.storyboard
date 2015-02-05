@@ -66,6 +66,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="rVh-YO-4Ut">
+                        <barButtonItem key="backBarButtonItem" title=" " id="kxp-Vd-pqr"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ky0-dP-xyu">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
