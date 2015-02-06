@@ -26,6 +26,7 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MoveCopyNodeViewController.h"
+#import "AppDelegate.h"
 
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
@@ -181,7 +182,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    [SVProgressHUD show];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -207,6 +208,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
             [self removeFromParentViewController];

@@ -1,5 +1,6 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "SSKeychain.h"
 
 @interface Helper ()
 
@@ -261,6 +262,31 @@
     :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
     
     return destinationFilePath;
+}
+
++ (void)logout {    
+    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *error = nil;
+    
+    NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    for (NSString *file in [fm contentsOfDirectoryAtPath:cacheDirectory error:&error]) {
+        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", cacheDirectory, file] error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+    }
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    for (NSString *file in [fm contentsOfDirectoryAtPath:documentDirectory error:&error]) {
+        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentDirectory, file] error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+    }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
+    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
 }
 
 @end
