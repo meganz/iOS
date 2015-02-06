@@ -1,6 +1,7 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
+#import "AppDelegate.h"
 
 @interface Helper ()
 
@@ -264,7 +265,8 @@
     return destinationFilePath;
 }
 
-+ (void)logout {    
++ (void)logout {
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
     [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *error = nil;
