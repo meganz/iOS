@@ -26,7 +26,6 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MoveCopyNodeViewController.h"
-#import "AppDelegate.h"
 
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
@@ -208,7 +207,6 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
             [self removeFromParentViewController];
