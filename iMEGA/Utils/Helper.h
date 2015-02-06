@@ -38,4 +38,6 @@
 
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
++ (void)logout;
+
 @end

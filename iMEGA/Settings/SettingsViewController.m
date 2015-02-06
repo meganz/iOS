@@ -83,31 +83,8 @@
     switch ([request type]) {
             
         case MEGARequestTypeLogout: {
-            [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
-            NSFileManager *fm = [NSFileManager defaultManager];
-            NSError *error = nil;
-            
-            NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            for (NSString *file in [fm contentsOfDirectoryAtPath:cacheDirectory error:&error]) {
-                BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", cacheDirectory, file] error:&error];
-                if (!success || error) {
-                    NSLog(@"remove file error %@", error);
-                }
-            }
-            NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            for (NSString *file in [fm contentsOfDirectoryAtPath:documentDirectory error:&error]) {
-                BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentDirectory, file] error:&error];
-                if (!success || error) {
-                    NSLog(@"remove file error %@", error);
-                }
-            }
-            
+            [Helper logout];
             [SVProgressHUD dismiss];
-            
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-            
             break;
         }
             

@@ -44,11 +44,15 @@
     [MEGASdkManager sharedMEGASdk];
     [MEGASdk setLogLevel:MEGALogLevelInfo];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    
     [self setupAppearance];
+    self.isLoginFromView = YES;
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
         UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"] delegate:self];
+        self.isLoginFromView = NO;
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         self.window.rootViewController = mainTBC;
     }     
@@ -176,7 +180,7 @@
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
         megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
         
-        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString delegate:self];
+        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
         return YES;
     }
     
@@ -224,7 +228,9 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeFetchNodes:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
+            if (!self.isLoginFromView) {
+                [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
+            }
             break;
             
         default:
@@ -234,6 +240,10 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiESid) {
+            [Helper logout];
+        }
+        
         if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
                                                             message:NSLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
@@ -248,7 +258,9 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+            if (!self.isLoginFromView) {
+                [[MEGASdkManager sharedMEGASdk] fetchNodes];
+            }
             break;
         }
             
