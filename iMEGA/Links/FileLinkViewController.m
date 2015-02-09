@@ -28,7 +28,7 @@
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "FileLinkViewController.h"
-#import "MoveCopyNodeViewController.h"
+#import "BrowserViewController.h"
 
 @interface FileLinkViewController () <MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -91,9 +91,9 @@
             UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
             
-            MoveCopyNodeViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
+            BrowserViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
             moveCopyNodeVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            moveCopyNodeVC.moveOrCopyNodes = [NSArray arrayWithObject:self.node];
+            moveCopyNodeVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
             
             [moveCopyNodeVC setIsPublicNode:YES];
         }

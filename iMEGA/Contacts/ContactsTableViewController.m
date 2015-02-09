@@ -23,6 +23,7 @@
 #import "ContactTableViewCell.h"
 #import "Helper.h"
 #import "CloudDriveTableViewController.h"
+#import "BrowserViewController.h"
 
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
@@ -43,6 +44,7 @@
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 
 @end
 
@@ -88,6 +90,7 @@
     if (!self.selectedUsersArray) {
         self.selectedUsersArray = [NSMutableArray new];
         [self.deleteBarButtonItem setEnabled:NO];
+        [self.shareFolderBarButtonItem setEnabled:NO];
     }
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -122,7 +125,6 @@
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:NSLocalizedString(@"addFromEmail", nil), NSLocalizedString(@"addFromContacts", nil), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
-    
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
@@ -133,6 +135,16 @@
     [removeAlertView show];
     removeAlertView.tag = 1;
     [removeAlertView show];
+}
+
+- (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
+    UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+    UINavigationController *mcnc = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    [self presentViewController:mcnc animated:YES completion:nil];
+    
+    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
+    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    [mcnvc setSelectedUsersArray:self.selectedUsersArray];
 }
 
 #pragma mark - UITableViewDataSource
@@ -189,6 +201,7 @@
     if (tableView.isEditing) {
         [self.selectedUsersArray addObject:user];
         [self.deleteBarButtonItem setEnabled:YES];
+        [self.shareFolderBarButtonItem setEnabled:YES];
         
         return;
     }
@@ -225,6 +238,7 @@
         
         if (self.selectedUsersArray.count == 0) {
             [self.deleteBarButtonItem setEnabled:NO];
+            [self.shareFolderBarButtonItem setEnabled:NO];
         }
         
         return;
@@ -238,6 +252,7 @@
     [self.selectedUsersArray addObject:user];
     
     [self.deleteBarButtonItem setEnabled:YES];
+    [self.shareFolderBarButtonItem setEnabled:YES];
     
     return (UITableViewCellEditingStyleDelete);
 }
