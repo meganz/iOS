@@ -27,7 +27,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
-#import "MoveCopyNodeViewController.h"
+#import "BrowserViewController.h"
 
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
@@ -534,9 +534,9 @@
     UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
-    MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
+    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.moveOrCopyNodes = [NSArray arrayWithArray:self.selectedNodesArray];
+    mcnvc.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {

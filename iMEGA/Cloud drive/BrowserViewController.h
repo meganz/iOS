@@ -23,10 +23,11 @@
 
 #import "MEGASdkManager.h"
 
-@interface MoveCopyNodeViewController : UIViewController <MEGADelegate>
+@interface BrowserViewController : UIViewController <MEGADelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) NSArray *moveOrCopyNodes;
+@property (nonatomic, strong) NSArray *selectedNodesArray;
+@property (nonatomic, strong) NSArray *selectedUsersArray;
 
 @property (nonatomic) BOOL isPublicNode;
 

@@ -23,7 +23,7 @@
 #import "SVProgressHUD.h"
 #import "Helper.h"
 
-#import "MoveCopyNodeViewController.h"
+#import "BrowserViewController.h"
 
 @interface DetailsNodeInfoViewController () {
     UIAlertView *renameAlertView;
@@ -130,9 +130,9 @@
     UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
-    MoveCopyNodeViewController *mcnvc = mcnc.viewControllers.firstObject;
+    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.moveOrCopyNodes = [NSArray arrayWithObject:self.node];
+    mcnvc.selectedNodesArray = [NSArray arrayWithObject:self.node];
     
 }
 

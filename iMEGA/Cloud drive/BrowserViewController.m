@@ -19,12 +19,12 @@
  * program.
  */
 
-#import "MoveCopyNodeViewController.h"
+#import "BrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 
-@interface MoveCopyNodeViewController () <UIAlertViewDelegate> {
+@interface BrowserViewController () <UIAlertViewDelegate> {
     UIAlertView *folderAlertView;
     NSUInteger remainingOperations;
 }
@@ -35,9 +35,11 @@
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
+@property (weak, nonatomic) IBOutlet UIButton *shareFolderButton;
+
 @end
 
-@implementation MoveCopyNodeViewController
+@implementation BrowserViewController
 
 #pragma mark - Lifecycle
 
@@ -97,23 +99,33 @@
         }
     }
     
+    if (self.selectedUsersArray) {
+        [self.toolbar setFrame:CGRectMake(0, 0, 0, 0)];
+        
+        [self.shareFolderButton setEnabled:YES];
+        [self.shareFolderButton setHidden:NO];
+        
+        NSString *sharedFolderString = [NSLocalizedString(@"select", nil) stringByAppendingString:[self.navigationItem title]];
+        [self.shareFolderButton setTitle:sharedFolderString forState:UIControlStateNormal];
+    }
+    
     [self.tableView reloadData];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.moveOrCopyNodes.count;
+    remainingOperations = self.selectedNodesArray.count;
     
-    for (MEGANode *n in self.moveOrCopyNodes) {
+    for (MEGANode *n in self.selectedNodesArray) {
         [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
     }
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.moveOrCopyNodes.count;
+    remainingOperations = self.selectedNodesArray.count;
     
-    for (MEGANode *n in self.moveOrCopyNodes) {
+    for (MEGANode *n in self.selectedNodesArray) {
         [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
     }
     
@@ -126,11 +138,48 @@
     [folderAlertView show];
     [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
         [folderAlertView dismissWithClickedButtonIndex:0 animated:NO];
-}];
+    }];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)selectSharedFolder:(UIButton *)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"readOnly", nil), NSLocalizedString(@"readAndWrite", nil), NSLocalizedString(@"fullAccess", nil), nil];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSInteger level;
+    switch (buttonIndex) {
+        case 0:
+            level = 0;
+            break;
+            
+        case 1:
+            level = 1;
+            break;
+            
+        case 2:
+            level = 2;
+            break;
+            
+        default:
+            return;
+    }
+    
+    remainingOperations = self.selectedUsersArray.count;
+    
+    for (MEGAUser *u in self.selectedUsersArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:u level:level];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -192,9 +241,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *newParent = [self.folderNodes objectAtIndex:indexPath.row];
     
-    MoveCopyNodeViewController *mcnvc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeID"];
+    BrowserViewController *mcnvc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeID"];
     [mcnvc setParentNode:newParent];
-    [mcnvc setMoveOrCopyNodes:self.moveOrCopyNodes];
+    [mcnvc setSelectedNodesArray:self.selectedNodesArray];
+    
+    if (self.selectedUsersArray) {
+        [mcnvc setSelectedUsersArray:self.selectedUsersArray];
+    }
     
     if(self.isPublicNode) {
         [mcnvc setIsPublicNode:YES];
@@ -219,7 +272,7 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.moveOrCopyNodes.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.moveOrCopyNodes.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -235,8 +288,18 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.moveOrCopyNodes.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesCopied", nil), self.moveOrCopyNodes.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+            break;
+            
+        case MEGARequestTypeShare:
+            remainingOperations--;
+            
+            if (remainingOperations == 0) {
+//                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
+                [SVProgressHUD showSuccessWithStatus:@"carpeta compartida"];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;

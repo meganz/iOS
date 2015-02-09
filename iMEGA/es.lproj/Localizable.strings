@@ -127,6 +127,12 @@
 "contactWithoutEmailTitle"="Sin email";
 "contactWithoutEmailMessage"="El contacto no tiene email";
 
+//Share folder
+"select" = "Seleccionar ";
+"readOnly" = "Lectura solo";
+"readAndWrite" = "Lectura y escritura";
+"fullAccess" = "Acceso completo";
+
 //Rename
 "renameNodeTitle" = "Cambiar nombre";
 "renameNodeMessage" = "Introduce otro nombre";

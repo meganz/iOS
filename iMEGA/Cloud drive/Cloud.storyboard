@@ -346,10 +346,10 @@
             </objects>
             <point key="canvasLocation" x="952" y="-3109"/>
         </scene>
-        <!--Move Copy Node View Controller-->
+        <!--Browser View Controller-->
         <scene sceneID="QN9-Nw-lfs">
             <objects>
-                <viewController storyboardIdentifier="moveNodeID" id="Z2F-Nr-ypX" customClass="MoveCopyNodeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="moveNodeID" id="Z2F-Nr-ypX" customClass="BrowserViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M5n-Ss-cZV"/>
                         <viewControllerLayoutGuide type="bottom" id="sx2-EY-zn3"/>
@@ -428,39 +428,55 @@
                                             <action selector="copyNode:" destination="Z2F-Nr-ypX" id="ceo-sa-1GJ"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ZMs-Yd-b6l"/>
-                                    <barButtonItem systemItem="add" id="Rgo-oZ-vnm">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="add:" destination="Z2F-Nr-ypX" id="eZ1-qk-SX8"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="SuB-Tg-9Xy"/>
-                                    <barButtonItem title="Cancel" id="eAY-hb-l2Q">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="cancel:" destination="Z2F-Nr-ypX" id="fg9-2M-mjr"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqH-A2-EvD">
+                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="6Dx-T7-U0D"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectSharedFolder:" destination="Z2F-Nr-ypX" eventType="touchUpInside" id="3R4-Nl-lFI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jqH-A2-EvD" secondAttribute="trailing" id="KPk-Or-WVl"/>
                             <constraint firstAttribute="trailing" secondItem="OqO-k1-16S" secondAttribute="trailing" id="Qdn-Na-HW8"/>
                             <constraint firstAttribute="trailing" secondItem="7Nx-88-DiR" secondAttribute="trailing" id="RIB-1o-p36"/>
                             <constraint firstItem="sx2-EY-zn3" firstAttribute="top" secondItem="OqO-k1-16S" secondAttribute="bottom" id="X8p-gv-4B8"/>
                             <constraint firstItem="OqO-k1-16S" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="aYl-AP-MlV"/>
                             <constraint firstItem="7Nx-88-DiR" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="eW6-Ip-nYg"/>
+                            <constraint firstItem="sx2-EY-zn3" firstAttribute="top" secondItem="jqH-A2-EvD" secondAttribute="bottom" id="ind-KN-yxQ"/>
                             <constraint firstItem="7Nx-88-DiR" firstAttribute="top" secondItem="M5n-Ss-cZV" secondAttribute="bottom" id="nG8-6B-N8B"/>
                             <constraint firstItem="OqO-k1-16S" firstAttribute="top" secondItem="7Nx-88-DiR" secondAttribute="bottom" id="uPm-eZ-y3E"/>
+                            <constraint firstItem="jqH-A2-EvD" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="zUL-KE-MYQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dJb-Gj-wJR">
                         <barButtonItem key="backBarButtonItem" title=" " id="S50-6X-Rph"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="eAY-hb-l2Q">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancel:" destination="Z2F-Nr-ypX" id="fg9-2M-mjr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rgo-oZ-vnm">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="add:" destination="Z2F-Nr-ypX" id="eZ1-qk-SX8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="shareFolderButton" destination="jqH-A2-EvD" id="Yhv-Gr-2Kk"/>
                         <outlet property="tableView" destination="7Nx-88-DiR" id="71N-lJ-L7M"/>
                         <outlet property="toolbar" destination="OqO-k1-16S" id="13A-dN-ZA4"/>
                     </connections>
