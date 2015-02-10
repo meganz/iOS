@@ -162,3 +162,9 @@
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Logout...";
+
+//Dialog logout from another location
+"loggetOutTitle" = "Logged out";
+"loggedOutFromAnotherLocation" = "You have been logged out on this device from another location";
+
+

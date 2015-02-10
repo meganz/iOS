@@ -241,6 +241,8 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiESid) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"loggetOutTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alertView show];
             [Helper logout];
         }
         
