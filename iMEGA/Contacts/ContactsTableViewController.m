@@ -34,6 +34,9 @@
     UIAlertView *removeAlertView;
     
     NSUInteger remainingOperations;
+    
+    BOOL allUsersSelected;
+    BOOL isSwipeEditing;
 }
 
 @property (nonatomic, strong) MEGAUserList *users;
@@ -41,6 +44,7 @@
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
@@ -81,10 +85,15 @@
     
     if (editing) {
         [self.addBarButtonItem setEnabled:NO];
-        [self.navigationItem.leftBarButtonItems.firstObject setEnabled:NO];
+        if (!isSwipeEditing) {
+            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        }
     } else {
+        allUsersSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
+        self.navigationItem.leftBarButtonItems = @[];
     }
     
     if (!self.selectedUsersArray) {
@@ -99,6 +108,7 @@
         self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
     }];
     
+    isSwipeEditing = NO;
 }
 
 #pragma mark - Private
@@ -117,6 +127,37 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)selectAllAction:(UIBarButtonItem *)sender {
+    [self.selectedUsersArray removeAllObjects];
+    
+    if (!allUsersSelected) {
+        MEGAUser *u = nil;
+        
+        for (NSInteger i = 0; i < [self.visibleUsersArray count]; i++) {
+            u = [self.visibleUsersArray objectAtIndex:i];
+            [self.selectedUsersArray addObject:u];
+        }
+        
+        allUsersSelected = YES;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+    } else {
+        allUsersSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+    }
+    
+    if (self.selectedUsersArray.count == 0) {
+        [self.deleteBarButtonItem setEnabled:NO];
+        [self.shareFolderBarButtonItem setEnabled:NO];
+        
+    } else {
+        [self.deleteBarButtonItem setEnabled:YES];
+        [self.shareFolderBarButtonItem setEnabled:YES];
+    }
+    
+    [self.tableView reloadData];
+    
+}
 
 - (IBAction)addContact:(UIBarButtonItem *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -145,6 +186,8 @@
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     [mcnvc setSelectedUsersArray:self.selectedUsersArray];
+    
+    [self setEditing:NO animated:NO];
 }
 
 #pragma mark - UITableViewDataSource
@@ -186,6 +229,15 @@
         cell.shareLabel.text = [NSString stringWithFormat:NSLocalizedString(@"foldersShare", @" folders shared"), numFilesShares];
     }
     
+    if (self.isEditing) {
+        // Check if selectedNodesArray contains the current node in the tableView
+        for (MEGAUser *u in self.selectedUsersArray) {
+            if ([[u email] isEqualToString:[user email]]) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+    }
+    
     return cell;
 }
 
@@ -202,6 +254,14 @@
         [self.selectedUsersArray addObject:user];
         [self.deleteBarButtonItem setEnabled:YES];
         [self.shareFolderBarButtonItem setEnabled:YES];
+        
+        if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
+            allUsersSelected = YES;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+        } else {
+            allUsersSelected = NO;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+        }
         
         return;
     }
@@ -241,6 +301,9 @@
             [self.shareFolderBarButtonItem setEnabled:NO];
         }
         
+        allUsersSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+        
         return;
     }
 }
@@ -253,6 +316,8 @@
     
     [self.deleteBarButtonItem setEnabled:YES];
     [self.shareFolderBarButtonItem setEnabled:YES];
+    
+    isSwipeEditing = YES;
     
     return (UITableViewCellEditingStyleDelete);
 }
@@ -302,7 +367,7 @@
     if (email) {
         [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:@"Sin email" message:@"Este contacto no tiene email" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
         [noEmailAlertView show];
     }

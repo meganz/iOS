@@ -32,6 +32,7 @@
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
+    UIAlertView *renameAlertView;
     
     NSInteger indexNodeSelected;
     NSUInteger remainingOperations;
@@ -39,13 +40,19 @@
     NSMutableArray *exportLinks;
     
     NSMutableArray *matchSearchNodes;
+    
+    BOOL allNodesSelected;
+    BOOL isSwipeEditing;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *renameBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
@@ -193,6 +200,15 @@
     
     cell.nodeHandle = [node handle];
     
+    if (self.isEditing) {
+        // Check if selectedNodesArray contains the current node in the tableView
+        for (MEGANode *n in self.selectedNodesArray) {
+            if ([n handle] == [node handle]) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+    }
+    
     return cell;
 }
 
@@ -214,9 +230,24 @@
     if (tableView.isEditing) {
         [self.selectedNodesArray addObject:node];
         
+        [self.downloadBarButtonItem setEnabled:YES];
         [self.shareBarButtonItem setEnabled:YES];
         [self.moveBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
+        
+        if (self.selectedNodesArray.count == 1) {
+            [self.renameBarButtonItem setEnabled:YES];
+        } else {
+            [self.renameBarButtonItem setEnabled:NO];
+        }
+        
+        if (self.selectedNodesArray.count == self.nodes.size.integerValue) {
+            allNodesSelected = YES;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+        } else {
+            allNodesSelected = NO;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+        }
         
         return;
     }
@@ -305,10 +336,17 @@
         }
         
         if (self.selectedNodesArray.count == 0) {
+            [self.downloadBarButtonItem setEnabled:NO];
             [self.shareBarButtonItem setEnabled:NO];
             [self.moveBarButtonItem setEnabled:NO];
+            [self.renameBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
+        } else if (self.selectedNodesArray.count == 1) {
+            [self.renameBarButtonItem setEnabled:YES];
         }
+        
+        allNodesSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         
         return;
     }
@@ -335,9 +373,14 @@
     self.selectedNodesArray = [NSMutableArray new];
     [self.selectedNodesArray addObject:n];
     
+    [self.downloadBarButtonItem setEnabled:YES];
     [self.shareBarButtonItem setEnabled:YES];
     [self.moveBarButtonItem setEnabled:YES];
+    [self.renameBarButtonItem setEnabled:YES];
     [self.deleteBarButtonItem setEnabled:YES];
+    
+    isSwipeEditing = YES;
+    
     return (UITableViewCellEditingStyleDelete);
 }
 
@@ -372,16 +415,24 @@
     
     if (editing) {
         [self.addBarButtonItem setEnabled:NO];
-        [self.navigationItem.leftBarButtonItems.firstObject setEnabled:NO];
+        if (!isSwipeEditing) {
+            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        }
     } else {
+        allNodesSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         self.selectedNodesArray = nil;
         [self.addBarButtonItem setEnabled:YES];
+        self.navigationItem.leftBarButtonItems = @[];
     }
     
     if (!self.selectedNodesArray) {
         self.selectedNodesArray = [NSMutableArray new];
+        
+        [self.downloadBarButtonItem setEnabled:NO];
         [self.shareBarButtonItem setEnabled:NO];
         [self.moveBarButtonItem setEnabled:NO];
+        [self.renameBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     }
     
@@ -391,6 +442,7 @@
         self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
     }];
     
+    isSwipeEditing = NO;
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -424,6 +476,18 @@
 #pragma mark - UIAlertDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 0){
+        if (buttonIndex == 1) {
+            if ([[[[self.selectedNodesArray objectAtIndex:0] name] pathExtension] isEqualToString:@""]) {
+                [[MEGASdkManager sharedMEGASdk] renameNode:[self.selectedNodesArray objectAtIndex:0] newName:[alertView textFieldAtIndex:0].text];
+            } else {
+                NSString *newName = [[alertView textFieldAtIndex:0].text stringByAppendingFormat:@".%@", [[[self.selectedNodesArray objectAtIndex:0] name] pathExtension]];
+                self.title = newName;
+                [[MEGASdkManager sharedMEGASdk] renameNode:[self.selectedNodesArray objectAtIndex:0] newName:newName];
+            }
+        }
+    }
+    
     if (alertView.tag == 1) {
         if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
@@ -512,6 +576,48 @@
 
 #pragma mark - IBActions
 
+- (IBAction)selectAllAction:(UIBarButtonItem *)sender {
+    [self.selectedNodesArray removeAllObjects];
+    
+    if (!allNodesSelected) {
+        MEGANode *n = nil;
+        NSInteger nodeListSize = [[self.nodes size] integerValue];
+        
+        for (NSInteger i = 0; i < nodeListSize; i++) {
+            n = [self.nodes nodeAtIndex:i];
+            [self.selectedNodesArray addObject:n];
+        }
+        
+        allNodesSelected = YES;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+    } else {
+        allNodesSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+    }
+    
+    if (self.selectedNodesArray.count == 0) {
+        [self.downloadBarButtonItem setEnabled:NO];
+        [self.shareBarButtonItem setEnabled:NO];
+        [self.moveBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+        [self.renameBarButtonItem setEnabled:NO];
+        
+    } else if (self.selectedNodesArray.count >= 1 ) {
+        [self.downloadBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:YES];
+        [self.moveBarButtonItem setEnabled:YES];
+        [self.deleteBarButtonItem setEnabled:YES];
+        
+        if (self.selectedNodesArray.count == 1) {
+            [self.renameBarButtonItem setEnabled:YES];
+        } else {
+            [self.renameBarButtonItem setEnabled:NO];
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
 - (IBAction)optionAdd:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
@@ -519,6 +625,19 @@
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"uploadPhoto", @"Upload photo"), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
+}
+
+- (IBAction)downloadAction:(UIBarButtonItem *)sender {
+    for (MEGANode *n in self.selectedNodesArray) {
+        NSString *filePath = [Helper pathForOffline];
+        NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
+        if (!fileExists) {
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:n localPath:filePath];
+        } else {
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+        }
+    }
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
@@ -546,6 +665,14 @@
     [removeAlertView show];
     removeAlertView.tag = 2;
     [removeAlertView show];
+}
+
+- (IBAction)renameAction:(UIBarButtonItem *)sender {
+    renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
+    [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [renameAlertView textFieldAtIndex:0].text = [[[[self.selectedNodesArray objectAtIndex:0] name] lastPathComponent] stringByDeletingPathExtension];
+    renameAlertView.tag = 0;
+    [renameAlertView show];
 }
 
 #pragma mark - Content Filtering
