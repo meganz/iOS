@@ -162,3 +162,7 @@
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Cerrando sesión...";
+
+//Dialog logout from another location
+"loggetOutTitle" = "Sessión cerrada";
+"loggedOutFromAnotherLocation" = "Has sido deslogueado de este dispositivo desde otra localización";
