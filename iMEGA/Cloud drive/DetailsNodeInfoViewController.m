@@ -42,6 +42,8 @@
 
 @implementation DetailsNodeInfoViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
@@ -140,7 +142,7 @@
     renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [renameAlertView textFieldAtIndex:0].text = [[[self.node name] lastPathComponent] stringByDeletingPathExtension];
-    removeAlertView.tag = 0;
+    renameAlertView.tag = 0;
     [renameAlertView show];
 }
 
@@ -151,7 +153,7 @@
     [removeAlertView show];
 }
 
-#pragma mark - Alert delegate
+#pragma mark - UIAlertDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0){
@@ -243,6 +245,7 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     self.node = [nodeList nodeAtIndex:0];
+    [self reloadUI];
 }
 
 #pragma mark - MEGATransferDelegate

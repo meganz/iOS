@@ -77,11 +77,17 @@
                     <connections>
                         <outlet property="addBarButtonItem" destination="Ky0-dP-xyu" id="Z1h-bw-Abl"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="2ce-SJ-qvQ"/>
+                        <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="rYo-Wq-hHn"/>
                         <outlet property="shareFolderBarButtonItem" destination="aEk-h4-ILY" id="d5V-Eo-foW"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="eMJ-oc-LIo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wLM-4l-MPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="selectAll" id="Llm-yt-C3F" userLabel="Select All Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="U9c-Mo-B5q" id="HkK-XU-hto"/>
+                    </connections>
+                </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="jvh-Sx-iEq">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -132,6 +138,7 @@
     </scenes>
     <resources>
         <image name="contactsIcon" width="64" height="49"/>
+        <image name="selectAll" width="29" height="29"/>
         <image name="tabBarDelete" width="30" height="30"/>
     </resources>
 </document>

@@ -27,7 +27,7 @@
 #import "ConfirmAccountViewController.h"
 #import "FileLinkViewController.h"
 
-#define kUserAgent @"iOS3"
+#define kUserAgent @"MEGAiOS/2.9.1.1"
 #define kAppKey @"EVtjzb7R"
 
 @interface AppDelegate ()
