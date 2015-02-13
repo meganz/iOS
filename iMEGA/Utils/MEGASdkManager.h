@@ -8,5 +8,6 @@
 + (void)setAppKey:(NSString *)appKey;
 + (void)setUserAgent:(NSString *)userAgent;
 + (MEGASdk *)sharedMEGASdk;
++ (MEGASdk *)sharedMEGASdkFolder;
 
 @end

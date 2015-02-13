@@ -28,6 +28,10 @@
 
 + (UIImage *)imageForNode:(MEGANode *)node;
 
++ (UIImage *)genericImage;
++ (UIImage *)folderImage;
++ (UIImage *)folderSharedImage;
+
 + (NSString *)pathForOfflineDirectory:(NSString *)directory;
 
 + (NSString *)pathForOffline;
@@ -37,6 +41,8 @@
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path;
 
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
+
++ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode;
 
 + (void)logout;
 

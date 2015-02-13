@@ -5,6 +5,7 @@
 static NSString *_appKey = nil;
 static NSString *_userAgent = nil;
 static MEGASdk *_megaSDK = nil;
+static MEGASdk *_megaSDKFolder = nil;
 
 + (void)setAppKey:(NSString *)appKey {
     _appKey = appKey;
@@ -23,6 +24,17 @@ static MEGASdk *_megaSDK = nil;
         _megaSDK = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
     });
     return _megaSDK;
+}
+
++ (MEGASdk *)sharedMEGASdkFolder {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSAssert(_appKey != nil, @"setAppKey: should be called first");
+        NSAssert(_userAgent != nil, @"setUserAgent: should be called first");
+        NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
+    });
+    return _megaSDKFolder;
 }
 
 @end

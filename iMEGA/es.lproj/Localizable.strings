@@ -9,13 +9,13 @@
 "invalidLink" = "Enlace incorrecto a MEGA";
 
 "fileEncrypted" = "Fichero encriptado";
-"fileEncryptedMessage" = "Esta función no esta disponible. De momento no se puede importar o descargar un fichero encriptado.";
+"fileEncryptedMessage" = "De momento no se puede importar o descargar un fichero encriptado.";
 
 "folderLink" = "Enlace a carpeta";
 "folderLinkMessage" = "De momento los enlaces a carpeta no están soportados.";
 
 "folderEncrypted" = "Enlace a carpeta encriptada";
-"folderEncryptedMessage" = "Esta función no esta disponible. De momento no se puede importar o descargar una carpeta encriptada.";
+"folderEncryptedMessage" = "De momento no se puede importar o descargar una carpeta encriptada.";
 
 //TourViewController
 
@@ -53,8 +53,9 @@
 "passwordWrong" = "Contraseña incorrecta";
 
 //TermsOfServiceViewController
-"errorLoadingTermsWeb" = "La carga de los Términos del Servicio de MEGA ha fallado.";
+"errorLoadingTermsWeb" = "La carga de la web los Términos del Servicio de MEGA ha fallado.";
 
+//LINKS
 //FileLinkViewController
 "importButton" = "Importar a tu disco en la nube";
 "downloadButton" = "Descargar a tu aplicación de MEGA";
@@ -63,11 +64,24 @@
 "fileTooBigMessage" = "El fichero que estás intentado descargar es más grande que el espacio disponible.";
 
 "importAction" = "Importar fichero";
-"importActionMessage" = "Esta función no esta disponible. De momento no se puede importar un fichero.";
+"importActionMessage" = "De momento no se puede importar un fichero.";
 
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "El fichero que estas intentando descargar ya existe en Offline";
 "downloadStarted" = "Descarga iniciada";
+
+//FolderLinkViewController
+"MEGA Folder"="MEGA carpeta";
+"emptyFolder"="Carpeta vacía";
+
+"importFolderAction"="Importar carpeta";
+"importFolderActionMessage"="De momento no se puede importar una carpeta.";
+
+"folderTooBig"="Necesitas más espacio";
+"folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
+
+"folderCreationError"="Error al crear la carpeta";
+"folderAlreadyExist"="La carpeta que estas intentado descargar ya existe en Offline";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud";
@@ -100,7 +114,8 @@
 "permissionMessage"="Compruebe sus permisos sobre esta carpeta";
 
 //UITABBARCONTROLLER (2) OFFLINE
-
+"offline"="Offline";
+"itemDeletingError"="Error al eliminar";
 
 //UITABBARCONTROLLER (3) CONTACTS
 "noFoldersShare" = "Ningún fichero compartido";

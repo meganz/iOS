@@ -55,6 +55,7 @@
 //TermsOfServiceViewController
 "errorLoadingTermsWeb" = "The MEGA Terms of Service web fail at loading.";
 
+//LINKS
 //FileLinkViewController
 "importButton" = "Import to your Cloud Drive";
 "downloadButton" = "Download to your MEGA App";
@@ -63,11 +64,24 @@
 "fileTooBigMessage" = "The file you are trying to download is bigger than the available memory.";
 
 "importAction" = "Import file";
-"importActionMessage" = "This function is not available. For the moment you can't import a file.";
+"importActionMessage" = "For the moment you can't import a file.";
 
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "The file you want to download already exists on Offline";
 "downloadStarted" = "Download started";
+
+//FolderLinkViewController
+"MEGA Folder"="MEGA Folder";
+"emptyFolder"="Empty Folder";
+
+"importFolderAction"="Import folder";
+"importFolderActionMessage"="For the moment you can't import a folder.";
+
+"folderTooBig"="You need more free space";
+"folderTooBigMessage"="The file you are trying to download is bigger than the avaliable memory.";
+
+"folderCreationError"="The folder can't be created";
+"folderAlreadyExist"="The folder you want to download already exists on Offline";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";
@@ -100,7 +114,8 @@
 "permissionMessage"="Check your permissions on this folder";
 
 //UITABBARCONTROLLER (2) OFFLINE
-
+"offline"="Offline";
+"itemDeletingError"="Error at deleting";
 
 //UITABBARCONTROLLER (3) CONTACTS
 "noFoldersShare" = "No files shared";
