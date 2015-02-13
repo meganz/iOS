@@ -2,10 +2,15 @@
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
 #import "AppDelegate.h"
+#import "SVProgressHUD.h"
 
 @interface Helper ()
 
 + (NSDictionary *)fileTypesDictionary;
+
++ (UIImage *)genericImage;
++ (UIImage *)folderImage;
++ (UIImage *)folderSharedImage;
 
 @end
 
@@ -199,6 +204,33 @@
     return fileTypeIconString;
 }
 
++ (UIImage *)genericImage {
+    static UIImage *genericImage = nil;
+    
+    if (genericImage == nil) {
+        genericImage = [UIImage imageNamed:@"generic"];
+    }
+    return genericImage;
+}
+
++ (UIImage *)folderImage {
+    static UIImage *folderImage = nil;
+    
+    if (folderImage == nil) {
+        folderImage = [UIImage imageNamed:@"folder"];
+    }
+    return folderImage;
+}
+
++ (UIImage *)folderSharedImage {
+    static UIImage *folderSharedImage = nil;
+    
+    if (folderSharedImage == nil) {
+        folderSharedImage = [UIImage imageNamed:@"folder_shared"];
+    }
+    return folderSharedImage;
+}
+
 + (UIImage *)imageForNode:(MEGANode *)node {
     
     MEGANodeType nodeType = [node type];
@@ -206,13 +238,13 @@
     switch (nodeType) {
         case MEGANodeTypeFolder: {
             if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node])
-                return [UIImage imageNamed:@"folder_shared"];
+                return [self folderSharedImage];
             else
-                return [UIImage imageNamed:@"folder"];
+                return [self folderImage];
             }
             
         case MEGANodeTypeRubbish:
-            return [UIImage imageNamed:@"folder"];
+            return [self folderImage];
             
         case MEGANodeTypeFile: {
             NSString *im = [self.fileTypesDictionary valueForKey:[node name].pathExtension.lowercaseString];
@@ -222,7 +254,7 @@
         }
             
         default:
-            return [UIImage imageNamed:@"generic"];
+            return [self genericImage];
     }
     
 }
@@ -263,6 +295,42 @@
     :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
     
     return destinationFilePath;
+}
+
++ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode {
+    
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    NSUInteger nodeListSize = [nodeList.size integerValue];
+    
+    MEGANode *node = nil;
+    
+    for (NSUInteger i = 0; i < nodeListSize; i++) {
+        node = [nodeList nodeAtIndex:i];
+        
+        if ([node type] == MEGANodeTypeFile) {
+            NSString *fileName = [[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[node name]];
+            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[folderPath stringByAppendingString:fileName]];
+            if (!fileExists) {
+                [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:node localPath:folderPath delegate:self];
+            }
+            
+        } else if ([node type] == MEGANodeTypeFolder){
+            NSString *childFolderName = [[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[node name]];
+            childFolderName = [childFolderName stringByAppendingString:@"/"];
+            NSString *childFolderPath = [folderPath stringByAppendingString:childFolderName];
+            BOOL folderExists = [[NSFileManager defaultManager] fileExistsAtPath:childFolderPath];
+            if (!folderExists) {
+                NSError *error;
+                [[NSFileManager defaultManager] createDirectoryAtPath:childFolderPath withIntermediateDirectories:YES attributes:nil error:&error];
+                if (error != nil) {
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderCreationError", @"The folder can't be created")];
+                    NSLog(@"FolderLinkVC > downloadNodesOnFolder: %@", error);
+                } else {
+                    [self downloadNodesOnFolder:childFolderPath parentNode:node];
+                }
+            }
+        }
+    }
 }
 
 + (void)logout {

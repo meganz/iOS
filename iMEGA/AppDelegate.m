@@ -26,6 +26,7 @@
 #include "MainTabBarController.h"
 #import "ConfirmAccountViewController.h"
 #import "FileLinkViewController.h"
+#import "FolderLinkViewController.h"
 
 #define kUserAgent @"MEGAiOS/2.9.1.1"
 #define kAppKey @"EVtjzb7R"
@@ -108,8 +109,7 @@
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:2]; // mega://"#!"
     BOOL isFileLink = [megaURLTypeString isEqualToString:@"#!"];
     if (isFileLink) {
-
-        NSString *fileLinkCodeString = [afterSlashesString substringFromIndex:2]; // mega://#!"xxxxxxxx..."
+        NSString *fileLinkCodeString = [afterSlashesString substringFromIndex:2]; // mega://#!"xxxxxxxx..."!
         
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
@@ -120,7 +120,6 @@
                                                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                                       otherButtonTitles:nil];
             [alertView show];
-            
             [self checkingRootViewController];
             
         } else {
@@ -139,39 +138,32 @@
     megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
     BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
     if (isFolderLink) {
+        NSString *folderLinkCodeString = [afterSlashesString substringFromIndex:3]; // mega://#F!"xxxxxxxx..."!
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderLink", @"Folder link")
-                                                            message:NSLocalizedString(@"folderLinkMessage", @"For the moment folder links are not supported.")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
+        BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
+        if (isEncryptedFolderLink) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
+                                                                message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            [self checkingRootViewController];
         
-        [self checkingRootViewController];
+        } else {            
+            UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+            
+            FolderLinkViewController *folderlinkVC = navigationController.viewControllers.firstObject;;
+            
+            NSString *megaFolderLinkString = [megaURLString stringByAppendingString:afterSlashesString];
+            [folderlinkVC setIsFolderRootNode:YES];
+            [folderlinkVC setFolderLinkString:megaFolderLinkString];
+            
+            [self.window setRootViewController:navigationController];
+        }
         
         return YES;
-        
-//TODO: manage MEGA folder links.
-//        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-//            NSString *folderLinkCodeString = [afterSlashesString substringFromIndex:3]; // mega://#F!"xxxxxxxx..."
-//            
-//            NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
-//            BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
-//            if (isEncryptedFolderLink) {
-//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
-//                                                                    message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
-//                                                                   delegate:self
-//                                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                                          otherButtonTitles:nil];
-//                [alertView show];
-//                return YES;
-//            }
-//            
-//        } else {
-//            //FolderLinkViewController
-//        }
-//        
-//        return YES;
     }
     
     megaURLTypeString = [afterSlashesString substringToIndex:7]; // mega://"confirm"

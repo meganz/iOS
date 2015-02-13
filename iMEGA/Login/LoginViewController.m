@@ -39,6 +39,8 @@
 
 @implementation LoginViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -118,32 +120,49 @@
 }
 
 - (void)checkLoginOption {
+    
     switch (self.loginOption) {
         case 1: { //IMPORT
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-            UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
-            moveCopyNodeVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            moveCopyNodeVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-            
-            [moveCopyNodeVC setIsPublicNode:YES];
+            if ([self.node type] == MEGANodeTypeFile) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+                UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                
+                [browserVC setIsPublicNode:YES];
+            }
             
             break;
         }
             
         case 2: { //DOWNLOAD
+            if (![self checkFreeSize]) {
+                return;
+            }
+            
             if ([self.node type] == MEGANodeTypeFile) {
                 NSString *filePath = [Helper pathForOffline];
-                NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
-                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
-                if (!fileExists) {
-                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath delegate:self];
+                
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath delegate:self];
+            }
+            
+            if ([self.node type] == MEGANodeTypeFolder) {
+                NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[self.node name]] stringByAppendingString:@"/"];
+                NSString *offlinePath = [Helper pathForOffline];
+                NSString *folderPath = [offlinePath stringByAppendingString:folderName];
+                
+                NSError *error;
+                [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
+                if (error != nil) {
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderCreationError", @"The folder can't be created")];
+                    NSLog(@"LoginVC > checkLoginOption: %@", error);
                 } else {
-                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+                    [Helper downloadNodesOnFolder:folderPath parentNode:self.node];
                 }
-            }            
+            }
             break;
         }
             
@@ -151,6 +170,39 @@
             break;
     }
 }
+
+- (BOOL)checkFreeSize {
+    NSNumber *nodeSizeNumber;
+    if ([self.node type] == MEGANodeTypeFile) {
+        nodeSizeNumber = [self.node size];
+    }
+    if ([self.node type] == MEGANodeTypeFolder) {
+        nodeSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:self.node];
+    }
+    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
+    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+        UIAlertView *alertView;
+        if ([self.node type] == MEGANodeTypeFile) {
+            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
+                                                   message:NSLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
+                                                  delegate:self
+                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         otherButtonTitles:nil];
+        }
+        if ([self.node type] == MEGANodeTypeFolder) {
+            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderTooBig", @"You need more free space")
+                                                   message:NSLocalizedString(@"folderTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
+                                                  delegate:self
+                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         otherButtonTitles:nil];
+        }
+        
+        [alertView show];
+        return NO;
+    }
+    return YES;
+}
+
 
 #pragma mark - Dismiss keyboard
 
