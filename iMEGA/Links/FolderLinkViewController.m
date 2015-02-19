@@ -31,6 +31,7 @@
 #import "MEGAPreview.h"
 #import "DetailsNodeInfoViewController.h"
 #import "EmptyView.h"
+#import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -77,6 +78,8 @@
     [self.navigationController.view setBackgroundColor:megaLightGray];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
+    [self.navigationItem setTitle:NSLocalizedString(@"MEGA Folder", nil)];
+    
     [self.importBarButtonItem setEnabled:NO];
     [self.downloadBarButtonItem setEnabled:NO];
     
@@ -95,6 +98,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
@@ -102,9 +107,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
-    
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
 }
 
@@ -115,7 +120,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    NSString *titleString = NSLocalizedString(@"MEGA Folder", @"MEGA Folder");
+    NSString *titleString = NSLocalizedString(@"megaFolder", @"MEGA Folder");
     if ([self.parentNode name] != nil) {
         if (self.isFolderRootNode) {
             titleString = [titleString stringByAppendingString:@"/"];
@@ -124,7 +129,6 @@
             titleString = [self.parentNode name];
         }
     }
-    
     [self.navigationItem setTitle:titleString];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
@@ -137,16 +141,33 @@
 }
 
 - (void)showEmptyFolderView {
-    
-    [self.searchDisplayController.searchBar setHidden:YES];
+    [self disableUIItems];
     
     EmptyView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView"  owner:self options: nil] firstObject];
     [emptyView.emptyImageView setImage:[UIImage imageNamed:@"emptyFolder"]];
     [emptyView.emptyLabel setText:NSLocalizedString(@"emptyFolder", @"Empty Folder")];
     
+    [self.tableView setBackgroundView:emptyView];
+}
+
+- (void)showUnavailableLinkView {
+    [self disableUIItems];
+    
+    UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
+    [unavailableLinkView.titleLabel setText:NSLocalizedString(@"folderLinkUnavailableTitle", @"")];
+    [unavailableLinkView.textView setText:NSLocalizedString(@"folderLinkUnavailableText", nil)];
+    [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
+    [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
+    
+    [self.tableView setBackgroundView:unavailableLinkView];
+}
+
+- (void)disableUIItems {
+    [self.searchDisplayController.searchBar setHidden:YES];
+    
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
-    [self.tableView setBackgroundView:emptyView];
     
     [self.importBarButtonItem setEnabled:NO];
     [self.downloadBarButtonItem setEnabled:NO];
@@ -238,7 +259,7 @@
 - (IBAction)importFolderTouchUpInside:(UIBarButtonItem *)sender {
     //TODO: Import folder
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"importFolderAction", @"Import folder")
-                                                        message:NSLocalizedString(@"importFolderActionMessage", @"This function is not available. For the moment you can't import a folder.")
+                                                        message:NSLocalizedString(@"importFolderActionMessage", @"For the moment you can't import a folder.")
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                               otherButtonTitles:nil];
@@ -366,9 +387,10 @@
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
                         if (isImage([n name].lowercaseString.pathExtension)) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
-                            [self.cloudImages addObject:photo];
+                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            megaPreview.isFromFolderLink = YES;
+                            megaPreview.caption = [n name];
+                            [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
                             }
@@ -380,9 +402,10 @@
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
                         
                         if (isImage([n name].lowercaseString.pathExtension)) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
-                            [self.cloudImages addObject:photo];
+                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            megaPreview.isFromFolderLink = YES;
+                            megaPreview.caption = [n name];
+                            [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
                             }
@@ -390,24 +413,24 @@
                     }
                 }
                 
-                MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
                 
-                browser.displayActionButton = YES;
-                browser.displayNavArrows = YES;
-                browser.displaySelectionButtons = NO;
-                browser.zoomPhotosToFill = YES;
-                browser.alwaysShowControls = NO;
-                browser.enableGrid = YES;
-                browser.startOnGrid = NO;
+                photoBrowser.displayActionButton = YES;
+                photoBrowser.displayNavArrows = YES;
+                photoBrowser.displaySelectionButtons = NO;
+                photoBrowser.zoomPhotosToFill = YES;
+                photoBrowser.alwaysShowControls = NO;
+                photoBrowser.enableGrid = YES;
+                photoBrowser.startOnGrid = NO;
                 
                 // Optionally set the current visible photo before displaying
                 //    [browser setCurrentPhotoIndex:1];
                 
-                [self.navigationController pushViewController:browser animated:YES];
+                [self.navigationController pushViewController:photoBrowser animated:YES];
                 
-                [browser showNextPhotoAnimated:YES];
-                [browser showPreviousPhotoAnimated:YES];
-                [browser setCurrentPhotoIndex:offsetIndex];
+                [photoBrowser showNextPhotoAnimated:YES];
+                [photoBrowser showPreviousPhotoAnimated:YES];
+                [photoBrowser setCurrentPhotoIndex:offsetIndex];
             }
             break;
         }
@@ -503,35 +526,18 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
-    switch ([error type]) {
-        case MEGAErrorTypeApiEArgs:
-            if ([request type] == MEGARequestTypeLogin) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                                    message:NSLocalizedString(@"invalidFolderLink", @"Folder link invalid")
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                                          otherButtonTitles:nil];
-                [alertView show];
-                
-                if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-                    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    
-                    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-                } else {
-                    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-                    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-                }
+    if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiEAccess) {
+            if ([request type] == MEGARequestTypeFetchNodes) {
+                [self showUnavailableLinkView];
+                [SVProgressHUD dismiss];
             }
-            break;
-            
-        case MEGAErrorTypeApiEOverQuota:
+        }
+        
+        if ([error type] == MEGAErrorTypeApiEOverQuota) {
             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
-            break;
-            
-        default:
-            break;
+        }
+        return;
     }
     
     switch ([request type]) {
@@ -570,6 +576,7 @@
                     }
                 }
             }
+            break;
         }
             
         default:
