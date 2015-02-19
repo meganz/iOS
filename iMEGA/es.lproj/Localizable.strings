@@ -11,14 +11,13 @@
 "fileEncrypted" = "Fichero encriptado";
 "fileEncryptedMessage" = "De momento no se puede importar o descargar un fichero encriptado.";
 
-"folderLink" = "Enlace a carpeta";
-"folderLinkMessage" = "De momento los enlaces a carpeta no están soportados.";
-
 "folderEncrypted" = "Enlace a carpeta encriptada";
 "folderEncryptedMessage" = "De momento no se puede importar o descargar una carpeta encriptada.";
 
-//TourViewController
+"loggetOutTitle" = "Sesión cerrada";
+"loggedOutFromAnotherLocation" = "Tu sesión ha sido cerrada de este dispositivo desde otra localización";
 
+//TourViewController
 "megaSpace"="MEGA ESPACIO";
 "megaSpeed"="MEGA VELOCIDAD";
 "megaPrivacy"="MEGA PRIVACIDAD";
@@ -57,6 +56,8 @@
 
 //LINKS
 //FileLinkViewController
+"megaLink"="Enlace a MEGA";
+
 "importButton" = "Importar a tu disco en la nube";
 "downloadButton" = "Descargar a tu aplicación de MEGA";
 
@@ -66,12 +67,15 @@
 "importAction" = "Importar fichero";
 "importActionMessage" = "De momento no se puede importar un fichero.";
 
+"fileLinkUnavailableTitle"="Enlace del archivo no disponible";
+"fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
+
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "El fichero que estas intentando descargar ya existe en Offline";
 "downloadStarted" = "Descarga iniciada";
 
 //FolderLinkViewController
-"MEGA Folder"="MEGA carpeta";
+"megaFolder"="Enlace a carpeta";
 "emptyFolder"="Carpeta vacía";
 
 "importFolderAction"="Importar carpeta";
@@ -82,6 +86,9 @@
 
 "folderCreationError"="Error al crear la carpeta";
 "folderAlreadyExist"="La carpeta que estas intentado descargar ya existe en Offline";
+
+"folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
+"folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud";
@@ -177,7 +184,3 @@
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Cerrando sesión...";
-
-//Dialog logout from another location
-"loggetOutTitle" = "Sessión cerrada";
-"loggedOutFromAnotherLocation" = "Has sido deslogueado de este dispositivo desde otra localización";

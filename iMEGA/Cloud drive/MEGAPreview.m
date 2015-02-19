@@ -78,8 +78,13 @@
 
 - (void)performLoadUnderlyingImageAndNotify {
     
-    if([self.node hasPreview])
-        [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+    if([self.node hasPreview]) {
+        if (self.isFromFolderLink) {
+            [[MEGASdkManager sharedMEGASdkFolder] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+        }
+    }
 }
 
 - (void)unloadUnderlyingImage {

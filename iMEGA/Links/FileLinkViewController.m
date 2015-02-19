@@ -29,6 +29,8 @@
 #import "MainTabBarController.h"
 #import "FileLinkViewController.h"
 #import "BrowserViewController.h"
+#import "EmptyView.h"
+#import "UnavailableLinkView.h"
 
 @interface FileLinkViewController () <MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -55,6 +57,13 @@
     
     [self.navigationItem setLeftBarButtonItem:self.cancelBarButtonItem];
     
+    [self setEdgesForExtendedLayout:UIRectEdgeNone];
+    
+    [self.navigationItem setTitle:NSLocalizedString(@"megaLink", nil)];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    [self setUIItemsEnabled:NO];
+    
     self.importButton.layer.cornerRadius = 6;
     self.importButton.layer.masksToBounds = YES;
     [self.importButton setTitle:NSLocalizedString(@"importButton", nil) forState:UIControlStateNormal];
@@ -64,6 +73,31 @@
     [self.downloadButton setTitle:NSLocalizedString(@"downloadButton", nil) forState:UIControlStateNormal];
     
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+}
+
+#pragma mark - Private
+- (void)setUIItemsEnabled:(BOOL)boolValue {
+    [self.nameLabel setHidden:!boolValue];
+    [self.sizeLabel setHidden:!boolValue];
+    
+    [self.thumbnailImageView setHidden:!boolValue];
+    
+    [self.importButton setEnabled:boolValue];
+    [self.downloadButton setEnabled:boolValue];
+}
+
+- (void)showUnavailableLinkView {
+    [self setUIItemsEnabled:NO];
+    
+    UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
+    [unavailableLinkView setFrame:self.view.bounds];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
+    [unavailableLinkView.titleLabel setText:NSLocalizedString(@"fileLinkUnavailableTitle", nil)];
+    [unavailableLinkView.textView setText:NSLocalizedString(@"fileLinkUnavailableText", nil)];
+    [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
+    [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
+    
+    [self.view addSubview:unavailableLinkView];
 }
 
 #pragma mark - IBActions
@@ -155,61 +189,31 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
-    switch ([error type]) {
-        case MEGAErrorTypeApiEArgs: {
-            
+    if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeGetPublicNode) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                                    message:NSLocalizedString(@"invalidLink", @"Link invalid")
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                                          otherButtonTitles:nil];
-                [alertView show];
-                
-                if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-                    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    
-                    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-                } else {
-                    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-                    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-                }
+                [self showUnavailableLinkView];
             }
-            break;
         }
-            
-        case MEGAErrorTypeApiOk: {
-            
-            if ([request type] == MEGARequestTypeGetPublicNode) {
-                self.node = [request publicNode];
-                NSString *name = [self.node name];
-                
-                [self.nameLabel setText:name];
-                
-                NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-                [self.sizeLabel setText:sizeString];
-                
-                NSString *fileTypeIconString = [Helper fileTypeIconForExtension:[name.pathExtension lowercaseString]];
-                UIImage *image = [UIImage imageNamed:fileTypeIconString];
-                [self.thumbnailImageView setImage:image];
-            }
-            
-//            if ([request type] == MEGARequestTypeImportLink) {
-//                
-//            }
-            
-            break;
-        }
-            
-        default:
-            return;
+        return;
     }
     
     switch ([request type]) {
             
         case MEGARequestTypeGetPublicNode: {
+            self.node = [request publicNode];
+            NSString *name = [self.node name];
+            
+            [self.nameLabel setText:name];
+            
+            NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+            [self.sizeLabel setText:sizeString];
+            
+            NSString *fileTypeIconString = [Helper fileTypeIconForExtension:[name.pathExtension lowercaseString]];
+            UIImage *image = [UIImage imageNamed:fileTypeIconString];
+            [self.thumbnailImageView setImage:image];
+            
+            [self setUIItemsEnabled:YES];
             break;
         }
       

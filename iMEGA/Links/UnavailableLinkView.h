@@ -1,8 +1,8 @@
 /**
- * @file MEGAPreview.h
- * @brief Photo preview of an image.
+ * @file UnavailableLinkView.m
+ * @brief Custom view for unavailable links.
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -20,18 +20,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MWPhoto.h"
-#import "MEGASdkManager.h"
 
-@interface MEGAPreview : NSObject <MWPhoto, MEGARequestDelegate, MEGATransferDelegate>
+@interface UnavailableLinkView : UIView
 
-@property (nonatomic) BOOL isFromFolderLink;
-@property (strong, nonatomic) NSString *caption;
-@property (strong, nonatomic) NSString *imagePath;
-@property (strong, nonatomic) MEGANode *node;
-
-+ (MEGAPreview *)photoWithNode:(MEGANode *)node;
-
-- (id)initWithNode:(MEGANode *)node;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end

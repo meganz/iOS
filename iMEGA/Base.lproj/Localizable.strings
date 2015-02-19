@@ -9,16 +9,15 @@
 "invalidLink" = "Invalid MEGA Link";
 
 "fileEncrypted" = "File encrypted";
-"fileEncryptedMessage" = "This function is not avaliable. For the moment you can't import or download an encrypted file.";
-
-"folderLink" = "Folder link";
-"folderLinkMessage" = "For the moment folder links are not supported.";
+"fileEncryptedMessage" = "For the moment you can't import or download an encrypted file.";
 
 "folderEncrypted" = "Folder encrypted";
-"folderEncryptedMessage" = "This function is not avaliable. For the moment you can't import or download an encrypted folder.";
+"folderEncryptedMessage" = "For the moment you can't import or download an encrypted folder.";
+
+"loggetOutTitle" = "Logged out";
+"loggedOutFromAnotherLocation" = "You have been logged out on this device from another location";
 
 //TourViewController
-
 "megaSpace"="MEGA SPACE";
 "megaSpeed"="MEGA SPEED";
 "megaPrivacy"="MEGA PRIVACY";
@@ -57,6 +56,8 @@
 
 //LINKS
 //FileLinkViewController
+"megaLink"="MEGA Link";
+
 "importButton" = "Import to your Cloud Drive";
 "downloadButton" = "Download to your MEGA App";
 
@@ -66,12 +67,15 @@
 "importAction" = "Import file";
 "importActionMessage" = "For the moment you can't import a file.";
 
+"fileLinkUnavailableTitle"="File link unavailable";
+"fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
+
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "The file you want to download already exists on Offline";
 "downloadStarted" = "Download started";
 
 //FolderLinkViewController
-"MEGA Folder"="MEGA Folder";
+"megaFolder"="MEGA Folder Link";
 "emptyFolder"="Empty Folder";
 
 "importFolderAction"="Import folder";
@@ -82,6 +86,9 @@
 
 "folderCreationError"="The folder can't be created";
 "folderAlreadyExist"="The folder you want to download already exists on Offline";
+
+"folderLinkUnavailableTitle"="Folder link unavailable";
+"folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";
@@ -177,9 +184,3 @@
 
 //UITABBARCONTROLLER (4) SETTINGS
 "logout" = "Logout...";
-
-//Dialog logout from another location
-"loggetOutTitle" = "Logged out";
-"loggedOutFromAnotherLocation" = "You have been logged out on this device from another location";
-
-
