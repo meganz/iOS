@@ -29,6 +29,8 @@
 #import "MEGAPreview.h"
 #import "BrowserViewController.h"
 
+#import "CameraUploads.h"
+
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
@@ -254,9 +256,13 @@
     
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cdvc setParentNode:node];
-            [self.navigationController pushViewController:cdvc animated:YES];
+            if ([node.name isEqualToString:@"Camera Uploads"]) {
+                [self.tabBarController setSelectedIndex:1];
+            } else {
+                CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                [cdvc setParentNode:node];
+                [self.navigationController pushViewController:cdvc animated:YES];
+            }
             break;
         }
             
@@ -737,6 +743,9 @@
     
     switch ([request type]) {
         case MEGARequestTypeFetchNodes:
+            [[CameraUploads syncManager] setTabBarController:[super tabBarController]];
+//            [[CameraUploads syncManager] getAllAssetsForUpload];
+            
             [SVProgressHUD dismiss];
             break;
             

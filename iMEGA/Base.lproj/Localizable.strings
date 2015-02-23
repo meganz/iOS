@@ -120,11 +120,16 @@
 "permissionTitle"="Permissions error";
 "permissionMessage"="Check your permissions on this folder";
 
-//UITABBARCONTROLLER (2) OFFLINE
+//UITABBARCONTROLLER (2) PHOTOS
+"photosTitle"="Photos";
+"photosPerMonth"="%lu photos";
+"photoPerMonth"="%lu photo";
+
+//UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error at deleting";
 
-//UITABBARCONTROLLER (3) CONTACTS
+//UITABBARCONTROLLER (4) CONTACTS
 "noFoldersShare" = "No files shared";
 "oneFolderShare" = "Sharing one node";
 "foldersShare" = "Sharing %d nodes";
@@ -182,5 +187,5 @@
 "fileMovedToRubbishBin" = "1 file moved to the rubbish bin";
 "filesMovedToRubbishBin" = "%d files moved to the rubbish bin";
 
-//UITABBARCONTROLLER (4) SETTINGS
+//UITABBARCONTROLLER (5) SETTINGS
 "logout" = "Logout...";

@@ -120,11 +120,16 @@
 "permissionTitle"="Error de permisisos";
 "permissionMessage"="Compruebe sus permisos sobre esta carpeta";
 
-//UITABBARCONTROLLER (2) OFFLINE
+//UITABBARCONTROLLER (2) PHOTOS
+"photosTitle"="Fotos";
+"photosPerMonth"="%lu fotos";
+"photoPerMonth"="%lu foto";
+
+//UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error al eliminar";
 
-//UITABBARCONTROLLER (3) CONTACTS
+//UITABBARCONTROLLER (4) CONTACTS
 "noFoldersShare" = "Ningún fichero compartido";
 "oneFolderShare" = "Compartiendo un nodo";
 "foldersShare" = "Compartiendo %d nodos";
@@ -182,5 +187,5 @@
 "fileMovedToRubbishBin" = "1 fichero movido a la papelera";
 "filesMovedToRubbishBin" = "%d ficheros movidos a la papelera";
 
-//UITABBARCONTROLLER (4) SETTINGS
+//UITABBARCONTROLLER (5) SETTINGS
 "logout" = "Cerrando sesión...";

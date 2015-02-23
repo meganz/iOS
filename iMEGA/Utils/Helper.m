@@ -354,9 +354,19 @@
         }
     }
     
+    for (NSString *file in [fm contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
+        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), file] error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+    }
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
     [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
+    
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
 }
 
 @end
