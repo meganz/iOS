@@ -26,6 +26,7 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "BrowserViewController.h"
+#import "CameraUploads.h"
 
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
@@ -272,6 +273,9 @@
             UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
+            
+            [[CameraUploads syncManager] setTabBarController:mainTBC];
+//            [[CameraUploads syncManager] getAllAssetsForUpload];
             
             [self checkLoginOption];
             

@@ -23,10 +23,11 @@
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
-#include "MainTabBarController.h"
+#import "MainTabBarController.h"
 #import "ConfirmAccountViewController.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
+#import "CameraUploads.h"
 
 #define kUserAgent @"MEGAiOS/2.9.1.1"
 #define kAppKey @"EVtjzb7R"
@@ -71,7 +72,9 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+//    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+//        [[CameraUploads syncManager] getAllAssetsForUpload];
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
