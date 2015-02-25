@@ -47,6 +47,7 @@
     [MEGASdk setLogLevel:MEGALogLevelInfo];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     
     [self setupAppearance];
     self.isLoginFromView = YES;
@@ -233,6 +234,12 @@
     }
 }
 
+- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
+#ifdef DEBUG
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+#endif
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiESid) {
@@ -276,6 +283,29 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+#ifdef DEBUG
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+#endif
+}
+
+#pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+}
+
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+#ifdef DEBUG
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+#endif
+}
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+}
+
+-(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+#ifdef DEBUG
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+#endif
 }
 
 @end
