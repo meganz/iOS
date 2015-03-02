@@ -367,6 +367,8 @@
     
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
 }
 
 @end
