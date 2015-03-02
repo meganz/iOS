@@ -61,10 +61,6 @@
 }
 
 - (void)reloadUI {
-    if ([self.node type] == MEGANodeTypeFolder) {
-        [self.downloadButton setHidden:YES];
-    }
-    
     NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
     
@@ -113,13 +109,15 @@
 
 - (IBAction)touchUpInsideDownload:(UIButton *)sender {
     if ([self.node type] == MEGANodeTypeFile) {
-        NSString *filePath = [Helper pathForOffline];
-        NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
-        if (!fileExists) {
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath];
-        } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+        [Helper downloadNode:self.node folder:@"" folderLink:NO];
+    } else if ([self.node type] == MEGANodeTypeFolder) {
+        NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[self.node name]] stringByAppendingString:@"/"];
+        NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
+        
+        if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+            [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
+            [self.tabBarController setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
+            [self.navigationController popViewControllerAnimated:NO];
         }
     }
 }
