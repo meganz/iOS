@@ -11,6 +11,7 @@
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
 + (UIImage *)folderSharedImage;
++ (UIImage *)defaultPhotoImage;
 
 @end
 
@@ -231,6 +232,15 @@
     return folderSharedImage;
 }
 
++ (UIImage *)defaultPhotoImage {
+    static UIImage *defaultPhotoImage = nil;
+    
+    if (defaultPhotoImage == nil) {
+        defaultPhotoImage = [UIImage imageNamed:@"image"];
+    }
+    return defaultPhotoImage;
+}
+
 + (UIImage *)imageForNode:(MEGANode *)node {
     
     MEGANodeType nodeType = [node type];
@@ -297,9 +307,47 @@
     return destinationFilePath;
 }
 
-+ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode {
++ (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
     
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    if ([folderPath isEqualToString:@""]) {
+        folderPath = [Helper pathForOffline];
+    }
+    
+    NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]];
+    NSString *offlineNameString = [[node base64Handle] stringByAppendingString:@"_"];
+    offlineNameString = [offlineNameString stringByAppendingString:fileName];
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+    if (!thumbnailExists && [node hasThumbnail]) {
+        if (isFolderLink) {
+            [[MEGASdkManager sharedMEGASdkFolder] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+        }
+    }
+    NSString *absoluteFilePath = [folderPath stringByAppendingString:offlineNameString];
+    
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath];
+    if (!fileExists) {
+        if (isFolderLink) {
+            [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:node localPath:absoluteFilePath];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:absoluteFilePath];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+    }
+}
+
++ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink {
+    
+    MEGANodeList *nodeList;
+    if (isFolderLink) {
+        nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    } else {
+        nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+    }
     NSUInteger nodeListSize = [nodeList.size integerValue];
     
     MEGANode *node = nil;
@@ -308,28 +356,33 @@
         node = [nodeList nodeAtIndex:i];
         
         if ([node type] == MEGANodeTypeFile) {
-            NSString *fileName = [[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[node name]];
-            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[folderPath stringByAppendingString:fileName]];
-            if (!fileExists) {
-                [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:node localPath:folderPath delegate:self];
-            }
-            
+            [Helper downloadNode:node folder:folderPath folderLink:isFolderLink];
         } else if ([node type] == MEGANodeTypeFolder){
-            NSString *childFolderName = [[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[node name]];
+            NSString *childFolderName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]];
             childFolderName = [childFolderName stringByAppendingString:@"/"];
             NSString *childFolderPath = [folderPath stringByAppendingString:childFolderName];
-            BOOL folderExists = [[NSFileManager defaultManager] fileExistsAtPath:childFolderPath];
-            if (!folderExists) {
-                NSError *error;
-                [[NSFileManager defaultManager] createDirectoryAtPath:childFolderPath withIntermediateDirectories:YES attributes:nil error:&error];
-                if (error != nil) {
-                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderCreationError", @"The folder can't be created")];
-                    NSLog(@"FolderLinkVC > downloadNodesOnFolder: %@", error);
-                } else {
-                    [self downloadNodesOnFolder:childFolderPath parentNode:node];
-                }
+            
+            if ([Helper createOfflineFolder:childFolderName folderPath:childFolderPath]) {
+                [self downloadNodesOnFolder:childFolderPath parentNode:node folderLink:isFolderLink];
             }
         }
+    }
+}
+
++ (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath {
+    BOOL folderExists = [[NSFileManager defaultManager] fileExistsAtPath:folderPath];
+    if (!folderExists) {
+        NSError *error;
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error != nil) {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"folderCreationError", nil), folderName]];
+            return NO;
+        } else {
+            return YES;
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderAlreadyExist", @"The folder you want to download already exists on Offline")];
+        return NO;
     }
 }
 

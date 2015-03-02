@@ -31,6 +31,7 @@
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
 + (UIImage *)folderSharedImage;
++ (UIImage *)defaultPhotoImage;
 
 + (NSString *)pathForOfflineDirectory:(NSString *)directory;
 
@@ -42,7 +43,9 @@
 
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
-+ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode;
++ (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink;
++ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink;
++ (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath;
 
 + (void)logout;
 

@@ -20,7 +20,7 @@
  */
 
 #import "OfflineTableViewController.h"
-#import "NodeTableViewCell.h"
+#import "OfflineTableViewCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "SVProgressHUD.h"
 #import "Helper.h"
@@ -52,11 +52,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self reloadUI];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -79,6 +79,8 @@
     if (directoryContents.count == 0) {
         [self showEmptyFolderView];
     } else {
+        [self.tableView setBounces:YES];
+        [self.tableView setScrollEnabled:YES];
         [self.tableView setBackgroundView:nil];
     }
     
@@ -96,7 +98,9 @@
             if (isImage(fileName.lowercaseString.pathExtension)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
-                photo.caption = fileName;
+                NSArray *itemNameComponentsArray = [fileName componentsSeparatedByString:@"_"];
+                NSString *imageName = [itemNameComponentsArray objectAtIndex:1];
+                photo.caption = [[MEGASdkManager sharedMEGASdk] localToName:imageName];
                 [self.offlineImages addObject:photo];
             }
         }
@@ -188,18 +192,11 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    OfflineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"offlineTableViewCell" forIndexPath:indexPath];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:nil];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:[indexPath row]]];
-    
-    NSString *itemNameString = [directoryContents objectAtIndex:[indexPath row]];
-    itemNameString = [[MEGASdkManager sharedMEGASdk] localToName:itemNameString];
-    if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
-        itemNameString = @"Downloading...";
-    }
-    [cell.nameLabel setText:itemNameString];
     
     NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
     
@@ -212,6 +209,8 @@
     
     unsigned long long size;
     
+    NSString *handleString;
+    NSString *itemNameString = [directoryContents objectAtIndex:[indexPath row]];
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
@@ -220,14 +219,35 @@
         
         size = [self sizeOfFolderAtPath:pathForItem];
     } else {
+        if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
+            itemNameString = NSLocalizedString(@"downloading", nil);
+        } else {
+            NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
+            handleString = [itemNameComponentsArray objectAtIndex:0];
+            itemNameString = [itemNameComponentsArray objectAtIndex:1];
+        }
+        
         NSString *extension = [[itemNameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
-        UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-        [cell.imageView setImage:iconImage];
+        if (isImage(itemNameString.lowercaseString.pathExtension)) {
+            NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbs"];
+            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
+            
+            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+            if (thumbnailImage == nil) {
+                thumbnailImage = [Helper defaultPhotoImage];
+            }
+            [cell.imageView setImage:thumbnailImage];
+        } else {
+            UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
+            [cell.imageView setImage:iconImage];
+        }
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
     }
+    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:itemNameString]];
     
     NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
     NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
@@ -238,7 +258,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle==UITableViewCellEditingStyleDelete) {
-        NodeTableViewCell *cell = (NodeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *selectedRowNameString = [cell.nameLabel text];
         
         NSString *directoryPathString = [self currentOfflinePath];
@@ -336,7 +356,9 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [self reloadUI];
+    if ([transfer type] == MEGATransferTypeDownload) {
+        [self reloadUI];
+    }
 }
 
 -(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

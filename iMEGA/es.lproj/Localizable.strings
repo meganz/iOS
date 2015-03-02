@@ -84,7 +84,7 @@
 "folderTooBig"="Necesitas más espacio";
 "folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
 
-"folderCreationError"="Error al crear la carpeta";
+"folderCreationError"="La carpeta '%@' no puede ser creada";
 "folderAlreadyExist"="La carpeta que estas intentado descargar ya existe en Offline";
 
 "folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
@@ -117,7 +117,7 @@
 "quotaExceeded"="Cuota de almacenamiento excedida";
 "fileImported"="Fichero importado";
 
-"permissionTitle"="Error de permisisos";
+"permissionTitle"="Error de permisos";
 "permissionMessage"="Compruebe sus permisos sobre esta carpeta";
 
 //UITABBARCONTROLLER (2) PHOTOS
@@ -128,6 +128,8 @@
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error al eliminar";
+
+"downloading"="Descargando...";
 
 //UITABBARCONTROLLER (4) CONTACTS
 "noFoldersShare" = "Ningún fichero compartido";
@@ -144,8 +146,8 @@
 "addContactError" = "Error al añadir contacto";
 "removed" = "eliminado";
 
-"removeMultipleUsersMessage" = "¿Estás seguro de que deseas elimiar %d usuarios de la lista de contactos?";
-"removeUserMessage" = "¿Estás seguro de que deseas elimiar a %@ de la lista de contactos?";
+"removeMultipleUsersMessage" = "¿Estás seguro de que deseas eliminar %d usuarios de la lista de contactos?";
+"removeUserMessage" = "¿Estás seguro de que deseas eliminar a %@ de la lista de contactos?";
 "removeUserTitle" = "Eliminar contacto";
 
 "removedContacts" = "%d contactos eliminados";

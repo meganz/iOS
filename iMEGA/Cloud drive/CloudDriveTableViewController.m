@@ -156,7 +156,11 @@
     }
     
     if (!fileExists) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        if (isImage([[[node name] pathExtension] lowercaseString])) {
+            [cell.thumbnailImageView setImage:[Helper defaultPhotoImage]];
+        } else {
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        }
     } else {
         [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
     }
@@ -635,15 +639,19 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in self.selectedNodesArray) {
-        NSString *filePath = [Helper pathForOffline];
-        NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
-        if (!fileExists) {
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:n localPath:filePath];
-        } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+        if ([n type] == MEGANodeTypeFile) {
+            [Helper downloadNode:n folder:@"" folderLink:NO];
+        } else if ([n type] == MEGANodeTypeFolder) {
+            NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[n name]] stringByAppendingString:@"/"];
+            NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
+            
+            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+                [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
+            }
         }
     }
+    [self setEditing:NO animated:NO];
+    [self.tabBarController setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {

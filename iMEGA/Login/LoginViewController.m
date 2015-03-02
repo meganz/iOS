@@ -145,23 +145,15 @@
             }
             
             if ([self.node type] == MEGANodeTypeFile) {
-                NSString *filePath = [Helper pathForOffline];
-                
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath delegate:self];
+                [Helper downloadNode:self.node folder:@"" folderLink:NO];
             }
             
             if ([self.node type] == MEGANodeTypeFolder) {
                 NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[self.node name]] stringByAppendingString:@"/"];
-                NSString *offlinePath = [Helper pathForOffline];
-                NSString *folderPath = [offlinePath stringByAppendingString:folderName];
+                NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
                 
-                NSError *error;
-                [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
-                if (error != nil) {
-                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderCreationError", @"The folder can't be created")];
-                    NSLog(@"LoginVC > checkLoginOption: %@", error);
-                } else {
-                    [Helper downloadNodesOnFolder:folderPath parentNode:self.node];
+                if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+                    [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:YES];
                 }
             }
             break;
@@ -299,23 +291,6 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

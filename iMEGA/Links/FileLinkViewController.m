@@ -159,17 +159,10 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [mainTBC setSelectedIndex:1]; //0 = Cloud, 1 = Offline, 2 = Contacts, 3 = Settings
+        [mainTBC setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
         
         if ([self.node type] == MEGANodeTypeFile) {
-            NSString *filePath = [Helper pathForOffline];
-            NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
-            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByAppendingString:fileName]];
-            if (!fileExists) {
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:filePath delegate:self];
-            } else {
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
-            }
+            [Helper downloadNode:self.node folder:@"" folderLink:NO];
         }
         
     } else {

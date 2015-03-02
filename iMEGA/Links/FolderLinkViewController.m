@@ -225,25 +225,13 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [mainTBC setSelectedIndex:1]; //0 = Cloud, 1 = Offline, 2 = Contacts, 3 = Settings
+        [mainTBC setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
         
         NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[self.parentNode name]] stringByAppendingString:@"/"];
-        NSString *offlinePath = [Helper pathForOffline];
-        NSString *folderPath = [offlinePath stringByAppendingString:folderName];
+        NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
         
-        BOOL folderExists = [[NSFileManager defaultManager] fileExistsAtPath:folderPath];
-        if (!folderExists) {
-            NSError *error;
-            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
-            if (error != nil) {
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderCreationError", (@"The folder '@%' can't be created", folderName))];
-                NSLog(@"FolderLinkVC > downloadFolderTouchUpInside: %@", error);
-            } else {
-                [Helper downloadNodesOnFolder:folderPath parentNode:self.parentNode];
-            }
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderAlreadyExist", @"The folder you want to download already exists on Offline")];
+        if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+            [Helper downloadNodesOnFolder:folderPath parentNode:self.parentNode folderLink:YES];
         }
         
     } else {
@@ -305,7 +293,11 @@
     }
     
     if (!fileExists) {
-        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        if (isImage([[[node name] pathExtension] lowercaseString])) {
+            [cell.thumbnailImageView setImage:[Helper defaultPhotoImage]];
+        } else {
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        }
     } else {
         [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
     }

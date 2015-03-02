@@ -84,7 +84,7 @@
 "folderTooBig"="You need more free space";
 "folderTooBigMessage"="The file you are trying to download is bigger than the avaliable memory.";
 
-"folderCreationError"="The folder can't be created";
+"folderCreationError"="The folder '%@' can't be created";
 "folderAlreadyExist"="The folder you want to download already exists on Offline";
 
 "folderLinkUnavailableTitle"="Folder link unavailable";
@@ -128,6 +128,8 @@
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error at deleting";
+
+"downloading"="Downloading...";
 
 //UITABBARCONTROLLER (4) CONTACTS
 "noFoldersShare" = "No files shared";
