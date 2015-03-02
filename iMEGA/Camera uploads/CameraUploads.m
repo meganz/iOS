@@ -150,7 +150,9 @@ static CameraUploads *instance = nil;
                                   }
                                   
                                   if (index==totalAssets-1) {
-                                      [self uploadNextImage];
+                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                          [self uploadNextImage];
+                                      });
                                   }
                               }
                              failureBlock:^(NSError *error){ NSLog(@"operation was not successfull!"); } ];
@@ -179,7 +181,6 @@ static CameraUploads *instance = nil;
 }
 
 - (void)uploadNextImage {
-    
     if ([self shouldRun] != 0) {
         //retryLayer;
     }
@@ -243,7 +244,12 @@ static CameraUploads *instance = nil;
                 lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
                 [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
                 [self.assetUploadArray removeObjectAtIndex:0];
-                [self uploadNextImage];
+                
+                [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [self uploadNextImage];
+                });
             }
         }
         
@@ -276,7 +282,9 @@ static CameraUploads *instance = nil;
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeCopy) {
-            [self uploadNextImage];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self uploadNextImage];
+            });
         }
         return;
     }
@@ -292,7 +300,12 @@ static CameraUploads *instance = nil;
             lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
             [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
             [self.assetUploadArray removeObjectAtIndex:0];
-            [self uploadNextImage];
+            
+            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self uploadNextImage];
+            });
             break;
         }
             
@@ -315,7 +328,9 @@ static CameraUploads *instance = nil;
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-            [self uploadNextImage];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self uploadNextImage];
+            });
         }
         return;
     }
@@ -336,7 +351,11 @@ static CameraUploads *instance = nil;
             NSLog(@"remove file error %@", error);
         }
         
-        [self uploadNextImage];
+       [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self uploadNextImage];
+        });
     }
 }
 
