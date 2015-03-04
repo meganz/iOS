@@ -50,6 +50,7 @@
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [self reloadUI];
 }
 
@@ -57,6 +58,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,7 +138,7 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
     
     if (!fileExists && [node hasThumbnail]) {
-        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
     }
     
     if (!fileExists) {
