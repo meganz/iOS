@@ -13,3 +13,6 @@
 [submodule "iMEGA/Vendor/GKContactImage"]
 	path = iMEGA/Vendor/GKContactImage
 	url = https://github.com/meganz/GKContactImage.git
+[submodule "iMEGA/Vendor/Reachability"]
+	path = iMEGA/Vendor/Reachability
+	url = https://github.com/meganz/Reachability.git

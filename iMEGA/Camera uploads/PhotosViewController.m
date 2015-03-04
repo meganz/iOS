@@ -24,6 +24,7 @@
 #import "HeaderCollectionReusableView.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
+#import "SVProgressHUD.h"
 
 @interface PhotosViewController ()
 
@@ -246,6 +247,11 @@
     }
     
     switch ([request type]) {
+        case MEGARequestTypeFetchNodes:
+            [SVProgressHUD dismiss];
+            [self reloadUI];
+            break;
+            
         case MEGARequestTypeGetAttrFile: {
             for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
                 if ([request nodeHandle] == [pcvc nodeHandle]) {

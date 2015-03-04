@@ -446,6 +446,11 @@
     }
     
     switch ([request type]) {
+        case MEGARequestTypeFetchNodes:
+            [SVProgressHUD dismiss];
+            [self reloadUI];
+            break;
+            
         case MEGARequestTypeGetAttrUser: {
             for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
                 if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {

@@ -27,6 +27,7 @@
 #import "MainTabBarController.h"
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
+#import "MEGAReachabilityManager.h"
 
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
@@ -65,7 +66,10 @@
 #pragma mark - Private methods
 
 - (IBAction)tapLogin:(id)sender {
-    if ([self validateForm]) {
+    if (![MEGAReachabilityManager isReachable]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problema de conexión" message:@"Compruba tu conexión a internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [alert show];
+    } else if ([self validateForm]) {
         NSOperationQueue *operationQueue = [NSOperationQueue new];
         
         NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
