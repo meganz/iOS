@@ -45,7 +45,16 @@
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
     } else {
-        [self.navigationItem setTitle:self.folderPathFromOffline];
+        NSString *currentFolderName = [self.folderPathFromOffline lastPathComponent];
+        NSArray *itemNameComponentsArray = [currentFolderName componentsSeparatedByString:@"_"];
+        NSString *titleString;
+        if ([itemNameComponentsArray count] > 2) {
+            NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
+            titleString = [currentFolderName substringFromIndex:(handleString.length + 1)];
+        } else {
+            titleString = [itemNameComponentsArray objectAtIndex:1];
+        }
+        [self.navigationItem setTitle:titleString];
     }
 }
 
@@ -98,8 +107,15 @@
             if (isImage(fileName.lowercaseString.pathExtension)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
+                
+                NSString *imageName;
                 NSArray *itemNameComponentsArray = [fileName componentsSeparatedByString:@"_"];
-                NSString *imageName = [itemNameComponentsArray objectAtIndex:1];
+                if ([itemNameComponentsArray count] > 2) {
+                    NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
+                    imageName = [fileName substringFromIndex:(handleString.length + 1)];
+                } else {
+                    imageName = [itemNameComponentsArray objectAtIndex:1];
+                }
                 photo.caption = [[MEGASdkManager sharedMEGASdk] localToName:imageName];
                 [self.offlineImages addObject:photo];
             }
@@ -112,7 +128,7 @@
 - (NSString *)currentOfflinePath {
     NSString *pathString = [Helper pathForOffline];
     if (self.folderPathFromOffline != nil) {
-        pathString = [Helper pathForOfflineDirectory:self.folderPathFromOffline];
+        pathString = [pathString stringByAppendingPathComponent:self.folderPathFromOffline];
     }
     return pathString;
 }
@@ -139,8 +155,7 @@
     NSString *pathFromOffline = @"";
     if (childFoldersArray.count > 1) {
         for (NSString *folderString in childFoldersArray) {
-            pathFromOffline = [pathFromOffline stringByAppendingString:folderString];
-            pathFromOffline = [pathFromOffline stringByAppendingString:@"/"];
+            pathFromOffline = [pathFromOffline stringByAppendingPathComponent:folderString];
         }
     } else {
         pathFromOffline = folderName;
@@ -209,8 +224,23 @@
     
     unsigned long long size;
     
-    NSString *handleString;
     NSString *itemNameString = [directoryContents objectAtIndex:[indexPath row]];
+    [cell setItemNameString:itemNameString];
+    
+    NSString *handleString;
+    NSString *nameString;
+    if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
+        nameString = NSLocalizedString(@"downloading", nil);
+    } else {
+        NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
+        handleString = [itemNameComponentsArray objectAtIndex:0];
+        if ([itemNameComponentsArray count] > 2) {
+            nameString = [itemNameString substringFromIndex:(handleString.length + 1)];
+        } else {
+            nameString = [itemNameComponentsArray objectAtIndex:1];
+        }
+    }
+    
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
@@ -219,18 +249,10 @@
         
         size = [self sizeOfFolderAtPath:pathForItem];
     } else {
-        if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
-            itemNameString = NSLocalizedString(@"downloading", nil);
-        } else {
-            NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
-            handleString = [itemNameComponentsArray objectAtIndex:0];
-            itemNameString = [itemNameComponentsArray objectAtIndex:1];
-        }
-        
-        NSString *extension = [[itemNameString pathExtension] lowercaseString];
+        NSString *extension = [[nameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
-        if (isImage(itemNameString.lowercaseString.pathExtension)) {
+        if (isImage(nameString.lowercaseString.pathExtension)) {
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbs"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
@@ -247,7 +269,7 @@
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
     }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:itemNameString]];
+    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:nameString]];
     
     NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
     NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
@@ -259,16 +281,12 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *selectedRowNameString = [cell.nameLabel text];
-        
-        NSString *directoryPathString = [self currentOfflinePath];
-        NSString *itemPath = [directoryPathString stringByAppendingPathComponent:selectedRowNameString];
+        NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
         
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
         if (!success || error) {
             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"itemDeletingError", @"Error at deleting")];
-            NSLog(@"%@", error);
             return;
         } else {
             [self.tableView reloadData];
@@ -280,22 +298,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *directoryPathString = [self currentOfflinePath];
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-    NSString *selectedRowName = [directoryContents objectAtIndex:[indexPath row]];
-    NSString *path = [directoryPathString stringByAppendingPathComponent:selectedRowName];
+    OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *itemNameString = [cell itemNameString];
+    NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
     
     BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
+    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
-        NSString *folderPathFromOffline = [self folderPathFromOffline:path folder:selectedRowName];
+        NSString *folderPathFromOffline = [self folderPathFromOffline:itemPath folder:[cell itemNameString]];
         
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
     } else {
-        if (isImage(selectedRowName.lowercaseString.pathExtension)) {
+        if (isImage(itemNameString.lowercaseString.pathExtension)) {
             MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
             
             browser.displayActionButton = YES;
@@ -316,10 +332,10 @@
             NSInteger selectedIndexPhoto = [[[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
             [browser setCurrentPhotoIndex:selectedIndexPhoto];
             
-        } else if (isVideo(selectedRowName.lowercaseString.pathExtension)) {
+        } else if (isVideo(itemNameString.lowercaseString.pathExtension)) {
             NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             NSMutableString *filePath = [NSMutableString new];
-            [filePath appendFormat:@"%@/%@", documentDirectory, selectedRowName];
+            [filePath appendFormat:@"%@/%@", documentDirectory, itemNameString];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             
             MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];

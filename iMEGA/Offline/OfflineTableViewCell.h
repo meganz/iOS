@@ -27,4 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
+@property (strong, nonatomic) NSString *itemNameString;
+
 @end
