@@ -123,8 +123,7 @@
     NSString *titleString = NSLocalizedString(@"megaFolder", @"MEGA Folder");
     if ([self.parentNode name] != nil) {
         if (self.isFolderRootNode) {
-            titleString = [titleString stringByAppendingString:@"/"];
-            titleString = [titleString stringByAppendingString:[self.parentNode name]];
+            titleString = [titleString stringByAppendingPathComponent:[self.parentNode name]];
         } else {
             titleString = [self.parentNode name];
         }
@@ -227,8 +226,8 @@
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
         [mainTBC setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
         
-        NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[self.parentNode name]] stringByAppendingString:@"/"];
-        NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
+        NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.parentNode name]]];
+        NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
         
         if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
             [Helper downloadNodesOnFolder:folderPath parentNode:self.parentNode folderLink:YES];

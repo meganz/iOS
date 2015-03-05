@@ -642,8 +642,8 @@
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
         } else if ([n type] == MEGANodeTypeFolder) {
-            NSString *folderName = [[[MEGASdkManager sharedMEGASdkFolder] nameToLocal:[n name]] stringByAppendingString:@"/"];
-            NSString *folderPath = [[Helper pathForOffline] stringByAppendingString:folderName];
+            NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
+            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
             
             if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
                 [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];

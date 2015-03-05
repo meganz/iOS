@@ -313,9 +313,7 @@
         folderPath = [Helper pathForOffline];
     }
     
-    NSString *fileName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]];
-    NSString *offlineNameString = [[node base64Handle] stringByAppendingString:@"_"];
-    offlineNameString = [offlineNameString stringByAppendingString:fileName];
+    NSString *offlineNameString = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
     
     NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
     BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -326,7 +324,7 @@
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
         }
     }
-    NSString *absoluteFilePath = [folderPath stringByAppendingString:offlineNameString];
+    NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath];
     if (!fileExists) {
@@ -358,9 +356,8 @@
         if ([node type] == MEGANodeTypeFile) {
             [Helper downloadNode:node folder:folderPath folderLink:isFolderLink];
         } else if ([node type] == MEGANodeTypeFolder){
-            NSString *childFolderName = [[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]];
-            childFolderName = [childFolderName stringByAppendingString:@"/"];
-            NSString *childFolderPath = [folderPath stringByAppendingString:childFolderName];
+            NSString *childFolderName = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
+            NSString *childFolderPath = [folderPath stringByAppendingPathComponent:childFolderName];
             
             if ([Helper createOfflineFolder:childFolderName folderPath:childFolderPath]) {
                 [self downloadNodesOnFolder:childFolderPath parentNode:node folderLink:isFolderLink];
@@ -375,7 +372,15 @@
         NSError *error;
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:&error];
         if (error != nil) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"folderCreationError", nil), folderName]];
+            NSString *folderNameString = [folderName lastPathComponent];
+            NSArray *folderNameComponentsArray = [folderNameString componentsSeparatedByString:@"_"];
+            if ([folderNameComponentsArray count] > 2) {
+                NSString *handleString = [folderNameComponentsArray objectAtIndex:0];
+                folderNameString = [folderNameString substringFromIndex:(handleString.length + 1)];
+            } else {
+                folderNameString = [folderNameComponentsArray objectAtIndex:1];
+            }
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"folderCreationError", nil), folderNameString]];
             return NO;
         } else {
             return YES;
