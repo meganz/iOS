@@ -752,7 +752,9 @@
     switch ([request type]) {
         case MEGARequestTypeFetchNodes:
             [[CameraUploads syncManager] setTabBarController:[super tabBarController]];
-//            [[CameraUploads syncManager] getAllAssetsForUpload];
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] getAllAssetsForUpload];
+            }
             
             [SVProgressHUD dismiss];
             break;

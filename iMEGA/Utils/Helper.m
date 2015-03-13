@@ -3,6 +3,7 @@
 #import "SSKeychain.h"
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
+#import "CameraUploads.h"
 
 @interface Helper ()
 
@@ -427,6 +428,19 @@
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
+    
+    //Reser Camera Uploads settings
+    [[CameraUploads syncManager].assetUploadArray removeAllObjects];
+    
+    [CameraUploads syncManager].isCameraUploadsEnabled = NO;
+    [CameraUploads syncManager].isUploadVideosEnabled = NO;
+    [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
+    [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnable];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
 }
 
 @end

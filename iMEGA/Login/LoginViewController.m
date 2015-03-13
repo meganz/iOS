@@ -270,8 +270,10 @@
             MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
             
-            [[CameraUploads syncManager] setTabBarController:mainTBC];
-//            [[CameraUploads syncManager] getAllAssetsForUpload];
+            [[CameraUploads syncManager] setTabBarController:[super tabBarController]];
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] getAllAssetsForUpload];
+            }
             
             [self checkLoginOption];
             

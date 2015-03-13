@@ -190,4 +190,25 @@
 "filesMovedToRubbishBin" = "%d files moved to the rubbish bin";
 
 //UITABBARCONTROLLER (5) SETTINGS
+"usedSpaceOfTotalSpace"="%@ of %@";
+"upgradeLabel"="Ugrade";
+"cameraUploadsLabel"="Camera Uploads";
+"passcodeLabel"="Passcode";
+"aboutLabel"="About";
+"feedbackLabel"="Feedback";
+"advancedLabel"="Advanced";
+"logoutLabel"="Log out";
+
+//(5) Settings - CameraUploadsTableViewController
+"enableCameraUploadsLabel"="Enable Camera Uploads";
+"disableCameraUploadsLabel"="Disable Camera Uploads";
+"uploadVideosLabel"="Upload videos";
+"useCellularConnectionLabel"="Use cellular connection";
+"onlyWhenChargingLabel"="Only when charging";
+
+//(5) Settings - AboutTableViewController
+"privacyPolicyLabel"="Privacy policy";
+"termsOfServicesLabel"="Terms of services";
+
+// HUD messages
 "logout" = "Logout...";

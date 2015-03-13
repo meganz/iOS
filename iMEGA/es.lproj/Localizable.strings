@@ -190,4 +190,25 @@
 "filesMovedToRubbishBin" = "%d ficheros movidos a la papelera";
 
 //UITABBARCONTROLLER (5) SETTINGS
+"usedSpaceOfTotalSpace"="%@ de %@";
+"upgradeLabel"="Mejorar cuenta";
+"cameraUploadsLabel"="Subidas de la cámara";
+"passcodeLabel"="Código de acceso";
+"aboutLabel"="Sobre nosotros";
+"feedbackLabel"="Feedback";
+"advancedLabel"="Avanzado";
+"logoutLabel"="Desconectar";
+
+//(5) Settings - CameraUploadsTableViewController
+"enableCameraUploadsLabel"="Activar subidas de la cámara";
+"disableCameraUploadsLabel"="Desactivar subidas de la cámara";
+"uploadVideosLabel"="Subir videos";
+"useCellularConnectionLabel"="Usar conexión de datos";
+"onlyWhenChargingLabel"="Subir solo cuando está cargando";
+
+//(5) Settings - AboutTableViewController
+"privacyPolicyLabel"="Politica de privacidad";
+"termsOfServicesLabel"="Términos del servicio";
+
+// HUD messages
 "logout" = "Cerrando sesión...";
