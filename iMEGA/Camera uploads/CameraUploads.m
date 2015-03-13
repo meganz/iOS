@@ -25,6 +25,7 @@
 #import "CameraUploads.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 
 #define kCameraUploads @"Camera Uploads"
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
@@ -84,12 +85,35 @@ static CameraUploads *instance = nil;
     totalAssets = 0;
     isCreatingFolder = NO;
     
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval: 360.0 target: self
-                                                      selector: @selector(getAllAssetsForUpload) userInfo: nil repeats: YES];
-    [timer fire];
+    self.isCameraUploadsEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsCameraUploadsEnable] boolValue];
+    self.isUploadVideosEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUploadVideosEnabled] boolValue];
+    self.isUseCellularConnectionEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUseCellularConnectionEnabled] boolValue];
+    self.isOnlyWhenChargingEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsOnlyWhenChargingEnabled] boolValue];
+    
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval: 360.0 target: self
+//                                                      selector: @selector(getAllAssetsForUpload) userInfo: nil repeats: YES];
+//    [timer fire];
 }
 
 - (int)shouldRun {
+    if (!self.isCameraUploadsEnabled) {
+        return 1;
+    }
+    
+    if (self.isOnlyWhenChargingEnabled) {
+        if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
+            [self.assetUploadArray removeAllObjects];
+            return 1;
+        }
+    }
+    
+    if (!self.isUseCellularConnectionEnabled) {
+        if ([MEGAReachabilityManager isReachableViaWWAN]) {
+            [self.assetUploadArray removeAllObjects];
+            return 1;
+        }
+    }
+    
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
         return 1;
     }
@@ -182,6 +206,7 @@ static CameraUploads *instance = nil;
 
 - (void)uploadNextImage {
     if ([self shouldRun] != 0) {
+        return;
         //retryLayer;
     }
     
@@ -225,7 +250,25 @@ static CameraUploads *instance = nil;
     nodeExists = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerPrint parent:cameraUploadsNode];
     
     if(nodeExists == nil) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:cameraUploadsNode delegate:self];
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:name];
+        
+        if ([[nameNodeList size] intValue] != 0) {
+            
+            NSString *newName = [[NSString stringWithFormat:@"%@_%d", [self.formatter stringFromDate:modificationTime], [[nameNodeList size] intValue]] stringByAppendingPathExtension:extension];
+            NSString *newLocalFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:newName];
+
+            NSError *error = nil;
+            [[NSFileManager defaultManager] moveItemAtPath:localFilePath toPath:newLocalFilePath error:&error];
+            if (error) {
+                NSLog(@"There is an Error: %@", error);
+            }
+            
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newLocalFilePath parent:cameraUploadsNode delegate:self];
+            
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:cameraUploadsNode delegate:self];
+        }
+        
     } else {
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
@@ -240,10 +283,12 @@ static CameraUploads *instance = nil;
             if (![nodeExists.name isEqualToString:name]) {
                 [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:name delegate:self];
             } else {
-                ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-                lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-                [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-                [self.assetUploadArray removeObjectAtIndex:0];
+                if ([self.assetUploadArray count] != 0) {
+                    ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
+                    lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+                    [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+                    [self.assetUploadArray removeObjectAtIndex:0];
+                }
                 
                 [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
                 

@@ -51,6 +51,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:nil];
     
+    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
+    
     [MEGASdkManager setAppKey:kAppKey];
     [MEGASdkManager setUserAgent:kUserAgent];
     [MEGASdkManager sharedMEGASdk];
@@ -63,7 +66,7 @@
     self.isLoginFromView = YES;
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         self.isLoginFromView = NO;
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -96,9 +99,9 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-//    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-//        [[CameraUploads syncManager] getAllAssetsForUpload];
-//    }
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -234,9 +237,12 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [[CameraUploads syncManager] getAllAssetsForUpload];
-    [self startBackgroundTask];
-    completionHandler(UIBackgroundFetchResultNewData);
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [self startBackgroundTask];
+    
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
 }
 
 #pragma mark - Private
@@ -299,7 +305,7 @@
         while(temp_addr != NULL) {
             if(temp_addr->ifa_addr->sa_family == AF_INET) {
                 // Check if interface is en0 which is the wifi connection on the iPhone
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
                     // Get NSString from C String
                     address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
                 }
@@ -323,8 +329,35 @@
         if (![self.IpAddress isEqualToString:[self getIpAddress]]) {
             [[MEGASdkManager sharedMEGASdk] reconnect];
         }
-    } else {
-        //NSLog(@"Unreachable");
+    }
+    
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
+            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+                [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+            }
+            
+            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
+                [[CameraUploads syncManager] getAllAssetsForUpload];
+            }
+        }
+    }
+}
+
+#pragma mark - Battery changed
+
+- (void)batteryChanged:(NSNotification *)notification {
+    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
+        // Status battery unplugged
+        if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
+            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+            [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+        }
+        // Status battery plugged
+        else {
+            [[CameraUploads syncManager] getAllAssetsForUpload];
+        }
     }
 }
 

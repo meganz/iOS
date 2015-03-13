@@ -22,11 +22,21 @@
 #import <Foundation/Foundation.h>
 #import "MEGASdkManager.h"
 
+#define kIsCameraUploadsEnable @"IsCameraUploadsEnable"
+#define kIsUploadVideosEnabled @"IsUploadVideosEnabled"
+#define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
+#define kIsOnlyWhenChargingEnabled @"IsOnlyWhenChargingEnabled"
+
 @interface CameraUploads : NSObject <NSFileManagerDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate, UITabBarControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *assetUploadArray;
 
 @property (nonatomic, weak) UITabBarController *tabBarController;
+
+@property BOOL isCameraUploadsEnabled;
+@property BOOL isUploadVideosEnabled;
+@property BOOL isUseCellularConnectionEnabled;
+@property BOOL isOnlyWhenChargingEnabled;
 
 + (CameraUploads *)syncManager;
 - (void)getAllAssetsForUpload;
