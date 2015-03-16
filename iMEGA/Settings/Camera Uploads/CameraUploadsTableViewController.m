@@ -116,6 +116,7 @@
             } else {
                 [self.enableCameraUploadsLabel setText:NSLocalizedString(@"enableCameraUploadsLabel", nil)];
                 [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+                [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
                 
                 [self.enableCameraUploadsCell setAccessoryType:UITableViewCellAccessoryNone];
                 [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryNone];

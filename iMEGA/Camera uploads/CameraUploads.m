@@ -212,7 +212,7 @@ static CameraUploads *instance = nil;
     
     ALAsset *asset = [self.assetUploadArray firstObject];
     if (!asset) {
-        [self setBadgeValue];
+//        [self setBadgeValue];
         return;
     }
     
@@ -242,7 +242,7 @@ static CameraUploads *instance = nil;
         }
     }
     
-    [self setBadgeValue];
+//    [self setBadgeValue];
     
     NSString *localFingerPrint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
     
@@ -365,6 +365,9 @@ static CameraUploads *instance = nil;
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if ([transfer type] == MEGATransferTypeUpload) {
+        [self setBadgeValue];
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {

@@ -25,15 +25,26 @@
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "SVProgressHUD.h"
+#import "CameraUploads.h"
 
 @interface PhotosViewController ()
 
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) MEGANodeList *nodesList;
+@property (nonatomic, strong) MEGANodeList *nodeList;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 @property (nonatomic, strong) NSMutableArray *previewsArray;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
+
+@property (weak, nonatomic) IBOutlet UIView *uploadProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *photoNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UILabel *transferredBytesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalBytesLabel;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadProgressViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewTopLayoutConstraint;
 
 @end
 
@@ -49,16 +60,14 @@
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,13 +85,13 @@
     
     self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:@"Camera Uploads"];
     
-    self.nodesList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
+    self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"MMMM yyyy"];
     
-    for (NSInteger i = 0; i < [self.nodesList.size integerValue]; i++) {
-        MEGANode *node = [self.nodesList nodeAtIndex:i];
+    for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
+        MEGANode *node = [self.nodeList nodeAtIndex:i];
         
         if (!isImage([node name].lowercaseString.pathExtension)) {
             continue;
@@ -105,6 +114,43 @@
     [self.navigationItem setTitle:NSLocalizedString(@"photosTitle", @"Photos")];
     
     [self.photosCollectionView reloadData];
+    
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        
+        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+        NSInteger transferListSize = [[transferList size] integerValue];
+        
+        for (NSInteger i = 0; i < transferListSize; i++) {
+            
+            MEGATransfer *transfer = [transferList transferAtIndex:i];
+            
+            if (([transfer type] == MEGATransferTypeUpload) && (self.uploadProgressViewTopLayoutConstraint != 0)) {
+                [self showProgressView];
+            }
+        }
+    } else {
+        
+        self.uploadProgressViewTopLayoutConstraint.constant = -60;
+        self.photosCollectionViewTopLayoutConstraint.constant = 0;
+    }
+}
+
+- (void)showProgressView {
+    [UIView animateWithDuration:1 animations:^{
+        self.uploadProgressViewTopLayoutConstraint.constant = 0;
+        self.photosCollectionViewTopLayoutConstraint.constant = 60;
+        
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)hideProgressView {
+    [UIView animateWithDuration:1 animations:^{
+        self.uploadProgressViewTopLayoutConstraint.constant = -60;
+        self.photosCollectionViewTopLayoutConstraint.constant = 0;
+        
+        [self.view layoutIfNeeded];
+    }];
 }
 
 #pragma mark - UICollectioViewDataSource
@@ -189,8 +235,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.previewsArray = [NSMutableArray new];
     
-    for (NSInteger i = 0; i < [[self.nodesList size] integerValue]; i++) {
-        MEGANode *n = [self.nodesList nodeAtIndex:i];
+    for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
+        MEGANode *n = [self.nodeList nodeAtIndex:i];
         MEGAPreview *preview = [MEGAPreview photoWithNode:n];
         preview.caption = [n name];
         [self.previewsArray addObject:preview];
@@ -277,6 +323,32 @@
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self reloadUI];
+}
+
+#pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+}
+
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (self.uploadProgressViewTopLayoutConstraint.constant == -60) {
+        [self showProgressView];
+    }
+    
+    if ([transfer type] == MEGATransferTypeUpload) {
+        [self.photoNameLabel setText:[transfer fileName]];
+        float percentage = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+        [self.transferredBytesLabel setText:[NSByteCountFormatter stringFromByteCount:[[transfer transferredBytes] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
+        [self.totalBytesLabel setText:[NSByteCountFormatter stringFromByteCount:[[transfer totalBytes] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
+        [self.speedLabel setText:[NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]]];
+        [self.progressView setProgress:percentage];
+    }
+}
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
+        [self hideProgressView];
+    }
 }
 
 @end
