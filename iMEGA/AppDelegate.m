@@ -281,7 +281,6 @@
 }
 
 - (void)startBackgroundTask {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;

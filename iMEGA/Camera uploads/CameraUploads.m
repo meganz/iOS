@@ -290,8 +290,6 @@ static CameraUploads *instance = nil;
                     [self.assetUploadArray removeObjectAtIndex:0];
                 }
                 
-                [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
-                
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     [self uploadNextImage];
                 });
@@ -346,8 +344,6 @@ static CameraUploads *instance = nil;
             [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
             [self.assetUploadArray removeObjectAtIndex:0];
             
-            [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self uploadNextImage];
             });
@@ -398,8 +394,6 @@ static CameraUploads *instance = nil;
         if (!success || error) {
             NSLog(@"remove file error %@", error);
         }
-        
-       [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[CameraUploads syncManager].assetUploadArray.count];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self uploadNextImage];
