@@ -37,8 +37,6 @@
     MEGANode *cameraUploadsNode;
     uint64_t cameraUploadHandle;
     
-    NSDate *lastUploadPhotoDate;
-    
     BOOL isCreatingFolder;
 }
 
@@ -75,10 +73,10 @@ static CameraUploads *instance = nil;
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
-    if (!lastUploadPhotoDate) {
-        lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-        [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+    self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
+    if (!self.lastUploadPhotoDate) {
+        self.lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
+        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
     }
     
     cameraUploadHandle = -1;
@@ -169,7 +167,7 @@ static CameraUploads *instance = nil;
                               resultBlock:^(ALAsset *asset) {
                                   NSDate *assetModificationTime = [asset valueForProperty:ALAssetPropertyDate];
                                   
-                                  if (asset != nil  && ([assetModificationTime timeIntervalSince1970] > [lastUploadPhotoDate timeIntervalSince1970])) {
+                                  if (asset != nil  && ([assetModificationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                                       [self.assetUploadArray addObject:asset];
                                   }
                                   
@@ -285,8 +283,8 @@ static CameraUploads *instance = nil;
             } else {
                 if ([self.assetUploadArray count] != 0) {
                     ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-                    lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-                    [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+                    self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+                    [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
                     [self.assetUploadArray removeObjectAtIndex:0];
                 }
                 
@@ -340,8 +338,8 @@ static CameraUploads *instance = nil;
         case MEGARequestTypeCopy:
         case MEGARequestTypeRename: {
             ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-            lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-            [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+            self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
             [self.assetUploadArray removeObjectAtIndex:0];
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -381,8 +379,8 @@ static CameraUploads *instance = nil;
     
     if ([transfer type] == MEGATransferTypeUpload) {
         ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-        lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-        [[NSUserDefaults standardUserDefaults] setObject:lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+        self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
         
         [self.assetUploadArray removeObjectAtIndex:0];
         

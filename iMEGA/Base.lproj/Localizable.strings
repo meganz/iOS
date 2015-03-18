@@ -191,7 +191,7 @@
 
 //UITABBARCONTROLLER (5) SETTINGS
 "usedSpaceOfTotalSpace"="%@ of %@";
-"upgradeLabel"="Ugrade";
+"upgradeLabel"="Upgrade account";
 "cameraUploadsLabel"="Camera Uploads";
 "passcodeLabel"="Passcode";
 "aboutLabel"="About";
