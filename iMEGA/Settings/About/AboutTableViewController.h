@@ -21,6 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AboutTableViewController : UITableViewController
+@interface AboutTableViewController : UITableViewController <UIAlertViewDelegate>
 
 @end
