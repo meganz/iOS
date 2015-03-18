@@ -21,8 +21,12 @@
 
 #import "AboutTableViewController.h"
 #import "TermsOfServiceViewController.h"
+#import "MEGASdkManager.h"
 
-@interface AboutTableViewController ()
+@interface AboutTableViewController () {
+    int megaSdkVersionCounter;
+    int versionCounter;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServicesLabel;
@@ -37,6 +41,13 @@
     
     [self.privacyPolicyLabel setText:NSLocalizedString(@"privacyPolicyLabel", nil)];
     [self.termsOfServicesLabel setText:NSLocalizedString(@"termsOfServicesLabel", nil)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    megaSdkVersionCounter = 0;
+    versionCounter = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,12 +68,52 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
+    if ([indexPath row] == 0) {
+        megaSdkVersionCounter = 0;
+        versionCounter++;
+        NSLog(@"%d", versionCounter);
+        if (versionCounter == 5) {
+            versionCounter = 0;
+            UIAlertView *gApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://g.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+            gApiAlertView.tag = 0;
+            [gApiAlertView show];
+        }
+    }
+    
+    if ([indexPath row] == 1) {
+        versionCounter = 0;
+        megaSdkVersionCounter++;
+        NSLog(@"%d", megaSdkVersionCounter);
+        if (megaSdkVersionCounter == 5) {
+            megaSdkVersionCounter = 0;
+            
+            UIAlertView *stagingApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://staging.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+            stagingApiAlertView.tag = 1;
+            [stagingApiAlertView show];
+        }
+    }
+    
     if ([indexPath row] == 3) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         TermsOfServiceViewController *termsOfServicesViewController = [storyboard instantiateViewControllerWithIdentifier:@"termsOfServiceID"];
         [self.navigationController pushViewController:termsOfServicesViewController animated:YES];
     }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if (alertView.tag == 0) {
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/"];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/"];
+        }
+    }
+    
+    versionCounter = 0;
+    megaSdkVersionCounter = 0;
 }
 
 @end
