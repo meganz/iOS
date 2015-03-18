@@ -38,6 +38,8 @@
 @property BOOL isUseCellularConnectionEnabled;
 @property BOOL isOnlyWhenChargingEnabled;
 
+@property (nonatomic, strong) NSDate *lastUploadPhotoDate;
+
 + (CameraUploads *)syncManager;
 - (void)getAllAssetsForUpload;
 

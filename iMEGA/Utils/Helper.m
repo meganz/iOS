@@ -427,10 +427,11 @@
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
-    
     //Reser Camera Uploads settings
     [[CameraUploads syncManager].assetUploadArray removeAllObjects];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
+    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
     
     [CameraUploads syncManager].isCameraUploadsEnabled = NO;
     [CameraUploads syncManager].isUploadVideosEnabled = NO;
