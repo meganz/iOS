@@ -210,5 +210,7 @@
 "privacyPolicyLabel"="Politica de privacidad";
 "termsOfServicesLabel"="Términos del servicio";
 
+"errorLoadingPrivacyPolicyWeb" = "La carga de la web política de privacidad de MEGA ha fallado.";
+
 // HUD messages
 "logout" = "Cerrando sesión...";

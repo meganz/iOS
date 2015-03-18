@@ -1,8 +1,8 @@
 /**
- * @file TermsOfServiceViewController.m
- * @brief View controller that allows to see the terms of service of MEGA
+ * @file PrivacyPolicyViewController.m
+ * @brief View controller that allows to see the privacy policy of MEGA
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -19,26 +19,24 @@
  * program.
  */
 
-#import "TermsOfServiceViewController.h"
-
+#import "PrivacyPolicyViewController.h"
 #import "SVProgressHUD.h"
 
-@interface TermsOfServiceViewController () <UIWebViewDelegate>
+@interface PrivacyPolicyViewController ()
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-
 @end
 
-@implementation TermsOfServiceViewController
+@implementation PrivacyPolicyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"termsOfServicesLabel", nil)];
+    [self.navigationItem setTitle:NSLocalizedString(@"privacyPolicyLabel", nil)];
     
     [self.navigationController.navigationBar.topItem setTitle:@""];
     
-    NSURL *url = [NSURL URLWithString:@"https://mega.co.nz/ios_terms.html"];
+    NSURL *url = [NSURL URLWithString:@"https://mega.co.nz/ios_privacy.html"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     
     [self.webView loadRequest:urlRequest];
@@ -55,7 +53,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"errorLoadingTermsWeb", @"The MEGA Terms of Service web fail at loading.")];
+    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"errorLoadingPrivacyPolicyWeb", @"The MEGA privacy policy web fail at loading.")];
 }
 
 @end

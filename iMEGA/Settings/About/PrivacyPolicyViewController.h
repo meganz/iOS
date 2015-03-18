@@ -1,8 +1,8 @@
 /**
- * @file SettingsViewController.h
- * @brief View controller that show your settings
+ * @file PrivacyPolicyViewController.h
+ * @brief View controller that allows to see the privacy policy of MEGA
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -20,8 +20,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MEGASdkManager.h"
 
-@interface SettingsViewController : UIViewController <MEGARequestDelegate>
+@interface PrivacyPolicyViewController : UIViewController
 
 @end
