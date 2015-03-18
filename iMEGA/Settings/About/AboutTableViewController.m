@@ -20,6 +20,7 @@
  */
 
 #import "AboutTableViewController.h"
+#import "TermsOfServiceViewController.h"
 
 @interface AboutTableViewController ()
 
@@ -51,6 +52,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 4;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if ([indexPath row] == 3) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TermsOfServiceViewController *termsOfServicesViewController = [storyboard instantiateViewControllerWithIdentifier:@"termsOfServiceID"];
+        [self.navigationController pushViewController:termsOfServicesViewController animated:YES];
+    }
 }
 
 @end

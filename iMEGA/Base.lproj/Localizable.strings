@@ -210,5 +210,7 @@
 "privacyPolicyLabel"="Privacy policy";
 "termsOfServicesLabel"="Terms of services";
 
+"errorLoadingPrivacyPolicyWeb" = "The MEGA privacy policy web fail at loading.";
+
 // HUD messages
 "logout" = "Logout...";
