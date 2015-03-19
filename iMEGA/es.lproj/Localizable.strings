@@ -207,8 +207,8 @@
 "onlyWhenChargingLabel"="Subir solo cuando está cargando";
 
 //(5) Settings - AboutTableViewController
-"privacyPolicyLabel"="Politica de privacidad";
-"termsOfServicesLabel"="Términos del servicio";
+"privacyPolicyLabel"="Politica de Privacidad";
+"termsOfServicesLabel"="Términos del Servicio";
 
 "errorLoadingPrivacyPolicyWeb" = "La carga de la web política de privacidad de MEGA ha fallado.";
 

@@ -23,13 +23,17 @@
 #import "TermsOfServiceViewController.h"
 #import "MEGASdkManager.h"
 
-@interface AboutTableViewController () {
+@interface AboutTableViewController () <UIGestureRecognizerDelegate> {
     int megaSdkVersionCounter;
     int versionCounter;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServicesLabel;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
+
+@property (weak, nonatomic) IBOutlet UIView *debugView;
 @end
 
 @implementation AboutTableViewController
@@ -41,6 +45,12 @@
     
     [self.privacyPolicyLabel setText:NSLocalizedString(@"privacyPolicyLabel", nil)];
     [self.termsOfServicesLabel setText:NSLocalizedString(@"termsOfServicesLabel", nil)];
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 5.0;
+    lpgr.delegate = self;
+    [self.versionCell addGestureRecognizer:lpgr];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,6 +63,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Enter the API_URL (DEBUG /!\\)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView textFieldAtIndex:0].text = @"";
+        alertView.tag = 2;
+        [alertView show];
+    }
 }
 
 #pragma mark - Table view data source
@@ -106,9 +126,21 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         if (alertView.tag == 0) {
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/"];
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+            for (UIView *view in [[[[UIApplication sharedApplication] delegate] window] subviews]) {
+                // Remove all overlapping views in the status bar
+                if (view.tag == 1) {
+                    [view removeFromSuperview];
+                }
+            }
+        } else if (alertView.tag == 1) {
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [self.debugView setBackgroundColor:[UIColor yellowColor]];
+            [[[[UIApplication sharedApplication] delegate] window] addSubview:self.debugView];
         } else {
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/"];
+            [self.debugView setBackgroundColor:[UIColor orangeColor]];
+            [[[[UIApplication sharedApplication] delegate] window] addSubview:self.debugView];
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:[[alertView textFieldAtIndex:0] text] disablepkp:YES];
         }
     }
     

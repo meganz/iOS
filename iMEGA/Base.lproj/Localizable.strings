@@ -207,8 +207,8 @@
 "onlyWhenChargingLabel"="Only when charging";
 
 //(5) Settings - AboutTableViewController
-"privacyPolicyLabel"="Privacy policy";
-"termsOfServicesLabel"="Terms of services";
+"privacyPolicyLabel"="Privacy Policy";
+"termsOfServicesLabel"="Terms of Services";
 
 "errorLoadingPrivacyPolicyWeb" = "The MEGA privacy policy web fail at loading.";
 

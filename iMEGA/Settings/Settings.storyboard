@@ -440,11 +440,26 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="About" id="o8N-QW-ma2"/>
                     <connections>
+                        <outlet property="debugView" destination="YVG-RV-2mq" id="0WL-Pc-2QU"/>
                         <outlet property="privacyPolicyLabel" destination="eIw-Vw-meZ" id="L8l-0h-zSK"/>
                         <outlet property="termsOfServicesLabel" destination="H9C-4v-XAB" id="Ew3-Su-ewA"/>
+                        <outlet property="versionCell" destination="cPl-8R-pEt" id="1oo-ei-Zx9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oNW-Qc-GDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view tag="1" contentMode="scaleToFill" id="YVG-RV-2mq">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Debug mode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaL-L2-6In">
+                            <rect key="frame" x="15" y="0.0" width="179" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="-1705" y="370"/>
         </scene>
