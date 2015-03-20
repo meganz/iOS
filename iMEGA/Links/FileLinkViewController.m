@@ -221,21 +221,4 @@
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-}
-
 @end

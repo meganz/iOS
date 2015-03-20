@@ -2,7 +2,7 @@
  * @file AppDelegate.h
  * @brief The AppDelegate of the app
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *

@@ -164,7 +164,7 @@
     return pathFromOffline;
 }
 
--(unsigned long long)sizeOfFolderAtPath:(NSString *)path {
+- (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
     unsigned long long folderSize = 0;
     
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
@@ -190,6 +190,24 @@
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
     [self.tableView setBackgroundView:emptyView];
+}
+
+- (NSArray *)nodeHandlesOnFolder:(NSString *)path {
+    
+    NSMutableArray *nodeHandlesOnFolder = [[NSMutableArray alloc] init];
+    
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            [nodeHandlesOnFolder addObjectsFromArray:[self nodeHandlesOnFolder:[path stringByAppendingPathComponent:item]]];
+        } else {
+            NSString *base64Handle = [[item componentsSeparatedByString:@"_"] objectAtIndex:0];
+            [nodeHandlesOnFolder addObject:base64Handle];
+        }
+    }
+    
+    return nodeHandlesOnFolder;
 }
 
 #pragma mark - UITableViewDataSource
@@ -283,12 +301,27 @@
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
         
+        BOOL isDirectory;
+        [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+        NSArray *nodesHandlesOnFolderArray;
+        if (isDirectory) {
+            nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
+        }
+        
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
         if (!success || error) {
             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"itemDeletingError", @"Error at deleting")];
             return;
         } else {
+            if (isDirectory) {
+                for (NSString *nodeHandle in nodesHandlesOnFolderArray) {
+                    [[Helper downloadedNodes] removeObjectForKey:nodeHandle];
+                }
+            } else {
+                NSString *base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
+                [[Helper downloadedNodes] removeObjectForKey:base64Handle];
+            }
             [self.tableView reloadData];
         }
     }
@@ -372,6 +405,10 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([error type]) {
+        return;
+    }
+    
     if ([transfer type] == MEGATransferTypeDownload) {
         [self reloadUI];
     }
