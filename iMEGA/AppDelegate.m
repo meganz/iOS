@@ -2,7 +2,7 @@
  * @file AppDelegate.m
  * @brief The AppDelegate of the app
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -96,6 +96,9 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -106,10 +109,15 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [Helper setDownloadedNodes];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
@@ -432,6 +440,10 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if ([transfer type] == MEGATransferTypeDownload) {        
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        [[Helper downloadingNodes] setObject:base64Handle forKey:base64Handle];
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -441,6 +453,15 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([error type]) {
+        return;
+    }
+    
+    if ([transfer type] == MEGATransferTypeDownload) {
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+        [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];
+    }
 }
 
 -(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

@@ -120,6 +120,8 @@
 "permissionTitle"="Error de permisos";
 "permissionMessage"="Compruebe sus permisos sobre esta carpeta";
 
+"transferCanceled"="Transferencia cancelada";
+
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Fotos";
 "photosPerMonth"="%lu fotos";

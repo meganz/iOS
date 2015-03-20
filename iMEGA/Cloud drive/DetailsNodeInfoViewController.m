@@ -36,7 +36,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *saveLabel;
+@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
+
 
 @end
 
@@ -94,14 +96,11 @@
     
     self.title = [self.node name];
     
-    NSString *documentFilePath = [Helper pathForNode:self.node searchPath:NSDocumentDirectory];
-    BOOL fileDocumentExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
-    if (fileDocumentExists) {
+    if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
         [self.downloadProgressView setHidden:YES];
-        [self.saveLabel setHidden:NO];
         [self.downloadButton setImage:[UIImage imageNamed:@"savedFile"] forState:UIControlStateNormal];
-        self.saveLabel.text = NSLocalizedString(@"savedForOffline", @"Saved for offline");
-        
+        [self.saveLabel setHidden:NO];
+        [self.saveLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
     }
 }
 
@@ -218,7 +217,7 @@
             NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
             activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
-            [self presentViewController:activityVC animated:YES completion:nil ];
+            [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
             
@@ -256,9 +255,21 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
     [self.downloadProgressView setProgress:progress];
+    
+    NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
+    if ([speed isEqualToString:@"Zero KB/s"]) {
+        speed = @"";
+    }
+    [self.speedLabel setText:speed];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([error type]) {
+        return;
+    }
+    
+    [self.speedLabel setText:@""];
+    
     [self.downloadProgressView setHidden:YES];
     [self.downloadProgressView setProgress:1];
     [self.saveLabel setHidden:NO];

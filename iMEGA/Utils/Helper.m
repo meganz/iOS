@@ -1,3 +1,24 @@
+/**
+ * @file Helper.m
+ * @brief Common methods for the app.
+ *
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
+ *
+ * This file is part of the MEGA SDK - Client Access Engine.
+ *
+ * Applications using the MEGA API must present a valid application key
+ * and comply with the the rules set forth in the Terms of Service.
+ *
+ * The MEGA SDK is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright Simplified (2-clause) BSD License.
+ *
+ * You should have received a copy of the license along with this
+ * program.
+ */
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
@@ -5,16 +26,7 @@
 #import "SVProgressHUD.h"
 #import "CameraUploads.h"
 
-@interface Helper ()
-
-+ (NSDictionary *)fileTypesDictionary;
-
-+ (UIImage *)genericImage;
-+ (UIImage *)folderImage;
-+ (UIImage *)folderSharedImage;
-+ (UIImage *)defaultPhotoImage;
-
-@end
+static NSMutableDictionary *downloadedNodes;
 
 @implementation Helper
 
@@ -242,6 +254,24 @@
     return defaultPhotoImage;
 }
 
++ (UIImage *)downloadingArrowImage {
+    static UIImage *downloadingArrowImage = nil;
+    
+    if (downloadingArrowImage == nil) {
+        downloadingArrowImage = [UIImage imageNamed:@"downloadingArrow"];
+    }
+    return downloadingArrowImage;
+}
+
++ (UIImage *)downloadedArrowImage {
+    static UIImage *downloadedArrowImage = nil;
+    
+    if (downloadedArrowImage == nil) {
+        downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
+    }
+    return downloadedArrowImage;
+}
+
 + (UIImage *)imageForNode:(MEGANode *)node {
     
     MEGANodeType nodeType = [node type];
@@ -306,6 +336,25 @@
     :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
     
     return destinationFilePath;
+}
+
++ (NSMutableDictionary *)downloadingNodes {
+    static NSMutableDictionary *downloadingNodes = nil;
+    if (!downloadingNodes) {
+        downloadingNodes = [[NSMutableDictionary alloc] init];
+    }
+    return downloadingNodes;
+}
+
++ (NSMutableDictionary *)downloadedNodes {
+    if (!downloadedNodes) {
+        downloadedNodes = [[NSMutableDictionary alloc] init];
+    }
+    return downloadedNodes;
+}
+
++ (void)setDownloadedNodes {
+    downloadedNodes = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"DownloadedNodes"]];
 }
 
 + (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
@@ -427,7 +476,7 @@
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
     
-    //Reser Camera Uploads settings
+    //Reset Camera Uploads settings
     [[CameraUploads syncManager].assetUploadArray removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
@@ -442,6 +491,12 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[Helper downloadingNodes] removeAllObjects];
+    [[Helper downloadedNodes] removeAllObjects];
 }
 
 @end

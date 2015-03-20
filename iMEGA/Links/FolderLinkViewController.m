@@ -101,7 +101,6 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
 
@@ -109,8 +108,6 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
 }
 
 #pragma mark - Private
@@ -579,23 +576,6 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self.tableView reloadData];
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

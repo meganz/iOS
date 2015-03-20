@@ -23,9 +23,12 @@
 
 @interface NodeTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+
 @property (nonatomic) uint64_t nodeHandle;
 
 @end

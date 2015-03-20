@@ -20,7 +20,25 @@
  */
 
 #import "NodeTableViewCell.h"
+#import "MEGASdkManager.h"
 
 @implementation NodeTableViewCell
+
+- (IBAction)cancelTransfer:(id)sender {
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+    NSInteger size = [transferList.size integerValue];
+    
+    for (NSInteger i = 0; i < size; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        if (transfer.type == MEGATransferTypeUpload) {
+            continue;
+        }
+        
+        if (transfer.nodeHandle == self.nodeHandle) {
+            [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
+            break;
+        }
+    }
+}
 
 @end
