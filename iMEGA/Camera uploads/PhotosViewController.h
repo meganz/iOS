@@ -24,6 +24,6 @@
 #import "MEGASdkManager.h"
 #import "MWPhotoBrowser.h"
 
-@interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGADelegate, MWPhotoBrowserDelegate>
+@interface PhotosViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MEGARequestDelegate, MEGATransferDelegate, MEGAGlobalDelegate, MWPhotoBrowserDelegate>
 
 @end

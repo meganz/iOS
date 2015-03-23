@@ -417,6 +417,11 @@
             break;
         }
             
+        case MEGARequestTypeFetchNodes: {
+            [SVProgressHUD dismiss];
+            break;
+        }
+            
         case MEGARequestTypeQuerySignUpLink: {
             ConfirmAccountViewController *confirmAccountVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountViewControllerID"];
             [confirmAccountVC setConfirmationLinkString:[request link]];
