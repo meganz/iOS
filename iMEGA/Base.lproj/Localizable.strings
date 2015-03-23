@@ -210,7 +210,7 @@
 
 //(5) Settings - AboutTableViewController
 "privacyPolicyLabel"="Privacy Policy";
-"termsOfServicesLabel"="Terms of Services";
+"termsOfServicesLabel"="Terms of Service";
 
 "errorLoadingPrivacyPolicyWeb" = "The MEGA privacy policy web fail at loading.";
 
