@@ -15,7 +15,7 @@
 "folderEncryptedMessage" = "For the moment you can't import or download an encrypted folder.";
 
 "loggetOutTitle" = "Logged out";
-"loggedOutFromAnotherLocation" = "You have been logged out on this device from another location";
+"loggedOutFromAnotherLocation" = "You have been logged out of this device from another location";
 
 //TourViewController
 "megaSpace"="MEGA SPACE";
@@ -42,7 +42,7 @@
 //CreateAccountViewController
 "nameInvalidFormat" = "Enter a valid name";
 "passwordsDoNotMatch" = "Passwords do not match";
-"termsCheckboxUnselected" = "You need to agree with the terms of service to register an account on MEGA.";
+"termsCheckboxUnselected" = "You need to agree with the Terms of Service to register an account on MEGA.";
 
 "emailAlreadyRegistered" = "This e-mail address has already registered an account with MEGA";
 "awesome" = "Awesome";
@@ -52,7 +52,7 @@
 "passwordWrong" = "Wrong password";
 
 //TermsOfServiceViewController
-"errorLoadingTermsWeb" = "The MEGA Terms of Service web fail at loading.";
+"errorLoadingTermsWeb" = "The MEGA Terms of Service failed to load.";
 
 //LINKS
 //FileLinkViewController
@@ -71,7 +71,7 @@
 "fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
 
 //FileLinkViewController - SVProgressHUD
-"fileAlreadyExist" = "The file you want to download already exists on Offline";
+"fileAlreadyExist" = "The file you want to download already exists Offline";
 "downloadStarted" = "Download started";
 
 //FolderLinkViewController
@@ -85,7 +85,7 @@
 "folderTooBigMessage"="The file you are trying to download is bigger than the avaliable memory.";
 
 "folderCreationError"="The folder '%@' can't be created";
-"folderAlreadyExist"="The folder you want to download already exists on Offline";
+"folderAlreadyExist"="The folder you want to download already exists Offline";
 
 "folderLinkUnavailableTitle"="Folder link unavailable";
 "folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
@@ -212,7 +212,7 @@
 "privacyPolicyLabel"="Privacy Policy";
 "termsOfServicesLabel"="Terms of Service";
 
-"errorLoadingPrivacyPolicyWeb" = "The MEGA privacy policy web fail at loading.";
+"errorLoadingPrivacyPolicyWeb" = "The MEGA Privacy Policy failed to load.";
 
 // HUD messages
 "logout" = "Logout...";
