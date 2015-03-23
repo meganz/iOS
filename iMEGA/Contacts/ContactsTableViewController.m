@@ -66,18 +66,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -216,7 +206,7 @@
         cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.width/2;
         cell.avatarImageView.layer.masksToBounds = YES;
     } else {
-        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
         [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
     }
     
@@ -326,7 +316,7 @@
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         remainingOperations = 1;
         MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-        [[MEGASdkManager sharedMEGASdk] removeContactUser:user];
+        [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:self];
     }
 }
 
@@ -365,7 +355,7 @@
     }
     
     if (email) {
-        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email];
+        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
@@ -393,7 +383,7 @@
     }
 
     if (email) {
-        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email];
+        [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
@@ -410,13 +400,13 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text]];
+            [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
         }
     } else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
             remainingOperations = self.selectedUsersArray.count;
             for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i]];
+                [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
             }
         }
     } else if (alertView.tag == 2) {
@@ -446,10 +436,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeFetchNodes:
-            [SVProgressHUD dismiss];
-            [self reloadUI];
-            break;
             
         case MEGARequestTypeGetAttrUser: {
             for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {

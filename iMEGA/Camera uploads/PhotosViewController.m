@@ -60,14 +60,7 @@
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [self reloadUI];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -184,7 +177,7 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
     
     if (!fileExists && [node hasThumbnail]) {
-        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
     }
     
     if (!fileExists) {
@@ -295,11 +288,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeFetchNodes:
-            [SVProgressHUD dismiss];
-            [self reloadUI];
-            break;
-            
         case MEGARequestTypeGetAttrFile: {
             for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
                 if ([request nodeHandle] == [pcvc nodeHandle]) {

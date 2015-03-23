@@ -59,15 +59,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    
     [self reloadUI];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
 }
 
 #pragma mark - Private Methods
@@ -77,18 +69,17 @@
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
     [self setUserAvatar];
     
-    [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-    [[MEGASdkManager sharedMEGASdk] getUserData];
+    [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserDataWithDelegate:self];
 }
 
 - (void)setUserAvatar {
-    
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.emailLabel.text];
     NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbs"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
     if (!fileExists) {
-        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
     } else {
         [self.avatarImageView setImage:[UIImage imageNamed:avatarFilePath]];
         
@@ -108,7 +99,7 @@
     
     // Logout
     if (indexPath.section == 2) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
     }
 }
 
@@ -153,6 +144,10 @@
             
         case MEGARequestTypeGetUserData: {
             [self.userNameLabel setText:[request name]];
+            
+            //Needed for load the avatar when user enter on settings before fetchnodes finish
+            self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
+            [self setUserAvatar];
             break;
         }
             

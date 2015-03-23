@@ -56,6 +56,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.navigationItem setTitle:NSLocalizedString(@"aboutLabel", "The title of about view")];
+    
     megaSdkVersionCounter = 0;
     versionCounter = 0;
 }
@@ -92,7 +94,6 @@
     if ([indexPath row] == 0) {
         megaSdkVersionCounter = 0;
         versionCounter++;
-        NSLog(@"%d", versionCounter);
         if (versionCounter == 5) {
             versionCounter = 0;
             UIAlertView *gApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://g.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
