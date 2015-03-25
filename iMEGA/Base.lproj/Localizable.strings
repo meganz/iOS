@@ -214,5 +214,23 @@
 
 "errorLoadingPrivacyPolicyWeb" = "The MEGA Privacy Policy failed to load.";
 
+//(5) Settings - AdvancedTableViewController
+
+"advancedLabel"="Advanced";
+"rubbishBinLabel"="Rubbish bin";
+"exportMasterKeyLabel"="Export master key";
+"rubbishBinFooter"="Deleted files go into the Rubbish Bin.";
+"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to set a new password without data loss.";
+"exportMasterKeyAlertTitle"="Master Key exported";
+"exportMasterKeyAlertMessage"="MasterKey.txt was exported to the Documents folder. You can transfer it by connecting the device to the computer and open iTunes. We strongly advise you against emailing this file!";
+
+//Remove nodes from rubbish bin
+"removeNodeFromRubbishBinTitle" = "Confirm removal";
+"removeNodeFromRubbishBinMessage" = "You are about to permanently remove 1 files from the Rubbish Bin. Would you like to proceed? (You cannot undo this action.)";
+"removeMultipleNodesFromRubbishBinMessage" = "You are about to permanently remove %d files from the Rubbish Bin. Would you like to proceed? (You cannot undo this action.)";
+
+"fileRemovedFromRubbishBin" = "1 file removed from MEGA";
+"filesRemovedFromRubbishBin" = "%d files removed from MEGA";
+
 // HUD messages
 "logout" = "Logout...";

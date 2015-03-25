@@ -249,6 +249,8 @@
     NSString *nameString;
     if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
         nameString = NSLocalizedString(@"downloading", nil);
+    } else if ([itemNameString isEqualToString:@"MasterKey.txt"]) {
+        nameString = itemNameString;
     } else {
         NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
         handleString = [itemNameComponentsArray objectAtIndex:0];

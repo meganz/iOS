@@ -75,11 +75,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (!self.user) {
-        NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
-        self.navigationItem.rightBarButtonItems = buttonsItems;
-    } else {
-        self.navigationItem.rightBarButtonItems = nil;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
+            self.navigationItem.rightBarButtonItems = buttonsItems;
+            break;
+        }
+            
+        case DisplayModeContact:
+            self.navigationItem.rightBarButtonItems = nil;
+            break;
+            
+        case DisplayModeRubbishBin: {
+            NSArray *buttonsItems = @[self.editButtonItem];
+            self.navigationItem.rightBarButtonItems = buttonsItems;
+            
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            NSArray *toolbarItems = [NSArray arrayWithObjects:self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem, nil];
+            [self.toolbar setItems:toolbarItems];
+            break;
+        }
+            
+        default:
+            break;
     }
 
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
@@ -100,6 +118,7 @@
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -142,6 +161,10 @@
     
     if (cell == nil) {
         cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     
     MEGANode *node = nil;
@@ -287,6 +310,11 @@
             } else {
                 CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 [cdvc setParentNode:node];
+                
+                if (self.displayMode == DisplayModeRubbishBin) {
+                    [cdvc setDisplayMode:self.displayMode];
+                }
+                
                 [self.navigationController pushViewController:cdvc animated:YES];
             }
             break;
@@ -395,6 +423,7 @@
     
     DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [nodeInfoDetailsVC setNode:node];
+    
     [self.navigationController pushViewController:nodeInfoDetailsVC animated:YES];
 }
 
@@ -420,7 +449,12 @@
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
         remainingOperations = 1;
-        [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+        
+        if (self.displayMode == DisplayModeCloudDrive) {
+            [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] removeNode:node];
+        }
     }
 }
 
@@ -530,7 +564,11 @@
         if (buttonIndex == 1) {
             remainingOperations = self.selectedNodesArray.count;
             for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
-                [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                if (self.displayMode == DisplayModeCloudDrive) {
+                    [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
+                }
             }
         }
     }
@@ -575,21 +613,44 @@
 #pragma mark - Private methods
 
 - (void)reloadUI {
-    
-    if (self.user) {
-        self.nodes = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
-        [self.searchDisplayController.searchBar setFrame:CGRectMake(0, 0, 0, 0)];
-    } else {
-        if (!self.parentNode) {
-            self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    switch (self.displayMode) {
+            
+        case DisplayModeCloudDrive: {
+            if (!self.parentNode) {
+                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            }
+            
+            if ([self.parentNode type] == MEGANodeTypeRoot) {
+                [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
+            } else {
+                [self.navigationItem setTitle:[self.parentNode name]];
+            }
+            
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            
+            break;
         }
-        if ([[self.parentNode name] isEqualToString:@"CRYPTO_ERROR"]) {
-            [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
-        } else {
-            [self.navigationItem setTitle:[self.parentNode name]];
+            
+        case DisplayModeRubbishBin: {
+            if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                [self.navigationItem setTitle:NSLocalizedString(@"rubbishBinLabel", "Rubbish bin")];
+            } else {
+                [self.navigationItem setTitle:[self.parentNode name]];
+            }
+            
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            
+            break;
         }
-        
-        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            
+        case DisplayModeContact: {
+            self.nodes = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+            [self.searchDisplayController.searchBar setFrame:CGRectMake(0, 0, 0, 0)];
+            break;
+        }
+            
+        default:
+            break;
     }
     
     [self.tableView reloadData];
@@ -695,10 +756,16 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] :[NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    if (self.displayMode == DisplayModeCloudDrive) {
+        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
     
-    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
-    [removeAlertView show];
+        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    } else if (self.displayMode == DisplayModeRubbishBin) {
+        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:NSLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
+        
+        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    }
+
     removeAlertView.tag = 2;
     [removeAlertView show];
 }
@@ -811,6 +878,16 @@
             remainingOperations--;
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+                [self setEditing:NO animated:NO];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeRemove: {
+            remainingOperations--;
+            if (remainingOperations == 0) {
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileRemovedFromRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }

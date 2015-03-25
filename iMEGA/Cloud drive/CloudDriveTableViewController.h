@@ -23,9 +23,17 @@
 #import "MWPhotoBrowser.h"
 #import "MEGASdkManager.h"
 
+typedef NS_ENUM (NSInteger, DisplayMode) {
+    DisplayModeCloudDrive = 0,
+    DisplayModeRubbishBin,
+    DisplayModeContact
+};
+
 @interface CloudDriveTableViewController : UITableViewController <MWPhotoBrowserDelegate, MEGADelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGAUser *user;
+
+@property (nonatomic) DisplayMode displayMode;
 
 @end

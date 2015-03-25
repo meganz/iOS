@@ -269,6 +269,7 @@
         cloud.navigationItem.title = [user email];
 
         [cloud setUser:user];
+        [cloud setDisplayMode:DisplayModeContact];
     }
     
 }
