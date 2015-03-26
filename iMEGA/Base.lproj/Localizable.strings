@@ -219,6 +219,7 @@
 "advancedLabel"="Advanced";
 "rubbishBinLabel"="Rubbish bin";
 "exportMasterKeyLabel"="Export master key";
+"changePasswordLabel"="Change password";
 "rubbishBinFooter"="Deleted files go into the Rubbish Bin.";
 "exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to set a new password without data loss.";
 "exportMasterKeyAlertTitle"="Master Key exported";
@@ -231,6 +232,10 @@
 
 "fileRemovedFromRubbishBin" = "1 file removed from MEGA";
 "filesRemovedFromRubbishBin" = "%d files removed from MEGA";
+
+//(5) Settings - ChangePasswordViewController
+"passwordChanged"="Your password has been changed.";
+"oldAndNewPasswordMatch"="The new and the old password can not match.";
 
 // HUD messages
 "logout" = "Logout...";

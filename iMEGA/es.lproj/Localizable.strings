@@ -219,6 +219,7 @@
 "advancedLabel"="Avanzado";
 "rubbishBinLabel"="Papelera";
 "exportMasterKeyLabel"="Exportar llave maestra";
+"changePasswordLabel"="Cambiar contraseña";
 "rubbishBinFooter"="Los archivos borrados van a la papelera.";
 "exportMasterKeyFooter"="Exportando la llave Maestra y guardándola en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos.";
 "exportMasterKeyAlertTitle"="Master Key exportada";
@@ -231,6 +232,10 @@
 
 "fileRemovedFromRubbishBin" = "1 fichero borrado de MEGA";
 "filesRemovedFromRubbishBin" = "%d ficheros borrados de MEGA";
+
+//(5) Settings - ChangePasswordViewController
+"passwordChanged"="Tu contraseña ha sido cambiada.";
+"oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
 
 // HUD messages
 "logout" = "Cerrando sesión...";
