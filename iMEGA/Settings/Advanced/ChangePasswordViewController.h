@@ -1,6 +1,6 @@
 /**
- * @file AdvancedTableViewController.h
- * @brief View controller that shows advanved settings
+ * @file ChangePasswordViewController.h
+ * @brief View controller that allows change the password
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -21,6 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AdvancedTableViewController : UITableViewController
+@interface ChangePasswordViewController : UIViewController
 
 @end
