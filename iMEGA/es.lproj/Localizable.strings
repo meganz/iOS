@@ -219,11 +219,15 @@
 "advancedLabel"="Avanzado";
 "rubbishBinLabel"="Papelera";
 "exportMasterKeyLabel"="Exportar llave maestra";
+"cleanupMasterKeyLabel"="Borrar llave maestra";
 "changePasswordLabel"="Cambiar contraseña";
 "rubbishBinFooter"="Los archivos borrados van a la papelera.";
 "exportMasterKeyFooter"="Exportando la llave Maestra y guardándola en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos.";
 "exportMasterKeyAlertTitle"="Master Key exportada";
 "exportMasterKeyAlertMessage"="Tu Llave Maestra (MasterKey.txt) ha sido exportada a la Carpeta de Documentos. Puedes transferirla conectando tu dispositivo al ordenador y abriendo  iTunes. Aconsejamos qué de ninguna manera envíes este archivo por correo electrónico!";
+"cleanupMasterKeyFooter"="Borrar la llave maestra del sandbox de la aplicación.";
+"cleanupMasterKeyAlertTitle"="Llave maestra borrada";
+"cleanupMasterKeyAlertMessage"="MasterKey.txt fue borrado de la carpeta de documentos.";
 
 //Remove nodes from rubbish bin
 "removeNodeFromRubbishBinTitle" = "Confirmar";

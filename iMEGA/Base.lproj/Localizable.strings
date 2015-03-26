@@ -218,12 +218,16 @@
 
 "advancedLabel"="Advanced";
 "rubbishBinLabel"="Rubbish bin";
-"exportMasterKeyLabel"="Export master key";
+"exportMasterKeyLabel"="Export Master Key";
+"cleanupMasterKeyLabel"="Cleanup Master Key";
 "changePasswordLabel"="Change password";
 "rubbishBinFooter"="Deleted files go into the Rubbish Bin.";
 "exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to set a new password without data loss.";
 "exportMasterKeyAlertTitle"="Master Key exported";
 "exportMasterKeyAlertMessage"="MasterKey.txt was exported to the Documents folder. You can transfer it by connecting the device to the computer and open iTunes. We strongly advise you against emailing this file!";
+"cleanupMasterKeyFooter"="Delete the Master Key from the sandbox of the application.";
+"cleanupMasterKeyAlertTitle"="Master Key cleaned";
+"cleanupMasterKeyAlertMessage"="MasterKey.txt was removed to the Documents folder.";
 
 //Remove nodes from rubbish bin
 "removeNodeFromRubbishBinTitle" = "Confirm removal";
