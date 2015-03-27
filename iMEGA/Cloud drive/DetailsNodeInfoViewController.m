@@ -108,6 +108,10 @@
 #pragma mark - IBActions
 
 - (IBAction)touchUpInsideDownload:(UIButton *)sender {
+    if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
+        return;
+    }
+    
     if ([self.node type] == MEGANodeTypeFile) {
         [Helper downloadNode:self.node folder:@"" folderLink:NO];
     } else if ([self.node type] == MEGANodeTypeFolder) {
