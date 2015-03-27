@@ -668,6 +668,12 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in self.selectedNodesArray) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:n]) {
+            return;
+        }
+    }
+    
+    for (MEGANode *n in self.selectedNodesArray) {
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
             
@@ -681,7 +687,7 @@
         }
     }
     [self setEditing:NO animated:YES];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"downloadStarted", @"Download started")]];
+    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
