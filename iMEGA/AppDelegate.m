@@ -447,7 +447,7 @@
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if ([transfer type] == MEGATransferTypeDownload) {        
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [[Helper downloadingNodes] setObject:base64Handle forKey:base64Handle];
+        [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
 }
 
@@ -459,6 +459,10 @@
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
+        if ([error type] == MEGAErrorTypeApiEIncomplete) {
+            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+            [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+        }
         return;
     }
     

@@ -24,6 +24,7 @@
 #import "Helper.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
 
 @interface DetailsNodeInfoViewController () {
     UIAlertView *renameAlertView;
@@ -115,8 +116,10 @@
         
         if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
             [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
-            [self.tabBarController setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
-            [self.navigationController popViewControllerAnimated:NO];
+            [self.navigationController popViewControllerAnimated:YES];
+            CloudDriveTableViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cloudDriveVC setParentNode:self.node];
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
         }
     }
 }
@@ -248,19 +251,32 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [self.downloadProgressView setHidden:NO];
-    [self.downloadProgressView setProgress:0];
+    if (transfer.type == MEGATransferTypeDownload) {
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
+        if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
+            [self.downloadProgressView setHidden:NO];
+            [self.downloadProgressView setProgress:0];
+            [self.speedLabel setText:NSLocalizedString(@"queued", @"Queued")];
+        }
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
-    [self.downloadProgressView setProgress:progress];
-    
-    NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-    if ([speed isEqualToString:@"Zero KB/s"]) {
-        speed = @"";
+    if (transfer.type == MEGATransferTypeDownload) {
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
+        if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
+            float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+            [self.downloadProgressView setProgress:progress];
+            
+            NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
+            if ([speed isEqualToString:@"Zero KB/s"]) {
+                speed = @"";
+            }
+            [self.speedLabel setText:speed];
+        }
     }
-    [self.speedLabel setText:speed];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -268,13 +284,18 @@
         return;
     }
     
-    [self.speedLabel setText:@""];
-    
-    [self.downloadProgressView setHidden:YES];
-    [self.downloadProgressView setProgress:1];
-    [self.saveLabel setHidden:NO];
-    [self.downloadButton setImage:[UIImage imageNamed:@"savedFile"] forState:UIControlStateNormal];
-    self.saveLabel.text = NSLocalizedString(@"savedForOffline", @"Saved for offline");
+    if (transfer.type == MEGATransferTypeDownload) {
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        if (([[Helper downloadedNodes] objectForKey:base64Handle] != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
+            [self.speedLabel setText:@""];
+            
+            [self.downloadProgressView setHidden:YES];
+            [self.downloadProgressView setProgress:1];
+            [self.saveLabel setHidden:NO];
+            [self.downloadButton setImage:[UIImage imageNamed:@"savedFile"] forState:UIControlStateNormal];
+            [self.saveLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+        }
+    }
 }
 
 -(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

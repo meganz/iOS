@@ -210,6 +210,48 @@
     return nodeHandlesOnFolder;
 }
 
+- (void)cancelPendingTransfersOnFolder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
+    MEGATransferList *transferList;
+    NSInteger transferListSize;
+    if (isFolderLink) {
+        transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
+        transferListSize = [transferList.size integerValue];
+    } else {
+        transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+        transferListSize = [transferList.size integerValue];
+    }
+    
+    for (NSInteger i = 0; i < transferListSize; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        if (transfer.type == MEGATransferTypeUpload) {
+            continue;
+        }
+        
+        if ([transfer.parentPath isEqualToString:[folderPath stringByAppendingString:@"/"]]) {
+             if (isFolderLink) {
+                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transfer.tag];
+             } else {
+                 [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transfer.tag];
+             }
+        } else {
+            NSString *lastPathComponent = [folderPath lastPathComponent];
+            NSArray *pathComponentsArray = [transfer.parentPath pathComponents];
+            NSUInteger pathComponentsArrayCount = [pathComponentsArray count];
+            for (NSUInteger j = 0; j < pathComponentsArrayCount; j++) {
+                NSString *folderString = [pathComponentsArray objectAtIndex:j];
+                if ([folderString isEqualToString:lastPathComponent]) {
+                    if (isFolderLink) {
+                        [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transfer.tag];
+                    } else {
+                        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transfer.tag];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -303,9 +345,19 @@
         
         BOOL isDirectory;
         [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-        NSArray *nodesHandlesOnFolderArray;
         if (isDirectory) {
-            nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
+            if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
+                [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
+            }
+            if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
+                [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
+            }
+        } else {
+            NSString *base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
+            NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
+            if (transferTag != nil) {
+                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+            }
         }
         
         NSError *error = nil;
@@ -315,8 +367,9 @@
             return;
         } else {
             if (isDirectory) {
-                for (NSString *nodeHandle in nodesHandlesOnFolderArray) {
-                    [[Helper downloadedNodes] removeObjectForKey:nodeHandle];
+                NSArray *nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
+                for (NSString *base64HandleAux in nodesHandlesOnFolderArray) {
+                    [[Helper downloadedNodes] removeObjectForKey:base64HandleAux];
                 }
             } else {
                 NSString *base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];

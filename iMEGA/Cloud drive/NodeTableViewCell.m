@@ -21,23 +21,14 @@
 
 #import "NodeTableViewCell.h"
 #import "MEGASdkManager.h"
+#import "Helper.h"
 
 @implementation NodeTableViewCell
 
 - (IBAction)cancelTransfer:(id)sender {
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-    NSInteger size = [transferList.size integerValue];
-    
-    for (NSInteger i = 0; i < size; i++) {
-        MEGATransfer *transfer = [transferList transferAtIndex:i];
-        if (transfer.type == MEGATransferTypeUpload) {
-            continue;
-        }
-        
-        if (transfer.nodeHandle == self.nodeHandle) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
-            break;
-        }
+    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
+    if (transferTag != nil) {
+        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
     }
 }
 

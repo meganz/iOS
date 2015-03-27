@@ -99,6 +99,8 @@
 "folderFiles" = "%d folder, %d files";
 "folderFile" = "%d folder, %d file";
 
+"queued"="Queued";
+
 //DetailsNodeInfoViewController
 "savedForOffline" = "Saved for offline";
 "generateLink" = "Generate link...";
