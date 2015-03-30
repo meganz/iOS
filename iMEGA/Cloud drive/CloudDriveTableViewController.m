@@ -162,20 +162,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"nodeCell";
-    
-    NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    if (cell == nil) {
-        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    if (self.displayMode == DisplayModeRubbishBin) {
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
     
     MEGANode *node = nil;
-    
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
@@ -183,6 +171,23 @@
     }
     
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
+    
+    NodeTableViewCell *cell;
+    if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
+        }
+    } else {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
+        }
+    }
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
     
     NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -204,21 +209,15 @@
     cell.nameLabel.text = [node name];
     
     if ([node type] == MEGANodeTypeFile) {
-        
         if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
             [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
             [cell.infoLabel setText:[NSString stringWithFormat:NSLocalizedString(@"queued", @"Queued")]];
-            [cell.cancelButton setHidden:NO];
         } else {
             if ([[Helper downloadedNodes] objectForKey:node.base64Handle] != nil) {
                 [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
             } else {
                 [cell.downloadedImageView setImage:nil];
             }
-            
-            [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
-            [cell.cancelButton setHidden:YES];
             
             struct tm *timeinfo;
             char buffer[80];
@@ -234,11 +233,7 @@
             
             cell.infoLabel.text = sizeAndDate;
         }
-    } else {
-        [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
-        [cell.downloadedImageView setImage:nil];
-        [cell.cancelButton setHidden:YES];
-        
+    } else {        
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
