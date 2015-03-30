@@ -111,6 +111,9 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
     [Helper setDownloadedNodes];
+    
+    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -122,15 +125,18 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [fileManager contentsOfDirectoryAtPath:documentDirectory error:&error]) {
+    NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
+    for (NSString *file in [fileManager contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
         if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
-            BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentDirectory, file] error:&error];
+            BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", offlineDirectory, file] error:&error];
             if (!success || error) {
                 NSLog(@"Remove file error %@", error);
             }
         }
     }
+    
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

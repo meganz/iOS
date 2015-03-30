@@ -115,6 +115,13 @@
         }
     }
     
+    NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:offlineDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
+            NSLog(@"Create directory error: %@", error);
+        }
+    }
+    
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
