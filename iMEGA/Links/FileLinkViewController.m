@@ -142,14 +142,7 @@
 
 - (IBAction)downloadTouchUpInside:(UIButton *)sender {
     
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    if ([freeSizeNumber longLongValue] < [[self.node size] longLongValue]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
-                                                            message:NSLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                                  otherButtonTitles:nil];
-        [alertView show];
+    if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
         return;
     }
     

@@ -138,12 +138,11 @@
                 
                 [browserVC setIsPublicNode:YES];
             }
-            
             break;
         }
             
         case 2: { //DOWNLOAD
-            if (![self checkFreeSize]) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
                 return;
             }
             
@@ -166,39 +165,6 @@
             break;
     }
 }
-
-- (BOOL)checkFreeSize {
-    NSNumber *nodeSizeNumber;
-    if ([self.node type] == MEGANodeTypeFile) {
-        nodeSizeNumber = [self.node size];
-    }
-    if ([self.node type] == MEGANodeTypeFolder) {
-        nodeSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:self.node];
-    }
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertView *alertView;
-        if ([self.node type] == MEGANodeTypeFile) {
-            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
-                                                   message:NSLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
-                                                  delegate:self
-                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                         otherButtonTitles:nil];
-        }
-        if ([self.node type] == MEGANodeTypeFolder) {
-            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderTooBig", @"You need more free space")
-                                                   message:NSLocalizedString(@"folderTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
-                                                  delegate:self
-                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                         otherButtonTitles:nil];
-        }
-        
-        [alertView show];
-        return NO;
-    }
-    return YES;
-}
-
 
 #pragma mark - Dismiss keyboard
 

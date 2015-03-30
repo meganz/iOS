@@ -202,16 +202,7 @@
 
 - (IBAction)downloadFolderTouchUpInside:(UIBarButtonItem *)sender {
     
-    NSNumber *folderSizeNumber = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:self.parentNode];
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    
-    if ([freeSizeNumber longLongValue] < [folderSizeNumber longLongValue]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderTooBig", @"You need more free space")
-                                                            message:NSLocalizedString(@"folderTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                                  otherButtonTitles:nil];
-        [alertView show];
+    if (![Helper isFreeSpaceEnoughToDownloadNode:self.parentNode]) {
         return;
     }
     
