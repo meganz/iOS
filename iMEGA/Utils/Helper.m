@@ -302,7 +302,7 @@ static NSMutableDictionary *downloadedNodes;
 
 + (NSString *)pathForOfflineDirectory:(NSString *)directory {
     
-    NSString *pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *pathString = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
     pathString = [directory isEqualToString:@""] ? [pathString stringByAppendingString:@"/"] : [pathString stringByAppendingPathComponent:directory];
     
     return pathString;
@@ -474,29 +474,32 @@ static NSMutableDictionary *downloadedNodes;
 + (void)logout {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
     [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
-    NSFileManager *fm = [NSFileManager defaultManager];
+    
     NSError *error = nil;
     
-    NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [fm contentsOfDirectoryAtPath:cacheDirectory error:&error]) {
-        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", cacheDirectory, file] error:&error];
-        if (!success || error) {
-            NSLog(@"remove file error %@", error);
-        }
+    // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Library/Offline - tmp
+    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
+    if (!success || error) {
+        NSLog(@"remove file error %@", error);
     }
-    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [fm contentsOfDirectoryAtPath:documentDirectory error:&error]) {
-        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", documentDirectory, file] error:&error];
-        if (!success || error) {
-            NSLog(@"remove file error %@", error);
-        }
+
+    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+    success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
+    if (!success || error) {
+        NSLog(@"remove file error %@", error);
+    }
+
+    NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
+
+    success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
+    if (!success || error) {
+        NSLog(@"remove file error %@", error);
     }
     
-    for (NSString *file in [fm contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        BOOL success = [fm removeItemAtPath:[NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), file] error:&error];
-        if (!success || error) {
-            NSLog(@"remove file error %@", error);
-        }
+    success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+    if (!success || error) {
+        NSLog(@"remove file error %@", error);
     }
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

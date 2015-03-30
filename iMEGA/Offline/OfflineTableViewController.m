@@ -421,9 +421,9 @@
             [browser setCurrentPhotoIndex:selectedIndexPhoto];
             
         } else if (isVideo(itemNameString.lowercaseString.pathExtension)) {
-            NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
             NSMutableString *filePath = [NSMutableString new];
-            [filePath appendFormat:@"%@/%@", documentDirectory, itemNameString];
+            [filePath appendFormat:@"%@/%@", offlineDirectory, itemNameString];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             
             MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
