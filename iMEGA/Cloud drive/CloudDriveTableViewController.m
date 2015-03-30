@@ -201,16 +201,17 @@
         if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
-            [cell.infoLabel setText:[NSString stringWithFormat:@"0%% • 0 KB/s"]];
+            [cell.infoLabel setText:[NSString stringWithFormat:NSLocalizedString(@"queued", @"Queued")]];
             [cell.cancelButton setHidden:NO];
         } else {
             if ([[Helper downloadedNodes] objectForKey:node.base64Handle] != nil) {
-                [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
                 [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
-                [cell.cancelButton setHidden:YES];
             } else {
                 [cell.downloadedImageView setImage:nil];
             }
+            
+            [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+            [cell.cancelButton setHidden:YES];
             
             struct tm *timeinfo;
             char buffer[80];
@@ -227,6 +228,10 @@
             cell.infoLabel.text = sizeAndDate;
         }
     } else {
+        [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+        [cell.downloadedImageView setImage:nil];
+        [cell.cancelButton setHidden:YES];
+        
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
@@ -373,6 +378,8 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
+            } else {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
             }
             break;
         }
@@ -722,8 +729,15 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in self.selectedNodesArray) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:n]) {
+            return;
+        }
+    }
+    
+    for (MEGANode *n in self.selectedNodesArray) {
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
+            
         } else if ([n type] == MEGANodeTypeFolder) {
             NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
             NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
@@ -733,8 +747,8 @@
             }
         }
     }
-    [self setEditing:NO animated:NO];
-    [self.tabBarController setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
+    [self setEditing:NO animated:YES];
+    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
@@ -940,6 +954,13 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (transfer.type == MEGATransferTypeDownload) {
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
+        if (indexPath != nil) {
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -948,7 +969,7 @@
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
         
-        NSString *base64Handle = [[[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle] base64Handle];
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -966,8 +987,7 @@
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled")]];
-            NSString *base64Handle = [[[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle] base64Handle];
-            [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -977,7 +997,7 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *base64Handle = [[[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle] base64Handle];
+        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

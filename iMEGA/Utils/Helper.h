@@ -71,6 +71,7 @@
 + (NSMutableDictionary *)downloadedNodes;
 + (void)setDownloadedNodes;
 
++ (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node;
 + (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink;
 + (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink;
 + (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath;

@@ -357,6 +357,36 @@ static NSMutableDictionary *downloadedNodes;
     downloadedNodes = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"DownloadedNodes"]];
 }
 
++ (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node {
+    NSNumber *nodeSizeNumber;
+    if ([node type] == MEGANodeTypeFile) {
+        nodeSizeNumber = [node size];
+    } else if ([node type] == MEGANodeTypeFolder) {
+        nodeSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:node];
+    }
+    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
+    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+        UIAlertView *alertView;
+        if ([node type] == MEGANodeTypeFile) {
+            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
+                                                   message:NSLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
+                                                  delegate:self
+                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         otherButtonTitles:nil];
+        } else if ([node type] == MEGANodeTypeFolder) {
+            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderTooBig", @"You need more free space")
+                                                   message:NSLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.")
+                                                  delegate:self
+                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         otherButtonTitles:nil];
+        }
+        
+        [alertView show];
+        return NO;
+    }
+    return YES;
+}
+
 + (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
     
     if ([folderPath isEqualToString:@""]) {
