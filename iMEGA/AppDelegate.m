@@ -137,6 +137,13 @@
     
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
     [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+    
+    if ([Helper renamePathForPreviewDocument] != nil) {
+        BOOL success = [fileManager moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
+        if (!success || error) {
+            NSLog(@"renamePathForPreview %@", error);
+        }
+    }
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

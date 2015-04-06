@@ -27,8 +27,12 @@
 #import "CameraUploads.h"
 
 static NSMutableDictionary *downloadedNodes;
+static NSString *pathForPreview;
+static NSString *renamePathForPreview;
 
 @implementation Helper
+
+#pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary {
     static NSDictionary *fileTypesDictionary = nil;
@@ -254,24 +258,6 @@ static NSMutableDictionary *downloadedNodes;
     return defaultPhotoImage;
 }
 
-+ (UIImage *)downloadingArrowImage {
-    static UIImage *downloadingArrowImage = nil;
-    
-    if (downloadingArrowImage == nil) {
-        downloadingArrowImage = [UIImage imageNamed:@"downloadingArrow"];
-    }
-    return downloadingArrowImage;
-}
-
-+ (UIImage *)downloadedArrowImage {
-    static UIImage *downloadedArrowImage = nil;
-    
-    if (downloadedArrowImage == nil) {
-        downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
-    }
-    return downloadedArrowImage;
-}
-
 + (UIImage *)imageForNode:(MEGANode *)node {
     
     MEGANodeType nodeType = [node type];
@@ -299,6 +285,27 @@ static NSMutableDictionary *downloadedNodes;
     }
     
 }
+
+
++ (UIImage *)downloadingArrowImage {
+    static UIImage *downloadingArrowImage = nil;
+    
+    if (downloadingArrowImage == nil) {
+        downloadingArrowImage = [UIImage imageNamed:@"downloadingArrow"];
+    }
+    return downloadingArrowImage;
+}
+
++ (UIImage *)downloadedArrowImage {
+    static UIImage *downloadedArrowImage = nil;
+    
+    if (downloadedArrowImage == nil) {
+        downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
+    }
+    return downloadedArrowImage;
+}
+
+#pragma mark - Paths
 
 + (NSString *)pathForOfflineDirectory:(NSString *)directory {
     
@@ -337,6 +344,25 @@ static NSMutableDictionary *downloadedNodes;
     
     return destinationFilePath;
 }
+
++ (NSString *)pathForPreviewDocument {
+    return pathForPreview;
+}
+
++ (void)setPathForPreviewDocument:(NSString *)path {
+    pathForPreview = path;
+}
+
++ (NSString *)renamePathForPreviewDocument {
+    return renamePathForPreview;
+
+}
+
++ (void)setRenamePathForPreviewDocument:(NSString *)path {
+    renamePathForPreview = path;
+}
+
+#pragma mark - Utils for download and downloading nodes
 
 + (NSMutableDictionary *)downloadingNodes {
     static NSMutableDictionary *downloadingNodes = nil;
@@ -470,6 +496,8 @@ static NSMutableDictionary *downloadedNodes;
         return NO;
     }
 }
+
+#pragma mark - Logout
 
 + (void)logout {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];

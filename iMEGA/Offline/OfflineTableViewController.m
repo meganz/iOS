@@ -19,14 +19,16 @@
  * program.
  */
 
+#import <MediaPlayer/MediaPlayer.h>
+#import <QuickLook/QuickLook.h>
+
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "EmptyView.h"
 
-@interface OfflineTableViewController ()
+@interface OfflineTableViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
 @property (nonatomic, strong) NSMutableArray *offlineImages;
@@ -390,6 +392,15 @@
     NSString *itemNameString = [cell itemNameString];
     NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
     
+    NSString *filename;
+    NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
+    if ([itemNameComponentsArray count] > 2) {
+        NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
+        filename = [itemNameString substringFromIndex:(handleString.length + 1)];
+    } else {
+        filename = [itemNameComponentsArray objectAtIndex:1];
+    }
+    
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
@@ -429,6 +440,39 @@
             MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
             [self presentMoviePlayerViewControllerAnimated:videoPlayerView];
             [videoPlayerView.moviePlayer play];
+        } else {
+            [Helper setPathForPreviewDocument:itemPath];
+            
+            //Copy the node to tmp without handle_
+            NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
+            NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
+            NSString *nameString;
+            if ([itemNameComponentsArray count] > 2) {
+                nameString = [itemNameString substringFromIndex:(handleString.length + 1)];
+            } else {
+                nameString = [itemNameComponentsArray objectAtIndex:1];
+            }
+            
+            NSArray *pathElements = [itemPath componentsSeparatedByString:@"/"];
+            
+            NSString *pathWihtoutName = @"/";
+            for (NSInteger i = 0; i < pathElements.count - 1; i++) {
+                pathWihtoutName = [pathWihtoutName stringByAppendingPathComponent:[pathElements objectAtIndex:i]];
+            }
+            
+            [Helper setRenamePathForPreviewDocument:[pathWihtoutName stringByAppendingPathComponent:nameString]];
+            
+            NSError *error = nil;
+            BOOL success = [[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[Helper renamePathForPreviewDocument] error:&error];
+            if (!success || error) {
+                NSLog(@"moveItemAtPath %@", error);
+            }
+            
+            QLPreviewController *previewController = [[QLPreviewController alloc]init];
+            previewController.delegate=self;
+            previewController.dataSource=self;
+            [previewController setTitle:filename];
+            [self presentViewController:previewController animated:YES completion:nil];
         }
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -450,6 +494,32 @@
         return [self.offlineImages objectAtIndex:index];
     return nil;
 }
+
+#pragma mark - QLPreviewControllerDataSource
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
+    return 1;
+}
+
+- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
+    return [NSURL fileURLWithPath:[Helper renamePathForPreviewDocument]];
+}
+
+#pragma mark - QLPreviewControllerDelegate
+
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
+    return YES;
+}
+
+- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
+    if (!success || error) {
+        NSLog(@"moveItemAtPath %@", error);
+    }
+    
+}
+
 
 #pragma mark - MEGATransferDelegate
 
