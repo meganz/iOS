@@ -45,6 +45,8 @@
 
 @interface Helper : NSObject
 
+#pragma mark - Images
+
 + (NSString *)fileTypeIconForExtension:(NSString *)extension;
 
 + (UIImage *)imageForNode:(MEGANode *)node;
@@ -57,6 +59,8 @@
 + (UIImage *)downloadingArrowImage;
 + (UIImage *)downloadedArrowImage;
 
+#pragma mark - Paths
+
 + (NSString *)pathForOfflineDirectory:(NSString *)directory;
 
 + (NSString *)pathForOffline;
@@ -67,6 +71,13 @@
 
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
++ (NSString *)pathForPreviewDocument;
++ (void)setPathForPreviewDocument:(NSString *)path;
++ (NSString *)renamePathForPreviewDocument;
++ (void)setRenamePathForPreviewDocument:(NSString *)path;
+
+#pragma mark - Utils for download and downloading nodes
+
 + (NSMutableDictionary *)downloadingNodes;
 + (NSMutableDictionary *)downloadedNodes;
 + (void)setDownloadedNodes;
@@ -75,6 +86,8 @@
 + (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink;
 + (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink;
 + (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath;
+
+#pragma mark - Logout
 
 + (void)logout;
 
