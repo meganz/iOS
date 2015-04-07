@@ -60,7 +60,14 @@
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [self reloadUI];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
