@@ -530,6 +530,21 @@ static NSString *renamePathForPreview;
         NSLog(@"remove file error %@", error);
     }
     
+    
+    // Remove Master Key exported file if exist
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"]];
+    
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
+    
+    if (existMasterKey) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+    }
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
     [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
