@@ -29,6 +29,7 @@
 #import "FolderLinkViewController.h"
 #import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
+#import "LTHPasscodeViewController.h"
 
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -36,7 +37,7 @@
 #define kUserAgent @"MEGAiOS/2.9.1.1"
 #define kAppKey @"EVtjzb7R"
 
-@interface AppDelegate ()
+@interface AppDelegate () <LTHPasscodeViewControllerDelegate>
 
 @property (nonatomic, strong) NSString *IpAddress;
 
@@ -65,12 +66,25 @@
     [self setupAppearance];
     self.isLoginFromView = YES;
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        self.isLoginFromView = NO;
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
-        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        self.window.rootViewController = mainTBC;
+    if ([LTHPasscodeViewController doesPasscodeExist]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        }
+        
+        [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
+        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                 withLogout:YES
+                                                             andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+        [[LTHPasscodeViewController sharedUser] setDelegate:self];
+        self.window.rootViewController = [LTHPasscodeViewController sharedUser];
+    } else {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            self.isLoginFromView = NO;
+            [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
+            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            self.window.rootViewController = mainTBC;
+        }
     }
     
     // Let the device know we want to receive push notifications
@@ -379,6 +393,26 @@
             [[CameraUploads syncManager] getAllAssetsForUpload];
         }
     }
+}
+
+#pragma mark - LTHPasscodeViewControllerDelegate
+
+- (void)passcodeWasEnteredSuccessfully {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.isLoginFromView = NO;
+    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
+    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+    self.window.rootViewController = mainTBC;
+}
+
+- (void)maxNumberOfFailedAttemptsReached {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        [Helper logout];
+    }
+}
+
+- (void)logoutButtonWasPressed {
+    [Helper logout];
 }
 
 #pragma mark - MEGARequestDelegate

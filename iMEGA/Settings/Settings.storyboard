@@ -131,6 +131,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="9Kd-ys-eJ4" kind="show" id="rTq-Ub-pxi"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="settingCell" rowHeight="54" id="Dll-LP-KI0">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -349,7 +352,136 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Udm-Q4-K82" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1705" y="-287"/>
+            <point key="canvasLocation" x="-1705" y="-941"/>
+        </scene>
+        <!--Passcode Table View Controller-->
+        <scene sceneID="dC4-4R-rPG">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="9Kd-ys-eJ4" customClass="PasscodeTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="cAo-0C-Ns3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="X9z-Qk-5iL">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="bSC-HN-j7m">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSC-HN-j7m" id="A9Z-zk-ddB">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn passcode on" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SuP-oK-n1S">
+                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="SuP-oK-n1S" firstAttribute="top" secondItem="A9Z-zk-ddB" secondAttribute="topMargin" constant="3" id="G7k-tc-xFO"/>
+                                                <constraint firstItem="SuP-oK-n1S" firstAttribute="leading" secondItem="A9Z-zk-ddB" secondAttribute="leadingMargin" id="mqX-XE-uBL"/>
+                                                <constraint firstItem="SuP-oK-n1S" firstAttribute="trailing" secondItem="A9Z-zk-ddB" secondAttribute="trailingMargin" id="odi-Ws-wVm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="ijq-Rm-ygJ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mve-fj-cww">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mve-fj-cww" id="s1m-YD-PAr">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change passcode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCo-TN-MKj">
+                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LCo-TN-MKj" firstAttribute="top" secondItem="s1m-YD-PAr" secondAttribute="topMargin" constant="3" id="Q78-wI-vFs"/>
+                                                <constraint firstItem="LCo-TN-MKj" firstAttribute="trailing" secondItem="s1m-YD-PAr" secondAttribute="trailingMargin" id="XSo-cp-Iw5"/>
+                                                <constraint firstItem="LCo-TN-MKj" firstAttribute="leading" secondItem="s1m-YD-PAr" secondAttribute="leadingMargin" id="ypL-Pp-dpT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="We3-9M-Stw">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Dk7-Vg-hyy">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dk7-Vg-hyy" id="yA6-uh-4UH">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple passcode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2c-dr-838">
+                                                    <rect key="frame" x="8" y="11" width="527" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWU-ov-XJM">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="simpleSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="eIV-Si-Oo9"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="B2c-dr-838" firstAttribute="top" secondItem="yA6-uh-4UH" secondAttribute="topMargin" constant="3" id="AW8-yk-G9d"/>
+                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="leading" secondItem="B2c-dr-838" secondAttribute="trailing" constant="8" id="RKT-OP-wSr"/>
+                                                <constraint firstItem="B2c-dr-838" firstAttribute="leading" secondItem="yA6-uh-4UH" secondAttribute="leadingMargin" id="RfJ-O2-eP9"/>
+                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="trailing" secondItem="yA6-uh-4UH" secondAttribute="trailingMargin" id="dMS-8t-MLE"/>
+                                                <constraint firstItem="HWU-ov-XJM" firstAttribute="top" secondItem="yA6-uh-4UH" secondAttribute="topMargin" constant="-2" id="iBL-ww-7Vh"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="If number of failed attempts reached" id="91f-Ih-KcR">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="inf-aX-HAP">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="inf-aX-HAP" id="TeB-Ow-QEG">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erase all local data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-W1-w1Z">
+                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="leading" secondItem="TeB-Ow-QEG" secondAttribute="leadingMargin" id="BUb-F1-xSc"/>
+                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="trailing" secondItem="TeB-Ow-QEG" secondAttribute="trailingMargin" id="h1R-YT-HMt"/>
+                                                <constraint firstItem="7ey-W1-w1Z" firstAttribute="top" secondItem="TeB-Ow-QEG" secondAttribute="topMargin" constant="3" id="ilq-Im-NVI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="9Kd-ys-eJ4" id="NRG-8w-npK"/>
+                            <outlet property="delegate" destination="9Kd-ys-eJ4" id="zeM-pk-u2c"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="changePasscodeLabel" destination="LCo-TN-MKj" id="YJL-p6-9pJ"/>
+                        <outlet property="eraseAllLocalDataCell" destination="inf-aX-HAP" id="b7I-eK-yte"/>
+                        <outlet property="eraseAllLocalDataLabel" destination="7ey-W1-w1Z" id="eWr-E7-dLV"/>
+                        <outlet property="simplePasscodeLabel" destination="B2c-dr-838" id="sfi-gc-9SZ"/>
+                        <outlet property="simpleSwitch" destination="HWU-ov-XJM" id="vgw-j4-JVA"/>
+                        <outlet property="turnOnOffPasscodeLabel" destination="SuP-oK-n1S" id="tHN-f6-IP0"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7n9-QG-mcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1705" y="-253"/>
         </scene>
         <!--Advanced-->
         <scene sceneID="JNs-d2-nKp">
@@ -667,7 +799,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aFF-r7-bca">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

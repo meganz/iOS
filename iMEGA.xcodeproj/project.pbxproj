@@ -35,6 +35,8 @@
 		4152273C1A692F1800EC7BB6 /* libMWPhotoBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4152272A1A692EDC00EC7BB6 /* libMWPhotoBrowser.a */; };
 		4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4152274F1A6986E000EC7BB6 /* MapKit.framework */; };
+		4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
+		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
@@ -54,6 +56,7 @@
 		41B082491AB320E100ABC1FB /* TermsOfServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B082481AB320E100ABC1FB /* TermsOfServiceViewController.m */; };
 		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D4241A6D925F0002E29E /* TourViewController.m */; };
+		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
 		41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDB51A8E2E92008408B3 /* PhotosViewController.m */; };
@@ -141,6 +144,10 @@
 		415227401A692F8D00EC7BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		415227421A692F9B00EC7BB6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4152274F1A6986E000EC7BB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4156C8081AD7E79A00F5E818 /* LTHKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHKeychainUtils.h; sourceTree = "<group>"; };
+		4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
+		4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
+		4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHPasscodeViewController.m; sourceTree = "<group>"; };
 		4178409E1AC328A600713F3C /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		4178409F1AC328A600713F3C /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
 		418072751AA5B9F30078D950 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -172,6 +179,8 @@
 		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
 		41B2D4231A6D925F0002E29E /* TourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourViewController.h; sourceTree = "<group>"; };
 		41B2D4241A6D925F0002E29E /* TourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourViewController.m; sourceTree = "<group>"; };
+		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
+		41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasscodeTableViewController.m; sourceTree = "<group>"; };
 		41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MNZCategory.h"; sourceTree = "<group>"; };
 		41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MNZCategory.m"; sourceTree = "<group>"; };
 		41BADDAE1A8E28FD008408B3 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
@@ -302,6 +311,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
 				41FC83A51AA732DC008FA551 /* Reachability */,
 				41B2D4191A6D06780002E29E /* GKContactImage */,
 				415227351A692EEF00EC7BB6 /* SVProgressHUD */,
@@ -376,6 +386,7 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AA1A191AC07EB900D32691 /* Advanced */,
 				41AC66441AB1D488003FE8DA /* About */,
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
@@ -445,6 +456,18 @@
 			path = Vendor/SVProgressHUD/SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4156C8081AD7E79A00F5E818 /* LTHKeychainUtils.h */,
+				4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */,
+				4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */,
+				4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */,
+			);
+			name = LTHPasscodeViewController;
+			path = Vendor/LTHPasscodeViewController/LTHPasscodeViewController;
+			sourceTree = "<group>";
+		};
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -506,6 +529,15 @@
 			);
 			name = GKContactImage;
 			path = Vendor/GKContactImage/Classes;
+			sourceTree = "<group>";
+		};
+		41B3B82D1AD591A80093A88D /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */,
+				41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */,
+			);
+			path = Passcode;
 			sourceTree = "<group>";
 		};
 		41BADDA61A8E064E008408B3 /* Categories */ = {
@@ -688,6 +720,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
@@ -695,6 +728,8 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
+				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
+				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				415227331A692EE600EC7BB6 /* SSKeychain.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsTableViewController.m in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
