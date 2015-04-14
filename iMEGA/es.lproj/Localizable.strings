@@ -243,5 +243,16 @@
 "passwordChanged"="Tu contraseña ha sido cambiada.";
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
 
+//(5) Settings - PasscodeTableViewController
+"passcodeTitle"="Código de acceso";
+
+"turnOnLabel"="Activar código de acceso";
+"turnOffLabel"="Desactivar código de acceso";
+"changePasscodeLabel"="Cambiar código de acceso";
+"simplePasscodeLabel"="Código de acceso simple";
+"eraseAllLocalDataLabel"="Borrar todos los datos locales";
+
+"failedAttempstSectionTitle"="Si el número de intentos fallidos se alcanza";
+
 // HUD messages
 "logout" = "Cerrando sesión...";

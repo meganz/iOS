@@ -243,5 +243,16 @@
 "passwordChanged"="Your password has been changed.";
 "oldAndNewPasswordMatch"="The new and the old password can not match.";
 
+//(5) Settings - PasscodeTableViewController
+"passcodeTitle"="Passcode";
+
+"turnOnLabel"="Turn passcode on";
+"turnOffLabel"="Turn passcode off";
+"changePasscodeLabel"="Change passcode";
+"simplePasscodeLabel"="Simple passcode";
+"eraseAllLocalDataLabel"="Erase all local data";
+
+"failedAttempstSectionTitle"="If number of failed attempts reached";
+
 // HUD messages
 "logout" = "Logout...";

@@ -25,6 +25,7 @@
 #import "AppDelegate.h"
 #import "SVProgressHUD.h"
 #import "CameraUploads.h"
+#import "LTHPasscodeViewController.h"
 
 static NSMutableDictionary *downloadedNodes;
 static NSString *pathForPreview;
@@ -573,6 +574,11 @@ static NSString *renamePathForPreview;
     
     [[Helper downloadingNodes] removeAllObjects];
     [[Helper downloadedNodes] removeAllObjects];
+    
+    // Delete passcode
+    if ([LTHPasscodeViewController doesPasscodeExist]) {
+        [LTHPasscodeViewController deletePasscode];
+    }
 }
 
 @end
