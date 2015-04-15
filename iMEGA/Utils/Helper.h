@@ -91,5 +91,7 @@
 #pragma mark - Logout
 
 + (void)logout;
++ (void)clearSession;
++ (void)deletePasscode;
 
 @end

@@ -502,7 +502,8 @@ static NSString *renamePathForPreview;
 
 + (void)logout {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
-    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+    
+    [Helper clearSession];
     
     NSError *error = nil;
     
@@ -575,7 +576,14 @@ static NSString *renamePathForPreview;
     [[Helper downloadingNodes] removeAllObjects];
     [[Helper downloadedNodes] removeAllObjects];
     
-    // Delete passcode
+    [Helper deletePasscode];
+}
+
++ (void)clearSession {
+    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+}
+
++ (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
         [LTHPasscodeViewController deletePasscode];
     }
