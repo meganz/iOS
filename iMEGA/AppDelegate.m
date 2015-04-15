@@ -37,6 +37,8 @@
 #define kUserAgent @"MEGAiOS/2.9.1.1"
 #define kAppKey @"EVtjzb7R"
 
+#define kFirstRun @"FirstRun"
+
 @interface AppDelegate () <LTHPasscodeViewControllerDelegate>
 
 @property (nonatomic, strong) NSString *IpAddress;
@@ -62,6 +64,14 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    
+    //Clear keychain (session) and delete passcode on first run in case of reinstallation
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
+        [Helper clearSession];
+        [Helper deletePasscode];
+        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     [self setupAppearance];
     self.isLoginFromView = YES;
