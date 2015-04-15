@@ -19,3 +19,6 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 	url = https://github.com/jnavarrom/LTHPasscodeViewController.git
+[submodule "iMEGA/Vendor/SVWebViewController"]
+	path = iMEGA/Vendor/SVWebViewController
+	url = https://github.com/meganz/SVWebViewController.git

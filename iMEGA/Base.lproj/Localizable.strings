@@ -254,5 +254,14 @@
 
 "failedAttempstSectionTitle"="If number of failed attempts reached";
 
+//(5) Settings - FeedbackTableViewController
+"sendFeedbackLabel"="Send feedback";
+"helpCentreLabel"="Help centre";
+"rateUsLabel"="Rate us!";
+
+"sendFeedbackFooter"="Contact the support team through email. All emails are read but given the high volume of requests we might not answer everyone individually.";
+"helpCentreFooter"="Get support or read popular topics.";
+"rateUsFooter"="Oh my, it's full of stars!";
+
 // HUD messages
 "logout" = "Logout...";

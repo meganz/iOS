@@ -23,6 +23,7 @@
 
 #import "SVProgressHUD.h"
 #import "Helper.h"
+#import "SVWebViewController.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -137,6 +138,8 @@
     return [emailTest evaluateWithObject:email];
 }
 
+#pragma mark - IBAction
+
 - (IBAction)loginTouchUpInside:(id)sender {
     [self.nameTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
@@ -144,6 +147,12 @@
     [self.retypePasswordTextField resignFirstResponder];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
+    NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_terms.html"];
+    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 #pragma mark - UITextFieldDelegate
