@@ -20,8 +20,8 @@
  */
 
 #import "AboutTableViewController.h"
-#import "TermsOfServiceViewController.h"
 #import "MEGASdkManager.h"
+#import "SVWebViewController.h"
 
 @interface AboutTableViewController () <UIGestureRecognizerDelegate> {
     int megaSdkVersionCounter;
@@ -105,7 +105,6 @@
     if ([indexPath row] == 1) {
         versionCounter = 0;
         megaSdkVersionCounter++;
-        NSLog(@"%d", megaSdkVersionCounter);
         if (megaSdkVersionCounter == 5) {
             megaSdkVersionCounter = 0;
             
@@ -115,10 +114,16 @@
         }
     }
     
+    if ([indexPath row] == 2) {
+        NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_privacy.html"];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    }
+    
     if ([indexPath row] == 3) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        TermsOfServiceViewController *termsOfServicesViewController = [storyboard instantiateViewControllerWithIdentifier:@"termsOfServiceID"];
-        [self.navigationController pushViewController:termsOfServicesViewController animated:YES];
+        NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_terms.html"];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
     }
 }
 

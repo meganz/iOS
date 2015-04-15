@@ -22,8 +22,9 @@
 #import "SettingsTableViewController.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
+#import "FeedbackTableViewController.h"
 
-@interface SettingsTableViewController ()
+@interface SettingsTableViewController () <UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -100,6 +101,27 @@
     // Logout
     if (indexPath.section == 2) {
         [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
+    }
+    
+    // Feedback
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"¿Cómo te sientes?"
+                                                                 delegate:self
+                                                        cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Feliz", @"Confuso", @"Infeliz", nil];
+        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != FeedbackFeelingNone) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+        FeedbackTableViewController *feedbackTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"FeedbackID"];
+        feedbackTableViewController.feeling = buttonIndex;
+        [self.navigationController pushViewController:feedbackTableViewController animated:YES];
     }
 }
 
