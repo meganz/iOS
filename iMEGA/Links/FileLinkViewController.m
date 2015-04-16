@@ -31,6 +31,7 @@
 #import "BrowserViewController.h"
 #import "EmptyView.h"
 #import "UnavailableLinkView.h"
+#import "OfflineTableViewController.h"
 
 @interface FileLinkViewController () <MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -152,7 +153,7 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [mainTBC setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
+        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.tabBarController];
         
         if ([self.node type] == MEGANodeTypeFile) {
             [Helper downloadNode:self.node folder:@"" folderLink:NO];

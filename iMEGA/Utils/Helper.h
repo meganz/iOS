@@ -90,6 +90,10 @@
 + (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink;
 + (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath;
 
+#pragma mark - Utils
+
++ (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
+
 #pragma mark - Logout
 
 + (void)logout;

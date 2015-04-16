@@ -33,6 +33,7 @@
 #import "EmptyView.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
+#import "OfflineTableViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -212,7 +213,7 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [mainTBC setSelectedIndex:2]; //0 = Cloud, 1 = Photos, 2 = Offline, 3 = Contacts, 4 = Settings
+        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.tabBarController];
         
         NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.parentNode name]]];
         NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
