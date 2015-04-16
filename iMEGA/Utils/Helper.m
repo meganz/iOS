@@ -284,9 +284,7 @@ static NSString *renamePathForPreview;
         default:
             return [self genericImage];
     }
-    
 }
-
 
 + (UIImage *)downloadingArrowImage {
     static UIImage *downloadingArrowImage = nil;
@@ -304,6 +302,24 @@ static NSString *renamePathForPreview;
         downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
     }
     return downloadedArrowImage;
+}
+
++ (UIImage *)downloadTransferImage {
+    static UIImage *downloadTransferImage = nil;
+    
+    if (downloadTransferImage == nil) {
+        downloadTransferImage = [UIImage imageNamed:@"downloadTransfers"];
+    }
+    return downloadTransferImage;
+}
+
++ (UIImage *)uploadTransferImage {
+    static UIImage *uploadTransferImage = nil;
+    
+    if (uploadTransferImage == nil) {
+        uploadTransferImage = [UIImage imageNamed:@"uploadTransfers"];
+    }
+    return uploadTransferImage;
 }
 
 #pragma mark - Paths

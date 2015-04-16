@@ -265,3 +265,15 @@
 
 // HUD messages
 "logout" = "Cerrando sesión...";
+
+//UITABBARCONTROLLER (6) TRANSFERS
+"transfers"="Transferencias";
+"all"="Todas";
+"downloads"="Descargas";
+"uploads"="Subidas";
+"activeTransfers"="Transferencias activas";
+"queuedTransfers"="Transferencias en cola";
+
+"transfersResumed"="Transferencias reanudadas";
+"transfersPaused"="Transferencias pausadas";
+"transfersCanceled"="Transferencias canceladas";
