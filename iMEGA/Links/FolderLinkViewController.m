@@ -529,6 +529,9 @@
             [self reloadUI];
             [self.importBarButtonItem setEnabled:YES];
             [self.downloadBarButtonItem setEnabled:YES];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+            }
             [SVProgressHUD dismiss];
             break;
         }

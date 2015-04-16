@@ -475,6 +475,12 @@
         }
             
         case MEGARequestTypeFetchNodes: {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+                [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
+                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+            } else {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
+            }
             [SVProgressHUD dismiss];
             break;
         }

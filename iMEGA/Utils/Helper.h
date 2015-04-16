@@ -59,6 +59,8 @@
 
 + (UIImage *)downloadingArrowImage;
 + (UIImage *)downloadedArrowImage;
++ (UIImage *)downloadTransferImage;
++ (UIImage *)uploadTransferImage;
 
 #pragma mark - Paths
 

@@ -265,3 +265,15 @@
 
 // HUD messages
 "logout" = "Logout...";
+
+//UITABBARCONTROLLER (6) TRANSFERS
+"transfers"="Transfers";
+"all"="All";
+"downloads"="Downloads";
+"uploads"="Uploads";
+"activeTransfers"="Active transfers";
+"queuedTransfers"="Queued transfers";
+
+"transfersResumed"="Transfers resumed";
+"transfersPaused"="Transfers paused";
+"transfersCanceled"="Transfers canceled";

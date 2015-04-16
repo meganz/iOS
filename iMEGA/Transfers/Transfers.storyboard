@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Transfers View Controller-->
+        <scene sceneID="aoy-5Q-lDY">
+            <objects>
+                <viewController id="o8b-vr-3of" customClass="TransfersViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Sbd-Is-32X"/>
+                        <viewControllerLayoutGuide type="bottom" id="OX2-DT-dra"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nvs-4v-twc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCF-At-J4t">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fyu-Vd-dXy">
+                                        <rect key="frame" x="176" y="8" width="248" height="29"/>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Downloads"/>
+                                            <segment title="Uploads"/>
+                                        </segments>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="transfersTypeSegmentedControlValueChanged:" destination="o8b-vr-3of" eventType="valueChanged" id="lUG-XK-RCa"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="fyu-Vd-dXy" secondAttribute="centerX" constant="-0.5" id="2gH-pN-oSr"/>
+                                    <constraint firstAttribute="centerY" secondItem="fyu-Vd-dXy" secondAttribute="centerY" id="BdU-xq-WsR"/>
+                                    <constraint firstAttribute="height" constant="44" id="QFf-QI-8CK"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gol-pZ-yZD">
+                                <rect key="frame" x="0.0" y="44" width="600" height="492"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" id="tHq-Vb-vFR" customClass="TransferTableViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tHq-Vb-vFR" id="x4S-nS-49E">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U3-pH-t8L">
+                                                    <rect key="frame" x="56" y="3" width="488" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.23999999459999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="ynC-ES-fNB">
+                                                    <rect key="frame" x="56" y="24" width="488" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-FV-cM7">
+                                                    <rect key="frame" x="8" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="CgI-wU-1Ir"/>
+                                                        <constraint firstAttribute="width" constant="40" id="nFQ-ax-D9a"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blm-2I-lcW" userLabel="Cancel Button">
+                                                    <rect key="frame" x="552" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="e0M-Bk-UHu"/>
+                                                        <constraint firstAttribute="width" constant="40" id="gdw-TL-0DZ"/>
+                                                    </constraints>
+                                                    <state key="normal" image="cancel">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="cancelTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="mW1-dO-haY"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sYj-FV-cM7" firstAttribute="top" secondItem="x4S-nS-49E" secondAttribute="topMargin" constant="-6" id="EP5-Zt-waz"/>
+                                                <constraint firstItem="blm-2I-lcW" firstAttribute="centerY" secondItem="sYj-FV-cM7" secondAttribute="centerY" id="KnD-18-cIH"/>
+                                                <constraint firstItem="ynC-ES-fNB" firstAttribute="top" secondItem="3U3-pH-t8L" secondAttribute="bottom" constant="3" id="LvU-ni-Yqa"/>
+                                                <constraint firstItem="blm-2I-lcW" firstAttribute="leading" secondItem="ynC-ES-fNB" secondAttribute="trailing" constant="8" id="NA8-8L-Czz"/>
+                                                <constraint firstItem="sYj-FV-cM7" firstAttribute="leading" secondItem="x4S-nS-49E" secondAttribute="leadingMargin" id="ZJT-eI-3Vw"/>
+                                                <constraint firstItem="blm-2I-lcW" firstAttribute="leading" secondItem="3U3-pH-t8L" secondAttribute="trailing" constant="8" id="az5-QZ-HNi"/>
+                                                <constraint firstItem="3U3-pH-t8L" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="8" id="b2I-XP-H3d"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="sYj-FV-cM7" secondAttribute="bottom" constant="-6" id="dcv-fB-uRZ"/>
+                                                <constraint firstItem="ynC-ES-fNB" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="8" id="lYJ-Tg-7NP"/>
+                                                <constraint firstAttribute="centerY" secondItem="sYj-FV-cM7" secondAttribute="centerY" id="msA-tc-TKK"/>
+                                                <constraint firstItem="blm-2I-lcW" firstAttribute="trailing" secondItem="x4S-nS-49E" secondAttribute="trailingMargin" id="pe6-cf-4ZW"/>
+                                                <constraint firstItem="sYj-FV-cM7" firstAttribute="centerY" secondItem="3U3-pH-t8L" secondAttribute="centerY" constant="10" id="vhn-0M-6Le"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="arrowImageView" destination="sYj-FV-cM7" id="4yf-Dd-HdM"/>
+                                            <outlet property="cancelButton" destination="blm-2I-lcW" id="g8j-jy-czH"/>
+                                            <outlet property="infoLabel" destination="ynC-ES-fNB" id="GoL-bW-m1q"/>
+                                            <outlet property="nameLabel" destination="3U3-pH-t8L" id="v6c-tP-3Qu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="o8b-vr-3of" id="usR-dM-Ee9"/>
+                                    <outlet property="delegate" destination="o8b-vr-3of" id="fSo-En-db2"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OCF-At-J4t" firstAttribute="top" secondItem="Sbd-Is-32X" secondAttribute="bottom" id="JaM-rO-he8"/>
+                            <constraint firstItem="Gol-pZ-yZD" firstAttribute="top" secondItem="OCF-At-J4t" secondAttribute="bottom" constant="8" id="QVD-Ua-vGH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OCF-At-J4t" secondAttribute="trailing" constant="-16" id="f7d-5H-sph"/>
+                            <constraint firstItem="Gol-pZ-yZD" firstAttribute="top" secondItem="OCF-At-J4t" secondAttribute="bottom" id="fx5-DC-KKM"/>
+                            <constraint firstItem="OX2-DT-dra" firstAttribute="top" secondItem="Gol-pZ-yZD" secondAttribute="bottom" id="hgZ-RH-qhx"/>
+                            <constraint firstItem="OCF-At-J4t" firstAttribute="leading" secondItem="Nvs-4v-twc" secondAttribute="leadingMargin" constant="-16" id="n2u-eu-yOc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gol-pZ-yZD" secondAttribute="trailing" constant="-16" id="ovf-QK-11B"/>
+                            <constraint firstItem="Gol-pZ-yZD" firstAttribute="leading" secondItem="Nvs-4v-twc" secondAttribute="leadingMargin" constant="-16" id="tbz-fQ-Kdv"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="QVD-Ua-vGH"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="tWQ-Er-ras"/>
+                    <connections>
+                        <outlet property="cancelBarButtonItem" destination="JY3-2h-mLE" id="SMI-eT-lXy"/>
+                        <outlet property="pauseBarButtonItem" destination="Tlb-j4-XPE" id="wVN-uf-Wf9"/>
+                        <outlet property="resumeBarButtonItem" destination="Ebr-Et-TQ1" id="Dkj-e1-Zkh"/>
+                        <outlet property="tableView" destination="Gol-pZ-yZD" id="I8S-r7-Z6c"/>
+                        <outlet property="transfersSegmentedControl" destination="fyu-Vd-dXy" id="2xW-vR-bTr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UrG-FX-mvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem style="done" systemItem="stop" id="JY3-2h-mLE" userLabel="Cancel Bar Button Item">
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="cancelTransfersAction:" destination="o8b-vr-3of" id="2cX-lc-PIN"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="done" systemItem="pause" id="Tlb-j4-XPE" userLabel="Pause Bar Button Item">
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="pauseTransfersAction:" destination="o8b-vr-3of" id="UwD-Qd-8hH"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="done" systemItem="play" id="Ebr-Et-TQ1" userLabel="Resume Bar Button Item">
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="resumeTransfersAction:" destination="o8b-vr-3of" id="SMz-Rx-YPf"/>
+                    </connections>
+                </barButtonItem>
+            </objects>
+            <point key="canvasLocation" x="963" y="-3932"/>
+        </scene>
+        <!--Transfers-->
+        <scene sceneID="YHV-SE-pQc">
+            <objects>
+                <navigationController storyboardIdentifier="navigationControllerTransfersID" automaticallyAdjustsScrollViewInsets="NO" id="6uN-CI-8KQ" userLabel="Transfers" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Transfers" image="tabBarDownload" id="Ud2-dA-PEh" userLabel="Transfers"/>
+                    <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="U9p-QP-PSW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="o8b-vr-3of" kind="relationship" relationship="rootViewController" id="jmI-MY-ZNe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gkO-dB-SuB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="211" y="-3932"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cancel" width="29" height="29"/>
+        <image name="tabBarDownload" width="30" height="30"/>
+    </resources>
+</document>

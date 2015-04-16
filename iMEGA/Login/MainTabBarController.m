@@ -30,12 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSMutableArray *viewControllerArray = [[NSMutableArray alloc] initWithCapacity:5];
+    NSMutableArray *viewControllerArray = [[NSMutableArray alloc] initWithCapacity:6];
 
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateInitialViewController]];
+    [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
     [viewControllerArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
 
     [self setViewControllers:viewControllerArray];
