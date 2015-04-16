@@ -514,6 +514,20 @@ static NSString *renamePathForPreview;
     }
 }
 
+#pragma mark - Utils
+
++ (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController {
+    NSArray *viewControllersArray = tabBarController.viewControllers;
+    NSUInteger index = 0;
+    for (UINavigationController *navigationController in viewControllersArray) {
+        if ([navigationController.visibleViewController isKindOfClass:classOfViewController]) {
+            [tabBarController setSelectedIndex:index];
+            break;
+        }
+        index += 1;
+    }
+}
+
 #pragma mark - Logout
 
 + (void)logout {

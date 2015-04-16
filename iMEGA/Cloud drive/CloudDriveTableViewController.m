@@ -28,8 +28,8 @@
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "BrowserViewController.h"
-
 #import "CameraUploads.h"
+#import "PhotosViewController.h"
 
 @interface CloudDriveTableViewController () {
     UIAlertView *folderAlertView;
@@ -313,7 +313,7 @@
     switch ([node type]) {
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:@"Camera Uploads"]) {
-                [self.tabBarController setSelectedIndex:1];
+            [Helper changeToViewController:[PhotosViewController class] onTabBarController:self.tabBarController];
             } else {
                 CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 [cdvc setParentNode:node];
