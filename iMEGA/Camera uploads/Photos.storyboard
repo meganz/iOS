@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Osn-De-bku">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -72,7 +72,7 @@
                                     <outlet property="delegate" destination="3GS-cK-Hw6" id="v1o-4A-TJF"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l6a-Jy-M7v">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6a-Jy-M7v">
                                 <rect key="frame" x="0.0" y="-60" width="600" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUW-BL-jbS">
@@ -104,7 +104,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total bytes" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zC-lc-b2f">
-                                        <rect key="frame" x="532" y="39" width="61" height="15"/>
+                                        <rect key="frame" x="531" y="39" width="61" height="15"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -127,14 +127,31 @@
                                     <constraint firstItem="iPp-va-Tkg" firstAttribute="leading" secondItem="l6a-Jy-M7v" secondAttribute="leading" constant="8" id="zSB-Jx-cN6"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deI-iy-ayk">
+                                <rect key="frame" x="0.0" y="443" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="VOl-dR-0Qb"/>
+                                </constraints>
+                                <state key="normal" title="Enable Camera Uploads">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="ykG-qf-2aM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="deI-iy-ayk" firstAttribute="leading" secondItem="qAU-co-j9W" secondAttribute="leading" id="38S-6Y-IxP"/>
                             <constraint firstItem="eJ4-F9-xrP" firstAttribute="top" secondItem="Isg-Gr-mnR" secondAttribute="bottom" constant="-49" id="46p-Se-PjW"/>
                             <constraint firstItem="l6a-Jy-M7v" firstAttribute="leading" secondItem="qAU-co-j9W" secondAttribute="leading" id="8jd-7L-hge"/>
                             <constraint firstAttribute="trailing" secondItem="Isg-Gr-mnR" secondAttribute="trailing" id="Dux-CP-Ypy"/>
+                            <constraint firstAttribute="trailing" secondItem="deI-iy-ayk" secondAttribute="trailing" id="Lb2-jo-AYc"/>
                             <constraint firstItem="Isg-Gr-mnR" firstAttribute="leading" secondItem="qAU-co-j9W" secondAttribute="leading" id="Mzg-4c-Nvo"/>
                             <constraint firstItem="Isg-Gr-mnR" firstAttribute="top" secondItem="aqh-EM-dta" secondAttribute="bottom" id="QKd-VY-SM9"/>
+                            <constraint firstItem="eJ4-F9-xrP" firstAttribute="top" secondItem="deI-iy-ayk" secondAttribute="bottom" id="jEs-mV-qjT"/>
                             <constraint firstItem="l6a-Jy-M7v" firstAttribute="top" secondItem="aqh-EM-dta" secondAttribute="bottom" constant="-60" id="l9A-6K-8ug"/>
                             <constraint firstAttribute="trailing" secondItem="l6a-Jy-M7v" secondAttribute="trailing" id="s1w-Dc-30c"/>
                         </constraints>
@@ -142,8 +159,10 @@
                     <tabBarItem key="tabBarItem" title="Photos" image="photosIcon" id="Fsw-2B-D8x"/>
                     <navigationItem key="navigationItem" id="hxz-Hg-nRC"/>
                     <connections>
+                        <outlet property="enableCameraUploadsButton" destination="deI-iy-ayk" id="yve-Ad-Wby"/>
                         <outlet property="photoNameLabel" destination="rUW-BL-jbS" id="Jd5-p1-kZB"/>
                         <outlet property="photosCollectionView" destination="Isg-Gr-mnR" id="apN-It-bKY"/>
+                        <outlet property="photosCollectionViewBottonLayoutConstraint" destination="46p-Se-PjW" id="14T-MW-VD5"/>
                         <outlet property="photosCollectionViewTopLayoutConstraint" destination="QKd-VY-SM9" id="ewO-m7-2dC"/>
                         <outlet property="progressView" destination="cZl-Eu-u3h" id="UtV-m9-fxk"/>
                         <outlet property="speedLabel" destination="g5b-VI-eLC" id="ts2-N1-R1V"/>

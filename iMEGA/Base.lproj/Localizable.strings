@@ -129,6 +129,8 @@
 "photosPerMonth"="%lu photos";
 "photoPerMonth"="%lu photo";
 
+"enableCameraUploadsButton"="Enable Camera Uploads";
+
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error at deleting";

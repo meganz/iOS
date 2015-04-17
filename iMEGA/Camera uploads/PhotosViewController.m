@@ -43,8 +43,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *transferredBytesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalBytesLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadProgressViewTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewBottonLayoutConstraint;
 
 @end
 
@@ -54,6 +57,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enableCameraUploadsButton", "Enable Camera Uploads") forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,6 +66,7 @@
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self reloadUI];
 }
 
@@ -116,7 +122,6 @@
     [self.photosCollectionView reloadData];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        
         MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
         NSInteger transferListSize = [[transferList size] integerValue];
         
@@ -128,10 +133,16 @@
                 [self showProgressView];
             }
         }
-    } else {
         
+        [self.enableCameraUploadsButton setHidden:YES];
+        [self.enableCameraUploadsButton setFrame:CGRectMake(0, 0, 0, 0)];
+        
+        self.photosCollectionViewBottonLayoutConstraint.constant = -49;
+    } else {
+        [self.enableCameraUploadsButton setHidden:NO];
         self.uploadProgressViewTopLayoutConstraint.constant = -60;
         self.photosCollectionViewTopLayoutConstraint.constant = 0;
+        self.photosCollectionViewBottonLayoutConstraint.constant = 0;
     }
 }
 
@@ -151,6 +162,15 @@
         
         [self.view layoutIfNeeded];
     }];
+}
+
+#pragma mark - IBAction
+
+- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];    
+    [[CameraUploads syncManager] getAllAssetsForUpload];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnable];
+    [self reloadUI];
 }
 
 #pragma mark - UICollectioViewDataSource
@@ -341,6 +361,9 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (transfer.type == MEGATransferTypeUpload && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        [self reloadUI];
+    }
     if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
         [self hideProgressView];
     }
