@@ -27,7 +27,7 @@
 
 #import "SVProgressHUD.h"
 
-@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, MEGARequestDelegate, MEGATransferDelegate>
+@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, MEGARequestDelegate, MEGATransferDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
@@ -86,13 +86,7 @@
         [self.navigationItem setRightBarButtonItems:@[self.pauseBarButtonItem, self.cancelBarButtonItem] animated:YES];
     }
     
-    [self.allActiveTransfersMutableDictionary removeAllObjects];
-    [self.allQueuedTransfersMutableDictionary removeAllObjects];
-    
-    [self.allTransfersIndexPathMutableDictionary removeAllObjects];
-    [self.downloadTransfersIndexPathMutableDictionary removeAllObjects];
-    [self.uploadTransfersIndexPathMutableDictionary removeAllObjects];
-    
+    [self cleanTransfersList];
     [self transfersList];
     [self.tableView reloadData];
 }
@@ -103,10 +97,7 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
     
-    [self.downloadActiveTransfersMutableDictionary removeAllObjects];
-    [self.downloadQueuedTransfersMutableDictionary removeAllObjects];
-    [self.uploadActiveTransfersMutableDictionary removeAllObjects];
-    [self.uploadQueuedTransfersMutableDictionary removeAllObjects];
+    [self cleanTransfersList];
 }
 
 #pragma mark - UITableViewDataSource
@@ -266,6 +257,31 @@
     }
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag == 0) && (buttonIndex == 1)) {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case 0: { //All
+                [self cancelTransfersForDirection:0];
+                [self cancelTransfersForDirection:1];
+                break;
+            }
+                
+            case 1: { //Downloads
+                [self cancelTransfersForDirection:0];
+                break;
+            }
+                
+            case 2: { //Uploads
+                [self cancelTransfersForDirection:1];
+                break;
+            }
+        }
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - Private methods
 
 - (void)transfersList {
@@ -307,6 +323,23 @@
         if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
             [self.uploadQueuedTransfersMutableDictionary setObject:transfer forKey:key];
         }
+    }
+}
+
+- (void)cleanTransfersList {
+    [self.allActiveTransfersMutableDictionary removeAllObjects];
+    [self.allQueuedTransfersMutableDictionary removeAllObjects];
+    
+    [self.allTransfersIndexPathMutableDictionary removeAllObjects];
+    [self.downloadTransfersIndexPathMutableDictionary removeAllObjects];
+    [self.uploadTransfersIndexPathMutableDictionary removeAllObjects];
+    
+    if (self.transfersSegmentedControl.selectedSegmentIndex == 1) {
+        [self.downloadActiveTransfersMutableDictionary removeAllObjects];
+        [self.downloadQueuedTransfersMutableDictionary removeAllObjects];
+    } else if (self.transfersSegmentedControl.selectedSegmentIndex == 2) {
+        [self.uploadActiveTransfersMutableDictionary removeAllObjects];
+        [self.uploadQueuedTransfersMutableDictionary removeAllObjects];
     }
 }
 
@@ -449,24 +482,40 @@
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
+    NSString *transfersTypeString;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case 0: { //All
-            [self cancelTransfersForDirection:0];
-            [self cancelTransfersForDirection:1];
+            if ((self.allActiveTransfersMutableDictionary.count == 0) && (self.allQueuedTransfersMutableDictionary.count == 0)) {
+                return;
+            }
+            transfersTypeString = NSLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
         }
             
         case 1: { //Downloads
-            [self cancelTransfersForDirection:0];
+            if ((self.downloadActiveTransfersMutableDictionary.count == 0) && (self.downloadQueuedTransfersMutableDictionary.count == 0)) {
+                return;
+            }
+            transfersTypeString = NSLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
         }
             
         case 2: { //Uploads
-            [self cancelTransfersForDirection:1];
+            if ((self.uploadActiveTransfersMutableDictionary.count == 0) && (self.uploadQueuedTransfersMutableDictionary.count == 0)) {
+                return;
+            }
+            transfersTypeString = NSLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
         }
     }
-    [self.tableView reloadData];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"cancelTransfersTitle", @"Cancel transfers")
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString]
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                              otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    [alertView setTag:0];
+    [alertView show];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -491,6 +540,8 @@
         }
             
         case MEGARequestTypeCancelTransfers: {
+            [self cleanTransfersList];
+            [self.tableView reloadData];
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transfersCanceled", @"Transfers canceled")]];
             break;
         }
