@@ -313,7 +313,7 @@
     switch ([node type]) {
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:@"Camera Uploads"]) {
-            [Helper changeToViewController:[PhotosViewController class] onTabBarController:self.tabBarController];
+                [Helper changeToViewController:[PhotosViewController class] onTabBarController:self.tabBarController];
             } else {
                 CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 [cdvc setParentNode:node];
