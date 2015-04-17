@@ -739,6 +739,7 @@
     for (MEGANode *n in self.selectedNodesArray) {
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
             
         } else if ([n type] == MEGANodeTypeFolder) {
             NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
@@ -746,11 +747,11 @@
             
             if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
                 [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
             }
         }
     }
     [self setEditing:NO animated:YES];
-    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
