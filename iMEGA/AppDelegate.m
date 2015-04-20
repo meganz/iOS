@@ -143,29 +143,33 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
-    [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error = nil;
-    
-    NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
-    for (NSString *file in [fileManager contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
-            BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", offlineDirectory, file] error:&error];
-            if (!success || error) {
-                NSLog(@"Remove file error %@", error);
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kRemainLoggedIn]) {
+        [Helper logout];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error = nil;
+        
+        NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
+        for (NSString *file in [fileManager contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
+            if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+                BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", offlineDirectory, file] error:&error];
+                if (!success || error) {
+                    NSLog(@"Remove file error %@", error);
+                }
             }
         }
-    }
-    
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-    
-    if ([Helper renamePathForPreviewDocument] != nil) {
-        BOOL success = [fileManager moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
-        if (!success || error) {
-            NSLog(@"renamePathForPreview %@", error);
+        
+        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
+        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+        
+        if ([Helper renamePathForPreviewDocument] != nil) {
+            BOOL success = [fileManager moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
+            if (!success || error) {
+                NSLog(@"renamePathForPreview %@", error);
+            }
         }
     }
 }
