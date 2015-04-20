@@ -36,6 +36,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *remainLoggedInLabel;
+
+@property (weak, nonatomic) IBOutlet UISwitch *loggedInSwitch;
+
 @end
 
 @implementation LoginViewController
@@ -62,7 +66,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
-#pragma mark - Private methods
+#pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
     if (![MEGAReachabilityManager isReachable]) {
@@ -79,6 +83,10 @@
     }
     
 }
+
+
+
+#pragma mark - Private methods
 
 - (void)generateKeys {
     NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.passwordTextField.text];
@@ -221,6 +229,8 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [[NSUserDefaults standardUserDefaults] setBool:self.loggedInSwitch.on forKey:kRemainLoggedIn];
+            
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
             [self removeFromParentViewController];
