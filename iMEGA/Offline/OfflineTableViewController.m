@@ -21,14 +21,17 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import <QuickLook/QuickLook.h>
-
-#import "OfflineTableViewController.h"
-#import "OfflineTableViewCell.h"
+#import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
+
+#import "MEGASdkManager.h"
 #import "Helper.h"
 #import "EmptyView.h"
 
-@interface OfflineTableViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource>
+#import "OfflineTableViewController.h"
+#import "OfflineTableViewCell.h"
+
+@interface OfflineTableViewController () <MWPhotoBrowserDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGATransferDelegate>
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
 @property (nonatomic, strong) NSMutableArray *offlineImages;
@@ -46,6 +49,19 @@
     
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
+        
+        NSString *directoryPathString = [self currentOfflinePath];
+        NSArray *nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:directoryPathString];
+        
+        for (NSString *base64HandleAux in nodesHandlesOnFolderArray) {
+            if ([base64HandleAux.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+                continue;
+            }
+            if ([[Helper downloadedNodes] objectForKey:base64HandleAux] == nil) {
+                [[Helper downloadedNodes] setObject:base64HandleAux forKey:base64HandleAux];
+            }
+        }
+        
     } else {
         NSString *currentFolderName = [self.folderPathFromOffline lastPathComponent];
         NSArray *itemNameComponentsArray = [currentFolderName componentsSeparatedByString:@"_"];
@@ -85,7 +101,6 @@
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-    int offsetIndex = 0;
     
     if (directoryContents.count == 0) {
         [self showEmptyFolderView];
@@ -95,6 +110,7 @@
         [self.tableView setBackgroundView:nil];
     }
     
+    int offsetIndex = 0;
     for (int i = 0; i < (int)[directoryContents count]; i++) {
         NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
         NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContents objectAtIndex:i]];
@@ -346,6 +362,8 @@
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
+        NSArray *nodesHandlesOnFolderArray;
+        NSString *base64Handle;
         
         BOOL isDirectory;
         [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
@@ -356,8 +374,10 @@
             if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
                 [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
             }
+            nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
+            
         } else {
-            NSString *base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
+            base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
             NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
             if (transferTag != nil) {
                 [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
@@ -371,12 +391,10 @@
             return;
         } else {
             if (isDirectory) {
-                NSArray *nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
                 for (NSString *base64HandleAux in nodesHandlesOnFolderArray) {
                     [[Helper downloadedNodes] removeObjectForKey:base64HandleAux];
                 }
             } else {
-                NSString *base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
                 [[Helper downloadedNodes] removeObjectForKey:base64Handle];
             }
             [self.tableView reloadData];
@@ -390,6 +408,10 @@
     
     OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *itemNameString = [cell itemNameString];
+    if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
     NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
     
     NSString *filename;
@@ -519,7 +541,6 @@
     }
     
 }
-
 
 #pragma mark - MEGATransferDelegate
 

@@ -2,7 +2,7 @@
  * @file OfflineTableViewController.h
  * @brief View controller that show offline files
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -20,9 +20,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MWPhotoBrowser.h"
-#import "MEGASdkManager.h"
 
-@interface OfflineTableViewController : UITableViewController <MWPhotoBrowserDelegate, MEGATransferDelegate>
+@interface OfflineTableViewController : UITableViewController
 
 @end
