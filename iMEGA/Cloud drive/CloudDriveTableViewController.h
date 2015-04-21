@@ -2,7 +2,7 @@
  * @file CloudDriveTableViewController.h
  * @brief View controller that show MEGA nodes and allow navigate through folders
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -20,7 +20,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MWPhotoBrowser.h"
 #import "MEGASdkManager.h"
 
 typedef NS_ENUM (NSInteger, DisplayMode) {
@@ -29,7 +28,7 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeContact
 };
 
-@interface CloudDriveTableViewController : UITableViewController <MWPhotoBrowserDelegate, MEGADelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface CloudDriveTableViewController : UITableViewController
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGAUser *user;

@@ -2,7 +2,7 @@
  * @file CloudDriveTableViewController.m
  * @brief Cloud drive table view controller of the app.
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -19,19 +19,23 @@
  * program.
  */
 
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import "CloudDriveTableViewController.h"
+#import "MWPhotoBrowser.h"
 #import "NodeTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "LoginViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "DetailsNodeInfoViewController.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
+#import "NSString+MNZCategory.h"
 
-@interface CloudDriveTableViewController () {
+@interface CloudDriveTableViewController () <MWPhotoBrowserDelegate, MEGADelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -545,6 +549,8 @@
         [folderAlertView show];
     } else if (buttonIndex == 1) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    } else if (buttonIndex == 2) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
     }
 }
 
@@ -588,27 +594,67 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
     
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:assetURL resultBlock:^(ALAsset *asset)  {
-        NSString *name = asset.defaultRepresentation.filename;
-        NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image= [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-        NSData *webData = UIImageJPEGRepresentation(imageView.image, 0.9);
-        
-        
-        NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-        [webData writeToFile:localFilePath atomically:YES];
-        
-        NSError *error = nil;
-        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
-        [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
-        if (error) {
-            NSLog(@"Error change modification date of file %@", error);
+    // if assetURL != nil then is picked from camera roll else is a capture from camera.
+    if (assetURL) {
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:assetURL resultBlock:^(ALAsset *asset)  {
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+            
+            NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
+            NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
+            NSString *name = [[formatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
+            NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+            
+            ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+            
+            if (!assetRepresentation) {
+                return;
+            }
+            
+            Byte *buffer = (Byte *)malloc(assetRepresentation.size);
+            NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
+            
+            NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+            [data writeToFile:localFilePath atomically:YES];
+            
+            NSError *error = nil;
+            NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
+            [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
+            if (error) {
+                NSLog(@"Error change modification date of file %@", error);
+            }
+            
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+        } failureBlock:nil];
+    } else {
+        NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+
+        if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
+            NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
+            NSString *moviePath = [videoUrl path];
+            
+            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
+                UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
+            }
+            
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
+            
+        } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+            
+            NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
+            NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+            UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+            NSData *imageData = UIImageJPEGRepresentation(image, 1);
+            [imageData writeToFile:imagePath atomically:YES];
+            
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
         }
-        
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
-    } failureBlock:nil];
+    }
     
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;
@@ -670,6 +716,7 @@
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
+    imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
     imagePickerController.delegate = self;
     
     self.imagePickerController = imagePickerController;
@@ -725,7 +772,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"uploadPhoto", @"Upload photo"), nil];
+                                                    otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"choosePhotoVideo", @"Choose"), NSLocalizedString(@"capturePhotoVideo", "Capture"), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
@@ -1006,11 +1053,20 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
-        NSError *e = nil;
-        NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&e];
-        if (!success || e) {
-            NSLog(@"remove file error %@", e);
+        if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[transfer nodeHandle]];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"MOV"];
+            [[MEGASdkManager sharedMEGASdk] renameNode:node newName:name];
+        } else {
+            NSError *e = nil;
+            NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&e];
+            if (!success || e) {
+                NSLog(@"remove file error %@", e);
+            }
         }
     }
 }
