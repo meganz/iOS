@@ -49,6 +49,7 @@
 		41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
+		41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
 		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
@@ -180,6 +181,8 @@
 		41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedTableViewController.m; sourceTree = "<group>"; };
 		41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
+		41AC2ABE1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
@@ -357,6 +360,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */,
 				41ADA9F31ADE8B8800641BB4 /* SVWebViewController */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
 				41FC83A51AA732DC008FA551 /* Reachability */,
@@ -554,6 +558,16 @@
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 			);
 			path = Advanced;
+			sourceTree = "<group>";
+		};
+		41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */ = {
+			isa = PBXGroup;
+			children = (
+				41AC2ABE1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.h */,
+				41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */,
+			);
+			name = DZNEmptyDataSet;
+			path = Vendor/DZNEmptyDataSet/Source;
 			sourceTree = "<group>";
 		};
 		41AC66441AB1D488003FE8DA /* About */ = {
@@ -856,6 +870,7 @@
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
+				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,

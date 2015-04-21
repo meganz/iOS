@@ -22,3 +22,6 @@
 [submodule "iMEGA/Vendor/SVWebViewController"]
 	path = iMEGA/Vendor/SVWebViewController
 	url = https://github.com/meganz/SVWebViewController.git
+[submodule "iMEGA/Vendor/DZNEmptyDataSet"]
+	path = iMEGA/Vendor/DZNEmptyDataSet
+	url = https://github.com/meganz/DZNEmptyDataSet.git
