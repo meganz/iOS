@@ -106,8 +106,9 @@
 "generateLink" = "Generate link...";
 
 //"+"
-//Upload photo
-"uploadPhoto" = "Upload photo";
+//Select photo or video
+"choosePhotoVideo" ="Choose";
+"capturePhotoVideo"="Capture";
 
 //Create folder
 "newFolderTitle" = "New folder";
