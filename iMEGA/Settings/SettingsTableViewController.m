@@ -2,7 +2,7 @@
  * @file SettingsTableViewController.m
  * @brief View controller that show your settings
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -23,8 +23,10 @@
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "FeedbackTableViewController.h"
+#import "MEGASdkManager.h"
+#import "UIImage+GKContact.h"
 
-@interface SettingsTableViewController () <UIActionSheetDelegate>
+@interface SettingsTableViewController () <UIActionSheetDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -36,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *feedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *logoutLabel;
+@property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
@@ -80,6 +83,7 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
     if (!fileExists) {
+        [self.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(88, 88)]];
         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
     } else {
         [self.avatarImageView setImage:[UIImage imageNamed:avatarFilePath]];
@@ -161,6 +165,28 @@
             NSString *usedStorageString = [NSByteCountFormatter stringFromByteCount:[[request.megaAccountDetails storageUsed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
             
             [self.storageLabel setText:[NSString stringWithFormat:NSLocalizedString(@"usedSpaceOfTotalSpace", nil), usedStorageString, maxStorageString]];
+            
+            switch ([request.megaAccountDetails type]) {
+                case 0:
+                    [self.accountTypeLabel setText:@"Free"];
+                    break;
+                
+                case 1:
+                    [self.accountTypeLabel setText:@"ProI"];
+                    break;
+                    
+                case 2:
+                    [self.accountTypeLabel setText:@"ProII"];
+                    break;
+                    
+                case 3:
+                    [self.accountTypeLabel setText:@"ProIII"];
+                    break;
+                    
+                default:
+                    break;
+            }
+            
             break;
         }
             
