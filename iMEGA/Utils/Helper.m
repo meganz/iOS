@@ -601,6 +601,7 @@ static NSString *renamePathForPreview;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[Helper downloadingNodes] removeAllObjects];
