@@ -50,6 +50,7 @@
 		41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
+		41AC2AC81AE69B11003C09E5 /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2AC71AE69B11003C09E5 /* PieChartView.m */; };
 		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
@@ -183,6 +184,8 @@
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		41AC2ABE1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
+		41AC2AC61AE69B11003C09E5 /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
+		41AC2AC71AE69B11003C09E5 /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
 		41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
@@ -360,6 +363,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				41AC2AC51AE69B11003C09E5 /* PieChart */,
 				41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */,
 				41ADA9F31ADE8B8800641BB4 /* SVWebViewController */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
@@ -568,6 +572,16 @@
 			);
 			name = DZNEmptyDataSet;
 			path = Vendor/DZNEmptyDataSet/Source;
+			sourceTree = "<group>";
+		};
+		41AC2AC51AE69B11003C09E5 /* PieChart */ = {
+			isa = PBXGroup;
+			children = (
+				41AC2AC61AE69B11003C09E5 /* PieChartView.h */,
+				41AC2AC71AE69B11003C09E5 /* PieChartView.m */,
+			);
+			name = PieChart;
+			path = Vendor/PieChart;
 			sourceTree = "<group>";
 		};
 		41AC66441AB1D488003FE8DA /* About */ = {
@@ -916,6 +930,7 @@
 				41B2D4251A6D925F0002E29E /* TourViewController.m in Sources */,
 				415227341A692EE600EC7BB6 /* SSKeychainQuery.m in Sources */,
 				41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */,
+				41AC2AC81AE69B11003C09E5 /* PieChartView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

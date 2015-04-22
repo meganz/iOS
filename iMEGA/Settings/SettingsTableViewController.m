@@ -25,8 +25,13 @@
 #import "FeedbackTableViewController.h"
 #import "MEGASdkManager.h"
 #import "UIImage+GKContact.h"
+#import "PieChartView.h"
 
-@interface SettingsTableViewController () <UIActionSheetDelegate, MEGARequestDelegate>
+@interface SettingsTableViewController () <UIActionSheetDelegate, MEGARequestDelegate, PieChartViewDelegate, PieChartViewDataSource> {
+    long long usedSize;
+    long long availableSize;
+    long long localCacheSize;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
@@ -41,6 +46,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+
+@property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *localImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *usedImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *availableImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *localLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usedSpaceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *availableLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLocalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeUsedSpaceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeAvailableLabel;
 
 @end
 
@@ -58,10 +76,46 @@
     [self.feedbackLabel setText:NSLocalizedString(@"feedbackLabel", nil)];
     [self.advancedLabel setText:NSLocalizedString(@"advancedLabel", nil)];
     [self.logoutLabel setText:NSLocalizedString(@"logoutLabel", nil)];
+    
+    self.pieChartView.delegate = self;
+    self.pieChartView.datasource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.pieChartView.layer.cornerRadius = CGRectGetWidth(self.pieChartView.frame)/2;
+    self.pieChartView.layer.masksToBounds = YES;
+    
+    self.usedImageView.backgroundColor = [UIColor colorWithRed:43/255.0f green:166/255.0f blue:222/255.0f alpha:1.0f];
+    self.localImageView.backgroundColor = [UIColor colorWithRed:19/255.0f green:224/255.0f blue:60/255.0f alpha:1.0f];
+    self.availableImageView.backgroundColor = [UIColor whiteColor];
+    
+    self.usedImageView.layer.cornerRadius = CGRectGetWidth(self.usedImageView.frame)/2;
+    self.usedImageView.layer.masksToBounds = YES;
+    self.usedImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.usedImageView.layer.borderWidth = 2;
+    
+    self.localImageView.layer.cornerRadius = CGRectGetWidth(self.localImageView.frame)/2;
+    self.localImageView.layer.masksToBounds = YES;
+    self.localImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.localImageView.layer.borderWidth = 2;
+    
+    self.availableImageView.layer.cornerRadius = CGRectGetWidth(self.availableImageView.frame)/2;
+    self.availableImageView.layer.masksToBounds = YES;
+    self.availableImageView.layer.borderColor = [UIColor colorWithRed:247/255.0f green:247/255.0f blue:247/255.0f alpha:1.0f].CGColor;
+    self.availableImageView.layer.borderWidth = 2;
+    
+    long long thumbsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"]];
+    
+    long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"]];
+    
+    long long offileSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"]];
+    
+    localCacheSize = thumbsSize + previewsSize + offileSize;
+    
+    NSString *localStorageString = [NSByteCountFormatter stringFromByteCount:localCacheSize countStyle:NSByteCountFormatterCountStyleMemory];
+    [self.sizeLocalLabel setText:localStorageString];
     
     [self reloadUI];
 }
@@ -103,12 +157,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Logout
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
     }
     
     // Feedback
-    if (indexPath.section == 1 && indexPath.row == 3) {
+    if (indexPath.section == 2 && indexPath.row == 3) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"¿Cómo te sientes?"
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
@@ -127,6 +181,55 @@
         feedbackTableViewController.feeling = buttonIndex;
         [self.navigationController pushViewController:feedbackTableViewController animated:YES];
     }
+}
+
+#pragma mark - PieChartViewDelegate
+
+- (CGFloat)centerCircleRadius {
+    return 35.f;
+}
+
+#pragma mark - PieChartViewDataSource
+- (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView {
+    return 3;
+}
+- (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
+    switch (index) {
+        case 0:
+            return [UIColor colorWithRed:19/255.0f green:224/255.0f blue:60/255.0f alpha:1.0f];
+            break;
+            
+        case 1:
+            return [UIColor colorWithRed:43/255.0f green:166/255.0f blue:222/255.0f alpha:1.0f];
+            break;
+            
+        case 2:
+            return [UIColor whiteColor];
+            break;
+            
+        default:
+            return [UIColor whiteColor];
+            break;
+    }
+}
+- (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index {
+    switch (index) {
+        case 0:
+            return localCacheSize / localCacheSize;
+            break;
+            
+        case 1:
+            return usedSize / localCacheSize;
+            break;
+            
+        case 2:
+            return availableSize / localCacheSize;
+            break;
+            
+        default:
+            break;
+    }
+    return 2;
 }
 
 #pragma mark - MEGARequestDelegate
@@ -161,10 +264,19 @@
         }
             
         case MEGARequestTypeAccountDetails: {
+            usedSize = [[request.megaAccountDetails storageUsed] longLongValue];
+            availableSize = [[request.megaAccountDetails storageMax] longLongValue] - [[request.megaAccountDetails storageUsed] longLongValue];
+            
+            [self.pieChartView reloadData];
+            
             NSString *maxStorageString = [NSByteCountFormatter stringFromByteCount:[[request.megaAccountDetails storageMax] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
             NSString *usedStorageString = [NSByteCountFormatter stringFromByteCount:[[request.megaAccountDetails storageUsed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
+            NSString *availableStorageString = [NSByteCountFormatter stringFromByteCount:([[request.megaAccountDetails storageMax] longLongValue]- [[request.megaAccountDetails storageUsed] longLongValue])  countStyle:NSByteCountFormatterCountStyleMemory];
             
             [self.storageLabel setText:[NSString stringWithFormat:NSLocalizedString(@"usedSpaceOfTotalSpace", nil), usedStorageString, maxStorageString]];
+            
+            [self.sizeUsedSpaceLabel setText:usedStorageString];
+            [self.sizeAvailableLabel setText:availableStorageString];
             
             switch ([request.megaAccountDetails type]) {
                 case 0:

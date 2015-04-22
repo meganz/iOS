@@ -528,6 +528,23 @@ static NSString *renamePathForPreview;
     }
 }
 
++ (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
+    unsigned long long folderSize = 0;
+    
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            folderSize += [Helper sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
+        } else {
+            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
+        }
+    }
+    
+    return folderSize;
+}
+
 #pragma mark - Logout
 
 + (void)logout {
