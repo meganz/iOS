@@ -182,23 +182,6 @@
     return pathFromOffline;
 }
 
-- (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
-    unsigned long long folderSize = 0;
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            folderSize += [self sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
-        } else {
-            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
-        }
-    }
-    
-    return folderSize;
-}
-
 - (void)showEmptyFolderView {
         
     EmptyView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView"  owner:self options: nil] firstObject];
@@ -327,7 +310,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell.imageView setImage:[Helper folderImage]];
         
-        size = [self sizeOfFolderAtPath:pathForItem];
+        size = [Helper sizeOfFolderAtPath:pathForItem];
     } else {
         NSString *extension = [[nameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];

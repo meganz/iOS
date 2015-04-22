@@ -94,6 +94,7 @@
 #pragma mark - Utils
 
 + (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
++ (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 
 #pragma mark - Logout
 
