@@ -48,8 +48,8 @@ static NSString *renamePathForPreview;
                                 @"aac":@"audio",
                                 @"ac3":@"audio",
                                 @"accdb":@"database",
-                                @"aep":@"aftereffects",
-                                @"aet":@"aftereffects",
+                                @"aep":@"after_effects",
+                                @"aet":@"after_effects",
                                 @"ai":@"illustrator",
                                 @"aif":@"audio",
                                 @"aiff":@"audio",
@@ -69,21 +69,21 @@ static NSString *renamePathForPreview;
                                 @"bay":@"raw",
                                 @"bmp":@"graphic",
                                 @"bz2":@"compressed",
-                                @"c":@"sourcecode",
-                                @"cc":@"sourcecode",
+                                @"c":@"source_code",
+                                @"cc":@"source_code",
                                 @"cdr":@"vector",
                                 @"cgi":@"web_lang",
                                 @"class":@"java",
                                 @"com":@"executable",
-                                @"cpp":@"sourcecode",
+                                @"cpp":@"source_code",
                                 @"cr2":@"raw",
                                 @"css":@"web_data",
-                                @"cxx":@"sourcecode",
+                                @"cxx":@"source_code",
                                 @"dcr":@"raw",
                                 @"db":@"database",
                                 @"dbf":@"database",
                                 @"dhtml":@"html",
-                                @"dll":@"sourcecode",
+                                @"dll":@"source_code",
                                 @"dng":@"raw",
                                 @"doc":@"word",
                                 @"docx":@"word",
@@ -91,12 +91,13 @@ static NSString *renamePathForPreview;
                                 @"dwg":@"cad",
                                 @"dwt":@"dreamweaver",
                                 @"dxf":@"cad",
+                                @"dmg":@"dmg",
                                 @"eps":@"vector",
                                 @"exe":@"executable",
                                 @"fff":@"raw",
                                 @"fla":@"flash",
                                 @"flac":@"audio",
-                                @"flv":@"flash_video",
+                                @"flv":@"video_flash",
                                 @"fnt":@"font",
                                 @"fon":@"font",
                                 @"gadget":@"executable",
@@ -104,8 +105,8 @@ static NSString *renamePathForPreview;
                                 @"gpx":@"gis",
                                 @"gsheet":@"spreadsheet",
                                 @"gz":@"compressed",
-                                @"h":@"sourcecode",
-                                @"hpp":@"sourcecode",
+                                @"h":@"source_code",
+                                @"hpp":@"source_code",
                                 @"htm":@"html",
                                 @"html":@"html",
                                 @"iff":@"audio",
@@ -119,8 +120,8 @@ static NSString *renamePathForPreview;
                                 @"key":@"generic",
                                 @"kml":@"gis",
                                 @"log":@"text",
-                                @"m":@"sourcecode",
-                                @"mm":@"sourcecode",
+                                @"m":@"source_code",
+                                @"mm":@"source_code",
                                 @"m3u":@"playlist",
                                 @"m4a":@"audio",
                                 @"max":@"3D",
@@ -175,12 +176,12 @@ static NSString *renamePathForPreview;
                                 @"rtf":@"text",
                                 @"rw2":@"raw",
                                 @"rwl":@"raw",
-                                @"sh":@"sourcecode",
+                                @"sh":@"source_code",
                                 @"shtml":@"web_data",
                                 @"sitx":@"compressed",
                                 @"sql":@"database",
                                 @"srf":@"raw",
-                                @"srt":@"video_subtitles",
+                                @"srt":@"subtitles",
                                 @"stl":@"3D",
                                 @"svg":@"vector",
                                 @"svgz":@"vector",
@@ -250,6 +251,15 @@ static NSString *renamePathForPreview;
     return folderSharedImage;
 }
 
++ (UIImage *)folderCameraUploadsImage {
+    static UIImage *folderCameraUploadsImage = nil;
+    
+    if (folderCameraUploadsImage == nil) {
+        folderCameraUploadsImage = [UIImage imageNamed:@"folder_camera_uploads"];
+    }
+    return folderCameraUploadsImage;
+}
+
 + (UIImage *)defaultPhotoImage {
     static UIImage *defaultPhotoImage = nil;
     
@@ -265,11 +275,16 @@ static NSString *renamePathForPreview;
     
     switch (nodeType) {
         case MEGANodeTypeFolder: {
-            if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node])
-                return [self folderSharedImage];
-            else
-                return [self folderImage];
+            if ([node.name isEqualToString:@"Camera Uploads"]) {
+                return [self folderCameraUploadsImage];
+            } else {
+                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
+                    return [self folderSharedImage];
+                } else {
+                    return [self folderImage];
+                }
             }
+        }
             
         case MEGANodeTypeRubbish:
             return [self folderImage];

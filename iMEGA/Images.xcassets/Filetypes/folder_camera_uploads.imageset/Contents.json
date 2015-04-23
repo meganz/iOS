@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "folder_image.png"
+      "filename" : "folder_camera_uploads.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "folder_image@2x.png"
+      "filename" : "folder_camera_uploads@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "folder_image@3x.png"
+      "filename" : "folder_camera_uploads@3x.png"
     }
   ],
   "info" : {
