@@ -22,20 +22,21 @@
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
 #import "MWPhotoBrowser.h"
+#import "UIScrollView+EmptyDataSet.h"
 
-#import "FolderLinkViewController.h"
 #import "MEGASdkManager.h"
 #import "Helper.h"
+
+#import "FolderLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "MEGAPreview.h"
 #import "DetailsNodeInfoViewController.h"
-#import "EmptyView.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     NSMutableArray *matchSearchNodes;
 }
@@ -60,6 +61,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     NSError *error;
@@ -111,6 +115,11 @@
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
 }
 
+- (void)dealloc {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -130,21 +139,7 @@
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     
-    if ([self.nodeList.size integerValue] == 0) {
-        [self showEmptyFolderView];
-    }
-    
     [self.tableView reloadData];
-}
-
-- (void)showEmptyFolderView {
-    [self disableUIItems];
-    
-    EmptyView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView"  owner:self options: nil] firstObject];
-    [emptyView.emptyImageView setImage:[UIImage imageNamed:@"emptyFolder"]];
-    [emptyView.emptyLabel setText:NSLocalizedString(@"emptyFolder", @"Empty Folder")];
-    
-    [self.tableView setBackgroundView:emptyView];
 }
 
 - (void)showUnavailableLinkView {
@@ -468,6 +463,51 @@
      [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
     
     return YES;
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    if (self.isFolderRootNode) {
+        text = NSLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link.");
+    } else {
+        text = NSLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    if (self.isFolderRootNode) {
+        text = NSLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link.");
+    } else {
+        text = NSLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+    }
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"emptyFolder"];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MWPhotoBrowserDelegate

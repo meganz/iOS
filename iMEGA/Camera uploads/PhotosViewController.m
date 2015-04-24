@@ -19,15 +19,17 @@
  * program.
  */
 
+#import "SVProgressHUD.h"
+#import "UIScrollView+EmptyDataSet.h"
+
 #import "PhotosViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
-#import "SVProgressHUD.h"
 #import "CameraUploads.h"
 
-@interface PhotosViewController ()
+@interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -59,6 +61,9 @@
     [super viewDidLoad];
     
     [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enableCameraUploadsButton", "Enable Camera Uploads") forState:UIControlStateNormal];
+    
+    self.photosCollectionView.emptyDataSetSource = self;
+    self.photosCollectionView.emptyDataSetDelegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,6 +84,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    self.photosCollectionView.emptyDataSetSource = nil;
+    self.photosCollectionView.emptyDataSetDelegate = nil;
 }
 
 #pragma mark - Private methods
@@ -291,6 +301,41 @@
     [photoBrowser showNextPhotoAnimated:YES];
     [photoBrowser showPreviousPhotoAnimated:YES];
     [photoBrowser setCurrentPhotoIndex:index];
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"emptyCameraUploads"];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MWPhotoBrowserDelegate

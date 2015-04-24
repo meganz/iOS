@@ -29,7 +29,6 @@
 #import "MainTabBarController.h"
 #import "FileLinkViewController.h"
 #import "BrowserViewController.h"
-#import "EmptyView.h"
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
 

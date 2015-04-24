@@ -21,21 +21,23 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "MWPhotoBrowser.h"
+#import "SVProgressHUD.h"
+#import "NSString+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
+
+#import "Helper.h"
 
 #import "CloudDriveTableViewController.h"
-#import "MWPhotoBrowser.h"
 #import "NodeTableViewCell.h"
-#import "SVProgressHUD.h"
 #import "LoginViewController.h"
 #import "DetailsNodeInfoViewController.h"
-#import "Helper.h"
 #import "MEGAPreview.h"
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
-#import "NSString+MNZCategory.h"
 
-@interface CloudDriveTableViewController () <MWPhotoBrowserDelegate, MEGADelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -78,6 +80,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -149,6 +154,11 @@
     }
     
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+}
+
+- (void)dealloc {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -522,6 +532,89 @@
     }];
     
     isSwipeEditing = NO;
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            if ([self.parentNode type] == MEGANodeTypeRoot) {
+                text = NSLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
+            } else {
+                text = NSLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+            }
+            break;
+        }
+            
+        case DisplayModeContact:
+            text = NSLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
+            break;
+            
+        case DisplayModeRubbishBin:
+            text = NSLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+            break;
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive:
+            text = NSLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
+            break;
+            
+        case DisplayModeContact:
+            text = NSLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
+            break;
+            
+        case DisplayModeRubbishBin:
+            text = NSLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+            break;
+    }
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            if ([self.parentNode type] == MEGANodeTypeRoot) {
+                return [UIImage imageNamed:@"emptyCloud"];
+            } else {
+                return [UIImage imageNamed:@"emptyFolder"];
+            }
+            break;
+        }
+            
+        case DisplayModeContact:
+            return [UIImage imageNamed:@"emptyFolder"];
+            break;
+            
+        case DisplayModeRubbishBin:
+            return [UIImage imageNamed:@"emptyRubbishBin"];
+            break;
+    }
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MWPhotoBrowserDelegate

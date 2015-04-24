@@ -90,6 +90,50 @@
 "folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
 "folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 
+//EMPTY STATES
+//Links
+"folderLinkEmptyState_title"="Enlace a carpeta vacía";
+"folderLinkEmptyState_titleFolder"="Carpeta vacía";
+
+"folderLinkEmptyState_text"="Actualmente, este enlace a carpeta no contiene ningún archivo.";
+"folderLinkEmptyState_textFolder"="Actualmente, esta carpeta anidada no contiene ningún archivo.";
+
+//Cloud Drive
+"cloudDriveEmptyState_title"="No hay archivos en tu Cloud Drive";
+"cloudDriveEmptyState_titleFolder"="Carpeta vacía";
+"cloudDriveEmptyState_titleContact"="No hay ficheros en esta carpeta compartida";
+"cloudDriveEmptyState_titleRubbishBin"="No hay archivos en la papelera";
+
+"cloudDriveEmptyState_text"="Añade nuevos archivos utilizando el botón superior.";
+"cloudDriveEmptyState_textContact"="¡Comparte algo! Añade nuevos archivos utilizando el botón superior.";
+"cloudDriveEmptyState_textRubbishBin"="¡Genial!";
+
+//Camera Uploads
+"cameraUploadsEmptyState_title"="Camera Uploads esta desactivado";
+
+"cameraUploadsEmptyState_text"="Activa Camera Uploads para tener una copia de las fotos de tu dispositivo en MEGA.";
+
+//Offline
+"offlineEmptyState_title"="No hay archivos guardados en Offline";
+"offlineEmptyState_titleForEmptyFolder"="Carpeta vacía";
+
+"offlineEmptyState_text"="Puedes descargar archivos a esta sección para poder utilizarlos cuando no tengas conexión a internet.";
+"offlineEmptyState_textForEmptyFolder"="Cuando te descargaste esta carpeta, estaba vacía.";
+
+//Contacts
+"contactsEmptyState_title"="¡Todavía no tienes contactos añadidos!";
+
+"contactsEmptyState_text"="Añade nuevos contactos utilizando el botón superior.";
+
+//Transfers
+"transfersEmptyState_titleAll"="No hay transferencias activas";
+"transfersEmptyState_titleDownload"="No hay transferencias activas de descarga";
+"transfersEmptyState_titleUpload"="No hay transferencias activas de subida";
+
+"transfersEmptyState_textAll"="No tienes ninguna transferencia pendiente.";
+"transfersEmptyState_textDownload"="No tienes ninguna transferencia pendiente de descarga.";
+"transfersEmptyState_textUpload"="No tienes ninguna transferencia pendiente de subida.";
+
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud";
 "updatingNodes" = "Actualizando nodos...";

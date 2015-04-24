@@ -90,6 +90,50 @@
 "folderLinkUnavailableTitle"="Folder link unavailable";
 "folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 
+//EMPTY STATES
+//Links
+"folderLinkEmptyState_title"="Empty folder link";
+"folderLinkEmptyState_titleFolder"="Empty folder.";
+
+"folderLinkEmptyState_text"="Currently, this folder link doesn't have any files.";
+"folderLinkEmptyState_textFolder"="Currently, this child folder doesn't have any files.";
+
+//Cloud Drive
+"cloudDriveEmptyState_title"="No files in your Cloud Drive";
+"cloudDriveEmptyState_titleFolder"="Empty folder";
+"cloudDriveEmptyState_titleContact"="No files in this shared folder";
+"cloudDriveEmptyState_titleRubbishBin"="Empty rubbish bin";
+
+"cloudDriveEmptyState_text"="Add new files using the upper button.";
+"cloudDriveEmptyState_textContact"="Share something! Add new files using the upper button.";
+"cloudDriveEmptyState_textRubbishBin"="Awesome!";
+
+//Camera Uploads
+"cameraUploadsEmptyState_title"="Camera Uploads is disabled";
+
+"cameraUploadsEmptyState_text"="Enable Camera Uploads to have a copy of your device photos on MEGA.";
+
+//Offline
+"offlineEmptyState_title"="No files saved for Offline";
+"offlineEmptyState_titleForEmptyFolder"="Empty folder";
+
+"offlineEmptyState_text"="You can download files to this section to be able to use them when you don't have internet connection.";
+"offlineEmptyState_textForEmptyFolder"="When you downloaded this folder it was empty.";
+
+//Contacts
+"contactsEmptyState_title"="You don't have any contacts added yet!";
+
+"contactsEmptyState_text"="Add new contacts using the upper button.";
+
+//Transfers
+"transfersEmptyState_titleAll"="No active transfers";
+"transfersEmptyState_titleDownload"="No active download transfers";
+"transfersEmptyState_titleUpload"="No active upload transfers";
+
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
+"transfersEmptyState_textDownload"="You don't have any pending download transfers.";
+"transfersEmptyState_textUpload"="You don't have any pending upload transfers.";
+
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";
 "updatingNodes" = "Updating nodes...";
