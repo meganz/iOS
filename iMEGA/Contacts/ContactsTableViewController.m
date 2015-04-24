@@ -2,7 +2,7 @@
  * @file ContactsTableViewController.m
  * @brief View controller that show your contacts
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -27,9 +27,9 @@
 
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
+#import "UIScrollView+EmptyDataSet.h"
 
-
-@interface ContactsTableViewController () {
+@interface ContactsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     UIAlertView *emailAlertView;
     UIAlertView *removeAlertView;
     
@@ -59,6 +59,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
+    
     NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
 }
@@ -68,6 +71,11 @@
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
+}
+
+- (void)dealloc {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -413,6 +421,41 @@
     } else if (alertView.tag == 2) {
     
     }
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text = NSLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text = NSLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"emptyContacts"];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MEGARequestDelegate

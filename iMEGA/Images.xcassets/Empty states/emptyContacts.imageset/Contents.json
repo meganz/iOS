@@ -3,16 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "emptyCloud.png"
+      "filename" : "emptyContacts.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "emptyCloud@2x.png"
+      "filename" : "emptyContacts@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "emptyContacts@3x.png"
     }
   ],
   "info" : {

@@ -19,15 +19,16 @@
  * program.
  */
 
+#import "SVProgressHUD.h"
+#import "UIScrollView+EmptyDataSet.h"
+
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
 #import "TransfersViewController.h"
 #import "TransferTableViewCell.h"
 
-#import "SVProgressHUD.h"
-
-@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, MEGARequestDelegate, MEGATransferDelegate>
+@interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
@@ -57,6 +58,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     [self.transfersSegmentedControl setTitle:NSLocalizedString(@"all", @"All") forSegmentAtIndex:0];
     [self.transfersSegmentedControl setTitle:NSLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
@@ -98,6 +102,11 @@
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
     
     [self cleanTransfersList];
+}
+
+- (void)dealloc {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -225,11 +234,16 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleForHeader;
-    if (section == 0) {
-        titleForHeader = NSLocalizedString(@"activeTransfers", @"Active transfers");
+    if ([self.tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+        titleForHeader = nil;
     } else {
-        titleForHeader = NSLocalizedString(@"queuedTransfers", @"Queued transfers");
+        if (section == 0) {
+            titleForHeader = NSLocalizedString(@"activeTransfers", @"Active transfers");
+        } else {
+            titleForHeader = NSLocalizedString(@"queuedTransfers", @"Queued transfers");
+        }
     }
+    
     return titleForHeader;
 }
 
@@ -516,6 +530,67 @@
                                               otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     [alertView setTag:0];
     [alertView show];
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+        case 0: //All
+            text = NSLocalizedString(@"transfersEmptyState_titleAll", @"No active transfers");
+            break;
+            
+        case 1: //Downloads
+            text = NSLocalizedString(@"transfersEmptyState_titleDownload", @"No active download transfers");
+            break;
+            
+        case 2: //Uploads
+            text = NSLocalizedString(@"transfersEmptyState_titleUpload", @"No active upload transfers");
+            break;
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+        case 0: //All
+            text = NSLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
+            break;
+            
+        case 1: //Downloads
+            text = NSLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending download transfers.");
+            break;
+            
+        case 2: //Uploads
+            text = NSLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending upload transfers.");
+            break;
+    }
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"emptyTransfers"];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MEGARequestDelegate

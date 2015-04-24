@@ -23,15 +23,15 @@
 #import <QuickLook/QuickLook.h>
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
-#import "EmptyView.h"
 
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
 
-@interface OfflineTableViewController () <MWPhotoBrowserDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGATransferDelegate>
+@interface OfflineTableViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate>
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
 @property (nonatomic, strong) NSMutableArray *offlineImages;
@@ -46,6 +46,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
@@ -92,6 +95,11 @@
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
 }
 
+- (void)dealloc {
+    self.tableView.emptyDataSetSource = nil;
+    self.tableView.emptyDataSetDelegate = nil;
+}
+
 #pragma mark - Private methods
 
 - (void)reloadUI {
@@ -101,15 +109,7 @@
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-    
-    if (directoryContents.count == 0) {
-        [self showEmptyFolderView];
-    } else {
-        [self.tableView setBounces:YES];
-        [self.tableView setScrollEnabled:YES];
-        [self.tableView setBackgroundView:nil];
-    }
-    
+        
     int offsetIndex = 0;
     for (int i = 0; i < (int)[directoryContents count]; i++) {
         NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
@@ -182,15 +182,21 @@
     return pathFromOffline;
 }
 
-- (void)showEmptyFolderView {
-        
-    EmptyView *emptyView = [[[NSBundle mainBundle] loadNibNamed:@"EmptyView"  owner:self options: nil] firstObject];
-    [emptyView.emptyImageView setImage:[UIImage imageNamed:@"emptyFolder"]];
-    [emptyView.emptyLabel setText:NSLocalizedString(@"emptyFolder", @"Empty Folder")];
+- (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
+    unsigned long long folderSize = 0;
     
-    [self.tableView setBounces:NO];
-    [self.tableView setScrollEnabled:NO];
-    [self.tableView setBackgroundView:emptyView];
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            folderSize += [self sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
+        } else {
+            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
+        }
+    }
+    
+    return folderSize;
 }
 
 - (NSArray *)nodeHandlesOnFolder:(NSString *)path {
@@ -486,6 +492,51 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    if (self.folderPathFromOffline == nil) {
+        text = NSLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+    } else {
+        text = NSLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    NSString *text;
+    if (self.folderPathFromOffline == nil) {
+        text = NSLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
+    } else {
+        text = NSLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
+    }
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"emptyFolder"];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
 }
 
 #pragma mark - MWPhotoBrowserDelegate
