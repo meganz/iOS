@@ -47,6 +47,8 @@
 		418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852021A668E4B00FDBA15 /* libz.dylib */; };
 		418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852041A668E5200FDBA15 /* libsqlite3.dylib */; };
 		41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
+		41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */; };
+		41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */; };
 		41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
@@ -178,6 +180,10 @@
 		418852041A668E5200FDBA15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		41A602981A8A5D11001AE538 /* CameraUploads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploads.h; sourceTree = "<group>"; };
 		41A602991A8A5D11001AE538 /* CameraUploads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploads.m; sourceTree = "<group>"; };
+		41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeTableViewController.h; sourceTree = "<group>"; };
+		41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeTableViewController.m; sourceTree = "<group>"; };
+		41A66D0B1AE7A0FE007D7E20 /* ProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewCell.h; sourceTree = "<group>"; };
+		41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewCell.m; sourceTree = "<group>"; };
 		41AA1A1A1AC081C600D32691 /* AdvancedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedTableViewController.h; sourceTree = "<group>"; };
 		41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedTableViewController.m; sourceTree = "<group>"; };
 		41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
@@ -439,6 +445,7 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				41A66D031AE78FF9007D7E20 /* Upgrade */,
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
 				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AC66441AB1D488003FE8DA /* About */,
@@ -551,6 +558,17 @@
 				41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */,
 			);
 			path = "Camera uploads";
+			sourceTree = "<group>";
+		};
+		41A66D031AE78FF9007D7E20 /* Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */,
+				41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */,
+				41A66D0B1AE7A0FE007D7E20 /* ProductTableViewCell.h */,
+				41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */,
+			);
+			path = Upgrade;
 			sourceTree = "<group>";
 		};
 		41AA1A191AC07EB900D32691 /* Advanced */ = {
@@ -884,6 +902,7 @@
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
+				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
@@ -910,6 +929,7 @@
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
+				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */,

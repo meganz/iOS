@@ -266,6 +266,17 @@
 "helpCentreFooter"="Get support or read popular topics.";
 "rateUsFooter"="Oh my, it's full of stars!";
 
+//(5) Settings - UpgradeTableViewController
+"upgradeAccount"="Upgrade account";
+
+"productSpace"="Storage %@";
+"productBandwidth"="Bandwidth %@";
+"productPricePerMonth"="%.2f %@ per month";
+"productMonthlyPrice"="Monthly (%.2f %@)";
+"productYearlyPrice"="Yearly (%.2f %@)";
+
+"chooseDuration"="Choose duration";
+
 // HUD messages
 "logout" = "Logout...";
 

@@ -26,6 +26,7 @@
 #import "MEGASdkManager.h"
 #import "UIImage+GKContact.h"
 #import "PieChartView.h"
+#import "UpgradeTableViewController.h"
 
 @interface SettingsTableViewController () <UIActionSheetDelegate, MEGARequestDelegate, PieChartViewDelegate, PieChartViewDataSource> {
     long long usedSize;
@@ -59,6 +60,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLocalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeUsedSpaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeAvailableLabel;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *upgradeCell;
+
+@property (nonatomic, strong) MEGAPricing *pricing;
+@property (nonatomic) MEGAAccountType megaAccountType;
 
 @end
 
@@ -129,6 +135,7 @@
     
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getUserDataWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
 }
 
 - (void)setUserAvatar {
@@ -169,6 +176,16 @@
                                                    destructiveButtonTitle:nil
                                                         otherButtonTitles:@"Feliz", @"Confuso", @"Infeliz", nil];
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    }
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showUpgrade"]) {
+        UpgradeTableViewController *upgradeTableViewController = segue.destinationViewController;
+        upgradeTableViewController.pricing = self.pricing;
+        upgradeTableViewController.megaAccountType = self.megaAccountType;
     }
 }
 
@@ -264,6 +281,7 @@
         }
             
         case MEGARequestTypeAccountDetails: {
+            self.megaAccountType = [[request megaAccountDetails] type];
             usedSize = [[request.megaAccountDetails storageUsed] longLongValue];
             availableSize = [[request.megaAccountDetails storageMax] longLongValue] - [[request.megaAccountDetails storageUsed] longLongValue];
             
@@ -310,6 +328,11 @@
             [self setUserAvatar];
             break;
         }
+            
+        case MEGARequestTypeGetPricing:
+            self.pricing = [request pricing];
+            [self.upgradeCell setUserInteractionEnabled:YES];
+            break;
             
         default:
             break;
