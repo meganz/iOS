@@ -266,6 +266,17 @@
 "helpCentreFooter"="Obtén asistencia técnica o lee los temas más populares.";
 "rateUsFooter"="Oh, ¡no puedes añadir más estrellas!";
 
+//(5) Settings - UpgradeTableViewController
+"upgradeAccount"="Mejorar cuenta";
+
+"productSpace"="Almacenamiento %@";
+"productBandwidth"="Ancho de banda %@";
+"productPricePerMonth"="%.2f %@ al mes";
+"productMonthlyPrice"="Mensualmente (%.2f %@)";
+"productYearlyPrice"="Anualmente (%.2f %@)";
+
+"chooseDuration"="Elegir duracción";
+
 // HUD messages
 "logout" = "Cerrando sesión...";
 
