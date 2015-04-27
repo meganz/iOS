@@ -406,9 +406,6 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (transfer.type == MEGATransferTypeUpload && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [self reloadUI];
-    }
     if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
         [self hideProgressView];
     }
