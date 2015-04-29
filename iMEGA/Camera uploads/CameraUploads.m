@@ -38,6 +38,7 @@
     uint64_t cameraUploadHandle;
     
     BOOL isCreatingFolder;
+    ALAsset *lastAssetUploaded;
 }
 
 
@@ -242,31 +243,44 @@ static CameraUploads *instance = nil;
     
 //    [self setBadgeValue];
     
-    NSString *localFingerPrint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
-    
+    NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
     MEGANode *nodeExists = nil;
-    nodeExists = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerPrint parent:cameraUploadsNode];
+    nodeExists = [[MEGASdkManager sharedMEGASdk] nodeByCRC:localCRC parent:cameraUploadsNode];
     
     if(nodeExists == nil) {
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:name];
+        NSString *localFingerPrint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localFilePath];
+        nodeExists = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerPrint parent:cameraUploadsNode];
+    }
+    
+    if (nodeExists == nil) {
+        NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
+        NSString *extension = [name pathExtension];
+        int index = 0;
+        int listSize = 0;
         
-        if ([[nameNodeList size] intValue] != 0) {
-            
-            NSString *newName = [[NSString stringWithFormat:@"%@_%d", [self.formatter stringFromDate:modificationTime], [[nameNodeList size] intValue]] stringByAppendingPathExtension:extension];
+        do {
+            if (index != 0) {
+                nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+            }
+            MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+            listSize = [nameNodeList.size intValue];
+            index++;
+        } while (listSize != 0);
+        
+        NSString *newName = [nameWithoutExtension stringByAppendingPathExtension:extension];
+        
+        if ([name isEqualToString:newName]) {
             NSString *newLocalFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:newName];
-
+            
             NSError *error = nil;
             [[NSFileManager defaultManager] moveItemAtPath:localFilePath toPath:newLocalFilePath error:&error];
             if (error) {
                 NSLog(@"There is an Error: %@", error);
             }
-            
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newLocalFilePath parent:cameraUploadsNode delegate:self];
-            
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:cameraUploadsNode delegate:self];
         }
-        
     } else {
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
@@ -278,7 +292,7 @@ static CameraUploads *instance = nil;
             [[MEGASdkManager sharedMEGASdk] copyNode:nodeExists newParent:cameraUploadsNode newName:name delegate:self];
             
         } else {
-            if (![nodeExists.name isEqualToString:name]) {
+            if (![nodeExists.name isEqualToString:name] && [[nodeExists.name stringByDeletingPathExtension] rangeOfString:[name stringByDeletingPathExtension]].location == NSNotFound) {
                 [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:name delegate:self];
             } else {
                 if ([self.assetUploadArray count] != 0) {
@@ -293,7 +307,6 @@ static CameraUploads *instance = nil;
                 });
             }
         }
-        
     }
 }
 
@@ -365,6 +378,13 @@ static CameraUploads *instance = nil;
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if ([transfer.transferredBytes longLongValue] == [transfer.totalBytes longLongValue]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            lastAssetUploaded= [self.assetUploadArray objectAtIndex:0];
+            [self.assetUploadArray removeObjectAtIndex:0];
+            [self uploadNextImage];
+        });
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -378,11 +398,8 @@ static CameraUploads *instance = nil;
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {
-        ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-        self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+        self.lastUploadPhotoDate = [lastAssetUploaded valueForProperty:ALAssetPropertyDate];
         [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-        
-        [self.assetUploadArray removeObjectAtIndex:0];
         
         [self setBadgeValue];
         
@@ -392,10 +409,6 @@ static CameraUploads *instance = nil;
         if (!success || error) {
             NSLog(@"remove file error %@", error);
         }
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self uploadNextImage];
-        });
     }
 }
 
