@@ -79,6 +79,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -406,7 +407,7 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
+    if ([[[CameraUploads syncManager] assetUploadArray] count] == 0) {
         [self hideProgressView];
     }
 }
