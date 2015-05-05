@@ -268,23 +268,23 @@
         node = [self.nodeList nodeAtIndex:indexPath.row];
     }
     
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-    
-    if (!fileExists && [node hasThumbnail]) {
-        [[MEGASdkManager sharedMEGASdkFolder] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
-    }
-    
-    if (!fileExists) {
-        if (isImage([[[node name] pathExtension] lowercaseString])) {
-            [cell.thumbnailImageView setImage:[Helper defaultPhotoImage]];
+    if ([node type] == MEGANodeTypeFile) {
+        if ([node hasThumbnail]) {
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+            if (!thumbnailExists) {
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            } else {
+                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            }
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
-    } else {
-        [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+    } else if ([node type] == MEGANodeTypeFolder) {
+        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
     }
-    
+        
     cell.nameLabel.text = [node name];
     
     if ([node type] == MEGANodeTypeFile) {

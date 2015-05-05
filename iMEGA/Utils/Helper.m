@@ -271,9 +271,7 @@ static NSString *renamePathForPreview;
 
 + (UIImage *)imageForNode:(MEGANode *)node {
     
-    MEGANodeType nodeType = [node type];
-    
-    switch (nodeType) {
+    switch ([node type]) {
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:@"Camera Uploads"]) {
                 return [self folderCameraUploadsImage];
@@ -284,15 +282,18 @@ static NSString *renamePathForPreview;
                     return [self folderImage];
                 }
             }
+            break;
         }
             
-        case MEGANodeTypeRubbish:
-            return [self folderImage];
-            
         case MEGANodeTypeFile: {
-            NSString *im = [self.fileTypesDictionary valueForKey:[node name].pathExtension.lowercaseString];
-            if (im && im.length>0) {
-                return [UIImage imageNamed:im];
+            NSString *nodePathExtension = node.name.pathExtension.lowercaseString;
+            if ([nodePathExtension isEqualToString:@"jpg"] || [nodePathExtension isEqualToString:@"jpeg"]) {
+                return [Helper defaultPhotoImage];
+            } else {
+                NSString *filetypeImage = [self.fileTypesDictionary valueForKey:nodePathExtension];
+                if (filetypeImage && filetypeImage.length > 0) {
+                    return [UIImage imageNamed:filetypeImage];
+                }
             }
         }
             

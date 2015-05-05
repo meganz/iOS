@@ -2,7 +2,7 @@
  * @file DetailsNodeInfoViewController.m
  * @brief View controller that show details info about a node
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -26,7 +26,7 @@
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 
-@interface DetailsNodeInfoViewController () {
+@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
 }
@@ -64,13 +64,21 @@
 }
 
 - (void)reloadUI {
-    NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
     
-    if (!fileExists) {
+    if ([self.node type] == MEGANodeTypeFile) {
+        if ([self.node hasThumbnail]) {
+            NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
+            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+            if (!thumbnailExists) {
+                [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+            } else {
+                [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            }
+        } else {
+            [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+        }
+    } else if ([self.node type] == MEGANodeTypeFolder) {
         [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
-    } else {
-        [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
     }
     
     self.nameLabel.text = [self.node name];
@@ -143,41 +151,170 @@
 }
 
 - (IBAction)touchUpInsideRename:(UIButton *)sender {
-    renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
+    if (!renameAlertView) {
+        renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
+    }
+    
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [renameAlertView textFieldAtIndex:0].text = [[[self.node name] lastPathComponent] stringByDeletingPathExtension];
-    renameAlertView.tag = 0;
+    [renameAlertView setTag:0];
+    
+    UITextField *textField = [renameAlertView textFieldAtIndex:0];
+    [textField setDelegate:self];
+    [textField setText:[self.node name]];
+    
     [renameAlertView show];
 }
 
 - (IBAction)touchUpInsideDelete:(UIButton *)sender {
-    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:NSLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
-    [removeAlertView show];
-    removeAlertView.tag = 1;
+    if (!removeAlertView) {
+        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:NSLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    }
+    [removeAlertView setTag:1];
     [removeAlertView show];
 }
 
 #pragma mark - UIAlertDelegate
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0){
-        if (buttonIndex == 1) {
-            if ([[[self.node name] pathExtension] isEqualToString:@""]) {
-                [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertView textFieldAtIndex:0].text];
-            } else {
-                NSString *newName = [[alertView textFieldAtIndex:0].text stringByAppendingFormat:@".%@", [[self.node name] pathExtension]];
-                self.nameLabel.text = newName;
-                self.title = newName;
-                [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:newName];
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    BOOL shouldEnable;
+    if ([alertView tag] == 0) {
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NSString *newName = [textField text];
+        NSString *newNameExtension = [newName pathExtension];
+        NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
+        
+        NSString *nodeNameString = [self.node name];
+        NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
+        
+        switch ([self.node type]) {
+            case MEGANodeTypeFile: {
+                if ([newName isEqualToString:@""] ||
+                    [newName isEqualToString:nodeNameString] ||
+                    [newName isEqualToString:nodeNameExtension] ||
+                    ![[NSString stringWithFormat:@".%@", newNameExtension] isEqualToString:nodeNameExtension] || //Particular case, for example: (.jp == .jpg)
+                    [newNameWithoutExtension isEqualToString:nodeNameExtension]) {
+                    shouldEnable = NO;
+                } else {
+                    shouldEnable = YES;
+                }
+                break;
             }
+                
+            case MEGANodeTypeFolder: {
+                if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString]) {
+                    shouldEnable = NO;
+                } else {
+                    shouldEnable = YES;
+                }
+                break;
+            }
+                
+            default:
+                shouldEnable = NO;
+                break;
         }
+        
+    } else {
+        shouldEnable = YES;
     }
-    if (alertView.tag == 1) {
+    
+    return shouldEnable;
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == 0) {
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        [textField setSelectedTextRange:nil];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if ([alertView tag] == 0) {
+        if (buttonIndex == 1) {
+            UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
+            [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
+        }
+    } else if ([alertView tag] == 1) {
         if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSString *nodeName = [textField text];
+    UITextPosition *beginning = textField.beginningOfDocument;
+    UITextRange *textRange;
+    
+    switch ([self.node type]) {
+        case MEGANodeTypeFile: {
+            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
+                UITextPosition *end = textField.endOfDocument;
+                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            } else {
+                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
+                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
+                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
+            }
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        case MEGANodeTypeFolder: {
+            UITextPosition *end = textField.endOfDocument;
+            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
+            [textField setSelectedTextRange:textRange];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL shouldChangeCharacters = YES;
+    switch ([self.node type]) {
+        case MEGANodeTypeFile: {
+            NSString *textFieldString = [textField text];
+            NSString *newName = [textFieldString stringByReplacingCharactersInRange:range withString:string];
+            NSString *newNameExtension = [newName pathExtension];
+            NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
+            
+            NSString *nodeNameString = [self.node name];
+            NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
+            
+            NSRange nodeWithoutExtensionRange = [[textFieldString stringByDeletingPathExtension] rangeOfString:[textFieldString stringByDeletingPathExtension]];
+            NSRange nodeExtensionStartRange = [textFieldString rangeOfString:@"." options:NSBackwardsSearch];
+            
+            if ((range.location > nodeExtensionStartRange.location) ||
+                (range.length > nodeWithoutExtensionRange.length) ||
+                ([newName isEqualToString:newNameExtension] && [newNameWithoutExtension isEqualToString:nodeNameExtension]) ||
+                ((range.location == nodeExtensionStartRange.location) && [string isEqualToString:@""])) {
+                
+                UITextPosition *beginning = textField.beginningOfDocument;
+                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:nodeExtensionStartRange.location];
+                [textField setSelectedTextRange:[textField textRangeFromPosition:beginning toPosition:beforeExtension]];
+                shouldChangeCharacters = NO;
+            } else if (range.location < nodeExtensionStartRange.location) {
+                shouldChangeCharacters = YES;
+            }
+            break;
+        }
+            
+        case MEGANodeTypeFolder:
+            shouldChangeCharacters = YES;
+            break;
+            
+        default:
+            shouldChangeCharacters = NO;
+            break;
+    }
+    
+    return shouldChangeCharacters;
 }
 
 #pragma mark - MEGARequestDelegate
