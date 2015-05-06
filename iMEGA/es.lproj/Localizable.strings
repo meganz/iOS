@@ -257,6 +257,10 @@
 "useCellularConnectionLabel"="Usar conexión de datos";
 "onlyWhenChargingLabel"="Subir solo cuando está cargando";
 
+"cameraUploadsEnable_header"="Activa las subidas de la cámara para subir automáticamente tus fotos y vídeos al disco en la nube";
+"cameraUploadsDisalbe_header"="Cuando se deshabilite, las nuevas fotos y videos no serán subidos";
+"cameraUploadsOptiones_header"="Opciones para la subida de la cámara";
+
 //(5) Settings - AboutTableViewController
 "privacyPolicyLabel"="Politica de Privacidad";
 "termsOfServicesLabel"="Términos del Servicio";

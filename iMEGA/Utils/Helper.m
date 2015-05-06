@@ -620,15 +620,20 @@ static NSString *renamePathForPreview;
     //Reset Camera Uploads settings
     [[CameraUploads syncManager].assetUploadArray removeAllObjects];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastUploadPhotoDate"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
     [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
+    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
     
     [CameraUploads syncManager].isCameraUploadsEnabled = NO;
     [CameraUploads syncManager].isUploadVideosEnabled = NO;
     [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
     [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnable];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];

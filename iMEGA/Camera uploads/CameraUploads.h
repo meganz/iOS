@@ -22,7 +22,7 @@
 #import <Foundation/Foundation.h>
 #import "MEGASdkManager.h"
 
-#define kIsCameraUploadsEnable @"IsCameraUploadsEnable"
+#define kIsCameraUploadsEnabled @"IsCameraUploadsEnabled"
 #define kIsUploadVideosEnabled @"IsUploadVideosEnabled"
 #define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
 #define kIsOnlyWhenChargingEnabled @"IsOnlyWhenChargingEnabled"
@@ -39,6 +39,7 @@
 @property BOOL isOnlyWhenChargingEnabled;
 
 @property (nonatomic, strong) NSDate *lastUploadPhotoDate;
+@property (nonatomic, strong) NSDate *lastUploadVideoDate;
 
 + (CameraUploads *)syncManager;
 - (void)getAllAssetsForUpload;

@@ -257,6 +257,10 @@
 "useCellularConnectionLabel"="Use cellular connection";
 "onlyWhenChargingLabel"="Only when charging";
 
+"cameraUploadsEnable_header"="Enable camera uploads to atumatically uploads your photos and videos to cloud drive";
+"cameraUploadsDisalbe_header"="When disabled new photos and videos won't be uploaded";
+"cameraUploadsOptiones_header"="Camera uploads options";
+
 //(5) Settings - AboutTableViewController
 "privacyPolicyLabel"="Privacy Policy";
 "termsOfServicesLabel"="Terms of Service";

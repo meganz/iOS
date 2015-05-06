@@ -21,8 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CameraUploads.h"
-
-@interface CameraUploadsTableViewController : UITableViewController <MEGARequestDelegate>
+@interface CameraUploadsTableViewController : UITableViewController
 
 @end
