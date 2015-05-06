@@ -28,6 +28,7 @@
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "CameraUploads.h"
+#import "CameraUploadsTableViewController.h"
 
 @interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
@@ -110,7 +111,7 @@
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
         
-        if (!isImage([node name].lowercaseString.pathExtension)) {
+        if (!isImage([node name].lowercaseString.pathExtension) && !isVideo([node name].lowercaseString.pathExtension)) {
             continue;
         }
         
@@ -178,9 +179,15 @@
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];    
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"cameraUploadsSettingsID"];
+    
+    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
+
+    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     [[CameraUploads syncManager] getAllAssetsForUpload];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnable];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
     [self reloadUI];
 }
 
@@ -260,6 +267,7 @@
         return nil;
     }
 }
+
 
 #pragma mark - UICollectioViewDelegate
 
@@ -407,7 +415,7 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([[[CameraUploads syncManager] assetUploadArray] count] == 0) {
+    if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
         [self hideProgressView];
     }
 }

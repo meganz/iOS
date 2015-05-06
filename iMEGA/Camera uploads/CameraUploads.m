@@ -26,10 +26,10 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "Helper.h"
+#import "SVProgressHUD.h"
 
 #define kCameraUploads @"Camera Uploads"
-#define kLastUploadPhotoDate @"LastUploadPhotoDate"
-#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
 @interface CameraUploads () {
     NSInteger totalAssets;
@@ -38,7 +38,6 @@
     uint64_t cameraUploadHandle;
     
     BOOL isCreatingFolder;
-    ALAsset *lastAssetUploaded;
 }
 
 
@@ -80,11 +79,17 @@ static CameraUploads *instance = nil;
         [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
     }
     
+    self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
+    if (!self.lastUploadVideoDate) {
+        self.lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
+        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+    }
+    
     cameraUploadHandle = -1;
     totalAssets = 0;
     isCreatingFolder = NO;
     
-    self.isCameraUploadsEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsCameraUploadsEnable] boolValue];
+    self.isCameraUploadsEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsCameraUploadsEnabled] boolValue];
     self.isUploadVideosEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUploadVideosEnabled] boolValue];
     self.isUseCellularConnectionEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUseCellularConnectionEnabled] boolValue];
     self.isOnlyWhenChargingEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsOnlyWhenChargingEnabled] boolValue];
@@ -161,26 +166,27 @@ static CameraUploads *instance = nil;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if(result != nil) {
-            if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-                NSURL *url = [[result defaultRepresentation]url];
-                
-                [self.library assetForURL:url
-                              resultBlock:^(ALAsset *asset) {
-                                  NSDate *assetModificationTime = [asset valueForProperty:ALAssetPropertyDate];
-                                  
-                                  if (asset != nil  && ([assetModificationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
+            NSURL *url = [[result defaultRepresentation]url];
+            [self.library assetForURL:url
+                          resultBlock:^(ALAsset *asset) {
+                              NSDate *assetModificationTime = [asset valueForProperty:ALAssetPropertyDate];
+                              
+                              if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && [CameraUploads syncManager].isUploadVideosEnabled && ([assetModificationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+                                  [self.assetUploadArray addObject:asset];
+                              } else {
+                                  if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetModificationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                                       [self.assetUploadArray addObject:asset];
                                   }
-                                  
-                                  if (index==totalAssets-1) {
-                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                          [self uploadNextImage];
-                                      });
-                                  }
                               }
-                             failureBlock:^(NSError *error){ NSLog(@"operation was not successfull!"); } ];
-                
-            }
+                              
+                              if (index==totalAssets-1) {
+                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                      [self uploadAsset];
+                                  });
+                              }
+                          }
+                         failureBlock:^(NSError *error){ NSLog(@"operation was not successfull!"); } ];
+            
         }
     };
     
@@ -203,13 +209,18 @@ static CameraUploads *instance = nil;
                               failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
 }
 
-- (void)uploadNextImage {
+- (void)uploadAsset {
     if ([self shouldRun] != 0) {
         return;
         //retryLayer;
     }
     
-    ALAsset *asset = [self.assetUploadArray firstObject];
+    ALAsset *asset = nil;
+    
+    if (self.assetUploadArray.count > 0) {
+        asset = [self.assetUploadArray firstObject];
+    }
+    
     if (!asset) {
 //        [self setBadgeValue];
         return;
@@ -220,25 +231,23 @@ static CameraUploads *instance = nil;
     NSString *name = [[self.formatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
     NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-        ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-        
-        if (!assetRepresentation) {
-            return;
-        }
-        
-        Byte *buffer = (Byte *)malloc(assetRepresentation.size);
-        NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
-        
-        NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-        [data writeToFile:localFilePath atomically:YES];
-        
-        NSError *error = nil;
-        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
-        [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
-        if (error) {
-            NSLog(@"Error change modification date of file %@", error);
-        }
+    ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+    
+    if (!assetRepresentation) {
+        return;
+    }
+    
+    Byte *buffer = (Byte *)malloc(assetRepresentation.size);
+    NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
+    
+    NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+    [data writeToFile:localFilePath atomically:YES];
+    
+    NSError *error = nil;
+    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
+    [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
+    if (error) {
+        NSLog(@"Error change modification date of file %@", error);
     }
     
 //    [self setBadgeValue];
@@ -269,7 +278,7 @@ static CameraUploads *instance = nil;
         
         NSString *newName = [nameWithoutExtension stringByAppendingPathExtension:extension];
         
-        if ([name isEqualToString:newName]) {
+        if (![name isEqualToString:newName]) {
             NSString *newLocalFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:newName];
             
             NSError *error = nil;
@@ -296,14 +305,13 @@ static CameraUploads *instance = nil;
                 [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:name delegate:self];
             } else {
                 if ([self.assetUploadArray count] != 0) {
-                    ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-                    self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+                    self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
                     [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
                     [self.assetUploadArray removeObjectAtIndex:0];
                 }
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [self uploadNextImage];
+                    [self uploadAsset];
                 });
             }
         }
@@ -337,7 +345,7 @@ static CameraUploads *instance = nil;
     if ([error type]) {
         if ([request type] == MEGARequestTypeCopy) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self uploadNextImage];
+                [self uploadAsset];
             });
         }
         return;
@@ -356,7 +364,7 @@ static CameraUploads *instance = nil;
             [self.assetUploadArray removeObjectAtIndex:0];
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self uploadNextImage];
+                [self uploadAsset];
             });
             break;
         }
@@ -378,28 +386,32 @@ static CameraUploads *instance = nil;
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.transferredBytes longLongValue] == [transfer.totalBytes longLongValue]) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            lastAssetUploaded= [self.assetUploadArray objectAtIndex:0];
-            [self.assetUploadArray removeObjectAtIndex:0];
-            [self uploadNextImage];
-        });
-    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self uploadNextImage];
+                [self uploadAsset];
             });
         }
         return;
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {
-        self.lastUploadPhotoDate = [lastAssetUploaded valueForProperty:ALAssetPropertyDate];
-        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+        ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
+        self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+        if ([[assetUploaded valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+            self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+        }
+        
+        if ([[assetUploaded valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+            self.lastUploadVideoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+        }
+        
+        [self.assetUploadArray removeObjectAtIndex:0];
         
         [self setBadgeValue];
         
@@ -409,6 +421,10 @@ static CameraUploads *instance = nil;
         if (!success || error) {
             NSLog(@"remove file error %@", error);
         }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self uploadAsset];
+        });
     }
 }
 

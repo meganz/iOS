@@ -22,7 +22,9 @@
 #import "CameraUploadsTableViewController.h"
 #import "MEGAReachabilityManager.h"
 
-@interface CameraUploadsTableViewController () 
+#import "CameraUploads.h"
+
+@interface CameraUploadsTableViewController ()  <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *enableCameraUploadsCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *enableUploadVideosCell;
@@ -75,7 +77,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
@@ -104,6 +106,28 @@
     return rowPerSection;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                return NSLocalizedString(@"cameraUploadsDisalbe_header", "When disabled new photos and videos won't be uploaded");
+            }
+            else {
+                return NSLocalizedString(@"cameraUploadsEnable_header", "Enable camera uploads to automatically uploads your photos and videos to cloud drive");
+            }
+            break;
+            
+        case 1:
+            return NSLocalizedString(@"cameraUploadsOptiones_header", "Camera uploads options");
+            
+        default:
+            return nil;
+            break;
+    }
+}
+
+#pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
@@ -114,6 +138,12 @@
                 [self.enableCameraUploadsLabel setText:NSLocalizedString(@"disableCameraUploadsLabel", nil)];
                 [self.enableCameraUploadsCell setAccessoryType:UITableViewCellAccessoryCheckmark];
             } else {
+                NSError *error = nil;
+                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+                if (!success || error) {
+                    NSLog(@"remove file error %@", error);
+                }
+                
                 [self.enableCameraUploadsLabel setText:NSLocalizedString(@"enableCameraUploadsLabel", nil)];
                 [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
                 [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
@@ -132,7 +162,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
             }
             
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnable];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
             
             [self.tableView reloadData];
             break;
@@ -140,7 +170,14 @@
         case 1:
             // Upload videos
             if (indexPath.row == 0) {
+                NSError *error = nil;
+                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+                if (!success || error) {
+                    NSLog(@"remove file error %@", error);
+                }
+                
                 [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
+                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
                 if ([[CameraUploads syncManager] isUploadVideosEnabled]) {
                     [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 } else {
@@ -196,6 +233,10 @@
 
     if ([request type] == MEGARequestTypeCancelTransfers) {
         [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+        
+        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+            [[CameraUploads syncManager] getAllAssetsForUpload];
+        }
     }
 }
 
