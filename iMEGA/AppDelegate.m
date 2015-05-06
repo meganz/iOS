@@ -89,11 +89,13 @@
         self.window.rootViewController = [LTHPasscodeViewController sharedUser];
     } else {
         if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             self.isLoginFromView = NO;
             [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
-            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            self.window.rootViewController = mainTBC;
+            
+            NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
+            UIViewController *viewController = [[UIViewController alloc] init];
+            [viewController setView:[objectsArray objectAtIndex:0]];
+            self.window.rootViewController = viewController;
         }
     }
     
@@ -479,6 +481,11 @@
         }
             
         case MEGARequestTypeFetchNodes: {
+            if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                self.window.rootViewController = mainTBC;
+            }
+            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
