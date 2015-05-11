@@ -519,7 +519,7 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeDownload) {        
+    if ([transfer type] == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
@@ -540,7 +540,7 @@
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload) {
+    if ([transfer type] == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] removeObjectForKey:base64Handle];
         [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];

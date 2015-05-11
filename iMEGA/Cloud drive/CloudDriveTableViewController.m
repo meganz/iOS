@@ -1251,7 +1251,7 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeDownload) {
+    if (transfer.type == MEGATransferTypeDownload && !transfer.isStreamingTransfer) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
@@ -1261,7 +1261,7 @@
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeDownload) {
+    if (transfer.type == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
@@ -1278,7 +1278,7 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
-            if ([transfer type] ==  MEGATransferTypeUpload) {
+            if ([transfer type] ==  MEGATransferTypeUpload  && !transfer.isStreamingTransfer) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -1293,7 +1293,7 @@
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload) {
+    if ([transfer type] == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
