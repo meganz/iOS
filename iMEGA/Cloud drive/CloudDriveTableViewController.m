@@ -21,6 +21,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <MediaPlayer/MPMoviePlayerViewController.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
@@ -37,6 +38,9 @@
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
+
+#import "AppDelegate.h"
+#import "MEGAProxyServer.h"
 
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
@@ -135,7 +139,6 @@
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -391,6 +394,16 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
+            } else if (isVideo(name.lowercaseString.pathExtension)) {
+                
+                NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
+                if (link) {
+                    MPMoviePlayerViewController *mp = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
+                    [self presentMoviePlayerViewControllerAnimated:mp];
+                    
+                    return;
+                }
+                
             } else {
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             }
@@ -779,7 +792,7 @@
         } failureBlock:nil];
     } else {
         NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-
+        
         if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
             NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
             NSString *moviePath = [videoUrl path];
