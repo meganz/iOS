@@ -80,6 +80,8 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		94F56A521AFCC265000673D4 /* MEGAProxyServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F56A511AFCC265000673D4 /* MEGAProxyServer.m */; };
+		94F56A581AFD0970000673D4 /* MEGAHttpSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F56A571AFD0970000673D4 /* MEGAHttpSession.m */; };
 		E8038FFD1A7A4B4400BAC43D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8038FFC1A7A4B4400BAC43D /* Main.storyboard */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
@@ -123,7 +125,7 @@
 		137361AC1A6664C400B740E8 /* iMEGATests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMEGATests.m; sourceTree = "<group>"; };
 		415226691A692ECC00EC7BB6 /* Cloud.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cloud.storyboard; sourceTree = "<group>"; };
 		4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
-		4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
+		4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CloudDriveTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4152266C1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsNodeInfoViewController.h; sourceTree = "<group>"; };
 		4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsNodeInfoViewController.m; sourceTree = "<group>"; };
 		4152266E1A692ECC00EC7BB6 /* MEGAPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAPreview.h; sourceTree = "<group>"; };
@@ -243,6 +245,10 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; };
+		94F56A501AFCC265000673D4 /* MEGAProxyServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MEGAProxyServer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		94F56A511AFCC265000673D4 /* MEGAProxyServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MEGAProxyServer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		94F56A561AFD0970000673D4 /* MEGAHttpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAHttpSession.h; sourceTree = "<group>"; };
+		94F56A571AFD0970000673D4 /* MEGAHttpSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAHttpSession.m; sourceTree = "<group>"; };
 		E8038FFC1A7A4B4400BAC43D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
 		E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderLinkViewController.m; sourceTree = "<group>"; };
@@ -462,6 +468,10 @@
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
 				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
+				94F56A501AFCC265000673D4 /* MEGAProxyServer.h */,
+				94F56A511AFCC265000673D4 /* MEGAProxyServer.m */,
+				94F56A561AFD0970000673D4 /* MEGAHttpSession.h */,
+				94F56A571AFD0970000673D4 /* MEGAHttpSession.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -912,6 +922,7 @@
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */,
+				94F56A581AFD0970000673D4 /* MEGAHttpSession.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
@@ -931,6 +942,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				4152268E1A692ECC00EC7BB6 /* MEGAPreview.m in Sources */,
+				94F56A521AFCC265000673D4 /* MEGAProxyServer.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				41ADAA191ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m in Sources */,
