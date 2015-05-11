@@ -566,25 +566,66 @@ static NSString *renamePathForPreview;
 + (void)logout {
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
     
+    [Helper cancelAllTransfers];
+    
     [Helper clearSession];
     
+    [Helper deleteUserData];
+    [Helper deleteMasterKey];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
+    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
+    
+    [Helper resetCameraUploadsSettings];
+    [Helper resetUserData];
+    
+    [Helper deletePasscode];
+}
+
++ (void)logoutFromConfirmAccount {    
+    [Helper cancelAllTransfers];
+    
+    [Helper clearSession];
+    
+    [Helper deleteUserData];
+    [Helper deleteMasterKey];
+    
+    [Helper resetCameraUploadsSettings];
+    [Helper resetUserData];
+    
+    [Helper deletePasscode];
+}
+
++ (void)cancelAllTransfers {
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+    
+    [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
+}
+
++ (void)clearSession {
+    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+}
+
++ (void)deleteUserData {
+    // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Library/Offline - tmp
     NSError *error = nil;
     
-    // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Library/Offline - tmp
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
     if (!success || error) {
         NSLog(@"remove file error %@", error);
     }
-
+    
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
     if (!success || error) {
         NSLog(@"remove file error %@", error);
     }
-
+    
     NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
-
+    
     success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
     if (!success || error) {
         NSLog(@"remove file error %@", error);
@@ -594,9 +635,11 @@ static NSString *renamePathForPreview;
     if (!success || error) {
         NSLog(@"remove file error %@", error);
     }
-    
-    
+}
+
++ (void)deleteMasterKey {
     // Remove Master Key exported file if exist
+    NSError *error = nil;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"]];
@@ -609,15 +652,20 @@ static NSString *renamePathForPreview;
             NSLog(@"remove file error %@", error);
         }
     }
+}
+
++ (void)resetUserData {
+    [[Helper downloadingNodes] removeAllObjects];
+    [[Helper downloadedNodes] removeAllObjects];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-    
-    //Reset Camera Uploads settings
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void)resetCameraUploadsSettings {
     [[CameraUploads syncManager].assetUploadArray removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
@@ -637,19 +685,6 @@ static NSString *renamePathForPreview;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [[Helper downloadingNodes] removeAllObjects];
-    [[Helper downloadedNodes] removeAllObjects];
-    
-    [Helper deletePasscode];
-}
-
-+ (void)clearSession {
-    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
 }
 
 + (void)deletePasscode {

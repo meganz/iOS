@@ -4,7 +4,7 @@
 "error" = "Error";
 
 //AppDelegate
-"accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor inicia sesión.";
+"accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor, inicia sesión.";
 
 "invalidLink" = "Enlace incorrecto a MEGA";
 
@@ -40,16 +40,29 @@
 "preparingNodes" = "Preparando nodos";
 
 //CreateAccountViewController
+"createAccount"="Crear cuenta";
+
+"namePlaceholder"="Nombre";
+"emailPlaceholder"="Correo electrónico";
+"passwordPlaceholder"="Contraseña";
+"retypePasswordPlaceholder"="Vuelve a escribir la contraseña";
+"termsOfServiceButton"="Acepto los términos del servicio de MEGA";
+
 "nameInvalidFormat" = "Introduce un nombre";
 "passwordsDoNotMatch" = "La contraseña no coincide.";
 "termsCheckboxUnselected" = "Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 
 "emailAlreadyRegistered" = "Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta con MEGA.";
 "awesome" = "¡Increíble!";
-"accountCreated" = "Por favor, comprueba tu correo y haz clic al enlace para confirmar tu cuenta.";
+"accountCreated" = "Por favor, comprueba tu correo y haz clic en el enlace para confirmar tu cuenta.";
 
 //ConfirmAccountViewController
+"confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
+"confirmAccountButton"="Confirma tu cuenta";
+
 "passwordWrong" = "Contraseña incorrecta";
+"alreadyLoggedInAlertTitle"="Hay iniciada una sesión con otra cuenta";
+"alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Offline serán borrados. ¿Quieres continuar?";
 
 //TermsOfServiceViewController
 "errorLoadingTermsWeb" = "La carga de la web los Términos del Servicio de MEGA ha fallado.";
