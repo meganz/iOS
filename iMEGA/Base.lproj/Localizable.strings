@@ -4,7 +4,7 @@
 "error" = "Error";
 
 //AppDelegate
-"accountAlreadyConfirmed" = "Account already confirmed";
+"accountAlreadyConfirmed" = "Your account has already been activated. Please log in.";
 
 "invalidLink" = "Invalid MEGA Link";
 
@@ -29,7 +29,7 @@
 "megaAccessText"="Get fully encrypted access anywhere, anytime.";
 
 "loginButton"="Login";
-"createAccountButton"="Create account";
+"createAccountButton"="Create Account";
 
 //LoginViewController
 "invalidMailOrPassword" = "Invalid e-mail and/or password. Please try again";
@@ -40,6 +40,14 @@
 "preparingNodes" = "Preparing nodes";
 
 //CreateAccountViewController
+"createAccount"="Create Account";
+
+"namePlaceholder"="Name";
+"emailPlaceholder"="Email";
+"passwordPlaceholder"="Password";
+"retypePasswordPlaceholder"="Retype Password";
+"termsOfServiceButton"="I agree with the MEGA Terms of Service";
+
 "nameInvalidFormat" = "Enter a valid name";
 "passwordsDoNotMatch" = "Passwords do not match";
 "termsCheckboxUnselected" = "You need to agree with the Terms of Service to register an account on MEGA.";
@@ -49,7 +57,12 @@
 "accountCreated" = "Please check your e-mail and click the link to confirm your account.";
 
 //ConfirmAccountViewController
+"confirmText"="Please enter your password to confirm your account";
+"confirmAccountButton"="Confirm your account";
+
 "passwordWrong" = "Wrong password";
+"alreadyLoggedInAlertTitle"="You are logged in with another account";
+"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 
 //TermsOfServiceViewController
 "errorLoadingTermsWeb" = "The MEGA Terms of Service failed to load.";

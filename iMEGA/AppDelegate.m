@@ -178,7 +178,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
-    NSString *megaURLString = @"https://mega.co.nz/";
+    NSString *megaURLString = @"https://mega.nz/";
     
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
     
@@ -247,12 +247,15 @@
         return YES;
     }
     
-    megaURLTypeString = [afterSlashesString substringToIndex:7]; // mega://"confirm"
-    BOOL isConfirmationLink = [megaURLTypeString isEqualToString:@"confirm"];
-    if (isConfirmationLink) {
+    BOOL isMEGACONZConfirmationLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]; // mega://"confirm"
+    BOOL isMEGANZConfirmationLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]; // mega://"#confirm"
+    if (isMEGACONZConfirmationLink) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
         megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
-        
+        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
+        return YES;
+    } else if (isMEGANZConfirmationLink) {
+        NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:afterSlashesString];
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
         return YES;
     }
@@ -501,7 +504,9 @@
             [confirmAccountVC setConfirmationLinkString:[request link]];
             [confirmAccountVC setEmailString:[request email]];
             
-            self.window.rootViewController = confirmAccountVC;
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:confirmAccountVC];
+            
+            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
             break;
         }
             

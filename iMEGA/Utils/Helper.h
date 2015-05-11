@@ -103,6 +103,7 @@
 #pragma mark - Logout
 
 + (void)logout;
++ (void)logoutFromConfirmAccount;
 + (void)clearSession;
 + (void)deletePasscode;
 

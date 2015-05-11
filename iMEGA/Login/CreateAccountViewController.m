@@ -2,7 +2,7 @@
  * @file CreateAccountViewController.m
  * @brief View controller that allows to create an account on MEGA
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -25,7 +25,7 @@
 #import "Helper.h"
 #import "SVWebViewController.h"
 
-@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
+@interface CreateAccountViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -38,15 +38,17 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
+@property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
+@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
+
 @end
 
 @implementation CreateAccountViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.createAccountButton.layer.cornerRadius = 6;
-    self.createAccountButton.layer.masksToBounds = YES;
     
     self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
     self.credentialsView.layer.borderWidth = 2.0f;
@@ -54,34 +56,33 @@
     self.credentialsView.layer.cornerRadius = 6;
     self.credentialsView.layer.masksToBounds = YES;
     
+    [self.nameTextField setPlaceholder:NSLocalizedString(@"namePlaceholder", @"Name")];
+    [self.emailTextField setPlaceholder:NSLocalizedString(@"emailPlaceholder", @"Email")];
+    [self.passwordTextField setPlaceholder:NSLocalizedString(@"passwordPlaceholder", @"Password")];
+    [self.retypePasswordTextField setPlaceholder:NSLocalizedString(@"retypePasswordPlaceholder", @"Retype Password")];
+    
+    [self.termsOfServiceButton setTitle:NSLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
+    
+    self.createAccountButton.layer.cornerRadius = 6;
+    self.createAccountButton.layer.masksToBounds = YES;
+    [self.createAccountButton setTitle:NSLocalizedString(@"createAccountButton", @"Create Account") forState:UIControlStateNormal];
+    
+    [self.accountCreatedView.layer setCornerRadius:6];
+    [self.accountCreatedView.layer setMasksToBounds:YES];
+    [self.accountCreatedLabel setText:NSLocalizedString(@"accountCreated", "Please check your e-mail and click the link to confirm your account.")];
+    
     [self.nameTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar.topItem setTitle:@"Create Account"];
+    [self.navigationController.navigationBar.topItem setTitle:NSLocalizedString(@"createAccount", @"Create Account")];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
 #pragma mark - Private methods
-
-- (IBAction)termsCheckboxTouchUpInside:(id)sender {
-    self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
-    
-    [self.nameTextField resignFirstResponder];
-    [self.emailTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-    [self.retypePasswordTextField resignFirstResponder];
-}
-
-- (IBAction)createAccountTouchUpInside:(id)sender {
-    if ([self validateForm]) {
-        [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
-        [self.createAccountButton setEnabled:NO];
-    }
-}
 
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text]) {
@@ -138,21 +139,36 @@
     return [emailTest evaluateWithObject:email];
 }
 
-#pragma mark - IBAction
+#pragma mark - IBActions
 
-- (IBAction)loginTouchUpInside:(id)sender {
+- (IBAction)termsCheckboxTouchUpInside:(id)sender {
+    self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
+    
     [self.nameTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     [self.retypePasswordTextField resignFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_terms.html"];
+    NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
     SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
     [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+- (IBAction)createAccountTouchUpInside:(id)sender {
+    if ([self validateForm]) {
+        [SVProgressHUD show];
+        [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
+        [self.createAccountButton setEnabled:NO];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self.accountCreatedView setHidden:NO];
+    [self.accountCreatedLabel setHidden:NO];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -208,6 +224,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeCreateAccount: {
+            [SVProgressHUD dismiss];
             
             [self.nameTextField setEnabled:NO];
             [self.emailTextField setEnabled:NO];

@@ -93,6 +93,7 @@
 		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
+		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -267,6 +268,7 @@
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAccountViewController.m; sourceTree = "<group>"; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAccountViewController.m; sourceTree = "<group>"; };
+		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -416,7 +418,7 @@
 		415226781A692ECC00EC7BB6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				E8038FFC1A7A4B4400BAC43D /* Main.storyboard */,
+				E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */,
 				4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */,
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
@@ -864,7 +866,6 @@
 				415227321A692EE600EC7BB6 /* SSKeychain.strings in Resources */,
 				41ADAA171ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
-				E8038FFD1A7A4B4400BAC43D /* Main.storyboard in Resources */,
 				41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				41ADAA181ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad@2x.png in Resources */,
@@ -872,6 +873,7 @@
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
+				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
