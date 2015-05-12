@@ -46,13 +46,7 @@ static MEGAProxyServer *_MEGAProxyServer = nil;
     return _MEGAProxyServer;
 }
 
-- (instancetype)init {
-    self = [super self];
-    [self start];
-    return self;
-}
-
--(BOOL)start {
+- (BOOL)start {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
     __Require_Action_Quiet(fd != -1, fail, NSLog(@"Failed to create socket"));
     struct sockaddr_in addr;
@@ -100,10 +94,9 @@ fail:
     }
 }
 
-static void socketAcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)
 // Called by CFSocket when someone connects to our listening socket.
 // This implementation just bounces the request up to Objective-C.
-{
+static void socketAcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef address, const void *data, void *info) {
 #pragma unused(type)
     assert(type == kCFSocketAcceptCallBack);
 #pragma unused(address)

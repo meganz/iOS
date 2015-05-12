@@ -30,6 +30,7 @@
 #import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
 #import "LTHPasscodeViewController.h"
+#import "MEGAProxyServer.h"
 
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -109,6 +110,9 @@
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:myTypes];
     }
+    
+    // Start Proxy server for streaming
+    [[MEGAProxyServer sharedInstance] start];
     
     return YES;
 }
@@ -487,6 +491,11 @@
             if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 self.window.rootViewController = mainTBC;
+                
+                [[CameraUploads syncManager] setTabBarController:mainTBC];
+                if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                    [[CameraUploads syncManager] getAllAssetsForUpload];
+                }
             }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -537,6 +546,10 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (transfer.isStreamingTransfer) {
+        return;
+    }
+    
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
@@ -545,7 +558,7 @@
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
+    if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] removeObjectForKey:base64Handle];
         [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];

@@ -53,13 +53,13 @@ MEGARange MGAIntersectionRanges(MEGARange *range1, MEGARange *range2) {
 }
 
 static void readStreamCallback(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo) {
-    NSLog(@"Read stream callbackt for stream %@ with event %lu", stream, eventType);
+    NSLog(@"Read stream callback for stream %@ with event %lu", stream, eventType);
     MEGAHttpSession *obj = (__bridge MEGAHttpSession *)clientCallBackInfo;
     [obj streamEventHasHappened:eventType];
 }
 
 static void writeStreamCallback(CFWriteStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo) {
-    NSLog(@"Write stream callbackt for stream %@ with event %lu", stream, eventType);
+    NSLog(@"Write stream callback for stream %@ with event %lu", stream, eventType);
     MEGAHttpSession *obj = (__bridge MEGAHttpSession *)clientCallBackInfo;
     [obj streamEventHasHappened:eventType];
 }
@@ -296,6 +296,10 @@ static NSString * rfc1123CurrentDate(void) {
 }
 
 - (BOOL)onTransferData:(MEGASdk *)api transfer:(MEGATransfer *)transfer buffer:(NSData *)buffer {
+
+    if(closed == TRUE) {
+        return NO;
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if(closed == TRUE) {
@@ -304,6 +308,7 @@ static NSString * rfc1123CurrentDate(void) {
         
         [self haveData:buffer withOffset:transfer.startPos.longLongValue + transfer.transferredBytes.longLongValue - transfer.deltaSize.longLongValue];
     });
-    return TRUE;
+    
+    return YES;
 }
 @end

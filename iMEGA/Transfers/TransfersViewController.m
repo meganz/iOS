@@ -690,6 +690,10 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (transfer.isStreamingTransfer) {
+        return;
+    }
+    
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled")]];
