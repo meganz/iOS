@@ -26,9 +26,11 @@
 
 #define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
 #define videoSet        [[NSSet alloc] initWithObjects:/*@"mkv",*/ @"avi", @"mp4", @"m4v", @"mpg", @"mpeg", @"mov", @"3gp",/*@"aaf",*/ nil]
+#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", nil]
 
 #define isImage(n)        [imagesSet containsObject:n]
 #define isVideo(n)        [videoSet containsObject:n]
+#define isMultimedia(n)   [multimediaSet containsObject:n]
 
 #define kMEGANode @"kMEGANode"
 #define kIndex @"kIndex"

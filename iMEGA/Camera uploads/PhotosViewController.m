@@ -400,11 +400,10 @@
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (self.uploadProgressViewTopLayoutConstraint.constant == -60) {
-        [self showProgressView];
-    }
-    
     if ([transfer type] == MEGATransferTypeUpload) {
+        if (self.uploadProgressViewTopLayoutConstraint.constant == -60) {
+            [self showProgressView];
+        }
         [self.photoNameLabel setText:[transfer fileName]];
         float percentage = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
         [self.transferredBytesLabel setText:[NSByteCountFormatter stringFromByteCount:[[transfer transferredBytes] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];

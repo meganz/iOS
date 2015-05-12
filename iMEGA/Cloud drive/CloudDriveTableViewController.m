@@ -22,6 +22,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MediaPlayer/MPMoviePlayerViewController.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
@@ -394,12 +395,25 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
-            } else if (isVideo(name.lowercaseString.pathExtension)) {
-                
+            } else if (isMultimedia(name.lowercaseString.pathExtension)) {
                 NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
                 if (link) {
-                    MPMoviePlayerViewController *mp = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                    [self presentMoviePlayerViewControllerAnimated:mp];
+                    MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
+                    // Remove the movie player view controller from the "playback did finish" notification observers
+                    [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
+                                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                  object:moviePlayerViewController.moviePlayer];
+                    
+                    // Register this class as an observer instead
+                    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                             selector:@selector(movieFinishedCallback:)
+                                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                                               object:moviePlayerViewController.moviePlayer];
+                    
+                    [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
+                    
+                    [moviePlayerViewController.moviePlayer prepareToPlay];
+                    [moviePlayerViewController.moviePlayer play];
                     
                     return;
                 }
@@ -1125,6 +1139,16 @@
     return YES;
 }
 
+#pragma mark - Moview player
+
+- (void)movieFinishedCallback:(NSNotification*)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:moviePlayer];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1151,11 +1175,6 @@
     
     switch ([request type]) {
         case MEGARequestTypeFetchNodes:
-            [[CameraUploads syncManager] setTabBarController:[super tabBarController]];
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
-            }
-            
             [SVProgressHUD dismiss];
             break;
             
@@ -1276,9 +1295,13 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (transfer.isStreamingTransfer) {
+        return;
+    }
+    
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
-            if ([transfer type] ==  MEGATransferTypeUpload  && !transfer.isStreamingTransfer) {
+            if ([transfer type] ==  MEGATransferTypeUpload) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -1293,7 +1316,7 @@
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
+    if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {

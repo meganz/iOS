@@ -28,8 +28,8 @@
 
 + (instancetype)sharedInstance;
 
--(BOOL)start;
--(void)stop;
+- (BOOL)start;
+- (void)stop;
 
 
 @end
