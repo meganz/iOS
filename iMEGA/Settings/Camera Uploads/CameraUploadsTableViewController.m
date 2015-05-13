@@ -32,9 +32,14 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *enableOnlyWhenChargingCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *onlyWhenChargingLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *onlyWhenChargingSwitch;
+
 @end
 
 @implementation CameraUploadsTableViewController
@@ -44,37 +49,112 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];
-    [self.useCellularConnectionLabel setText:NSLocalizedString(@"useCellularConnectionLabel", nil)];
-    [self.onlyWhenChargingLabel setText:NSLocalizedString(@"onlyWhenChargingLabel", nil)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.navigationItem setTitle:NSLocalizedString(@"cameraUploadsLabel", nil)];
+    [self.enableCameraUploadsLabel setText:NSLocalizedString(@"cameraUploadsLabel", nil)];
+    
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [self.enableCameraUploadsLabel setText:NSLocalizedString(@"disableCameraUploadsLabel", nil)];
-        [self.enableCameraUploadsCell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        [self.enableCameraUploadsSwitch setOn:YES animated:YES];
+        
+        [self.uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];
+        [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
+        
+        [self.useCellularConnectionLabel setText:NSLocalizedString(@"useCellularConnectionLabel", nil)];
+        [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
+        
+        [self.onlyWhenChargingLabel setText:NSLocalizedString(@"onlyWhenChargingLabel", nil)];
+        [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     } else {
-        [self.enableCameraUploadsLabel setText:NSLocalizedString(@"enableCameraUploadsLabel", nil)];
-    }
-    
-    if ([[CameraUploads syncManager] isUploadVideosEnabled]) {
-        [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-    }
-    
-    if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-        [self.enableUseCellularConnectionCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-    }
-    
-    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        [self.enableOnlyWhenChargingCell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        [self.enableCameraUploadsSwitch setOn:NO animated:YES];
     }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - IBActions
+
+- (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
+    BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
+    [CameraUploads syncManager].isCameraUploadsEnabled = isCameraUploadsEnabled;
+    
+    if (isCameraUploadsEnabled) {
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+    } else {
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+        
+        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+        [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
+        
+        [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
+        [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
+        [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
+        
+        [CameraUploads syncManager].isUploadVideosEnabled = isCameraUploadsEnabled;
+        [CameraUploads syncManager].isUseCellularConnectionEnabled = isCameraUploadsEnabled;
+        [CameraUploads syncManager].isOnlyWhenChargingEnabled = isCameraUploadsEnabled;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+    if (!success || error) {
+        NSLog(@"remove file error %@", error);
+    }
+    
+    [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+    
+    [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+}
+
+- (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
+    [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
+    if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+    } else {
+        if (![MEGAReachabilityManager isReachableViaWiFi]) {
+            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+        }
+    }
+    [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+}
+
+- (IBAction)onlyWhenChargindSwitchValueChanged:(UISwitch *)sender {
+    [CameraUploads syncManager].isOnlyWhenChargingEnabled = ![CameraUploads syncManager].isOnlyWhenChargingEnabled;
+    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
+        if ([[UIDevice currentDevice] batteryState] == 1) {
+            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+        }
+    } else {
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+    }
+    [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
 }
 
 #pragma mark - UITableViewDataSource
@@ -122,104 +202,6 @@
             
         default:
             return nil;
-            break;
-    }
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0:
-            [CameraUploads syncManager].isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-            
-            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
-                [self.enableCameraUploadsLabel setText:NSLocalizedString(@"disableCameraUploadsLabel", nil)];
-                [self.enableCameraUploadsCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-            } else {
-                NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-                if (!success || error) {
-                    NSLog(@"remove file error %@", error);
-                }
-                
-                [self.enableCameraUploadsLabel setText:NSLocalizedString(@"enableCameraUploadsLabel", nil)];
-                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-                [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
-                
-                [self.enableCameraUploadsCell setAccessoryType:UITableViewCellAccessoryNone];
-                [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryNone];
-                [self.enableUseCellularConnectionCell setAccessoryType:UITableViewCellAccessoryNone];
-                [self.enableOnlyWhenChargingCell setAccessoryType:UITableViewCellAccessoryNone];
-                
-                [CameraUploads syncManager].isUploadVideosEnabled = [CameraUploads syncManager].isCameraUploadsEnabled;
-                [CameraUploads syncManager].isUseCellularConnectionEnabled = [CameraUploads syncManager].isCameraUploadsEnabled;
-                [CameraUploads syncManager].isOnlyWhenChargingEnabled = [CameraUploads syncManager].isCameraUploadsEnabled;
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-            
-            [self.tableView reloadData];
-            break;
-            
-        case 1:
-            // Upload videos
-            if (indexPath.row == 0) {
-                NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-                if (!success || error) {
-                    NSLog(@"remove file error %@", error);
-                }
-                
-                [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-                if ([[CameraUploads syncManager] isUploadVideosEnabled]) {
-                    [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                } else {
-                    [self.enableUploadVideosCell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-            }
-            
-            // Use cellular connection
-            if (indexPath.row == 1) {
-                [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-                if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-                    [[CameraUploads syncManager] getAllAssetsForUpload];
-                    [self.enableUseCellularConnectionCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                } else {
-                    if (![MEGAReachabilityManager isReachableViaWiFi]) {
-                        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-                    }
-                    [self.enableUseCellularConnectionCell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-            }
-            
-            // Only when charging
-            if (indexPath.row == 2) {
-                [CameraUploads syncManager].isOnlyWhenChargingEnabled = ![CameraUploads syncManager].isOnlyWhenChargingEnabled;
-                if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-                    if ([[UIDevice currentDevice] batteryState] == 1) {
-                        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-                    }
-                    [self.enableOnlyWhenChargingCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                } else {
-                    [[CameraUploads syncManager] getAllAssetsForUpload];
-                    [self.enableOnlyWhenChargingCell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
-            }
-            
-        default:
             break;
     }
 }
