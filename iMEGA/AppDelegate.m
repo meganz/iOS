@@ -101,15 +101,15 @@
     }
     
     // Let the device know we want to receive push notifications
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                             |UIRemoteNotificationTypeSound
-                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
-        [application registerUserNotificationSettings:settings];
-    } else {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [application registerForRemoteNotificationTypes:myTypes];
-    }
+//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+//                                                                                             |UIRemoteNotificationTypeSound
+//                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+//        [application registerUserNotificationSettings:settings];
+//    } else {
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [application registerForRemoteNotificationTypes:myTypes];
+//    }
     
     // Start Proxy server for streaming
     [[MEGAProxyServer sharedInstance] start];
@@ -268,40 +268,40 @@
     return YES;
 }
 
-#pragma mark - Push Notifications
-
-#ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    //register to receive notifications
-    [application registerForRemoteNotifications];
-}
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-    //handle the actions
-    if ([identifier isEqualToString:@"declineAction"]){
-    }
-    else if ([identifier isEqualToString:@"answerAction"]){
-    }
-}
-#endif
-
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
-    NSString* newToken = [deviceToken description];
-    NSLog(@"device token %@", newToken);
-}
-
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
-    NSLog(@"Failed to get token, error: %@", error);
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
-        [self startBackgroundTask];
-    
-        completionHandler(UIBackgroundFetchResultNewData);
-    }
-}
+//#pragma mark - Push Notifications
+//
+//#ifdef __IPHONE_8_0
+//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+//    //register to receive notifications
+//    [application registerForRemoteNotifications];
+//}
+//
+//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+//    //handle the actions
+//    if ([identifier isEqualToString:@"declineAction"]){
+//    }
+//    else if ([identifier isEqualToString:@"answerAction"]){
+//    }
+//}
+//#endif
+//
+//- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
+//    NSString* newToken = [deviceToken description];
+//    NSLog(@"device token %@", newToken);
+//}
+//
+//- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
+//    NSLog(@"Failed to get token, error: %@", error);
+//}
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+//        [[CameraUploads syncManager] getAllAssetsForUpload];
+//        [self startBackgroundTask];
+//    
+//        completionHandler(UIBackgroundFetchResultNewData);
+//    }
+//}
 
 #pragma mark - Private
 
