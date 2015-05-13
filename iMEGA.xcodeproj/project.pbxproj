@@ -797,7 +797,7 @@
 						DevelopmentTeam = T9RH74Y7L9;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.DataProtection = {
 								enabled = 1;
