@@ -94,6 +94,7 @@
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
+		E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -269,6 +270,8 @@
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
+		E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsPopUpViewController.h; sourceTree = "<group>"; };
+		E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploadsPopUpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -551,6 +554,8 @@
 			children = (
 				41A602981A8A5D11001AE538 /* CameraUploads.h */,
 				41A602991A8A5D11001AE538 /* CameraUploads.m */,
+				E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */,
+				E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */,
 				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
@@ -927,6 +932,7 @@
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,

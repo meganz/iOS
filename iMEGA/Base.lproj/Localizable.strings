@@ -187,7 +187,9 @@
 "photosPerMonth"="%lu photos";
 "photoPerMonth"="%lu photo";
 
+"skipButton"="Skip";
 "enableCameraUploadsButton"="Enable Camera Uploads";
+"cameraUploadsEnabled"="Camera Uploads enabled!";
 
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
@@ -264,13 +266,11 @@
 "logoutLabel"="Log out";
 
 //(5) Settings - CameraUploadsTableViewController
-"enableCameraUploadsLabel"="Enable Camera Uploads";
-"disableCameraUploadsLabel"="Disable Camera Uploads";
 "uploadVideosLabel"="Upload videos";
 "useCellularConnectionLabel"="Use cellular connection";
 "onlyWhenChargingLabel"="Only when charging";
 
-"cameraUploadsEnable_header"="Enable camera uploads to atumatically uploads your photos and videos to cloud drive";
+"cameraUploadsEnable_header"="Enable camera uploads to automatically upload your photos and videos to cloud drive";
 "cameraUploadsDisalbe_header"="When disabled new photos and videos won't be uploaded";
 "cameraUploadsOptiones_header"="Camera uploads options";
 

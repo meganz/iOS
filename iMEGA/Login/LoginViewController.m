@@ -28,6 +28,8 @@
 #import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
 
+#import "CameraUploadsPopUpViewController.h"
+
 @interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *credentialsView;
@@ -244,11 +246,10 @@
             UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-            
-            [[CameraUploads syncManager] setTabBarController:[super tabBarController]];
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
-            }
+                
+            CameraUploadsPopUpViewController *cameraUploadsPopUpVC = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpViewControllerID"];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
+            [mainTBC presentViewController:navigationController animated:YES completion:nil];
             
             [self checkLoginOption];
             

@@ -187,7 +187,9 @@
 "photosPerMonth"="%lu fotos";
 "photoPerMonth"="%lu foto";
 
+"skipButton"="Saltar";
 "enableCameraUploadsButton"="Activar subidas de la cámara";
+"cameraUploadsEnabled"="¡Subidas de la cámara activadas!";
 
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
@@ -264,8 +266,6 @@
 "logoutLabel"="Desconectar";
 
 //(5) Settings - CameraUploadsTableViewController
-"enableCameraUploadsLabel"="Activar subidas de la cámara";
-"disableCameraUploadsLabel"="Desactivar subidas de la cámara";
 "uploadVideosLabel"="Subir videos";
 "useCellularConnectionLabel"="Usar conexión de datos";
 "onlyWhenChargingLabel"="Subir solo cuando está cargando";
