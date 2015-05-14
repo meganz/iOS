@@ -415,13 +415,6 @@ static CameraUploads *instance = nil;
         
         [self setBadgeValue];
         
-        NSError *error = nil;
-        NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
-        if (!success || error) {
-            NSLog(@"remove file error %@", error);
-        }
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self uploadAsset];
         });

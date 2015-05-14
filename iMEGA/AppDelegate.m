@@ -563,6 +563,22 @@
         [[Helper downloadingNodes] removeObjectForKey:base64Handle];
         [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];
     }
+    
+    if ([transfer type] == MEGATransferTypeUpload) {
+        NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
+        
+        if (isImage([transfer fileName].pathExtension)) {
+            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
+            [api createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
+            [api createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+        }
+        
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
+        if (!success || error) {
+            NSLog(@"remove file error %@", error);
+        }
+    }
 }
 
 -(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

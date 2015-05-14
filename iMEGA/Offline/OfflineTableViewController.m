@@ -122,7 +122,7 @@
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
             [self.offlineDocuments addObject:tempDictionary];
             
-            if (isImage(fileName.lowercaseString.pathExtension)) {
+            if (isImage(fileName.pathExtension)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
                 
@@ -321,7 +321,7 @@
         NSString *extension = [[nameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
-        if (isImage(nameString.lowercaseString.pathExtension)) {
+        if (isImage(nameString.pathExtension)) {
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbs"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
@@ -421,7 +421,7 @@
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
     } else {
-        if (isImage(itemNameString.lowercaseString.pathExtension)) {
+        if (isImage(itemNameString.pathExtension)) {
             MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
             
             browser.displayActionButton = YES;
@@ -442,7 +442,7 @@
             NSInteger selectedIndexPhoto = [[[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
             [browser setCurrentPhotoIndex:selectedIndexPhoto];
             
-        } else if (isVideo(itemNameString.lowercaseString.pathExtension)) {
+        } else if (isVideo(itemNameString.pathExtension)) {
             NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
             NSMutableString *filePath = [NSMutableString new];
             [filePath appendFormat:@"%@/%@", offlineDirectory, itemNameString];
