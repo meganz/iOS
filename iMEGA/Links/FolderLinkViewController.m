@@ -352,7 +352,7 @@
 
         case MEGANodeTypeFile: {
             NSString *name = [node name];
-            if (isImage(name.lowercaseString.pathExtension)) {
+            if (isImage(name.pathExtension)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -361,7 +361,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].lowercaseString.pathExtension)) {
+                        if (isImage([n name].pathExtension)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];
@@ -376,7 +376,7 @@
                     for (NSInteger i = 0; i < nodeListSize; i++) {
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
                         
-                        if (isImage([n name].lowercaseString.pathExtension)) {
+                        if (isImage([n name].pathExtension)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];

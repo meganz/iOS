@@ -344,7 +344,7 @@
             
         case MEGANodeTypeFile: {
             NSString *name = [node name];
-            if (isImage(name.lowercaseString.pathExtension)) {
+            if (isImage(name.pathExtension)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -353,7 +353,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].lowercaseString.pathExtension)) {
+                        if (isImage([n name].pathExtension)) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -366,7 +366,7 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        if (isImage([n name].lowercaseString.pathExtension)) {
+                        if (isImage([n name].pathExtension)) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -395,7 +395,7 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
-            } else if (isMultimedia(name.lowercaseString.pathExtension)) {
+            } else if (isMultimedia(name.pathExtension)) {
                 NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
                 if (link) {
                     MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
@@ -1330,14 +1330,7 @@
             [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
             NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"MOV"];
             [[MEGASdkManager sharedMEGASdk] renameNode:node newName:name];
-        } else {
-            NSError *e = nil;
-            NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
-            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&e];
-            if (!success || e) {
-                NSLog(@"remove file error %@", e);
-            }
-        }
+        } 
     }
 }
 
