@@ -310,13 +310,11 @@
 //(5) Settings - PasscodeTableViewController
 "passcodeTitle"="Passcode";
 
-"turnOnLabel"="Turn passcode on";
-"turnOffLabel"="Turn passcode off";
 "changePasscodeLabel"="Change passcode";
 "simplePasscodeLabel"="Simple passcode";
-"eraseAllLocalDataLabel"="Erase all local data";
+"eraseAllLocalDataLabel"="Erase local data";
 
-"failedAttempstSectionTitle"="If number of failed attempts reached";
+"failedAttempstSectionTitle"="Log out and erase local data of the app after 10 failed passcode attempts";
 
 //(5) Settings - FeedbackTableViewController
 "sendFeedbackLabel"="Send feedback";

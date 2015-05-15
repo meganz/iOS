@@ -66,6 +66,8 @@
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     
+    [[LTHPasscodeViewController sharedUser] setDelegate:self];
+    
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
         [Helper clearSession];
@@ -75,29 +77,14 @@
     }
     
     [self setupAppearance];
-    self.isLoginFromView = YES;
     
-    if ([LTHPasscodeViewController doesPasscodeExist]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        }
+    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
         
-        [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
-        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                 withLogout:YES
-                                                             andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
-        [[LTHPasscodeViewController sharedUser] setDelegate:self];
-        self.window.rootViewController = [LTHPasscodeViewController sharedUser];
-    } else {
-        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-            self.isLoginFromView = NO;
-            [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
-            
-            NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
-            UIViewController *viewController = [[UIViewController alloc] init];
-            [viewController setView:[objectsArray objectAtIndex:0]];
-            self.window.rootViewController = viewController;
-        }
+        NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
+        UIViewController *viewController = [[UIViewController alloc] init];
+        [viewController setView:[objectsArray objectAtIndex:0]];
+        self.window.rootViewController = viewController;
     }
     
     // Let the device know we want to receive push notifications
@@ -420,32 +407,34 @@
 
 #pragma mark - LTHPasscodeViewControllerDelegate
 
-- (void)passcodeWasEnteredSuccessfully {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self.isLoginFromView = NO;
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
-    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-    self.window.rootViewController = mainTBC;
-}
+//- (void)passcodeWasEnteredSuccessfully {
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
+//    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+//    self.window.rootViewController = mainTBC;
+//}
 
 - (void)maxNumberOfFailedAttemptsReached {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-        [Helper logout];
+        [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
 
 - (void)logoutButtonWasPressed {
-    [Helper logout];
+    [[MEGASdkManager sharedMEGASdk] logout];
 }
 
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
-        case MEGARequestTypeFetchNodes:
-            if (!self.isLoginFromView) {
-                [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...")];
-            }
+        case MEGARequestTypeFetchNodes: {
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...")];
+            break;
+        }
+            
+        case MEGARequestTypeLogout:
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"logout", @"Logout...")];
             break;
             
         default:
@@ -481,9 +470,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            if (!self.isLoginFromView) {
-                [[MEGASdkManager sharedMEGASdk] fetchNodes];
-            }
+            [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }
             
@@ -491,6 +478,17 @@
             if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 self.window.rootViewController = mainTBC;
+                
+                if ([LTHPasscodeViewController doesPasscodeExist]) {
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                    }
+                    
+                    [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:YES
+                                                                         andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                }
                 
                 [[CameraUploads syncManager] setTabBarController:mainTBC];
                 if ([CameraUploads syncManager].isCameraUploadsEnabled) {
@@ -516,6 +514,12 @@
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:confirmAccountVC];
             
             [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MEGARequestTypeLogout: {
+            [Helper logout];
+            [SVProgressHUD dismiss];
             break;
         }
             

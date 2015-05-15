@@ -563,9 +563,7 @@ static NSString *renamePathForPreview;
 
 #pragma mark - Logout
 
-+ (void)logout {
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setIsLoginFromView:YES];
-    
++ (void)logout {    
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
