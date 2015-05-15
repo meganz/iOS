@@ -250,7 +250,7 @@ static CameraUploads *instance = nil;
         NSLog(@"Error change modification date of file %@", error);
     }
     
-//    [self setBadgeValue];
+    [self setBadgeValue];
     
     NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
     MEGANode *nodeExists = nil;
@@ -262,21 +262,7 @@ static CameraUploads *instance = nil;
     }
     
     if (nodeExists == nil) {
-        NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
-        NSString *extension = [name pathExtension];
-        int index = 0;
-        int listSize = 0;
-        
-        do {
-            if (index != 0) {
-                nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
-            }
-            MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-            listSize = [nameNodeList.size intValue];
-            index++;
-        } while (listSize != 0);
-        
-        NSString *newName = [nameWithoutExtension stringByAppendingPathExtension:extension];
+        NSString *newName = [self newNameForName:name];
         
         if (![name isEqualToString:newName]) {
             NSString *newLocalFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:newName];
@@ -298,11 +284,25 @@ static CameraUploads *instance = nil;
         }
         
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:nodeExists] handle] != cameraUploadHandle) {
-            [[MEGASdkManager sharedMEGASdk] copyNode:nodeExists newParent:cameraUploadsNode newName:name delegate:self];
+            NSString *newName = [self newNameForName:name];
+            
+            if (![name isEqualToString:newName]) {
+                [[MEGASdkManager sharedMEGASdk] copyNode:nodeExists newParent:cameraUploadsNode newName:newName delegate:self];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] copyNode:nodeExists newParent:cameraUploadsNode newName:name delegate:self];
+            }
             
         } else {
             if (![nodeExists.name isEqualToString:name] && [[nodeExists.name stringByDeletingPathExtension] rangeOfString:[name stringByDeletingPathExtension]].location == NSNotFound) {
-                [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:name delegate:self];
+                NSString *newName = [self newNameForName:name];
+                NSLog(@"CU rename: \nMEGA name: %@\nMEGA modification time: %@\nNew name: %@\nLocal modification time: %@", nodeExists.name, nodeExists.modificationTime, newName, modificationTime);
+                
+                if (![name isEqualToString:newName]) {
+                    [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:newName delegate:self];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:name delegate:self];
+                }
+                
             } else {
                 if ([self.assetUploadArray count] != 0) {
                     self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
@@ -326,6 +326,25 @@ static CameraUploads *instance = nil;
     } else {
         [[self.tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
     }
+}
+
+- (NSString *)newNameForName:(NSString *)name {
+    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
+    NSString *extension = [name pathExtension];
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        NSLog(@"Looking names: %@.%@", nameWithoutExtension, extension);
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = [nameNodeList.size intValue];
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 #pragma mark - MEGARequestDelegate
