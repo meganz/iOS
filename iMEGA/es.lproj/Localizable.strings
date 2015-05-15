@@ -310,13 +310,11 @@
 //(5) Settings - PasscodeTableViewController
 "passcodeTitle"="Código de acceso";
 
-"turnOnLabel"="Activar código de acceso";
-"turnOffLabel"="Desactivar código de acceso";
 "changePasscodeLabel"="Cambiar código de acceso";
 "simplePasscodeLabel"="Código de acceso simple";
-"eraseAllLocalDataLabel"="Borrar todos los datos locales";
+"eraseAllLocalDataLabel"="Borrar los datos locales";
 
-"failedAttempstSectionTitle"="Si el número de intentos fallidos se alcanza";
+"failedAttempstSectionTitle"="Se cerrará la sesión y se borrarán los datos locales de la aplicación después de 10 intentos fallidos";
 
 //(5) Settings - FeedbackTableViewController
 "sendFeedbackLabel"="Enviar comentarios";
