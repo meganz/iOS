@@ -65,6 +65,8 @@ static CameraUploads *instance = nil;
 - (void)prepare {
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [self.formatter setLocale:locale];
     
     self.fileManager = [NSFileManager defaultManager];
     [self.fileManager setDelegate:self];
