@@ -31,6 +31,9 @@
 #import "MEGAReachabilityManager.h"
 #import "LTHPasscodeViewController.h"
 #import "MEGAProxyServer.h"
+#import "CameraUploadsPopUpViewController.h"
+
+#import "BrowserViewController.h"
 
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -40,7 +43,9 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <LTHPasscodeViewControllerDelegate>
+@interface AppDelegate () <LTHPasscodeViewControllerDelegate> {
+    BOOL isAccountFirstLogin;
+}
 
 @property (nonatomic, strong) NSString *IpAddress;
 
@@ -79,12 +84,18 @@
     [self setupAppearance];
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        isAccountFirstLogin = NO;
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
         
         NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
         UIViewController *viewController = [[UIViewController alloc] init];
         [viewController setView:[objectsArray objectAtIndex:0]];
         self.window.rootViewController = viewController;
+    } else {
+        isAccountFirstLogin = YES;
+        
+        [Helper setLinkNode:nil];
+        [Helper setSelectedOptionOnLink:0];
     }
     
     // Let the device know we want to receive push notifications
@@ -332,6 +343,56 @@
     }];
 }
 
+- (void)showCameraUploadsPopUp {
+    CameraUploadsPopUpViewController *cameraUploadsPopUpVC = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpViewControllerID"];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
+    
+    [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)selectedOptionOnLink {
+    switch ([Helper selectedOptionOnLink]) {
+        case 1: { //IMPORT
+            MEGANode *node = [Helper linkNode];
+            if ([node type] == MEGANodeTypeFile) {
+                UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
+                [browserVC setIsPublicNode:YES];
+            }
+            break;
+        }
+            
+        case 2: { //DOWNLOAD
+            MEGANode *node = [Helper linkNode];
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node]) {
+                return;
+            }
+            
+            if ([node type] == MEGANodeTypeFile) {
+                [Helper downloadNode:node folder:@"" folderLink:NO];
+            } else if ([node type] == MEGANodeTypeFolder) {
+                NSString *folderName = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
+                NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
+                
+                if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+                    [Helper downloadNodesOnFolder:folderPath parentNode:node folderLink:YES];
+                }
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    [Helper setLinkNode:nil];
+    [Helper setSelectedOptionOnLink:0];
+}
+
 #pragma mark - Get IP Address
 
 - (NSString *)getIpAddress {
@@ -407,13 +468,6 @@
 
 #pragma mark - LTHPasscodeViewControllerDelegate
 
-//- (void)passcodeWasEnteredSuccessfully {
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
-//    MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-//    self.window.rootViewController = mainTBC;
-//}
-
 - (void)maxNumberOfFailedAttemptsReached {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
         [[MEGASdkManager sharedMEGASdk] logout];
@@ -446,6 +500,15 @@
 #ifdef DEBUG
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
+    
+    if ([request type] == MEGARequestTypeFetchNodes){
+        float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
+        if (progress > 0 && progress <0.99) {
+            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes")];
+        } else if (progress > 0.99 || progress < 0) {
+            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes")];
+        }
+    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -470,30 +533,45 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+                isAccountFirstLogin = NO;
+            } else {
+                isAccountFirstLogin = YES;
+                
+                NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+                [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
+            }
+            
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
-            if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                self.window.rootViewController = mainTBC;
+            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:mainTBC];
+            
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                }
                 
-                if ([LTHPasscodeViewController doesPasscodeExist]) {
-                    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                    }
+                [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+            } else {
+                if (isAccountFirstLogin) {
+                    [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
                     
-                    [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
-                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                             withLogout:YES
-                                                                         andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                    if ([Helper selectedOptionOnLink] != 0) {
+                        [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                    }
                 }
-                
-                [[CameraUploads syncManager] setTabBarController:mainTBC];
-                if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                    [[CameraUploads syncManager] getAllAssetsForUpload];
-                }
+            }
+            
+            [[CameraUploads syncManager] setTabBarController:mainTBC];
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] getAllAssetsForUpload];
             }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -502,6 +580,7 @@
             } else {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
+            
             [SVProgressHUD dismiss];
             break;
         }

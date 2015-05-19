@@ -184,6 +184,8 @@
 
 #pragma mark - IBActions
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
+    [Helper setLinkNode:nil];
+    [Helper setSelectedOptionOnLink:0];
     [[MEGASdkManager sharedMEGASdkFolder] logout];
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -221,8 +223,9 @@
         UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
-        [loginVC setLoginOption:[(UIButton *)sender tag]];
-        [loginVC setNode:self.parentNode];
+        [Helper setLinkNode:self.parentNode];
+        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
 }

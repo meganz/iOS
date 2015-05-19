@@ -86,6 +86,14 @@
 + (NSString *)renamePathForPreviewDocument;
 + (void)setRenamePathForPreviewDocument:(NSString *)path;
 
+#pragma mark - Utils for links when you are not logged
+
++ (MEGANode *)linkNode;
++ (void)setLinkNode:(MEGANode *)node;
+
++ (NSInteger)selectedOptionOnLink;
++ (void)setSelectedOptionOnLink:(NSInteger)option;
+
 #pragma mark - Utils for download and downloading nodes
 
 + (NSMutableDictionary *)downloadingNodes;

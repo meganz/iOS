@@ -31,6 +31,9 @@ static NSMutableDictionary *downloadedNodes;
 static NSString *pathForPreview;
 static NSString *renamePathForPreview;
 
+static MEGANode *linkNode;
+static NSInteger linkNodeOption;
+
 @implementation Helper
 
 #pragma mark - Images
@@ -393,6 +396,24 @@ static NSString *renamePathForPreview;
 
 + (void)setRenamePathForPreviewDocument:(NSString *)path {
     renamePathForPreview = path;
+}
+
+#pragma mark - Utils for links when you are not logged
+
++ (MEGANode *)linkNode {
+    return linkNode;
+}
+
++ (void)setLinkNode:(MEGANode *)node {
+    linkNode = node;
+}
+
++ (NSInteger)selectedOptionOnLink {
+    return linkNodeOption;
+}
+
++ (void)setSelectedOptionOnLink:(NSInteger)option {
+    linkNodeOption = option;
 }
 
 #pragma mark - Utils for download and downloading nodes

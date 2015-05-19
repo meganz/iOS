@@ -1178,9 +1178,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeFetchNodes:
-            [SVProgressHUD dismiss];
-            break;
             
         case MEGARequestTypeGetAttrFile: {
             for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {

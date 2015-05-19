@@ -131,13 +131,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeFetchNodes:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...")];
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -180,19 +173,6 @@
         case MEGARequestTypeLogout: {
             [Helper logoutFromConfirmAccount];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
-            break;
-        }
-            
-        case MEGARequestTypeLogin: {
-            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
-            break;
-        }
-            
-        case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD dismiss];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
             break;
         }
             
