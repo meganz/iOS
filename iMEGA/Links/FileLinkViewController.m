@@ -103,6 +103,9 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
+    [Helper setLinkNode:nil];
+    [Helper setSelectedOptionOnLink:0];
+    
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -134,8 +137,9 @@
     } else {
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
-        [loginVC setLoginOption:[(UIButton *)sender tag]];
-        [loginVC setNode:self.node];
+        [Helper setLinkNode:self.node];
+        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
 }
@@ -162,8 +166,9 @@
         UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
-        [loginVC setLoginOption:[(UIButton *)sender tag]];
-        [loginVC setNode:self.node];
+        [Helper setLinkNode:self.node];
+        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
 }

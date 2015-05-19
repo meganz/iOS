@@ -2,7 +2,7 @@
  * @file LoginViewController.m
  * @brief View controller that allows to login in your MEGA account
  *
- * (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -23,14 +23,9 @@
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
 #import "Helper.h"
-#import "MainTabBarController.h"
-#import "BrowserViewController.h"
-#import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
 
-#import "CameraUploadsPopUpViewController.h"
-
-@interface LoginViewController () <MEGATransferDelegate, UITextFieldDelegate>
+@interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -133,49 +128,6 @@
     
 }
 
-- (void)checkLoginOption {
-    
-    switch (self.loginOption) {
-        case 1: { //IMPORT
-            if ([self.node type] == MEGANodeTypeFile) {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-                UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-                
-                [browserVC setIsPublicNode:YES];
-            }
-            break;
-        }
-            
-        case 2: { //DOWNLOAD
-            if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
-                return;
-            }
-            
-            if ([self.node type] == MEGANodeTypeFile) {
-                [Helper downloadNode:self.node folder:@"" folderLink:NO];
-            }
-            
-            if ([self.node type] == MEGANodeTypeFolder) {
-                NSString *folderName = [[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]]];
-                NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-                
-                if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                    [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:YES];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - Dismiss keyboard
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -193,6 +145,7 @@
             
         case 1:
             [self.passwordTextField resignFirstResponder];
+            [self tapLogin:self.loginButton];
             break;
             
         default:
@@ -232,27 +185,6 @@
     switch ([request type]) {
         case MEGARequestTypeLogin: {
             [[NSUserDefaults standardUserDefaults] setBool:self.loggedInSwitch.on forKey:kRemainLoggedIn];
-            
-            NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-            [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
-            [self removeFromParentViewController];
-            [api fetchNodesWithDelegate:self];
-            break;
-        }
-            
-        case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD dismiss];
-            
-            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-                
-            CameraUploadsPopUpViewController *cameraUploadsPopUpVC = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpViewControllerID"];
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
-            [mainTBC presentViewController:navigationController animated:YES completion:nil];
-            
-            [self checkLoginOption];
-            
             break;
         }
             
@@ -262,14 +194,6 @@
 }
 
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    if ([request type] == MEGARequestTypeFetchNodes){
-        float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
-        if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes")];
-        } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes")];
-        }
-    }
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
