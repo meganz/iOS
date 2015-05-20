@@ -57,6 +57,11 @@
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
+    
+    dispatch_queue_t createAttributesQueue;
+    dispatch_group_t createAttributesGroup;
+    dispatch_semaphore_t createAttributesSemaphore;
+
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -77,6 +82,9 @@
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
+
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) ALAssetsLibrary *library;
 
 @end
 
@@ -140,6 +148,19 @@
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
+    
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [self.dateFormatter setLocale:locale];
+    
+    self.library = [[ALAssetsLibrary alloc] init];
+    
+    createAttributesQueue = dispatch_queue_create("Create thumbnails and previews", NULL);
+    createAttributesGroup = dispatch_group_create();
+    
+    createAttributesSemaphore = dispatch_semaphore_create(8);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -234,18 +255,108 @@
     cell.nameLabel.text = [node name];
     
     if ([node type] == MEGANodeTypeFile) {
-        if ([node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
-            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-            if (!thumbnailExists) {
+        
+        // check if the thumbnail exist in the cache directory
+        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+        
+        if (!fileExists) {
+            NSString *dateString = [node.name stringByDeletingPathExtension];
+            
+            // Request thumbnails for photos taken in the same second because these photos aren't added to the photos dictionary (only added the first one)
+            if ([dateString containsString:@"_"] && [node hasThumbnail]) {
                 [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
             } else {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                NSDate *dateFromString = [self.dateFormatter dateFromString:dateString];
+                NSString *dateKey = [NSString stringWithFormat:@"%lld", (long long)[dateFromString timeIntervalSince1970]];
+                
+                NSURL *photoUrl = [[(AppDelegate *)[[UIApplication sharedApplication] delegate] photosUrlDictionary] objectForKey:dateKey];
+                
+                // check if the photo exist in photo library
+                if (!photoUrl) {
+                    if ([node hasThumbnail]) {
+                        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                    }
+                } else {
+                    [self.library assetForURL:photoUrl
+                                  resultBlock:^(ALAsset *asset) {
+                                      
+                                      dispatch_group_async(createAttributesGroup, createAttributesQueue, ^{
+                                          dispatch_semaphore_wait(createAttributesSemaphore, DISPATCH_TIME_FOREVER);
+                                          
+                                          NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
+                                          NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
+                                          NSString *name = [[self.dateFormatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
+                                          NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+                                          
+                                          ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+                                          
+                                          if (!assetRepresentation) {
+                                              return;
+                                          }
+                                          
+                                          Byte *buffer = (Byte *)malloc(assetRepresentation.size);
+                                          NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
+                                          
+                                          NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+                                          [data writeToFile:localFilePath atomically:YES];
+                                          
+                                          NSError *error = nil;
+                                          NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
+                                          
+                                          [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
+                                          if (error) {
+                                              NSLog(@"Error change modification date of file %@", error);
+                                          }
+                                          
+                                          NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
+                                          NSString *nodeCRC = [[MEGASdkManager sharedMEGASdk] CRCForNode:node];
+                                          
+                                          if ([localCRC isEqualToString:nodeCRC]) {
+                                              [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
+                                              [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^(){
+                                                  NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:[node base64Handle]];
+                                                  if (indexPath != nil) {
+                                                      [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  }
+                                              });
+                                              
+                                              BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
+                                              if (!success || error) {
+                                                  NSLog(@"remove file error %@", error);
+                                              }
+                                              
+                                              if (![node hasThumbnail]) {
+                                                  [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
+                                              }
+                                              
+                                              if (![node hasPreview]) {
+                                                  [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+                                              }
+                                          } else {
+                                              [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                                          }
+                                          
+                                          dispatch_semaphore_signal(createAttributesSemaphore);
+                                      });
+                                      
+                                  }
+                     
+                                 failureBlock:^(NSError *error) {
+                                     NSLog(@"operation was not successfull!");
+                                 }];
+                }
             }
-        } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
+        
+        if (!fileExists) {
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        } else {
+            [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+        }
+        
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
