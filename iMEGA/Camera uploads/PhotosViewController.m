@@ -251,7 +251,7 @@
     if (!fileExists) {
         NSString *dateString = [node.name stringByDeletingPathExtension];
         
-        if ([dateString containsString:@"_"] && [node hasThumbnail]) {
+        if (!([dateString rangeOfString:@"_"].location == NSNotFound) && [node hasThumbnail]) {
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
         } else {
             NSDate *dateFromString = [self.dateFormatter dateFromString:dateString];

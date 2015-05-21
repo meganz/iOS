@@ -264,7 +264,7 @@
             NSString *dateString = [node.name stringByDeletingPathExtension];
             
             // Request thumbnails for photos taken in the same second because these photos aren't added to the photos dictionary (only added the first one)
-            if ([dateString containsString:@"_"] && [node hasThumbnail]) {
+            if (!([dateString rangeOfString:@"_"].location == NSNotFound) && [node hasThumbnail]) {
                 [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
             } else {
                 NSDate *dateFromString = [self.dateFormatter dateFromString:dateString];
