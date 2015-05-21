@@ -116,8 +116,11 @@
     
     // Start Proxy server for streaming
     [[MEGAProxyServer sharedInstance] start];
-    
-    [self photosUrlByModificationDate];
+       
+    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
+        [self photosUrlByModificationDate];
+    }
+
     
     return YES;
 }

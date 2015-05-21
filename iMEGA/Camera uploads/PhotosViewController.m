@@ -261,7 +261,7 @@
             
             if (!photoUrl) {
                 if ([node hasThumbnail]) {
-                    [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                    [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
                 }
             } else {
                 [self.library assetForURL:photoUrl
