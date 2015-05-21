@@ -86,13 +86,15 @@
     [self.navigationItem setTitle:NSLocalizedString(@"MEGA Folder", nil)];
     
     [self.importBarButtonItem setEnabled:NO];
+    [self.importBarButtonItem setTitle:NSLocalizedString(@"browserVC_importButton", @"Import")];
     [self.downloadBarButtonItem setEnabled:NO];
+    [self.downloadBarButtonItem setTitle:NSLocalizedString(@"downloadButton", @"Download")];
     
     if (self.isFolderRootNode) {
         [MEGASdkManager sharedMEGASdkFolder];
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
-        [self.navigationItem setLeftBarButtonItem:self.cancelBarButtonItem];
+        [self.navigationItem setRightBarButtonItem:self.cancelBarButtonItem];
         [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
     } else {
@@ -210,7 +212,7 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.tabBarController];
+        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
         
         NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.parentNode name]]];
         NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];

@@ -73,9 +73,11 @@
 
 "importButton" = "Importar a tu disco en la nube";
 "downloadButton" = "Descargar a tu aplicación de MEGA";
+"openButton" = "Abrir archivo";
 
 "fileTooBig" = "Necesitas más espacio";
 "fileTooBigMessage" = "El fichero que estás intentado descargar es más grande que el espacio disponible.";
+"fileTooBigMessage_open"="El fichero que estás intentado abrir es más grande que el espacio disponible.";
 
 "importAction" = "Importar fichero";
 "importActionMessage" = "De momento no se puede importar un fichero.";
@@ -85,11 +87,13 @@
 
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "El fichero que estas intentando descargar ya existe en Offline";
-"downloadStarted" = "Descarga iniciada";
+"downloadStarted" = "¡Descarga iniciada!";
 
 //FolderLinkViewController
 "megaFolder"="Enlace a carpeta";
 "emptyFolder"="Carpeta vacía";
+
+"downloadButton"="Descargar";
 
 "importFolderAction"="Importar carpeta";
 "importFolderActionMessage"="De momento no se puede importar una carpeta.";
@@ -158,6 +162,8 @@
 
 "queued"="Queued";
 
+"transferCanceled"="Transferencia cancelada";
+
 //DetailsNodeInfoViewController
 "savedForOffline" = "Guardado en offline";
 "generateLink" = "Generando link...";
@@ -173,14 +179,23 @@
 "newFolderMessage" = "Nombre para la carpeta";
 "createFolderButton" = "Crear";
 
-//MoveCopyNodeViewController
-"quotaExceeded"="Cuota de almacenamiento excedida";
-"fileImported"="Fichero importado";
+//BrowserViewController
 
 "permissionTitle"="Error de permisos";
 "permissionMessage"="Compruebe sus permisos sobre esta carpeta";
 
-"transferCanceled"="Transferencia cancelada";
+"sharedFolder_success"="¡Carpeta compartida!";
+
+"browserVC_moveButton"="Mover";
+"browserVC_newFolderButton"="Nueva carpeta";
+"browserVC_copyButton"="Copiar";
+
+// BrowserVC - Links
+"importTitle"="Importar a ";
+"browserVC_importButton"="Importar";
+"fileImported"="¡Fichero importado!";
+
+"quotaExceeded"="Cuota de almacenamiento excedida";
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Fotos";
