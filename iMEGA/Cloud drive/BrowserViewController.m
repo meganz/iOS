@@ -37,6 +37,12 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *shareFolderButton;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
+
 @end
 
 @implementation BrowserViewController
@@ -46,6 +52,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.cancelBarButtonItem setTitle:NSLocalizedString(@"cancel", nil)];
+    
+    [self.toolBarMoveBarButtonItem setTitle:NSLocalizedString(@"browserVC_moveButton", @"Move")];
+    [self.toolBarNewFolderBarButtonItem setTitle:NSLocalizedString(@"browserVC_newFolderButton", @"New folder")];
+    
+    if (self.isPublicNode) {
+        [self.toolBarMoveBarButtonItem setEnabled:NO];
+        [self.toolBarCopyBarButtonItem setTitle:NSLocalizedString(@"browserVC_importButton", @"Import")];
+    } else {
+        [self.toolBarCopyBarButtonItem setTitle:NSLocalizedString(@"browserVC_copyButton", @"Copy")];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,14 +98,9 @@
     }
     
     if (self.isPublicNode) {
-        NSString *importTitle = @"Import to ";
+        NSString *importTitle = NSLocalizedString(@"importTitle", @"Import to ");
         importTitle = [importTitle stringByAppendingString:[self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
-        
-        NSMutableArray *items = [NSMutableArray arrayWithArray:self.toolbar.items];
-        
-        [[items objectAtIndex:0] setEnabled:NO];
-        [[items objectAtIndex:2] setTitle:@"Import"];
     }
     
     for (NSInteger i = 0; i < self.nodes.size.integerValue; i++) {
@@ -131,7 +143,7 @@
     
 }
 
-- (IBAction)add:(UIBarButtonItem *)sender {
+- (IBAction)newFolder:(UIBarButtonItem *)sender {
     folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder") message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
     [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [folderAlertView textFieldAtIndex:0].text = @"";
@@ -268,7 +280,7 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeMove:
+        case MEGARequestTypeMove: {
             remainingOperations--;
             
             if (remainingOperations == 0) {
@@ -277,11 +289,12 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
+        }
         
-        case MEGARequestTypeCopy:
-            if(self.isPublicNode) {
+        case MEGARequestTypeCopy: {
+            if (self.isPublicNode) {
                 [self dismissViewControllerAnimated:YES completion:nil];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"File imported")];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"File imported!")];
                 break;
             }
             
@@ -293,16 +306,18 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
+        }
             
-        case MEGARequestTypeShare:
+        case MEGARequestTypeShare: {
             remainingOperations--;
             
             if (remainingOperations == 0) {
 //                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
-                [SVProgressHUD showSuccessWithStatus:@"carpeta compartida"];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sharedFolder_success", @"Folder shared!")];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
+        }
             
         default:
             break;

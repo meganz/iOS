@@ -73,9 +73,11 @@
 
 "importButton" = "Import to your Cloud Drive";
 "downloadButton" = "Download to your MEGA App";
+"openButton" = "Open file";
 
 "fileTooBig" = "You need more free space";
 "fileTooBigMessage" = "The file you are trying to download is bigger than the available memory.";
+"fileTooBigMessage_open"="The file you are trying to open is bigger than the avaliable memory.";
 
 "importAction" = "Import file";
 "importActionMessage" = "For the moment you can't import a file.";
@@ -85,11 +87,13 @@
 
 //FileLinkViewController - SVProgressHUD
 "fileAlreadyExist" = "The file you want to download already exists Offline";
-"downloadStarted" = "Download started";
+"downloadStarted" = "Download started!";
 
 //FolderLinkViewController
 "megaFolder"="MEGA Folder Link";
 "emptyFolder"="Empty Folder";
+
+"downloadButton"="Download";
 
 "importFolderAction"="Import folder";
 "importFolderActionMessage"="For the moment you can't import a folder.";
@@ -158,6 +162,8 @@
 
 "queued"="Queued";
 
+"transferCanceled"="Transfer canceled";
+
 //DetailsNodeInfoViewController
 "savedForOffline" = "Saved for offline";
 "generateLink" = "Generate link...";
@@ -173,14 +179,23 @@
 "createFolderButton" = "Create";
 "createFolder" = "Create folder";
 
-//MoveCopyNodeViewController
-"quotaExceeded"="Storage quota exceeded";
-"fileImported"="File imported";
+//BrowserViewController
 
 "permissionTitle"="Permissions error";
 "permissionMessage"="Check your permissions on this folder";
 
-"transferCanceled"="Transfer canceled";
+"sharedFolder_success"="Folder shared!";
+
+"browserVC_moveButton"="Move";
+"browserVC_newFolderButton"="New folder";
+"browserVC_copyButton"="Copy";
+
+// BrowserVC - Links
+"importTitle"="Import to ";
+"browserVC_importButton"="Import";
+"fileImported"="File imported!";
+
+"quotaExceeded"="Storage quota exceeded";
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Photos";

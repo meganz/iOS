@@ -19,6 +19,8 @@
  * program.
  */
 
+#import <QuickLook/QuickLook.h>
+
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
 
@@ -32,7 +34,7 @@
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
 
-@interface FileLinkViewController () <MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
+@interface FileLinkViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
@@ -45,6 +47,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *importButton;
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
+@property (weak, nonatomic) IBOutlet UIButton *openButton;
 
 @end
 
@@ -55,7 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setLeftBarButtonItem:self.cancelBarButtonItem];
+    [self.navigationItem setRightBarButtonItem:self.cancelBarButtonItem];
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
@@ -72,6 +75,11 @@
     self.downloadButton.layer.masksToBounds = YES;
     [self.downloadButton setTitle:NSLocalizedString(@"downloadButton", nil) forState:UIControlStateNormal];
     
+    self.openButton.layer.cornerRadius = 6;
+    self.openButton.layer.masksToBounds = YES;
+    [self.openButton setTitle:NSLocalizedString(@"openButton", nil) forState:UIControlStateNormal];
+    
+    [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
 }
 
@@ -84,6 +92,11 @@
     
     [self.importButton setEnabled:boolValue];
     [self.downloadButton setEnabled:boolValue];
+    
+    NSString *extension = [self.node.name pathExtension];
+    if (isDocument(extension) || isImage(extension)) {
+        [self.openButton setEnabled:boolValue];
+    }
 }
 
 - (void)showUnavailableLinkView {
@@ -100,11 +113,35 @@
     [self.view addSubview:unavailableLinkView];
 }
 
+- (void)openTempFile {
+    QLPreviewController *previewController = [[QLPreviewController alloc] init];
+    [previewController setDelegate:self];
+    [previewController setDataSource:self];
+    [previewController setTitle:[self.node name]];
+    [self presentViewController:previewController animated:YES completion:nil];
+}
+
+- (void)deleteTempFile {
+    NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    if (fileExists) {
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[Helper pathForPreviewDocument] error:&error];
+        if (!success || error) {
+            NSLog(@"Remove file error %@", error);
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
+    
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
+    
+    [self deleteTempFile];
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
@@ -117,6 +154,8 @@
 }
 
 - (IBAction)importTouchUpInside:(UIButton *)sender {
+    [self deleteTempFile];
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -128,11 +167,11 @@
             UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
             
-            BrowserViewController *moveCopyNodeVC = navigationController.viewControllers.firstObject;
-            moveCopyNodeVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            moveCopyNodeVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
             
-            [moveCopyNodeVC setIsPublicNode:YES];
+            [browserVC setIsPublicNode:YES];
         }
     } else {
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -145,6 +184,7 @@
 }
 
 - (IBAction)downloadTouchUpInside:(UIButton *)sender {
+    [self deleteTempFile];
     
     if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
         return;
@@ -156,7 +196,7 @@
         MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         
         [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:self.tabBarController];
+        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
         
         if ([self.node type] == MEGANodeTypeFile) {
             [Helper downloadNode:self.node folder:@"" folderLink:NO];
@@ -173,9 +213,66 @@
     }
 }
 
+- (IBAction)openTouchUpInside:(UIButton *)sender {
+    [self setUIItemsEnabled:NO];
+    
+    NSNumber *nodeSizeNumber = [self.node size];
+    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
+    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
+                                                            message:NSLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    
+    [Helper setRenamePathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:[self.node name]]];
+    
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
+    if (!fileExists) {
+        NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+        [Helper setPathForPreviewDocument:path];
+        
+        [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:path];
+    } else {
+        [self openTempFile];
+    }
+}
+
+#pragma mark - QLPreviewControllerDataSource
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
+    return 1;
+}
+
+- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
+    return [NSURL fileURLWithPath:[Helper renamePathForPreviewDocument]];
+}
+
+#pragma mark - QLPreviewControllerDelegate
+
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
+    return YES;
+}
+
+- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
+    [Helper setPathForPreviewDocument:nil];
+    [Helper setRenamePathForPreviewDocument:nil];
+    
+    [self setUIItemsEnabled:YES];
+}
+
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+}
+
+- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -183,6 +280,7 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeGetPublicNode) {
+                [SVProgressHUD dismiss];
                 [self showUnavailableLinkView];
             }
         }
@@ -193,8 +291,8 @@
             
         case MEGARequestTypeGetPublicNode: {
             self.node = [request publicNode];
-            NSString *name = [self.node name];
             
+            NSString *name = [self.node name];
             [self.nameLabel setText:name];
             
             NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
@@ -204,7 +302,14 @@
             UIImage *image = [UIImage imageNamed:fileTypeIconString];
             [self.thumbnailImageView setImage:image];
             
+            NSString *extension = [self.node.name pathExtension];
+            if (isDocument(extension) || isImage(extension)) {
+                [self.openButton setEnabled:YES];
+                [self.openButton setHidden:NO];
+            }
+            
             [self setUIItemsEnabled:YES];
+            [SVProgressHUD dismiss];
             break;
         }
       
@@ -213,10 +318,41 @@
     }
 }
 
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
+- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+#pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (([transfer type] == MEGATransferTypeDownload)  && (!transfer.isStreamingTransfer) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
+        [SVProgressHUD show];
+    }
+}
+
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+}
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
+        return;
+    }
+    
+    if ([transfer type] == MEGATransferTypeDownload && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
+        
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper pathForPreviewDocument] toPath:[Helper renamePathForPreviewDocument] error:&error];
+        if (!success || error) {
+            NSLog(@"moveItemAtPath %@", error);
+        }
+        
+        [self openTempFile];
+        
+        [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end
