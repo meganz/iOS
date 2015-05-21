@@ -230,6 +230,10 @@
     }
 }
 - (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index {
+    if (localCacheSize == 0) {
+        localCacheSize = 1;
+    }
+    
     switch (index) {
         case 0:
             return localCacheSize / localCacheSize;
