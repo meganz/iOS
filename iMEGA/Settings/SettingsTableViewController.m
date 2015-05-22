@@ -170,11 +170,11 @@
     
     // Feedback
     if (indexPath.section == 2 && indexPath.row == 3) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"¿Cómo te sientes?"
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"feedbackActionSheet_title", "How are you feeling?")
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Feliz", @"Confuso", @"Infeliz", nil];
+                                                        otherButtonTitles:NSLocalizedString(@"feedbackActionSheet_happyButton", "Happy"), NSLocalizedString(@"feedbackActionSheet_confusedButton", "Confused"), NSLocalizedString(@"feedbackActionSheet_unhappyButton", "Unhappy"), nil];
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
     }
 }

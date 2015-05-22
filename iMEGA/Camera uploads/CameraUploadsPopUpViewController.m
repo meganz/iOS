@@ -19,6 +19,8 @@
  * program.
  */
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
@@ -29,7 +31,7 @@
 #import "CameraUploadsTableViewController.h"
 #import "PhotosViewController.h"
 
-@interface CameraUploadsPopUpViewController () <MEGARequestDelegate>
+@interface CameraUploadsPopUpViewController () <UIAlertViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -111,13 +113,26 @@
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-    [[CameraUploads syncManager] getAllAssetsForUpload];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"cameraUploadsEnabled", @"Camera Uploads enabled!")];
-    }];
+    if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        [alert show];
+    } else {
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"cameraUploadsEnabled", @"Camera Uploads enabled!")];
+        }];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
