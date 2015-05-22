@@ -3,6 +3,10 @@
 "ok" = "OK";
 "error" = "Error";
 
+"attention"="Attention";
+"cameraPermissions"="Please give MEGA app permission to access your Camera in your settings app!";
+"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in your settings app!";
+
 //AppDelegate
 "accountAlreadyConfirmed" = "Your account has already been activated. Please log in.";
 
@@ -279,6 +283,11 @@
 "feedbackLabel"="Feedback";
 "advancedLabel"="Advanced";
 "logoutLabel"="Log out";
+
+"feedbackActionSheet_title"="How are you feeling?";
+"feedbackActionSheet_happyButton"="Happy";
+"feedbackActionSheet_confusedButton"="Confused";
+"feedbackActionSheet_unhappyButton"="Unhappy";
 
 //(5) Settings - CameraUploadsTableViewController
 "uploadVideosLabel"="Upload videos";

@@ -35,7 +35,7 @@
 
 #import "NSString+MNZCategory.h"
 
-@interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     dispatch_queue_t createAttributesQueue;
     dispatch_group_t createAttributesGroup;
     dispatch_semaphore_t createAttributesSemaphore;
@@ -210,10 +210,15 @@
     
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
     
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-    [[CameraUploads syncManager] getAllAssetsForUpload];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-    [self reloadUI];
+    if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        [alert show];
+    } else {
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+        [self reloadUI];
+    }
 }
 
 #pragma mark - UICollectioViewDataSource
@@ -468,6 +473,14 @@
     }
     
     return nil;
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }
 }
 
 #pragma mark - MEGARequestDelegate

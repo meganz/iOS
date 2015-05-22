@@ -23,6 +23,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <MediaPlayer/MPMoviePlayerViewController.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
@@ -770,7 +772,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder") message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
+        folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder")
+                                                     message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder")
+                                                    delegate:self
+                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                           otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
         [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [folderAlertView textFieldAtIndex:0].text = @"";
         folderAlertView.tag = 1;
@@ -778,11 +784,33 @@
     } else if (buttonIndex == 1) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     } else if (buttonIndex == 2) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                // Will get here on both iOS 7 & 8 even though camera permissions weren't required
+                // until iOS 8. So for iOS 7 permission will always be granted.
+                if (granted) {
+                    // Permission has been granted. Use dispatch_async for any UI updating
+                    // code because this block may be executed in a thread.
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    });
+                } else {
+                    // Permission has been denied.
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention")
+                                                                        message:NSLocalizedString(@"cameraPermissions", "Please give MEGA app permission to access your Camera in your settings app!")
+                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancel") : NSLocalizedString(@"ok", "OK"))
+                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+                        alert.tag = 3;
+                        [alert show];
+                    });
+                }
+            }];
+        }
     }
 }
 
-#pragma mark - UIAlertDelegate
+#pragma mark - UIAlertViewDelegate
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     BOOL shouldEnable;
@@ -869,6 +897,13 @@
                 }
             }
             break;
+        }
+        
+        // Check camera permissions
+        case 3: {
+            if (buttonIndex == 1) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            }
         }
             
         default:

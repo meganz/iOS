@@ -19,12 +19,14 @@
  * program.
  */
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "CameraUploadsTableViewController.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CameraUploads.h"
 
-@interface CameraUploadsTableViewController ()  <MEGARequestDelegate>
+@interface CameraUploadsTableViewController ()  <UIAlertViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *enableCameraUploadsCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *enableUploadVideosCell;
@@ -81,37 +83,43 @@
 #pragma mark - IBActions
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
-    BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-    [CameraUploads syncManager].isCameraUploadsEnabled = isCameraUploadsEnabled;
-    
-    if (isCameraUploadsEnabled) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+    if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [self.enableCameraUploadsSwitch isOn]) {
+        [self.enableCameraUploadsSwitch setOn:!self.enableCameraUploadsSwitch.isOn animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        [alert show];
     } else {
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-        if (!success || error) {
-            NSLog(@"remove file error %@", error);
+        BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
+        [CameraUploads syncManager].isCameraUploadsEnabled = isCameraUploadsEnabled;
+        
+        if (isCameraUploadsEnabled) {
+            [[CameraUploads syncManager] getAllAssetsForUpload];
+        } else {
+            NSError *error = nil;
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+            if (!success || error) {
+                NSLog(@"remove file error %@", error);
+            }
+            
+            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+            [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
+            
+            [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
+            [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
+            [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
+            
+            [CameraUploads syncManager].isUploadVideosEnabled = isCameraUploadsEnabled;
+            [CameraUploads syncManager].isUseCellularConnectionEnabled = isCameraUploadsEnabled;
+            [CameraUploads syncManager].isOnlyWhenChargingEnabled = isCameraUploadsEnabled;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
         }
         
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-        [[[CameraUploads syncManager].tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         
-        [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
-        [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
-        [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
-        
-        [CameraUploads syncManager].isUploadVideosEnabled = isCameraUploadsEnabled;
-        [CameraUploads syncManager].isUseCellularConnectionEnabled = isCameraUploadsEnabled;
-        [CameraUploads syncManager].isOnlyWhenChargingEnabled = isCameraUploadsEnabled;
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+        [self.tableView reloadData];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-    
-    [self.tableView reloadData];
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
@@ -204,6 +212,14 @@
         default:
             return nil;
             break;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }
 }
 
