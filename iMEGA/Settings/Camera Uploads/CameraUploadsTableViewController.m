@@ -176,7 +176,8 @@
             break;
             
         case 1:
-            rowPerSection = 3;
+            //TODO: rowPerSection = 3 => Shows upload only when charging option. Valid for uploads in background.
+            rowPerSection = 2;
             break;
             
         default:

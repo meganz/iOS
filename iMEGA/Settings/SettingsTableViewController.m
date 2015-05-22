@@ -181,13 +181,13 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showUpgrade"]) {
-        UpgradeTableViewController *upgradeTableViewController = segue.destinationViewController;
-        upgradeTableViewController.pricing = self.pricing;
-        upgradeTableViewController.megaAccountType = self.megaAccountType;
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([segue.identifier isEqualToString:@"showUpgrade"]) {
+//        UpgradeTableViewController *upgradeTableViewController = segue.destinationViewController;
+//        upgradeTableViewController.pricing = self.pricing;
+//        upgradeTableViewController.megaAccountType = self.megaAccountType;
+//    }
+//}
 
 #pragma mark - UIActionSheetDelegate
 
