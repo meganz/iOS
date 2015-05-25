@@ -48,7 +48,7 @@ static MEGAProxyServer *_MEGAProxyServer = nil;
 
 - (BOOL)start {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
-    __Require_Action_Quiet(fd != -1, fail, NSLog(@"Failed to create socket"));
+    __Require_Action_Quiet(fd != -1, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to create socket"]);
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len    = sizeof(addr);
@@ -56,11 +56,11 @@ static MEGAProxyServer *_MEGAProxyServer = nil;
     addr.sin_port   = 0;
     addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     int err = bind(fd, (const struct sockaddr *) &addr, sizeof(addr));
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to bind socket"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to bind socket"]);
     err = listen(fd, 10);
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to listen socket"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to listen socket"]);
     err = getsockname(fd, (struct sockaddr *) &addr, &(socklen_t){sizeof(addr)});
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to getsockname"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to getsockname"]);
     _port = ntohs(addr.sin_port);
     assert(_listeningSocket == NULL);
     _listeningSocket = CFSocketCreateWithNative(kCFAllocatorDefault,
@@ -69,7 +69,7 @@ static MEGAProxyServer *_MEGAProxyServer = nil;
                                                 socketAcceptCallback,
                                                 &(CFSocketContext){ 0, (__bridge void *) self, NULL, NULL, NULL });
     fd = -1; // CFSocket now ressponsible for native socket closing
-    __Require_Action_Quiet(_listeningSocket, fail, NSLog(@"Failed to create CFSocket"));
+    __Require_Action_Quiet(_listeningSocket, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to create CFSocket"]);
     CFRunLoopSourceRef rls = CFSocketCreateRunLoopSource(NULL, _listeningSocket, 0);
     assert(rls != NULL);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
@@ -110,7 +110,7 @@ static void socketAcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDat
 
 - (BOOL)startServer {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
-    __Require_Action_Quiet(fd != -1, fail, NSLog(@"Failed to create socket"));
+    __Require_Action_Quiet(fd != -1, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to create socket"]);
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_len    = sizeof(addr);
@@ -118,11 +118,11 @@ static void socketAcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDat
     addr.sin_port   = 0;
     addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     int err = bind(fd, (const struct sockaddr *) &addr, sizeof(addr));
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to bind socket"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to bind socket"]);
     err = listen(fd, 10);
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to listen socket"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to listen socket"]);
     err = getsockname(fd, (struct sockaddr *) &addr, &(socklen_t){sizeof(addr)});
-    __Require_Action_Quiet(err == 0, fail, NSLog(@"Failed to getsockname"));
+    __Require_Action_Quiet(err == 0, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to getsockname"]);
     _port = ntohs(addr.sin_port);
     assert(_listeningSocket == NULL);
     _listeningSocket = CFSocketCreateWithNative(kCFAllocatorDefault,
@@ -131,7 +131,7 @@ static void socketAcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDat
                                                 socketAcceptCallback,
                                                 &(CFSocketContext){ 0, (__bridge void *) self, NULL, NULL, NULL });
     fd = -1; // CFSocket now ressponsible for native socket closing
-    __Require_Action_Quiet(_listeningSocket, fail, NSLog(@"Failed to create CFSocket"));
+    __Require_Action_Quiet(_listeningSocket, fail, [MEGASdk logWithLevel:MEGALogLevelError message:@"Failed to create CFSocket"]);
     CFRunLoopSourceRef rls = CFSocketCreateRunLoopSource(NULL, _listeningSocket, 0);
     assert(rls != NULL);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
@@ -148,7 +148,7 @@ fail:
 }
 
 - (void)acceptConnection:(CFSocketNativeHandle)fd {
-    NSLog(@"Accepting connection for fd: %d", fd);
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Accepting connection for fd: %d", fd]];
     [_connectionHandlers addObject:[[MEGAHttpSession alloc] initWithFd:fd]];
 }
 

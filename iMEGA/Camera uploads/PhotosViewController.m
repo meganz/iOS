@@ -297,7 +297,7 @@
                                       
                                       [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
                                       if (error) {
-                                          NSLog(@"Error change modification date of file %@", error);
+                                          [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
                                       }
                                       
                                       NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
@@ -313,7 +313,7 @@
                                           
                                           BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
                                           if (!success || error) {
-                                              NSLog(@"remove file error %@", error);
+                                              [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
                                           }
                                           
                                           if (![node hasThumbnail]) {
@@ -333,7 +333,7 @@
                               }
                  
                              failureBlock:^(NSError *error) {
-                                 NSLog(@"operation was not successfull!");
+                                 [MEGASdk logWithLevel:MEGALogLevelError message:@"assetForURL failureBlock"];
                              }];
             }
         }
