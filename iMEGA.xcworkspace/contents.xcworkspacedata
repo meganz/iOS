@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:iMEGA.xcodeproj">
+      location = "group:MEGA.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:iMEGA/Vendor/SDK/bindings/ios/mega.xcodeproj">
+      location = "group:iMEGA/Vendor/SDK/bindings/ios/MEGASDK.xcodeproj">
    </FileRef>
 </Workspace>

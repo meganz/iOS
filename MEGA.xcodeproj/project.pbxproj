@@ -10,7 +10,7 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		137361AD1A6664C400B740E8 /* iMEGATests.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361AC1A6664C400B740E8 /* iMEGATests.m */; };
+		414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 414296101B133EFA00639A20 /* libMEGASDK.a */; };
 		4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */; };
 		4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */; };
@@ -40,7 +40,6 @@
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
-		418851ED1A66826400FDBA15 /* libmega.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851EC1A66826400FDBA15 /* libmega.a */; };
 		418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FA1A668E2700FDBA15 /* ImageIO.framework */; };
 		418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */; };
 		418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852001A668E4400FDBA15 /* libc++.dylib */; };
@@ -99,13 +98,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		137361A71A6664C400B740E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 137361821A6664C300B740E8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 137361891A6664C300B740E8;
-			remoteInfo = iMEGA;
-		};
 		415227291A692EDC00EC7BB6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 415226FB1A692EDC00EC7BB6 /* MWPhotoBrowser.xcodeproj */;
@@ -116,15 +108,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1373618A1A6664C300B740E8 /* iMEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iMEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		137361A61A6664C400B740E8 /* iMEGATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iMEGATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		137361AB1A6664C400B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		137361AC1A6664C400B740E8 /* iMEGATests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMEGATests.m; sourceTree = "<group>"; };
+		414296101B133EFA00639A20 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		415226691A692ECC00EC7BB6 /* Cloud.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cloud.storyboard; sourceTree = "<group>"; };
 		4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CloudDriveTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -174,7 +164,6 @@
 		418072751AA5B9F30078D950 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAReachabilityManager.h; sourceTree = "<group>"; };
 		418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAReachabilityManager.m; sourceTree = "<group>"; };
-		418851EC1A66826400FDBA15 /* libmega.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmega.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libmega.a"; sourceTree = "<group>"; };
 		418851FA1A668E2700FDBA15 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		418852001A668E4400FDBA15 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -281,6 +270,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */,
 				418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */,
 				415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */,
 				4152273C1A692F1800EC7BB6 /* libMWPhotoBrowser.a in Frameworks */,
@@ -290,14 +280,6 @@
 				41B1F7D81B0496330059A984 /* Crashlytics.framework in Frameworks */,
 				418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */,
 				418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */,
-				418851ED1A66826400FDBA15 /* libmega.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		137361A31A6664C400B740E8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +290,6 @@
 			isa = PBXGroup;
 			children = (
 				1373618C1A6664C300B740E8 /* iMEGA */,
-				137361A91A6664C400B740E8 /* iMEGATests */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 			);
@@ -317,8 +298,7 @@
 		1373618B1A6664C300B740E8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1373618A1A6664C300B740E8 /* iMEGA.app */,
-				137361A61A6664C400B740E8 /* iMEGATests.xctest */,
+				1373618A1A6664C300B740E8 /* MEGA.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -352,23 +332,6 @@
 				1373618E1A6664C300B740E8 /* Info.plist */,
 				1373618F1A6664C300B740E8 /* main.m */,
 				415227411A692F8D00EC7BB6 /* Localizable.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		137361A91A6664C400B740E8 /* iMEGATests */ = {
-			isa = PBXGroup;
-			children = (
-				137361AC1A6664C400B740E8 /* iMEGATests.m */,
-				137361AA1A6664C400B740E8 /* Supporting Files */,
-			);
-			path = iMEGATests;
-			sourceTree = "<group>";
-		};
-		137361AA1A6664C400B740E8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				137361AB1A6664C400B740E8 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -540,6 +503,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				414296101B133EFA00639A20 /* libMEGASDK.a */,
 				41B1F7D71B0496330059A984 /* Crashlytics.framework */,
 				418072751AA5B9F30078D950 /* SystemConfiguration.framework */,
 				4152274F1A6986E000EC7BB6 /* MapKit.framework */,
@@ -548,7 +512,6 @@
 				418852001A668E4400FDBA15 /* libc++.dylib */,
 				418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */,
 				418851FA1A668E2700FDBA15 /* ImageIO.framework */,
-				418851EC1A66826400FDBA15 /* libmega.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -757,9 +720,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		137361891A6664C300B740E8 /* iMEGA */ = {
+		137361891A6664C300B740E8 /* MEGA */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "iMEGA" */;
+			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
@@ -770,28 +733,10 @@
 			);
 			dependencies = (
 			);
-			name = iMEGA;
+			name = MEGA;
 			productName = iMEGA;
-			productReference = 1373618A1A6664C300B740E8 /* iMEGA.app */;
+			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
 			productType = "com.apple.product-type.application";
-		};
-		137361A51A6664C400B740E8 /* iMEGATests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 137361B31A6664C400B740E8 /* Build configuration list for PBXNativeTarget "iMEGATests" */;
-			buildPhases = (
-				137361A21A6664C400B740E8 /* Sources */,
-				137361A31A6664C400B740E8 /* Frameworks */,
-				137361A41A6664C400B740E8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				137361A81A6664C400B740E8 /* PBXTargetDependency */,
-			);
-			name = iMEGATests;
-			productName = iMEGATests;
-			productReference = 137361A61A6664C400B740E8 /* iMEGATests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -814,13 +759,9 @@
 							};
 						};
 					};
-					137361A51A6664C400B740E8 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 137361891A6664C300B740E8;
-					};
 				};
 			};
-			buildConfigurationList = 137361851A6664C300B740E8 /* Build configuration list for PBXProject "iMEGA" */;
+			buildConfigurationList = 137361851A6664C300B740E8 /* Build configuration list for PBXProject "MEGA" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -848,8 +789,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				137361891A6664C300B740E8 /* iMEGA */,
-				137361A51A6664C400B740E8 /* iMEGATests */,
+				137361891A6664C300B740E8 /* MEGA */,
 			);
 		};
 /* End PBXProject section */
@@ -892,13 +832,6 @@
 				415227271A692EDC00EC7BB6 /* MWPhotoBrowser.bundle in Resources */,
 				41ADAA1A1ADE8B8800641BB4 /* SVWebViewControllerActivityChrome@2x.png in Resources */,
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		137361A41A6664C400B740E8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -983,23 +916,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		137361A21A6664C400B740E8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				137361AD1A6664C400B740E8 /* iMEGATests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		137361A81A6664C400B740E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 137361891A6664C300B740E8 /* iMEGA */;
-			targetProxy = 137361A71A6664C400B740E8 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4152272C1A692EE600EC7BB6 /* SSKeychain.strings */ = {
@@ -1137,7 +1054,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/MWPhotoBrowser/**";
@@ -1164,51 +1081,17 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/MWPhotoBrowser/**";
 			};
 			name = Release;
 		};
-		137361B41A6664C400B740E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iMEGATests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iMEGA.app/iMEGA";
-			};
-			name = Debug;
-		};
-		137361B51A6664C400B740E8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iMEGATests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iMEGA.app/iMEGA";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		137361851A6664C300B740E8 /* Build configuration list for PBXProject "iMEGA" */ = {
+		137361851A6664C300B740E8 /* Build configuration list for PBXProject "MEGA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				137361AE1A6664C400B740E8 /* Debug */,
@@ -1217,20 +1100,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "iMEGA" */ = {
+		137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				137361B11A6664C400B740E8 /* Debug */,
 				137361B21A6664C400B740E8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		137361B31A6664C400B740E8 /* Build configuration list for PBXNativeTarget "iMEGATests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				137361B41A6664C400B740E8 /* Debug */,
-				137361B51A6664C400B740E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
