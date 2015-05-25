@@ -187,7 +187,9 @@ static CameraUploads *instance = nil;
                                   });
                               }
                           }
-                         failureBlock:^(NSError *error){ NSLog(@"operation was not successfull!"); } ];
+                         failureBlock:^(NSError *error) {
+                             [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                         } ];
             
         }
     };
@@ -208,7 +210,9 @@ static CameraUploads *instance = nil;
     
     [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                 usingBlock:assetGroupEnumerator
-                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+                              failureBlock:^(NSError *error) {
+                                  [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                              }];
 }
 
 - (void)uploadAsset {
@@ -249,7 +253,7 @@ static CameraUploads *instance = nil;
     NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
     [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
     if (error) {
-        NSLog(@"Error change modification date of file %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
     }
     
     [self setBadgeValue];
@@ -272,7 +276,7 @@ static CameraUploads *instance = nil;
             NSError *error = nil;
             [[NSFileManager defaultManager] moveItemAtPath:localFilePath toPath:newLocalFilePath error:&error];
             if (error) {
-                NSLog(@"There is an Error: %@", error);
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
             }
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newLocalFilePath parent:cameraUploadsNode delegate:self];
         } else {
@@ -282,7 +286,7 @@ static CameraUploads *instance = nil;
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
         if (!success || error) {
-            NSLog(@"remove file error %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
         
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:nodeExists] handle] != cameraUploadHandle) {
@@ -297,7 +301,6 @@ static CameraUploads *instance = nil;
         } else {
             if (![nodeExists.name isEqualToString:name] && [[nodeExists.name stringByDeletingPathExtension] rangeOfString:[name stringByDeletingPathExtension]].location == NSNotFound) {
                 NSString *newName = [self newNameForName:name];
-                NSLog(@"CU rename: \nMEGA name: %@\nMEGA modification time: %@\nNew name: %@\nLocal modification time: %@", nodeExists.name, nodeExists.modificationTime, newName, modificationTime);
                 
                 if (![name isEqualToString:newName]) {
                     [[MEGASdkManager sharedMEGASdk] renameNode:nodeExists newName:newName delegate:self];
@@ -340,7 +343,7 @@ static CameraUploads *instance = nil;
         if (index != 0) {
             nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
         }
-        NSLog(@"Looking names: %@.%@", nameWithoutExtension, extension);
+
         MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:cameraUploadsNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
         listSize = [nameNodeList.size intValue];
         index++;

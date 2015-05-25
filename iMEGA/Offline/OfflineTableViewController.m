@@ -476,7 +476,7 @@
             NSError *error = nil;
             BOOL success = [[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[Helper renamePathForPreviewDocument] error:&error];
             if (!success || error) {
-                NSLog(@"moveItemAtPath %@", error);
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
             }
             
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
@@ -571,7 +571,7 @@
     NSError *error = nil;
     BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
     if (!success || error) {
-        NSLog(@"moveItemAtPath %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
     }
     
 }

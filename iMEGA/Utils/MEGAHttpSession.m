@@ -53,13 +53,13 @@ MEGARange MGAIntersectionRanges(MEGARange *range1, MEGARange *range2) {
 }
 
 static void readStreamCallback(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo) {
-    NSLog(@"Read stream callback for stream %@ with event %lu", stream, eventType);
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Read stream callback for stream %@ with event %lu", stream, eventType]];
     MEGAHttpSession *obj = (__bridge MEGAHttpSession *)clientCallBackInfo;
     [obj streamEventHasHappened:eventType];
 }
 
 static void writeStreamCallback(CFWriteStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo) {
-    NSLog(@"Write stream callback for stream %@ with event %lu", stream, eventType);
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Write stream callback for stream %@ with event %lu", stream, eventType]];
     MEGAHttpSession *obj = (__bridge MEGAHttpSession *)clientCallBackInfo;
     [obj streamEventHasHappened:eventType];
 }
@@ -84,10 +84,10 @@ static void writeStreamCallback(CFWriteStreamRef stream, CFStreamEventType event
     //_delegate = delegate;
     _dataToWrite = [[NSMutableData alloc] init];
     _request = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, TRUE);
-    __Require_Action_Quiet(_request, fail, NSLog(@"Can't create empty request"));
+    __Require_Action_Quiet(_request, fail,     [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Can't create empty request"];);
     CFStreamCreatePairWithSocket(kCFAllocatorDefault, fd, &_readStream, &_writeStream);
-    __Require_Action_Quiet(_readStream, fail, NSLog(@"Can't create read stream"));
-    __Require_Action_Quiet(_writeStream, fail, NSLog(@"Can't create write stream"));
+    __Require_Action_Quiet(_readStream, fail, [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Can't create read stream"];);
+    __Require_Action_Quiet(_writeStream, fail, [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Can't create write stream"];);
     CFReadStreamSetProperty(_readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
     CFWriteStreamSetProperty(_writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
     const CFOptionFlags readStreamCallbacks = kCFStreamEventHasBytesAvailable | kCFStreamEventEndEncountered | kCFStreamEventErrorOccurred;
@@ -98,13 +98,13 @@ static void writeStreamCallback(CFWriteStreamRef stream, CFStreamEventType event
                           readStreamCallback,
                           &context);
     CFReadStreamScheduleWithRunLoop(_readStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    __Require_Action_Quiet(CFReadStreamOpen(_readStream), fail, NSLog(@"Can't open read stream"));
+    __Require_Action_Quiet(CFReadStreamOpen(_readStream), fail, [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Can't open read stream"];);
     CFWriteStreamSetClient(_writeStream,
                            writeStreamCallbacks,
                            writeStreamCallback,
                            &context);
     CFWriteStreamScheduleWithRunLoop(_writeStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    __Require_Action_Quiet(CFWriteStreamOpen(_writeStream), fail, NSLog(@"Can't open write stream"));
+    __Require_Action_Quiet(CFWriteStreamOpen(_writeStream), fail, [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Can't open write stream"];);
     return self;
 fail:
     if (_readStream) CFRelease(_readStream);
@@ -116,10 +116,11 @@ fail:
 - (void)haveData:(NSData *)data withOffset:(off_t)offset {
 
     if (!_writeStream) {
-        NSLog(@"No valid write stream, ignoring data for %@: len: %@ offset: %lld", self, @(data.length), offset);
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"No valid write stream, ignoring data for %@: len:%@ offset: %lld", self, @(data.length), offset]];
         return;
     }
-    NSLog(@"%@: have data len: %@ offset: %lld", self, @(data.length), offset);
+    
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"%@: have data len: %@ offset: %lld", self, @(data.length), offset]];
     MEGARange incomingRange = MGAMakeRange(offset, data.length);
     off_t requiredLocation = _range.location + _bytesWritten + _dataToWrite.length;
     if (!MGALocationInRange(requiredLocation, _range)) return; // we have all data, just need to write it
@@ -128,7 +129,7 @@ fail:
     if (!intersectionRange.length) return; // not interested in this data
     unsigned char *bytes = (unsigned char *)data.bytes;
     bytes += intersectionRange.location - incomingRange.location;
-    NSLog(@"%@: Will take len: %lld from offset: %lld", self, intersectionRange.length, intersectionRange.location - incomingRange.location);
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"%@: Will take len: %lld from offset: %lld", self, intersectionRange.length, intersectionRange.location - incomingRange.location]];
     [_dataToWrite appendBytes:bytes length:(NSUInteger)intersectionRange.length];
     [self tryToWriteData];
 }
@@ -150,7 +151,7 @@ fail:
             break;
         }
         default:
-            NSLog(@"Unknown sream event");
+            [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Unknown stream event"];
             break;
     }
 }
@@ -184,8 +185,9 @@ fail:
         CFHTTPMessageAppendBytes(_request, buffer, readed);
         if (CFHTTPMessageIsHeaderComplete(_request)) {
             CFHTTPMessageRef response = [self newResponseForRequest];
-            NSLog(@"RESPONSE:\n%@", [[NSString alloc] initWithData:(__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(response)
-                                                           encoding:NSUTF8StringEncoding]);
+            
+            [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"RESPONSE:\n%@", [[NSString alloc] initWithData:(__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(response)
+                                                                                                                               encoding:NSUTF8StringEncoding]]];
             NSData *data = (__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(response);
             _headerToWrite = [[NSMutableData alloc] initWithData:data];
             [self tryToWriteData];
@@ -193,7 +195,7 @@ fail:
         }
     }
     else if (readed < 0) {
-        NSLog(@"Error occurs on sream read");
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Error occurs on stream read"];
         [self closeStreams];
     }
 }
@@ -212,23 +214,23 @@ fail:
             }
         }
         else if (written < 0) {
-            NSLog(@"Error occurs on sream write");
+            [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Error occurs on stream write"];
             [self closeStreams];
         }
     }
 }
 
 - (void)streamEnded {
-    NSLog(@"Stream ended");
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:@"Stream ended"];
     [self closeStreams];
 }
 
 - (void)streamError {
     if (kCFStreamStatusError == CFReadStreamGetStatus(_readStream)) {
-        NSLog(@"Read stream error: %@", (__bridge_transfer NSError *)CFReadStreamCopyError(_readStream));
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Read stream error: %@", (__bridge_transfer NSError *)CFReadStreamCopyError(_readStream)]];
     }
     if (kCFStreamStatusError == CFWriteStreamGetStatus(_writeStream)) {
-        NSLog(@"Write stream error: %@", (__bridge_transfer NSError *)CFWriteStreamCopyError(_writeStream));
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Write stream error: %@", (__bridge_transfer NSError *)CFWriteStreamCopyError(_writeStream)]];
     }
     [self closeStreams];
 }
@@ -252,12 +254,12 @@ static NSString * rfc1123CurrentDate(void) {
 }
 
 - (CFHTTPMessageRef)newResponseForRequest {
-    NSLog(@"REQUEST:\n%@", [[NSString alloc] initWithData:(__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(_request)
-                                                  encoding:NSUTF8StringEncoding]);
+    [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"REQUEST:\n%@", [[NSString alloc] initWithData:(__bridge_transfer NSData *)CFHTTPMessageCopySerializedMessage(_request)
+                                                                                                                      encoding:NSUTF8StringEncoding]]];
     
     NSString *requestMethod = (__bridge_transfer NSString *)CFHTTPMessageCopyRequestMethod(_request);
     if (![@[@"HEAD", @"GET"] containsObject:requestMethod]) {
-        NSLog(@"Got request with unsupported method: %@", requestMethod);
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Got request with unsupported method: %@", requestMethod]];
         return CFHTTPMessageCreateResponse(kCFAllocatorDefault, 405, NULL, kCFHTTPVersion1_0);
     }
     NSURL *url = (__bridge_transfer NSURL *)CFHTTPMessageCopyRequestURL(_request);
@@ -265,7 +267,7 @@ static NSString * rfc1123CurrentDate(void) {
     
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:_handle];
     if (!node) {
-        NSLog(@"Can't find node for handle %lld", _handle);
+        [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Can't find node for handle %lld", _handle]];
         return CFHTTPMessageCreateResponse(kCFAllocatorDefault, 404, NULL, kCFHTTPVersion1_0);
     }
     NSString *rangeHeader = (__bridge_transfer NSString *)CFHTTPMessageCopyHeaderFieldValue(_request, CFSTR("Range"));

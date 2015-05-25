@@ -71,7 +71,7 @@
     [MEGASdkManager setAppKey:kAppKey];
     [MEGASdkManager setUserAgent:kUserAgent];
     [MEGASdkManager sharedMEGASdk];
-    [MEGASdk setLogLevel:MEGALogLevelInfo];
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -176,7 +176,7 @@
             if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
                 BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", offlineDirectory, file] error:&error];
                 if (!success || error) {
-                    NSLog(@"Remove file error %@", error);
+                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
                 }
             }
         }
@@ -187,7 +187,7 @@
         if ([Helper renamePathForPreviewDocument] != nil) {
             BOOL success = [fileManager moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
             if (!success || error) {
-                NSLog(@"renamePathForPreview %@", error);
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
             }
         }
     }
@@ -357,7 +357,7 @@
                      }
              
                     failureBlock:^(NSError *error) {
-                        NSLog(@"operation was not successfull!");
+                        [MEGASdk logWithLevel:MEGALogLevelError message:@"assetForURL failureBlock"];
                     }];
         }
     };
@@ -377,7 +377,9 @@
     
     [library enumerateGroupsWithTypes:ALAssetsGroupAll
                                 usingBlock:assetGroupEnumerator
-                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+                              failureBlock:^(NSError *error) {
+                                  [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                              }];
 
 }
 
@@ -767,7 +769,7 @@
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
         if (!success || error) {
-            NSLog(@"remove file error %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
     }
 }

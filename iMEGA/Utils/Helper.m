@@ -634,25 +634,25 @@ static NSInteger linkNodeOption;
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
     if (!success || error) {
-        NSLog(@"remove file error %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
     if (!success || error) {
-        NSLog(@"remove file error %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
     }
     
     NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
     
     success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
     if (!success || error) {
-        NSLog(@"remove file error %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
     }
     
     success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
     if (!success || error) {
-        NSLog(@"remove file error %@", error);
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
     }
 }
 
@@ -668,7 +668,7 @@ static NSInteger linkNodeOption;
     if (existMasterKey) {
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error];
         if (!success || error) {
-            NSLog(@"remove file error %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
     }
 }

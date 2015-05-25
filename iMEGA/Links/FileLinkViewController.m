@@ -129,7 +129,7 @@
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[Helper pathForPreviewDocument] error:&error];
         if (!success || error) {
-            NSLog(@"Remove file error %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
     }
 }
@@ -342,7 +342,7 @@
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper pathForPreviewDocument] toPath:[Helper renamePathForPreviewDocument] error:&error];
         if (!success || error) {
-            NSLog(@"moveItemAtPath %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
         }
         
         [self openTempFile];

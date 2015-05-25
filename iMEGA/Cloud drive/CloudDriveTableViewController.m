@@ -129,21 +129,21 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            NSLog(@"Create directory error: %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            NSLog(@"Create directory error: %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
         }
     }
     
     NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:offlineDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            NSLog(@"Create directory error: %@", error);
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
         }
     }
     
@@ -308,7 +308,7 @@
                                           
                                           [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
                                           if (error) {
-                                              NSLog(@"Error change modification date of file %@", error);
+                                              [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
                                           }
                                           
                                           NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
@@ -327,7 +327,7 @@
                                               
                                               BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
                                               if (!success || error) {
-                                                  NSLog(@"remove file error %@", error);
+                                                  [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
                                               }
                                               
                                               if (![node hasThumbnail]) {
@@ -347,7 +347,7 @@
                                   }
                      
                                  failureBlock:^(NSError *error) {
-                                     NSLog(@"operation was not successfull!");
+                                     [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
                                  }];
                 }
             }
@@ -947,7 +947,7 @@
             NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
             [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
             if (error) {
-                NSLog(@"Error change modification date of file %@", error);
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
             }
             
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
