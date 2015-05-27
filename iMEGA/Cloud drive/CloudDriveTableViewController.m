@@ -114,7 +114,7 @@
             break;
             
         case DisplayModeRubbishBin: {
-            NSArray *buttonsItems = @[self.editButtonItem];
+            NSArray *buttonsItems = @[self.editButtonItem, self.sortByBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];

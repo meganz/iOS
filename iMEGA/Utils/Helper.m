@@ -681,6 +681,9 @@ static NSInteger linkNodeOption;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    //Set default order on logout
+    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
