@@ -201,6 +201,19 @@
 
 "quotaExceeded"="Cuota de almacenamiento excedida";
 
+//"Sort by"
+
+"sortTitle"="Ordenar";
+
+"orderByTableHeader"="Ordernar por";
+
+"alphabeticallyField"="Nombre";
+"sizeField"="Tamaño";
+"creationDateField"="Fecha de creación";
+"modificationDateField"="Fecha de modificación";
+
+"fieldsTitle"="Campos";
+
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Fotos";
 "photosPerMonth"="%lu fotos";
