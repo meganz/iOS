@@ -201,6 +201,20 @@
 
 "quotaExceeded"="Storage quota exceeded";
 
+//"Sort by"
+
+"sortTitle"="Sort";
+
+"orderByTableHeader"="Order by";
+
+"alphabeticallyField"="Name";
+"sizeField"="Size";
+"creationDateField"="Creation date";
+"modificationDateField"="Modification date";
+
+"fieldsTitle"="Fields";
+
+
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Photos";
 "photosPerMonth"="%lu photos";

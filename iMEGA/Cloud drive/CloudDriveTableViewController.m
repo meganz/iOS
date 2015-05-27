@@ -41,6 +41,7 @@
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
+#import "SortByTableViewController.h"
 
 #import "AppDelegate.h"
 #import "MEGAProxyServer.h"
@@ -68,6 +69,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -102,7 +104,7 @@
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
-            NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
+            NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem, self.sortByBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             break;
         }
@@ -641,6 +643,7 @@
     
     if (editing) {
         [self.addBarButtonItem setEnabled:NO];
+        [self.sortByBarButtonItem setEnabled:NO];
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
@@ -649,6 +652,7 @@
         self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         self.selectedNodesArray = nil;
         [self.addBarButtonItem setEnabled:YES];
+        [self.sortByBarButtonItem setEnabled:YES];
         self.navigationItem.leftBarButtonItems = @[];
     }
     
@@ -1084,7 +1088,15 @@
                 [self.navigationItem setTitle:[self.parentNode name]];
             }
             
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            //Sort configuration by default is "default ascending"
+            if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
+                [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
+            MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+            
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:sortOrderType];
             
             break;
         }
@@ -1251,6 +1263,14 @@
     [textField setText:[node name]];
     
     [renameAlertView show];
+}
+
+- (IBAction)sortByAction:(UIBarButtonItem *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+    UINavigationController *sortByNavigationControllerID = [storyboard instantiateViewControllerWithIdentifier:@"sortByNavigationControllerID"];
+    
+    [self presentViewController:sortByNavigationControllerID animated:YES completion:nil];
+    
 }
 
 #pragma mark - Content Filtering
