@@ -36,7 +36,7 @@
     
     self.title = NSLocalizedString(@"fieldsTitle", "Fields");
     
-    fieldArray = @[NSLocalizedString(@"alphabeticallyField", "By name"), NSLocalizedString(@"sizeField", "Size"), NSLocalizedString(@"creationDateField", "Creation time"), NSLocalizedString(@"modificationDateField", "Modification time")];
+    fieldArray = @[NSLocalizedString(@"alphabeticallyField", "Name"), NSLocalizedString(@"sizeField", "Size"), NSLocalizedString(@"dateField", "Date")];
 }
 
 - (void)didReceiveMemoryWarning {

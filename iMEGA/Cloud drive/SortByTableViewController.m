@@ -92,7 +92,7 @@
     switch (self.sortType) {
         case 1:
         case 2:
-            self.detailLabel.text = NSLocalizedString(@"alphabeticallyField", "By name");
+            self.detailLabel.text = NSLocalizedString(@"alphabeticallyField", "Name");
             break;
             
         case 3:
@@ -102,12 +102,7 @@
             
         case 5:
         case 6:
-            self.detailLabel.text = NSLocalizedString(@"creationDateField", "Creation time");
-            break;
-            
-        case 7:
-        case 8:
-            self.detailLabel.text = NSLocalizedString(@"modificationDateField", "Modification time");
+            self.detailLabel.text = NSLocalizedString(@"dateField", "Date");
             break;
             
         default:

@@ -209,8 +209,7 @@
 
 "alphabeticallyField"="Nombre";
 "sizeField"="Tamaño";
-"creationDateField"="Fecha de creación";
-"modificationDateField"="Fecha de modificación";
+"dateField"="Fecha";
 
 "fieldsTitle"="Campos";
 
