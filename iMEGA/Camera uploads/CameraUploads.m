@@ -310,9 +310,7 @@ static CameraUploads *instance = nil;
                 
             } else {
                 if ([self.assetUploadArray count] != 0) {
-                    self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
-                    [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-                    [self.assetUploadArray removeObjectAtIndex:0];
+                    [self updateLastUploadDate];
                 }
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -352,6 +350,22 @@ static CameraUploads *instance = nil;
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
+- (void)updateLastUploadDate {
+    ALAsset *asset = [self.assetUploadArray objectAtIndex:0];
+    
+    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+        self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
+        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+    }
+    
+    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+        self.lastUploadVideoDate = [asset valueForProperty:ALAssetPropertyDate];
+        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+    }
+    
+    [self.assetUploadArray removeObjectAtIndex:0];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -382,10 +396,7 @@ static CameraUploads *instance = nil;
             
         case MEGARequestTypeCopy:
         case MEGARequestTypeRename: {
-            ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-            self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-            [self.assetUploadArray removeObjectAtIndex:0];
+            [self updateLastUploadDate];
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self uploadAsset];
@@ -423,19 +434,7 @@ static CameraUploads *instance = nil;
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {
-        ALAsset *assetUploaded = [self.assetUploadArray objectAtIndex:0];
-        self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-        if ([[assetUploaded valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-            self.lastUploadPhotoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-        }
-        
-        if ([[assetUploaded valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
-            self.lastUploadVideoDate = [assetUploaded valueForProperty:ALAssetPropertyDate];
-            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
-        }
-        
-        [self.assetUploadArray removeObjectAtIndex:0];
+        [self updateLastUploadDate];
         
         [self setBadgeValue];
         
