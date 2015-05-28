@@ -166,11 +166,18 @@
 
 "queued"="Queued";
 
-"transferCanceled"="Transfer canceled";
+"transferCanceled"="Transfer canceled!";
 
 //DetailsNodeInfoViewController
-"savedForOffline" = "Saved for offline";
-"generateLink" = "Generate link...";
+"saveForOffline"="Save for Offline";
+"savedForOffline"="Saved for Offline";
+"getLink"="Get link";
+"creatingLink" = "Creating link...";
+"move"="Move"; //This string already exists
+"rename"="Rename"; //This string already exists
+"moveToRubbishBin"="Move to the Rubbish Bin";
+
+"cancelDownloadAlertViewText"="Do you want to cancel the download?";
 
 //"+"
 //Select photo or video
@@ -384,9 +391,9 @@
 "activeTransfers"="Active transfers";
 "queuedTransfers"="Queued transfers";
 
-"transfersResumed"="Transfers resumed";
-"transfersPaused"="Transfers paused";
-"transfersCanceled"="Transfers canceled";
+"transfersResumed"="Transfers resumed!";
+"transfersPaused"="Transfers paused!";
+"transfersCanceled"="Transfers canceled!";
 
 "cancelTransfersTitle"="Cancel transfers";
 "cancelTransfersText"="Do you want to cancel %@?";

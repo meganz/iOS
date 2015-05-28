@@ -164,13 +164,20 @@
 "folderFiles" = "%d carpeta, %d ficheros";
 "folderFile" = "%d carpeta, %d fichero";
 
-"queued"="Queued";
+"queued"="En cola";
 
-"transferCanceled"="Transferencia cancelada";
+"transferCanceled"="¡Transferencia cancelada!";
 
 //DetailsNodeInfoViewController
-"savedForOffline" = "Guardado en offline";
-"generateLink" = "Generando link...";
+"saveForOffline"="Guardar en Offline";
+"savedForOffline"="Guardado en Offline";
+"getLink"="Obtener link";
+"creatingLink" = "Creando link...";
+"move"="Mover"; //This string already exists
+"rename"="Renombrar"; //This string already exists
+"moveToRubbishBin"="Mover a la Papelera";
+
+"cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
 
 //"+"
 //Select photo or video
@@ -383,9 +390,9 @@
 "activeTransfers"="Transferencias activas";
 "queuedTransfers"="Transferencias en cola";
 
-"transfersResumed"="Transferencias reanudadas";
-"transfersPaused"="Transferencias pausadas";
-"transfersCanceled"="Transferencias canceladas";
+"transfersResumed"="¡Transferencias reanudadas!";
+"transfersPaused"="¡Transferencias pausadas!";
+"transfersCanceled"="¡Transferencias canceladas!";
 
 "cancelTransfersTitle"="Cancelar transferencias";
 "cancelTransfersText"="¿Quieres cancelar %@?";

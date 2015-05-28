@@ -26,7 +26,8 @@
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 
-@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGADelegate> {
+@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
+    UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
 }
@@ -35,11 +36,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *modificationTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-@property (weak, nonatomic) IBOutlet UIProgressView *downloadProgressView;
-@property (weak, nonatomic) IBOutlet UILabel *saveLabel;
-@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
-@property (weak, nonatomic) IBOutlet UIButton *downloadButton;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -104,18 +102,11 @@
     }
     
     self.title = [self.node name];
-    
-    if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
-        [self.downloadProgressView setHidden:YES];
-        [self.downloadButton setImage:[UIImage imageNamed:@"savedFile"] forState:UIControlStateNormal];
-        [self.saveLabel setHidden:NO];
-        [self.saveLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
-    }
 }
 
-#pragma mark - IBActions
+#pragma mark - Private methods
 
-- (IBAction)touchUpInsideDownload:(UIButton *)sender {
+- (void)download {
     if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
         return;
     }
@@ -136,21 +127,21 @@
     }
 }
 
-- (IBAction)touchUpInsideGenerateLink:(UIButton *)sender {
+- (void)getLink {
     [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
 }
 
-- (IBAction)touchUpInsideMove:(id)sender {
-    UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-    [self presentViewController:mcnc animated:YES completion:nil];
+- (void)move {
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    [self presentViewController:navigationController animated:YES completion:nil];
     
-    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
-    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.selectedNodesArray = [NSArray arrayWithObject:self.node];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
     
 }
 
-- (IBAction)touchUpInsideRename:(UIButton *)sender {
+- (void)rename {
     if (!renameAlertView) {
         renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
     }
@@ -165,7 +156,7 @@
     [renameAlertView show];
 }
 
-- (IBAction)touchUpInsideDelete:(UIButton *)sender {
+- (void)delete {
     if (!removeAlertView) {
         removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:NSLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
     }
@@ -239,7 +230,122 @@
             [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             [self.navigationController popViewControllerAnimated:YES];
         }
+    } else if ([alertView tag] == 2) {
+        if (buttonIndex == 1) {
+            NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
+            if (transferTag != nil) {
+                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+            }
+        }
     }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+    }
+    switch (indexPath.row) {
+        case 0: {
+            if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+                [cell.textLabel setText:NSLocalizedString(@"queued", @"Queued")];
+                return cell;
+            } else {
+                if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
+                    [cell.imageView setImage:[UIImage imageNamed:@"savedFile"]];
+                    [cell.textLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+                } else {
+                    [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+                    [cell.textLabel setText:NSLocalizedString(@"saveForOffline", @"Save for Offline")];
+                }
+            }
+            break;
+        }
+        
+        case 1: {
+            [cell.imageView setImage:[UIImage imageNamed:@"shareFile"]];
+            [cell.textLabel setText:NSLocalizedString(@"getLink", @"Get link")];
+            break;
+        }
+            
+        case 2: {
+            [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+            [cell.textLabel setText:NSLocalizedString(@"move", @"Move")];
+            break;
+        }
+            
+        case 3: {
+            [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+            [cell.textLabel setText:NSLocalizedString(@"rename", @"Rename")];
+            break;
+        }
+            
+        case 4: {
+            [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+            [cell.textLabel setText:NSLocalizedString(@"moveToRubbishBin", @"Move to Rubbish Bin")];
+            break;
+        }
+    }
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    switch (indexPath.row) {
+        case 0: {
+            if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                if (!cancelDownloadAlertView) {
+                    cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"downloading", @"Downloading...")
+                                                                         message:NSLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
+                                                                        delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"cancel", nil)
+                                                               otherButtonTitles:NSLocalizedString(@"ok", nil), nil];
+                }
+                [cancelDownloadAlertView setTag:2];
+                [cancelDownloadAlertView show];
+            } else {
+                if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
+                    break;
+                } else {
+                   [self download];
+                }
+            }
+            break;
+        }
+            
+        case 1:
+            [self getLink];
+            break;
+            
+        case 2:
+            [self move];
+            break;
+            
+        case 3:
+            [self rename];
+            break;
+            
+        case 4:
+            [self delete];
+            break;
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -322,7 +428,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"generateLink", @"Generate link...")];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
             break;
             
         default:
@@ -346,7 +452,6 @@
                     [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
                 }
             }
-            
             break;
         }
         case MEGARequestTypeExport: {
@@ -364,6 +469,11 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
+            
+        case MEGARequestTypeCancelTransfer:
+            [self.tableView reloadData];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled!")]];
+            break;
             
         default:
             break;
@@ -392,49 +502,54 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (transfer.type == MEGATransferTypeUpload) {
+        return;
+    }
+    
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
         if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
-            [self.downloadProgressView setHidden:NO];
-            [self.downloadProgressView setProgress:0];
-            [self.speedLabel setText:NSLocalizedString(@"queued", @"Queued")];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [cell.textLabel setText:NSLocalizedString(@"queued", @"Queued")];
         }
     }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (transfer.type == MEGATransferTypeUpload) {
+        return;
+    }
+    
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
         if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
-            float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
-            [self.downloadProgressView setProgress:progress];
-            
+            float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
+            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
             NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-            if ([speed isEqualToString:@"Zero KB/s"]) {
-                speed = @"";
-            }
-            [self.speedLabel setText:speed];
+            
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [cell.textLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
     }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([error type]) {
+    if ([error type] || ([transfer type] == MEGATransferTypeUpload)) {
         return;
     }
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         if (([[Helper downloadedNodes] objectForKey:base64Handle] != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
-            [self.speedLabel setText:@""];
+            if (cancelDownloadAlertView.visible) {
+                [cancelDownloadAlertView dismissWithClickedButtonIndex:0 animated:YES];
+            }
             
-            [self.downloadProgressView setHidden:YES];
-            [self.downloadProgressView setProgress:1];
-            [self.saveLabel setHidden:NO];
-            [self.downloadButton setImage:[UIImage imageNamed:@"savedFile"] forState:UIControlStateNormal];
-            [self.saveLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:0];
+            [cell.textLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+            [self.tableView reloadData];
         }
     }
 }

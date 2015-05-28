@@ -1324,7 +1324,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"generateLink", @"Generate link...")];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
             break;
             
         default:
@@ -1503,7 +1503,7 @@
     }
 }
 
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end
