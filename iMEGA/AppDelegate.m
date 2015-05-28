@@ -71,7 +71,7 @@
     [MEGASdkManager setAppKey:kAppKey];
     [MEGASdkManager setUserAgent:kUserAgent];
     [MEGASdkManager sharedMEGASdk];
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
+    [MEGASdk setLogLevel:MEGALogLevelInfo];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
