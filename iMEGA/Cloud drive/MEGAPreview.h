@@ -23,7 +23,7 @@
 #import "MWPhoto.h"
 #import "MEGASdkManager.h"
 
-@interface MEGAPreview : NSObject <MWPhoto, MEGARequestDelegate, MEGATransferDelegate>
+@interface MEGAPreview : NSObject
 
 @property (nonatomic) BOOL isFromFolderLink;
 @property (strong, nonatomic) NSString *caption;

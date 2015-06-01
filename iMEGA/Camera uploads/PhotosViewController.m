@@ -390,9 +390,11 @@
     
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
-        MEGAPreview *preview = [MEGAPreview photoWithNode:n];
-        preview.caption = [n name];
-        [self.previewsArray addObject:preview];
+        if (isImage([n name].pathExtension)) {
+            MEGAPreview *preview = [MEGAPreview photoWithNode:n];
+            preview.caption = [n name];
+            [self.previewsArray addObject:preview];
+        }
     }
     
     // Get the index of the array using the indexPath
@@ -404,26 +406,38 @@
         index += array.count;
     }
     
-    index += indexPath.row;
+    NSInteger videosCount = 0;
+    for (NSInteger i = 0; i < index + indexPath.row; i++) {
+        MEGANode *n = [self.nodeList nodeAtIndex:i];
+        if (!isImage([n name].pathExtension)) {
+            videosCount++;
+        }
+    }
     
-    MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    index += indexPath.row - videosCount;
     
-    photoBrowser.displayActionButton = YES;
-    photoBrowser.displayNavArrows = YES;
-    photoBrowser.displaySelectionButtons = NO;
-    photoBrowser.zoomPhotosToFill = YES;
-    photoBrowser.alwaysShowControls = NO;
-    photoBrowser.enableGrid = YES;
-    photoBrowser.startOnGrid = NO;
+    MEGANode *node = [self.nodeList nodeAtIndex:(index + videosCount)];
     
-    // Optionally set the current visible photo before displaying
-    //    [browser setCurrentPhotoIndex:1];
-    
-    [self.navigationController pushViewController:photoBrowser animated:YES];
-    
-    [photoBrowser showNextPhotoAnimated:YES];
-    [photoBrowser showPreviousPhotoAnimated:YES];
-    [photoBrowser setCurrentPhotoIndex:index];
+    if (isImage([node name].pathExtension)) {
+        MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+        
+        photoBrowser.displayActionButton = YES;
+        photoBrowser.displayNavArrows = YES;
+        photoBrowser.displaySelectionButtons = NO;
+        photoBrowser.zoomPhotosToFill = YES;
+        photoBrowser.alwaysShowControls = NO;
+        photoBrowser.enableGrid = YES;
+        photoBrowser.startOnGrid = NO;
+        
+        // Optionally set the current visible photo before displaying
+        //    [browser setCurrentPhotoIndex:1];
+        
+        [self.navigationController pushViewController:photoBrowser animated:YES];
+        
+        [photoBrowser showNextPhotoAnimated:YES];
+        [photoBrowser showPreviousPhotoAnimated:YES];
+        [photoBrowser setCurrentPhotoIndex:index];
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
