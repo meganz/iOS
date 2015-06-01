@@ -468,7 +468,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -481,7 +481,7 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -1447,12 +1447,13 @@
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeDownload  && !transfer.isStreamingTransfer) {
+    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+    
+    if (transfer.type == MEGATransferTypeDownload  && !transfer.isStreamingTransfer && [[Helper downloadingNodes] objectForKey:base64Handle]) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
         
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];

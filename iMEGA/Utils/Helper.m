@@ -474,16 +474,6 @@ static NSInteger linkNodeOption;
     }
     
     NSString *offlineNameString = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
-    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-    if (!thumbnailExists && [node hasThumbnail]) {
-        if (isFolderLink) {
-            [[MEGASdkManager sharedMEGASdkFolder] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-        } else {
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-        }
-    }
     NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath];

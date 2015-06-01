@@ -755,6 +755,32 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] removeObjectForKey:base64Handle];
         [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];
+        
+        if (isImage([transfer fileName].pathExtension)) {
+            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
+            
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+            
+            if (!thumbnailExists) {
+                [api createThumbnail:[transfer path] destinatioPath:thumbnailFilePath];
+            }
+            
+            if (![node hasThumbnail]) {
+                [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
+            }
+            
+            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"];
+            BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
+            
+            if (!previewExists) {
+                [api createPreview:[transfer path] destinatioPath:previewFilePath];
+            }
+            
+            if (![node hasPreview]) {
+                [api setPreviewNode:node sourceFilePath:previewFilePath];
+            }
+        }
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {

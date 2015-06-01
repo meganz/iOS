@@ -24,7 +24,7 @@
 #import "Helper.h"
 
 
-@interface MEGAPreview () {
+@interface MEGAPreview () <MWPhoto, MEGARequestDelegate, MEGATransferDelegate> {
 
     BOOL _isLoading;
 
@@ -58,8 +58,10 @@
 
 - (UIImage *)underlyingImage {
     self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"previews"];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath])return nil;
-
+    if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
+        return nil;
+    }
+    
     return [UIImage imageWithContentsOfFile:self.imagePath];
 }
 
@@ -77,12 +79,18 @@
 }
 
 - (void)performLoadUnderlyingImageAndNotify {
-    
     if([self.node hasPreview]) {
         if (self.isFromFolderLink) {
             [[MEGASdkManager sharedMEGASdkFolder] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
         } else {
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+        }
+    } else {
+        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]]]];
+        if (self.isFromFolderLink) {
+            [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
         }
     }
 }
@@ -110,6 +118,32 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error{
+}
+
+#pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [[Helper downloadingNodes] removeObjectForKey:[MEGASdk base64HandleForHandle:[transfer nodeHandle]]];
+}
+
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    float progress = [transfer.transferredBytes floatValue] / [transfer.totalBytes floatValue];
+    NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithFloat:progress], @"progress",
+                          self, @"photo", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
+}
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type) {
+        return;
+    }
+    
+    self.caption = [self.node name];
+    [self performSelector:@selector(imageLoaded) withObject:nil afterDelay:0];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:[transfer path] error:nil];
+    [[Helper downloadedNodes] removeObjectForKey:[MEGASdk base64HandleForHandle:[transfer nodeHandle]]];
 }
 
 @end
