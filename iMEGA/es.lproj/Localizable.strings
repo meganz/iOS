@@ -222,12 +222,17 @@
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Fotos";
+"selectTitle"="Seleccionar elementos";
+
 "photosPerMonth"="%lu fotos";
 "photoPerMonth"="%lu foto";
 
 "skipButton"="Saltar";
 "enableCameraUploadsButton"="Activar subidas de la cámara";
 "cameraUploadsEnabled"="¡Subidas de la cámara activadas!";
+
+"oneItemSelected"="%lu elemento seleccionado";
+"itemsSelected"="%lu elementos seleccionados";
 
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
