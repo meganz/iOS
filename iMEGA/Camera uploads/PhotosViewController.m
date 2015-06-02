@@ -32,6 +32,7 @@
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "AppDelegate.h"
+#import "BrowserViewController.h"
 
 #import "NSString+MNZCategory.h"
 
@@ -39,6 +40,11 @@
     dispatch_queue_t createAttributesQueue;
     dispatch_group_t createAttributesGroup;
     dispatch_semaphore_t createAttributesSemaphore;
+    
+    BOOL allNodesSelected;
+    NSMutableArray *exportLinks;
+    NSUInteger remainingOperations;
+
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -63,6 +69,16 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadProgressViewTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *photosCollectionViewBottonLayoutConstraint;
+
+@property (nonatomic, strong) NSMutableDictionary *selectedItemsDictionary;
+
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @end
 
@@ -89,11 +105,17 @@
     createAttributesGroup = dispatch_group_create();
     
     createAttributesSemaphore = dispatch_semaphore_create(8);
-
+    
+    self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
+    
+    NSArray *buttonsItems = @[self.editButtonItem];
+    self.navigationItem.rightBarButtonItems = buttonsItems;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self setEditing:NO animated:NO];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -154,8 +176,6 @@
         }
     }
     
-    [self.navigationItem setTitle:NSLocalizedString(@"photosTitle", @"Photos")];
-    
     [self.photosCollectionView reloadData];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
@@ -180,6 +200,13 @@
         self.uploadProgressViewTopLayoutConstraint.constant = -60;
         self.photosCollectionViewTopLayoutConstraint.constant = 0;
         self.photosCollectionViewBottonLayoutConstraint.constant = 0;
+    }
+    
+    if ([self.photosCollectionView allowsMultipleSelection]) {
+        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+    } else {
+        
+        [self.navigationItem setTitle:NSLocalizedString(@"photosTitle", @"Photos")];
     }
 }
 
@@ -219,6 +246,125 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [self reloadUI];
     }
+}
+
+- (IBAction)selectAllAction:(UIBarButtonItem *)sender {
+    [self.selectedItemsDictionary removeAllObjects];
+    
+    if (!allNodesSelected) {
+        MEGANode *n = nil;
+        NSInteger nodeListSize = [[self.nodeList size] integerValue];
+        
+        for (NSInteger i = 0; i < nodeListSize; i++) {
+            n = [self.nodeList nodeAtIndex:i];
+            [self.selectedItemsDictionary setObject:n forKey:[NSNumber numberWithLongLong:n.handle]];
+        }
+        
+        allNodesSelected = YES;
+        [self.navigationItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"itemsSelected", "%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+    } else {
+        allNodesSelected = NO;
+        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select title")];
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+    }
+    
+    if (self.selectedItemsDictionary.count == 0) {
+        [self.downloadBarButtonItem setEnabled:NO];
+        [self.shareBarButtonItem setEnabled:NO];
+        [self.moveBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+        
+    } else {
+        [self.downloadBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:YES];
+        [self.moveBarButtonItem setEnabled:YES];
+        [self.deleteBarButtonItem setEnabled:YES];
+    }
+    
+    [self.photosCollectionView reloadData];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+        [self.photosCollectionView setAllowsMultipleSelection:YES];
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+    } else {
+        allNodesSelected = NO;
+        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+        [self.navigationItem setTitle:@"Photos"];
+        [self.photosCollectionView setAllowsMultipleSelection:NO];
+        [self.selectedItemsDictionary removeAllObjects];
+        [self.photosCollectionView reloadData];
+        self.navigationItem.leftBarButtonItems = @[];
+    }
+    if (![self.selectedItemsDictionary count]) {
+        [self.downloadBarButtonItem setEnabled:NO];
+        [self.shareBarButtonItem setEnabled:NO];
+        [self.moveBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+    
+    [self.tabBarController.tabBar addSubview:self.toolbar];
+    
+    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+    }];
+}
+
+- (IBAction)downloadAction:(UIBarButtonItem *)sender {
+    for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:n]) {
+            return;
+        }
+    }
+    
+    for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
+        if ([n type] == MEGANodeTypeFile) {
+            [Helper downloadNode:n folder:@"" folderLink:NO];
+            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+            
+        } else if ([n type] == MEGANodeTypeFolder) {
+            NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
+            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
+            
+            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+                [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+            }
+        }
+    }
+    [self setEditing:NO animated:YES];
+}
+
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
+    exportLinks = [NSMutableArray new];
+    remainingOperations = self.selectedItemsDictionary.count;
+    
+    for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
+        [[MEGASdkManager sharedMEGASdk] exportNode:n delegate:self];
+    }
+}
+
+- (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+    UINavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    [self presentViewController:mcnc animated:YES completion:nil];
+    
+    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
+    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    mcnvc.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
+}
+
+- (IBAction)deleteAction:(UIBarButtonItem *)sender {
+    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    
+    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    removeAlertView.tag = 1;
+    [removeAlertView show];
 }
 
 #pragma mark - UICollectioViewDataSource
@@ -347,6 +493,16 @@
     
     cell.nodeHandle = [node handle];
     
+    if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
+        cell.thumbnailImageView.layer.borderColor = [[UIColor redColor] CGColor];
+        cell.thumbnailImageView.layer.borderWidth = 3.0;
+        [cell.thumbnailImageView.layer setOpacity:0.6];
+    } else {
+        cell.thumbnailImageView.layer.borderColor = nil;
+        cell.thumbnailImageView.layer.borderWidth = 0.0;
+        [cell.thumbnailImageView.layer setOpacity:1.0];
+    }
+    
     return cell;
 }
 
@@ -386,7 +542,7 @@
 #pragma mark - UICollectioViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    self.previewsArray = [NSMutableArray new];
+    self.previewsArray = [[NSMutableArray alloc] init];
     
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
@@ -418,25 +574,63 @@
     
     MEGANode *node = [self.nodeList nodeAtIndex:(index + videosCount)];
     
-    if (isImage([node name].pathExtension)) {
-        MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    
+    if (![self.photosCollectionView allowsMultipleSelection]) {
+        if (isImage([node name].pathExtension)) {
+            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+            
+            photoBrowser.displayActionButton = YES;
+            photoBrowser.displayNavArrows = YES;
+            photoBrowser.displaySelectionButtons = NO;
+            photoBrowser.zoomPhotosToFill = YES;
+            photoBrowser.alwaysShowControls = NO;
+            photoBrowser.enableGrid = YES;
+            photoBrowser.startOnGrid = NO;
+            
+            // Optionally set the current visible photo before displaying
+            //    [browser setCurrentPhotoIndex:1];
+            
+            [self.navigationController pushViewController:photoBrowser animated:YES];
+            
+            [photoBrowser showNextPhotoAnimated:YES];
+            [photoBrowser showPreviousPhotoAnimated:YES];
+            [photoBrowser setCurrentPhotoIndex:index];
+        }
+    } else {
+        if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
+            [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
+        }
+        else {
+            [self.selectedItemsDictionary setObject:node forKey:[NSNumber numberWithLongLong:node.handle]];
+        }
         
-        photoBrowser.displayActionButton = YES;
-        photoBrowser.displayNavArrows = YES;
-        photoBrowser.displaySelectionButtons = NO;
-        photoBrowser.zoomPhotosToFill = YES;
-        photoBrowser.alwaysShowControls = NO;
-        photoBrowser.enableGrid = YES;
-        photoBrowser.startOnGrid = NO;
+        if ([self.selectedItemsDictionary count]) {
+            NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+            
+            [self.navigationItem setTitle:message];
+            
+            [self.downloadBarButtonItem setEnabled:YES];
+            [self.shareBarButtonItem setEnabled:YES];
+            [self.moveBarButtonItem setEnabled:YES];
+            [self.deleteBarButtonItem setEnabled:YES];
+        } else {
+            [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+            
+            [self.downloadBarButtonItem setEnabled:NO];
+            [self.shareBarButtonItem setEnabled:NO];
+            [self.moveBarButtonItem setEnabled:NO];
+            [self.deleteBarButtonItem setEnabled:NO];
+        }
         
-        // Optionally set the current visible photo before displaying
-        //    [browser setCurrentPhotoIndex:1];
+        if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
+            allNodesSelected = YES;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
+        } else {
+            allNodesSelected = NO;
+            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
+        }
         
-        [self.navigationController pushViewController:photoBrowser animated:YES];
-        
-        [photoBrowser showNextPhotoAnimated:YES];
-        [photoBrowser showPreviousPhotoAnimated:YES];
-        [photoBrowser setCurrentPhotoIndex:index];
+        [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];
     }
 }
 
@@ -492,12 +686,33 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    // Move to rubbish bin
+    if (alertView.tag == 1) {
+        if (buttonIndex == 1) {
+            remainingOperations = self.selectedItemsDictionary.count;
+            for (NSInteger i = 0; i < self.selectedItemsDictionary.count; i++) {
+                    [[MEGASdkManager sharedMEGASdk] moveNode:[[self.selectedItemsDictionary allValues] objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:self];
+            }
+        }
+    } else {
+        if (buttonIndex == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
     }
 }
 
 #pragma mark - MEGARequestDelegate
+
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeExport:
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -515,6 +730,41 @@
                         [pcvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
                     }
                 }
+            }
+            break;
+        }
+            
+            
+        case MEGARequestTypeMove: {
+            remainingOperations--;
+            if (remainingOperations == 0) {
+                NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedItemsDictionary.count];
+                [SVProgressHUD showSuccessWithStatus:message];
+//                [self setEditing:NO animated:NO];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeExport: {
+            remainingOperations--;
+            
+            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            
+            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
+            
+            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            
+            NSString *link = [request link];
+            
+            NSArray *tempArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ \n %@ \n %@\n", name, size, link], nil];
+            [exportLinks addObjectsFromArray:tempArray];
+            
+            if (remainingOperations == 0) {
+                [SVProgressHUD dismiss];
+                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                [self presentViewController:activityVC animated:YES completion:nil ];
+                [self setEditing:NO animated:NO];
             }
             break;
         }

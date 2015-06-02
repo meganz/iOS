@@ -223,12 +223,17 @@
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Photos";
+"selectTitle"="Select items";
+
 "photosPerMonth"="%lu photos";
 "photoPerMonth"="%lu photo";
 
 "skipButton"="Skip";
 "enableCameraUploadsButton"="Enable Camera Uploads";
 "cameraUploadsEnabled"="Camera Uploads enabled!";
+
+"oneItemSelected"="%lu item selected";
+"itemsSelected"="%lu items selected";
 
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
