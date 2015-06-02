@@ -766,19 +766,11 @@
                 [api createThumbnail:[transfer path] destinatioPath:thumbnailFilePath];
             }
             
-            if (![node hasThumbnail]) {
-                [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
-            }
-            
             NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"];
             BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
             
             if (!previewExists) {
                 [api createPreview:[transfer path] destinatioPath:previewFilePath];
-            }
-            
-            if (![node hasPreview]) {
-                [api setPreviewNode:node sourceFilePath:previewFilePath];
             }
         }
     }
