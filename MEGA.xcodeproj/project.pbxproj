@@ -89,6 +89,7 @@
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
+		E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
 		E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */; };
 		E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */; };
 		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
@@ -256,6 +257,8 @@
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
 		E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
+		E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGANavigationController.h; sourceTree = "<group>"; };
+		E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGANavigationController.m; sourceTree = "<group>"; };
 		E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnavailableLinkView.h; sourceTree = "<group>"; };
 		E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnavailableLinkView.m; sourceTree = "<group>"; };
 		E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnavailableLinkView.xib; sourceTree = "<group>"; };
@@ -451,6 +454,8 @@
 				94F56A511AFCC265000673D4 /* MEGAProxyServer.m */,
 				94F56A561AFD0970000673D4 /* MEGAHttpSession.h */,
 				94F56A571AFD0970000673D4 /* MEGAHttpSession.m */,
+				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
+				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -875,6 +880,7 @@
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
+				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,

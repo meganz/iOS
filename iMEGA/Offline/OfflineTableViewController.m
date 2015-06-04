@@ -100,6 +100,14 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 #pragma mark - Private methods
 
 - (void)reloadUI {

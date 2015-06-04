@@ -126,6 +126,19 @@
     [self reloadUI];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 #pragma mark - Private Methods
 
 - (void)reloadUI {
@@ -152,11 +165,6 @@
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
         self.avatarImageView.layer.masksToBounds = YES;
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - IBActions

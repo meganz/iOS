@@ -27,6 +27,8 @@
 
 @implementation MainTabBarController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -51,6 +53,9 @@
     
     [self setDelegate:self];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     UIImage *tabHighlightImage = [[UIImage imageNamed:@"tabHighlight"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     CGSize tabSize = CGSizeMake(self.view.frame.size.width/[self.tabBar.items count], self.tabBar.frame.size.height);
     
@@ -62,7 +67,36 @@
     [self.tabBar setSelectionIndicatorImage:resizedHighlightImage];
 }
 
-#pragma mark UITabBarControllerDelegate
+- (BOOL)shouldAutorotate {
+    if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
+        return [self.selectedViewController shouldAutorotate];
+    } else {
+        return YES;
+    }
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+        if ([self.selectedViewController isEqual:self.moreNavigationController]) {
+            return UIInterfaceOrientationMaskPortrait;
+        }
+        return [self.selectedViewController supportedInterfaceOrientations];
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+        if ([self.selectedViewController isEqual:self.moreNavigationController]) {
+            return UIInterfaceOrientationPortrait;
+        }
+        return [self.selectedViewController preferredInterfaceOrientationForPresentation];
+    }
+    return UIInterfaceOrientationPortrait;
+}
+
+#pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
     if (changed) {

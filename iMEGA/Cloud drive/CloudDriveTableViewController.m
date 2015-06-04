@@ -38,6 +38,7 @@
 #import "LoginViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "MEGAPreview.h"
+#import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
@@ -189,6 +190,14 @@
 - (void)dealloc {
     self.tableView.emptyDataSetSource = nil;
     self.tableView.emptyDataSetDelegate = nil;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - UITableViewDataSource
@@ -1226,7 +1235,7 @@
 }
 
 - (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
-    UINavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    MEGANavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
@@ -1267,7 +1276,7 @@
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    UINavigationController *sortByNavigationControllerID = [storyboard instantiateViewControllerWithIdentifier:@"sortByNavigationControllerID"];
+    MEGANavigationController *sortByNavigationControllerID = [storyboard instantiateViewControllerWithIdentifier:@"sortByNavigationControllerID"];
     
     [self presentViewController:sortByNavigationControllerID animated:YES completion:nil];
     

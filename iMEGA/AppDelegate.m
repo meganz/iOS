@@ -32,12 +32,14 @@
 #import "LTHPasscodeViewController.h"
 #import "MEGAProxyServer.h"
 #import "CameraUploadsPopUpViewController.h"
+#import "MEGANavigationController.h"
 
 #import "BrowserViewController.h"
 
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 #import <Crashlytics/Crashlytics.h>
+#import <QuickLook/QuickLook.h>
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -266,21 +268,6 @@
     [[UITabBar appearance] setTintColor:whiteColor];
 }
 
-- (void)checkingRootViewController {
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:mainTBC];
-//            [mainTBC setSelectedIndex:1]; //0 = Cloud, 1 = Offline, 2 = Contacts, 3 = Settings
-        }
-    } else {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-        [self.window setRootViewController:viewController];
-    }
-}
-
 - (void)startBackgroundTask {
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
@@ -290,7 +277,7 @@
 
 - (void)showCameraUploadsPopUp {
     CameraUploadsPopUpViewController *cameraUploadsPopUpVC = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpViewControllerID"];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
     
     [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
 }
@@ -300,7 +287,7 @@
         case 1: { //IMPORT
             MEGANode *node = [Helper linkNode];
             if ([node type] == MEGANodeTypeFile) {
-                UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
                 [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
@@ -391,6 +378,8 @@
         return;
     }
     
+    [self dissmissPreviousLinkIfPresented];
+    
     if ([self isFileLink:afterSlashesString]) {
         return;
     }
@@ -403,6 +392,19 @@
     
     [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
     return;
+}
+
+- (void)dissmissPreviousLinkIfPresented {
+    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+        MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+        if ([navigationController.topViewController isKindOfClass:[FileLinkViewController class]] || [navigationController.topViewController isKindOfClass:[FolderLinkViewController class]]) {
+            [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:^{
+                if ([navigationController.presentedViewController isKindOfClass:[QLPreviewController class]]) {
+                    [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+                }
+            }];
+        }
+    }
 }
 
 - (BOOL)isFileLink:(NSString *)afterSlashesString {
@@ -421,16 +423,24 @@
                                                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                                       otherButtonTitles:nil];
             [alertView show];
-            [self checkingRootViewController];
             
         } else {
             FileLinkViewController *fileLinkVC = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
-            
             NSString *megaFileLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
             [fileLinkVC setFileLinkString:megaFileLinkURLString];
             
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:fileLinkVC];
-            self.window.rootViewController = navigationController;
+            MEGANavigationController *linkNavigationController = [[MEGANavigationController alloc] initWithRootViewController:fileLinkVC];
+            
+            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:linkNavigationController animated:YES completion:nil];
+                } else {
+                    [self.window.rootViewController presentViewController:linkNavigationController animated:YES completion:nil];
+                }
+            } else {
+                [self.window.rootViewController presentViewController:linkNavigationController animated:YES completion:nil];
+            }
         }
         return YES;
     }
@@ -453,18 +463,26 @@
                                                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
                                                       otherButtonTitles:nil];
             [alertView show];
-            [self checkingRootViewController];
             
         } else {
-            UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+            MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
             
-            FolderLinkViewController *folderlinkVC = navigationController.viewControllers.firstObject;;
+            FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;;
             
             NSString *megaFolderLinkString = [megaURLString stringByAppendingString:afterSlashesString];
             [folderlinkVC setIsFolderRootNode:YES];
             [folderlinkVC setFolderLinkString:megaFolderLinkString];
             
-            [self.window setRootViewController:navigationController];
+            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:folderNavigationController animated:YES completion:nil];
+                } else {
+                    [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
+                }
+            } else {
+                [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
+            }
         }
         return YES;
     }
@@ -700,7 +718,7 @@
             [confirmAccountVC setConfirmationLinkString:[request link]];
             [confirmAccountVC setEmailString:[request email]];
             
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:confirmAccountVC];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:confirmAccountVC];
             
             [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
             break;

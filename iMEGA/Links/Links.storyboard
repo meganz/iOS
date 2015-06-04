@@ -135,7 +135,7 @@
         <!--Navigation Controller-->
         <scene sceneID="iL7-nb-PoQ">
             <objects>
-                <navigationController storyboardIdentifier="FolderLinkNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="Dlq-Cw-Nwc" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FolderLinkNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="Dlq-Cw-Nwc" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Lvs-D2-QL4">

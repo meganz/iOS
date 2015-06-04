@@ -517,7 +517,7 @@
         <!--Cloud Drive-->
         <scene sceneID="YHV-SE-pQc">
             <objects>
-                <navigationController storyboardIdentifier="navCloudDriveID" automaticallyAdjustsScrollViewInsets="NO" id="6uN-CI-8KQ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navCloudDriveID" automaticallyAdjustsScrollViewInsets="NO" id="6uN-CI-8KQ" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Cloud Drive" image="cloudIcon" id="Ud2-dA-PEh"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -544,7 +544,7 @@
         <!--Navigation Controller-->
         <scene sceneID="J0U-BP-QZ2">
             <objects>
-                <navigationController storyboardIdentifier="moveNodeNav" automaticallyAdjustsScrollViewInsets="NO" id="ycj-sT-1OK" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="moveNodeNav" automaticallyAdjustsScrollViewInsets="NO" id="ycj-sT-1OK" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="reU-k6-eBZ">
@@ -708,7 +708,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xI5-qd-9ig">
             <objects>
-                <navigationController storyboardIdentifier="sortByNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="K2a-mF-i8W" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="sortByNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="K2a-mF-i8W" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedBottomBarMetrics"/>
