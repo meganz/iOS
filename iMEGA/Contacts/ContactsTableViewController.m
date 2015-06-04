@@ -29,6 +29,8 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "MEGANavigationController.h"
+
 @interface ContactsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     UIAlertView *emailAlertView;
     UIAlertView *removeAlertView;
@@ -76,6 +78,14 @@
 - (void)dealloc {
     self.tableView.emptyDataSetSource = nil;
     self.tableView.emptyDataSetDelegate = nil;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -178,7 +188,7 @@
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
     UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    UINavigationController *mcnc = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    MEGANavigationController *mcnc = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;

@@ -25,6 +25,7 @@
 
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
+#import "MEGANavigationController.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
@@ -59,6 +60,14 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 - (void)reloadUI {
@@ -132,7 +141,7 @@
 }
 
 - (void)move {
-    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;

@@ -66,6 +66,14 @@
     [self.emailTextField setText:_emailString];
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)confirmTouchUpInside:(id)sender {

@@ -1,6 +1,6 @@
 /**
- * @file UnavailableLinkView.m
- * @brief Custom view for unavailable links.
+ * @file MEGANavigationController.h
+ * @brief The UINavigationController of the app.
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -19,18 +19,8 @@
  * program.
  */
 
-#import "UnavailableLinkView.h"
+#import <UIKit/UIKit.h>
 
-@implementation UnavailableLinkView
-
-#pragma mark - Lifecycle
-
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
+@interface MEGANavigationController : UINavigationController
 
 @end

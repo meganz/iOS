@@ -29,6 +29,7 @@
 #import "HeaderCollectionReusableView.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
+#import "MEGANavigationController.h"
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "AppDelegate.h"
@@ -138,6 +139,14 @@
 - (void)dealloc {
     self.photosCollectionView.emptyDataSetSource = nil;
     self.photosCollectionView.emptyDataSetDelegate = nil;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - Private methods
@@ -351,7 +360,7 @@
 
 - (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    UINavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+    MEGANavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;

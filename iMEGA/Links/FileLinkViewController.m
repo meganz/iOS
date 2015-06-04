@@ -33,6 +33,7 @@
 #import "BrowserViewController.h"
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
+#import "MEGANavigationController.h"
 
 @interface FileLinkViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -83,7 +84,16 @@
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 #pragma mark - Private
+
 - (void)setUIItemsEnabled:(BOOL)boolValue {
     [self.nameLabel setHidden:!boolValue];
     [self.sizeLabel setHidden:!boolValue];
@@ -143,38 +153,27 @@
     
     [self deleteTempFile];
     
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-    } else {
-        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-        [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)importTouchUpInside:(UIButton *)sender {
     [self deleteTempFile];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        
-        [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        
-        if ([self.node type] == MEGANodeTypeFile) {
-            UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-            UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-            
-            [browserVC setIsPublicNode:YES];
-        }
+        [self dismissViewControllerAnimated:YES completion:^{
+            if ([self.node type] == MEGANodeTypeFile) {
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                
+                [browserVC setIsPublicNode:YES];
+            }
+        }];
     } else {
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
         [Helper setLinkNode:self.node];
         [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
@@ -191,20 +190,16 @@
     }
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MainTabBarController *mainTBC = [storyboard instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        
-        [[[[UIApplication sharedApplication] delegate] window] setRootViewController:mainTBC];
-        [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
-        
-        if ([self.node type] == MEGANodeTypeFile) {
-            [Helper downloadNode:self.node folder:@"" folderLink:NO];
-        }
-        
+        [self dismissViewControllerAnimated:YES completion:^{
+            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+            
+            if ([self.node type] == MEGANodeTypeFile) {
+                [Helper downloadNode:self.node folder:@"" folderLink:NO];
+            }
+        }];
     } else {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
         [Helper setLinkNode:self.node];
         [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];

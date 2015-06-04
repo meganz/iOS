@@ -73,6 +73,14 @@
     [super didReceiveMemoryWarning];
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
