@@ -293,28 +293,37 @@
             [self.sizeUsedSpaceLabel setText:usedStorageString];
             [self.sizeAvailableLabel setText:availableStorageString];
             
-            switch ([request.megaAccountDetails type]) {
-                case 0:
-                    [self.accountTypeLabel setText:@"Free"];
-                    break;
+            if (![request.megaAccountDetails type]) {
+                [self.accountTypeLabel setText:@"Free"];
+            } else {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'"];
+                NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+                [formatter setLocale:locale];
+                NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:[request.megaAccountDetails proExpiration]];
                 
-                case 1:
-                    [self.accountTypeLabel setText:@"ProI"];
-                    break;
-                    
-                case 2:
-                    [self.accountTypeLabel setText:@"ProII"];
-                    break;
-                    
-                case 3:
-                    [self.accountTypeLabel setText:@"ProIII"];
-                    break;
-                    
-                default:
-                    break;
+                NSString *expiresString = [NSString stringWithFormat:NSLocalizedString(@"expiresOn", "(Expires on %@)"), [formatter stringFromDate:expireDate]];
+                
+                switch ([request.megaAccountDetails type]) {
+                    case 1: {
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProI %@", request.megaAccountDetails.subscriptionCycle]];
+                        break;
+                    }
+                        
+                    case 2:{
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProII %@", expiresString]];
+                        break;
+                    }
+                        
+                    case 3:{
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProIII %@", expiresString]];
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
             }
-            
-            break;
         }
             
         case MEGARequestTypeGetUserData: {
