@@ -313,6 +313,8 @@
 "feedbackActionSheet_confusedButton"="Confuso";
 "feedbackActionSheet_unhappyButton"="Inféliz";
 
+"expiresOn"="(caduca el %@)";
+
 //(5) Settings - CameraUploadsTableViewController
 "uploadVideosLabel"="Subir videos";
 "useCellularConnectionLabel"="Usar conexión de datos";
