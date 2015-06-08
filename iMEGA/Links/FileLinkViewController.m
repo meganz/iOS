@@ -34,8 +34,9 @@
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAQLPreviewControllerTransitionAnimator.h"
 
-@interface FileLinkViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
+@interface FileLinkViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
@@ -127,6 +128,7 @@
     QLPreviewController *previewController = [[QLPreviewController alloc] init];
     [previewController setDelegate:self];
     [previewController setDataSource:self];
+    [previewController setTransitioningDelegate:self];
     [previewController setTitle:[self.node name]];
     [self presentViewController:previewController animated:YES completion:nil];
 }
@@ -236,6 +238,17 @@
     } else {
         [self openTempFile];
     }
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+   
+    if ([presented isKindOfClass:[QLPreviewController class]]) {
+        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
+    }
+    
+    return nil;
 }
 
 #pragma mark - QLPreviewControllerDataSource
