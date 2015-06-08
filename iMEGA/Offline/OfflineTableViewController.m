@@ -26,12 +26,13 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "MEGASdkManager.h"
+#import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
 
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
 
-@interface OfflineTableViewController () <QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate>
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate>
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
 @property (nonatomic, strong) NSMutableArray *offlineImages;
@@ -490,6 +491,7 @@
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
             previewController.delegate=self;
             previewController.dataSource=self;
+            [previewController setTransitioningDelegate:self];
             [previewController setTitle:filename];
             [self presentViewController:previewController animated:YES completion:nil];
         }
@@ -500,6 +502,17 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    
+    if ([presented isKindOfClass:[QLPreviewController class]]) {
+        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
+    }
+    
+    return nil;
 }
 
 #pragma mark - DZNEmptyDataSetSource
