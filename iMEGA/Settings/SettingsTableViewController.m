@@ -32,6 +32,8 @@
     long long usedSize;
     long long availableSize;
     long long localCacheSize;
+    
+    NSString *fullname;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -85,6 +87,11 @@
     
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
+    
+    fullname = [[NSString alloc] init];
+    
+    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeFirstname delegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeLastname delegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -123,6 +130,9 @@
     NSString *localStorageString = [NSByteCountFormatter stringFromByteCount:localCacheSize countStyle:NSByteCountFormatterCountStyleMemory];
     [self.sizeLocalLabel setText:localStorageString];
     
+    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
+    
     [self reloadUI];
 }
 
@@ -145,10 +155,6 @@
     
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
     [self setUserAvatar];
-    
-    [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] getUserDataWithDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
 }
 
 - (void)setUserAvatar {
@@ -273,6 +279,11 @@
     
     switch ([request type]) {
         case MEGARequestTypeGetAttrUser: {
+            if (request.paramType == MEGAUserAttributeLastname) {
+                fullname = [fullname stringByAppendingString:@" "];
+            }
+            fullname = [fullname stringByAppendingString:request.text];
+            [self.userNameLabel setText:fullname];
             [self setUserAvatar];
             break;
         }
@@ -324,14 +335,6 @@
                         break;
                 }
             }
-        }
-            
-        case MEGARequestTypeGetUserData: {
-            [self.userNameLabel setText:[request name]];
-            
-            //Needed for load the avatar when user enter on settings before fetchnodes finish
-            self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
-            [self setUserAvatar];
             break;
         }
             
