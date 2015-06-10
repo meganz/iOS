@@ -56,20 +56,20 @@
     self.credentialsView.layer.cornerRadius = 6;
     self.credentialsView.layer.masksToBounds = YES;
     
-    [self.nameTextField setPlaceholder:NSLocalizedString(@"namePlaceholder", @"Name")];
-    [self.emailTextField setPlaceholder:NSLocalizedString(@"emailPlaceholder", @"Email")];
-    [self.passwordTextField setPlaceholder:NSLocalizedString(@"passwordPlaceholder", @"Password")];
-    [self.retypePasswordTextField setPlaceholder:NSLocalizedString(@"retypePasswordPlaceholder", @"Retype Password")];
+    [self.nameTextField setPlaceholder:AMLocalizedString(@"namePlaceholder", @"Name")];
+    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
+    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
+    [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"retypePasswordPlaceholder", @"Retype Password")];
     
-    [self.termsOfServiceButton setTitle:NSLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
+    [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setTitle:NSLocalizedString(@"createAccountButton", @"Create Account") forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccountButton", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setCornerRadius:6];
     [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedLabel setText:NSLocalizedString(@"accountCreated", "Please check your e-mail and click the link to confirm your account.")];
+    [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
     
     [self.nameTextField becomeFirstResponder];
 }
@@ -77,7 +77,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar.topItem setTitle:NSLocalizedString(@"createAccount", @"Create Account")];
+    [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", @"Create Account")];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
@@ -94,24 +94,24 @@
 
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.nameTextField becomeFirstResponder];
         return NO;
     } else if (![self validateEmail:self.emailTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
     } else if (![self validatePassword:self.passwordTextField.text]) {
         if ([self.passwordTextField.text length] == 0) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordTextField becomeFirstResponder];
         } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.retypePasswordTextField becomeFirstResponder];
         }
         return NO;
     } else if (![self.termsCheckboxButton isSelected]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"termsCheckboxUnselected", @"You need to agree with the terms of service to register an account on MEGA.")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"termsCheckboxUnselected", @"You need to agree with the terms of service to register an account on MEGA.")];
         return NO;
     }
     return YES;
@@ -217,7 +217,7 @@
         switch ([error type]) {
                 
             case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailAlreadyRegistered", @"This e-mail address has already registered an account with MEGA")];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyRegistered", @"This e-mail address has already registered an account with MEGA")];
                 [self.emailTextField becomeFirstResponder];
                 
                 [self.createAccountButton setEnabled:YES];
@@ -241,10 +241,10 @@
             [self.termsCheckboxButton setUserInteractionEnabled:NO];
             [self.createAccountButton setEnabled:NO];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"awesome", @"Awesome")
-                                                            message:NSLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"awesome", @"Awesome")
+                                                            message:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                                   otherButtonTitles:nil];
             [alert show];
         }

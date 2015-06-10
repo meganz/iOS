@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -506,7 +506,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="alphabeticallySwitch" destination="Ewv-9K-vOr" id="nHZ-tV-GI3"/>
+                        <outlet property="ascendingLabel" destination="x1f-2Y-w5y" id="Kja-yW-Kxo"/>
+                        <outlet property="cancelBarButtonItem" destination="K3C-tf-ftL" id="2tg-Wp-cig"/>
                         <outlet property="detailLabel" destination="aLR-pY-GAF" id="btb-ld-WIf"/>
+                        <outlet property="fieldLabel" destination="MBJ-Lo-Nqc" id="ajG-qW-zNY"/>
+                        <outlet property="saveBarButtonItem" destination="Nmj-pH-BhC" id="LzG-dK-qnx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kyu-Vi-huh" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -90,8 +90,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enableCameraUploadsButton", "Enable Camera Uploads") forState:UIControlStateNormal];
-    
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
@@ -117,6 +115,8 @@
     [super viewWillAppear:animated];
     
     [self setEditing:NO animated:NO];
+    
+    [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads") forState:UIControlStateNormal];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -212,10 +212,10 @@
     }
     
     if ([self.photosCollectionView allowsMultipleSelection]) {
-        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
     } else {
         
-        [self.navigationItem setTitle:NSLocalizedString(@"photosTitle", @"Photos")];
+        [self.navigationItem setTitle:@"Camera Uploads"];
     }
 }
 
@@ -247,7 +247,7 @@
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
     
     if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancelar") : AMLocalizedString(@"ok", @"OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
@@ -270,11 +270,11 @@
         }
         
         allNodesSelected = YES;
-        [self.navigationItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"itemsSelected", "%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
+        [self.navigationItem setTitle:[NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
         self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
     } else {
         allNodesSelected = NO;
-        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select title")];
+        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select title")];
         self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
     }
     
@@ -298,13 +298,13 @@
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+        [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
     } else {
         allNodesSelected = NO;
         self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
-        [self.navigationItem setTitle:@"Photos"];
+        [self.navigationItem setTitle:@"Camera Uploads"];
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
         [self.photosCollectionView reloadData];
@@ -334,7 +334,7 @@
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
             
         } else if ([n type] == MEGANodeTypeFolder) {
             NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
@@ -342,7 +342,7 @@
             
             if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
                 [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
             }
         }
     }
@@ -369,9 +369,9 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
     
-    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     removeAlertView.tag = 1;
     [removeAlertView show];
 }
@@ -532,9 +532,9 @@
         NSString *photosPerMonth = nil;
         NSInteger numberPhotosPerMonth = [[dict objectForKey:month] count];
         if ( numberPhotosPerMonth > 1) {
-            photosPerMonth = [NSString stringWithFormat:NSLocalizedString(@"photosPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
+            photosPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photosPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
         } else {
-            photosPerMonth = [NSString stringWithFormat:NSLocalizedString(@"photoPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
+            photosPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photoPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
         }
         
         NSString *sectionText = [NSString stringWithFormat:@"%@ (%@)", month, photosPerMonth];
@@ -614,7 +614,7 @@
         }
         
         if ([self.selectedItemsDictionary count]) {
-            NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
+            NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", nil), self.selectedItemsDictionary.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", nil), self.selectedItemsDictionary.count];
             
             [self.navigationItem setTitle:message];
             
@@ -623,7 +623,7 @@
             [self.moveBarButtonItem setEnabled:YES];
             [self.deleteBarButtonItem setEnabled:YES];
         } else {
-            [self.navigationItem setTitle:NSLocalizedString(@"selectTitle", "Select items")];
+            [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
             
             [self.downloadBarButtonItem setEnabled:NO];
             [self.shareBarButtonItem setEnabled:NO];
@@ -650,8 +650,8 @@
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         return nil;
     }
-    
-    NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
+
+    NSString *text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -665,7 +665,7 @@
         return nil;
     }
     
-    NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
+    NSString *text = AMLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -731,7 +731,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"creatingLink", @"Creating link...")];
             break;
             
         default:
@@ -763,7 +763,7 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedItemsDictionary.count];
+                NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedItemsDictionary.count];
                 [SVProgressHUD showSuccessWithStatus:message];
 //                [self setEditing:NO animated:NO];
             }
@@ -775,9 +775,9 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
             
-            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             
             NSString *link = [request link];
             

@@ -54,19 +54,19 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationItem setTitle:NSLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
+    [self.navigationItem setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
     
-    [_uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", @"Upload videos")];
-    [_useCellularConnectionLabel setText:NSLocalizedString(@"useCellularConnectionLabel", @"Use cellular connection")];
+    [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
+    [_useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", @"Use cellular connection")];
     
     [_skipButton.layer setCornerRadius:6];
     [_skipButton.layer setMasksToBounds:YES];
-    [_skipButton setTitle:NSLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
+    [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
     [_enableButton.layer setCornerRadius:6];
     [_enableButton.layer setMasksToBounds:YES];
-    [_enableButton setTitle:NSLocalizedString(@"ok", nil) forState:UIControlStateNormal];
+    [_enableButton setTitle:AMLocalizedString(@"ok", nil) forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,7 +122,7 @@
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
     if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancelar") : AMLocalizedString(@"ok", @"OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
@@ -130,7 +130,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         
         [self dismissViewControllerAnimated:YES completion:^{
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"cameraUploadsEnabled", @"Camera Uploads enabled!")];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"cameraUploadsEnabled", @"Camera Uploads enabled!")];
         }];
     }
 }

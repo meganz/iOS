@@ -20,9 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.sendFeedbackLabel setText:NSLocalizedString(@"sendFeedbackLabel", "Send feedback")];
-    [self.helpCentreLabel setText:NSLocalizedString(@"helpCentreLabel", "Help centre")];
-    [self.rateUsLabel setText:NSLocalizedString(@"rateUsLabel", "Rate us!")];
+    [self.sendFeedbackLabel setText:AMLocalizedString(@"sendFeedbackLabel", @"Send feedback")];
+    [self.helpCentreLabel setText:AMLocalizedString(@"helpCentreLabel", @"Help centre")];
+    [self.rateUsLabel setText:AMLocalizedString(@"rateUsLabel", @"Rate us!")];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,15 +74,15 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return NSLocalizedString(@"sendFeedbackFooter", "Contact the support team through email. All emails are read but given the high volume of requests we might not answer everyone individually.");
+            return AMLocalizedString(@"sendFeedbackFooter", @"Contact the support team through email. All emails are read but given the high volume of requests we might not answer everyone individually.");
             break;
             
         case 1:
-            return NSLocalizedString(@"helpCentreFooter", "Get support or read popular topics.");
+            return AMLocalizedString(@"helpCentreFooter", @"Get support or read popular topics.");
             break;
             
         case 2:
-            return NSLocalizedString(@"rateUsFooter", "Oh my, it's full of stars!");
+            return AMLocalizedString(@"rateUsFooter", @"Oh my, it's full of stars!");
             break;
             
         default:

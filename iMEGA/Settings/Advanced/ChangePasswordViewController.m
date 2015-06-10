@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"changePasswordLabel", "The title of the change password view")];
+    [self.navigationItem setTitle:AMLocalizedString(@"changePasswordLabel", @"The title of the change password view")];
     
     self.changePasswordButton.layer.cornerRadius = 6;
     self.changePasswordButton.layer.masksToBounds = YES;
@@ -63,16 +63,16 @@
 
 - (BOOL)validateForm {
     if (self.oldPasswordTextField.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.oldPasswordTextField becomeFirstResponder];
         return NO;
     }
     if (![self validatePassword:self.theNewPasswordTextField.text]) {
         if ([self.theNewPasswordTextField.text length] == 0) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.theNewPasswordTextField becomeFirstResponder];
         } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.theNewPasswordTextField setText:@""];
             [self.retypeNewPasswordTextField setText:@""];
             [self.theNewPasswordTextField becomeFirstResponder];
@@ -81,7 +81,7 @@
     }
     
     if ([self.oldPasswordTextField.text isEqualToString:self.theNewPasswordTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
         [self.theNewPasswordTextField setText:@""];
         [self.retypeNewPasswordTextField setText:@""];
         [self.theNewPasswordTextField becomeFirstResponder];
@@ -118,12 +118,12 @@
         [self.theNewPasswordTextField setText:@""];
         [self.retypeNewPasswordTextField setText:@""];
         [self.oldPasswordTextField becomeFirstResponder];
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         return;
     }
     
     if ([request type] == MEGARequestTypeChangePassword) {
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

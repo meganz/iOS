@@ -35,10 +35,15 @@
     NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:6];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:1] tabBarItem] setTitle:@"Camera Uploads"];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:2] tabBarItem] setTitle:@"Offline"];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:3] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:4] tabBarItem] setTitle:AMLocalizedString(@"transfers", @"Transfers")];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
     
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
     if (tabsOrderArray) {

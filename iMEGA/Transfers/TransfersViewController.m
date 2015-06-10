@@ -62,9 +62,9 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    [self.transfersSegmentedControl setTitle:NSLocalizedString(@"all", @"All") forSegmentAtIndex:0];
-    [self.transfersSegmentedControl setTitle:NSLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
-    [self.transfersSegmentedControl setTitle:NSLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
+    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"all", @"All") forSegmentAtIndex:0];
+    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
+    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
     
     self.allActiveTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
     self.allQueuedTransfersMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -77,7 +77,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"transfers", @"Transfers")];
+    [self.navigationItem setTitle:AMLocalizedString(@"transfers", @"Transfers")];
     
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -180,7 +180,7 @@
                 break;
             }
         }
-        [cell.infoLabel setText:[NSString stringWithFormat:NSLocalizedString(@"queued", @"Queued")]];
+        [cell.infoLabel setText:[NSString stringWithFormat:AMLocalizedString(@"queued", @"Queued")]];
     }
     
     NSString *fileName = [transfer fileName];
@@ -246,9 +246,9 @@
         titleForHeader = nil;
     } else {
         if (section == 0) {
-            titleForHeader = NSLocalizedString(@"activeTransfers", @"Active transfers");
+            titleForHeader = AMLocalizedString(@"activeTransfers", @"Active transfers");
         } else {
-            titleForHeader = NSLocalizedString(@"queuedTransfers", @"Queued transfers");
+            titleForHeader = AMLocalizedString(@"queuedTransfers", @"Queued transfers");
         }
     }
     
@@ -510,7 +510,7 @@
             if ((self.allActiveTransfersMutableDictionary.count == 0) && (self.allQueuedTransfersMutableDictionary.count == 0)) {
                 return;
             }
-            transfersTypeString = NSLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
+            transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
         }
             
@@ -518,7 +518,7 @@
             if ((self.downloadActiveTransfersMutableDictionary.count == 0) && (self.downloadQueuedTransfersMutableDictionary.count == 0)) {
                 return;
             }
-            transfersTypeString = NSLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
+            transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
         }
             
@@ -526,16 +526,16 @@
             if ((self.uploadActiveTransfersMutableDictionary.count == 0) && (self.uploadQueuedTransfersMutableDictionary.count == 0)) {
                 return;
             }
-            transfersTypeString = NSLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
+            transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
         }
     }
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"cancelTransfersTitle", @"Cancel transfers")
-                                                        message:[NSString stringWithFormat:NSLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString]
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers")
+                                                        message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString]
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                              otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+                                              cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                              otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     [alertView setTag:0];
     [alertView show];
 }
@@ -547,15 +547,15 @@
     NSString *text;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case 0: //All
-            text = NSLocalizedString(@"transfersEmptyState_titleAll", @"No active transfers");
+            text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No active transfers");
             break;
             
         case 1: //Downloads
-            text = NSLocalizedString(@"transfersEmptyState_titleDownload", @"No active download transfers");
+            text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No active download transfers");
             break;
             
         case 2: //Uploads
-            text = NSLocalizedString(@"transfersEmptyState_titleUpload", @"No active upload transfers");
+            text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No active upload transfers");
             break;
     }
     
@@ -570,15 +570,15 @@
     NSString *text;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case 0: //All
-            text = NSLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
+            text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
             break;
             
         case 1: //Downloads
-            text = NSLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending download transfers.");
+            text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending download transfers.");
             break;
             
         case 2: //Uploads
-            text = NSLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending upload transfers.");
+            text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending upload transfers.");
             break;
     }
     
@@ -614,9 +614,9 @@
     switch ([request type]) {
         case MEGARequestTypePauseTransfers: {
             if ([request flag]) {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transfersPaused", @"Transfers paused")]];
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersPaused", @"Transfers paused")]];
             } else {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transfersResumed", @"Transfers resumed")]];
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersResumed", @"Transfers resumed")]];
             }
             [[NSUserDefaults standardUserDefaults] setBool:[request flag] forKey:@"TransfersPaused"];
             break;
@@ -625,7 +625,7 @@
         case MEGARequestTypeCancelTransfers: {
             [self cleanTransfersList];
             [self.tableView reloadData];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transfersCanceled", @"Transfers canceled")]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersCanceled", @"Transfers canceled")]];
             break;
         }
             
@@ -704,7 +704,7 @@
     
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled")]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled")]];
             [self removeActiveTransfer:transfer];
             [self.tableView reloadData];
         }

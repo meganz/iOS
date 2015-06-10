@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *upgradeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *applicationLanguageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (weak, nonatomic) IBOutlet UILabel *feedbackLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
@@ -76,14 +77,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self.upgradeLabel setText:NSLocalizedString(@"upgradeLabel", nil)];
-    [self.cameraUploadsLabel setText:NSLocalizedString(@"cameraUploadsLabel", nil)];
-    [self.passcodeLabel setText:NSLocalizedString(@"passcodeLabel", nil)];
-    [self.aboutLabel setText:NSLocalizedString(@"aboutLabel", nil)];
-    [self.feedbackLabel setText:NSLocalizedString(@"feedbackLabel", nil)];
-    [self.advancedLabel setText:NSLocalizedString(@"advancedLabel", nil)];
-    [self.logoutLabel setText:NSLocalizedString(@"logoutLabel", nil)];
     
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
@@ -96,6 +89,40 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.navigationItem setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
+    [self.upgradeLabel setText:AMLocalizedString(@"upgradeLabel", nil)];
+    [self.cameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
+    [self.passcodeLabel setText:AMLocalizedString(@"passcodeLabel", nil)];
+    [self.applicationLanguageLabel setText:AMLocalizedString(@"applicationLanguageLabel", @"Application language")];
+    [self.aboutLabel setText:AMLocalizedString(@"aboutLabel", nil)];
+    [self.feedbackLabel setText:AMLocalizedString(@"feedbackLabel", nil)];
+    [self.advancedLabel setText:AMLocalizedString(@"advancedLabel", nil)];
+    [self.logoutLabel setText:AMLocalizedString(@"logoutLabel", nil)];
+    
+    [self.localLabel setText:AMLocalizedString(@"localLabel", @"Local")];
+    [self.usedSpaceLabel setText:AMLocalizedString(@"usedSpaceLabel", @"Used")];
+    [self.availableLabel setText:AMLocalizedString(@"availableLabel", @"Available")];
+    
+    //Tab bar item titles
+    for (NSInteger i = 0; i < [self.tabBarController.viewControllers count]; i++) {
+        switch ([[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] tag]) {
+            case 3:
+                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
+                break;
+                
+            case 4:
+                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+                break;
+                
+            case 5:
+                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
+                break;
+                
+            default:
+                break;
+        }
+    }
     
     self.pieChartView.layer.cornerRadius = CGRectGetWidth(self.pieChartView.frame)/2;
     self.pieChartView.layer.masksToBounds = YES;
@@ -183,12 +210,12 @@
     }
     
     // Feedback
-    if (indexPath.section == 2 && indexPath.row == 3) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"feedbackActionSheet_title", "How are you feeling?")
+    if (indexPath.section == 2 && indexPath.row == 4) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"feedbackActionSheet_title", @"How are you feeling?")
                                                                  delegate:self
-                                                        cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                        cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:NSLocalizedString(@"feedbackActionSheet_happyButton", "Happy"), NSLocalizedString(@"feedbackActionSheet_confusedButton", "Confused"), NSLocalizedString(@"feedbackActionSheet_unhappyButton", "Unhappy"), nil];
+                                                        otherButtonTitles:AMLocalizedString(@"feedbackActionSheet_happyButton", @"Happy"), AMLocalizedString(@"feedbackActionSheet_confusedButton", @"Confused"), AMLocalizedString(@"feedbackActionSheet_unhappyButton", @"Unhappy"), nil];
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
     }
 }
@@ -279,12 +306,16 @@
     
     switch ([request type]) {
         case MEGARequestTypeGetAttrUser: {
-            if (request.paramType == MEGAUserAttributeLastname) {
-                fullname = [fullname stringByAppendingString:@" "];
+            //If paramType = 1 or 2 we are receiving the firstname or the lastname
+            if (request.paramType) {
+                if (request.paramType == MEGAUserAttributeLastname) {
+                    fullname = [fullname stringByAppendingString:@" "];
+                }
+                fullname = [fullname stringByAppendingString:request.text];
+                [self.userNameLabel setText:fullname];
+            } else {
+                [self setUserAvatar];
             }
-            fullname = [fullname stringByAppendingString:request.text];
-            [self.userNameLabel setText:fullname];
-            [self setUserAvatar];
             break;
         }
             
@@ -299,7 +330,7 @@
             NSString *usedStorageString = [NSByteCountFormatter stringFromByteCount:[[request.megaAccountDetails storageUsed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
             NSString *availableStorageString = [NSByteCountFormatter stringFromByteCount:([[request.megaAccountDetails storageMax] longLongValue]- [[request.megaAccountDetails storageUsed] longLongValue])  countStyle:NSByteCountFormatterCountStyleMemory];
             
-            [self.storageLabel setText:[NSString stringWithFormat:NSLocalizedString(@"usedSpaceOfTotalSpace", nil), usedStorageString, maxStorageString]];
+            [self.storageLabel setText:[NSString stringWithFormat:AMLocalizedString(@"usedSpaceOfTotalSpace", nil), usedStorageString, maxStorageString]];
             
             [self.sizeUsedSpaceLabel setText:usedStorageString];
             [self.sizeAvailableLabel setText:availableStorageString];
@@ -313,7 +344,7 @@
                 [formatter setLocale:locale];
                 NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:[request.megaAccountDetails proExpiration]];
                 
-                NSString *expiresString = [NSString stringWithFormat:NSLocalizedString(@"expiresOn", "(Expires on %@)"), [formatter stringFromDate:expireDate]];
+                NSString *expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
                 
                 switch ([request.megaAccountDetails type]) {
                     case 1: {

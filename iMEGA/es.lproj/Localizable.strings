@@ -214,6 +214,11 @@
 
 "orderByTableHeader"="Ordernar por";
 
+"fieldLabel"="Campo";
+"ascendingLabel"="Ascendente";
+
+"save"="Guardar";
+
 "alphabeticallyField"="Nombre";
 "sizeField"="Tamaño";
 "dateField"="Fecha";
@@ -241,6 +246,7 @@
 "downloading"="Descargando...";
 
 //UITABBARCONTROLLER (4) CONTACTS
+"contactsTitle"="Contactos";
 "noFoldersShare" = "Ningún fichero compartido";
 "oneFolderShare" = "Compartiendo un nodo";
 "foldersShare" = "Compartiendo %d nodos";
@@ -299,14 +305,21 @@
 "filesMovedToRubbishBin" = "%d ficheros movidos a la papelera";
 
 //UITABBARCONTROLLER (5) SETTINGS
+"settingsTitle"="Configuración";
+
 "usedSpaceOfTotalSpace"="%@ de %@";
 "upgradeLabel"="Mejorar cuenta";
 "cameraUploadsLabel"="Subidas de la cámara";
 "passcodeLabel"="Código de acceso";
+"applicationLanguageLabel"="Idioma de la aplicación";
 "aboutLabel"="Sobre nosotros";
 "feedbackLabel"="Feedback";
 "advancedLabel"="Avanzado";
 "logoutLabel"="Desconectar";
+
+"localLabel"="Local";
+"usedSpaceLabel"="Usado";
+"availableLabel"="Disponible";
 
 "feedbackActionSheet_title"="¿Cómo te sientes?";
 "feedbackActionSheet_happyButton"="Féliz";
@@ -323,6 +336,12 @@
 "cameraUploadsEnable_header"="Activa las subidas de la cámara para subir automáticamente tus fotos y vídeos al disco en la nube";
 "cameraUploadsDisalbe_header"="Cuando se deshabilite, las nuevas fotos y videos no serán subidos";
 "cameraUploadsOptiones_header"="Opciones para la subida de la cámara";
+
+//(5) Settings - LanguageTableViewController
+"applicationLanguage"="Español";
+
+"en"="Inglés";
+"es"="Español";
 
 //(5) Settings - AboutTableViewController
 "privacyPolicyLabel"="Politica de Privacidad";

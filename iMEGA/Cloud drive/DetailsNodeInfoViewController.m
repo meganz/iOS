@@ -152,7 +152,7 @@
 
 - (void)rename {
     if (!renameAlertView) {
-        renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
+        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
     }
     
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -167,7 +167,7 @@
 
 - (void)delete {
     if (!removeAlertView) {
-        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:NSLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     }
     [removeAlertView setTag:1];
     [removeAlertView show];
@@ -269,15 +269,15 @@
         case 0: {
             if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
                 [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
-                [cell.textLabel setText:NSLocalizedString(@"queued", @"Queued")];
+                [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
                 return cell;
             } else {
                 if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
                     [cell.imageView setImage:[UIImage imageNamed:@"savedFile"]];
-                    [cell.textLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+                    [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
                 } else {
                     [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
-                    [cell.textLabel setText:NSLocalizedString(@"saveForOffline", @"Save for Offline")];
+                    [cell.textLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
                 }
             }
             break;
@@ -285,25 +285,25 @@
         
         case 1: {
             [cell.imageView setImage:[UIImage imageNamed:@"shareFile"]];
-            [cell.textLabel setText:NSLocalizedString(@"getLink", @"Get link")];
+            [cell.textLabel setText:AMLocalizedString(@"getLink", @"Get link")];
             break;
         }
             
         case 2: {
             [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
-            [cell.textLabel setText:NSLocalizedString(@"move", @"Move")];
+            [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
             break;
         }
             
         case 3: {
             [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
-            [cell.textLabel setText:NSLocalizedString(@"rename", @"Rename")];
+            [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
             break;
         }
             
         case 4: {
             [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
-            [cell.textLabel setText:NSLocalizedString(@"moveToRubbishBin", @"Move to Rubbish Bin")];
+            [cell.textLabel setText:AMLocalizedString(@"moveToRubbishBin", @"Move to Rubbish Bin")];
             break;
         }
     }
@@ -319,11 +319,11 @@
         case 0: {
             if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
                 if (!cancelDownloadAlertView) {
-                    cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"downloading", @"Downloading...")
-                                                                         message:NSLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
+                    cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"downloading", @"Downloading...")
+                                                                         message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
                                                                         delegate:self
-                                                               cancelButtonTitle:NSLocalizedString(@"cancel", nil)
-                                                               otherButtonTitles:NSLocalizedString(@"ok", nil), nil];
+                                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                               otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 }
                 [cancelDownloadAlertView setTag:2];
                 [cancelDownloadAlertView show];
@@ -437,7 +437,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"creatingLink", @"Creating link...")];
             break;
             
         default:
@@ -468,8 +468,8 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
-            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             NSString *link = [request link];
             
             NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
@@ -481,7 +481,7 @@
             
         case MEGARequestTypeCancelTransfer:
             [self.tableView reloadData];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled!")]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled!")]];
             break;
             
         default:
@@ -520,7 +520,7 @@
         NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
         if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [cell.textLabel setText:NSLocalizedString(@"queued", @"Queued")];
+            [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
         }
     }
 }
@@ -557,7 +557,7 @@
             }
             
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:0];
-            [cell.textLabel setText:NSLocalizedString(@"savedForOffline", @"Saved for offline")];
+            [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
             [self.tableView reloadData];
         }
     }

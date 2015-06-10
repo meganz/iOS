@@ -42,11 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"passcodeTitle", "Passcode")];
-    [self.turnOnOffPasscodeLabel setText:NSLocalizedString(@"passcodeTitle", @"Passcode")];
-    [self.changePasscodeLabel setText:NSLocalizedString(@"changePasscodeLabel", "Change passcode")];
-    [self.simplePasscodeLabel setText:NSLocalizedString(@"simplePasscodeLabel", "Simple passcode")];
-    [self.eraseLocalDataLabel setText:NSLocalizedString(@"eraseAllLocalDataLabel", "Erase all local data")];
+    [self.navigationItem setTitle:AMLocalizedString(@"passcodeTitle", @"Passcode")];
+    [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcodeTitle", @"Passcode")];
+    [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
+    [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
+    [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
 }
 
@@ -126,7 +126,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 3) {
-        return NSLocalizedString(@"failedAttempstSectionTitle", "Log out and erase all local data on MEGA’s app after 10 failed passcode attempts");
+        return AMLocalizedString(@"failedAttempstSectionTitle", @"Log out and erase all local data on MEGA’s app after 10 failed passcode attempts");
     }
     
     return nil;

@@ -71,6 +71,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
+    
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
 }
@@ -170,17 +172,17 @@
 - (IBAction)addContact:(UIBarButtonItem *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"addFromEmail", nil), NSLocalizedString(@"addFromContacts", nil), nil];
+                                                    otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     
-    NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:NSLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
+    NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
     
-    removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     [removeAlertView show];
     removeAlertView.tag = 1;
     [removeAlertView show];
@@ -230,11 +232,11 @@
     
     int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
     if (numFilesShares == 0) {
-        cell.shareLabel.text = NSLocalizedString(@"noFoldersShare", @"No folders shared");
+        cell.shareLabel.text = AMLocalizedString(@"noFoldersShare", @"No folders shared");
     } else  if (numFilesShares == 1 ) {
-        cell.shareLabel.text = NSLocalizedString(@"oneFolderShare", @" folder shared");
+        cell.shareLabel.text = AMLocalizedString(@"oneFolderShare", @" folder shared");
     } else {
-        cell.shareLabel.text = [NSString stringWithFormat:NSLocalizedString(@"foldersShare", @" folders shared"), numFilesShares];
+        cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShare", @" folders shared"), numFilesShares];
     }
     
     if (self.isEditing) {
@@ -343,7 +345,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        emailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactTitle", nil) message:NSLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"addContactButton", nil), nil];
+        emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:AMLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
         [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [emailAlertView textFieldAtIndex:0].text = @"";
         emailAlertView.tag = 0;
@@ -376,7 +378,7 @@
     if (email) {
         [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmailTitle", nil) message:AMLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
         [noEmailAlertView show];
     }
@@ -404,7 +406,7 @@
     if (email) {
         [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"contactWithoutEmailTitle", nil) message:NSLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmailTitle", nil) message:AMLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
         [noEmailAlertView show];
     }
@@ -437,7 +439,7 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    NSString *text = NSLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
+    NSString *text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
                                  NSForegroundColorAttributeName: [UIColor darkGrayColor]};
@@ -447,7 +449,7 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
-    NSString *text = NSLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
+    NSString *text = AMLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -473,7 +475,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeAddContact:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"adding", nil)];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"adding", nil)];
             break;
             
         default:
@@ -484,7 +486,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeAddContact) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"addContactError", nil)];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"addContactError", nil)];
         }
         return;
     }
@@ -510,13 +512,13 @@
         }
             
         case MEGARequestTypeAddContact:
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"added", nil)];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"added", nil)];
             break;
             
         case MEGARequestTypeRemoveContact:
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedUsersArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"removedContact", nil), [request email]] : [NSString stringWithFormat:NSLocalizedString(@"removedContacts", nil), self.selectedUsersArray.count];
+                NSString *message = (self.selectedUsersArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"removedContact", nil), [request email]] : [NSString stringWithFormat:AMLocalizedString(@"removedContacts", nil), self.selectedUsersArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }

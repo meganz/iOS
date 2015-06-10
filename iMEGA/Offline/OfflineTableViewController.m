@@ -52,7 +52,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     if (self.folderPathFromOffline == nil) {
-        [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
+        [self.navigationItem setTitle:AMLocalizedString(@"offline", @"Offline")];
         
         NSString *directoryPathString = [self currentOfflinePath];
         NSArray *nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:directoryPathString];
@@ -306,7 +306,7 @@
     NSString *handleString;
     NSString *nameString;
     if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
-        nameString = NSLocalizedString(@"downloading", nil);
+        nameString = AMLocalizedString(@"downloading", nil);
     } else if ([itemNameString isEqualToString:@"MasterKey.txt"]) {
         nameString = itemNameString;
     } else {
@@ -385,7 +385,7 @@
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
         if (!success || error) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"itemDeletingError", @"Error at deleting")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"itemDeletingError", @"Error at deleting")];
             return;
         } else {
             if (isDirectory) {
@@ -521,9 +521,9 @@
     
     NSString *text;
     if (self.folderPathFromOffline == nil) {
-        text = NSLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+        text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
     } else {
-        text = NSLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
+        text = AMLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
@@ -536,9 +536,9 @@
     
     NSString *text;
     if (self.folderPathFromOffline == nil) {
-        text = NSLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
+        text = AMLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
     } else {
-        text = NSLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
+        text = AMLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
