@@ -43,8 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.privacyPolicyLabel setText:NSLocalizedString(@"privacyPolicyLabel", nil)];
-    [self.termsOfServicesLabel setText:NSLocalizedString(@"termsOfServicesLabel", nil)];
+    [self.privacyPolicyLabel setText:AMLocalizedString(@"privacyPolicyLabel", nil)];
+    [self.termsOfServicesLabel setText:AMLocalizedString(@"termsOfServicesLabel", nil)];
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
@@ -56,7 +56,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"aboutLabel", "The title of about view")];
+    [self.navigationItem setTitle:AMLocalizedString(@"aboutLabel", @"The title of about view")];
     
     megaSdkVersionCounter = 0;
     versionCounter = 0;

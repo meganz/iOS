@@ -48,28 +48,28 @@
     self.title = @"";
     
     self.titles = [NSArray arrayWithObjects:
-                   NSLocalizedString(@"megaSpace", nil),
-                   NSLocalizedString(@"megaSpeed", nil),
-                   NSLocalizedString(@"megaPrivacy", nil),
-                   NSLocalizedString(@"megaAccess", nil), nil];
+                   AMLocalizedString(@"megaSpace", nil),
+                   AMLocalizedString(@"megaSpeed", nil),
+                   AMLocalizedString(@"megaPrivacy", nil),
+                   AMLocalizedString(@"megaAccess", nil), nil];
     
     self.subtitles = [NSArray arrayWithObjects:
-                      NSLocalizedString(@"megaSpaceText", nil),
-                      NSLocalizedString(@"megaSpeedText", nil),
-                      NSLocalizedString(@"megaPrivacyText", nil),
-                      NSLocalizedString(@"megaAccessText", nil),
+                      AMLocalizedString(@"megaSpaceText", nil),
+                      AMLocalizedString(@"megaSpeedText", nil),
+                      AMLocalizedString(@"megaPrivacyText", nil),
+                      AMLocalizedString(@"megaAccessText", nil),
                       nil];
     
     
     self.loginButton.layer.cornerRadius = 6;
     self.loginButton.layer.backgroundColor = megaRed.CGColor;
     self.loginButton.layer.masksToBounds = YES;
-    [self.loginButton setTitle:NSLocalizedString(@"loginButton", nil) forState:UIControlStateNormal];
+    [self.loginButton setTitle:AMLocalizedString(@"loginButton", nil) forState:UIControlStateNormal];
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.backgroundColor = megaDarkGray.CGColor;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setTitle:NSLocalizedString(@"createAccountButton", nil) forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccountButton", nil) forState:UIControlStateNormal];
     
     self.titleLabel.textColor = megaRed;
     self.titleLabel.numberOfLines = 0;

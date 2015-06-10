@@ -46,22 +46,22 @@
     
     [self.navigationItem setTitleView:_logoView];
     
-    [self.confirmTextLabel setText:NSLocalizedString(@"confirmText", @"Please enter your password to confirm your account")];
+    [self.confirmTextLabel setText:AMLocalizedString(@"confirmText", @"Please enter your password to confirm your account")];
     
     self.confirmAccountButton.layer.cornerRadius = 6;
     self.confirmAccountButton.layer.masksToBounds = YES;
-    [self.confirmAccountButton setTitle:NSLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
+    [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
     self.cancelButton.layer.cornerRadius = 6;
     self.cancelButton.layer.masksToBounds = YES;
-    [self.cancelButton setTitle:NSLocalizedString(@"cancel", @"Cancel") forState:UIControlStateNormal];
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", @"Cancel") forState:UIControlStateNormal];
     
     self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
     self.credentialsView.layer.borderWidth = 2.0f;
     self.credentialsView.layer.borderColor =[megaLightGray CGColor];
     self.credentialsView.layer.cornerRadius = 6;
     self.credentialsView.layer.masksToBounds = YES;
-    [self.emailTextField setPlaceholder:NSLocalizedString(@"emailPlaceholder", @"Email")];
-    [self.passwordTextField setPlaceholder:NSLocalizedString(@"passwordPlaceholder", @"Password")];
+    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
+    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.emailTextField setText:_emailString];
 }
@@ -93,7 +93,7 @@
 
 - (BOOL)validateForm {
     if (![self validatePassword:self.passwordTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.passwordTextField becomeFirstResponder];
         return NO;
     }
@@ -146,17 +146,17 @@
         switch ([error type]) {
             case MEGAErrorTypeApiENoent: {
                 [self lockUI:NO];
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordWrong", @"Wrong password")];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordWrong", @"Wrong password")];
                 break;
             }
                 
             case MEGAErrorTypeApiEAccess: {
                 [SVProgressHUD dismiss];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alreadyLoggedInAlertTitle", "You are logged with another account")
-                                                                    message:NSLocalizedString(@"alreadyLoggedInAlertMessage", "If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?")
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"You are logged with another account")
+                                                                    message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?")
                                                                    delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"cancel", nil)
-                                                          otherButtonTitles:NSLocalizedString(@"ok", nil), nil];
+                                                          cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                          otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 [alertView setTag:0];
                 [alertView show];
                 break;

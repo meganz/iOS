@@ -102,11 +102,11 @@
 
 - (BOOL)validateForm {
     if (![self validateEmail:self.emailTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
     } else if (![self validatePassword:self.passwordTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.passwordTextField becomeFirstResponder];
         return NO;
     }
@@ -175,10 +175,10 @@
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs:
             case MEGAErrorTypeApiENoent: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
-                                                                message:NSLocalizedString(@"invalidMailOrPassword", @"Email or password invalid.")
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", @"Error")
+                                                                message:AMLocalizedString(@"invalidMailOrPassword", @"Email or password invalid.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                                       otherButtonTitles:nil];
                 [alert show];
                 break;

@@ -52,16 +52,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.cancelBarButtonItem setTitle:NSLocalizedString(@"cancel", nil)];
+    [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
     
-    [self.toolBarMoveBarButtonItem setTitle:NSLocalizedString(@"browserVC_moveButton", @"Move")];
-    [self.toolBarNewFolderBarButtonItem setTitle:NSLocalizedString(@"browserVC_newFolderButton", @"New folder")];
+    [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"browserVC_moveButton", @"Move")];
+    [self.toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"browserVC_newFolderButton", @"New folder")];
     
     if (self.isPublicNode) {
         [self.toolBarMoveBarButtonItem setEnabled:NO];
-        [self.toolBarCopyBarButtonItem setTitle:NSLocalizedString(@"browserVC_importButton", @"Import")];
+        [self.toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"browserVC_importButton", @"Import")];
     } else {
-        [self.toolBarCopyBarButtonItem setTitle:NSLocalizedString(@"browserVC_copyButton", @"Copy")];
+        [self.toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"browserVC_copyButton", @"Copy")];
     }
 }
 
@@ -98,7 +98,7 @@
     self.folderNodes = [NSMutableArray new];
     
     if ([self.parentNode.name isEqualToString:[[[MEGASdkManager sharedMEGASdk] rootNode] name]]) {
-        [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
+        [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
         self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
     } else {
         [self.navigationItem setTitle:[self.parentNode name]];
@@ -106,7 +106,7 @@
     }
     
     if (self.isPublicNode) {
-        NSString *importTitle = NSLocalizedString(@"importTitle", @"Import to ");
+        NSString *importTitle = AMLocalizedString(@"importTitle", @"Import to ");
         importTitle = [importTitle stringByAppendingString:[self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
     }
@@ -125,7 +125,7 @@
         [self.shareFolderButton setEnabled:YES];
         [self.shareFolderButton setHidden:NO];
         
-        NSString *sharedFolderString = [NSLocalizedString(@"select", nil) stringByAppendingString:[self.navigationItem title]];
+        NSString *sharedFolderString = [AMLocalizedString(@"select", nil) stringByAppendingString:[self.navigationItem title]];
         [self.shareFolderButton setTitle:sharedFolderString forState:UIControlStateNormal];
     }
     
@@ -152,7 +152,7 @@
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
-    folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder") message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
+    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolderTitle", @"Create new folder") message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
     [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [folderAlertView textFieldAtIndex:0].text = @"";
     [folderAlertView show];
@@ -168,9 +168,9 @@
 - (IBAction)selectSharedFolder:(UIButton *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"readOnly", nil), NSLocalizedString(@"readAndWrite", nil), NSLocalizedString(@"fullAccess", nil), nil];
+                                                    otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
@@ -239,15 +239,15 @@
     
     if (files == 0 || files > 1) {
         if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
+            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
         } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
         }
     } else if (files == 1) {
         if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
+            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
         } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
+            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
         }
     }
     
@@ -281,7 +281,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEOverQuota) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
         }
         
         return;
@@ -292,7 +292,7 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -302,14 +302,14 @@
         case MEGARequestTypeCopy: {
             if (self.isPublicNode) {
                 [self dismissViewControllerAnimated:YES completion:nil];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"fileImported", @"File imported!")];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"File imported!")];
                 break;
             }
             
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -320,8 +320,8 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-//                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sharedFolder_success", @"Folder shared!")];
+//                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharedFolder_success", @"Folder shared!")];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;

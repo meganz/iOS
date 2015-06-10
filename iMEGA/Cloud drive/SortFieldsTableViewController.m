@@ -34,9 +34,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"fieldsTitle", "Fields");
+    self.title = AMLocalizedString(@"fieldsTitle", @"Fields");
     
-    fieldArray = @[NSLocalizedString(@"alphabeticallyField", "Name"), NSLocalizedString(@"sizeField", "Size"), NSLocalizedString(@"dateField", "Date")];
+    fieldArray = @[AMLocalizedString(@"alphabeticallyField", @"Name"), AMLocalizedString(@"sizeField", @"Size"), AMLocalizedString(@"dateField", @"Date")];
 }
 
 - (void)didReceiveMemoryWarning {

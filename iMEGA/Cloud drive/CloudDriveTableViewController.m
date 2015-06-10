@@ -102,6 +102,7 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    self.tabBarItem.title = @"Liked";
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -233,7 +234,7 @@
         }
         
         [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
-        [cell.infoLabel setText:[NSString stringWithFormat:NSLocalizedString(@"queued", @"Queued")]];
+        [cell.infoLabel setText:[NSString stringWithFormat:AMLocalizedString(@"queued", @"Queued")]];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
@@ -380,15 +381,15 @@
         
         if (files == 0 || files > 1) {
             if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
             } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
             }
         } else if (files == 1) {
             if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
             } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
             }
         }
         
@@ -692,19 +693,19 @@
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if ([self.parentNode type] == MEGANodeTypeRoot) {
-                text = NSLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
+                text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
             } else {
-                text = NSLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+                text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
             }
             break;
         }
             
         case DisplayModeContact:
-            text = NSLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
+            text = AMLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
             break;
             
         case DisplayModeRubbishBin:
-            text = NSLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+            text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
             break;
     }
     
@@ -719,15 +720,15 @@
     NSString *text;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-            text = NSLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
+            text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
             break;
             
         case DisplayModeContact:
-            text = NSLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
+            text = AMLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
             break;
             
         case DisplayModeRubbishBin:
-            text = NSLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+            text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
             break;
     }
     
@@ -785,11 +786,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        folderAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"newFolderTitle", @"Create new folder")
-                                                     message:NSLocalizedString(@"newFolderMessage", @"Name for the new folder")
+        folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolderTitle", @"Create new folder")
+                                                     message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder")
                                                     delegate:self
-                                           cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                           otherButtonTitles:NSLocalizedString(@"createFolderButton", @"Create"), nil];
+                                           cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                           otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
         [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [folderAlertView textFieldAtIndex:0].text = @"";
         folderAlertView.tag = 1;
@@ -810,10 +811,10 @@
                 } else {
                     // Permission has been denied.
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention")
-                                                                        message:NSLocalizedString(@"cameraPermissions", "Please give MEGA app permission to access your Camera in your settings app!")
-                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancel") : NSLocalizedString(@"ok", "OK"))
-                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention")
+                                                                        message:AMLocalizedString(@"cameraPermissions", @"Please give MEGA app permission to access your Camera in your settings app!")
+                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancel") : AMLocalizedString(@"ok", @"OK"))
+                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
                         alert.tag = 3;
                         [alert show];
                     });
@@ -1092,7 +1093,7 @@
             }
             
             if ([self.parentNode type] == MEGANodeTypeRoot) {
-                [self.navigationItem setTitle:NSLocalizedString(@"cloudDrive", @"Cloud drive")];
+                [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
             } else {
                 [self.navigationItem setTitle:[self.parentNode name]];
             }
@@ -1112,7 +1113,7 @@
             
         case DisplayModeRubbishBin: {
             if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                [self.navigationItem setTitle:NSLocalizedString(@"rubbishBinLabel", "Rubbish bin")];
+                [self.navigationItem setTitle:AMLocalizedString(@"rubbishBinLabel", @"Rubbish bin")];
             } else {
                 [self.navigationItem setTitle:[self.parentNode name]];
             }
@@ -1194,9 +1195,9 @@
 - (IBAction)optionAdd:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"createFolder", @"Create folder"), NSLocalizedString(@"choosePhotoVideo", @"Choose"), NSLocalizedString(@"capturePhotoVideo", "Capture"), nil];
+                                                    otherButtonTitles:AMLocalizedString(@"createFolder", @"Create folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
@@ -1210,7 +1211,7 @@
     for (MEGANode *n in self.selectedNodesArray) {
         if ([n type] == MEGANodeTypeFile) {
             [Helper downloadNode:n folder:@"" folderLink:NO];
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
             
         } else if ([n type] == MEGANodeTypeFolder) {
             NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[n name]]];
@@ -1218,7 +1219,7 @@
             
             if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
                 [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"downloadStarted", @"Download started")];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
             }
         }
     }
@@ -1245,13 +1246,13 @@
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     if (self.displayMode == DisplayModeCloudDrive) {
-        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:NSLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
     
-        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     } else if (self.displayMode == DisplayModeRubbishBin) {
-        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:NSLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:NSLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
+        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
         
-        removeAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
     }
 
     removeAlertView.tag = 2;
@@ -1260,7 +1261,7 @@
 
 - (IBAction)renameAction:(UIBarButtonItem *)sender {
     if (!renameAlertView) {
-        renameAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"renameNodeTitle", @"Rename") message:NSLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"renameNodeButton", @"Rename"), nil];
+        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
     }
     
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -1333,7 +1334,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"creatingLink", @"Creating link...")];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"creatingLink", @"Creating link...")];
             break;
             
         default:
@@ -1345,7 +1346,7 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([request type] == MEGARequestTypeCreateFolder || [request type] == MEGARequestTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
                 [alertView show];
             }
         }
@@ -1383,7 +1384,7 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
@@ -1393,7 +1394,7 @@
         case MEGARequestTypeRemove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:NSLocalizedString(@"fileRemovedFromRubbishBin", nil)] : [NSString stringWithFormat:NSLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileRemovedFromRubbishBin", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
@@ -1405,9 +1406,9 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileName", nil), n.name];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
             
-            NSString *size = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : NSLocalizedString(@"folder", nil)];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             
             NSString *link = [request link];
             
@@ -1479,11 +1480,11 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([transfer type] ==  MEGATransferTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:NSLocalizedString(@"transferCanceled", @"Transfer canceled")]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled")]];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

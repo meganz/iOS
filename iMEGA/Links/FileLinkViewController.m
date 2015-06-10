@@ -64,22 +64,22 @@
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"megaLink", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     [self setUIItemsEnabled:NO];
     
     self.importButton.layer.cornerRadius = 6;
     self.importButton.layer.masksToBounds = YES;
-    [self.importButton setTitle:NSLocalizedString(@"importButton", nil) forState:UIControlStateNormal];
+    [self.importButton setTitle:AMLocalizedString(@"importButton", nil) forState:UIControlStateNormal];
     
     self.downloadButton.layer.cornerRadius = 6;
     self.downloadButton.layer.masksToBounds = YES;
-    [self.downloadButton setTitle:NSLocalizedString(@"downloadButton", nil) forState:UIControlStateNormal];
+    [self.downloadButton setTitle:AMLocalizedString(@"downloadButton", nil) forState:UIControlStateNormal];
     
     self.openButton.layer.cornerRadius = 6;
     self.openButton.layer.masksToBounds = YES;
-    [self.openButton setTitle:NSLocalizedString(@"openButton", nil) forState:UIControlStateNormal];
+    [self.openButton setTitle:AMLocalizedString(@"openButton", nil) forState:UIControlStateNormal];
     
     [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
@@ -116,8 +116,8 @@
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView setFrame:self.view.bounds];
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
-    [unavailableLinkView.titleLabel setText:NSLocalizedString(@"fileLinkUnavailableTitle", nil)];
-    [unavailableLinkView.textView setText:NSLocalizedString(@"fileLinkUnavailableText", nil)];
+    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"fileLinkUnavailableTitle", nil)];
+    [unavailableLinkView.textView setText:AMLocalizedString(@"fileLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
     
@@ -216,10 +216,10 @@
     NSNumber *nodeSizeNumber = [self.node size];
     NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
-                                                            message:NSLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+                                                            message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                                   otherButtonTitles:nil];
         [alertView show];
         return;

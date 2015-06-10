@@ -448,16 +448,16 @@ static NSInteger linkNodeOption;
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
         UIAlertView *alertView;
         if ([node type] == MEGANodeTypeFile) {
-            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileTooBig", @"You need more free space")
-                                                   message:NSLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
+            alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+                                                   message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.")
                                                   delegate:self
-                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                          otherButtonTitles:nil];
         } else if ([node type] == MEGANodeTypeFolder) {
-            alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderTooBig", @"You need more free space")
-                                                   message:NSLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.")
+            alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"folderTooBig", @"You need more free space")
+                                                   message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.")
                                                   delegate:self
-                                         cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                         cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                          otherButtonTitles:nil];
         }
         
@@ -484,7 +484,7 @@ static NSInteger linkNodeOption;
             [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:absoluteFilePath];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
     }
 }
 
@@ -530,13 +530,13 @@ static NSInteger linkNodeOption;
             } else {
                 folderNameString = [folderNameComponentsArray objectAtIndex:1];
             }
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:NSLocalizedString(@"folderCreationError", nil), folderNameString]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), folderNameString]];
             return NO;
         } else {
             return YES;
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"folderAlreadyExist", @"The folder you want to download already exists on Offline")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderAlreadyExist", @"The folder you want to download already exists on Offline")];
         return NO;
     }
 }

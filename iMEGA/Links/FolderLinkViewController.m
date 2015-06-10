@@ -87,12 +87,12 @@
     [self.navigationController.view setBackgroundColor:megaLightGray];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"MEGA Folder", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"MEGA Folder", nil)];
     
     [self.importBarButtonItem setEnabled:NO];
-    [self.importBarButtonItem setTitle:NSLocalizedString(@"browserVC_importButton", @"Import")];
+    [self.importBarButtonItem setTitle:AMLocalizedString(@"browserVC_importButton", @"Import")];
     [self.downloadBarButtonItem setEnabled:NO];
-    [self.downloadBarButtonItem setTitle:NSLocalizedString(@"downloadButton", @"Download")];
+    [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
     
     if (self.isFolderRootNode) {
         [MEGASdkManager sharedMEGASdkFolder];
@@ -141,7 +141,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    NSString *titleString = NSLocalizedString(@"megaFolder", @"MEGA Folder");
+    NSString *titleString = AMLocalizedString(@"megaFolder", @"MEGA Folder");
     if ([self.parentNode name] != nil) {
         if (self.isFolderRootNode) {
             titleString = [titleString stringByAppendingPathComponent:[self.parentNode name]];
@@ -161,8 +161,8 @@
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
-    [unavailableLinkView.titleLabel setText:NSLocalizedString(@"folderLinkUnavailableTitle", @"")];
-    [unavailableLinkView.textView setText:NSLocalizedString(@"folderLinkUnavailableText", nil)];
+    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"folderLinkUnavailableTitle", @"")];
+    [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
     
@@ -235,10 +235,10 @@
 
 - (IBAction)importFolderTouchUpInside:(UIBarButtonItem *)sender {
     //TODO: Import folder
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"importFolderAction", @"Import folder")
-                                                        message:NSLocalizedString(@"importFolderActionMessage", @"For the moment you can't import a folder.")
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"importFolderAction", @"Import folder")
+                                                        message:AMLocalizedString(@"importFolderActionMessage", @"For the moment you can't import a folder.")
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                              cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                               otherButtonTitles:nil];
     [alertView show];
     return;
@@ -315,15 +315,15 @@
         
         if (files == 0 || files > 1) {
             if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
             } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
             }
         } else if (files == 1) {
             if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
             } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:NSLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
+                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
             }
         }
         
@@ -481,9 +481,9 @@
     
     NSString *text;
     if (self.isFolderRootNode) {
-        text = NSLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link.");
+        text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link.");
     } else {
-        text = NSLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
+        text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
@@ -500,9 +500,9 @@
     
     NSString *text;
     if (self.isFolderRootNode) {
-        text = NSLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link.");
+        text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link.");
     } else {
-        text = NSLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+        text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -577,7 +577,7 @@
         }
         
         if ([error type] == MEGAErrorTypeApiEOverQuota) {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
         }
         return;
     }

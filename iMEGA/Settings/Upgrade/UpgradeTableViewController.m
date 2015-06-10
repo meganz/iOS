@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"upgradeAccount", "Upgrade account");
+    self.title = AMLocalizedString(@"upgradeAccount", @"Upgrade account");
     
 }
 
@@ -105,10 +105,10 @@
             break;
     }
     
-    [cell.productStorageLabel setText:[NSString stringWithFormat:NSLocalizedString(@"productSpace", "Space %@"), [NSByteCountFormatter stringFromByteCount:([self.pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory]]];
-    [cell.productBandwidthLabel setText:[NSString stringWithFormat:NSLocalizedString(@"productBandwidth", "Bandwidth %@"), [NSByteCountFormatter stringFromByteCount:([self.pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory]]];
+    [cell.productStorageLabel setText:[NSString stringWithFormat:AMLocalizedString(@"productSpace", @"Space %@"), [NSByteCountFormatter stringFromByteCount:([self.pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory]]];
+    [cell.productBandwidthLabel setText:[NSString stringWithFormat:AMLocalizedString(@"productBandwidth", @"Bandwidth %@"), [NSByteCountFormatter stringFromByteCount:([self.pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory]]];
     
-    [cell.productPriceLabel setText:[NSString stringWithFormat:NSLocalizedString(@"productPricePerMonth", "%.2f %@ per month"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2] / 100, [self.pricing currencyAtProductIndex:indexPath.row]]];
+    [cell.productPriceLabel setText:[NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"%.2f %@ per month"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2] / 100, [self.pricing currencyAtProductIndex:indexPath.row]]];
     
     return cell;
 }
@@ -116,12 +116,12 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.monthlyPrice = [NSString stringWithFormat:NSLocalizedString(@"productMonthlyPrice", "Monthly (%.2f %@)"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2] / 100, [self.pricing currencyAtProductIndex:indexPath.row]];
-    self.yearlyPrice = [NSString stringWithFormat:NSLocalizedString(@"productYearlyPrice", "Yearly (%.2f %@)"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2 + 1] / 100, [self.pricing currencyAtProductIndex:indexPath.row]];
+    self.monthlyPrice = [NSString stringWithFormat:AMLocalizedString(@"productMonthlyPrice", @"Monthly (%.2f %@)"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2] / 100, [self.pricing currencyAtProductIndex:indexPath.row]];
+    self.yearlyPrice = [NSString stringWithFormat:AMLocalizedString(@"productYearlyPrice", @"Yearly (%.2f %@)"), (float)[self.pricing amountAtProductIndex:indexPath.row * 2 + 1] / 100, [self.pricing currencyAtProductIndex:indexPath.row]];
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"chooseDuration", "Choose duration")
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"chooseDuration", @"Choose duration")
                                                              delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"cancel", "Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:self.yearlyPrice, self.monthlyPrice, nil];
     [actionSheet showInView:self.view];

@@ -56,19 +56,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"cameraUploadsLabel", nil)];
-    [self.enableCameraUploadsLabel setText:NSLocalizedString(@"cameraUploadsLabel", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"cameraUploadsLabel", nil)];
+    [self.enableCameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [self.enableCameraUploadsSwitch setOn:YES animated:YES];
         
-        [self.uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];
+        [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
         [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
         
-        [self.useCellularConnectionLabel setText:NSLocalizedString(@"useCellularConnectionLabel", nil)];
+        [self.useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", nil)];
         [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
         
-        [self.onlyWhenChargingLabel setText:NSLocalizedString(@"onlyWhenChargingLabel", nil)];
+        [self.onlyWhenChargingLabel setText:AMLocalizedString(@"onlyWhenChargingLabel", nil)];
         [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
@@ -93,7 +93,7 @@
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
     if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [self.enableCameraUploadsSwitch isOn]) {
         [self.enableCameraUploadsSwitch setOn:!self.enableCameraUploadsSwitch.isOn animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"attention", "Attention") message:NSLocalizedString(@"photoLibraryPermissions", "Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"cancel", "Cancelar") : NSLocalizedString(@"ok", "OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? NSLocalizedString(@"ok", "OK") : nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancelar") : AMLocalizedString(@"ok", @"OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
         [alert show];
     } else {
         BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
@@ -207,15 +207,15 @@
     switch (section) {
         case 0:
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                return NSLocalizedString(@"cameraUploadsDisalbe_header", "When disabled new photos and videos won't be uploaded");
+                return AMLocalizedString(@"cameraUploadsDisalbe_header", @"When disabled new photos and videos won't be uploaded");
             }
             else {
-                return NSLocalizedString(@"cameraUploadsEnable_header", "Enable camera uploads to automatically uploads your photos and videos to cloud drive");
+                return AMLocalizedString(@"cameraUploadsEnable_header", @"Enable camera uploads to automatically uploads your photos and videos to cloud drive");
             }
             break;
             
         case 1:
-            return NSLocalizedString(@"cameraUploadsOptiones_header", "Camera uploads options");
+            return AMLocalizedString(@"cameraUploadsOptiones_header", @"Camera uploads options");
             
         default:
             return nil;

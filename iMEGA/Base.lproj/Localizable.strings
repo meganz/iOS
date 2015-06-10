@@ -214,6 +214,11 @@
 
 "orderByTableHeader"="Order by";
 
+"fieldLabel"="Field";
+"ascendingLabel"="Ascending";
+
+"save"="Save";
+
 "alphabeticallyField"="Name";
 "sizeField"="Size";
 "dateField"="Date";
@@ -242,6 +247,7 @@
 "downloading"="Downloading...";
 
 //UITABBARCONTROLLER (4) CONTACTS
+"contactsTitle"="Contacts";
 "noFoldersShare" = "No files shared";
 "oneFolderShare" = "Sharing one node";
 "foldersShare" = "Sharing %d nodes";
@@ -300,14 +306,21 @@
 "filesMovedToRubbishBin" = "%d files moved to the rubbish bin";
 
 //UITABBARCONTROLLER (5) SETTINGS
+"settingsTitle"="Settings";
+
 "usedSpaceOfTotalSpace"="%@ of %@";
 "upgradeLabel"="Upgrade account";
 "cameraUploadsLabel"="Camera Uploads";
 "passcodeLabel"="Passcode";
+"applicationLanguageLabel"="Application language";
 "aboutLabel"="About";
 "feedbackLabel"="Feedback";
 "advancedLabel"="Advanced";
 "logoutLabel"="Log out";
+
+"localLabel"="Local";
+"usedSpaceLabel"="Used";
+"availableLabel"="Available";
 
 "feedbackActionSheet_title"="How are you feeling?";
 "feedbackActionSheet_happyButton"="Happy";
@@ -324,6 +337,12 @@
 "cameraUploadsEnable_header"="Enable camera uploads to automatically upload your photos and videos to cloud drive";
 "cameraUploadsDisalbe_header"="When disabled new photos and videos won't be uploaded";
 "cameraUploadsOptiones_header"="Camera uploads options";
+
+//(5) Settings - LanguageTableViewController
+"applicationLanguage"="English";
+
+"en"="English";
+"es"="Spanish";
 
 //(5) Settings - AboutTableViewController
 "privacyPolicyLabel"="Privacy Policy";

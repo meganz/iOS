@@ -28,6 +28,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *alphabeticallySwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *fieldLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ascendingLabel;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (nonatomic) MEGASortOrderType sortType;
 
 @end
@@ -39,7 +45,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"sortTitle", "Sort");
+    self.title = AMLocalizedString(@"sortTitle", @"Sort");
+    
+    [self.fieldLabel setText:AMLocalizedString(@"fieldLabel", @"Campo")];
+    [self.ascendingLabel setText:AMLocalizedString(@"ascendingLabel", @"Ascending")];
+    [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", @"Cancel")];
+    [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
     
     self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
     [self setDetailLabelText];
@@ -100,17 +111,17 @@
     switch (self.sortType) {
         case 1:
         case 2:
-            self.detailLabel.text = NSLocalizedString(@"alphabeticallyField", "Name");
+            self.detailLabel.text = AMLocalizedString(@"alphabeticallyField", @"Name");
             break;
             
         case 3:
         case 4:
-            self.detailLabel.text = NSLocalizedString(@"sizeField", "Size");
+            self.detailLabel.text = AMLocalizedString(@"sizeField", @"Size");
             break;
             
         case 5:
         case 6:
-            self.detailLabel.text = NSLocalizedString(@"dateField", "Date");
+            self.detailLabel.text = AMLocalizedString(@"dateField", @"Date");
             break;
             
         default:
@@ -129,7 +140,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return NSLocalizedString(@"orderByTableHeader", "Order by");
+    return AMLocalizedString(@"orderByTableHeader", @"Order by");
 }
 
 #pragma mark - UITableViewDelegate 

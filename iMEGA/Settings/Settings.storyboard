@@ -263,6 +263,30 @@
                                             <segue destination="9Kd-ys-eJ4" kind="show" id="rTq-Ub-pxi"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="languageCell" rowHeight="54" id="9Wp-Vc-5xE">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Wp-Vc-5xE" id="dcJ-W2-p6R">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="129.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application language" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUl-9Q-DUU">
+                                                    <rect key="frame" x="8" y="16" width="551" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EUl-9Q-DUU" firstAttribute="leading" secondItem="dcJ-W2-p6R" secondAttribute="leadingMargin" id="2TM-5j-A5N"/>
+                                                <constraint firstItem="EUl-9Q-DUU" firstAttribute="top" secondItem="dcJ-W2-p6R" secondAttribute="topMargin" constant="8" id="eMv-rI-psI"/>
+                                                <constraint firstItem="EUl-9Q-DUU" firstAttribute="trailing" secondItem="dcJ-W2-p6R" secondAttribute="trailingMargin" id="gI5-m4-SOu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="NCc-N3-k7j" kind="show" id="pY0-bg-wiE"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="settingCell" rowHeight="54" id="Dll-LP-KI0">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dll-LP-KI0" id="isI-oZ-Y2w">
@@ -373,6 +397,7 @@
                         <outlet property="aboutLabel" destination="20k-UH-IGJ" id="hti-f4-1kv"/>
                         <outlet property="accountTypeLabel" destination="dhm-HY-OSI" id="zdd-PE-46i"/>
                         <outlet property="advancedLabel" destination="oaw-HF-Caa" id="b6K-yo-EoT"/>
+                        <outlet property="applicationLanguageLabel" destination="EUl-9Q-DUU" id="Mzg-Hk-Juk"/>
                         <outlet property="availableImageView" destination="blt-k7-Ea3" id="PAL-EI-f1n"/>
                         <outlet property="availableLabel" destination="o2j-8L-Dab" id="0Zq-S7-16I"/>
                         <outlet property="avatarImageView" destination="2rS-fD-aJe" id="iKa-8y-1Wt"/>
@@ -398,6 +423,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TXR-Sw-ijM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2001" y="-1219"/>
+        </scene>
+        <!--Language Table View Controller-->
+        <scene sceneID="PhQ-QW-DGl">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="NCc-N3-k7j" customClass="LanguageTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sVc-Xc-cYL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="languageCell" id="BMW-jx-toz">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BMW-jx-toz" id="0G6-c3-D63">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="NCc-N3-k7j" id="5aD-r8-64C"/>
+                            <outlet property="delegate" destination="NCc-N3-k7j" id="Nhg-b7-BQ8"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fuj-EB-ykU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1101" y="-992"/>
         </scene>
         <!--Upgrade Table View Controller-->
         <scene sceneID="dfj-ai-dDU">
@@ -479,7 +530,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exB-7y-jtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-932" y="-1091"/>
+            <point key="canvasLocation" x="-287" y="-1248"/>
         </scene>
         <!--Camera Uploads-->
         <scene sceneID="4TD-tc-NuR">
@@ -925,7 +976,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xL1-ZA-byq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-269" y="-1243"/>
+            <point key="canvasLocation" x="-161" y="-1943"/>
         </scene>
         <!--Advanced-->
         <scene sceneID="JNs-d2-nKp">
@@ -1025,7 +1076,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4m-YE-vxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-926" y="616"/>
+            <point key="canvasLocation" x="-2001" y="544"/>
         </scene>
         <!--Change Password View Controller-->
         <scene sceneID="4x0-Jc-Zk5">
@@ -1116,7 +1167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhb-cj-fvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-171" y="619"/>
+            <point key="canvasLocation" x="-1167" y="544"/>
         </scene>
         <!--About-->
         <scene sceneID="AfA-UY-hqs">
@@ -1228,13 +1279,13 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-477" y="-150"/>
+            <point key="canvasLocation" x="-1401" y="-190"/>
         </scene>
-        <!--Settings-->
+        <!--Navigation Controller-->
         <scene sceneID="WR9-WA-C2Y">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qvR-uV-YnP" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="Settings" image="settingsIcon" id="aSa-xA-PrR"/>
+                    <tabBarItem key="tabBarItem" tag="5" title="" image="settingsIcon" id="aSa-xA-PrR"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aFF-r7-bca">

@@ -40,11 +40,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"advancedLabel", "The title for the advanced view")];
+    [self.navigationItem setTitle:AMLocalizedString(@"advancedLabel", @"The title for the advanced view")];
     
-    [self.rubbishBinLabel setText:NSLocalizedString(@"rubbishBinLabel", "The name for the rubbish bin label")];
-    [self.exportMasterKeyLabel setText:NSLocalizedString(@"exportMasterKeyLabel", "The name for the export master key label")];
-    [self.changePasswordLabel setText:NSLocalizedString(@"changePasswordLabel", "The name for the change password label")];
+    [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"The name for the rubbish bin label")];
+    [self.exportMasterKeyLabel setText:AMLocalizedString(@"exportMasterKeyLabel", @"The name for the export master key label")];
+    [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     
     [self reloadUI];
 }
@@ -59,9 +59,9 @@
     existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"MasterKey.txt"]];
     
     if (existMasterKey) {
-        [self.exportMasterKeyLabel setText:NSLocalizedString(@"cleanupMasterKeyLabel", "Cleanup Master Key")];
+        [self.exportMasterKeyLabel setText:AMLocalizedString(@"cleanupMasterKeyLabel", @"Cleanup Master Key")];
     } else {
-        [self.exportMasterKeyLabel setText:NSLocalizedString(@"exportMasterKeyLabel", "The name for the export master key label")];
+        [self.exportMasterKeyLabel setText:AMLocalizedString(@"exportMasterKeyLabel", @"The name for the export master key label")];
     }
 }
 
@@ -78,14 +78,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [NSString stringWithFormat:NSLocalizedString(@"rubbishBinFooter", "The footer label for the rubbish bin section in advanced view")];
+            return AMLocalizedString(@"rubbishBinFooter", @"The footer label for the rubbish bin section in advanced view");
             break;
             
         case 1:
             if (existMasterKey) {
-                return [NSString stringWithFormat:NSLocalizedString(@"cleanupMasterKeyFooter", "Delete the Master Key from the sandbox of the application")];
+                return AMLocalizedString(@"cleanupMasterKeyFooter", @"Delete the Master Key from the sandbox of the application");
             } else {
-                return [NSString stringWithFormat:NSLocalizedString(@"exportMasterKeyFooter", "The footer label for the export Master Key section in advanced view")];
+                return AMLocalizedString(@"exportMasterKeyFooter", @"The footer label for the export Master Key section in advanced view");
             }
             
             break;
@@ -106,7 +106,7 @@
         CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         
         [self.navigationController pushViewController:cloud animated:YES];
-        cloud.navigationItem.title = NSLocalizedString(@"rubbishBinLabel", "The name for the rubbish bin label");
+        cloud.navigationItem.title = AMLocalizedString(@"rubbishBinLabel", @"The name for the rubbish bin label");
         
         [cloud setParentNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
         [cloud setDisplayMode:DisplayModeRubbishBin];
@@ -121,7 +121,7 @@
             BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:nil];
             
             if (success) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"cleanupMasterKeyAlertTitle", "Master Key cleaned") message:NSLocalizedString(@"cleanupMasterKeyAlertMessage", "MasterKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cleanupMasterKeyAlertTitle", @"Master Key cleaned") message:AMLocalizedString(@"cleanupMasterKeyAlertMessage", @"MasterKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [alertView show];
             }
         
@@ -129,7 +129,7 @@
             BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
             
             if (success) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"exportMasterKeyAlertTitle", nil) message:NSLocalizedString(@"exportMasterKeyAlertMessage", nil) delegate:nil cancelButtonTitle:@"Got it" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"exportMasterKeyAlertTitle", nil) message:AMLocalizedString(@"exportMasterKeyAlertMessage", nil) delegate:nil cancelButtonTitle:@"Got it" otherButtonTitles:nil, nil];
                 [alertView show];
             }
         }
