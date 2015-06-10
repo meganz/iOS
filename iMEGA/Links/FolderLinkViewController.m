@@ -38,6 +38,8 @@
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
+    BOOL isFetchNodesDone;
+    
     NSMutableArray *matchSearchNodes;
 }
 
@@ -64,6 +66,8 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    
+    isFetchNodesDone = NO;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     NSError *error;
@@ -471,6 +475,10 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
+    if (!isFetchNodesDone) {
+        return nil;
+    }
+    
     NSString *text;
     if (self.isFolderRootNode) {
         text = NSLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link.");
@@ -485,6 +493,10 @@
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    if (!isFetchNodesDone) {
+        return nil;
+    }
     
     NSString *text;
     if (self.isFolderRootNode) {
@@ -505,10 +517,18 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    if (!isFetchNodesDone) {
+        return nil;
+    }
+    
     return [UIImage imageNamed:@"emptyFolder"];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    if (!isFetchNodesDone) {
+        return nil;
+    }
+    
     return [UIColor whiteColor];
 }
 
@@ -564,11 +584,13 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            isFetchNodesDone = NO;
             [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            isFetchNodesDone = YES;
             [self reloadUI];
             [self.importBarButtonItem setEnabled:YES];
             [self.downloadBarButtonItem setEnabled:YES];
