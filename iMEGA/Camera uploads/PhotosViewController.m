@@ -647,6 +647,10 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        return nil;
+    }
+    
     NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
@@ -656,6 +660,10 @@
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        return nil;
+    }
     
     NSString *text = NSLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
     
@@ -671,10 +679,18 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        return nil;
+    }
+    
     return [UIImage imageNamed:@"emptyCameraUploads"];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        return nil;
+    }
+    
     return [UIColor whiteColor];
 }
 
