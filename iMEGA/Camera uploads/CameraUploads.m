@@ -211,6 +211,8 @@ static CameraUploads *instance = nil;
     [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                 usingBlock:assetGroupEnumerator
                               failureBlock:^(NSError *error) {
+                                  [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
                                   [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
                               }];
 }
@@ -223,12 +225,13 @@ static CameraUploads *instance = nil;
     
     ALAsset *asset = nil;
     
+    [self setBadgeValue];
+    
     if (self.assetUploadArray.count > 0) {
         asset = [self.assetUploadArray firstObject];
     }
     
     if (!asset) {
-//        [self setBadgeValue];
         return;
     }
     
@@ -255,8 +258,6 @@ static CameraUploads *instance = nil;
     if (error) {
         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
     }
-    
-    [self setBadgeValue];
     
     NSString *localCRC = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
     MEGANode *nodeExists = nil;
