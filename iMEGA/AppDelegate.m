@@ -39,6 +39,7 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 #import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
 #import <QuickLook/QuickLook.h>
 
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -80,7 +81,7 @@
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
 
-    [Crashlytics startWithAPIKey:@"c944139841def49387948c278782db2e7dbe8933"];
+    [Fabric with:@[CrashlyticsKit]];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
