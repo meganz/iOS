@@ -13,6 +13,7 @@
 		4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
 		41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41319F541B14968600696BA8 /* SortByTableViewController.m */; };
 		41319F591B149D4500696BA8 /* SortFieldsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */; };
+		414236F41B298800004276AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414236F31B298800004276AA /* Fabric.framework */; };
 		414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 414296101B133EFA00639A20 /* libMEGASDK.a */; };
 		4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */; };
@@ -127,6 +128,7 @@
 		41319F541B14968600696BA8 /* SortByTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortByTableViewController.m; sourceTree = "<group>"; };
 		41319F571B149D4500696BA8 /* SortFieldsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortFieldsTableViewController.h; sourceTree = "<group>"; };
 		41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortFieldsTableViewController.m; sourceTree = "<group>"; };
+		414236F31B298800004276AA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		414296101B133EFA00639A20 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		415226691A692ECC00EC7BB6 /* Cloud.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cloud.storyboard; sourceTree = "<group>"; };
 		4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				41B1F7D81B0496330059A984 /* Crashlytics.framework in Frameworks */,
 				418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */,
 				418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */,
+				414236F41B298800004276AA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +553,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				414236F31B298800004276AA /* Fabric.framework */,
 				414296101B133EFA00639A20 /* libMEGASDK.a */,
 				41B1F7D71B0496330059A984 /* Crashlytics.framework */,
 				418072751AA5B9F30078D950 /* SystemConfiguration.framework */,
