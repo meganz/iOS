@@ -175,6 +175,9 @@
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
+    
+    //Hide searchbar
+    self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -253,7 +256,7 @@
         time_t rawtime = [[node modificationTime] timeIntervalSince1970];
         timeinfo = localtime(&rawtime);
         
-        strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
+        strftime(buffer, 80, "%d %B %Y %I:%M %p", timeinfo);
         
         NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
         NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
@@ -377,22 +380,7 @@
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
-        NSString *filesAndFolders;
-        
-        if (files == 0 || files > 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
-            }
-        } else if (files == 1) {
-            if (folders == 0 || folders > 1) {
-                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
-            } else if (folders == 1) {
-                filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
-            }
-        }
-        
+        NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
         cell.infoLabel.text = filesAndFolders;
     }
     
@@ -705,7 +693,11 @@
             break;
             
         case DisplayModeRubbishBin:
-            text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+            if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+            } else {
+                text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+            }
             break;
     }
     
@@ -728,7 +720,11 @@
             break;
             
         case DisplayModeRubbishBin:
-            text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+            if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+            } else {
+                text = @"";
+            }
             break;
     }
     
@@ -759,7 +755,11 @@
             break;
             
         case DisplayModeRubbishBin:
-            return [UIImage imageNamed:@"emptyRubbishBin"];
+            if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                return [UIImage imageNamed:@"emptyRubbishBin"];
+            } else {
+                return [UIImage imageNamed:@"emptyFolder"];
+            }
             break;
     }
 }
@@ -1146,6 +1146,42 @@
     
     self.imagePickerController = imagePickerController;
     [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
+    if (files > 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
+    }
+    
+    if (files == 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
+    }
+    
+    if (!files && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
+    }
+    
+    if (!files && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
+    }
+    
+    return AMLocalizedString(@"emptyFolder", @"Empty folder");
 }
 
 #pragma mark - IBActions

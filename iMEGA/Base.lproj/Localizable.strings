@@ -159,10 +159,16 @@
 "cloudDrive" = "Cloud Drive";
 "updatingNodes" = "Updating nodes...";
 
-"foldersFiles" = "%d folders, %d files";
-"foldersFile" = "%d folders, %d file";
-"folderFiles" = "%d folder, %d files";
-"folderFile" = "%d folder, %d file";
+"emptyFolder"="Empty folder";
+"oneFile"="%d file";
+"files"="%d files";
+"oneFolder"="%d folder";
+"folders"="%d folders";
+"folderAndFile"="%d folde, %d file";
+"foldersAndFiles" = "%d folders, %d files";
+"foldersAndFile" = "%d folders, %d file";
+"folderAndFiles" = "%d folder, %d files";
+"folderAndFile" = "%d folder, %d file";
 
 "queued"="Queued";
 
