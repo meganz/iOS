@@ -237,7 +237,7 @@
         }
         
         [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
-        [cell.infoLabel setText:[NSString stringWithFormat:AMLocalizedString(@"queued", @"Queued")]];
+        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
@@ -1420,7 +1420,7 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMovedToRubbishBin", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
@@ -1430,7 +1430,7 @@
         case MEGARequestTypeRemove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileRemovedFromRubbishBin", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileRemovedFromRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
@@ -1520,7 +1520,7 @@
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled")]];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled")];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

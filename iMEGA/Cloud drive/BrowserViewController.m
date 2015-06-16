@@ -132,6 +132,44 @@
     [self.tableView reloadData];
 }
 
+
+
+- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
+    if (files > 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
+    }
+    
+    if (files == 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
+    }
+    
+    if (!files && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
+    }
+    
+    if (!files && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
+    }
+    
+    return AMLocalizedString(@"emptyFolder", @"Empty folder");
+}
+
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
@@ -235,21 +273,7 @@
     NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
     NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
     
-    NSString *filesAndFolders;
-    
-    if (files == 0 || files > 1) {
-        if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFiles", @"Folders, files"), (int)folders, (int)files];
-        } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFiles", @"Folder, files"), (int)folders, (int)files];
-        }
-    } else if (files == 1) {
-        if (folders == 0 || folders > 1) {
-            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"foldersFile", @"Folders, file"), (int)folders, (int)files];
-        } else if (folders == 1) {
-            filesAndFolders = [NSString stringWithFormat:AMLocalizedString(@"folderFile", @"Folders, file"), (int)folders, (int)files];
-        }
-    }
+    NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
     
     cell.infoLabel.text = filesAndFolders;
     
@@ -292,7 +316,7 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileMoved", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -309,7 +333,7 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileCopied", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
+                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileCopied", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
