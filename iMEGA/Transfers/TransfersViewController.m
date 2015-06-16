@@ -180,7 +180,7 @@
                 break;
             }
         }
-        [cell.infoLabel setText:[NSString stringWithFormat:AMLocalizedString(@"queued", @"Queued")]];
+        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     }
     
     NSString *fileName = [transfer fileName];
@@ -614,9 +614,9 @@
     switch ([request type]) {
         case MEGARequestTypePauseTransfers: {
             if ([request flag]) {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersPaused", @"Transfers paused")]];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transfersPaused", @"Transfers paused")];
             } else {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersResumed", @"Transfers resumed")]];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transfersResumed", @"Transfers resumed")];
             }
             [[NSUserDefaults standardUserDefaults] setBool:[request flag] forKey:@"TransfersPaused"];
             break;
@@ -625,7 +625,7 @@
         case MEGARequestTypeCancelTransfers: {
             [self cleanTransfersList];
             [self.tableView reloadData];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transfersCanceled", @"Transfers canceled")]];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transfersCanceled", @"Transfers canceled")];
             break;
         }
             
@@ -704,7 +704,7 @@
     
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled")]];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled")];
             [self removeActiveTransfer:transfer];
             [self.tableView reloadData];
         }

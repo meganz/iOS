@@ -481,7 +481,7 @@
             
         case MEGARequestTypeCancelTransfer:
             [self.tableView reloadData];
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:AMLocalizedString(@"transferCanceled", @"Transfer canceled!")]];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled!")];
             break;
             
         default:
