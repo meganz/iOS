@@ -28,7 +28,7 @@
                                             <segment title="Downloads"/>
                                             <segment title="Uploads"/>
                                         </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="transfersTypeSegmentedControlValueChanged:" destination="o8b-vr-3of" eventType="valueChanged" id="lUG-XK-RCa"/>
                                         </connections>
@@ -41,8 +41,8 @@
                                     <constraint firstAttribute="height" constant="44" id="QFf-QI-8CK"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gol-pZ-yZD">
-                                <rect key="frame" x="0.0" y="44" width="600" height="492"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gol-pZ-yZD">
+                                <rect key="frame" x="0.0" y="44" width="600" height="443"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" id="tHq-Vb-vFR" customClass="TransferTableViewCell">
@@ -141,19 +141,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UrG-FX-mvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem style="done" systemItem="stop" id="JY3-2h-mLE" userLabel="Cancel Bar Button Item">
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="cancelTransfersAction:" destination="o8b-vr-3of" id="2cX-lc-PIN"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="done" systemItem="pause" id="Tlb-j4-XPE" userLabel="Pause Bar Button Item">
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="pauseTransfersAction:" destination="o8b-vr-3of" id="UwD-Qd-8hH"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem style="done" systemItem="play" id="Ebr-Et-TQ1" userLabel="Resume Bar Button Item">
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="resumeTransfersAction:" destination="o8b-vr-3of" id="SMz-Rx-YPf"/>
                     </connections>
@@ -165,16 +162,12 @@
         <scene sceneID="YHV-SE-pQc">
             <objects>
                 <navigationController storyboardIdentifier="navigationControllerTransfersID" automaticallyAdjustsScrollViewInsets="NO" id="6uN-CI-8KQ" userLabel="Transfers" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="4" title="Transfers" image="tabBarDownload" id="Ud2-dA-PEh" userLabel="Transfers"/>
+                    <tabBarItem key="tabBarItem" tag="4" title="" image="transfersIcon" id="Ud2-dA-PEh" userLabel="Transfers"/>
                     <toolbarItems/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="U9p-QP-PSW">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="U9p-QP-PSW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -187,7 +180,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cancel" width="29" height="29"/>
-        <image name="tabBarDownload" width="30" height="30"/>
+        <image name="cancel" width="46" height="44"/>
+        <image name="transfersIcon" width="26" height="26"/>
     </resources>
 </document>

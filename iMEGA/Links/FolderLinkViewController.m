@@ -109,7 +109,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    [self.tableView setContentOffset:CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height)];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
@@ -332,6 +332,11 @@
     
     cell.nodeHandle = [node handle];
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGrey];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     return cell;
 }
 
@@ -478,6 +483,9 @@
     if (!isFetchNodesDone) {
         return nil;
     }
+    
+    //Avoid showing separator lines between cells on empty states
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
     if (self.isFolderRootNode) {

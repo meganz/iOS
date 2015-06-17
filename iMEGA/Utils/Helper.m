@@ -258,7 +258,7 @@ static NSInteger linkNodeOption;
     static UIImage *folderCameraUploadsImage = nil;
     
     if (folderCameraUploadsImage == nil) {
-        folderCameraUploadsImage = [UIImage imageNamed:@"folder_camera_uploads"];
+        folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
     }
     return folderCameraUploadsImage;
 }

@@ -98,7 +98,6 @@
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     
     self.titleLabel.text = self.titles[0];
     self.subtitleLabel.text = self.subtitles[0];

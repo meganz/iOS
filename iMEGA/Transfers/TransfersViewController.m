@@ -123,6 +123,11 @@
     
     TransferTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGrey];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     MEGATransfer *transfer;
     if ([indexPath section] == 0) { //ACTIVE TRANSFERS
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
@@ -543,6 +548,9 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    //Avoid showing separator lines between cells on empty states
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {

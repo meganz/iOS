@@ -265,9 +265,10 @@
         cell.infoLabel.text = sizeAndDate;
     }
     
-    if (self.displayMode == DisplayModeRubbishBin) {
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGrey];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     cell.nameLabel.text = [node name];
     
@@ -371,6 +372,9 @@
         if (!fileExists) {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         } else {
+            [cell.thumbnailImageView.layer setCornerRadius:4];
+            [cell.thumbnailImageView.layer setMasksToBounds:YES];
+            
             [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         }
         
@@ -532,6 +536,19 @@
                 }
                 
             } else {
+                MEGANode *node = nil;
+                
+                if (tableView == self.searchDisplayController.searchResultsTableView) {
+                    node = [matchSearchNodes objectAtIndex:indexPath.row];
+                } else {
+                    node = [self.nodes nodeAtIndex:indexPath.row];
+                }
+                
+                DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+                [detailsNodeInfoVC setNode:node];
+                
+                [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
+                
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             }
             break;
@@ -572,22 +589,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = nil;
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        node = [matchSearchNodes objectAtIndex:indexPath.row];
-    } else {
-        node = [self.nodes nodeAtIndex:indexPath.row];
-    }
-    
-    DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-    [nodeInfoDetailsVC setNode:node];
-    
-    [self.navigationController pushViewController:nodeInfoDetailsVC animated:YES];
-}
-
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
     
@@ -603,6 +604,10 @@
     isSwipeEditing = YES;
     
     return (UITableViewCellEditingStyleDelete);
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return AMLocalizedString(@"remove", @"");
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -677,6 +682,9 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
+    //Avoid showing separator lines between cells on empty states
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     NSString *text;
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -743,7 +751,7 @@
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if ([self.parentNode type] == MEGANodeTypeRoot) {
-                return [UIImage imageNamed:@"emptyCloud"];
+                return [UIImage imageNamed:@"emptyCloudDrive"];
             } else {
                 return [UIImage imageNamed:@"emptyFolder"];
             }
@@ -820,6 +828,16 @@
                     });
                 }
             }];
+        }
+    }
+}
+
+//For iOS 7 UIActionSheet color
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:megaRed forState:UIControlStateNormal];
         }
     }
 }
@@ -1317,6 +1335,24 @@
     
     [self presentViewController:sortByNavigationControllerID animated:YES completion:nil];
     
+}
+
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    MEGANode *node = nil;
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    if (self.tableView == self.searchDisplayController.searchResultsTableView) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
+    
+    DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+    [detailsNodeInfoVC setNode:node];
+    
+    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
 #pragma mark - Content Filtering

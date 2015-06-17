@@ -124,9 +124,7 @@
         NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
         
         [mailer setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
-        [self presentViewController:mailer animated:YES completion:^{
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-        }];
+        [self presentViewController:mailer animated:YES completion:nil];
     } else {
         [SVProgressHUD showErrorWithStatus:@"No email account configured"];
     }
