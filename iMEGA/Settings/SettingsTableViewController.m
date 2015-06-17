@@ -241,6 +241,16 @@
     }
 }
 
+//For iOS 7 UIActionSheet color
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:megaRed forState:UIControlStateNormal];
+        }
+    }
+}
+
 #pragma mark - PieChartViewDelegate
 
 - (CGFloat)centerCircleRadius {

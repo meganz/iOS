@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,14 +13,15 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashImage" translatesAutoresizingMaskIntoConstraints="NO" id="NDJ-F8-gvk">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="NDJ-F8-gvk" secondAttribute="trailing" id="13C-5P-Djm"/>
-                <constraint firstItem="NDJ-F8-gvk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="SbV-g6-iAK"/>
-                <constraint firstItem="NDJ-F8-gvk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hc6-dc-NF4"/>
-                <constraint firstAttribute="bottom" secondItem="NDJ-F8-gvk" secondAttribute="bottom" id="yS5-Bu-WYs"/>
+                <constraint firstItem="NDJ-F8-gvk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3j4-f9-nPI"/>
+                <constraint firstAttribute="trailing" secondItem="NDJ-F8-gvk" secondAttribute="trailing" id="RAU-XF-7JK"/>
+                <constraint firstItem="NDJ-F8-gvk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="SBr-nd-oYa"/>
+                <constraint firstAttribute="bottom" secondItem="NDJ-F8-gvk" secondAttribute="bottom" id="lKg-ei-wfd"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -28,6 +29,6 @@
         </view>
     </objects>
     <resources>
-        <image name="splashImage" width="320" height="480"/>
+        <image name="splashImage" width="640" height="960"/>
     </resources>
 </document>

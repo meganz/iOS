@@ -252,21 +252,18 @@
 #pragma mark - Private
 
 - (void)setupAppearance {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    UIColor *whiteColor = [UIColor whiteColor];
     
     NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:whiteColor forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setValue:[UIFont systemFontOfSize:18.0] forKey:NSFontAttributeName];
     [[UINavigationBar appearance] setTitleTextAttributes:titleTextAttributesDictionary];
+    [[UINavigationBar appearance] setTintColor:megaRed];
     
-    [[UINavigationBar appearance] setBarTintColor:megaRed];
-    [[UINavigationBar appearance] setTintColor:whiteColor];
+    [[UIBarButtonItem appearance] setTintColor:megaRed];
     
-    [[UIBarButtonItem appearance] setTintColor:whiteColor];
+    [[UITextField appearance] setTintColor:megaRed];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
     
-    [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UITabBar appearance] setTintColor:whiteColor];
+    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
 }
 
 - (void)startBackgroundTask {
@@ -277,10 +274,9 @@
 }
 
 - (void)showCameraUploadsPopUp {
-    CameraUploadsPopUpViewController *cameraUploadsPopUpVC = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpViewControllerID"];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:cameraUploadsPopUpVC];
+    MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
-    [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
 }
 
 - (void)selectedOptionOnLink {
@@ -426,21 +422,20 @@
             [alertView show];
             
         } else {
-            FileLinkViewController *fileLinkVC = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
+            MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+            FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
             NSString *megaFileLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
             [fileLinkVC setFileLinkString:megaFileLinkURLString];
-            
-            MEGANavigationController *linkNavigationController = [[MEGANavigationController alloc] initWithRootViewController:fileLinkVC];
             
             if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
                 MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
                 if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:linkNavigationController animated:YES completion:nil];
+                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
                 } else {
-                    [self.window.rootViewController presentViewController:linkNavigationController animated:YES completion:nil];
+                    [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
                 }
             } else {
-                [self.window.rootViewController presentViewController:linkNavigationController animated:YES completion:nil];
+                [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
             }
         }
         return YES;
@@ -468,7 +463,7 @@
         } else {
             MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
             
-            FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;;
+            FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
             
             NSString *megaFolderLinkString = [megaURLString stringByAppendingString:afterSlashesString];
             [folderlinkVC setIsFolderRootNode:YES];

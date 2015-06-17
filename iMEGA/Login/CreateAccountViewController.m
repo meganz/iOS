@@ -78,8 +78,6 @@
     [super viewWillAppear:animated];
     
     [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", @"Create Account")];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

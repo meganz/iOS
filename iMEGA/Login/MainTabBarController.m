@@ -20,6 +20,7 @@
  */
 
 #import "MainTabBarController.h"
+#import "Helper.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate>
 
@@ -45,6 +46,38 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
     [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
     
+    for (NSInteger i = 0; i< [defaultViewControllersMutableArray count]; i++) {
+        UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        switch (tabBarItem.tag) {
+            case 0:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"cloudDriveSelectedIcon"]];
+                break;
+                
+            case 1:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"cameraUploadsSelectedIcon"]];
+                break;
+                
+            case 2:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"offlineSelectedIcon"]];
+                break;
+                
+            case 3:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"contactsSelectedIcon"]];
+                break;
+                
+            case 4:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"transfersSelectedIcon"]];
+                break;
+                
+            case 5:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"settingsSelectedIcon"]];
+                break;
+        }
+    }
+    
+    [self.view setTintColor:megaRed];
+    [self.moreNavigationController.view setTintColor:megaRed];
+    
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
     if (tabsOrderArray) {
         NSMutableArray *customOrderMutableArray = [NSMutableArray arrayWithCapacity:defaultViewControllersMutableArray.count];
@@ -58,18 +91,6 @@
     
     [self setDelegate:self];
     
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    UIImage *tabHighlightImage = [[UIImage imageNamed:@"tabHighlight"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    CGSize tabSize = CGSizeMake(self.view.frame.size.width/[self.tabBar.items count], self.tabBar.frame.size.height);
-    
-    UIGraphicsBeginImageContext(tabSize);
-    [tabHighlightImage drawInRect:CGRectMake(0, 0, tabSize.width, tabSize.height)];
-    UIImage *resizedHighlightImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self.tabBar setSelectionIndicatorImage:resizedHighlightImage];
 }
 
 - (BOOL)shouldAutorotate {

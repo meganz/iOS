@@ -285,6 +285,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OfflineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"offlineTableViewCell" forIndexPath:indexPath];
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGrey];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:nil];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:[indexPath row]]];
@@ -322,8 +327,7 @@
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell.imageView setImage:[Helper folderImage]];
+        [cell.thumbnailImageView setImage:[Helper folderImage]];
         
         size = [Helper sizeOfFolderAtPath:pathForItem];
     } else {
@@ -331,6 +335,9 @@
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
         if (isImage(nameString.pathExtension)) {
+            [cell.thumbnailImageView.layer setCornerRadius:4];
+            [cell.thumbnailImageView.layer setMasksToBounds:YES];
+            
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbs"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
@@ -339,10 +346,10 @@
             if (thumbnailImage == nil) {
                 thumbnailImage = [Helper defaultPhotoImage];
             }
-            [cell.imageView setImage:thumbnailImage];
+            [cell.thumbnailImageView setImage:thumbnailImage];
         } else {
             UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-            [cell.imageView setImage:iconImage];
+            [cell.thumbnailImageView setImage:iconImage];
         }
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
@@ -519,6 +526,9 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
+    //Avoid showing separator lines between cells on empty states
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     NSString *text;
     if (self.folderPathFromOffline == nil) {
         text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
@@ -553,7 +563,7 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"emptyFolder"];
+    return [UIImage imageNamed:@"emptyOffline"];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

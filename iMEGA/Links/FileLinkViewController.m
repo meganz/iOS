@@ -65,7 +65,6 @@
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     [self setUIItemsEnabled:NO];
     

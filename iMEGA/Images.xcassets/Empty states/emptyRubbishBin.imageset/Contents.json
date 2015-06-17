@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "emptyRubbishBin.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "emptyRubbishBin@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "emptyRubbishBin@3x.png"
+      "filename" : "emptyRubbishBin.pdf"
     }
   ],
   "info" : {

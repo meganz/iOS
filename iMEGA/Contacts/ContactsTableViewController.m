@@ -214,6 +214,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGrey];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     
     cell.nameLabel.text = [user email];
@@ -358,6 +363,16 @@
     }
 }
 
+//For iOS 7 UIActionSheet color
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:megaRed forState:UIControlStateNormal];
+        }
+    }
+}
+
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
@@ -438,6 +453,9 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    //Avoid showing separator lines between cells on empty states
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
     
