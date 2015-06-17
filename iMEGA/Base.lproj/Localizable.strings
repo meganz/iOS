@@ -165,11 +165,11 @@
 "files"="%d files";
 "oneFolder"="%d folder";
 "folders"="%d folders";
-"folderAndFile"="%d folde, %d file";
-"foldersAndFiles" = "%d folders, %d files";
-"foldersAndFile" = "%d folders, %d file";
-"folderAndFiles" = "%d folder, %d files";
-"folderAndFile" = "%d folder, %d file";
+"folderAndFile"="%d folde • %d file";
+"foldersAndFiles" = "%d folders • %d files";
+"foldersAndFile" = "%d folders • %d file";
+"folderAndFiles" = "%d folder • %d files";
+"folderAndFile" = "%d folder • %d file";
 
 "queued"="Queued";
 
