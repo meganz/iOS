@@ -44,7 +44,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-#define kUserAgent @"MEGAiOS/2.9.1.1"
+#define kUserAgent @"MEGAiOS/2.9.2.1"
 #define kAppKey @"EVtjzb7R"
 
 #define kFirstRun @"FirstRun"

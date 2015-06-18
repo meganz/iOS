@@ -50,6 +50,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *accountTypeImageView;
 
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 
@@ -200,6 +201,27 @@
     }
 }
 
+#pragma mark - UITableViewDataSource
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            [cell.contentView setBackgroundColor:megaLightGray];
+            break;
+            
+        case 1:
+            [cell.contentView setBackgroundColor:megaRed];
+            break;
+            
+        case 3:
+            [cell.contentView setBackgroundColor:megaDarkGray];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - IBActions
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -340,12 +362,13 @@
             NSString *usedStorageString = [NSByteCountFormatter stringFromByteCount:[[request.megaAccountDetails storageUsed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
             NSString *availableStorageString = [NSByteCountFormatter stringFromByteCount:([[request.megaAccountDetails storageMax] longLongValue]- [[request.megaAccountDetails storageUsed] longLongValue])  countStyle:NSByteCountFormatterCountStyleMemory];
             
-            [self.storageLabel setText:[NSString stringWithFormat:AMLocalizedString(@"usedSpaceOfTotalSpace", nil), usedStorageString, maxStorageString]];
+            [self.storageLabel setText:[NSString stringWithFormat:@"%@", maxStorageString]];
             
             [self.sizeUsedSpaceLabel setText:usedStorageString];
             [self.sizeAvailableLabel setText:availableStorageString];
             
             if (![request.megaAccountDetails type]) {
+                [self.accountTypeImageView setImage:[UIImage imageNamed:@"profree"]];
                 [self.accountTypeLabel setText:@"Free"];
             } else {
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -357,18 +380,27 @@
                 NSString *expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"(Expires on %@)"), [formatter stringFromDate:expireDate]];
                 
                 switch ([request.megaAccountDetails type]) {
-                    case 1: {
-                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProI %@", request.megaAccountDetails.subscriptionCycle]];
+                    case MEGAAccountTypeLite: {
+                        [self.accountTypeImageView setImage:[UIImage imageNamed:@"prolite"]];
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"Pro Lite %@", expiresString]];
                         break;
                     }
                         
-                    case 2:{
-                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProII %@", expiresString]];
+                    case MEGAAccountTypeProI: {
+                        [self.accountTypeImageView setImage:[UIImage imageNamed:@"pro1"]];
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"Pro I %@", expiresString]];
                         break;
                     }
                         
-                    case 3:{
-                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"ProIII %@", expiresString]];
+                    case MEGAAccountTypeProII: {
+                        [self.accountTypeImageView setImage:[UIImage imageNamed:@"pro2"]];
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"Pro II %@", expiresString]];
+                        break;
+                    }
+                        
+                    case MEGAAccountTypeProIII: {
+                        [self.accountTypeImageView setImage:[UIImage imageNamed:@"pro3"]];
+                        [self.accountTypeLabel setText:[NSString stringWithFormat:@"Pro III %@", expiresString]];
                         break;
                     }
                         
