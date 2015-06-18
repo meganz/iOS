@@ -73,6 +73,8 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
 }
