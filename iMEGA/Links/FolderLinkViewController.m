@@ -109,8 +109,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.tableView setContentOffset:CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height)];
-    
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
@@ -179,16 +177,12 @@
     [self.downloadBarButtonItem setEnabled:NO];
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope {
+- (void)filterContentForSearchText:(NSString*)searchText {
     
     matchSearchNodes = [NSMutableArray new];
     MEGANodeList *allNodeList = nil;
     
-    if([scope isEqualToString:@"Recursive"]) {
-        allNodeList = [[MEGASdkManager sharedMEGASdkFolder] nodeListSearchForNode:self.parentNode searchString:searchText recursive:YES];
-    } else {
-        allNodeList = [[MEGASdkManager sharedMEGASdkFolder] nodeListSearchForNode:self.parentNode searchString:searchText recursive:NO];
-    }
+    allNodeList = [[MEGASdkManager sharedMEGASdkFolder] nodeListSearchForNode:self.parentNode searchString:searchText recursive:YES];
     
     for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
         MEGANode *n = [allNodeList nodeAtIndex:i];
@@ -484,15 +478,13 @@
 #pragma mark - UISearchDisplayControllerDelegate
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-    [self filterContentForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    [self filterContentForSearchText:searchString];
     
     return YES;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
-    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
     
     return YES;
 }

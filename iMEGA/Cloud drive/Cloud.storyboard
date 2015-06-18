@@ -20,10 +20,6 @@
                             <color key="tintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                            <scopeButtonTitles>
-                                <string>Recursive</string>
-                                <string>No recursive</string>
-                            </scopeButtonTitles>
                             <connections>
                                 <outlet property="delegate" destination="KWY-Kr-BLD" id="aDb-0l-HJe"/>
                             </connections>
