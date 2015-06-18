@@ -475,6 +475,12 @@
             NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
             activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+            
+            if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
+                activityVC.popoverPresentationController.sourceView = self.view;
+                activityVC.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width / 2, self.view.frame.size.height / 4, 0, 0);
+            }
+            
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
