@@ -1485,6 +1485,11 @@
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
                 activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                
+                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
+                    activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
+                }
+                
                 [self presentViewController:activityVC animated:YES completion:nil ];
                 [self setEditing:NO animated:NO];
             }
