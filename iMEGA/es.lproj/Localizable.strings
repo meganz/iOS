@@ -3,6 +3,7 @@
 "ok" = "Aceptar";
 "error" = "Error";
 "remove" = "Eliminar";
+"shareFolder" = "Compartir carpeta";
 
 "attention"="Atención";
 "cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en la configuración de la aplicación!";
@@ -157,7 +158,7 @@
 "transfersEmptyState_textUpload"="No tienes ninguna transferencia pendiente de subida.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
-"cloudDrive" = "Cloud";
+"cloudDrive" = "Cloud Drive";
 "updatingNodes" = "Actualizando nodos...";
 
 "emptyFolder"="Carpeta vacia";

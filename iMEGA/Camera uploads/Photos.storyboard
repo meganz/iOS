@@ -57,7 +57,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="0.23999999463558197" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="P5z-Zy-8op" firstAttribute="leading" secondItem="rT5-lt-gbb" secondAttribute="leadingMargin" constant="12" id="2lq-ir-ioY"/>
                                         <constraint firstItem="P5z-Zy-8op" firstAttribute="top" secondItem="rT5-lt-gbb" secondAttribute="topMargin" constant="-4" id="CDL-eV-nx8"/>
@@ -110,7 +110,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.23999999463558197" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="cZl-Eu-u3h" firstAttribute="leading" secondItem="l6a-Jy-M7v" secondAttribute="leading" constant="8" id="2zH-qx-fpf"/>
                                     <constraint firstAttribute="trailing" secondItem="7zC-lc-b2f" secondAttribute="trailing" constant="8" id="4mL-WV-Mk1"/>
@@ -178,7 +178,7 @@
                         <outlet property="uploadProgressViewTopLayoutConstraint" destination="l9A-6K-8ug" id="cek-RT-W8S"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="selectAll" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
+                <barButtonItem image="check_mark" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="3GS-cK-Hw6" id="XId-i9-9Xl"/>
                     </connections>
@@ -187,28 +187,25 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <items>
-                        <barButtonItem enabled="NO" image="tabBarDownload" id="mZb-63-wxw" userLabel="Download Bar Button Item">
+                        <barButtonItem enabled="NO" image="toolbarDownload" width="32" id="mZb-63-wxw" userLabel="Download Bar Button Item">
                             <connections>
                                 <action selector="downloadAction:" destination="3GS-cK-Hw6" id="osa-ls-637"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="tabBarShare" id="84D-T8-1ui" userLabel="Share Bar Button Item">
-                            <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
+                        <barButtonItem enabled="NO" image="toolbarShare" width="32" id="84D-T8-1ui" userLabel="Share Bar Button Item">
                             <connections>
                                 <action selector="shareLinkAction:" destination="3GS-cK-Hw6" id="9LL-5Z-Qod"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujf-9f-8Qy"/>
-                        <barButtonItem enabled="NO" image="tabBarMove" id="k2g-A4-j6f" userLabel="Move Copy Bar Button Item">
-                            <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
+                        <barButtonItem enabled="NO" image="toolbarMove" width="32" id="k2g-A4-j6f" userLabel="Move Copy Bar Button Item">
                             <connections>
                                 <action selector="moveCopyAction:" destination="3GS-cK-Hw6" id="YjH-T4-UqP"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="8tv-N6-uNs"/>
-                        <barButtonItem enabled="NO" image="tabBarDelete" id="bVv-a0-Fx7" userLabel="Delete Bar Button Item">
-                            <inset key="imageInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
+                        <barButtonItem enabled="NO" image="toolbarDelete" width="32" id="bVv-a0-Fx7" userLabel="Delete Bar Button Item">
                             <connections>
                                 <action selector="deleteAction:" destination="3GS-cK-Hw6" id="ofI-ck-r51"/>
                             </connections>
@@ -412,11 +409,11 @@
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="30" height="24"/>
+        <image name="check_mark" width="29" height="29"/>
         <image name="emptyCameraUploads" width="320" height="320"/>
-        <image name="selectAll" width="29" height="29"/>
-        <image name="tabBarDelete" width="30" height="30"/>
-        <image name="tabBarDownload" width="30" height="30"/>
-        <image name="tabBarMove" width="30" height="30"/>
-        <image name="tabBarShare" width="30" height="30"/>
+        <image name="toolbarDelete" width="32" height="32"/>
+        <image name="toolbarDownload" width="32" height="32"/>
+        <image name="toolbarMove" width="32" height="32"/>
+        <image name="toolbarShare" width="32" height="32"/>
     </resources>
 </document>
