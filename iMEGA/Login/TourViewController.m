@@ -97,8 +97,11 @@
         [self.tourScrollView setContentSize:CGSizeMake(width*4, width)];
     }
     
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
+    // Always crash on iPad with iOS7. Don't call "[self.navigationController setNavigationBarHidden:YES animated:NO];" for iPad with iOS7
+    if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPad || ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedDescending)) {
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+    }
+
     self.titleLabel.text = self.titles[0];
     self.subtitleLabel.text = self.subtitles[0];
     [self.tourPageControl setCurrentPage:0];
