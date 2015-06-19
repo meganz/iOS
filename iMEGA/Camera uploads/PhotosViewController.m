@@ -20,6 +20,8 @@
  */
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <MediaPlayer/MPMoviePlayerViewController.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -36,6 +38,7 @@
 #import "BrowserViewController.h"
 
 #import "NSString+MNZCategory.h"
+#import "MEGAProxyServer.h"
 
 @interface PhotosViewController () <UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     dispatch_queue_t createAttributesQueue;
@@ -604,6 +607,29 @@
             [photoBrowser showNextPhotoAnimated:YES];
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
+        } else if (isMultimedia(node.name.pathExtension)) {
+            NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
+            if (link) {
+                MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
+                // Remove the movie player view controller from the "playback did finish" notification observers
+                [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
+                                                                name:MPMoviePlayerPlaybackDidFinishNotification
+                                                              object:moviePlayerViewController.moviePlayer];
+                
+                // Register this class as an observer instead
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(movieFinishedCallback:)
+                                                             name:MPMoviePlayerPlaybackDidFinishNotification
+                                                           object:moviePlayerViewController.moviePlayer];
+                
+                [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
+                
+                [moviePlayerViewController.moviePlayer prepareToPlay];
+                [moviePlayerViewController.moviePlayer play];
+                
+                return;
+            }
+            
         }
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
@@ -706,6 +732,16 @@
     }
     
     return nil;
+}
+
+#pragma mark - Moview player
+
+- (void)movieFinishedCallback:(NSNotification*)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:moviePlayer];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIAlertViewDelegate
