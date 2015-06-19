@@ -102,7 +102,8 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    self.tabBarItem.title = @"Liked";
+    
+    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -433,10 +434,8 @@
         
         if (self.selectedNodesArray.count == self.nodes.size.integerValue) {
             allNodesSelected = YES;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
         } else {
             allNodesSelected = NO;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         }
         
         return;
@@ -583,7 +582,6 @@
         }
         
         allNodesSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         
         return;
     }
@@ -644,15 +642,18 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    [self.editButtonItem setTitle:@""];
+    
     if (editing) {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.addBarButtonItem setEnabled:NO];
         [self.sortByBarButtonItem setEnabled:NO];
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
     } else {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         self.selectedNodesArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         [self.sortByBarButtonItem setEnabled:YES];
@@ -1217,10 +1218,8 @@
         }
         
         allNodesSelected = YES;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
     } else {
         allNodesSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
     }
     
     if (self.selectedNodesArray.count == 0) {

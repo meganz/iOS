@@ -563,7 +563,11 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"emptyOffline"];
+    if (self.folderPathFromOffline == nil) {
+        return [UIImage imageNamed:@"emptyOffline"];
+    } else {
+        return [UIImage imageNamed:@"emptyFolder"];
+    }
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

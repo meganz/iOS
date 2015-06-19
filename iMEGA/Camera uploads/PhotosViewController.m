@@ -110,8 +110,8 @@
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    NSArray *buttonsItems = @[self.editButtonItem];
-    self.navigationItem.rightBarButtonItems = buttonsItems;
+    [self.navigationItem setRightBarButtonItem:self.editButtonItem];
+    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -274,11 +274,9 @@
         
         allNodesSelected = YES;
         [self.navigationItem setTitle:[NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"%lu Items selected"), (long)[[self.nodeList size] unsignedIntegerValue]]];
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
     } else {
         allNodesSelected = NO;
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select title")];
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
     }
     
     if (self.selectedItemsDictionary.count == 0) {
@@ -300,13 +298,16 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    [self.editButtonItem setTitle:@""];
+    
     if (editing) {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
         [self.photosCollectionView setAllowsMultipleSelection:YES];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
     } else {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allNodesSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         [self.navigationItem setTitle:@"Camera Uploads"];
         [self.photosCollectionView setAllowsMultipleSelection:NO];
         [self.selectedItemsDictionary removeAllObjects];
@@ -506,7 +507,7 @@
     cell.nodeHandle = [node handle];
     
     if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
-        cell.thumbnailImageView.layer.borderColor = [[UIColor redColor] CGColor];
+        cell.thumbnailImageView.layer.borderColor = [megaRed CGColor];
         cell.thumbnailImageView.layer.borderWidth = 3.0;
         [cell.thumbnailImageView.layer setOpacity:0.6];
     } else {
@@ -659,10 +660,8 @@
         
         if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
             allNodesSelected = YES;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
         } else {
             allNodesSelected = NO;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         }
         
         [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];

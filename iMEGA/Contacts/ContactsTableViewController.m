@@ -64,8 +64,13 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+    
     NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
+    
+    [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
+    [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", @"Remove")];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,15 +99,18 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
+        
+    [self.editButtonItem setTitle:@""];
     
     if (editing) {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.addBarButtonItem setEnabled:NO];
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
     } else {
+        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allUsersSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         self.navigationItem.leftBarButtonItems = @[];
@@ -152,10 +160,8 @@
         }
         
         allUsersSelected = YES;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
     } else {
         allUsersSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
     }
     
     if (self.selectedUsersArray.count == 0) {
@@ -274,10 +280,8 @@
         
         if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
             allUsersSelected = YES;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"deselectAll"];
         } else {
             allUsersSelected = NO;
-            self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         }
         
         return;
@@ -298,6 +302,8 @@
         [cloud setUser:user];
         [cloud setDisplayMode:DisplayModeContact];
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
@@ -320,7 +326,6 @@
         }
         
         allUsersSelected = NO;
-        self.selectAllBarButtonItem.image = [UIImage imageNamed:@"selectAll"];
         
         return;
     }
