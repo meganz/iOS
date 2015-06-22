@@ -416,7 +416,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyz-B8-m89">
                                 <rect key="frame" x="10" y="347" width="579" height="58"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your e-mail and click the link to confirm your account." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wS1-bl-xiK">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your e-mail and click the link to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wS1-bl-xiK">
                                         <rect key="frame" x="8" y="8" width="563" height="42"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="42" id="NMe-dk-B6G"/>
@@ -496,11 +496,11 @@
                         <viewControllerLayoutGuide type="bottom" id="SdA-8b-svB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pt3-jO-A0x">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6N-FH-tcX" userLabel="Confirm">
-                                <rect key="frame" x="10" y="168" width="580" height="43"/>
+                                <rect key="frame" x="10" y="148" width="580" height="43"/>
                                 <color key="backgroundColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="faE-Nk-VOS"/>
@@ -514,7 +514,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0h1-08-iFW">
-                                <rect key="frame" x="10" y="78" width="580" height="82"/>
+                                <rect key="frame" x="10" y="58" width="580" height="82"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mail" translatesAutoresizingMaskIntoConstraints="NO" id="B2z-ln-6QW" userLabel="Mail">
                                         <rect key="frame" x="15" y="6" width="30" height="30"/>
@@ -569,7 +569,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tht-3q-oWg">
-                                <rect key="frame" x="10" y="219" width="580" height="43"/>
+                                <rect key="frame" x="10" y="199" width="580" height="43"/>
                                 <color key="backgroundColor" white="0.23999999459999999" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="e4m-Uo-b1L"/>
@@ -584,7 +584,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your password to confirm your account." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ju4-nA-cq0">
-                                <rect key="frame" x="16" y="28" width="568" height="42"/>
+                                <rect key="frame" x="16" y="8" width="568" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -631,8 +631,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="120" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoMEGAWhite" translatesAutoresizingMaskIntoConstraints="NO" id="BdY-9m-DL2">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blackLogo" translatesAutoresizingMaskIntoConstraints="NO" id="BdY-9m-DL2">
                             <rect key="frame" x="0.0" y="0.0" width="120" height="24"/>
+                            <color key="tintColor" red="0.80477464199066162" green="0.0" blue="0.041726302355527878" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -665,12 +666,30 @@
             </objects>
             <point key="canvasLocation" x="-417" y="-1099"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vb5-EJ-xDr">
+            <objects>
+                <navigationController storyboardIdentifier="ConfirmAccountNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="YJs-s6-GAA" customClass="MEGANavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mD2-yS-dr8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RsM-Wk-nbd" kind="relationship" relationship="rootViewController" id="ryY-OD-WQI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lKk-Oh-71s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="472" y="120"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="blackLogo" width="120" height="24"/>
         <image name="checkBoxOff" width="35" height="35"/>
         <image name="checkBoxOn" width="35" height="35"/>
         <image name="key" width="33" height="33"/>
-        <image name="logoMEGAWhite" width="120" height="24"/>
         <image name="mail" width="33" height="33"/>
         <image name="user" width="33" height="33"/>
     </resources>

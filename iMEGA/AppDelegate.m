@@ -710,13 +710,22 @@
         }
             
         case MEGARequestTypeQuerySignUpLink: {
-            ConfirmAccountViewController *confirmAccountVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountViewControllerID"];
+            MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
+            
+            ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
             [confirmAccountVC setConfirmationLinkString:[request link]];
             [confirmAccountVC setEmailString:[request email]];
             
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:confirmAccountVC];
-            
-            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+                } else {
+                    [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+                }
+            } else {
+                [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+            }
             break;
         }
             
