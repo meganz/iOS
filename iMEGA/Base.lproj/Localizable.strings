@@ -5,6 +5,7 @@
 "remove" = "Remove";
 "paused"="Paused";
 "shareFolder" = "Share folder";
+"noCamera"="No camera available";
 
 "attention"="Attention";
 "cameraPermissions"="Please give MEGA app permission to access your Camera in your settings app!";
