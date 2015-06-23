@@ -5,6 +5,8 @@
 "remove" = "Eliminar";
 "paused" = "En pausa";
 "shareFolder" = "Compartir carpeta";
+"noCamera"="No hay cámara disponible";
+
 
 "attention"="Atención";
 "cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en la configuración de la aplicación!";

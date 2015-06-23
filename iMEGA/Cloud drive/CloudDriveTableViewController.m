@@ -804,8 +804,6 @@
         [folderAlertView textFieldAtIndex:0].text = @"";
         folderAlertView.tag = 1;
         [folderAlertView show];
-    } else if (buttonIndex == 1) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     } else if (buttonIndex == 2) {
         if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
@@ -840,6 +838,12 @@
             UIButton *button = (UIButton *)subview;
             [button setTitleColor:megaRed forState:UIControlStateNormal];
         }
+    }
+}
+
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
 }
 
@@ -1157,6 +1161,13 @@
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     
+    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noCamera", @"No camera available")];
+        }
+        return;
+    }
+    
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
@@ -1164,7 +1175,13 @@
     imagePickerController.delegate = self;
     
     self.imagePickerController = imagePickerController;
-    [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
+    
+    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
+        [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
+    }
 }
 
 - (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
@@ -1251,7 +1268,12 @@
                                                     cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:AMLocalizedString(@"createFolder", @"Create folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
+    } else {
+        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    }
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
