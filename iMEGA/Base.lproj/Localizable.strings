@@ -3,6 +3,7 @@
 "ok" = "OK";
 "error" = "Error";
 "remove" = "Remove";
+"paused"="Paused";
 "shareFolder" = "Share folder";
 
 "attention"="Attention";
