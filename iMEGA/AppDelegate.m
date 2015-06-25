@@ -44,7 +44,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-#define kUserAgent @"MEGAiOS/2.9.2.1"
+#define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
 
 #define kFirstRun @"FirstRun"
@@ -72,7 +72,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
     
     [MEGASdkManager setAppKey:kAppKey];
-    [MEGASdkManager setUserAgent:kUserAgent];
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    [MEGASdkManager setUserAgent:userAgent];
     [MEGASdkManager sharedMEGASdk];
     [MEGASdk setLogLevel:MEGALogLevelInfo];
     
