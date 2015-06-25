@@ -43,12 +43,12 @@
 #define kLastUploadVideoDate @"LastUploadVideoDate"
 #define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
-#define megaRed      UIColorFromRGB(0xD90007)
-#define megaBlack    UIColorFromRGB(0x212221)
-
-#define megaInfoGrey UIColorFromRGB(0xF7F7F7)
+#define megaRed         [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0]
+#define megaGreen       [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0]
+#define megaBlue        [UIColor colorWithRed:43.0/255.0 green:166.0/255.0 blue:222.0/255.0 alpha:1.0]
+#define megaInfoGrey    [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0]
+#define megaGrey        [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]
+#define megaBlack       [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0]
 
 #define megaDarkGray    [UIColor colorWithWhite:0.243 alpha:1.000]
 #define megaLightGray   [UIColor colorWithWhite:0.933 alpha:1.000]
@@ -60,6 +60,7 @@
 + (NSString *)fileTypeIconForExtension:(NSString *)extension;
 
 + (UIImage *)imageForNode:(MEGANode *)node;
++ (UIImage *)imageForExtension:(NSString *)extension;
 
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
@@ -68,8 +69,10 @@
 
 + (UIImage *)downloadingArrowImage;
 + (UIImage *)downloadedArrowImage;
-+ (UIImage *)downloadTransferImage;
-+ (UIImage *)uploadTransferImage;
++ (UIImage *)downloadingTransferImage;
++ (UIImage *)uploadingTransferImage;
++ (UIImage *)downloadQueuedTransferImage;
++ (UIImage *)uploadQueuedTransferImage;
 
 #pragma mark - Paths
 

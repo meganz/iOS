@@ -290,19 +290,26 @@ static NSInteger linkNodeOption;
             
         case MEGANodeTypeFile: {
             NSString *nodePathExtension = node.name.pathExtension.lowercaseString;
-            if ([nodePathExtension isEqualToString:@"jpg"] || [nodePathExtension isEqualToString:@"jpeg"]) {
-                return [Helper defaultPhotoImage];
-            } else {
-                NSString *filetypeImage = [self.fileTypesDictionary valueForKey:nodePathExtension];
-                if (filetypeImage && filetypeImage.length > 0) {
-                    return [UIImage imageNamed:filetypeImage];
-                }
-            }
+            return [self imageForExtension:nodePathExtension];
         }
             
         default:
             return [self genericImage];
     }
+}
+
++ (UIImage *)imageForExtension:(NSString *)extension {
+    extension = extension.lowercaseString;
+    UIImage *image;
+    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
+        image = [Helper defaultPhotoImage];
+    } else {
+        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
+        if (filetypeImage && filetypeImage.length > 0) {
+            image = [UIImage imageNamed:filetypeImage];
+        }
+    }
+    return image;
 }
 
 + (UIImage *)downloadingArrowImage {
@@ -323,22 +330,40 @@ static NSInteger linkNodeOption;
     return downloadedArrowImage;
 }
 
-+ (UIImage *)downloadTransferImage {
-    static UIImage *downloadTransferImage = nil;
++ (UIImage *)downloadingTransferImage {
+    static UIImage *downloadingTransferImage = nil;
     
-    if (downloadTransferImage == nil) {
-        downloadTransferImage = [UIImage imageNamed:@"downloadTransfers"];
+    if (downloadingTransferImage == nil) {
+        downloadingTransferImage = [UIImage imageNamed:@"downloading"];
     }
-    return downloadTransferImage;
+    return downloadingTransferImage;
 }
 
-+ (UIImage *)uploadTransferImage {
-    static UIImage *uploadTransferImage = nil;
++ (UIImage *)uploadingTransferImage {
+    static UIImage *uploadingTransferImage = nil;
     
-    if (uploadTransferImage == nil) {
-        uploadTransferImage = [UIImage imageNamed:@"uploadTransfers"];
+    if (uploadingTransferImage == nil) {
+        uploadingTransferImage = [UIImage imageNamed:@"uploading"];
     }
-    return uploadTransferImage;
+    return uploadingTransferImage;
+}
+
++ (UIImage *)downloadQueuedTransferImage {
+    static UIImage *downloadQueuedTransferImage = nil;
+    
+    if (downloadQueuedTransferImage == nil) {
+        downloadQueuedTransferImage = [UIImage imageNamed:@"downloadQueued"];
+    }
+    return downloadQueuedTransferImage;
+}
+
++ (UIImage *)uploadQueuedTransferImage {
+    static UIImage *uploadQueuedTransferImage = nil;
+    
+    if (uploadQueuedTransferImage == nil) {
+        uploadQueuedTransferImage = [UIImage imageNamed:@"uploadQueued"];
+    }
+    return uploadQueuedTransferImage;
 }
 
 #pragma mark - Paths

@@ -151,13 +151,15 @@
 "contactsEmptyState_text"="Add new contacts using the upper button.";
 
 //Transfers
-"transfersEmptyState_titleAll"="No active transfers";
-"transfersEmptyState_titleDownload"="No active download transfers";
-"transfersEmptyState_titleUpload"="No active upload transfers";
+"transfersEmptyState_titlePaused"="Transfers Paused";
+"transfersEmptyState_titleAll"="No Transfers";
+"transfersEmptyState_titleDownload"="No Download Transfers";
+"transfersEmptyState_titleUpload"="No Upload Transfers";
 
+"transfersEmptyState_textPaused"="Resume the transfers using the upper button.";
 "transfersEmptyState_textAll"="You don't have any pending transfers.";
-"transfersEmptyState_textDownload"="You don't have any pending download transfers.";
-"transfersEmptyState_textUpload"="You don't have any pending upload transfers.";
+"transfersEmptyState_textDownload"="You don't have any pending downloads.";
+"transfersEmptyState_textUpload"="You don't have any pending uploads.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";
