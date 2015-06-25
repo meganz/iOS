@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
 
 @property (weak, nonatomic) IBOutlet UIView *debugView;
+
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @end
 
 @implementation AboutTableViewController
@@ -51,6 +53,8 @@
     lpgr.minimumPressDuration = 5.0;
     lpgr.delegate = self;
     [self.versionCell addGestureRecognizer:lpgr];
+    
+    [self.versionLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
