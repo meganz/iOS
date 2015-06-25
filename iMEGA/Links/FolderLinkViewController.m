@@ -161,8 +161,8 @@
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"folderLinkUnavailableTitle", @"")];
     [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
-    [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
-    [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
+    [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
+    [unavailableLinkView.textView setTextColor:megaDarkGray];
     
     [self.tableView setBackgroundView:unavailableLinkView];
 }
@@ -348,7 +348,7 @@
     cell.nodeHandle = [node handle];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGrey];
+    [view setBackgroundColor:megaInfoGray];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -507,8 +507,7 @@
         text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -530,9 +529,9 @@
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
     paragraph.alignment = NSTextAlignmentCenter;
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
-                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
-                                 NSParagraphStyleAttributeName: paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
+                                 NSForegroundColorAttributeName:megaGray,
+                                 NSParagraphStyleAttributeName:paragraph};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

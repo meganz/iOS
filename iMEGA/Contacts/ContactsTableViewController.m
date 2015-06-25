@@ -228,7 +228,7 @@
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGrey];
+    [view setBackgroundColor:megaInfoGray];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -471,8 +471,7 @@
     
     NSString *text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+   NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -485,9 +484,9 @@
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
     paragraph.alignment = NSTextAlignmentCenter;
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
-                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
-                                 NSParagraphStyleAttributeName: paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
+                                 NSForegroundColorAttributeName:megaGray,
+                                 NSParagraphStyleAttributeName:paragraph};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

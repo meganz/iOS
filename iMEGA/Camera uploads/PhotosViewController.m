@@ -679,8 +679,7 @@
 
     NSString *text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
-                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -697,9 +696,9 @@
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
     paragraph.alignment = NSTextAlignmentCenter;
     
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0],
-                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
-                                 NSParagraphStyleAttributeName: paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
+                                 NSForegroundColorAttributeName:megaGray,
+                                 NSParagraphStyleAttributeName:paragraph};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -767,7 +766,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"creatingLink", @"Creating link...")];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
             break;
             
         default:

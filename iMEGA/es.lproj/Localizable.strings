@@ -185,7 +185,7 @@
 "saveForOffline"="Guardar en Offline";
 "savedForOffline"="Guardado en Offline";
 "getLink"="Obtener link";
-"creatingLink" = "Creando link...";
+"generatingLink" = "Generando link...";
 "move"="Mover"; //This string already exists
 "rename"="Renombrar"; //This string already exists
 "moveToRubbishBin"="Mover a la Papelera";

@@ -252,15 +252,17 @@
 
 #pragma mark - Private
 
-- (void)setupAppearance {
-    
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont systemFontOfSize:18.0] forKey:NSFontAttributeName];
-    [[UINavigationBar appearance] setTitleTextAttributes:titleTextAttributesDictionary];
+- (void)setupAppearance {    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0], NSForegroundColorAttributeName:megaBlack}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     
-    [[UIBarButtonItem appearance] setTintColor:megaRed];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
     
+    [[UIBarButtonItem appearance] setTintColor:megaRed];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0]} forState:UIControlStateNormal];
+        
     [[UITextField appearance] setTintColor:megaRed];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
     

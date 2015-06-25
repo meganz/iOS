@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -25,6 +25,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="ZQL-HD-3IG"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Import to your Cloud Drive">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +40,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Aqg-ve-I8e"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Download to your MEGA App">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,7 +55,7 @@
                                     <constraint firstAttribute="width" constant="160" id="Oqn-vp-DTR"/>
                                     <constraint firstAttribute="height" constant="21" id="qth-zY-At4"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -62,7 +64,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="yQg-lH-a2k"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -78,6 +80,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Hcb-dT-KNZ"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="Open file">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -124,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l74-Ci-Em5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem systemItem="cancel" id="4wR-WW-9ce">
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="cancelTouchUpInside:" destination="LWX-jg-8m6" id="77j-MF-V6t"/>
                     </connections>
@@ -199,25 +202,18 @@
                                                         <constraint firstAttribute="width" constant="40" id="Moi-dn-iTo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRb-gX-juI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRb-gX-juI">
                                                     <rect key="frame" x="60" y="6" width="483" height="18"/>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Title">
-                                                            <attributes>
-                                                                <color key="NSColor" white="0.23999999463558197" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" white="0.23999999463558197" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="MWR-OE-dzi">
-                                                    <rect key="frame" x="60" y="25" width="483" height="15"/>
+                                                    <rect key="frame" x="60" y="24" width="483" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="hy5-vz-jil"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -225,14 +221,14 @@
                                             <constraints>
                                                 <constraint firstItem="KRb-gX-juI" firstAttribute="top" secondItem="qiq-TC-tXD" secondAttribute="topMargin" constant="-2" id="FCf-zu-s8i"/>
                                                 <constraint firstItem="tCJ-hL-06B" firstAttribute="top" secondItem="qiq-TC-tXD" secondAttribute="topMargin" constant="8" id="HV2-0h-Cl0"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="MWR-OE-dzi" secondAttribute="bottom" constant="-4.5" id="Oqw-BX-Koq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="MWR-OE-dzi" secondAttribute="bottom" constant="-3.5" id="Oqw-BX-Koq"/>
                                                 <constraint firstItem="KRb-gX-juI" firstAttribute="leading" secondItem="MWR-OE-dzi" secondAttribute="leading" id="Uv0-KJ-GCk"/>
                                                 <constraint firstItem="5ad-Bd-qox" firstAttribute="centerY" secondItem="tCJ-hL-06B" secondAttribute="centerY" id="ba8-y7-0Je"/>
                                                 <constraint firstItem="5ad-Bd-qox" firstAttribute="leading" secondItem="tCJ-hL-06B" secondAttribute="trailing" id="cTw-5h-pGm"/>
                                                 <constraint firstItem="tCJ-hL-06B" firstAttribute="leading" secondItem="qiq-TC-tXD" secondAttribute="leading" id="eQL-4O-9v4"/>
                                                 <constraint firstItem="MWR-OE-dzi" firstAttribute="trailing" secondItem="KRb-gX-juI" secondAttribute="trailing" id="lsI-4M-pX0"/>
                                                 <constraint firstItem="5ad-Bd-qox" firstAttribute="top" secondItem="qiq-TC-tXD" secondAttribute="topMargin" constant="-6" id="nAj-fN-LoR"/>
-                                                <constraint firstItem="MWR-OE-dzi" firstAttribute="top" secondItem="KRb-gX-juI" secondAttribute="bottom" constant="1" id="pgh-Hv-kTA"/>
+                                                <constraint firstItem="MWR-OE-dzi" firstAttribute="top" secondItem="KRb-gX-juI" secondAttribute="bottom" id="pgh-Hv-kTA"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="KRb-gX-juI" secondAttribute="trailing" constant="49" id="qNq-OM-OwP"/>
                                                 <constraint firstItem="KRb-gX-juI" firstAttribute="leading" secondItem="5ad-Bd-qox" secondAttribute="trailing" constant="8" symbolic="YES" id="sgG-oz-5hZ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="tCJ-hL-06B" secondAttribute="bottom" constant="7.5" id="w9T-SN-zUx"/>
@@ -305,6 +301,7 @@
                     </connections>
                 </searchDisplayController>
                 <barButtonItem systemItem="cancel" id="D67-ek-Mq7">
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="cancelTouchUpInside:" destination="9ZV-tM-uu1" id="S9H-Kn-xyN"/>
                     </connections>

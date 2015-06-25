@@ -117,8 +117,8 @@
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"fileLinkUnavailableTitle", nil)];
     [unavailableLinkView.textView setText:AMLocalizedString(@"fileLinkUnavailableText", nil)];
-    [unavailableLinkView.textView setFont:[UIFont systemFontOfSize:14.0]];
-    [unavailableLinkView.textView setTextColor:[UIColor darkGrayColor]];
+    [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
+    [unavailableLinkView.textView setTextColor:megaDarkGray];
     
     [self.view addSubview:unavailableLinkView];
 }
