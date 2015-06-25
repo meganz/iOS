@@ -152,13 +152,15 @@
 "contactsEmptyState_text"="Añade nuevos contactos utilizando el botón superior.";
 
 //Transfers
-"transfersEmptyState_titleAll"="No hay transferencias activas";
-"transfersEmptyState_titleDownload"="No hay transferencias activas de descarga";
-"transfersEmptyState_titleUpload"="No hay transferencias activas de subida";
+"transfersEmptyState_titlePaused"="Transferencias en pausa";
+"transfersEmptyState_titleAll"="No hay transferencias";
+"transfersEmptyState_titleDownload"="No hay transferencias de descarga";
+"transfersEmptyState_titleUpload"="No hay transferencias de subida";
 
+"transfersEmptyState_textPaused"="Reanuda las transferencias utilizando el botón superior.";
 "transfersEmptyState_textAll"="No tienes ninguna transferencia pendiente.";
-"transfersEmptyState_textDownload"="No tienes ninguna transferencia pendiente de descarga.";
-"transfersEmptyState_textUpload"="No tienes ninguna transferencia pendiente de subida.";
+"transfersEmptyState_textDownload"="No tienes ninguna descarga pendiente.";
+"transfersEmptyState_textUpload"="No tienes ninguna subida pendiente.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";

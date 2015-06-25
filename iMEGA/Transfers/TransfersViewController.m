@@ -88,10 +88,10 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
         areTransfersPaused = YES;
-        [self.navigationItem setRightBarButtonItems:@[self.resumeBarButtonItem, self.cancelBarButtonItem] animated:YES];
+        [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.resumeBarButtonItem] animated:YES];
     } else {
         areTransfersPaused = NO;
-        [self.navigationItem setRightBarButtonItems:@[self.pauseBarButtonItem, self.cancelBarButtonItem] animated:YES];
+        [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.pauseBarButtonItem] animated:YES];
     }
     
     [self transfersList];
@@ -131,7 +131,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TransferTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+    TransferTableViewCell *cell;
     
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:megaInfoGrey];
@@ -140,15 +140,18 @@
     
     MEGATransfer *transfer;
     if ([indexPath section] == 0) { //ACTIVE TRANSFERS
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"activeTransferCell" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[TransferTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"activeTransferCell"];
+        }
+        
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case 0: { //All
                 transfer = [[self.allActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 if ([transfer type] == MEGATransferTypeDownload) {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                    [cell.arrowImageView setImage:[Helper downloadTransferImage]];
                 } else {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                    [cell.arrowImageView setImage:[Helper uploadTransferImage]];
                 }
                 break;
             }
@@ -156,33 +159,36 @@
             case 1: { //Downloads
                 transfer = [[self.downloadActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                [cell.arrowImageView setImage:[Helper downloadTransferImage]];
                 break;
             }
                 
             case 2: { //Uploads
                 transfer = [[self.uploadActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                [cell.arrowImageView setImage:[Helper uploadTransferImage]];
                 break;
             }
         }
-        
-        if (areTransfersPaused) {
-            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
+        if ([transfer type] == MEGATransferTypeDownload) {
+            [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
+            [cell.percentageLabel setTextColor:megaGreen];
         } else {
-            [cell.infoLabel setText:AMLocalizedString(@"downloading", @"Downloading...")];
+            [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
+            [cell.percentageLabel setTextColor:megaBlue];
         }
+        
     } else { //QUEUED TRANSFERS
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferCell" forIndexPath:indexPath];
+        if (cell == nil) {
+            cell = [[TransferTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"transferCell"];
+        }
+        
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case 0: { //All
                 transfer = [[self.allQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 if ([transfer type] == MEGATransferTypeDownload) {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                    [cell.arrowImageView setImage:[Helper downloadTransferImage]];
                 } else {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                    [cell.arrowImageView setImage:[Helper uploadTransferImage]];
                 }
                 break;
             }
@@ -190,21 +196,21 @@
             case 1: { //Downloads
                 transfer = [[self.downloadQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
-                [cell.arrowImageView setImage:[Helper downloadTransferImage]];
                 break;
             }
                 
             case 2: { //Uploads
                 transfer = [[self.uploadQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
-                [cell.arrowImageView setImage:[Helper uploadTransferImage]];
                 break;
             }
         }
-        if (areTransfersPaused) {
-            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
+        
+        [cell.percentageLabel setText:AMLocalizedString(@"queued", @"Queued")];
+        if ([transfer type] == MEGATransferTypeDownload) {
+            [cell.arrowImageView setImage:[Helper downloadQueuedTransferImage]];
         } else {
-            [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
+            [cell.arrowImageView setImage:[Helper uploadQueuedTransferImage]];
         }
     }
     
@@ -222,6 +228,7 @@
         nameString = fileName;
     }
     [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:nameString]];
+    [cell.iconImageView setImage:[Helper imageForExtension:nameString.pathExtension]];
     
     [cell setTransferTag:transfer.tag];
     
@@ -234,50 +241,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: { //All
-            if (section == 0) {
-                numberOfRows = [self.allActiveTransfersMutableDictionary count];
-            } else {
-                numberOfRows = [self.allQueuedTransfersMutableDictionary count];
+    if (!areTransfersPaused) {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case 0: { //All
+                if (section == 0) {
+                    numberOfRows = [self.allActiveTransfersMutableDictionary count];
+                } else {
+                    numberOfRows = [self.allQueuedTransfersMutableDictionary count];
+                }
+                break;
             }
-            break;
-        }
-            
-        case 1:  { //Downloads
-            if (section == 0) {
-                numberOfRows = [self.downloadActiveTransfersMutableDictionary count];
-            } else {
-                numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
+                
+            case 1:  { //Downloads
+                if (section == 0) {
+                    numberOfRows = [self.downloadActiveTransfersMutableDictionary count];
+                } else {
+                    numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
+                }
+                break;
             }
-            break;
-        }
-            
-        case 2: { //Uploads
-            if (section == 0) {
-                numberOfRows = [self.uploadActiveTransfersMutableDictionary count];
-            } else {
-                numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
+                
+            case 2: { //Uploads
+                if (section == 0) {
+                    numberOfRows = [self.uploadActiveTransfersMutableDictionary count];
+                } else {
+                    numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
+                }
+                break;
             }
-            break;
         }
+    }
+    if (numberOfRows == 0) {
+        [self.cancelBarButtonItem setEnabled:NO];
+    } else {
+        [self.cancelBarButtonItem setEnabled:YES];
     }
     return numberOfRows;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *titleForHeader;
-    if ([self.tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
-        titleForHeader = nil;
-    } else {
-        if (section == 0) {
-            titleForHeader = AMLocalizedString(@"activeTransfers", @"Active transfers");
-        } else {
-            titleForHeader = AMLocalizedString(@"queuedTransfers", @"Queued transfers");
-        }
-    }
-    
-    return titleForHeader;
 }
 
 #pragma mark - UITableViewDelegate
@@ -555,12 +554,12 @@
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
     [self pauseOrResumeTransfers:YES];
-    [self.navigationItem setRightBarButtonItems:@[self.resumeBarButtonItem, self.cancelBarButtonItem] animated:NO];
+    [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.resumeBarButtonItem] animated:NO];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
     [self pauseOrResumeTransfers:NO];
-    [self.navigationItem setRightBarButtonItems:@[self.pauseBarButtonItem, self.cancelBarButtonItem] animated:NO];
+    [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.pauseBarButtonItem] animated:NO];
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
@@ -608,18 +607,22 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: //All
-            text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No active transfers");
-            break;
-            
-        case 1: //Downloads
-            text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No active download transfers");
-            break;
-            
-        case 2: //Uploads
-            text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No active upload transfers");
-            break;
+    if (areTransfersPaused) {
+        text = AMLocalizedString(@"transfersEmptyState_titlePaused",  @"Transfers Paused");
+    } else {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case 0: //All
+                text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No Transfers");
+                break;
+                
+            case 1: //Downloads
+                text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
+                break;
+                
+            case 2: //Uploads
+                text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
+                break;
+        }
     }
     
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0],
@@ -631,18 +634,22 @@
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
     NSString *text;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case 0: //All
-            text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
-            break;
-            
-        case 1: //Downloads
-            text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending download transfers.");
-            break;
-            
-        case 2: //Uploads
-            text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending upload transfers.");
-            break;
+    if (areTransfersPaused) {
+        text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the upper button.");
+    } else {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case 0: //All
+                text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
+                break;
+                
+            case 1: //Downloads
+                text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending downloads.");
+                break;
+                
+            case 2: //Uploads
+                text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending uploads.");
+                break;
+        }
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -657,7 +664,25 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"emptyTransfers"];
+    UIImage *image;
+    if (areTransfersPaused) {
+        image = [UIImage imageNamed:@"transfersPaused"];
+    } else {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case 0: //All
+                image = [UIImage imageNamed:@"emptyTransfers"];
+                break;
+                
+            case 1: //Downloads
+                image = [UIImage imageNamed:@"emptyTransfersDownloads"];
+                break;
+                
+            case 2: //Uploads
+                image = [UIImage imageNamed:@"emptyTransfersUploads"];
+                break;
+        }
+    }
+    return image;
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -677,24 +702,9 @@
     switch ([request type]) {
         case MEGARequestTypePauseTransfers: {
             if ([request flag]) {
-                NSArray *allTransfersIndexPathArray = self.allTransfersIndexPathMutableDictionary.allValues;
-                for (NSIndexPath *indexPath in allTransfersIndexPathArray) {
-                    TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                    [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
-                }
-                
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transfersPaused", @"Transfers paused")];
+                [self.tableView reloadEmptyDataSet];
             } else {
-                NSArray *queuedTransfersArray = self.allQueuedTransfersMutableDictionary.allValues;
-                for (MEGATransfer *transfer in queuedTransfersArray) {
-                    NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-                    if (indexPath != nil && ([indexPath section] == 1)) {
-                        TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
-                    }
-                }
-                
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transfersResumed", @"Transfers resumed")];
+                [self.tableView reloadEmptyDataSet];
             }
             [[NSUserDefaults standardUserDefaults] setBool:[request flag] forKey:@"TransfersPaused"];
             areTransfersPaused = [request flag];
@@ -742,11 +752,19 @@
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath != nil && ([indexPath section] == 0)) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
+        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
         
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
+        if ([transfer type] == MEGATransferTypeDownload) {
+            [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
+            [cell.percentageLabel setTextColor:megaGreen];
+        } else {
+            [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
+            [cell.percentageLabel setTextColor:megaBlue];
+        }
+        [cell.percentageLabel setText:percentageCompleted];
+        [cell.speedLabel setText:speed];
     }
 }
 
