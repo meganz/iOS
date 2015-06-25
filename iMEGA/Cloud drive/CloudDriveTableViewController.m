@@ -65,7 +65,8 @@
     dispatch_queue_t createAttributesQueue;
     dispatch_group_t createAttributesGroup;
     dispatch_semaphore_t createAttributesSemaphore;
-
+    
+    MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -105,30 +106,47 @@
     
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
     switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem, self.sortByBarButtonItem];
-            self.navigationItem.rightBarButtonItems = buttonsItems;
+        case DisplayModeCloudDrive:
+            if (!self.parentNode) {
+                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            }
+            
+            MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+            
+            switch (accessType) {
+                case MEGAShareTypeAccessRead:
+                    self.navigationItem.rightBarButtonItems = @[self.editButtonItem, self.sortByBarButtonItem];
+                    break;
+                    
+                default:
+                    self.navigationItem.rightBarButtonItems = @[self.editButtonItem, self.addBarButtonItem, self.sortByBarButtonItem];
+                    break;
+            }
+            
             break;
-        }
             
         case DisplayModeContact:
             self.navigationItem.rightBarButtonItems = nil;
+            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
+        
             
-        case DisplayModeRubbishBin: {
-            NSArray *buttonsItems = @[self.editButtonItem, self.sortByBarButtonItem];
-            self.navigationItem.rightBarButtonItems = buttonsItems;
-            
-            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            NSArray *toolbarItems = [NSArray arrayWithObjects:self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem, nil];
-            [self.toolbar setItems:toolbarItems];
+        case DisplayModeRubbishBin:
+            self.navigationItem.rightBarButtonItems = @[self.editButtonItem, self.sortByBarButtonItem];
+            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
-        }
-            
+        
         default:
             break;
     }
+    
+    
+    MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    
+    [self toolbarActionsForShareType:shareType];
 
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     NSError *error;
@@ -421,6 +439,8 @@
     if (tableView.isEditing) {
         [self.selectedNodesArray addObject:node];
         
+        [self toolbarActionsForNodeArray:self.selectedNodesArray];
+        
         [self.downloadBarButtonItem setEnabled:YES];
         [self.shareBarButtonItem setEnabled:YES];
         [self.moveBarButtonItem setEnabled:YES];
@@ -571,6 +591,8 @@
             }
         }
         
+        [self toolbarActionsForNodeArray:self.selectedNodesArray];
+        
         if (self.selectedNodesArray.count == 0) {
             [self.downloadBarButtonItem setEnabled:NO];
             [self.shareBarButtonItem setEnabled:NO];
@@ -590,22 +612,40 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
     
-    self.selectedNodesArray = [NSMutableArray new];
-    [self.selectedNodesArray addObject:n];
-    
-    [self.downloadBarButtonItem setEnabled:YES];
-    [self.shareBarButtonItem setEnabled:YES];
-    [self.moveBarButtonItem setEnabled:YES];
-    [self.renameBarButtonItem setEnabled:YES];
-    [self.deleteBarButtonItem setEnabled:YES];
-    
-    isSwipeEditing = YES;
-    
-    return (UITableViewCellEditingStyleDelete);
+    if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n] < MEGAShareTypeAccessFull) {
+        return UITableViewCellEditingStyleNone;
+    } else {
+        self.selectedNodesArray = [NSMutableArray new];
+        [self.selectedNodesArray addObject:n];
+        [self.downloadBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:YES];
+        [self.moveBarButtonItem setEnabled:YES];
+        [self.renameBarButtonItem setEnabled:YES];
+        [self.deleteBarButtonItem setEnabled:YES];
+        
+        isSwipeEditing = YES;
+        
+        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n];
+        [self toolbarActionsForShareType:shareType];
+        
+        return UITableViewCellEditingStyleDelete;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return AMLocalizedString(@"remove", @"");
+    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+    
+    if (self.displayMode != DisplayModeContact) {
+        if (accessType >= MEGAShareTypeAccessFull) {
+            return AMLocalizedString(@"remove", @"Remove");
+        }
+    } else {
+        return AMLocalizedString(@"leaveFolder", @"Leave folder");
+    }
+    
+    //editingStyleForRowAtIndexPath return -> UITableViewCellEditingStyleNone
+    return @"";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -613,9 +653,16 @@
         MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
         remainingOperations = 1;
         
-        if (self.displayMode == DisplayModeCloudDrive) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+        MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+    
+        if (accessType == MEGAShareTypeAccessOwner) {
+            if (self.displayMode == DisplayModeCloudDrive) {
+                [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] removeNode:node];
+            }
         } else {
+            //Leave share folder
             [[MEGASdkManager sharedMEGASdk] removeNode:node];
         }
     }
@@ -1109,7 +1156,6 @@
 
 - (void)reloadUI {
     switch (self.displayMode) {
-            
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
@@ -1220,6 +1266,66 @@
     return AMLocalizedString(@"emptyFolder", @"Empty folder");
 }
 
+- (void)toolbarActionsForShareType:(MEGAShareType )shareType {
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    lowShareType = shareType;
+    
+    switch (shareType) {
+        case MEGAShareTypeAccessRead:
+        case MEGAShareTypeAccessReadWrite: {
+            if (self.displayMode == DisplayModeContact) {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            } else {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem]];                
+            }
+            break;
+        }
+            
+        case MEGAShareTypeAccessFull: {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            break;
+        }
+            
+        case MEGAShareTypeAccessOwner: {
+            if (self.displayMode == DisplayModeCloudDrive) {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            } else {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            }
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
+    MEGAShareType shareType;
+    lowShareType = MEGAShareTypeAccessOwner;
+    
+    for (MEGANode *n in nodeArray) {
+        shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n];
+        
+        if (shareType == MEGAShareTypeAccessRead  && shareType < lowShareType) {
+            lowShareType = shareType;
+            break;
+        }
+        
+        if (shareType == MEGAShareTypeAccessReadWrite && shareType < lowShareType) {
+            lowShareType = shareType;
+        }
+        
+        if (shareType == MEGAShareTypeAccessFull && shareType < lowShareType) {
+            lowShareType = shareType;
+            
+        }
+    }
+    
+    [self toolbarActionsForShareType:lowShareType];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1235,6 +1341,8 @@
         }
         
         allNodesSelected = YES;
+        
+        [self toolbarActionsForNodeArray:self.selectedNodesArray];
     } else {
         allNodesSelected = NO;
     }
@@ -1317,21 +1425,30 @@
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     mcnvc.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
+    if (lowShareType == MEGAShareTypeAccessOwner) {
+        [mcnvc setBrowseAction:BrowseActionCopyAndMove];
+    }
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    if (self.displayMode == DisplayModeCloudDrive) {
-        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
-    
-        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
-    } else if (self.displayMode == DisplayModeRubbishBin) {
-        NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
-        
-        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+    if (lowShareType == MEGAShareTypeAccessFull) {
+        //Leave folder or remove folder in a incoming shares
+        for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
+            [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
+        }
+    } else {
+        if (self.displayMode == DisplayModeCloudDrive) {
+            NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+            
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+        } else {
+            NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
+            
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+        }
+        removeAlertView.tag = 2;
+        [removeAlertView show];
     }
-
-    removeAlertView.tag = 2;
-    [removeAlertView show];
 }
 
 - (IBAction)renameAction:(UIBarButtonItem *)sender {
@@ -1372,6 +1489,7 @@
     
     DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setNode:node];
+    [detailsNodeInfoVC setDisplayMode:self.displayMode];
     
     [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
@@ -1481,7 +1599,12 @@
         case MEGARequestTypeRemove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileRemovedFromRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                NSString *message;
+                if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
+                    message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileRemovedFromRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                } else {
+                    message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave!");
+                }
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }

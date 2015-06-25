@@ -370,6 +370,7 @@
     BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     mcnvc.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
+    [mcnvc setBrowseAction:BrowseActionCopyAndMove];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {

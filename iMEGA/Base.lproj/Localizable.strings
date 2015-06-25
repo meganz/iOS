@@ -282,6 +282,9 @@
 "contactWithoutEmailTitle"="No email";
 "contactWithoutEmailMessage"="The contact does not have an email";
 
+"leaveFolder"="Leave";
+"shareFolderLeaved"="Folder leave!";
+
 //Share folder
 "select" = "Select ";
 "readOnly" = "Read only";

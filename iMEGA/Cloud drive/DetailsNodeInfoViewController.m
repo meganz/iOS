@@ -31,6 +31,9 @@
     UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
+    
+    NSInteger actions;
+    MEGAShareType accessType;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -48,6 +51,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
+    
+    switch (accessType) {
+        case MEGAShareTypeAccessRead:
+        case MEGAShareTypeAccessReadWrite:
+            if (self.displayMode == DisplayModeContact) {
+                actions = 3; //Download, copy and leave
+            } else {
+                actions = 2; //Download and copy
+            }
+            break;
+            
+        case MEGAShareTypeAccessFull:
+                actions = 4; //Download, copy, rename and leave (contacts) or delete (cloud drive)
+            break;
+            
+        case MEGAShareTypeAccessOwner:
+            //Cloud drive
+            if (self.displayMode == DisplayModeCloudDrive) {
+                actions = 5; //Download, get link, *share*, move & copy, rename, move to rubbish bin
+            } else {
+                //Rubbish bin
+                actions = 4; //Download, move or copy, rename, remove
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,7 +104,6 @@
 }
 
 - (void)reloadUI {
-    
     if ([self.node type] == MEGANodeTypeFile) {
         if ([self.node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
@@ -127,11 +159,9 @@
         NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
         
         if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-            [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
             [self.navigationController popViewControllerAnimated:YES];
-            CloudDriveTableViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cloudDriveVC setParentNode:self.node];
-            [self.navigationController pushViewController:cloudDriveVC animated:YES];
+            [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
         }
     }
 }
@@ -140,7 +170,7 @@
     [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
 }
 
-- (void)move {
+- (void)copyAndMove:(BOOL)move {
     MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
     [self presentViewController:navigationController animated:YES completion:nil];
     
@@ -148,6 +178,7 @@
     browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
     
+    move ? [browserVC setBrowseAction:BrowseActionCopyAndMove] : [browserVC setBrowseAction:BrowseActionCopy];
 }
 
 - (void)rename {
@@ -166,11 +197,25 @@
 }
 
 - (void)delete {
-    if (!removeAlertView) {
-        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+    //Leave folder or remove folder in a incoming shares
+    if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull)) {
+        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+    
+        //Delete permanently
+        if (self.displayMode == DisplayModeRubbishBin) {
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+        }
+        
+        //Move to rubbish bin
+        if (self.displayMode == DisplayModeCloudDrive) {
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+        }
+        
+        [removeAlertView setTag:1];
+        [removeAlertView show];
     }
-    [removeAlertView setTag:1];
-    [removeAlertView show];
 }
 
 #pragma mark - UIAlertDelegate
@@ -236,7 +281,11 @@
         }
     } else if ([alertView tag] == 1) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            if (self.displayMode == DisplayModeRubbishBin) {
+                [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            }
             [self.navigationController popViewControllerAnimated:YES];
         }
     } else if ([alertView tag] == 2) {
@@ -256,7 +305,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return actions;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -265,47 +314,112 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
     }
-    switch (indexPath.row) {
-        case 0: {
-            if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-                [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
-                [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
-                return cell;
+    
+    //Is the same for all posibilities
+    if (indexPath.row == 0) {
+        if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+            [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+            [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
+            return cell;
+        } else {
+            if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
+                [cell.imageView setImage:[UIImage imageNamed:@"savedFile"]];
+                [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
             } else {
-                if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
-                    [cell.imageView setImage:[UIImage imageNamed:@"savedFile"]];
-                    [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
-                } else {
-                    [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
-                    [cell.textLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
-                }
+                [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+                [cell.textLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
+            }
+        }
+    }
+    
+    switch (accessType) {
+        case MEGAShareTypeAccessReadWrite:
+        case MEGAShareTypeAccessRead:
+            switch (indexPath.row) {
+                case 1:
+                    [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                    [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
+                    break;
+                    
+                case 2:
+                    [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                    [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
+                    break;
             }
             break;
-        }
-        
-        case 1: {
-            [cell.imageView setImage:[UIImage imageNamed:@"shareFile"]];
-            [cell.textLabel setText:AMLocalizedString(@"getLink", @"Get link")];
-            break;
-        }
             
-        case 2: {
-            [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
-            [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
+        case MEGAShareTypeAccessFull:
+            switch (indexPath.row) {
+                case 1:
+                    [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                    [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
+                    break;
+                
+                case 2:
+                    [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                    [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                    break;
+                    
+                case 3:
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
+                    } else {
+                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
+                    }
+                    
+                    break;
+            }
             break;
-        }
             
-        case 3: {
-            [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
-            [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
-            break;
-        }
+        case MEGAShareTypeAccessOwner:
+            if (self.displayMode == DisplayModeCloudDrive) {
+                switch (indexPath.row) {
+                    case 1:
+                        [cell.imageView setImage:[UIImage imageNamed:@"shareFile"]];
+                        [cell.textLabel setText:AMLocalizedString(@"getLink", @"Get link")];
+                        break;
+                        
+                    case 2:
+                        [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                        [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
+                        break;
+                        
+                    case 3:
+                        [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                        [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                        break;
+                        
+                    case 4:
+                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.textLabel setText:AMLocalizedString(@"moveToRubbishBin", @"Move to the rubbish bin")];
+                        break;
+                }
+                // Rubbish bin
+            } else {
+                switch (indexPath.row) {
+                    case 1:
+                        [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                        [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
+                        break;
+                        
+                    case 2:
+                        [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                        [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                        break;
+                        
+                    case 3:
+                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
+                        break;
+                }
+            }
             
-        case 4: {
-            [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
-            [cell.textLabel setText:AMLocalizedString(@"moveToRubbishBin", @"Move to Rubbish Bin")];
             break;
-        }
+            
+        default:
+            break;
     }
     
     return cell;
@@ -338,15 +452,67 @@
         }
             
         case 1:
-            [self getLink];
+            switch (accessType) {
+                case MEGAShareTypeAccessRead:
+                case MEGAShareTypeAccessReadWrite:
+                case MEGAShareTypeAccessFull:
+                    [self copyAndMove:NO];
+                    break;
+                    
+                case MEGAShareTypeAccessOwner:
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [self getLink];
+                    } else {
+                        [self copyAndMove:YES];
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case 2:
-            [self move];
+            switch (accessType) {
+                case MEGAShareTypeAccessRead:
+                case MEGAShareTypeAccessReadWrite:
+                    [self delete];
+                    break;
+                    
+                case MEGAShareTypeAccessFull:
+                    [self rename];
+                    break;
+                    
+                case MEGAShareTypeAccessOwner:
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [self copyAndMove:YES];
+                    } else {
+                        [self rename];
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case 3:
-            [self rename];
+            switch (accessType) {
+                case MEGAShareTypeAccessFull:
+                    [self delete];
+                    break;
+                    
+                case MEGAShareTypeAccessOwner:
+                    if (self.displayMode == DisplayModeCloudDrive) {
+                        [self rename];
+                    } else {
+                        [self delete];
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case 4:

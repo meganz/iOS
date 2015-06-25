@@ -84,6 +84,11 @@
     [self reloadUI];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+}
+
 - (void)dealloc {
     self.tableView.emptyDataSetSource = nil;
     self.tableView.emptyDataSetDelegate = nil;

@@ -54,7 +54,15 @@
     
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
     
-    [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"browserVC_moveButton", @"Move")];
+    if (self.browseAction == BrowseActionCopy) {
+        NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+        [toolbarButtons removeObject:self.toolBarMoveBarButtonItem];
+        [toolbarButtons removeObject:[self.toolbar.items objectAtIndex:1]]; // Remove the 1st flexible space
+        [self.toolbar setItems:toolbarButtons];
+    } else {
+        [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"browserVC_moveButton", @"Move")];
+    }
+    
     [self.toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"browserVC_newFolderButton", @"New folder")];
     
     if (self.isPublicNode) {
@@ -296,6 +304,8 @@
     if(self.isPublicNode) {
         [mcnvc setIsPublicNode:YES];
     }
+    
+    [mcnvc setBrowseAction:self.browseAction];
     
     [self.navigationController pushViewController:mcnvc animated:YES];
 }

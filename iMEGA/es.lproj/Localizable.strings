@@ -282,6 +282,9 @@
 "contactWithoutEmailTitle"="Sin email";
 "contactWithoutEmailMessage"="El contacto no tiene email";
 
+"leaveFolder"="Abandonar";
+"shareFolderLeaved"="Carpeta abandonada!";
+
 //Share folder
 "select" = "Seleccionar ";
 "readOnly" = "Lectura solo";
