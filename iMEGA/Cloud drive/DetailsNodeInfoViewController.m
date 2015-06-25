@@ -318,15 +318,15 @@
     //Is the same for all posibilities
     if (indexPath.row == 0) {
         if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-            [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+            [cell.imageView setImage:[UIImage imageNamed:@"download"]];
             [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
             return cell;
         } else {
             if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
-                [cell.imageView setImage:[UIImage imageNamed:@"savedFile"]];
+                [cell.imageView setImage:[UIImage imageNamed:@"downloaded"]];
                 [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
             } else {
-                [cell.imageView setImage:[UIImage imageNamed:@"saveFile"]];
+                [cell.imageView setImage:[UIImage imageNamed:@"download"]];
                 [cell.textLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
             }
         }
@@ -337,12 +337,12 @@
         case MEGAShareTypeAccessRead:
             switch (indexPath.row) {
                 case 1:
-                    [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                    [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
                     [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
                     break;
                     
                 case 2:
-                    [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                    [cell.imageView setImage:[UIImage imageNamed:@"leaveShare"]];
                     [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
                     break;
             }
@@ -351,21 +351,21 @@
         case MEGAShareTypeAccessFull:
             switch (indexPath.row) {
                 case 1:
-                    [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                    [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
                     [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
                     break;
                 
                 case 2:
-                    [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                    [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
                     [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
                     break;
                     
                 case 3:
                     if (self.displayMode == DisplayModeCloudDrive) {
-                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
                         [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
                     } else {
-                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"leaveShare"]];
                         [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
                     }
                     
@@ -377,22 +377,22 @@
             if (self.displayMode == DisplayModeCloudDrive) {
                 switch (indexPath.row) {
                     case 1:
-                        [cell.imageView setImage:[UIImage imageNamed:@"shareFile"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"getLink"]];
                         [cell.textLabel setText:AMLocalizedString(@"getLink", @"Get link")];
                         break;
                         
                     case 2:
-                        [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
                         [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
                         break;
                         
                     case 3:
-                        [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
                         [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
                         break;
                         
                     case 4:
-                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"rubbishBin"]];
                         [cell.textLabel setText:AMLocalizedString(@"moveToRubbishBin", @"Move to the rubbish bin")];
                         break;
                 }
@@ -400,17 +400,17 @@
             } else {
                 switch (indexPath.row) {
                     case 1:
-                        [cell.imageView setImage:[UIImage imageNamed:@"moveFile"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
                         [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
                         break;
                         
                     case 2:
-                        [cell.imageView setImage:[UIImage imageNamed:@"renameFile"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
                         [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
                         break;
                         
                     case 3:
-                        [cell.imageView setImage:[UIImage imageNamed:@"delete"]];
+                        [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
                         [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
                         break;
                 }
@@ -603,7 +603,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"creatingLink", @"Creating link...")];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
             break;
             
         default:

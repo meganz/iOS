@@ -289,8 +289,9 @@ static NSInteger linkNodeOption;
         }
             
         case MEGANodeTypeFile: {
-            NSString *nodePathExtension = node.name.pathExtension.lowercaseString;
+            NSString *nodePathExtension = node.name.pathExtension;
             return [self imageForExtension:nodePathExtension];
+            break;
         }
             
         default:
@@ -307,6 +308,8 @@ static NSInteger linkNodeOption;
         NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
         if (filetypeImage && filetypeImage.length > 0) {
             image = [UIImage imageNamed:filetypeImage];
+        } else {
+            return [self genericImage];
         }
     }
     return image;
