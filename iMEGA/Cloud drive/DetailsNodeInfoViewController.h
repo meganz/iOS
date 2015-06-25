@@ -21,9 +21,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MEGASdkManager.h"
+#include "CloudDriveTableViewController.h"
 
 @interface DetailsNodeInfoViewController : UIViewController 
 
 @property (nonatomic, strong) MEGANode *node;
+@property (nonatomic) DisplayMode displayMode;
 
 @end
