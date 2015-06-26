@@ -101,8 +101,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="rVh-YO-4Ut">
                         <barButtonItem key="backBarButtonItem" title=" " id="kxp-Vd-pqr"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ky0-dP-xyu">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="rightBarButtonItem" image="add" id="Ky0-dP-xyu" userLabel="Add Bar Button Item">
+                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addContact:" destination="U9c-Mo-B5q" id="b0R-O1-xOz"/>
                             </connections>
@@ -111,6 +111,7 @@
                     <connections>
                         <outlet property="addBarButtonItem" destination="Ky0-dP-xyu" id="Z1h-bw-Abl"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="2ce-SJ-qvQ"/>
+                        <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="BbB-jM-CfB"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="rYo-Wq-hHn"/>
                         <outlet property="shareFolderBarButtonItem" destination="aEk-h4-ILY" id="d5V-Eo-foW"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="eMJ-oc-LIo"/>
@@ -120,6 +121,11 @@
                 <barButtonItem image="check_mark" id="Llm-yt-C3F" userLabel="Check Mark Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="U9c-Mo-B5q" id="HkK-XU-hto"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="edit" width="22" style="plain" id="EF0-GJ-VNE" userLabel="Edit Bar Button Item">
+                    <connections>
+                        <action selector="editTapped:" destination="U9c-Mo-B5q" id="jwa-BE-PyN"/>
                     </connections>
                 </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="jvh-Sx-iEq">
@@ -168,7 +174,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="22" height="22"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="contactsIcon" width="32" height="24"/>
+        <image name="edit" width="22" height="22"/>
     </resources>
 </document>
