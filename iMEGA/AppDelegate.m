@@ -107,8 +107,19 @@
             [viewController setView:[objectsArray objectAtIndex:0]];
             self.window.rootViewController = viewController;
         } else {
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:mainTBC];
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                }
+                
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
+            } else {
+                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                [self.window setRootViewController:mainTBC];
+            }
         }
     } else {
         isAccountFirstLogin = YES;
@@ -585,9 +596,14 @@
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    if (self.link != nil) {
-        [self processLink:self.link];
-        self.link = nil;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.link != nil) {
+            [self processLink:self.link];
+            self.link = nil;
+        }
+    } else {
+        MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        [self.window setRootViewController:mainTBC];
     }
 }
 
@@ -680,7 +696,6 @@
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
-                [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                          withLogout:YES
                                                                      andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
