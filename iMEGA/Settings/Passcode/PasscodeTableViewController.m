@@ -84,14 +84,12 @@
 
 - (IBAction)passcodeSwitchValueChanged:(UISwitch *)sender {
     if (![LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
         [[LTHPasscodeViewController sharedUser] showForEnablingPasscodeInViewController:self asModal:YES];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
         [self.eraseLocalDataSwitch setOn:YES];
     } else {
-        [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsEraseAllLocalDataEnabled];
         [self.eraseLocalDataSwitch setOn:NO];
@@ -141,7 +139,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 1: {
-            [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:megaRed];
             [[LTHPasscodeViewController sharedUser] showForChangingPasscodeInViewController:self asModal:YES];
             break;
         }
