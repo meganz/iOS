@@ -29,6 +29,7 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 
 @interface ContactsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
@@ -478,7 +479,12 @@
     //Avoid showing separator lines between cells on empty states
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    NSString *text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
+    } else {
+        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
+    }
     
    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
     
@@ -487,7 +493,12 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
-    NSString *text = AMLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        text = AMLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
+    } else {
+        text = @"";
+    }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -501,7 +512,11 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"emptyContacts"];
+    if ([MEGAReachabilityManager isReachable]) {
+        return [UIImage imageNamed:@"emptyContacts"];
+    } else {
+        return [UIImage imageNamed:@"emptyCloudDrive"];
+    }
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

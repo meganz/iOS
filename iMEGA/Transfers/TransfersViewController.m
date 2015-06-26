@@ -23,6 +23,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
 #import "TransfersViewController.h"
@@ -607,22 +608,26 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
-    if (areTransfersPaused) {
-        text = AMLocalizedString(@"transfersEmptyState_titlePaused",  @"Transfers Paused");
-    } else {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: //All
-                text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No Transfers");
-                break;
-                
-            case 1: //Downloads
-                text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
-                break;
-                
-            case 2: //Uploads
-                text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
-                break;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (areTransfersPaused) {
+            text = AMLocalizedString(@"transfersEmptyState_titlePaused",  @"Transfers Paused");
+        } else {
+            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+                case 0: //All
+                    text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No Transfers");
+                    break;
+                    
+                case 1: //Downloads
+                    text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
+                    break;
+                    
+                case 2: //Uploads
+                    text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
+                    break;
+            }
         }
+    } else {
+        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -633,22 +638,26 @@
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
     NSString *text;
-    if (areTransfersPaused) {
-        text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the upper button.");
-    } else {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: //All
-                text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
-                break;
-                
-            case 1: //Downloads
-                text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending downloads.");
-                break;
-                
-            case 2: //Uploads
-                text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending uploads.");
-                break;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (areTransfersPaused) {
+            text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the upper button.");
+        } else {
+            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+                case 0: //All
+                    text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
+                    break;
+                    
+                case 1: //Downloads
+                    text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending downloads.");
+                    break;
+                    
+                case 2: //Uploads
+                    text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending uploads.");
+                    break;
+            }
         }
+    } else {
+        text = @"";
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -664,22 +673,26 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
-    if (areTransfersPaused) {
-        image = [UIImage imageNamed:@"transfersPaused"];
-    } else {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: //All
-                image = [UIImage imageNamed:@"emptyTransfers"];
-                break;
-                
-            case 1: //Downloads
-                image = [UIImage imageNamed:@"emptyTransfersDownloads"];
-                break;
-                
-            case 2: //Uploads
-                image = [UIImage imageNamed:@"emptyTransfersUploads"];
-                break;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (areTransfersPaused) {
+            image = [UIImage imageNamed:@"transfersPaused"];
+        } else {
+            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+                case 0: //All
+                    image = [UIImage imageNamed:@"emptyTransfers"];
+                    break;
+                    
+                case 1: //Downloads
+                    image = [UIImage imageNamed:@"emptyTransfersDownloads"];
+                    break;
+                    
+                case 2: //Uploads
+                    image = [UIImage imageNamed:@"emptyTransfersUploads"];
+                    break;
+            }
         }
+    } else {
+        image = [UIImage imageNamed:@"emptyCloudDrive"];
     }
     return image;
 }
