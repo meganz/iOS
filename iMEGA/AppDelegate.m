@@ -101,10 +101,15 @@
         isAccountFirstLogin = NO;
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
         
-        NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
-        UIViewController *viewController = [[UIViewController alloc] init];
-        [viewController setView:[objectsArray objectAtIndex:0]];
-        self.window.rootViewController = viewController;
+        if ([MEGAReachabilityManager isReachable]) {
+            NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
+            UIViewController *viewController = [[UIViewController alloc] init];
+            [viewController setView:[objectsArray objectAtIndex:0]];
+            self.window.rootViewController = viewController;
+        } else {
+            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:mainTBC];
+        }
     } else {
         isAccountFirstLogin = YES;
         
@@ -129,7 +134,6 @@
     if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
         [self photosUrlByModificationDate];
     }
-
     
     return YES;
 }
