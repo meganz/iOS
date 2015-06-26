@@ -47,6 +47,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
@@ -64,9 +65,14 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+        [negativeSpaceBarButtonItem setWidth:-8.0];
+    } else {
+        [negativeSpaceBarButtonItem setWidth:-4.0];
+    }
     
-    NSArray *buttonsItems = @[self.editButtonItem, self.addBarButtonItem];
+    NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
     
     [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
@@ -102,19 +108,22 @@
     return UIInterfaceOrientationPortrait;
 }
 
+- (IBAction)editTapped:(UIBarButtonItem *)sender {
+    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
+    [self setEditing:value animated:YES];
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
-        
-    [self.editButtonItem setTitle:@""];
     
     if (editing) {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"done"]];
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         [self.addBarButtonItem setEnabled:NO];
         if (!isSwipeEditing) {
             self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         }
     } else {
-        [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
         allUsersSelected = NO;
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
