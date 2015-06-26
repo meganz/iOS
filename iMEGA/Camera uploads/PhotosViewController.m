@@ -32,6 +32,7 @@
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "AppDelegate.h"
@@ -673,11 +674,16 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        return nil;
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            return nil;
+        }
+        
+        text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
+    } else {
+        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
     }
-
-    NSString *text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
     
@@ -686,11 +692,16 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        return nil;
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            return nil;
+        }
+        
+        text = AMLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
+    } else {
+        text = @"";
     }
-    
-    NSString *text = AMLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -704,11 +715,16 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        return nil;
-    }
     
-    return [UIImage imageNamed:@"emptyCameraUploads"];
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            return nil;
+        }
+        
+        return [UIImage imageNamed:@"emptyCameraUploads"];
+    } else {
+        return [UIImage imageNamed:@"emptyCloudDrive"];
+    }
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

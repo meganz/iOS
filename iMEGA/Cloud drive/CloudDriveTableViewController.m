@@ -39,6 +39,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "MEGAPreview.h"
 #import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
 #import "BrowserViewController.h"
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
@@ -747,27 +748,31 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
-    switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            if ([self.parentNode type] == MEGANodeTypeRoot) {
-                text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
-            } else {
-                text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+    if ([MEGAReachabilityManager isReachable]) {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                if ([self.parentNode type] == MEGANodeTypeRoot) {
+                    text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
+                } else {
+                    text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+                }
+                break;
             }
-            break;
+                
+            case DisplayModeContact:
+                text = AMLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
+                break;
+                
+            case DisplayModeRubbishBin:
+                if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                    text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+                } else {
+                    text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+                }
+                break;
         }
-            
-        case DisplayModeContact:
-            text = AMLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
-            break;
-            
-        case DisplayModeRubbishBin:
-            if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
-            } else {
-                text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
-            }
-            break;
+    } else {
+        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -778,22 +783,26 @@
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
     NSString *text;
-    switch (self.displayMode) {
-        case DisplayModeCloudDrive:
-            text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
-            break;
-            
-        case DisplayModeContact:
-            text = AMLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
-            break;
-            
-        case DisplayModeRubbishBin:
-            if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
-            } else {
-                text = @"";
-            }
-            break;
+    if ([MEGAReachabilityManager isReachable]) {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive:
+                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
+                break;
+                
+            case DisplayModeContact:
+                text = AMLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
+                break;
+                
+            case DisplayModeRubbishBin:
+                if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                    text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+                } else {
+                    text = @"";
+                }
+                break;
+        }
+    } else {
+        text = @"";
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -808,27 +817,32 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            if ([self.parentNode type] == MEGANodeTypeRoot) {
-                return [UIImage imageNamed:@"emptyCloudDrive"];
-            } else {
-                return [UIImage imageNamed:@"emptyFolder"];
+    
+    if ([MEGAReachabilityManager isReachable]) {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                if ([self.parentNode type] == MEGANodeTypeRoot) {
+                    return [UIImage imageNamed:@"emptyCloudDrive"];
+                } else {
+                    return [UIImage imageNamed:@"emptyFolder"];
+                }
+                break;
             }
-            break;
+                
+            case DisplayModeContact:
+                return [UIImage imageNamed:@"emptyFolder"];
+                break;
+                
+            case DisplayModeRubbishBin:
+                if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                    return [UIImage imageNamed:@"emptyRubbishBin"];
+                } else {
+                    return [UIImage imageNamed:@"emptyFolder"];
+                }
+                break;
         }
-            
-        case DisplayModeContact:
-            return [UIImage imageNamed:@"emptyFolder"];
-            break;
-            
-        case DisplayModeRubbishBin:
-            if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                return [UIImage imageNamed:@"emptyRubbishBin"];
-            } else {
-                return [UIImage imageNamed:@"emptyFolder"];
-            }
-            break;
+    } else {
+         return [UIImage imageNamed:@"emptyCloudDrive"];
     }
 }
 
