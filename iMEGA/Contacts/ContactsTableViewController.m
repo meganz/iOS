@@ -515,7 +515,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         return [UIImage imageNamed:@"emptyContacts"];
     } else {
-        return [UIImage imageNamed:@"emptyCloudDrive"];
+        return [UIImage imageNamed:@"noInternetConnection"];
     }
 }
 

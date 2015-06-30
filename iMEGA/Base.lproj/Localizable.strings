@@ -119,9 +119,9 @@
 "noInternetConnectionEmptyState_title"="No Internet Connection";
 //Links
 "folderLinkEmptyState_title"="Empty folder link";
-"folderLinkEmptyState_titleFolder"="Empty folder.";
+"folderLinkEmptyState_titleFolder"="Empty folder";
 
-"folderLinkEmptyState_text"="Currently, this folder link doesn't have any files.";
+"folderLinkEmptyState_text"="Currently, this link doesn't have any files.";
 "folderLinkEmptyState_textFolder"="Currently, this child folder doesn't have any files.";
 
 //Cloud Drive

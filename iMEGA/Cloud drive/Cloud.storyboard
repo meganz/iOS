@@ -686,15 +686,33 @@
                                     <outlet property="delegate" destination="Z2F-Nr-ypX" id="g1b-MZ-cg4"/>
                                 </connections>
                             </tableView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSp-lb-4Jk" userLabel="Share folder">
+                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="cLs-CS-Pnk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectSharedFolder:" destination="Z2F-Nr-ypX" eventType="touchUpInside" id="PXG-aF-4BG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="dSp-lb-4Jk" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="89h-iN-Jrk"/>
                             <constraint firstAttribute="trailing" secondItem="OqO-k1-16S" secondAttribute="trailing" id="Qdn-Na-HW8"/>
                             <constraint firstAttribute="trailing" secondItem="7Nx-88-DiR" secondAttribute="trailing" id="RIB-1o-p36"/>
                             <constraint firstItem="sx2-EY-zn3" firstAttribute="top" secondItem="OqO-k1-16S" secondAttribute="bottom" id="X8p-gv-4B8"/>
                             <constraint firstItem="OqO-k1-16S" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="aYl-AP-MlV"/>
                             <constraint firstItem="7Nx-88-DiR" firstAttribute="leading" secondItem="ZhJ-Cr-fyv" secondAttribute="leading" id="eW6-Ip-nYg"/>
+                            <constraint firstItem="sx2-EY-zn3" firstAttribute="top" secondItem="dSp-lb-4Jk" secondAttribute="bottom" id="gOg-6f-Ngn"/>
                             <constraint firstItem="7Nx-88-DiR" firstAttribute="top" secondItem="M5n-Ss-cZV" secondAttribute="bottom" id="nG8-6B-N8B"/>
+                            <constraint firstAttribute="trailing" secondItem="dSp-lb-4Jk" secondAttribute="trailing" id="qLJ-gA-yBc"/>
                             <constraint firstItem="OqO-k1-16S" firstAttribute="top" secondItem="7Nx-88-DiR" secondAttribute="bottom" id="uPm-eZ-y3E"/>
                         </constraints>
                     </view>
@@ -709,6 +727,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="eAY-hb-l2Q" id="K0y-SX-RA3"/>
+                        <outlet property="shareFolderButton" destination="dSp-lb-4Jk" id="0I8-J4-T4E"/>
                         <outlet property="tableView" destination="7Nx-88-DiR" id="71N-lJ-L7M"/>
                         <outlet property="toolBarCopyBarButtonItem" destination="lKS-IO-O01" id="oL1-Km-hve"/>
                         <outlet property="toolBarMoveBarButtonItem" destination="7Sv-uf-KA4" id="g3C-EQ-WoC"/>

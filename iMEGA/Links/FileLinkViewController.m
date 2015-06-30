@@ -114,7 +114,7 @@
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView setFrame:self.view.bounds];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"fileLinkUnavailableTitle", nil)];
     [unavailableLinkView.textView setText:AMLocalizedString(@"fileLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
@@ -133,6 +133,10 @@
 }
 
 - (void)deleteTempFile {
+    if (self.node == nil) {
+        return;
+    }
+    
     NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
@@ -305,11 +309,11 @@
             NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
             [self.sizeLabel setText:sizeString];
             
-            NSString *fileTypeIconString = [Helper fileTypeIconForExtension:[name.pathExtension lowercaseString]];
+            NSString *extension = [name pathExtension];
+            NSString *fileTypeIconString = [Helper fileTypeIconForExtension:[extension lowercaseString]];
             UIImage *image = [UIImage imageNamed:fileTypeIconString];
             [self.thumbnailImageView setImage:image];
             
-            NSString *extension = [self.node.name pathExtension];
             if (isDocument(extension) || isImage(extension)) {
                 [self.openButton setEnabled:YES];
                 [self.openButton setHidden:NO];

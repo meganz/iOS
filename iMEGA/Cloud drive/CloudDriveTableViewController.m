@@ -858,7 +858,7 @@
                 break;
         }
     } else {
-         return [UIImage imageNamed:@"emptyCloudDrive"];
+         return [UIImage imageNamed:@"noInternetConnection"];
     }
 }
 

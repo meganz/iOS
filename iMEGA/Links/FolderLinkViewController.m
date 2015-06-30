@@ -87,7 +87,7 @@
     [self.navigationController.view setBackgroundColor:megaLightGray];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"MEGA Folder", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"megaFolder", nil)];
     
     [self.importBarButtonItem setEnabled:NO];
     [self.importBarButtonItem setTitle:AMLocalizedString(@"browserVC_importButton", @"Import")];
@@ -139,7 +139,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    NSString *titleString = AMLocalizedString(@"megaFolder", @"MEGA Folder");
+    NSString *titleString = AMLocalizedString(@"megaFolder", @"MEGA Folder Link");
     if ([self.parentNode name] != nil) {
         if (self.isFolderRootNode) {
             titleString = [titleString stringByAppendingPathComponent:[self.parentNode name]];
@@ -158,7 +158,7 @@
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"emptyCloud"]];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"folderLinkUnavailableTitle", @"")];
     [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
@@ -170,6 +170,7 @@
 - (void)disableUIItems {
     [self.searchDisplayController.searchBar setHidden:YES];
     
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
     
@@ -502,7 +503,7 @@
     
     NSString *text;
     if (self.isFolderRootNode) {
-        text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link.");
+        text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
     } else {
         text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
     }
@@ -520,7 +521,7 @@
     
     NSString *text;
     if (self.isFolderRootNode) {
-        text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link.");
+        text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
     } else {
         text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
     }
@@ -612,7 +613,7 @@
         case MEGARequestTypeFetchNodes: {
             isFetchNodesDone = YES;
             [self reloadUI];
-            [self.importBarButtonItem setEnabled:YES];
+//            [self.importBarButtonItem setEnabled:YES];
             [self.downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
