@@ -48,7 +48,7 @@
 #import "AppDelegate.h"
 #import "MEGAProxyServer.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -62,6 +62,7 @@
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
+    BOOL isSearchTableViewDisplay; //YES if the search table view is displayed, NO otherwise
     
     dispatch_queue_t createAttributesQueue;
     dispatch_group_t createAttributesGroup;
@@ -193,6 +194,8 @@
     [self.dateFormatter setLocale:locale];
     
     self.library = [[ALAssetsLibrary alloc] init];
+    
+    matchSearchNodes = [[NSMutableArray alloc] init];
     
     createAttributesQueue = dispatch_queue_create("Create thumbnails and previews", NULL);
     createAttributesGroup = dispatch_group_create();
@@ -622,13 +625,20 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = nil;
     
-    if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n] < MEGAShareTypeAccessFull) {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [self.nodes nodeAtIndex:indexPath.row];
+    }
+//    MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
+    
+    if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] < MEGAShareTypeAccessFull) {
         return UITableViewCellEditingStyleNone;
     } else {
         self.selectedNodesArray = [NSMutableArray new];
-        [self.selectedNodesArray addObject:n];
+        [self.selectedNodesArray addObject:node];
         [self.downloadBarButtonItem setEnabled:YES];
         [self.shareBarButtonItem setEnabled:YES];
         [self.moveBarButtonItem setEnabled:YES];
@@ -637,7 +647,7 @@
         
         isSwipeEditing = YES;
         
-        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:n];
+        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         [self toolbarActionsForShareType:shareType];
         
         return UITableViewCellEditingStyleDelete;
@@ -662,7 +672,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle==UITableViewCellEditingStyleDelete) {
-        MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
+        MEGANode *node = nil;
+        
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            node = [matchSearchNodes objectAtIndex:indexPath.row];
+        } else {
+            node = [self.nodes nodeAtIndex:indexPath.row];
+        }
         remainingOperations = 1;
         
         MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
@@ -984,6 +1000,11 @@
                 UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
                 MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
                 [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
+                
+                if (isSearchTableViewDisplay) {
+                    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+                    [self.searchDisplayController.searchResultsTableView reloadData];
+                }
             }
             break;
         }
@@ -1433,6 +1454,10 @@
         }
     }
     [self setEditing:NO animated:YES];
+    
+    if (isSearchTableViewDisplay) {
+        [self.searchDisplayController.searchResultsTableView reloadData];
+    }
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
@@ -1441,6 +1466,11 @@
     
     for (MEGANode *n in self.selectedNodesArray) {
         [[MEGASdkManager sharedMEGASdk] exportNode:n];
+    }
+    
+    if (isSearchTableViewDisplay) {
+        [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+        [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
 
@@ -1453,6 +1483,10 @@
     mcnvc.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
     if (lowShareType == MEGAShareTypeAccessOwner) {
         [mcnvc setBrowseAction:BrowseActionCopyAndMove];
+    }
+    
+    if (isSearchTableViewDisplay) {
+        [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
 
@@ -1474,6 +1508,10 @@
         }
         removeAlertView.tag = 2;
         [removeAlertView show];
+    }
+    
+    if (isSearchTableViewDisplay) {
+        [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
 
@@ -1507,7 +1545,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    if (self.tableView == self.searchDisplayController.searchResultsTableView) {
+    if (isSearchTableViewDisplay) {
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
         node = [self.nodes nodeAtIndex:indexPath.row];
@@ -1523,8 +1561,7 @@
 #pragma mark - Content Filtering
 
 - (void)filterContentForSearchText:(NSString*)searchText {
-    
-    matchSearchNodes = [NSMutableArray new];
+    [matchSearchNodes removeAllObjects];
     MEGANodeList *allNodeList = nil;
     
     allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchText recursive:YES];
@@ -1536,7 +1573,15 @@
     
 }
 
-#pragma mark - UISearchDisplayControllerDelegate
+#pragma mark - UISearchDisplayDelegate
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    isSearchTableViewDisplay = YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
+    isSearchTableViewDisplay = NO;
+}
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self filterContentForSearchText:searchString];
@@ -1665,6 +1710,12 @@
             }
             break;
         }
+            
+        case MEGARequestTypeRename:
+            if (isSearchTableViewDisplay) {
+                [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+                [self.searchDisplayController.searchResultsTableView reloadData];
+            }
             
         default:
             break;
