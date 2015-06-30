@@ -692,7 +692,7 @@
             }
         }
     } else {
-        image = [UIImage imageNamed:@"emptyCloudDrive"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
     return image;
 }

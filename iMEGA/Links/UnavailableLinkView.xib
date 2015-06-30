@@ -12,20 +12,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
-                    <rect key="frame" x="199" y="25" width="202" height="140"/>
+                    <rect key="frame" x="229" y="25" width="142" height="160"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="202" id="7hi-wX-zCa"/>
-                        <constraint firstAttribute="height" constant="140" id="a2b-EF-YS0"/>
+                        <constraint firstAttribute="width" constant="142" id="7hi-wX-zCa"/>
+                        <constraint firstAttribute="height" constant="160" id="a2b-EF-YS0"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                    <rect key="frame" x="16" y="173" width="568" height="20"/>
+                    <rect key="frame" x="16" y="193" width="568" height="21"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaU-6T-JvV">
-                    <rect key="frame" x="16" y="201" width="568" height="150"/>
+                    <rect key="frame" x="16" y="222" width="568" height="150"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="eLP-ni-h1O"/>

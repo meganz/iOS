@@ -28,7 +28,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
-
+#import "MEGAReachabilityManager.h"
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
 
@@ -527,10 +527,14 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
-    if (self.folderPathFromOffline == nil) {
-        text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.folderPathFromOffline == nil) {
+            text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+        } else {
+            text = AMLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
+        }
     } else {
-        text = AMLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
+        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -541,10 +545,14 @@
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
     NSString *text;
-    if (self.folderPathFromOffline == nil) {
-        text = AMLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.folderPathFromOffline == nil) {
+            text = AMLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
+        } else {
+            text = AMLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
+        }
     } else {
-        text = AMLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
+        text = @"";
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -559,11 +567,17 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if (self.folderPathFromOffline == nil) {
-        return [UIImage imageNamed:@"emptyOffline"];
+    UIImage *image;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.folderPathFromOffline == nil) {
+            image = [UIImage imageNamed:@"emptyOffline"];
+        } else {
+            image = [UIImage imageNamed:@"emptyFolder"];
+        }
     } else {
-        return [UIImage imageNamed:@"emptyFolder"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
+    return image;
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {

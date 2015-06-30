@@ -723,7 +723,7 @@
         
         return [UIImage imageNamed:@"emptyCameraUploads"];
     } else {
-        return [UIImage imageNamed:@"emptyCloudDrive"];
+        return [UIImage imageNamed:@"noInternetConnection"];
     }
 }
 

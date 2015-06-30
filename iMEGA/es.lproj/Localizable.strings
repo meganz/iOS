@@ -122,7 +122,7 @@
 "folderLinkEmptyState_title"="Enlace a carpeta vacía";
 "folderLinkEmptyState_titleFolder"="Carpeta vacía";
 
-"folderLinkEmptyState_text"="Actualmente, este enlace a carpeta no contiene ningún archivo.";
+"folderLinkEmptyState_text"="Actualmente, este enlace no contiene ningún archivo.";
 "folderLinkEmptyState_textFolder"="Actualmente, esta carpeta anidada no contiene ningún archivo.";
 
 //Cloud Drive
