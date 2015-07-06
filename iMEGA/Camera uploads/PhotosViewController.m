@@ -41,7 +41,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAProxyServer.h"
 
-@interface PhotosViewController () <UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     dispatch_queue_t createAttributesQueue;
     dispatch_group_t createAttributesGroup;
     dispatch_semaphore_t createAttributesSemaphore;
@@ -668,6 +668,12 @@
         
         [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];
     }
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(([UIScreen mainScreen].bounds.size.width-3)/4,([UIScreen mainScreen].bounds.size.width-3)/4);
 }
 
 #pragma mark - DZNEmptyDataSetSource
