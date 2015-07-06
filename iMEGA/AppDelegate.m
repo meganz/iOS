@@ -622,12 +622,12 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...")];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
             break;
         }
             
         case MEGARequestTypeLogout:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"logout", @"Logout...")];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"logout", @"Logout...") maskType:SVProgressHUDMaskTypeClear];
             break;
             
         default:
@@ -643,9 +643,9 @@
     if ([request type] == MEGARequestTypeFetchNodes){
         float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
         if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes")];
+            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
         } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes")];
+            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
         }
     }
 }

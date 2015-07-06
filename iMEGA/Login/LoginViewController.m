@@ -73,6 +73,9 @@
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
+    [self.emailTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+    
     if (![MEGAReachabilityManager isReachable]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problema de conexión" message:@"Compruba tu conexión a internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
         [alert show];
@@ -180,6 +183,8 @@
                                                       cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
                                                       otherButtonTitles:nil];
                 [alert show];
+                
+                [self.emailTextField becomeFirstResponder];
                 break;
             }
                 
