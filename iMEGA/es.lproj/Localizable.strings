@@ -253,6 +253,8 @@
 "oneItemSelected"="%lu elemento seleccionado";
 "itemsSelected"="%lu elementos seleccionados";
 
+"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tiene suficiente espacio en su dispositivo";
+
 //UITABBARCONTROLLER (3) OFFLINE
 "offline"="Offline";
 "itemDeletingError"="Error al eliminar";

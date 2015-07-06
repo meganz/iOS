@@ -28,10 +28,11 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
+#import "CameraUploadsTableViewController.h"
 
 #define kCameraUploads @"Camera Uploads"
 
-@interface CameraUploads () {
+@interface CameraUploads () <UIAlertViewDelegate> {
     NSInteger totalAssets;
     
     MEGANode *cameraUploadsNode;
@@ -242,15 +243,50 @@ static CameraUploads *instance = nil;
     
     ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
     
+    long long asize = assetRepresentation.size;
+    long long freeSpace = (long long)[self freeDiskSpace];
+    
+    if (asize > freeSpace) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+                                                                message:AMLocalizedString(@"cameraUploadsDisabled_alertView_message", @"Camera Uploads will be disabled, because you don't have enought space on your device")
+                                                               delegate:self
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        });
+        
+        [self turnOffCameraUploads];
+        return;
+    }
+    
     if (!assetRepresentation) {
         return;
     }
     
-    Byte *buffer = (Byte *)malloc(assetRepresentation.size);
-    NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
+    [[NSFileManager defaultManager] createFileAtPath:localFilePath contents:nil attributes:nil];
+    NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:localFilePath];
     
-    NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-    [data writeToFile:localFilePath atomically:YES];
+    static const NSUInteger kBufferSize = 10 * 1024;
+    uint8_t *buffer = calloc(kBufferSize, sizeof(*buffer));
+    NSUInteger offset = 0, bytesRead = 0;
+    
+    do {
+        bytesRead = [assetRepresentation getBytes:buffer fromOffset:offset length:kBufferSize error:nil];
+        [handle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
+        
+        offset += bytesRead;
+        
+    } while (bytesRead > 0);
+    
+    free(buffer);
+    [handle closeFile];
+    
+//    Byte *buffer = (Byte *)malloc(assetRepresentation.size);
+//    NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
+//    
+//    NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+//    [data writeToFile:localFilePath atomically:YES];
     
     NSError *error = nil;
     NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
@@ -352,19 +388,73 @@ static CameraUploads *instance = nil;
 }
 
 - (void)updateLastUploadDate {
-    ALAsset *asset = [self.assetUploadArray objectAtIndex:0];
-    
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-        self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
-        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-    }
-    
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
-        self.lastUploadVideoDate = [asset valueForProperty:ALAssetPropertyDate];
-        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+    if (self.assetUploadArray > 0) {
+        ALAsset *asset = [self.assetUploadArray objectAtIndex:0];
+        
+        if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+            self.lastUploadPhotoDate = [asset valueForProperty:ALAssetPropertyDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+        }
+        
+        if ([[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+            self.lastUploadVideoDate = [asset valueForProperty:ALAssetPropertyDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+        }
     }
     
     [self.assetUploadArray removeObjectAtIndex:0];
+}
+
+- (uint64_t)freeDiskSpace {
+    uint64_t totalSpace = 0;
+    uint64_t totalFreeSpace = 0;
+    NSError *error = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    
+    if (dictionary) {
+        NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSystemSize];
+        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
+        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
+        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
+    } else {
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]]];
+    }
+    
+    return totalFreeSpace;
+}
+
+- (void)turnOffCameraUploads {
+    [[CameraUploads syncManager].assetUploadArray removeAllObjects];
+    
+    [CameraUploads syncManager].isCameraUploadsEnabled = NO;
+    [CameraUploads syncManager].isUploadVideosEnabled = NO;
+    [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
+    [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //If settings is on "more" tab bar item
+    if (self.tabBarController.selectedIndex >= 4) {
+        if ([[self.tabBarController.moreNavigationController visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[self.tabBarController.moreNavigationController visibleViewController] viewWillAppear:YES];
+            });
+        }
+    } else {
+        if ([[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] isKindOfClass:[CameraUploadsTableViewController class]]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[(UINavigationController *)[(UITabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController] selectedViewController] visibleViewController] viewWillAppear:YES];
+            });
+        }
+    }
 }
 
 #pragma mark - MEGARequestDelegate
