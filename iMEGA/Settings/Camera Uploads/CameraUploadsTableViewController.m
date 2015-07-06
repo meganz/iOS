@@ -75,6 +75,8 @@
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
     }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -192,6 +194,9 @@
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         return 2;
     } else {
+        [self.uploadVideosSwitch setOn:NO animated:YES];
+        [self.useCellularConnectionSwitch setOn:NO animated:YES];
+        [self.onlyWhenChargingSwitch setOn:NO animated:YES];
         return 1;
     }
 }
