@@ -187,24 +187,16 @@
         [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSError *error = nil;
-        
-        NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
-        for (NSString *file in [fileManager contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-            if ([file.lowercaseString.pathExtension isEqualToString:@"mega"]) {
-                BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", offlineDirectory, file] error:&error];
-                if (!success || error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
-                }
-            }
-        }
-        
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
+        
+        NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
+        [self removeUnfinishedTransfersOnFolder:offlineDirectory];
         
         if ([Helper renamePathForPreviewDocument] != nil) {
-            BOOL success = [fileManager moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
+            NSError *error = nil;
+            BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
             if (!success || error) {
                 [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
             }
@@ -518,6 +510,24 @@
         return YES;
     }
     return NO;
+}
+
+- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
+        } else {
+            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
+                NSError *error = nil;
+                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error];
+                if (!success || error) {
+                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - Get IP Address
