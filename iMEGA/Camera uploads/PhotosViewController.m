@@ -49,7 +49,7 @@
     BOOL allNodesSelected;
     NSMutableArray *exportLinks;
     NSUInteger remainingOperations;
-
+    NSUInteger itemsPerRow;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -113,6 +113,16 @@
     
     [self.navigationItem setRightBarButtonItem:self.editButtonItem];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
+    
+    if (iPad) {
+        itemsPerRow = 7;
+    } else {
+        if (iPhone4X || iPhone5X) {
+            itemsPerRow = 3;
+        } else {
+            itemsPerRow = 4;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -673,7 +683,7 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(([UIScreen mainScreen].bounds.size.width-3)/4,([UIScreen mainScreen].bounds.size.width-3)/4);
+    return CGSizeMake(([UIScreen mainScreen].bounds.size.width-itemsPerRow-1)/itemsPerRow,([UIScreen mainScreen].bounds.size.width-itemsPerRow-1)/itemsPerRow);
 }
 
 #pragma mark - DZNEmptyDataSetSource
