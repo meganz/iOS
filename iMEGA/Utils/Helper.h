@@ -27,7 +27,7 @@
 #define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
 #define videoSet        [[NSSet alloc] initWithObjects:/*@"mkv",*/ @"avi", @"mp4", @"m4v", @"mpg", @"mpeg", @"mov", @"3gp",/*@"aaf",*/ nil]
 #define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", nil]
-#define documentsSet     [[NSSet alloc] initWithObjects:@"pdf", @"rtf", @"csv", @"key", @"keynote", @"numbers", @"pages", @"doc", @"docx", @"dotx", @"wps", @"xls", @"xlsx", @"xlt", @"xltm", @"pps", @"ppt", @"pptx", nil]
+#define documentsSet    [[NSSet alloc] initWithObjects:@"pdf", @"rtf", @"csv", @"key", @"keynote", @"numbers", @"pages", @"doc", @"docx", @"dotx", @"wps", @"xls", @"xlsx", @"xlt", @"xltm", @"pps", @"ppt", @"pptx", nil]
 
 #define isImage(n)        [imagesSet containsObject:n.lowercaseString]
 #define isVideo(n)        [videoSet containsObject:n.lowercaseString]
@@ -54,6 +54,14 @@
 #define megaBlack       [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0]
 
 #define megaLightGray   [UIColor colorWithWhite:0.933 alpha:1.000]
+
+#pragma mark - Device
+
+#define iPhone4X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 480)
+#define iPhone5X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
+#define iPhone6     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)
+#define iPhone6Plus ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 736)
+#define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 
 @interface Helper : NSObject
 

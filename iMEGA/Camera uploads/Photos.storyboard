@@ -35,12 +35,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRo-0N-f4b">
+                                                <imageView userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eRo-0N-f4b">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="eRo-0N-f4b" firstAttribute="top" secondItem="h9o-K1-j6B" secondAttribute="top" id="2nK-kw-bPO"/>
+                                            <constraint firstItem="eRo-0N-f4b" firstAttribute="leading" secondItem="h9o-K1-j6B" secondAttribute="leading" id="XT2-Vy-KYQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="eRo-0N-f4b" secondAttribute="bottom" id="bgJ-0K-HZG"/>
+                                            <constraint firstAttribute="trailing" secondItem="eRo-0N-f4b" secondAttribute="trailing" id="tLS-cp-wqG"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="thumbnailImageView" destination="eRo-0N-f4b" id="CiL-ya-uM2"/>
                                         </connections>
