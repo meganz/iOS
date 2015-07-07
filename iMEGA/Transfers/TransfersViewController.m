@@ -80,7 +80,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -108,6 +112,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
@@ -242,33 +248,36 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    if (!areTransfersPaused) {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case 0: { //All
-                if (section == 0) {
-                    numberOfRows = [self.allActiveTransfersMutableDictionary count];
-                } else {
-                    numberOfRows = [self.allQueuedTransfersMutableDictionary count];
+    
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!areTransfersPaused) {
+            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+                case 0: { //All
+                    if (section == 0) {
+                        numberOfRows = [self.allActiveTransfersMutableDictionary count];
+                    } else {
+                        numberOfRows = [self.allQueuedTransfersMutableDictionary count];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 1:  { //Downloads
-                if (section == 0) {
-                    numberOfRows = [self.downloadActiveTransfersMutableDictionary count];
-                } else {
-                    numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
+                    
+                case 1:  { //Downloads
+                    if (section == 0) {
+                        numberOfRows = [self.downloadActiveTransfersMutableDictionary count];
+                    } else {
+                        numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case 2: { //Uploads
-                if (section == 0) {
-                    numberOfRows = [self.uploadActiveTransfersMutableDictionary count];
-                } else {
-                    numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
+                    
+                case 2: { //Uploads
+                    if (section == 0) {
+                        numberOfRows = [self.uploadActiveTransfersMutableDictionary count];
+                    } else {
+                        numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
+                    }
+                    break;
                 }
-                break;
             }
         }
     }
@@ -480,11 +489,6 @@
     }
 }
 
-- (void)pauseOrResumeTransfers:(BOOL)pauseOrResume {
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:pauseOrResume delegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:pauseOrResume delegate:self];
-}
-
 - (void)cancelTransfersForDirection:(NSInteger)direction {
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
     if ([transferList.size integerValue] != 0) {
@@ -528,6 +532,18 @@
     return indexPath;
 }
 
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    [self.tableView reloadData];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.pauseBarButtonItem setEnabled:boolValue];
+    [self.cancelBarButtonItem setEnabled:boolValue];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)transfersTypeSegmentedControlValueChanged:(UISegmentedControl *)sender {
@@ -554,13 +570,15 @@
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    [self pauseOrResumeTransfers:YES];
     [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.resumeBarButtonItem] animated:NO];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    [self pauseOrResumeTransfers:NO];
     [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.pauseBarButtonItem] animated:NO];
+    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
@@ -604,7 +622,6 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    //Avoid showing separator lines between cells on empty states
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
@@ -627,7 +644,7 @@
             }
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -713,13 +730,9 @@
     
     switch ([request type]) {
         case MEGARequestTypePauseTransfers: {
-            if ([request flag]) {
-                [self.tableView reloadEmptyDataSet];
-            } else {
-                [self.tableView reloadEmptyDataSet];
-            }
             [[NSUserDefaults standardUserDefaults] setBool:[request flag] forKey:@"TransfersPaused"];
             areTransfersPaused = [request flag];
+            [self.tableView reloadData];
             break;
         }
             

@@ -77,18 +77,15 @@
     [self.passwordTextField resignFirstResponder];
     
     if (![MEGAReachabilityManager isReachable]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problema de conexión" message:@"Compruba tu conexión a internet" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [alert show];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     } else if ([self validateForm]) {
         NSOperationQueue *operationQueue = [NSOperationQueue new];
         
         NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
                                                                                 selector:@selector(generateKeys)
                                                                                   object:nil];
-        
         [operationQueue addOperation:operation];
     }
-    
 }
 
 

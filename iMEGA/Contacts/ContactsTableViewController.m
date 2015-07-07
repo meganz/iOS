@@ -83,16 +83,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -159,6 +166,18 @@
     }
     
     [self.tableView reloadData];
+}
+
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    [self.tableView reloadData];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.addBarButtonItem setEnabled:boolValue];
+    [self.editBarButtonItem setEnabled:boolValue];
 }
 
 #pragma mark - IBActions
@@ -230,7 +249,18 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [self.visibleUsersArray count];
+    NSInteger numberOfRows = 0;
+    if ([MEGAReachabilityManager isReachable]) {
+        numberOfRows = [self.visibleUsersArray count];
+    }
+    
+    if (numberOfRows == 0) {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    } else {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    }
+    
+    return numberOfRows;
 }
 
 
@@ -476,14 +506,13 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    //Avoid showing separator lines between cells on empty states
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
     } else {
-        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
