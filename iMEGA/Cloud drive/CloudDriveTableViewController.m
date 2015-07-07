@@ -1477,7 +1477,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"createFolder", @"Create folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
+                                                    otherButtonTitles:AMLocalizedString(@"newFolderTitle", @"New folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];

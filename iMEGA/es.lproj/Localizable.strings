@@ -197,8 +197,7 @@
 "choosePhotoVideo"="Elegir";
 "capturePhotoVideo"="Capturar";
 
-//Create folder
-"createFolder" = "Crear carpeta";
+//New folder
 "newFolderTitle" = "Nueva carpeta";
 "newFolderMessage" = "Nombre para la carpeta";
 "createFolderButton" = "Crear";
