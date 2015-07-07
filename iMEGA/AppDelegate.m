@@ -274,6 +274,10 @@
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
     
     [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
+    
+    [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
+    [SVProgressHUD setBackgroundColor:megaInfoGray];
+    [SVProgressHUD setForegroundColor:megaBlack];
 }
 
 - (void)startBackgroundTask {

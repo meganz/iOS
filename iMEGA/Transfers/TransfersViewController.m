@@ -36,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *negativeSpaceBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -91,12 +92,19 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
+    self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+        [self.negativeSpaceBarButtonItem setWidth:-5.0];
+    } else {
+        [self.negativeSpaceBarButtonItem setWidth:-1.0];
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
         areTransfersPaused = YES;
-        [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.resumeBarButtonItem] animated:YES];
+        [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.resumeBarButtonItem] animated:YES];
     } else {
         areTransfersPaused = NO;
-        [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.pauseBarButtonItem] animated:YES];
+        [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.pauseBarButtonItem] animated:YES];
     }
     
     [self transfersList];
@@ -139,11 +147,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     TransferTableViewCell *cell;
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     MEGATransfer *transfer;
     if ([indexPath section] == 0) { //ACTIVE TRANSFERS
@@ -237,6 +240,12 @@
     [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:nameString]];
     [cell.iconImageView setImage:[Helper imageForExtension:nameString.pathExtension]];
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGray];
+    [cell setSelectedBackgroundView:view];
+    
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     [cell setTransferTag:transfer.tag];
     
     return cell;
@@ -281,11 +290,15 @@
             }
         }
     }
+    
     if (numberOfRows == 0) {
         [self.cancelBarButtonItem setEnabled:NO];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self.cancelBarButtonItem setEnabled:YES];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
+    
     return numberOfRows;
 }
 
@@ -570,13 +583,13 @@
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.resumeBarButtonItem] animated:NO];
+    [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.resumeBarButtonItem] animated:NO];
     [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES delegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    [self.navigationItem setRightBarButtonItems:@[self.cancelBarButtonItem, self.pauseBarButtonItem] animated:NO];
+    [self.navigationItem setRightBarButtonItems:@[self.negativeSpaceBarButtonItem, self.cancelBarButtonItem, self.pauseBarButtonItem] animated:NO];
     [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO delegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
 }

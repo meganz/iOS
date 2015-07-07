@@ -197,11 +197,10 @@
 "choosePhotoVideo" ="Choose";
 "capturePhotoVideo"="Capture";
 
-//Create folder
+//New folder
 "newFolderTitle" = "New folder";
 "newFolderMessage" = "Name for the new folder";
 "createFolderButton" = "Create";
-"createFolder" = "Create folder";
 
 //BrowserViewController
 
