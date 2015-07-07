@@ -25,7 +25,7 @@
                                     <size key="itemSize" width="120" height="120"/>
                                     <size key="headerReferenceSize" width="320" height="30"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                                    <inset key="sectionInset" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCellId" id="h9o-K1-j6B" customClass="PhotoCollectionViewCell">
