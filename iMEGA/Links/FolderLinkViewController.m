@@ -31,6 +31,7 @@
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "MEGAPreview.h"
+#import "MEGAReachabilityManager.h"
 #import "DetailsNodeInfoViewController.h"
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
@@ -109,14 +110,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
 - (void)dealloc {
@@ -227,6 +234,17 @@
     return AMLocalizedString(@"emptyFolder", @"Empty folder");
 }
 
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    [self.tableView reloadData];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.downloadBarButtonItem setEnabled:boolValue];
+}
+
 #pragma mark - IBActions
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
     [Helper setLinkNode:nil];
@@ -282,11 +300,22 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [matchSearchNodes count];
-    } else {
-        return [[self.nodeList size] integerValue];
+    NSInteger numberOfRows = 0;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            numberOfRows = [matchSearchNodes count];
+        } else {
+            numberOfRows = [[self.nodeList size] integerValue];
+        }
     }
+    
+    if (numberOfRows == 0) {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    } else {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    }
+    
+    return numberOfRows;
 }
 
 
@@ -494,18 +523,23 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    if (!isFetchNodesDone) {
-        return nil;
-    }
-    
-    //Avoid showing separator lines between cells on empty states
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
-    if (self.isFolderRootNode) {
-        text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!isFetchNodesDone && self.isFolderRootNode) {
+            return nil;
+        }
+        
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+        if (self.isFolderRootNode) {
+            text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
+        } else {
+            text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
+        }
     } else {
-        text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -515,15 +549,19 @@
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     
-    if (!isFetchNodesDone) {
-        return nil;
-    }
-    
     NSString *text;
-    if (self.isFolderRootNode) {
-        text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!isFetchNodesDone && self.isFolderRootNode) {
+            return nil;
+        }
+        
+        if (self.isFolderRootNode) {
+            text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
+        } else {
+            text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+        }
     } else {
-        text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+        text = @"";
     }
     
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
@@ -538,16 +576,23 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if (!isFetchNodesDone) {
-        return nil;
-    }
     
-    return [UIImage imageNamed:@"emptyFolder"];
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!isFetchNodesDone && self.isFolderRootNode) {
+            return nil;
+        }
+        
+        return [UIImage imageNamed:@"emptyFolder"];
+    } else {
+        return [UIImage imageNamed:@"noInternetConnection"];
+    }
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    if (!isFetchNodesDone) {
-        return nil;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!isFetchNodesDone && self.isFolderRootNode) {
+            return nil;
+        }
     }
     
     return [UIColor whiteColor];

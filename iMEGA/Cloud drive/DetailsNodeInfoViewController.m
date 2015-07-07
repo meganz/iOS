@@ -26,6 +26,7 @@
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
@@ -148,73 +149,93 @@
 #pragma mark - Private methods
 
 - (void)download {
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
-        return;
-    }
-    
-    if ([self.node type] == MEGANodeTypeFile) {
-        [Helper downloadNode:self.node folder:@"" folderLink:NO];
-    } else if ([self.node type] == MEGANodeTypeFolder) {
-        NSString *folderName = [[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]]];
-        NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-        
-        if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
+    if ([MEGAReachabilityManager isReachable]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
+            return;
         }
+        
+        if ([self.node type] == MEGANodeTypeFile) {
+            [Helper downloadNode:self.node folder:@"" folderLink:NO];
+        } else if ([self.node type] == MEGANodeTypeFolder) {
+            NSString *folderName = [[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]]];
+            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
+            
+            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
+            }
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
 - (void)getLink {
-    [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
+    if ([MEGAReachabilityManager isReachable]) {
+        [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
 }
 
 - (void)copyAndMove:(BOOL)move {
-    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    
-    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-    
-    move ? [browserVC setBrowseAction:BrowseActionCopyAndMove] : [browserVC setBrowseAction:BrowseActionCopy];
+    if ([MEGAReachabilityManager isReachable]) {
+        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+        
+        move ? [browserVC setBrowseAction:BrowseActionCopyAndMove] : [browserVC setBrowseAction:BrowseActionCopy];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
 }
 
 - (void)rename {
-    if (!renameAlertView) {
-        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!renameAlertView) {
+            renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
+        }
+        
+        [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [renameAlertView setTag:0];
+        
+        UITextField *textField = [renameAlertView textFieldAtIndex:0];
+        [textField setDelegate:self];
+        [textField setText:[self.node name]];
+        
+        [renameAlertView show];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
-    
-    [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [renameAlertView setTag:0];
-    
-    UITextField *textField = [renameAlertView textFieldAtIndex:0];
-    [textField setDelegate:self];
-    [textField setText:[self.node name]];
-    
-    [renameAlertView show];
 }
 
 - (void)delete {
-    //Leave folder or remove folder in a incoming shares
-    if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull)) {
-        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
-        [self.navigationController popViewControllerAnimated:YES];
+    if ([MEGAReachabilityManager isReachable]) {
+        //Leave folder or remove folder in a incoming shares
+        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull)) {
+            [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            
+            //Delete permanently
+            if (self.displayMode == DisplayModeRubbishBin) {
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+            }
+            
+            //Move to rubbish bin
+            if (self.displayMode == DisplayModeCloudDrive) {
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+            }
+            
+            [removeAlertView setTag:1];
+            [removeAlertView show];
+        }
     } else {
-    
-        //Delete permanently
-        if (self.displayMode == DisplayModeRubbishBin) {
-            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
-        }
-        
-        //Move to rubbish bin
-        if (self.displayMode == DisplayModeCloudDrive) {
-            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
-        }
-        
-        [removeAlertView setTag:1];
-        [removeAlertView show];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 

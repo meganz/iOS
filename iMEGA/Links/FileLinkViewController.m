@@ -33,6 +33,7 @@
 #import "BrowserViewController.h"
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 
@@ -162,84 +163,96 @@
 }
 
 - (IBAction)importTouchUpInside:(UIButton *)sender {
-    [self deleteTempFile];
-    
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            if ([self.node type] == MEGANodeTypeFile) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-                
-                [browserVC setIsPublicNode:YES];
-            }
-        }];
+    if ([MEGAReachabilityManager isReachable]) {
+        [self deleteTempFile];
+        
+        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                if ([self.node type] == MEGANodeTypeFile) {
+                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+                    
+                    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                    browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                    
+                    [browserVC setIsPublicNode:YES];
+                }
+            }];
+        } else {
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            
+            [Helper setLinkNode:self.node];
+            [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+            
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     } else {
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        
-        [Helper setLinkNode:self.node];
-        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
-        
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
 - (IBAction)downloadTouchUpInside:(UIButton *)sender {
-    [self deleteTempFile];
-    
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
-        return;
-    }
-    
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+    if ([MEGAReachabilityManager isReachable]) {
+        [self deleteTempFile];
+        
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
+            return;
+        }
+        
+        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+                
+                if ([self.node type] == MEGANodeTypeFile) {
+                    [Helper downloadNode:self.node folder:@"" folderLink:NO];
+                }
+            }];
+        } else {
+            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
             
-            if ([self.node type] == MEGANodeTypeFile) {
-                [Helper downloadNode:self.node folder:@"" folderLink:NO];
-            }
-        }];
+            [Helper setLinkNode:self.node];
+            [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+            
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     } else {
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        
-        [Helper setLinkNode:self.node];
-        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
-        
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
 - (IBAction)openTouchUpInside:(UIButton *)sender {
-    [self setUIItemsEnabled:NO];
-    
-    NSNumber *nodeSizeNumber = [self.node size];
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
-                                                            message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        return;
-    }
-    
-    [Helper setRenamePathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:[self.node name]]];
-    
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
-    if (!fileExists) {
-        NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
-        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-        [Helper setPathForPreviewDocument:path];
+    if ([MEGAReachabilityManager isReachable]) {
+        [self setUIItemsEnabled:NO];
         
-        [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:path];
+        NSNumber *nodeSizeNumber = [self.node size];
+        NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
+        if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+                                                                message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
+                                                               delegate:self
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            return;
+        }
+        
+        [Helper setRenamePathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:[self.node name]]];
+        
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
+        if (!fileExists) {
+            NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+            NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+            [Helper setPathForPreviewDocument:path];
+            
+            [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:path];
+        } else {
+            [self openTempFile];
+        }
     } else {
-        [self openTempFile];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 

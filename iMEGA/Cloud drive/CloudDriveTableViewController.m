@@ -206,9 +206,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [self reloadUI];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     //Hide searchbar
     self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
@@ -216,6 +220,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     if (self.tableView.isEditing) {
         self.selectedNodesArray = nil;
@@ -245,11 +251,22 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [matchSearchNodes count];
-    } else {
-        return [[self.nodes size] integerValue];
+    NSInteger numberOfRows = 0;
+    if ([MEGAReachabilityManager isReachable]) {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            numberOfRows = [matchSearchNodes count];
+        } else {
+            numberOfRows = [[self.nodes size] integerValue];
+        }
     }
+    
+    if (numberOfRows == 0) {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    } else {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    }
+    
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -760,11 +777,14 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     
-    //Avoid showing separator lines between cells on empty states
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.parentNode == nil) {
+            return nil;
+        }
+        
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
@@ -788,7 +808,7 @@
                 break;
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -800,6 +820,10 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.parentNode == nil) {
+            return nil;
+        }
+        
         switch (self.displayMode) {
             case DisplayModeCloudDrive:
                 text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
@@ -835,6 +859,10 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.parentNode == nil) {
+            return nil;
+        }
+        
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
@@ -1371,6 +1399,33 @@
     }
     
     [self toolbarActionsForShareType:lowShareType];
+}
+
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    [self.tableView reloadData];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            [self.sortByBarButtonItem setEnabled:boolValue];
+            [self.addBarButtonItem setEnabled:boolValue];
+            [self.editBarButtonItem setEnabled:boolValue];
+            break;
+        }
+            
+        case DisplayModeContact:
+            break;
+            
+        case DisplayModeRubbishBin: {
+            [self.sortByBarButtonItem setEnabled:boolValue];
+            [self.editBarButtonItem setEnabled:boolValue];
+            break;
+        }
+    }
 }
 
 #pragma mark - IBActions

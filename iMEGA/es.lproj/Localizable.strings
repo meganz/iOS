@@ -6,7 +6,7 @@
 "paused" = "En pausa";
 "shareFolder" = "Compartir carpeta";
 "noCamera"="No hay cámara disponible";
-
+"noInternetConnection"="No hay conexión a internet";
 
 "attention"="Atención";
 "cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en la configuración de la aplicación!";
@@ -117,7 +117,6 @@
 "folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 
 //EMPTY STATES
-"noInternetConnectionEmptyState_title"="No hay conexión a internet";
 //Links
 "folderLinkEmptyState_title"="Enlace a carpeta vacía";
 "folderLinkEmptyState_titleFolder"="Carpeta vacía";

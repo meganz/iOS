@@ -128,6 +128,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self setEditing:NO animated:NO];
     
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads") forState:UIControlStateNormal];
@@ -135,11 +137,16 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
@@ -249,6 +256,14 @@
         
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)internetConnectionChanged {
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+}
+
+- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.editButtonItem setEnabled:boolValue];
 }
 
 #pragma mark - IBAction
@@ -698,7 +713,7 @@
         
         text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
     } else {
-        text = AMLocalizedString(@"noInternetConnectionEmptyState_title",  @"No Internet Connection");
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};

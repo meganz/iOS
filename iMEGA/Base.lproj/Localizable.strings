@@ -6,6 +6,7 @@
 "paused"="Paused";
 "shareFolder" = "Share folder";
 "noCamera"="No camera available";
+"noInternetConnection"="No Internet Connection";
 
 "attention"="Attention";
 "cameraPermissions"="Please give MEGA app permission to access your Camera in your settings app!";
@@ -116,7 +117,6 @@
 "folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 
 //EMPTY STATES
-"noInternetConnectionEmptyState_title"="No Internet Connection";
 //Links
 "folderLinkEmptyState_title"="Empty folder link";
 "folderLinkEmptyState_titleFolder"="Empty folder";
