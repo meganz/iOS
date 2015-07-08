@@ -260,7 +260,7 @@
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0], NSForegroundColorAttributeName:megaBlack}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
