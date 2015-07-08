@@ -501,7 +501,7 @@ static NSInteger linkNodeOption;
         folderPath = [Helper pathForOffline];
     }
     
-    NSString *offlineNameString = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
+    NSString *offlineNameString = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[node name]]];
     NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath];
@@ -534,7 +534,7 @@ static NSInteger linkNodeOption;
         if ([node type] == MEGANodeTypeFile) {
             [Helper downloadNode:node folder:folderPath folderLink:isFolderLink];
         } else if ([node type] == MEGANodeTypeFolder){
-            NSString *childFolderName = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[node name]]];
+            NSString *childFolderName = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[node name]]];
             NSString *childFolderPath = [folderPath stringByAppendingPathComponent:childFolderName];
             
             if ([Helper createOfflineFolder:childFolderName folderPath:childFolderPath]) {

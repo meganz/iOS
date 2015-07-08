@@ -138,7 +138,7 @@
         return;
     }
     
-    NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+    NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
     if (fileExists) {
@@ -242,7 +242,7 @@
         
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
         if (!fileExists) {
-            NSString *name = [[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]];
+            NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
             NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
             [Helper setPathForPreviewDocument:path];
             
