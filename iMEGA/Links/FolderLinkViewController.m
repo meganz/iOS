@@ -265,7 +265,7 @@
             MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
             
-            NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.parentNode name]]];
+            NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.parentNode name]]];
             NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
             
             if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {

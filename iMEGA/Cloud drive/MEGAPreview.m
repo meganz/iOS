@@ -86,7 +86,7 @@
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
         }
     } else {
-        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] nameToLocal:[self.node name]]]];
+        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]]];
         if (self.isFromFolderLink) {
             [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
         } else {

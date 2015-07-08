@@ -148,7 +148,7 @@
                 } else {
                     imageName = [itemNameComponentsArray objectAtIndex:1];
                 }
-                photo.caption = [[MEGASdkManager sharedMEGASdk] localToName:imageName];
+                photo.caption = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:imageName];
                 [self.offlineImages addObject:photo];
             }
         }
@@ -359,7 +359,7 @@
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
     }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:nameString]];
+    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
     
     NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
     NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];

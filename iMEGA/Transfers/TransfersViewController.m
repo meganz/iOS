@@ -237,7 +237,7 @@
     } else if ([transfer type] == MEGATransferTypeUpload) {
         nameString = fileName;
     }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] localToName:nameString]];
+    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
     [cell.iconImageView setImage:[Helper imageForExtension:nameString.pathExtension]];
     
     UIView *view = [[UIView alloc] init];
