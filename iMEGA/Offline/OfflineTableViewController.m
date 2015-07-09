@@ -471,9 +471,10 @@
         } else if (isVideo(itemNameString.pathExtension)) {
             NSURL *fileURL = [NSURL fileURLWithPath:itemPath];
             
-            MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
-            [self presentMoviePlayerViewControllerAnimated:videoPlayerView];
-            [videoPlayerView.moviePlayer play];
+            MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
+            [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+            [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
+            [moviePlayerViewController.moviePlayer play];
         } else {
             [Helper setPathForPreviewDocument:itemPath];
             

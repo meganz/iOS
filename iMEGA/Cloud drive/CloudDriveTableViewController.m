@@ -578,6 +578,8 @@
                                                                  name:MPMoviePlayerPlaybackDidFinishNotification
                                                                object:moviePlayerViewController.moviePlayer];
                     
+                    [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+                    
                     [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
                     
                     [moviePlayerViewController.moviePlayer prepareToPlay];
