@@ -24,6 +24,7 @@
 
 #import "SVProgressHUD.h"
 #import "Helper.h"
+#import "MEGAReachabilityManager.h"
 
 @interface ConfirmAccountViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -78,9 +79,13 @@
 
 - (IBAction)confirmTouchUpInside:(id)sender {
     if ([self validateForm]) {
-        [SVProgressHUD show];
-        [self lockUI:YES];
-        [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
+        if ([MEGAReachabilityManager isReachable]) {
+            [SVProgressHUD show];
+            [self lockUI:YES];
+            [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
 

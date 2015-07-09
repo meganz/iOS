@@ -1,5 +1,6 @@
 
 #import "FeedbackTableViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
@@ -94,21 +95,25 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0:
-            [self sendFeedback];
-            break;
-            
-        case 1:
-            [self openHelpCentre];
-            break;
-            
-        case 2:
-            [self rateApp];
-            break;
-            
-        default:
-            break;
+    if ([MEGAReachabilityManager isReachable]) {
+        switch (indexPath.section) {
+            case 0:
+                [self sendFeedback];
+                break;
+                
+            case 1:
+                [self openHelpCentre];
+                break;
+                
+            case 2:
+                [self rateApp];
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
