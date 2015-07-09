@@ -76,19 +76,19 @@
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     
-    if (![MEGAReachabilityManager isReachable]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
-    } else if ([self validateForm]) {
-        NSOperationQueue *operationQueue = [NSOperationQueue new];
-        
-        NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                                                selector:@selector(generateKeys)
-                                                                                  object:nil];
-        [operationQueue addOperation:operation];
+    if ([self validateForm]) {
+        if ([MEGAReachabilityManager isReachable]) {
+            NSOperationQueue *operationQueue = [NSOperationQueue new];
+            
+            NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                                    selector:@selector(generateKeys)
+                                                                                      object:nil];
+            [operationQueue addOperation:operation];
+        } else if ([self validateForm]) {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
-
-
 
 #pragma mark - Private methods
 

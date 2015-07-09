@@ -21,6 +21,8 @@
 
 #import "AboutTableViewController.h"
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
+#import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
 @interface AboutTableViewController () <UIGestureRecognizerDelegate> {
@@ -114,6 +116,7 @@
             gApiAlertView.tag = 0;
             [gApiAlertView show];
         }
+        return;
     }
     
     if ([indexPath row] == 1) {
@@ -126,18 +129,23 @@
             stagingApiAlertView.tag = 1;
             [stagingApiAlertView show];
         }
+        return;
     }
     
-    if ([indexPath row] == 2) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_privacy.html"];
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-        [self.navigationController pushViewController:webViewController animated:YES];
-    }
-    
-    if ([indexPath row] == 3) {
-        NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_terms.html"];
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-        [self.navigationController pushViewController:webViewController animated:YES];
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([indexPath row] == 2) {
+            NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_privacy.html"];
+            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+        
+        if ([indexPath row] == 3) {
+            NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
+            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
