@@ -21,8 +21,9 @@
 
 #import "CreateAccountViewController.h"
 
-#import "SVProgressHUD.h"
 #import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
 @interface CreateAccountViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
@@ -61,14 +62,17 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"retypePasswordPlaceholder", @"Retype Password")];
     
+    [self.termsOfServiceButton setTitleColor:megaRed forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
+    [self.createAccountButton setBackgroundColor:megaDarkGray];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccountButton", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setCornerRadius:6];
     [self.accountCreatedView.layer setMasksToBounds:YES];
+    [self.accountCreatedView setBackgroundColor:megaRed];
     [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
     
     [self.nameTextField becomeFirstResponder];
@@ -157,16 +161,24 @@
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
-    SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-    [self.navigationController pushViewController:webViewController animated:YES];
+    if ([MEGAReachabilityManager isReachable]) {
+        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
     if ([self validateForm]) {
-        [SVProgressHUD show];
-        [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
-        [self.createAccountButton setEnabled:NO];
+        if ([MEGAReachabilityManager isReachable]) {
+            [SVProgressHUD show];
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
+            [self.createAccountButton setEnabled:NO];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
 
