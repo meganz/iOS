@@ -21,6 +21,8 @@
 
 #import "ChangePasswordViewController.h"
 #import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
+#import "Helper.h"
 #import "SVProgressHUD.h"
 
 @interface ChangePasswordViewController () <MEGARequestDelegate>
@@ -52,6 +54,8 @@
     self.changePasswordView.layer.borderColor =[[UIColor colorWithWhite:0.933 alpha:1.000] CGColor];
     self.changePasswordView.layer.cornerRadius = 6;
     self.changePasswordView.layer.masksToBounds = YES;
+    
+    [self.changePasswordButton setBackgroundColor:megaDarkGray];
     
     [self.oldPasswordTextField becomeFirstResponder];
 }
@@ -103,7 +107,11 @@
 
 - (IBAction)changePasswordTouchUpIndise:(UIButton *)sender {
     if ([self validateForm]) {
-        [[MEGASdkManager sharedMEGASdk] changePassword:[self.oldPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
+        if ([MEGAReachabilityManager isReachable]) {
+            [[MEGASdkManager sharedMEGASdk] changePassword:[self.oldPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
 
