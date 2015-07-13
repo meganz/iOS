@@ -224,7 +224,9 @@
 
 - (IBAction)openTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachable]) {
-        [self setUIItemsEnabled:NO];
+        [self.importButton setEnabled:NO];
+        [self.downloadButton setEnabled:NO];
+        [self.openButton setEnabled:NO];
         
         NSNumber *nodeSizeNumber = [self.node size];
         NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
@@ -287,7 +289,9 @@
     [Helper setPathForPreviewDocument:nil];
     [Helper setRenamePathForPreviewDocument:nil];
     
-    [self setUIItemsEnabled:YES];
+    [self.importButton setEnabled:YES];
+    [self.downloadButton setEnabled:YES];
+    [self.openButton setEnabled:YES];
 }
 
 

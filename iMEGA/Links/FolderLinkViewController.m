@@ -37,7 +37,7 @@
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     BOOL isFetchNodesDone;
     
@@ -46,7 +46,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
@@ -67,6 +66,9 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
+    
+    [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
+    [self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:0.0f];
     
     isFetchNodesDone = NO;
     
@@ -100,8 +102,6 @@
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
         [self.navigationItem setRightBarButtonItem:self.cancelBarButtonItem];
-        [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-
     } else {
         [self reloadUI];
     }
@@ -175,7 +175,6 @@
 }
 
 - (void)disableUIItems {
-    [self.searchDisplayController.searchBar setHidden:YES];
     
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     [self.tableView setBounces:NO];
@@ -245,6 +244,10 @@
     [self.downloadBarButtonItem setEnabled:boolValue];
 }
 
+- (void)hideSearchBar {
+    [self.tableView setContentOffset:CGPointMake(0, 44)];
+}
+
 #pragma mark - IBActions
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
     [Helper setLinkNode:nil];
@@ -310,7 +313,11 @@
     }
     
     if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        } else {
+            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        }
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
@@ -507,6 +514,11 @@
 
 #pragma mark - UISearchDisplayControllerDelegate
 
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
+    [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+}
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self filterContentForSearchText:searchString];
     
@@ -530,8 +542,6 @@
         if (!isFetchNodesDone && self.isFolderRootNode) {
             return nil;
         }
-        
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         
         if (self.isFolderRootNode) {
             text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
