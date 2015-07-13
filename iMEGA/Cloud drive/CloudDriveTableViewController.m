@@ -107,6 +107,9 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
+    
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -151,6 +154,7 @@
             
         case DisplayModeRubbishBin:
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
+            [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"remove"]];
             [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
         
@@ -185,8 +189,6 @@
         }
     }
     
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     
@@ -212,12 +214,10 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
     [self reloadUI];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    //Hide searchbar
-    self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -263,7 +263,11 @@
     }
     
     if (numberOfRows == 0) {
-        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        } else {
+            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        }
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
@@ -1273,6 +1277,7 @@
             
         case DisplayModeContact: {
             self.nodes = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+            [self.tableView setContentOffset:CGPointMake(0, 0)];
             [self.searchDisplayController.searchBar setFrame:CGRectMake(0, 0, 0, 0)];
             break;
         }
@@ -1633,6 +1638,11 @@
 }
 
 #pragma mark - UISearchDisplayDelegate
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
+    [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+}
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     isSearchTableViewDisplay = YES;
