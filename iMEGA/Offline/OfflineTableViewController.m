@@ -541,7 +541,7 @@
         if (self.folderPathFromOffline == nil) {
             text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
         } else {
-            text = AMLocalizedString(@"offlineEmptyState_titleForEmptyFolder", @"Empty folder");
+            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");

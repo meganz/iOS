@@ -121,7 +121,7 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"chooseDuration", @"Choose duration")
                                                              delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:self.yearlyPrice, self.monthlyPrice, nil];
     [actionSheet showInView:self.view];

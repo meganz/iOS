@@ -248,10 +248,10 @@ static CameraUploads *instance = nil;
     
     if (asize > freeSpace) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
                                                                 message:AMLocalizedString(@"cameraUploadsDisabled_alertView_message", @"Camera Uploads will be disabled, because you don't have enought space on your device")
                                                                delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
         });

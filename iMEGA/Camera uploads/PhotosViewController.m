@@ -276,7 +276,7 @@
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
     
     if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancelar") : AMLocalizedString(@"ok", @"OK")) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
@@ -402,7 +402,7 @@
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
     
-    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     removeAlertView.tag = 1;
     [removeAlertView show];
 }
@@ -713,7 +713,7 @@
             return nil;
         }
         
-        text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled.");
+        text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled");
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
@@ -859,9 +859,9 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
             
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             
             NSString *link = [request link];
             

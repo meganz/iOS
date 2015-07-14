@@ -94,7 +94,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
     [self.upgradeLabel setText:AMLocalizedString(@"upgradeLabel", nil)];
     [self.cameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
-    [self.passcodeLabel setText:AMLocalizedString(@"passcodeLabel", nil)];
+    [self.passcodeLabel setText:AMLocalizedString(@"passcode", nil)];
     [self.applicationLanguageLabel setText:AMLocalizedString(@"applicationLanguageLabel", @"Application language")];
     [self.aboutLabel setText:AMLocalizedString(@"aboutLabel", nil)];
     [self.feedbackLabel setText:AMLocalizedString(@"feedbackLabel", nil)];
@@ -235,7 +235,7 @@
     if (indexPath.section == 2 && indexPath.row == 4) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"feedbackActionSheet_title", @"How are you feeling?")
                                                                  delegate:self
-                                                        cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                    destructiveButtonTitle:nil
                                                         otherButtonTitles:AMLocalizedString(@"feedbackActionSheet_happyButton", @"Happy"), AMLocalizedString(@"feedbackActionSheet_confusedButton", @"Confused"), AMLocalizedString(@"feedbackActionSheet_unhappyButton", @"Unhappy"), nil];
         [actionSheet showFromTabBar:self.tabBarController.tabBar];

@@ -231,10 +231,10 @@
         NSNumber *nodeSizeNumber = [self.node size];
         NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
         if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileTooBig", @"You need more free space")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
                                                                 message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
                                                                delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             return;

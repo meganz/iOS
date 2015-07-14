@@ -60,10 +60,10 @@
         [toolbarButtons removeObject:[self.toolbar.items objectAtIndex:1]]; // Remove the 1st flexible space
         [self.toolbar setItems:toolbarButtons];
     } else {
-        [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"browserVC_moveButton", @"Move")];
+        [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
     }
     
-    [self.toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"browserVC_newFolderButton", @"New folder")];
+    [self.toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"newFolder", @"New Folder")];
     
     if (self.isPublicNode) {
         [self.toolBarMoveBarButtonItem setEnabled:NO];
@@ -175,7 +175,7 @@
         return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
     }
     
-    return AMLocalizedString(@"emptyFolder", @"Empty folder");
+    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
 #pragma mark - IBActions
@@ -198,7 +198,7 @@
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
-    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolderTitle", @"Create new folder") message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
+    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder") message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
     [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [folderAlertView textFieldAtIndex:0].text = @"";
     [folderAlertView show];
@@ -214,7 +214,7 @@
 - (IBAction)selectSharedFolder:(UIButton *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
