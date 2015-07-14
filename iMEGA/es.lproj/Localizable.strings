@@ -2,8 +2,16 @@
 "cancel" = "Cancelar";
 "ok" = "Aceptar";
 "error" = "Error";
+"name" = "Nombre";
+"passcode" = "Código de acceso";
+"size" = "Tamaño";
+
+"move" = "Mover";
+"rename" = "Renombrar";
 "remove" = "Eliminar";
 "paused" = "En pausa";
+
+"newFolder" = "Nueva carpeta";
 "shareFolder" = "Compartir carpeta";
 "noCamera"="No hay cámara disponible";
 "noInternetConnection"="No hay conexión a internet";
@@ -37,10 +45,12 @@
 "megaPrivacyText"="Mantén todos tus archivos a salvo con el encriptado punto-a-punto de MEGA.";
 "megaAccessText"="Obtén acceso totalmente encriptado en cualquier lugar, en cualquier momento.";
 
-"loginButton"="Iniciar sesión";
-"createAccountButton"="Crear cuenta";
+"login"="Iniciar sesión";
+"createAccount" = "Crear cuenta";
 
 //LoginViewController
+"remainLoggedIn" = "Permacer conectado";
+
 "invalidMailOrPassword" = "Email o contraseña no válida.";
 
 "emailInvalidFormat" = "Introduzca un email válido";
@@ -49,9 +59,6 @@
 "preparingNodes" = "Preparando nodos";
 
 //CreateAccountViewController
-"createAccount"="Crear cuenta";
-
-"namePlaceholder"="Nombre";
 "emailPlaceholder"="Correo electrónico";
 "passwordPlaceholder"="Contraseña";
 "retypePasswordPlaceholder"="Vuelve a escribir la contraseña";
@@ -77,6 +84,9 @@
 "errorLoadingTermsWeb" = "La carga de la web los Términos del Servicio de MEGA ha fallado.";
 
 //LINKS
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig" = "Necesitas más espacio";
+
 //FileLinkViewController
 "megaLink"="Enlace a MEGA";
 
@@ -84,7 +94,6 @@
 "downloadButton" = "Descargar a tu aplicación de MEGA";
 "openButton" = "Abrir archivo";
 
-"fileTooBig" = "Necesitas más espacio";
 "fileTooBigMessage" = "El fichero que estás intentado descargar es más grande que el espacio disponible.";
 "fileTooBigMessage_open"="El fichero que estás intentado abrir es más grande que el espacio disponible.";
 
@@ -100,14 +109,12 @@
 
 //FolderLinkViewController
 "megaFolder"="Enlace a carpeta";
-"emptyFolder"="Carpeta vacía";
 
 "downloadButton"="Descargar";
 
 "importFolderAction"="Importar carpeta";
 "importFolderActionMessage"="De momento no se puede importar una carpeta.";
 
-"folderTooBig"="Necesitas más espacio";
 "folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
 
 "folderCreationError"="La carpeta '%@' no puede ser creada";
@@ -117,21 +124,22 @@
 "folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 
 //EMPTY STATES
+/* Title shown when a folder doesn't have any files */
+"emptyFolder" = "Carpeta vacía";
+
 //Links
 "folderLinkEmptyState_title"="Enlace a carpeta vacía";
-"folderLinkEmptyState_titleFolder"="Carpeta vacía";
 
 "folderLinkEmptyState_text"="Actualmente, este enlace no contiene ningún archivo.";
-"folderLinkEmptyState_textFolder"="Actualmente, esta carpeta anidada no contiene ningún archivo.";
+"folderLinkEmptyState_textFolder"="Actualmente, esta carpeta no contiene ningún archivo.";
 
 //Cloud Drive
 "cloudDriveEmptyState_title"="No hay archivos en tu Cloud Drive";
-"cloudDriveEmptyState_titleFolder"="Carpeta vacía";
 "cloudDriveEmptyState_titleContact"="No hay ficheros en esta carpeta compartida";
 "cloudDriveEmptyState_titleRubbishBin"="No hay archivos en la papelera";
 
-"cloudDriveEmptyState_text"="Añade nuevos archivos utilizando el botón superior.";
-"cloudDriveEmptyState_textContact"="¡Comparte algo! Añade nuevos archivos utilizando el botón superior.";
+"cloudDriveEmptyState_text"="Añade archivos utilizando el botón superior.";
+"cloudDriveEmptyState_textContact"="¡Comparte algo! Añade archivos utilizando el botón superior.";
 "cloudDriveEmptyState_textRubbishBin"="¡Genial!";
 
 //Camera Uploads
@@ -140,33 +148,31 @@
 "cameraUploadsEmptyState_text"="Activa Camera Uploads para tener una copia de las fotos de tu dispositivo en MEGA.";
 
 //Offline
-"offlineEmptyState_title"="No hay archivos guardados en Offline";
-"offlineEmptyState_titleForEmptyFolder"="Carpeta vacía";
+"offlineEmptyState_title"="No hay archivos disponibles sin conexión";
 
-"offlineEmptyState_text"="Puedes descargar archivos a esta sección para poder utilizarlos cuando no tengas conexión a internet.";
-"offlineEmptyState_textForEmptyFolder"="Cuando te descargaste esta carpeta, estaba vacía.";
+"offlineEmptyState_text" = "Descarga archivos para utilizarlos cuando no tengas conexión a internet.";
+"offlineEmptyState_textForEmptyFolder"="Cuando descargaste esta carpeta, estaba vacía.";
 
 //Contacts
-"contactsEmptyState_title"="¡Todavía no tienes contactos añadidos!";
+"contactsEmptyState_title"="¡Todavía no tienes contactos!";
 
-"contactsEmptyState_text"="Añade nuevos contactos utilizando el botón superior.";
+"contactsEmptyState_text"="Añade contactos utilizando el botón superior.";
 
 //Transfers
-"transfersEmptyState_titlePaused"="Transferencias en pausa";
-"transfersEmptyState_titleAll"="No hay transferencias";
-"transfersEmptyState_titleDownload"="No hay transferencias de descarga";
-"transfersEmptyState_titleUpload"="No hay transferencias de subida";
+"transfersEmptyState_titlePaused" = "Transferencias en pausa";
+"transfersEmptyState_titleAll" = "No hay transferencias";
+"transfersEmptyState_titleDownload" = "No hay descargas";
+"transfersEmptyState_titleUpload" = "No hay subidas";
 
-"transfersEmptyState_textPaused"="Reanuda las transferencias utilizando el botón superior.";
-"transfersEmptyState_textAll"="No tienes ninguna transferencia pendiente.";
-"transfersEmptyState_textDownload"="No tienes ninguna descarga pendiente.";
-"transfersEmptyState_textUpload"="No tienes ninguna subida pendiente.";
+"transfersEmptyState_textPaused" = "Reanuda las transferencias utilizando el botón superior.";
+"transfersEmptyState_textAll" = "No tienes ninguna transferencia pendiente.";
+"transfersEmptyState_textDownload" = "No tienes ninguna descarga pendiente.";
+"transfersEmptyState_textUpload" = "No tienes ninguna subida pendiente.";
 
 //UITABBARCONTROLLER (1) CLOUD DRIVE
 "cloudDrive" = "Cloud Drive";
 "updatingNodes" = "Actualizando nodos...";
 
-"emptyFolder"="Carpeta vacia";
 "oneFile"="%d fichero";
 "files"="%d ficheros";
 "oneFolder"="%d carpeta";
@@ -186,8 +192,6 @@
 "savedForOffline"="Guardado en Offline";
 "getLink"="Obtener link";
 "generatingLink" = "Generando link...";
-"move"="Mover"; //This string already exists
-"rename"="Renombrar"; //This string already exists
 "moveToRubbishBin"="Mover a la Papelera";
 
 "cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
@@ -198,7 +202,6 @@
 "capturePhotoVideo"="Capturar";
 
 //New folder
-"newFolderTitle" = "Nueva carpeta";
 "newFolderMessage" = "Nombre para la carpeta";
 "createFolderButton" = "Crear";
 
@@ -209,8 +212,6 @@
 
 "sharedFolder_success"="¡Carpeta compartida!";
 
-"browserVC_moveButton"="Mover";
-"browserVC_newFolderButton"="Nueva carpeta";
 "browserVC_copyButton"="Copiar";
 
 // BrowserVC - Links
@@ -231,8 +232,6 @@
 
 "save"="Guardar";
 
-"alphabeticallyField"="Nombre";
-"sizeField"="Tamaño";
 "dateField"="Fecha";
 
 "fieldsTitle"="Campos";
@@ -295,9 +294,7 @@
 "fullAccess" = "Acceso completo";
 
 //Rename
-"renameNodeTitle" = "Cambiar nombre";
 "renameNodeMessage" = "Introduce otro nombre";
-"renameNodeButton" = "Renombrar";
 
 //Move to rubbish bin
 "moveNodeToRubbishBinTitle" = "Mover a la papelera";
@@ -313,8 +310,6 @@
 "filesCopied" = "%d ficheros copiados";
 
 //Generate links
-"fileName"="Nombre";
-"fileSize"="Tamaño";
 "folder"="Carpeta";
 
 // HUD messages
@@ -327,7 +322,6 @@
 "usedSpaceOfTotalSpace"="%@ de %@";
 "upgradeLabel"="Mejorar cuenta";
 "cameraUploadsLabel"="Subidas de la cámara";
-"passcodeLabel"="Código de acceso";
 "applicationLanguageLabel"="Idioma de la aplicación";
 "aboutLabel"="Sobre nosotros";
 "feedbackLabel"="Feedback";
@@ -368,7 +362,6 @@
 
 //(5) Settings - AdvancedTableViewController
 
-"advancedLabel"="Avanzado";
 "rubbishBinLabel"="Papelera";
 "exportMasterKeyLabel"="Exportar llave maestra";
 "cleanupMasterKeyLabel"="Borrar llave maestra";
@@ -394,8 +387,6 @@
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
 
 //(5) Settings - PasscodeTableViewController
-"passcodeTitle"="Código de acceso";
-
 "changePasscodeLabel"="Cambiar código de acceso";
 "simplePasscodeLabel"="Código de acceso simple";
 "eraseAllLocalDataLabel"="Borrar los datos locales";

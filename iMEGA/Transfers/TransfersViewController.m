@@ -625,8 +625,8 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers")
                                                         message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString]
                                                        delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
-                                              otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     [alertView setTag:0];
     [alertView show];
 }

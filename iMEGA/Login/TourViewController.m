@@ -64,12 +64,12 @@
     self.loginButton.layer.cornerRadius = 6;
     self.loginButton.layer.backgroundColor = megaRed.CGColor;
     self.loginButton.layer.masksToBounds = YES;
-    [self.loginButton setTitle:AMLocalizedString(@"loginButton", nil) forState:UIControlStateNormal];
+    [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.backgroundColor = megaDarkGray.CGColor;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setTitle:AMLocalizedString(@"createAccountButton", nil) forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     self.titleLabel.textColor = megaRed;
     self.titleLabel.numberOfLines = 0;

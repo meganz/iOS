@@ -431,7 +431,7 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileEncrypted", @"File encrypted")
                                                                 message:NSLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -470,7 +470,7 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
                                                                 message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -673,10 +673,10 @@
         }
         
         if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", @"Error")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", nil)
                                                             message:NSLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                                  cancelButtonTitle:NSLocalizedString(@"ok", nil)
                                                   otherButtonTitles:nil];
             [alert show];
         }

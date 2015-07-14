@@ -685,7 +685,7 @@
     
     if (self.displayMode != DisplayModeContact) {
         if (accessType >= MEGAShareTypeAccessFull) {
-            return AMLocalizedString(@"remove", @"Remove");
+            return AMLocalizedString(@"remove", nil);
         }
     } else {
         return AMLocalizedString(@"leaveFolder", @"Leave folder");
@@ -798,7 +798,7 @@
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
                     text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
                 } else {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                 }
                 break;
             }
@@ -811,7 +811,7 @@
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
                     text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
                 } else {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_titleFolder",  @"Empty folder.");
+                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                 }
                 break;
         }
@@ -920,10 +920,10 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolderTitle", @"Create new folder")
+        folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder")
                                                      message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder")
                                                     delegate:self
-                                           cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                           cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                            otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
         [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [folderAlertView textFieldAtIndex:0].text = @"";
@@ -945,8 +945,8 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention")
                                                                         message:AMLocalizedString(@"cameraPermissions", @"Please give MEGA app permission to access your Camera in your settings app!")
-                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", @"Cancel") : AMLocalizedString(@"ok", @"OK"))
-                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", @"OK") : nil), nil];
+                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil))
+                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
                         alert.tag = 3;
                         [alert show];
                     });
@@ -1347,7 +1347,7 @@
         return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
     }
     
-    return AMLocalizedString(@"emptyFolder", @"Empty folder");
+    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
 - (void)toolbarActionsForShareType:(MEGAShareType )shareType {
@@ -1484,9 +1484,9 @@
 - (IBAction)optionAdd:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"newFolderTitle", @"New folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
+                                                    otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
@@ -1564,11 +1564,11 @@
         if (self.displayMode == DisplayModeCloudDrive) {
             NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
             
-            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         } else {
             NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
             
-            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         }
         removeAlertView.tag = 2;
         [removeAlertView show];
@@ -1581,7 +1581,7 @@
 
 - (IBAction)renameAction:(UIBarButtonItem *)sender {
     if (!renameAlertView) {
-        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
+        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"rename", nil) message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"rename", nil), nil];
     }
     
     [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -1691,7 +1691,7 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([request type] == MEGARequestTypeCreateFolder || [request type] == MEGARequestTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
             }
         }
@@ -1756,9 +1756,9 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
             
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             
             NSString *link = [request link];
             
@@ -1841,7 +1841,7 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if ([transfer type] ==  MEGATransferTypeUpload) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {

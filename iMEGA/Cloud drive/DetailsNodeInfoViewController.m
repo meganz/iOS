@@ -197,7 +197,7 @@
 - (void)rename {
     if ([MEGAReachabilityManager isReachable]) {
         if (!renameAlertView) {
-            renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"renameNodeTitle", @"Rename") message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"renameNodeButton", @"Rename"), nil];
+            renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"rename", nil) message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"rename", nil), nil];
         }
         
         [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -223,12 +223,12 @@
             
             //Delete permanently
             if (self.displayMode == DisplayModeRubbishBin) {
-                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
             }
             
             //Move to rubbish bin
             if (self.displayMode == DisplayModeCloudDrive) {
-                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node") message:AMLocalizedString(@"moveNodeToRubbishBinMessage", @"Are you sure?") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
             }
             
             [removeAlertView setTag:1];
@@ -378,13 +378,13 @@
                 
                 case 2:
                     [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                    [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                    [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
                     break;
                     
                 case 3:
                     if (self.displayMode == DisplayModeCloudDrive) {
                         [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
-                        [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
+                        [cell.textLabel setText:AMLocalizedString(@"remove", nil)];
                     } else {
                         [cell.imageView setImage:[UIImage imageNamed:@"leaveShare"]];
                         [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
@@ -404,12 +404,12 @@
                         
                     case 2:
                         [cell.imageView setImage:[UIImage imageNamed:@"move"]];
-                        [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
+                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
                         break;
                         
                     case 3:
                         [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                        [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                        [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
                         break;
                         
                     case 4:
@@ -422,17 +422,17 @@
                 switch (indexPath.row) {
                     case 1:
                         [cell.imageView setImage:[UIImage imageNamed:@"move"]];
-                        [cell.textLabel setText:AMLocalizedString(@"move", @"Move")];
+                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
                         break;
                         
                     case 2:
                         [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                        [cell.textLabel setText:AMLocalizedString(@"rename", @"Rename")];
+                        [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
                         break;
                         
                     case 3:
                         [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
-                        [cell.textLabel setText:AMLocalizedString(@"remove", @"Remove")];
+                        [cell.textLabel setText:AMLocalizedString(@"remove", nil)];
                         break;
                 }
             }
@@ -655,8 +655,8 @@
             
             MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
             
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileName", nil), n.name];
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"fileSize", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
+            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
+            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
             NSString *link = [request link];
             
             NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];

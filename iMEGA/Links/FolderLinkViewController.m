@@ -230,7 +230,7 @@
         return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
     }
     
-    return AMLocalizedString(@"emptyFolder", @"Empty folder");
+    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
 - (void)internetConnectionChanged {
@@ -290,7 +290,7 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"importFolderAction", @"Import folder")
                                                         message:AMLocalizedString(@"importFolderActionMessage", @"For the moment you can't import a folder.")
                                                        delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                               otherButtonTitles:nil];
     [alertView show];
     return;
@@ -546,7 +546,7 @@
         if (self.isFolderRootNode) {
             text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
         } else {
-            text = AMLocalizedString(@"folderLinkEmptyState_titleFolder", @"Empty folder.");
+            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");

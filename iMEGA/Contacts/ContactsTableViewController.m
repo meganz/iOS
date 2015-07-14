@@ -79,7 +79,7 @@
     self.navigationItem.rightBarButtonItems = buttonsItems;
     
     [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
-    [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", @"Remove")];
+    [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -216,7 +216,7 @@
 - (IBAction)addContact:(UIBarButtonItem *)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel")
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
     [actionSheet showFromTabBar:self.tabBarController.tabBar];
@@ -226,7 +226,7 @@
     
     NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
     
-    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"ok", @"OK"), nil];
+    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     [removeAlertView show];
     removeAlertView.tag = 1;
     [removeAlertView show];
@@ -404,7 +404,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:AMLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", @"Cancel") otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
+        emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:AMLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
         [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [emailAlertView textFieldAtIndex:0].text = @"";
         emailAlertView.tag = 0;
@@ -512,7 +512,7 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_title", @"Add new contacts using the upper button.");
+        text = AMLocalizedString(@"contactsEmptyState_title", @"You don't have any contacts added yet!");
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
@@ -526,7 +526,7 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_text", @"You don't have any contacts added yet!");
+        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the upper button.");
     } else {
         text = @"";
     }

@@ -49,7 +49,7 @@
     
     [self.fieldLabel setText:AMLocalizedString(@"fieldLabel", @"Campo")];
     [self.ascendingLabel setText:AMLocalizedString(@"ascendingLabel", @"Ascending")];
-    [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", @"Cancel")];
+    [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
     
     self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
@@ -111,12 +111,12 @@
     switch (self.sortType) {
         case 1:
         case 2:
-            self.detailLabel.text = AMLocalizedString(@"alphabeticallyField", @"Name");
+            self.detailLabel.text = AMLocalizedString(@"name", nil);
             break;
             
         case 3:
         case 4:
-            self.detailLabel.text = AMLocalizedString(@"sizeField", @"Size");
+            self.detailLabel.text = AMLocalizedString(@"size", nil);
             break;
             
         case 5:

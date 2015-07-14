@@ -36,7 +36,7 @@
     
     self.title = AMLocalizedString(@"fieldsTitle", @"Fields");
     
-    fieldArray = @[AMLocalizedString(@"alphabeticallyField", @"Name"), AMLocalizedString(@"sizeField", @"Size"), AMLocalizedString(@"dateField", @"Date")];
+    fieldArray = @[AMLocalizedString(@"name", nil), AMLocalizedString(@"size", nil), AMLocalizedString(@"dateField", @"Date")];
 }
 
 - (void)didReceiveMemoryWarning {

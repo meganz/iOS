@@ -55,11 +55,19 @@
     self.credentialsView.layer.cornerRadius = 6;
     self.credentialsView.layer.masksToBounds = YES;
     
+    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
+    [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
+    
+    [self.remainLoggedInLabel setText:AMLocalizedString(@"remainLoggedIn", @"Remain logged in")];
+    [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
+    
     [self.emailTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"login", @"Login")];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -174,10 +182,10 @@
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs:
             case MEGAErrorTypeApiENoent: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", @"Error")
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
                                                                 message:AMLocalizedString(@"invalidMailOrPassword", @"Email or password invalid.")
                                                                delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
                 [alert show];
                 

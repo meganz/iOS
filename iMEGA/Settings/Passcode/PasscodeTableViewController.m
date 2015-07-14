@@ -42,8 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"passcodeTitle", @"Passcode")];
-    [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcodeTitle", @"Passcode")];
+    [self.navigationItem setTitle:AMLocalizedString(@"passcode", nil)];
+    [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
     [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
     [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];

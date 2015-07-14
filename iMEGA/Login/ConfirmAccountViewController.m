@@ -54,7 +54,7 @@
     [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
     self.cancelButton.layer.cornerRadius = 6;
     self.cancelButton.layer.masksToBounds = YES;
-    [self.cancelButton setTitle:AMLocalizedString(@"cancel", @"Cancel") forState:UIControlStateNormal];
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
     self.credentialsView.layer.borderWidth = 2.0f;

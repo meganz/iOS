@@ -57,7 +57,7 @@
     self.credentialsView.layer.cornerRadius = 6;
     self.credentialsView.layer.masksToBounds = YES;
     
-    [self.nameTextField setPlaceholder:AMLocalizedString(@"namePlaceholder", @"Name")];
+    [self.nameTextField setPlaceholder:AMLocalizedString(@"name", nil)];
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"retypePasswordPlaceholder", @"Retype Password")];
@@ -68,7 +68,7 @@
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
     [self.createAccountButton setBackgroundColor:megaDarkGray];
-    [self.createAccountButton setTitle:AMLocalizedString(@"createAccountButton", @"Create Account") forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setCornerRadius:6];
     [self.accountCreatedView.layer setMasksToBounds:YES];
@@ -254,7 +254,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"awesome", @"Awesome")
                                                             message:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")
                                                            delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                   otherButtonTitles:nil];
             [alert show];
         }
