@@ -35,9 +35,10 @@
 #import "MEGANavigationController.h"
 
 #import "BrowserViewController.h"
+#import "MEGAStore.h"
 
-#include <ifaddrs.h>
-#include <arpa/inet.h>
+#import <ifaddrs.h>
+#import <arpa/inet.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>
 #import <QuickLook/QuickLook.h>
@@ -79,6 +80,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
 
@@ -93,6 +95,8 @@
     }
     
     [self setupAppearance];
+    
+    [MEGAStore shareInstance];
     
     self.link = nil;
     isFetchNodesDone = NO;
@@ -158,9 +162,6 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -172,8 +173,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    [Helper setDownloadedNodes];
-    
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
@@ -184,15 +183,11 @@
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kRemainLoggedIn]) {
         [Helper logout];
     } else {
-        [[NSUserDefaults standardUserDefaults] setObject:[Helper downloadedNodes] forKey:@"DownloadedNodes"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
         [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
         
-        NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
-        [self removeUnfinishedTransfersOnFolder:offlineDirectory];
+        [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
         
         if ([Helper renamePathForPreviewDocument] != nil) {
             NSError *error = nil;
@@ -311,19 +306,16 @@
             
         case 2: { //DOWNLOAD
             MEGANode *node = [Helper linkNode];
-            if (![Helper isFreeSpaceEnoughToDownloadNode:node]) {
-                return;
-            }
-            
             if ([node type] == MEGANodeTypeFile) {
-                [Helper downloadNode:node folder:@"" folderLink:NO];
-            } else if ([node type] == MEGANodeTypeFolder) {
-                NSString *folderName = [[[node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[node name]]];
-                NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-                
-                if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                    [Helper downloadNodesOnFolder:folderPath parentNode:node folderLink:YES];
+                if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                    return;
                 }
+                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
+            } else if ([node type] == MEGANodeTypeFolder) {
+                if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
+                    return;
+                }
+                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
             }
             break;
         }
@@ -813,7 +805,15 @@
     if ([transfer type] == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] removeObjectForKey:base64Handle];
-        [[Helper downloadedNodes] setObject:base64Handle forKey:base64Handle];
+        
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:transfer.path]];
+        if (!offlineNodeExist) {
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] insertOfflineNode];
+            [offlineNode setBase64Handle:base64Handle];
+            [offlineNode setParentBase64Handle:[[[MEGASdkManager sharedMEGASdk] parentNodeForNode:[[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle]] base64Handle]];
+            [offlineNode setLocalPath:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
+            [[MEGAStore shareInstance] saveContext];
+        }
         
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];

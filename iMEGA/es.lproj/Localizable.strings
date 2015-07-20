@@ -20,6 +20,8 @@
 "cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en la configuración de la aplicación!";
 "photoLibraryPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú librería de fotos en la configuración de la aplicación!";
 
+"emptyFolderMessage" = "No se pueden descargar carpetas vacias";
+
 //AppDelegate
 "accountAlreadyConfirmed" = "Tu cuenta ya ha sido activada. Por favor, inicia sesión.";
 

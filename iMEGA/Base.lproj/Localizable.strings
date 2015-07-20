@@ -20,6 +20,8 @@
 "cameraPermissions"="Please give MEGA app permission to access your Camera in your settings app!";
 "photoLibraryPermissions"="Please give MEGA app permission to access your photo library in your settings app!";
 
+"emptyFolderMessage" = "You can't download an empty folder";
+
 //AppDelegate
 "accountAlreadyConfirmed" = "Your account has already been activated. Please log in.";
 

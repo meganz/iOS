@@ -225,20 +225,8 @@
     }
     
     NSString *fileName = [transfer fileName];
-    NSString *nameString;
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSArray *itemNameComponentsArray = [fileName componentsSeparatedByString:@"_"];
-        NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
-        if ([itemNameComponentsArray count] > 2) {
-            nameString = [fileName substringFromIndex:(handleString.length + 1)];
-        } else  {
-            nameString = [itemNameComponentsArray objectAtIndex:1];
-        }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        nameString = fileName;
-    }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
-    [cell.iconImageView setImage:[Helper imageForExtension:nameString.pathExtension]];
+    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName]];
+    [cell.iconImageView setImage:[Helper imageForExtension:fileName.pathExtension]];
     
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:megaInfoGray];

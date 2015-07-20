@@ -196,7 +196,8 @@
     if ([MEGAReachabilityManager isReachable]) {
         [self deleteTempFile];
         
-        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
+            [self setEditing:NO animated:YES];
             return;
         }
         
@@ -204,10 +205,8 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
-                
-                if ([self.node type] == MEGANodeTypeFile) {
-                    [Helper downloadNode:self.node folder:@"" folderLink:NO];
-                }
+                [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
             }];
         } else {
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

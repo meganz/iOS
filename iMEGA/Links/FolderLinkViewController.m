@@ -258,8 +258,8 @@
 }
 
 - (IBAction)downloadFolderTouchUpInside:(UIBarButtonItem *)sender {
-    
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self.parentNode]) {
+    if (![Helper isFreeSpaceEnoughToDownloadNode:self.parentNode isFolderLink:YES]) {
+        [self setEditing:NO animated:YES];
         return;
     }
     
@@ -268,12 +268,8 @@
             MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
             
-            NSString *folderName = [[[self.parentNode base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.parentNode name]]];
-            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-            
-            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                [Helper downloadNodesOnFolder:folderPath parentNode:self.parentNode folderLink:YES];
-            }
+            [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
         }];
     } else {
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

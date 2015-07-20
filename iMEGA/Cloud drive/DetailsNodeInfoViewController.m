@@ -28,6 +28,8 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 
+#import "MEGAStore.h"
+
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
@@ -144,28 +146,20 @@
     }
     
     self.title = [self.node name];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Private methods
 
 - (void)download {
     if ([MEGAReachabilityManager isReachable]) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
             return;
         }
-        
-        if ([self.node type] == MEGANodeTypeFile) {
-            [Helper downloadNode:self.node folder:@"" folderLink:NO];
-        } else if ([self.node type] == MEGANodeTypeFolder) {
-            NSString *folderName = [[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]];
-            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-            
-            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                [self.navigationController popViewControllerAnimated:YES];
-                [Helper downloadNodesOnFolder:folderPath parentNode:self.node folderLink:NO];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
-            }
-        }
+        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
@@ -343,7 +337,10 @@
             [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
             return cell;
         } else {
-            if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
+            
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:self.node.base64Handle];
+            
+            if (offlineNode != nil) {
                 [cell.imageView setImage:[UIImage imageNamed:@"downloaded"]];
                 [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
             } else {
@@ -463,11 +460,7 @@
                 [cancelDownloadAlertView setTag:2];
                 [cancelDownloadAlertView show];
             } else {
-                if ([[Helper downloadedNodes] objectForKey:self.node.base64Handle] != nil) {
-                    break;
-                } else {
-                   [self download];
-                }
+                [self download];
             }
             break;
         }
@@ -744,7 +737,8 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        if (([[Helper downloadedNodes] objectForKey:base64Handle] != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
+        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:self.node.base64Handle];
+        if ((offlineNode != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
             if (cancelDownloadAlertView.visible) {
                 [cancelDownloadAlertView dismissWithClickedButtonIndex:0 animated:YES];
             }

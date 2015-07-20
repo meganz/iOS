@@ -356,25 +356,14 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:n]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
+            [self setEditing:NO animated:YES];
             return;
         }
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        if ([n type] == MEGANodeTypeFile) {
-            [Helper downloadNode:n folder:@"" folderLink:NO];
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
-            
-        } else if ([n type] == MEGANodeTypeFolder) {
-            NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[n name]]];
-            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-            
-            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
-            }
-        }
+        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
     }
     [self setEditing:NO animated:YES];
 }
