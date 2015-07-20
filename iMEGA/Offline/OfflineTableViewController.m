@@ -32,6 +32,8 @@
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
 
+#import "MEGAStore.h"
+
 @interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate>
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
@@ -53,30 +55,9 @@
     
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:AMLocalizedString(@"offline", @"Offline")];
-        
-        NSString *directoryPathString = [self currentOfflinePath];
-        NSArray *nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:directoryPathString];
-        
-        for (NSString *base64HandleAux in nodesHandlesOnFolderArray) {
-            if ([base64HandleAux.lowercaseString.pathExtension isEqualToString:@"mega"]) {
-                continue;
-            }
-            if ([[Helper downloadedNodes] objectForKey:base64HandleAux] == nil) {
-                [[Helper downloadedNodes] setObject:base64HandleAux forKey:base64HandleAux];
-            }
-        }
-        
     } else {
         NSString *currentFolderName = [self.folderPathFromOffline lastPathComponent];
-        NSArray *itemNameComponentsArray = [currentFolderName componentsSeparatedByString:@"_"];
-        NSString *titleString;
-        if ([itemNameComponentsArray count] > 2) {
-            NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
-            titleString = [currentFolderName substringFromIndex:(handleString.length + 1)];
-        } else {
-            titleString = [itemNameComponentsArray objectAtIndex:1];
-        }
-        [self.navigationItem setTitle:titleString];
+        [self.navigationItem setTitle:currentFolderName];
     }
 }
 
@@ -139,16 +120,7 @@
             if (isImage(fileName.pathExtension)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
-                
-                NSString *imageName;
-                NSArray *itemNameComponentsArray = [fileName componentsSeparatedByString:@"_"];
-                if ([itemNameComponentsArray count] > 2) {
-                    NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
-                    imageName = [fileName substringFromIndex:(handleString.length + 1)];
-                } else {
-                    imageName = [itemNameComponentsArray objectAtIndex:1];
-                }
-                photo.caption = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:imageName];
+                photo.caption = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName];
                 [self.offlineImages addObject:photo];
             }
         }
@@ -213,22 +185,22 @@
     return folderSize;
 }
 
-- (NSArray *)nodeHandlesOnFolder:(NSString *)path {
-    
-    NSMutableArray *nodeHandlesOnFolder = [[NSMutableArray alloc] init];
+- (NSArray *)offlinePathOnFolder:(NSString *)path {
+    NSString *relativePath = [Helper pathRelativeToOfflineDirectory:path];
+    NSMutableArray *offlinePathsOnFolder = [[NSMutableArray alloc] init];
     
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
     for (NSString *item in directoryContents) {
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
         if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [nodeHandlesOnFolder addObjectsFromArray:[self nodeHandlesOnFolder:[path stringByAppendingPathComponent:item]]];
+            [offlinePathsOnFolder addObject:[relativePath stringByAppendingPathComponent:item]];
+            [offlinePathsOnFolder addObjectsFromArray:[self offlinePathOnFolder:[path stringByAppendingPathComponent:item]]];
         } else {
-            NSString *base64Handle = [[item componentsSeparatedByString:@"_"] objectAtIndex:0];
-            [nodeHandlesOnFolder addObject:base64Handle];
+            [offlinePathsOnFolder addObject:[relativePath stringByAppendingPathComponent:item]];
         }
     }
     
-    return nodeHandlesOnFolder;
+    return offlinePathsOnFolder;
 }
 
 - (void)cancelPendingTransfersOnFolder:(NSString *)folderPath folderLink:(BOOL)isFolderLink {
@@ -280,15 +252,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSString *directoryPathString = [self currentOfflinePath];
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:nil];
-    NSInteger numberOfRows = directoryContents.count;
-    if (numberOfRows == 0) {
+    if (self.offlineDocuments.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
-    return numberOfRows;
+    return self.offlineDocuments.count;
 }
 
 
@@ -301,8 +270,8 @@
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:nil];
-    NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:[indexPath row]]];
+    NSString *nameString = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
+    NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
     NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
     
@@ -315,24 +284,10 @@
     
     unsigned long long size;
     
-    NSString *itemNameString = [directoryContents objectAtIndex:[indexPath row]];
-    [cell setItemNameString:itemNameString];
+    [cell setItemNameString:nameString];
     
-    NSString *handleString;
-    NSString *nameString;
-    if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
-        nameString = AMLocalizedString(@"downloading", nil);
-    } else if ([itemNameString isEqualToString:@"MasterKey.txt"]) {
-        nameString = itemNameString;
-    } else {
-        NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
-        handleString = [itemNameComponentsArray objectAtIndex:0];
-        if ([itemNameComponentsArray count] > 2) {
-            nameString = [itemNameString substringFromIndex:(handleString.length + 1)];
-        } else {
-            nameString = [itemNameComponentsArray objectAtIndex:1];
-        }
-    }
+    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
+    NSString *handleString = [offNode base64Handle];
     
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
@@ -377,8 +332,8 @@
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
-        NSArray *nodesHandlesOnFolderArray;
-        NSString *base64Handle;
+        NSArray *offlinePathsOnFolderArray;
+        MOOfflineNode *offlineNode;
         
         BOOL isDirectory;
         [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
@@ -389,30 +344,32 @@
             if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
                 [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
             }
-            nodesHandlesOnFolderArray = [self nodeHandlesOnFolder:itemPath];
-            
-        } else {
-            base64Handle = [[[cell itemNameString] componentsSeparatedByString:@"_"] objectAtIndex:0];
-            NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
-            if (transferTag != nil) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
-            }
+            offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
         }
         
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
+        offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
+        if (offlineNode != nil) {
+            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+        }
         if (!success || error) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"itemDeletingError", @"Error at deleting")];
             return;
         } else {
             if (isDirectory) {
-                for (NSString *base64HandleAux in nodesHandlesOnFolderArray) {
-                    [[Helper downloadedNodes] removeObjectForKey:base64HandleAux];
+                for (NSString *localPathAux in offlinePathsOnFolderArray) {
+                    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
+                    if (offlineNode != nil) {
+                        [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                    }
                 }
             } else {
-                [[Helper downloadedNodes] removeObjectForKey:base64Handle];
+                if (offlineNode != nil) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
             }
-            [self.tableView reloadData];
+            [self reloadUI];
         }
     }
 }
@@ -423,20 +380,7 @@
     
     OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *itemNameString = [cell itemNameString];
-    if ([[itemNameString pathExtension] isEqualToString:@"mega"]) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        return;
-    }
     NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
-    
-    NSString *filename;
-    NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
-    if ([itemNameComponentsArray count] > 2) {
-        NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
-        filename = [itemNameString substringFromIndex:(handleString.length + 1)];
-    } else {
-        filename = [itemNameComponentsArray objectAtIndex:1];
-    }
     
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
@@ -478,36 +422,11 @@
         } else {
             [Helper setPathForPreviewDocument:itemPath];
             
-            //Copy the node to tmp without handle_
-            NSArray *itemNameComponentsArray = [itemNameString componentsSeparatedByString:@"_"];
-            NSString *handleString = [itemNameComponentsArray objectAtIndex:0];
-            NSString *nameString;
-            if ([itemNameComponentsArray count] > 2) {
-                nameString = [itemNameString substringFromIndex:(handleString.length + 1)];
-            } else {
-                nameString = [itemNameComponentsArray objectAtIndex:1];
-            }
-            
-            NSArray *pathElements = [itemPath componentsSeparatedByString:@"/"];
-            
-            NSString *pathWihtoutName = @"/";
-            for (NSInteger i = 0; i < pathElements.count - 1; i++) {
-                pathWihtoutName = [pathWihtoutName stringByAppendingPathComponent:[pathElements objectAtIndex:i]];
-            }
-            
-            [Helper setRenamePathForPreviewDocument:[pathWihtoutName stringByAppendingPathComponent:nameString]];
-            
-            NSError *error = nil;
-            BOOL success = [[NSFileManager defaultManager] moveItemAtPath:itemPath toPath:[Helper renamePathForPreviewDocument] error:&error];
-            if (!success || error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-            }
-            
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
             previewController.delegate=self;
             previewController.dataSource=self;
             [previewController setTransitioningDelegate:self];
-            [previewController setTitle:filename];
+            [previewController setTitle:itemNameString];
             [self presentViewController:previewController animated:YES completion:nil];
         }
         
@@ -613,22 +532,13 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:[Helper renamePathForPreviewDocument]];
+    return [NSURL fileURLWithPath:[Helper pathForPreviewDocument]];
 }
 
 #pragma mark - QLPreviewControllerDelegate
 
 - (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
     return YES;
-}
-
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-    }
-    
 }
 
 #pragma mark - MEGATransferDelegate

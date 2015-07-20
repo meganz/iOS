@@ -90,6 +90,8 @@
 
 + (NSString *)pathForOffline;
 
++ (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;
+
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path;
@@ -112,13 +114,9 @@
 #pragma mark - Utils for download and downloading nodes
 
 + (NSMutableDictionary *)downloadingNodes;
-+ (NSMutableDictionary *)downloadedNodes;
-+ (void)setDownloadedNodes;
 
-+ (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node;
-+ (void)downloadNode:(MEGANode *)node folder:(NSString *)folderPath folderLink:(BOOL)isFolderLink;
-+ (void)downloadNodesOnFolder:(NSString *)folderPath parentNode:(MEGANode *)parentNode folderLink:(BOOL)isFolderLink;
-+ (BOOL)createOfflineFolder:(NSString *)folderName folderPath:(NSString *)folderPath;
++ (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
++ (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;
 
 #pragma mark - Utils
 

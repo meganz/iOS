@@ -48,6 +48,8 @@
 #import "AppDelegate.h"
 #import "MEGAProxyServer.h"
 
+#import "MEGAStore.h"
+
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
@@ -182,12 +184,7 @@
         }
     }
     
-    NSString *offlineDirectory = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Offline"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:offlineDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
-        }
-    }
+    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
@@ -301,7 +298,9 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
         
-        if ([[Helper downloadedNodes] objectForKey:node.base64Handle] != nil) {
+        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:node.base64Handle];
+        
+        if (offlineNode != nil) {
             [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
         } else {
             [cell.downloadedImageView setImage:nil];
@@ -1497,31 +1496,25 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     for (MEGANode *n in self.selectedNodesArray) {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:n]) {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
+            [self setEditing:NO animated:YES];
             return;
         }
     }
     
+    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+    
     for (MEGANode *n in self.selectedNodesArray) {
-        if ([n type] == MEGANodeTypeFile) {
-            [Helper downloadNode:n folder:@"" folderLink:NO];
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
-            
-        } else if ([n type] == MEGANodeTypeFolder) {
-            NSString *folderName = [[[n base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[n name]]];
-            NSString *folderPath = [[Helper pathForOffline] stringByAppendingPathComponent:folderName];
-            
-            if ([Helper createOfflineFolder:folderName folderPath:folderPath]) {
-                [Helper downloadNodesOnFolder:folderPath parentNode:n folderLink:NO];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", @"Download started")];
-            }
-        }
+        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
     }
+    
     [self setEditing:NO animated:YES];
     
     if (isSearchTableViewDisplay) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
+    
+    [self.tableView reloadData];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {

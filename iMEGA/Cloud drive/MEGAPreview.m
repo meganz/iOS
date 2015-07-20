@@ -23,6 +23,7 @@
 #import "SVProgressHUD.h"
 #import "Helper.h"
 
+#import "MEGAStore.h"
 
 @interface MEGAPreview () <MWPhoto, MEGARequestDelegate, MEGATransferDelegate> {
 
@@ -86,7 +87,8 @@
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
         }
     } else {
-        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[[self.node base64Handle] stringByAppendingString:@"_"] stringByAppendingString:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]]];
+        
+        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]];
         if (self.isFromFolderLink) {
             [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
         } else {
@@ -143,7 +145,9 @@
     [self performSelector:@selector(imageLoaded) withObject:nil afterDelay:0];
     
     [[NSFileManager defaultManager] removeItemAtPath:[transfer path] error:nil];
-    [[Helper downloadedNodes] removeObjectForKey:[MEGASdk base64HandleForHandle:[transfer nodeHandle]]];
+    
+    MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:transfer.path]];
+    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
 }
 
 @end
