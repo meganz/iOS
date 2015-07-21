@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:6];
+    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:7];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
     [[[defaultViewControllersMutableArray objectAtIndex:1] tabBarItem] setTitle:@"Camera Uploads"];
@@ -45,6 +45,8 @@
     [[[defaultViewControllersMutableArray objectAtIndex:4] tabBarItem] setTitle:AMLocalizedString(@"transfers", @"Transfers")];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
     [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
+    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
+    [[[defaultViewControllersMutableArray objectAtIndex:6] tabBarItem] setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     for (NSInteger i = 0; i< [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
@@ -71,6 +73,10 @@
                 
             case 5:
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"settingsSelectedIcon"]];
+                break;
+                
+            case 6:
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
                 break;
         }
     }
