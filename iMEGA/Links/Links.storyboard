@@ -169,7 +169,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gos-Pq-kMu">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="scaleToFill" id="b4A-nX-hiu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -274,20 +274,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="B63-wU-db4" firstAttribute="top" secondItem="gos-Pq-kMu" secondAttribute="bottom" id="0bd-vY-Tsg"/>
                             <constraint firstItem="gos-Pq-kMu" firstAttribute="trailing" secondItem="XS0-b6-FQU" secondAttribute="trailing" id="4du-7P-hCH"/>
                             <constraint firstItem="XS0-b6-FQU" firstAttribute="bottom" secondItem="B63-wU-db4" secondAttribute="top" id="6o6-g3-RgR"/>
-                            <constraint firstItem="XS0-b6-FQU" firstAttribute="top" secondItem="gos-Pq-kMu" secondAttribute="bottom" constant="-44" id="Gjt-Zk-Xja"/>
+                            <constraint firstItem="XS0-b6-FQU" firstAttribute="top" secondItem="gos-Pq-kMu" secondAttribute="bottom" id="9ih-2c-c8X"/>
                             <constraint firstItem="gos-Pq-kMu" firstAttribute="top" secondItem="phq-C4-flR" secondAttribute="bottom" id="Wtq-y7-DHm"/>
                             <constraint firstItem="gos-Pq-kMu" firstAttribute="leading" secondItem="XS0-b6-FQU" secondAttribute="leading" id="gmb-U1-YZM"/>
                             <constraint firstItem="XS0-b6-FQU" firstAttribute="leading" secondItem="ffw-DJ-D1l" secondAttribute="leading" id="zAy-13-hfC"/>
                             <constraint firstAttribute="trailing" secondItem="XS0-b6-FQU" secondAttribute="trailing" id="zfK-xG-Uv7"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Gjt-Zk-Xja"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="5HE-bc-Hh9">
                         <barButtonItem key="backBarButtonItem" title=" " id="yce-RA-6Iy"/>
