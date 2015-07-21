@@ -1,5 +1,5 @@
 /**
- * @file MyAccountViewController.h
+ * @file MyAccountViewController.m
  * @brief View controller to see and manage your account details.
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
@@ -111,6 +111,7 @@
     
     [self.purchasesHistoryButton setTitle:AMLocalizedString(@"purchasesHistory", @"Purchases history") forState:UIControlStateNormal];
     
+    [_emailLabel setText:[[MEGASdkManager sharedMEGASdk] myEmail]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -128,13 +129,14 @@
     }
     [_localUsedSpaceLabel setText:stringFromByteCount];
     
+    
+    _fullname = @"";
+    
     [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeFirstname delegate:self];
     [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeLastname delegate:self];
     
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
-    
-    [_emailLabel setText:[[MEGASdkManager sharedMEGASdk] myEmail]];
     
     [self setUserAvatar];
 }
