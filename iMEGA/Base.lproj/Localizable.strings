@@ -5,12 +5,17 @@
 "name" = "Name";
 "passcode" = "Passcode";
 "size" = "Size";
+/* Text relative to the account status shown on CAPITAL letters */
+"free" = "FREE";
+"usage" = "Usage";
 
 "move" = "Move";
 "rename" = "Rename";
 "remove" = "Remove";
 "paused" = "Paused";
 
+/* Title of the app section where you can see your account details */
+"myAccount" = "My Account";
 "newFolder" = "New Folder";
 "shareFolder" = "Share folder";
 "noCamera"="No camera available";
@@ -339,7 +344,8 @@
 "feedbackActionSheet_confusedButton"="Confused";
 "feedbackActionSheet_unhappyButton"="Unhappy";
 
-"expiresOn"="(expires on %@)";
+/* Expiry date of the account PRO level */
+"expiresOn" = "expires on %@";
 
 //(5) Settings - CameraUploadsTableViewController
 "uploadVideosLabel"="Upload videos";
@@ -418,7 +424,7 @@
 // HUD messages
 "logout" = "Logout...";
 
-//UITABBARCONTROLLER - TRANSFERS
+//(6)UITABBARCONTROLLER - TRANSFERS
 "transfers"="Transfers";
 "all"="All";
 "downloads"="Downloads";
@@ -435,3 +441,17 @@
 "allInUppercaseTransfers"="ALL transfers";
 "uploadInUppercaseTransfers"="UPLOAD transfers";
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
+
+//(7)UITABBARCONTROLLER - MY ACCOUNT
+"restorePurchases" = "Restore purchases";
+"purchasesHistory" = "Purchases history";
+
+//UsageViewController
+"incomingShares" = "Incoming Shares";
+
+/* Sentece showed under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@" = "of %@";
+/* Sentece showed under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@" = "used of %@";
+/* Sentece showed under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@" = "available of %@";
