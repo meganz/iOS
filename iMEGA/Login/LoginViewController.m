@@ -201,7 +201,10 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [[NSUserDefaults standardUserDefaults] setBool:self.loggedInSwitch.on forKey:kRemainLoggedIn];
+            if (self.loggedInSwitch.on) {
+                NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+                [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
+            }
             break;
         }
             
