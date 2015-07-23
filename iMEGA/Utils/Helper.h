@@ -37,7 +37,6 @@
 #define kMEGANode @"kMEGANode"
 #define kIndex @"kIndex"
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
-#define kRemainLoggedIn @"RemainLoggedIn"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
 #define kLastUploadVideoDate @"LastUploadVideoDate"

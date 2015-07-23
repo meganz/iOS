@@ -180,7 +180,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kRemainLoggedIn]) {
+    if (![SSKeychain passwordForService:@"MEGA" account:@"session"]) {
         [Helper logout];
     } else {
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
@@ -684,9 +684,6 @@
             } else {
                 isAccountFirstLogin = YES;
                 self.link = nil;
-                
-                NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-                [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
             }
             
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
