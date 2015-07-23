@@ -112,15 +112,15 @@
             NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             if (!thumbnailExists) {
-                [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+                [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
             } else {
                 [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
             }
         } else {
-            [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+            [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
         }
     } else if ([self.node type] == MEGANodeTypeFolder) {
-        [self.thumbnailImageView setImage:[Helper imageForNode:self.node]];
+        [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
     }
     
     self.nameLabel.text = [self.node name];

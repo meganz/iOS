@@ -8,12 +8,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "access_@2x.png"
+      "filename" : "access@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "access-1.png"
+      "filename" : "access@3x.png"
     }
   ],
   "info" : {

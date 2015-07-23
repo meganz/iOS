@@ -8,12 +8,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "privacy_security_@2x.png"
+      "filename" : "privacy_security@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "privacy_security-1.png"
+      "filename" : "privacy_security@3x.png"
     }
   ],
   "info" : {

@@ -8,12 +8,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "storage_space_@2x.png"
+      "filename" : "storage_space@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "storage_space-1.png"
+      "filename" : "storage_space@3x.png"
     }
   ],
   "info" : {

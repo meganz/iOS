@@ -77,6 +77,9 @@
 + (UIImage *)imageForNode:(MEGANode *)node;
 + (UIImage *)imageForExtension:(NSString *)extension;
 
++ (UIImage *)infoImageForNode:(MEGANode *)node;
++ (UIImage *)infoImageForExtension:(NSString *)extension;
+
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
 + (UIImage *)folderSharedImage;
