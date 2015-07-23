@@ -42,8 +42,8 @@ static NSInteger linkNodeOption;
     static NSDictionary *fileTypesDictionary = nil;
     
     if (fileTypesDictionary == nil) {
-        fileTypesDictionary = @{@"3ds":@"3D",
-                                @"3dm":@"3D",
+        fileTypesDictionary = @{@"3ds":@"3d",
+                                @"3dm":@"3d",
                                 @"3fr":@"raw",
                                 @"3g2":@"video",
                                 @"3gp":@"video",
@@ -100,7 +100,7 @@ static NSInteger linkNodeOption;
                                 @"fff":@"raw",
                                 @"fla":@"flash",
                                 @"flac":@"audio",
-                                @"flv":@"video_flash",
+                                @"flv":@"video",
                                 @"fnt":@"font",
                                 @"fon":@"font",
                                 @"gadget":@"executable",
@@ -120,14 +120,14 @@ static NSInteger linkNodeOption;
                                 @"jpeg":@"image",
                                 @"jpg":@"image",
                                 @"js":@"web_data",
-                                @"key":@"generic",
+                                @"key":@"keynote",
                                 @"kml":@"gis",
                                 @"log":@"text",
                                 @"m":@"source_code",
                                 @"mm":@"source_code",
                                 @"m3u":@"playlist",
                                 @"m4a":@"audio",
-                                @"max":@"3D",
+                                @"max":@"3d",
                                 @"mdb":@"database",
                                 @"mef":@"raw",
                                 @"mid":@"midi",
@@ -141,9 +141,9 @@ static NSInteger linkNodeOption;
                                 @"mrw":@"raw",
                                 @"msi":@"executable",
                                 @"nb":@"spreadsheet",
-                                @"numbers":@"spreadsheet",
+                                @"numbers":@"numbers",
                                 @"nef":@"raw",
-                                @"obj":@"3D",
+                                @"obj":@"3d",
                                 @"odp":@"generic",
                                 @"ods":@"spreadsheet",
                                 @"odt":@"text",
@@ -151,7 +151,7 @@ static NSInteger linkNodeOption;
                                 @"otf":@"font",
                                 @"ots":@"spreadsheet",
                                 @"orf":@"raw",
-                                @"pages":@"text",
+                                @"pages":@"pages",
                                 @"pcast":@"podcast",
                                 @"pdb":@"database",
                                 @"pdf":@"pdf",
@@ -182,10 +182,11 @@ static NSInteger linkNodeOption;
                                 @"sh":@"source_code",
                                 @"shtml":@"web_data",
                                 @"sitx":@"compressed",
+                                @"sketch":@"sketch",
                                 @"sql":@"database",
                                 @"srf":@"raw",
                                 @"srt":@"subtitles",
-                                @"stl":@"3D",
+                                @"stl":@"3d",
                                 @"svg":@"vector",
                                 @"svgz":@"vector",
                                 @"swf":@"swf",
@@ -310,6 +311,49 @@ static NSInteger linkNodeOption;
             image = [UIImage imageNamed:filetypeImage];
         } else {
             return [self genericImage];
+        }
+    }
+    return image;
+}
+
++ (UIImage *)infoImageForNode:(MEGANode *)node {
+    
+    switch ([node type]) {
+        case MEGANodeTypeFolder: {
+            if ([node.name isEqualToString:@"Camera Uploads"]) {
+                return [UIImage imageNamed:@"info_folder_image"];
+            } else {
+                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
+                    return [UIImage imageNamed:@"info_folder_shared"];
+                } else {
+                    return [UIImage imageNamed:@"info_folder"];
+                }
+            }
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            NSString *nodePathExtension = node.name.pathExtension;
+            return [self infoImageForExtension:nodePathExtension];
+            break;
+        }
+            
+        default:
+            return [UIImage imageNamed:@"info_generic"];
+    }
+}
+
++ (UIImage *)infoImageForExtension:(NSString *)extension {
+    extension = extension.lowercaseString;
+    UIImage *image;
+    if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
+        image = [UIImage imageNamed:@"info_image"];
+    } else {
+        NSString *filetypeImage = [self.fileTypesDictionary valueForKey:extension];
+        if (filetypeImage && filetypeImage.length > 0) {
+            image = [UIImage imageNamed:[NSString stringWithFormat:@"info_%@", filetypeImage]];
+        } else {
+            return [UIImage imageNamed:@"info_generic"];
         }
     }
     return image;
