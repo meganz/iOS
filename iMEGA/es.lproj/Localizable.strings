@@ -212,6 +212,10 @@
 "newFolderMessage" = "Nombre para la carpeta";
 "createFolderButton" = "Crear";
 
+//Upload a file - Alert
+"fileExistAlertController_Message" = "%@ subido previamente";
+"uploadStarted_Message" = "¡Subida iniciada!";
+
 //BrowserViewController
 
 "permissionTitle"="Error de permisos";

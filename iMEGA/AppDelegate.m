@@ -197,6 +197,13 @@
             }
         }
     }
+    
+    // Clean up temporary directory
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+    if (!success || error) {
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -791,18 +798,27 @@
         return;
     }
     
-    if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+    //Delete local file even if we get an error
+    if ([transfer type] == MEGATransferTypeUpload) {
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
+    }
+    
+    //Delete transfer from dictionary file even if we get an error
+    NSString *base64Handle;
+    if ([transfer type] == MEGATransferTypeDownload) {
+        base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
+        [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+    }
+    
+    if ([error type]) {
         return;
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [[Helper downloadingNodes] removeObjectForKey:base64Handle];
-        
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:transfer.path]];
         if (!offlineNodeExist) {
             MOOfflineNode *offlineNode = [[MEGAStore shareInstance] insertOfflineNode];
@@ -832,18 +848,10 @@
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {
-        NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[transfer fileName]];
-        
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            [api createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
-            [api createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
-        }
-        
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+            [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
+            [api createPreview:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
         }
     }
 }

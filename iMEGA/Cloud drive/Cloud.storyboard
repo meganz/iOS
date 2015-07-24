@@ -190,6 +190,7 @@
                         <outlet property="downloadBarButtonItem" destination="zRS-Iw-IxB" id="0Oz-5g-uLM"/>
                         <outlet property="editBarButtonItem" destination="mLN-ad-YAf" id="cvn-77-Glh"/>
                         <outlet property="moveBarButtonItem" destination="paI-37-wBm" id="Sj3-a8-hXZ"/>
+                        <outlet property="progressView" destination="v98-Hf-RjB" id="M4n-cf-IuF"/>
                         <outlet property="renameBarButtonItem" destination="Bnc-QN-zeY" id="YzG-89-EhS"/>
                         <outlet property="searchDisplayController" destination="qPQ-ZD-KvF" id="5tF-An-RrW"/>
                         <outlet property="selectAllBarButtonItem" destination="Tlb-j4-XPE" id="ymf-3D-A1G"/>
@@ -200,6 +201,10 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bYw-MF-Zjk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" id="v98-Hf-RjB">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="2.5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </progressView>
                 <barButtonItem image="check_mark" width="22" id="Tlb-j4-XPE" userLabel="Check Mark Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="KWY-Kr-BLD" id="FQc-xa-aUj"/>
