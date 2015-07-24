@@ -50,7 +50,7 @@
 
 #import "MEGAStore.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -84,6 +84,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *renameBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
+@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
 
@@ -215,6 +217,10 @@
     [self reloadUI];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
+    [self.progressView setFrame:CGRectMake(0, 42, CGRectGetWidth(self.view.frame), 2)];
+    [self.progressView setProgress:0.0];
+    [self.navigationController.navigationBar addSubview:self.progressView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -228,6 +234,7 @@
     }
     
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [self.progressView removeFromSuperview];
 }
 
 - (void)dealloc {
@@ -918,40 +925,72 @@
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder")
-                                                     message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder")
-                                                    delegate:self
-                                           cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                           otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
-        [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [folderAlertView textFieldAtIndex:0].text = @"";
-        folderAlertView.tag = 1;
-        [folderAlertView show];
-    } else if (buttonIndex == 2) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                // Will get here on both iOS 7 & 8 even though camera permissions weren't required
-                // until iOS 8. So for iOS 7 permission will always be granted.
-                if (granted) {
-                    // Permission has been granted. Use dispatch_async for any UI updating
-                    // code because this block may be executed in a thread.
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                    });
-                } else {
-                    // Permission has been denied.
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention")
-                                                                        message:AMLocalizedString(@"cameraPermissions", @"Please give MEGA app permission to access your Camera in your settings app!")
-                                                                       delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil))
-                                                              otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
-                        alert.tag = 3;
-                        [alert show];
-                    });
-                }
-            }];
+    switch (buttonIndex) {
+        //New folder
+        case 0:
+            folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder")
+                                                         message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder")
+                                                        delegate:self
+                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                               otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
+            [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+            [folderAlertView textFieldAtIndex:0].text = @"";
+            folderAlertView.tag = 1;
+            [folderAlertView show];
+            break;
+            
+        //Choose
+        case 1:
+            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            break;
+          
+        //Capture
+        case 2:
+            if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    // Will get here on both iOS 7 & 8 even though camera permissions weren't required
+                    // until iOS 8. So for iOS 7 permission will always be granted.
+                    if (granted) {
+                        // Permission has been granted. Use dispatch_async for any UI updating
+                        // code because this block may be executed in a thread.
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        });
+                    } else {
+                        // Permission has been denied.
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention")
+                                                                            message:AMLocalizedString(@"cameraPermissions", @"Please give MEGA app permission to access your Camera in your settings app!")
+                                                                           delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil))
+                                                                  otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
+                            alert.tag = 3;
+                            [alert show];
+                        });
+                    }
+                }];
+            }
+
+            break;
+          
+        // Upload a file iOS 8+
+        case 3: {
+            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+                UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent,
+                                                                                                                                 (__bridge NSString *) kUTTypeData,
+                                                                                                                                 (__bridge NSString *) kUTTypePackage,
+                                                                                                                                 (@"com.apple.iwork.pages.pages"),
+                                                                                                                                 (@"com.apple.iwork.numbers.numbers"),
+                                                                                                                                 (@"com.apple.iwork.keynote.key")]
+                                                                                                                        inMode:UIDocumentPickerModeImport];
+                documentMenuViewController.delegate = self;
+                documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:documentMenuViewController animated:YES completion:nil];
+            }
+            break;
         }
+            
+        default:
+            break;
     }
 }
 
@@ -962,12 +1001,6 @@
             UIButton *button = (UIButton *)subview;
             [button setTitleColor:megaRed forState:UIControlStateNormal];
         }
-    }
-}
-
-- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
 }
 
@@ -1481,11 +1514,23 @@
 }
 
 - (IBAction)optionAdd:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
+    UIActionSheet *actionSheet;
+    
+    //iOS 8+
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                  delegate:self
+                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                    destructiveButtonTitle:nil
+                                         otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), @"Upload a file", nil];
+    
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                  delegate:self
+                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                    destructiveButtonTitle:nil
+                                         otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
+    }
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
@@ -1657,7 +1702,7 @@
     return YES;
 }
 
-#pragma mark - Moview player
+#pragma mark - Movie player
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
     MPMoviePlayerController *moviePlayer = [aNotification object];
@@ -1665,6 +1710,61 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIDocumentPickerDelegate
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
+    if (controller.documentPickerMode == UIDocumentPickerModeImport) {
+        NSString *localFilePath = [url path];
+        
+        NSString *crcLocal = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeByCRC:crcLocal parent:self.parentNode];
+        
+        // If file doesn't exist in MEGA then upload it
+        if (node == nil) {
+            UIAlertView *toastAlertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                     message:AMLocalizedString(@"uploadStarted_Message", @"Message shown when the user select upload a file")
+                                                                    delegate:nil
+                                                           cancelButtonTitle:nil
+                                                           otherButtonTitles:nil, nil];
+            [toastAlertView show];
+            
+            int duration = 1; // duration in seconds
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [toastAlertView dismissWithClickedButtonIndex:0 animated:YES];
+            });
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+        } else {
+            if ([node.name isEqualToString:url.lastPathComponent]) {
+                NSError *error = nil;
+                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
+                if (!success || error) {
+                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+                }
+                
+                NSString *alertMessage = [NSString stringWithFormat:AMLocalizedString(@"fileExistAlertController_Message", nil), [url lastPathComponent]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *alertController = [UIAlertController
+                                                          alertControllerWithTitle:nil
+                                                          message:alertMessage
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"OK", @"Ok") style:UIAlertActionStyleDefault handler:nil]];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
+            } else {
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode newName:url.lastPathComponent];
+            }
+        }
+    }
+}
+
+#pragma mark - UIDocumentMenuDelegate
+
+- (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
+    documentPicker.delegate = self;
+    [self presentViewController:documentPicker animated:YES completion:nil];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -1823,6 +1923,9 @@
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
+    } else {
+        float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+        [self.progressView setProgress:progress];
     }
 }
 
@@ -1855,6 +1958,7 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
+        [self.progressView setProgress:0.0];
         if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[transfer nodeHandle]];
             

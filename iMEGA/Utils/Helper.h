@@ -118,9 +118,10 @@
 + (NSInteger)selectedOptionOnLink;
 + (void)setSelectedOptionOnLink:(NSInteger)option;
 
-#pragma mark - Utils for download and downloading nodes
+#pragma mark - Utils downloading and uploading nodes
 
 + (NSMutableDictionary *)downloadingNodes;
++ (NSMutableDictionary *)uploadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink;

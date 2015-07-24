@@ -212,6 +212,10 @@
 "newFolderMessage" = "Name for the new folder";
 "createFolderButton" = "Create";
 
+//Upload a file - Alert
+"fileExistAlertController_Message" = "%@ already uploaded";
+"uploadStarted_Message" = "Upload started!";
+
 //BrowserViewController
 
 "permissionTitle"="Permissions error";
