@@ -85,8 +85,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *renameBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
-@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
-
 @property (nonatomic, strong) MEGANodeList *nodes;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
@@ -217,10 +215,6 @@
     [self reloadUI];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    [self.progressView setFrame:CGRectMake(0, 42, CGRectGetWidth(self.view.frame), 2)];
-    [self.progressView setProgress:0.0];
-    [self.navigationController.navigationBar addSubview:self.progressView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -234,7 +228,6 @@
     }
     
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
-    [self.progressView removeFromSuperview];
 }
 
 - (void)dealloc {
@@ -1923,9 +1916,6 @@
             NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
-    } else {
-        float progress = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
-        [self.progressView setProgress:progress];
     }
 }
 
@@ -1958,7 +1948,6 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
-        [self.progressView setProgress:0.0];
         if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[transfer nodeHandle]];
             
