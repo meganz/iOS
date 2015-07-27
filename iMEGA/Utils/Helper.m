@@ -494,7 +494,7 @@ static NSInteger linkNodeOption;
     linkNodeOption = option;
 }
 
-#pragma mark - Utils downloading and uploading nodes
+#pragma mark - Utils download and downloading nodes
 
 + (NSMutableDictionary *)downloadingNodes {
     static NSMutableDictionary *downloadingNodes = nil;
@@ -502,14 +502,6 @@ static NSInteger linkNodeOption;
         downloadingNodes = [[NSMutableDictionary alloc] init];
     }
     return downloadingNodes;
-}
-
-+ (NSMutableDictionary *)uploadingNodes {
-    static NSMutableDictionary *uploadingNodes = nil;
-    if (!uploadingNodes) {
-        uploadingNodes = [[NSMutableDictionary alloc] init];
-    }
-    return uploadingNodes;
 }
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink {
