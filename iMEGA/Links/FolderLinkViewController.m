@@ -263,7 +263,7 @@
         return;
     }
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
             MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
