@@ -166,7 +166,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         [self deleteTempFile];
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([self.node type] == MEGANodeTypeFile) {
                     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
@@ -201,7 +201,7 @@
             return;
         }
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];

@@ -86,8 +86,32 @@
 
     [Fabric with:@[CrashlyticsKit]];
     
+    // Delete username and password if exists - V1
+    if ([SSKeychain passwordForService:@"MEGA" account:@"username"] && [SSKeychain passwordForService:@"MEGA" account:@"password"]) {
+        [SSKeychain deletePasswordForService:@"MEGA" account:@"username"];
+        [SSKeychain deletePasswordForService:@"MEGA" account:@"password"];
+    }
+    
+    // Session from v2
+    NSData *sessionV2 = [SSKeychain passwordDataForService:@"MEGA" account:@"session"];
+    NSString *sessionV3 = [SSKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    
+    if (sessionV2) {
+        sessionV3 = [sessionV2 base64EncodedStringWithOptions:0];
+        sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
+        sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+        sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
+        
+        [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+        [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
+        sessionV3 = nil;
         [Helper clearSession];
         [Helper deletePasscode];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
@@ -101,9 +125,9 @@
     self.link = nil;
     isFetchNodesDone = NO;
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+    if (sessionV3) {
         isAccountFirstLogin = NO;
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SSKeychain passwordForService:@"MEGA" account:@"session"]];
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
             NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
@@ -125,11 +149,6 @@
                 [self.window setRootViewController:mainTBC];
             }
         }
-    } else {
-        isAccountFirstLogin = YES;
-        
-        [Helper setLinkNode:nil];
-        [Helper setSelectedOptionOnLink:0];
     }
     
     // Let the device know we want to receive push notifications
@@ -180,7 +199,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
-    if (![SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+    if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
     } else {
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
@@ -209,7 +228,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     self.link = [url absoluteString];
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
             self.link = nil;
@@ -630,6 +649,12 @@
     [[MEGASdkManager sharedMEGASdk] logout];
 }
 
+#pragma mark - Compatibility with v2
+
+- (void)compatibilityWithV2 {
+
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -685,7 +710,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            if ([SSKeychain passwordForService:@"MEGA" account:@"session"]) {
+            if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
             } else {

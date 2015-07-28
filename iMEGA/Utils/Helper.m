@@ -551,20 +551,24 @@ static NSInteger linkNodeOption;
 }
 
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
-    NSString *offlineNameString = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:node.name];
+    MEGASdk *api;
+    
+    if (isFolderLink) {
+        api = [MEGASdkManager sharedMEGASdkFolder];
+    } else {
+        api = [MEGASdkManager sharedMEGASdk];
+    }
+    
+    NSString *offlineNameString = [api escapeFsIncompatible:node.name];
     NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
-            if (isFolderLink) {
-                [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:node localPath:absoluteFilePath];
-            } else {
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:absoluteFilePath];
-            }
+            [api startDownloadNode:node localPath:absoluteFilePath];
         } else {
 //            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
         }
-    } else if (node.type == MEGANodeTypeFolder && [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue] != 0) {
+    } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
@@ -575,13 +579,13 @@ static NSInteger linkNodeOption;
                 if (!offlineNode) {
                     MOOfflineNode *offNode = [[MEGAStore shareInstance] insertOfflineNode];
                     [offNode setBase64Handle:node.base64Handle];
-                    [offNode setParentBase64Handle:[[[MEGASdkManager sharedMEGASdk] parentNodeForNode:[[MEGASdkManager sharedMEGASdk] nodeForHandle:node.handle]] base64Handle]];
+                    [offNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
                     [offNode setLocalPath:[[Helper pathRelativeToOfflineDirectory:[Helper pathRelativeToOfflineDirectory:absoluteFilePath]] decomposedStringWithCanonicalMapping]];
                     [[MEGAStore shareInstance] saveContext];
                 }
             }
         }
-        MEGANodeList *nList = [[MEGASdkManager sharedMEGASdk] childrenForParent:node];
+        MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
             [self downloadNode:child folderPath:absoluteFilePath isFolderLink:isFolderLink];
@@ -662,7 +666,7 @@ static NSInteger linkNodeOption;
 }
 
 + (void)clearSession {
-    [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+    [SSKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
 }
 
 + (void)deleteUserData {

@@ -203,7 +203,7 @@
         case MEGARequestTypeLogin: {
             if (self.loggedInSwitch.on) {
                 NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-                [SSKeychain setPassword:session forService:@"MEGA" account:@"session"];
+                [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
             }
             break;
         }
