@@ -14,8 +14,6 @@
 "remove" = "Remove";
 "paused" = "Paused";
 
-/* Title of the app section where you can see your account details */
-"myAccount" = "My Account";
 "newFolder" = "New Folder";
 "shareFolder" = "Share folder";
 "noCamera"="No camera available";
@@ -328,37 +326,39 @@
 "filesMovedToRubbishBin" = "%d files moved to the rubbish bin";
 
 //UITABBARCONTROLLER (5) SETTINGS
-"settingsTitle"="Settings";
+"settingsTitle" = "Settings";
 
-"usedSpaceOfTotalSpace"="%@ of %@";
-"upgradeLabel"="Upgrade account";
-"cameraUploadsLabel"="Camera Uploads";
-"applicationLanguageLabel"="Application language";
-"aboutLabel"="About";
-"feedbackLabel"="Feedback";
-"advancedLabel"="Advanced";
-"logoutLabel"="Log out";
+"cameraUploadsLabel" = "Camera Uploads";
+"rubbishBinLabel" = "Rubbish Bin";
 
-"localLabel"="Local";
-"usedSpaceLabel"="Used";
-"availableLabel"="Available";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"securityOptions" = "Security Options";
 
-"feedbackActionSheet_title"="How are you feeling?";
-"feedbackActionSheet_happyButton"="Happy";
-"feedbackActionSheet_confusedButton"="Confused";
-"feedbackActionSheet_unhappyButton"="Unhappy";
+/* Settings section that shows all the info relative to the app */
+"about" = "About";
+"language" = "Language";
 
-/* Expiry date of the account PRO level */
-"expiresOn" = "expires on %@";
+"sendFeedbackLabel" = "Send Feedback";
+/* Text shown when you want to send feedback of the app and you don't have an email account configured on your device */
+"noEmailAccountConfigured" = "No email account configured";
+
+"privacyPolicyLabel" = "Privacy Policy";
+"termsOfServicesLabel" = "Terms of Service";
+"errorLoadingPrivacyPolicyWeb" = "The MEGA Privacy Policy failed to load.";
+
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off" = "Off";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on" = "On";
 
 //(5) Settings - CameraUploadsTableViewController
-"uploadVideosLabel"="Upload videos";
-"useCellularConnectionLabel"="Use cellular connection";
-"onlyWhenChargingLabel"="Only when charging";
+"uploadVideosLabel" = "Upload videos";
+"useCellularConnectionLabel" = "Use cellular connection";
+"onlyWhenChargingLabel" = "Only when charging";
 
-"cameraUploadsEnable_header"="Enable camera uploads to automatically upload your photos and videos to cloud drive";
-"cameraUploadsDisalbe_header"="When disabled new photos and videos won't be uploaded";
-"cameraUploadsOptiones_header"="Camera uploads options";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer" = "When enabled new photos and videos will be uploaded.";
+"options" = "Options";
 
 //(5) Settings - LanguageTableViewController
 "applicationLanguage"="English";
@@ -367,29 +367,30 @@
 "es"="Spanish";
 
 //(5) Settings - AboutTableViewController
-"privacyPolicyLabel"="Privacy Policy";
-"termsOfServicesLabel"="Terms of Service";
+"version" = "Version";
+"acknowledgements" = "Acknowledgements";
 
-"errorLoadingPrivacyPolicyWeb" = "The MEGA Privacy Policy failed to load.";
+//(5) Settings - SecurityOptionsTableViewController
+"masterKey" = "Master Key";
+"changePasswordLabel" = "Change password";
 
-//(5) Settings - AdvancedTableViewController
+"exportMasterKey" = "Export Master Key";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage" = "Security warning! This is a high risk operation. Do you want to continue?";
 
-"rubbishBinLabel"="Rubbish bin";
-"exportMasterKeyLabel"="Export Master Key";
-"cleanupMasterKeyLabel"="Cleanup Master Key";
-"changePasswordLabel"="Change password";
-"rubbishBinFooter"="Deleted files go into the Rubbish Bin.";
-"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to set a new password without data loss.";
-"exportMasterKeyAlertTitle"="Master Key exported";
-"exportMasterKeyAlertMessage"="MasterKey.txt was exported to the Documents folder. You can transfer it by connecting the device to the computer and open iTunes. We strongly advise you against emailing this file!";
-"cleanupMasterKeyFooter"="Delete the Master Key from the sandbox of the application.";
-"cleanupMasterKeyAlertTitle"="Master Key cleaned";
-"cleanupMasterKeyAlertMessage"="MasterKey.txt was removed to the Documents folder.";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter" = "Exporting the Master Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 
-//Remove nodes from rubbish bin
+"masterKeyExported" = "Master Key exported";
+"masterKeyExported_alertMessage" = "Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
+
+"masterKeyRemoved" = "Master Key removed";
+"masterKeyRemoved_alertMessage" = "MasterKey.txt was removed from the Documents folder.";
+
+//(5) Settings - Rubbish Bin
 "removeNodeFromRubbishBinTitle" = "Confirm removal";
-"removeNodeFromRubbishBinMessage" = "You are about to permanently remove 1 files from the Rubbish Bin. Would you like to proceed? (You cannot undo this action.)";
-"removeMultipleNodesFromRubbishBinMessage" = "You are about to permanently remove %d files from the Rubbish Bin. Would you like to proceed? (You cannot undo this action.)";
+"removeNodeFromRubbishBinMessage" = "You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
+"removeMultipleNodesFromRubbishBinMessage" = "You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
 
 "fileRemovedFromRubbishBin" = "1 file removed from MEGA";
 "filesRemovedFromRubbishBin" = "%d files removed from MEGA";
@@ -403,30 +404,17 @@
 "simplePasscodeLabel"="Simple passcode";
 "eraseAllLocalDataLabel"="Erase local data";
 
-"failedAttempstSectionTitle"="Log out and erase local data of the app after 10 failed passcode attempts";
+"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
 
 //(5) Settings - FeedbackTableViewController
-"sendFeedbackLabel"="Send feedback";
 "helpCentreLabel"="Help centre";
 "rateUsLabel"="Rate us!";
 
-"sendFeedbackFooter"="Contact the support team through email. All emails are read but given the high volume of requests we might not answer everyone individually.";
 "helpCentreFooter"="Get support or read popular topics.";
-"rateUsFooter"="Oh my, it's full of stars!";
-
-//(5) Settings - UpgradeTableViewController
-"upgradeAccount"="Upgrade account";
-
-"productSpace"="Storage %@";
-"productBandwidth"="Bandwidth %@";
-"productPricePerMonth"="%.2f %@ per month";
-"productMonthlyPrice"="Monthly (%.2f %@)";
-"productYearlyPrice"="Yearly (%.2f %@)";
-
-"chooseDuration"="Choose duration";
 
 // HUD messages
-"logout" = "Logout...";
+/* String shown when you are logging out of your account. */
+"loggingOut" = "Logging out";
 
 //(6)UITABBARCONTROLLER - TRANSFERS
 "transfers"="Transfers";
@@ -447,6 +435,18 @@
 "downloadInUppercaseTransfers"="DOWNLOAD transfers";
 
 //(7)UITABBARCONTROLLER - MY ACCOUNT
+/* Title of the app section where you can see your account details */
+"myAccount" = "My Account";
+
+"logoutLabel" = "Log out";
+
+"localLabel" = "Local";
+"usedSpaceLabel" = "Used";
+"availableLabel" = "Available";
+
+/* Expiry date of the account PRO level */
+"expiresOn" = "expires on %@";
+
 "restorePurchases" = "Restore purchases";
 "purchasesHistory" = "Purchases history";
 
@@ -459,3 +459,14 @@
 "used of %@" = "used of %@";
 /* Sentece showed under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@" = "available of %@";
+
+//UpgradeTableViewController
+"upgradeAccount" = "Upgrade account";
+
+"productSpace" = "Storage %@";
+"productBandwidth" = "Bandwidth %@";
+"productPricePerMonth" = "%.2f %@ per month";
+"productMonthlyPrice" = "Monthly (%.2f %@)";
+"productYearlyPrice" = "Yearly (%.2f %@)";
+
+"chooseDuration" = "Choose duration";

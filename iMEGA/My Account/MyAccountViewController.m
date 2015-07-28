@@ -107,7 +107,7 @@
     [self.availableLabel setText:AMLocalizedString(@"availableLabel", @"Available")];
     
     [self.freeStatusLabel setText:AMLocalizedString(@"free", nil)];
-    [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeLabel", nil) forState:UIControlStateNormal];
+    [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeAccount", nil) forState:UIControlStateNormal];
     
     [self.purchasesHistoryButton setTitle:AMLocalizedString(@"purchasesHistory", @"Purchases history") forState:UIControlStateNormal];
     

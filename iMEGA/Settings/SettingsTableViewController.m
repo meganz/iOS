@@ -19,26 +19,37 @@
  * program.
  */
 
-#import "SettingsTableViewController.h"
-#import "Helper.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
-#import "FeedbackTableViewController.h"
+#import "SVWebViewController.h"
+
 #import "MEGASdkManager.h"
-#import "UIImage+GKContact.h"
-#import "PieChartView.h"
-#import "UpgradeTableViewController.h"
+#import "MEGAReachabilityManager.h"
+#import "Helper.h"
+#import "CameraUploads.h"
 
-@interface SettingsTableViewController () <UIActionSheetDelegate>
+#import "SettingsTableViewController.h"
+#import "CameraUploadsTableViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "PasscodeTableViewController.h"
+#import "AboutTableViewController.h"
+#import "FeedbackTableViewController.h"
+#import "SecurityOptionsTableViewController.h"
 
-@property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *applicationLanguageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
-@property (weak, nonatomic) IBOutlet UILabel *feedbackLabel;
-@property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
+@interface SettingsTableViewController () <MFMailComposeViewControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+    
+    BOOL isLanguagePickerViewShown;
+    
+    NSArray *languages;
+    NSArray *languagesCodes;
+    NSString *selectedLanguage;
+}
 
-@property (nonatomic, strong) MEGAPricing *pricing;
-@property (nonatomic) MEGAAccountType megaAccountType;
+@property (strong, nonatomic) IBOutlet UIPickerView *languagePickerView;
+
+@property (nonatomic, strong) NSIndexPath *languagePickerViewIndexPath;
+@property (nonatomic, assign) CGFloat languagePickerCellRowHeight;
 
 @end
 
@@ -49,19 +60,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSString *language = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    if (language) {
+        selectedLanguage = language;
+    } else {
+        selectedLanguage = nil;
+    }
+    
+    languagesCodes = [NSArray arrayWithObjects:@"en", @"es", nil];
+    
+    isLanguagePickerViewShown = NO;
+    _languagePickerCellRowHeight = 216.0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.navigationItem setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
-    
-    [self.cameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
-    [self.passcodeLabel setText:AMLocalizedString(@"passcode", nil)];
-    [self.applicationLanguageLabel setText:AMLocalizedString(@"applicationLanguageLabel", @"Application language")];
-    [self.aboutLabel setText:AMLocalizedString(@"aboutLabel", nil)];
-    [self.feedbackLabel setText:AMLocalizedString(@"feedbackLabel", nil)];
-    [self.advancedLabel setText:AMLocalizedString(@"advancedLabel", nil)];
     
     //Tab bar item titles
     for (NSInteger i = 0; i < [self.tabBarController.viewControllers count]; i++) {
@@ -86,11 +101,13 @@
                 break;
         }
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    if (isLanguagePickerViewShown) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(_languagePickerViewIndexPath.row - 1) inSection:2];
+        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -101,40 +118,322 @@
     return UIInterfaceOrientationPortrait;
 }
 
-#pragma mark - IBActions
+#pragma mark - Private
+
+- (void)toggleLanguagePickerForSelectedIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView beginUpdates];
+    
+    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:2]];
+    
+    if (isLanguagePickerViewShown) {
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+    [self.tableView endUpdates];
+}
+
+- (void)displayInlineLanguagePickerViewForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.tableView beginUpdates];
+    
+    BOOL before = NO;
+    if (_languagePickerViewIndexPath != nil) {
+        before = _languagePickerViewIndexPath.row < indexPath.row;
+    }
+    
+    BOOL sameCellClicked = (_languagePickerViewIndexPath.row - 1 == indexPath.row);
+    
+    if (isLanguagePickerViewShown) {
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_languagePickerViewIndexPath.row inSection:2]]
+                              withRowAnimation:UITableViewRowAnimationFade];
+        _languagePickerViewIndexPath = nil;
+    }
+    
+    if (!sameCellClicked) {
+        NSInteger rowToReveal = (before ? indexPath.row - 1 : indexPath.row);
+        NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:2];
+        
+        [self toggleLanguagePickerForSelectedIndexPath:indexPathToReveal];
+        _languagePickerViewIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:2];
+    }
+    
+    [self.tableView endUpdates];
+    
+    [self updateLanguagePicker];
+}
+
+- (void)updateLanguagePicker {
+    if (_languagePickerViewIndexPath != nil) {
+        
+        if (_languagePickerView != nil) {
+            UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:(_languagePickerViewIndexPath.row - 1) inSection:_languagePickerViewIndexPath.section]];
+            NSString *titleForRow = languagesCodes[[_languagePickerView selectedRowInComponent:0]];
+            [tableViewCell.detailTextLabel setText:AMLocalizedString(titleForRow, nil)];
+            [_languagePickerView selectRow:[_languagePickerView selectedRowInComponent:0] inComponent:0 animated:NO];
+        }
+    }
+}
+
+- (void)sendFeedback {
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([MFMailComposeViewController canSendMail]) {
+            MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+            [mailComposeVC setMailComposeDelegate:self];
+            [mailComposeVC setToRecipients:@[@"ios@mega.co.nz"]];
+            
+            NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+            
+            [mailComposeVC setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
+            [self presentViewController:mailComposeVC animated:YES completion:nil];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noEmailAccountConfigured", @"No email account configured")];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
+- (void)showURL:(NSString *)urlString {
+    if ([MEGAReachabilityManager isReachable]) {
+        NSURL *URL = [NSURL URLWithString:urlString];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return languagesCodes.count;
+}
+
+#pragma mark - UIPickerViewDelegate
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *titleForRow = languagesCodes[row];
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(titleForRow, nil)];
+    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:20.0] range:[titleForRow rangeOfString:titleForRow]];
+    return mutableAttributedString;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (row >= languagesCodes.count) {
+        return;
+    }
+    
+    selectedLanguage = languagesCodes[row];
+    [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 4;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSInteger numberOfRows = 0;
+    switch (section) {
+        case 0:
+        case 1:
+        case 3:
+            numberOfRows = 2;
+            break;
+            
+        case 2: {
+            if (_languagePickerViewIndexPath != nil) {
+                numberOfRows = 4;
+            } else {
+                numberOfRows = 3;
+            }
+            break;
+        }
+    }
+    return numberOfRows;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CGFloat heightForRow = 44.0;
+    if (indexPath.section == 2 && indexPath.row == 2 && isLanguagePickerViewShown) {
+        heightForRow = _languagePickerCellRowHeight;
+    }
+    return heightForRow;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = nil;
+    NSString *cellID = @"";
+    
+    switch (indexPath.section) {
+        case 0:
+        case 1:
+            cellID = ((indexPath.row == 0) ? @"settingsRightDetailCellID" : @"settingsBasicCellID");
+            break;
+            
+        case 2: {
+            if (indexPath.row == 0 || indexPath.row == 3) {
+                cellID = @"settingsBasicCellID";
+            } else if (indexPath.row == 1) {
+                cellID = @"settingsRightDetailCellID";
+            }  else if (indexPath.row == 2) {
+                cellID = (isLanguagePickerViewShown ? @"languagePickerCellID" : @"settingsBasicCellID");
+            }
+            break;
+        }
+            
+        case 3:
+            cellID = @"settingsBasicCellID";
+            break;
+    }
+    cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    switch (indexPath.section) {
+        case 0: {
+            if (indexPath.row == 0) {
+                [cell.textLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
+                [cell.detailTextLabel setText:([[CameraUploads syncManager] isCameraUploadsEnabled] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil))];
+            } else if (indexPath.row == 1) {
+                [cell.textLabel setText:AMLocalizedString(@"rubbishBinLabel", nil)];
+            }
+            break;
+        }
+            
+        case 1: {
+            if (indexPath.row == 0) {
+                [cell.textLabel setText:AMLocalizedString(@"passcode", nil)];
+                [cell.detailTextLabel setText:([LTHPasscodeViewController doesPasscodeExist] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil))];
+            } else if (indexPath.row == 1) {
+                [cell.textLabel setText:AMLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account")];
+            }
+            break;
+        }
+            
+        case 2: {
+            if (indexPath.row == 0) {
+                [cell.textLabel setText:AMLocalizedString(@"about", @"")];
+            } else if (indexPath.row == 1) {
+                [cell.textLabel setText:AMLocalizedString(@"language", @"")];
+                [cell.detailTextLabel setText:AMLocalizedString(selectedLanguage, nil)];
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            } else if (indexPath.row == 2) {
+                if (!isLanguagePickerViewShown) {
+                    [cell.textLabel setText:AMLocalizedString(@"sendFeedbackLabel", nil)];
+                }
+            }  else if (indexPath.row == 3) {
+                [cell.textLabel setText:AMLocalizedString(@"sendFeedbackLabel", nil)];
+            }
+            break;
+        }
+            
+        case 3: {
+            if (indexPath.row == 0) {
+                [cell.textLabel setText:AMLocalizedString(@"privacyPolicyLabel", nil)];
+            } else if (indexPath.row == 1) {
+                [cell.textLabel setText:AMLocalizedString(@"termsOfServicesLabel", nil)];
+            }
+            break;
+        }
+    }
+    
+    return cell;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    // Feedback
-    if (indexPath.row == 4) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"feedbackActionSheet_title", @"How are you feeling?")
-                                                                 delegate:self
-                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:AMLocalizedString(@"feedbackActionSheet_happyButton", @"Happy"), AMLocalizedString(@"feedbackActionSheet_confusedButton", @"Confused"), AMLocalizedString(@"feedbackActionSheet_unhappyButton", @"Unhappy"), nil];
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
-    }
-}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != FeedbackFeelingNone) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
-        FeedbackTableViewController *feedbackTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"FeedbackID"];
-        feedbackTableViewController.feeling = buttonIndex;
-        [self.navigationController pushViewController:feedbackTableViewController animated:YES];
-    }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
+    switch (indexPath.section) {
+        case 0: { //Camera Uploads, Rubbish Bin
+            if (indexPath.row == 0) {
+                CameraUploadsTableViewController *cameraUploadsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
+                [self.navigationController pushViewController:cameraUploadsTVC animated:YES];
+                break;
+            } else if (indexPath.row == 1) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+                CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                
+                [self.navigationController pushViewController:cloud animated:YES];
+                cloud.navigationItem.title = AMLocalizedString(@"rubbishBinLabel", @"The name for the rubbish bin label");
+                
+                [cloud setParentNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                [cloud setDisplayMode:DisplayModeRubbishBin];
+                break;
+            }
+        }
+        
+        case 1: { //Pascode, Security Options
+            if (indexPath.row == 0) {
+                PasscodeTableViewController *passcodeTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"PasscodeTableViewControllerID"];
+                [self.navigationController pushViewController:passcodeTVC animated:YES];
+                break;
+            } else if (indexPath.row == 1) {
+                SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
+                [self.navigationController pushViewController:securityOptionsTVC animated:YES];
+                break;
+            }
+        }
+         
+        case 2: { //About, Language, Send Feedback, Rate Us
+            if (indexPath.row == 0) {
+                AboutTableViewController *aboutTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutTableViewControllerID"];
+                [self.navigationController pushViewController:aboutTVC animated:YES];
+                break;
+            } else if (indexPath.row == 1) {
+                [self displayInlineLanguagePickerViewForRowAtIndexPath:indexPath];
+                isLanguagePickerViewShown = !isLanguagePickerViewShown;
+                [self.tableView reloadData];
+                break;
+            } else if (indexPath.row == 2) {
+                if (!isLanguagePickerViewShown) {
+                    [self sendFeedback];
+                    break;
+                }
+            } else if (indexPath.row == 3) {
+                if (isLanguagePickerViewShown) {
+                    [self sendFeedback];
+                }
+                break;
+            }
+        }
+         
+        case 3: { //Privacy Policy, Terms of Service
+            if ([MEGAReachabilityManager isReachable]) {
+                if (indexPath.row == 0) {
+                    [self showURL:@"https://mega.nz/ios_privacy.html"];
+                    break;
+                } else if (indexPath.row == 1) {
+                    [self showURL:@"https://mega.nz/ios_terms.html"];
+                    break;
+                }
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                break;
+            }
         }
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

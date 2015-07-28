@@ -82,10 +82,6 @@
             return AMLocalizedString(@"helpCentreFooter", @"Get support or read popular topics.");
             break;
             
-        case 2:
-            return AMLocalizedString(@"rateUsFooter", @"Oh my, it's full of stars!");
-            break;
-            
         default:
             return nil;
             break;
@@ -97,9 +93,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([MEGAReachabilityManager isReachable]) {
         switch (indexPath.section) {
-            case 0:
-                [self sendFeedback];
-                break;
                 
             case 1:
                 [self openHelpCentre];
@@ -120,23 +113,8 @@
 
 #pragma mark - select row actions
 
-- (void)sendFeedback {
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-        [mailer setMailComposeDelegate:self];
-        [mailer setToRecipients:@[@"ios@mega.co.nz"]];
-        
-        NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-        
-        [mailer setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
-        [self presentViewController:mailer animated:YES completion:nil];
-    } else {
-        [SVProgressHUD showErrorWithStatus:@"No email account configured"];
-    }
-}
-
 - (void)openHelpCentre {
-    NSURL *URL = [NSURL URLWithString:@"https://mega.co.nz/ios_help.html"];
+    NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_help.html"];
     SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
     [self.navigationController pushViewController:webViewController animated:YES];
 }
@@ -144,11 +122,6 @@
 - (void)rateApp {
     NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id706857885?at=10l6dK"];
     [[UIApplication sharedApplication] openURL:url];
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
--(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -42,7 +42,6 @@
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		416625281B66552800AEB579 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625231B66552800AEB579 /* SSKeychain.m */; };
 		416625291B66552800AEB579 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625251B66552800AEB579 /* SSKeychainQuery.m */; };
-		41670E461B2857DD00218C3F /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41670E451B2857DD00218C3F /* LanguageTableViewController.m */; };
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
@@ -54,7 +53,7 @@
 		41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */; };
 		41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */; };
-		41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */; };
+		41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
 		41AC2AC81AE69B11003C09E5 /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2AC71AE69B11003C09E5 /* PieChartView.m */; };
@@ -181,8 +180,6 @@
 		416625231B66552800AEB579 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		416625241B66552800AEB579 /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
 		416625251B66552800AEB579 /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
-		41670E441B2857DD00218C3F /* LanguageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageTableViewController.h; sourceTree = "<group>"; };
-		41670E451B2857DD00218C3F /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageTableViewController.m; sourceTree = "<group>"; };
 		4178409E1AC328A600713F3C /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		4178409F1AC328A600713F3C /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		418072751AA5B9F30078D950 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -200,8 +197,8 @@
 		41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeTableViewController.m; sourceTree = "<group>"; };
 		41A66D0B1AE7A0FE007D7E20 /* ProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewCell.h; sourceTree = "<group>"; };
 		41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewCell.m; sourceTree = "<group>"; };
-		41AA1A1A1AC081C600D32691 /* AdvancedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedTableViewController.h; sourceTree = "<group>"; };
-		41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedTableViewController.m; sourceTree = "<group>"; };
+		41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityOptionsTableViewController.h; sourceTree = "<group>"; };
+		41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityOptionsTableViewController.m; sourceTree = "<group>"; };
 		41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41AC2ABE1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
@@ -378,15 +375,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4122C0DE1B274D1E001CE833 /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				41670E441B2857DD00218C3F /* LanguageTableViewController.h */,
-				41670E451B2857DD00218C3F /* LanguageTableViewController.m */,
-			);
-			path = Language;
-			sourceTree = "<group>";
-		};
 		4122C0E31B274E6A001CE833 /* AMLocalizedString */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,13 +479,11 @@
 		415226821A692ECC00EC7BB6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				4122C0DE1B274D1E001CE833 /* Language */,
-				41A66D031AE78FF9007D7E20 /* Upgrade */,
 				41FC83BC1AAE0559008FA551 /* Camera Uploads */,
 				41B3B82D1AD591A80093A88D /* Passcode */,
 				41AC66441AB1D488003FE8DA /* About */,
 				41ADA9EE1ADE7AB400641BB4 /* Feedback */,
-				41AA1A191AC07EB900D32691 /* Advanced */,
+				41AA1A191AC07EB900D32691 /* Security Options */,
 				415226831A692ECC00EC7BB6 /* Settings.storyboard */,
 				41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */,
 				41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */,
@@ -626,15 +612,15 @@
 			path = Upgrade;
 			sourceTree = "<group>";
 		};
-		41AA1A191AC07EB900D32691 /* Advanced */ = {
+		41AA1A191AC07EB900D32691 /* Security Options */ = {
 			isa = PBXGroup;
 			children = (
-				41AA1A1A1AC081C600D32691 /* AdvancedTableViewController.h */,
-				41AA1A1B1AC081C600D32691 /* AdvancedTableViewController.m */,
+				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
+				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
 				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 			);
-			path = Advanced;
+			path = "Security Options";
 			sourceTree = "<group>";
 		};
 		41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */ = {
@@ -798,6 +784,7 @@
 		E889C9DE1B55652B00ECEFDF /* My Account */ = {
 			isa = PBXGroup;
 			children = (
+				41A66D031AE78FF9007D7E20 /* Upgrade */,
 				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
 				E889C9E01B55657E00ECEFDF /* MyAccountViewController.h */,
 				E889C9E11B55657E00ECEFDF /* MyAccountViewController.m */,
@@ -1011,13 +998,12 @@
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
-				41670E461B2857DD00218C3F /* LanguageTableViewController.m in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				41ADAA141ADE8B8800641BB4 /* SVModalWebViewController.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
-				41AA1A1C1AC081C600D32691 /* AdvancedTableViewController.m in Sources */,
 				416625281B66552800AEB579 /* SSKeychain.m in Sources */,
+				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				41319F591B149D4500696BA8 /* SortFieldsTableViewController.m in Sources */,

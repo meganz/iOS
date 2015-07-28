@@ -23,7 +23,9 @@
 #import "LTHPasscodeViewController.h"
 #import "Helper.h"
 
-@interface PasscodeTableViewController ()
+@interface PasscodeTableViewController () {
+    BOOL wasPasscodeAlreadyEnabled;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *turnOnOffPasscodeLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *turnOnOffPasscodeSwitch;
@@ -48,28 +50,37 @@
     [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
     [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
+    wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.turnOnOffPasscodeSwitch setOn:[LTHPasscodeViewController doesPasscodeExist]];
-    
-    [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-        [self.eraseLocalDataSwitch setOn:YES];
-        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+    BOOL doesPasscodeExist = [LTHPasscodeViewController doesPasscodeExist];
+    [self.turnOnOffPasscodeSwitch setOn:doesPasscodeExist];
+    if (doesPasscodeExist) {
+        [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            [self.eraseLocalDataSwitch setOn:YES];
+            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        } else {
+            [self.eraseLocalDataSwitch setOn:NO];
+            
+            if (!wasPasscodeAlreadyEnabled) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
+                [self.eraseLocalDataSwitch setOn:YES];
+                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                wasPasscodeAlreadyEnabled = YES;
+            }
+        }
+        
     } else {
+        [self.simplePasscodeSwitch setOn:NO];
         [self.eraseLocalDataSwitch setOn:NO];
     }
     
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -79,6 +90,19 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return UIInterfaceOrientationPortrait;
 }
+        
+#pragma mark - Private
+        
+- (void)eraseLocalData {
+    BOOL eraseLocalDataEnaled = [[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled];
+    
+    if (eraseLocalDataEnaled) {
+        [self.eraseLocalDataSwitch setOn:YES];
+        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+    } else {
+        [self.eraseLocalDataSwitch setOn:NO];
+    }
+}
 
 #pragma mark - IBActions
 
@@ -86,13 +110,8 @@
     if (![LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showForEnablingPasscodeInViewController:self asModal:YES];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
-        [self.eraseLocalDataSwitch setOn:YES];
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsEraseAllLocalDataEnabled];
-        [self.eraseLocalDataSwitch setOn:NO];
     }
 }
 
@@ -115,37 +134,51 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([LTHPasscodeViewController doesPasscodeExist]) {
-        return 4;
-    } else {
-        return 1;
-    }
-}
+    BOOL doesPasscodeExist = [LTHPasscodeViewController doesPasscodeExist];
+    [self.changePasscodeLabel setEnabled:doesPasscodeExist];
+    [self.simplePasscodeLabel setEnabled:doesPasscodeExist];
+    [self.simplePasscodeSwitch setEnabled:doesPasscodeExist];
+    [self.eraseLocalDataLabel setEnabled:doesPasscodeExist];
+    [self.eraseLocalDataSwitch setEnabled:doesPasscodeExist];
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 3) {
-        return AMLocalizedString(@"failedAttempstSectionTitle", @"Log out and erase all local data on MEGA’s app after 10 failed passcode attempts");
-    }
-    
-    return nil;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    NSInteger numberOfRows = 0;
+    
+    switch (section) {
+        case 0:
+            numberOfRows = 3;
+            break;
+            
+        case 1:
+            numberOfRows = 1;
+            break;
+    }
+    
+    return numberOfRows;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSString *titleForFooter = @"";
+    
+    if (section == 1) {
+        titleForFooter = AMLocalizedString(@"failedAttempstSectionTitle", @"Log out and erase all local data on MEGA’s app after 10 failed passcode attempts");
+    }
+    
+    return titleForFooter;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 1: {
+    if ((indexPath.section == 0) && (indexPath.row == 1)) {
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
             [[LTHPasscodeViewController sharedUser] showForChangingPasscodeInViewController:self asModal:YES];
-            break;
         }
-            
-        default:
-            break;
     }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
