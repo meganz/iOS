@@ -30,14 +30,15 @@
     int versionCounter;
 }
 
-@property (weak, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *termsOfServicesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sdkVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
 
 @property (weak, nonatomic) IBOutlet UIView *debugView;
 
-@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @end
 
 @implementation AboutTableViewController
@@ -47,22 +48,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.privacyPolicyLabel setText:AMLocalizedString(@"privacyPolicyLabel", nil)];
-    [self.termsOfServicesLabel setText:AMLocalizedString(@"termsOfServicesLabel", nil)];
+    [self.versionLabel setText:AMLocalizedString(@"version", nil)];
+    [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
+    [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = 5.0;
     lpgr.delegate = self;
     [self.versionCell addGestureRecognizer:lpgr];
-    
-    [self.versionLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"aboutLabel", @"The title of about view")];
+    [self.navigationItem setTitle:AMLocalizedString(@"about", nil)];
     
     megaSdkVersionCounter = 0;
     versionCounter = 0;
@@ -81,9 +82,19 @@
     return UIInterfaceOrientationPortrait;
 }
 
-#pragma mark - Gesture recognizer
+#pragma mark - Private
 
--(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
+- (void)acknowledgements {
+    if ([MEGAReachabilityManager isReachable]) {
+        NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
+        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
+        [self.navigationController pushViewController:webViewController animated:YES];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Enter the API_URL (DEBUG /!\\)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
         [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -96,56 +107,60 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    NSInteger numberOfRows = 0;
+    switch (section) {
+        case 0:
+            numberOfRows = 2;
+            break;
+            
+        case 1:
+            numberOfRows = 1;
+            break;
+    }
+    return numberOfRows;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if ([indexPath row] == 0) {
-        megaSdkVersionCounter = 0;
-        versionCounter++;
-        if (versionCounter == 5) {
-            versionCounter = 0;
-            UIAlertView *gApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://g.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-            gApiAlertView.tag = 0;
-            [gApiAlertView show];
+
+    switch (indexPath.section) {
+        case 0: {
+            if ([indexPath row] == 0) {
+                megaSdkVersionCounter = 0;
+                versionCounter++;
+                if (versionCounter == 5) {
+                    versionCounter = 0;
+                    UIAlertView *gApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://g.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+                    gApiAlertView.tag = 0;
+                    [gApiAlertView show];
+                }
+                return;
+            } else if ([indexPath row] == 1) {
+                versionCounter = 0;
+                megaSdkVersionCounter++;
+                if (megaSdkVersionCounter == 5) {
+                    megaSdkVersionCounter = 0;
+                    
+                    UIAlertView *stagingApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://staging.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+                    stagingApiAlertView.tag = 1;
+                    [stagingApiAlertView show];
+                }
+                return;
+            }
+            break;
         }
-        return;
-    }
-    
-    if ([indexPath row] == 1) {
-        versionCounter = 0;
-        megaSdkVersionCounter++;
-        if (megaSdkVersionCounter == 5) {
-            megaSdkVersionCounter = 0;
             
-            UIAlertView *stagingApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://staging.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-            stagingApiAlertView.tag = 1;
-            [stagingApiAlertView show];
+        case 1: {
+            if ([indexPath row] == 0) {
+                [self acknowledgements];
+            }
+            break;
         }
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([indexPath row] == 2) {
-            NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_privacy.html"];
-            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-            [self.navigationController pushViewController:webViewController animated:YES];
-        }
-        
-        if ([indexPath row] == 3) {
-            NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
-            SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-            [self.navigationController pushViewController:webViewController animated:YES];
-        }
-    } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 

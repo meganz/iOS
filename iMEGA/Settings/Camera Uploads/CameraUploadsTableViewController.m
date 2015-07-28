@@ -61,16 +61,17 @@
     [self.navigationItem setTitle:AMLocalizedString(@"cameraUploadsLabel", nil)];
     [self.enableCameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
     
+    [self.useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", nil)];
+    [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
+    [self.onlyWhenChargingLabel setText:AMLocalizedString(@"onlyWhenChargingLabel", nil)];
+    
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [self.enableCameraUploadsSwitch setOn:YES animated:YES];
         
-        [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
         [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
         
-        [self.useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", nil)];
         [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
         
-        [self.onlyWhenChargingLabel setText:AMLocalizedString(@"onlyWhenChargingLabel", nil)];
         [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
@@ -191,54 +192,52 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        return 2;
-    } else {
-        [self.uploadVideosSwitch setOn:NO animated:YES];
-        [self.useCellularConnectionSwitch setOn:NO animated:YES];
-        [self.onlyWhenChargingSwitch setOn:NO animated:YES];
-        return 1;
-    }
+    
+    BOOL isCameraUploadsEnabled = [[CameraUploads syncManager] isCameraUploadsEnabled];
+    [self.uploadVideosLabel setEnabled:isCameraUploadsEnabled];
+    [self.uploadVideosSwitch setEnabled:isCameraUploadsEnabled];
+    [self.useCellularConnectionLabel setEnabled:isCameraUploadsEnabled];
+    [self.useCellularConnectionSwitch setEnabled:isCameraUploadsEnabled];
+    [self.onlyWhenChargingLabel setEnabled:isCameraUploadsEnabled];
+    [self.onlyWhenChargingSwitch setEnabled:isCameraUploadsEnabled];
+    
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger rowPerSection;
+    NSInteger numberOfRows;
 
     switch (section) {
         case 0:
-            rowPerSection = 1;
+            numberOfRows = 1;
             break;
             
         case 1:
-            //TODO: rowPerSection = 3 => Shows upload only when charging option. Valid for uploads in background.
-            rowPerSection = 2;
+            //TODO: numberOfRows = 3 => Shows upload only when charging option. Valid for uploads in background.
+            numberOfRows = 2;
             break;
             
         default:
             break;
     }
     
-    return rowPerSection;
+    return numberOfRows;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                return AMLocalizedString(@"cameraUploadsDisalbe_header", @"When disabled new photos and videos won't be uploaded");
-            }
-            else {
-                return AMLocalizedString(@"cameraUploadsEnable_header", @"Enable camera uploads to automatically uploads your photos and videos to cloud drive");
-            }
-            break;
-            
-        case 1:
-            return AMLocalizedString(@"cameraUploadsOptiones_header", @"Camera uploads options");
-            
-        default:
-            return nil;
-            break;
+    NSString *titleForHeader;
+    if (section == 1) {
+        titleForHeader = [NSString stringWithFormat:@"%@:", AMLocalizedString(@"options", nil)];
     }
+    return titleForHeader;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSString *titleForFooter;
+    if (section == 0) {
+        titleForFooter = AMLocalizedString(@"cameraUploads_footer", @"Footer explicative text to explain the Camera Uploads funtionality");
+    }
+    return titleForFooter;
 }
 
 #pragma mark - UIAlertViewDelegate

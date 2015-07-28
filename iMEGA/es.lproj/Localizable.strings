@@ -14,8 +14,6 @@
 "remove" = "Eliminar";
 "paused" = "En pausa";
 
-/* Title of the app section where you can see your account details */
-"myAccount" = "Mi cuenta";
 "newFolder" = "Nueva carpeta";
 "shareFolder" = "Compartir carpeta";
 "noCamera"="No hay cámara disponible";
@@ -328,37 +326,39 @@
 "filesMovedToRubbishBin" = "%d ficheros movidos a la papelera";
 
 //UITABBARCONTROLLER (5) SETTINGS
-"settingsTitle"="Configuración";
+"settingsTitle" = "Ajustes";
 
-"usedSpaceOfTotalSpace"="%@ de %@";
-"upgradeLabel"="Mejorar cuenta";
-"cameraUploadsLabel"="Subidas de la cámara";
-"applicationLanguageLabel"="Idioma de la aplicación";
-"aboutLabel"="Sobre nosotros";
-"feedbackLabel"="Feedback";
-"advancedLabel"="Avanzado";
-"logoutLabel"="Desconectar";
+"cameraUploadsLabel" = "Subidas de la cámara";
+"rubbishBinLabel" = "Papelera";
 
-"localLabel"="Local";
-"usedSpaceLabel"="Usado";
-"availableLabel"="Disponible";
+/* Title of the Settings section where you can configure security details of your MEGA account */
+"securityOptions" = "Opciones de seguridad";
 
-"feedbackActionSheet_title"="¿Cómo te sientes?";
-"feedbackActionSheet_happyButton"="Féliz";
-"feedbackActionSheet_confusedButton"="Confuso";
-"feedbackActionSheet_unhappyButton"="Inféliz";
+/* Settings section that shows all the info relative to the app */
+"about" = "Acerca de";
+"language" = "Idioma";
 
-/* Expiry date of the account PRO level */
-"expiresOn" = "caduca el %@";
+"sendFeedbackLabel" = "Enviar comentarios";
+/* Text shown when you want to send feedback of the app and you don't have an email account configured on your device */
+"noEmailAccountConfigured" = "No hay una cuenta de email configurada";
+
+"privacyPolicyLabel" = "Politica de Privacidad";
+"termsOfServicesLabel" = "Términos del Servicio";
+"errorLoadingPrivacyPolicyWeb" = "La carga de la web política de privacidad de MEGA ha fallado.";
+
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off" = "No";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on" = "Sí";
 
 //(5) Settings - CameraUploadsTableViewController
-"uploadVideosLabel"="Subir videos";
-"useCellularConnectionLabel"="Usar conexión de datos";
-"onlyWhenChargingLabel"="Subir solo cuando está cargando";
+"uploadVideosLabel" = "Subir videos";
+"useCellularConnectionLabel" = "Usar conexión de datos";
+"onlyWhenChargingLabel" = "Subir solo cuando está cargando";
 
-"cameraUploadsEnable_header"="Activa las subidas de la cámara para subir automáticamente tus fotos y vídeos al disco en la nube";
-"cameraUploadsDisalbe_header"="Cuando se deshabilite, las nuevas fotos y videos no serán subidos";
-"cameraUploadsOptiones_header"="Opciones para la subida de la cámara";
+/* Footer text to explain the Camera Uploads funtionality */
+"cameraUploads_footer" = "Si está activado, se subirán nuevas fotos y vídeos.";
+"options" = "Opciones";
 
 //(5) Settings - LanguageTableViewController
 "applicationLanguage"="Español";
@@ -367,32 +367,33 @@
 "es"="Español";
 
 //(5) Settings - AboutTableViewController
-"privacyPolicyLabel"="Politica de Privacidad";
-"termsOfServicesLabel"="Términos del Servicio";
+"version" = "Versión";
+"acknowledgements" = "Agradecimientos";
 
-"errorLoadingPrivacyPolicyWeb" = "La carga de la web política de privacidad de MEGA ha fallado.";
+//(5) Settings - SecurityOptionsTableViewController
+"masterKey" = "Clave maestra";
+"changePasswordLabel" = "Cambiar contraseña";
 
-//(5) Settings - AdvancedTableViewController
+"exportMasterKey" = "Exportar clave maestra";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage" = "¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Desea continuar?";
 
-"rubbishBinLabel"="Papelera";
-"exportMasterKeyLabel"="Exportar llave maestra";
-"cleanupMasterKeyLabel"="Borrar llave maestra";
-"changePasswordLabel"="Cambiar contraseña";
-"rubbishBinFooter"="Los archivos borrados van a la papelera.";
-"exportMasterKeyFooter"="Exportando la llave Maestra y guardándola en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos.";
-"exportMasterKeyAlertTitle"="Master Key exportada";
-"exportMasterKeyAlertMessage"="Tu Llave Maestra (MasterKey.txt) ha sido exportada a la Carpeta de Documentos. Puedes transferirla conectando tu dispositivo al ordenador y abriendo  iTunes. Aconsejamos qué de ninguna manera envíes este archivo por correo electrónico!";
-"cleanupMasterKeyFooter"="Borrar la llave maestra del sandbox de la aplicación.";
-"cleanupMasterKeyAlertTitle"="Llave maestra borrada";
-"cleanupMasterKeyAlertMessage"="MasterKey.txt fue borrado de la carpeta de documentos.";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter" = "Exportando la clave maestra y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
 
-//Remove nodes from rubbish bin
+"masterKeyExported" = "Master Key exportada";
+"masterKeyExported_alertMessage" = "Tu clave maestra (MasterKey.txt) ha sido guardada en este dispositivo. Conéctate a tu ordenador y abre iTunes para poder acceder a ella en los documentos de MEGA. ¡Aconsejamos mantener este fichero seguro!";
+
+"masterKeyRemoved" = "Llave maestra borrada";
+"masterKeyRemoved_alertMessage" = "MasterKey.txt fue borrado de la carpeta de documentos.";
+
+//(5) Settings - Rubbish Bin
 "removeNodeFromRubbishBinTitle" = "Confirmar";
-"removeNodeFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente 1 archivos de la Papelera. ¿Seguro que quieres seguir con esto? (Está acción no se podrá deshacer.)";
-"removeMultipleNodesFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente %d archivos de la Papelera. ¿Seguro que quieres seguir con esto? (Está acción no se podrá deshacer.)";
+"removeNodeFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeMultipleNodesFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
 
-"fileRemovedFromRubbishBin" = "1 fichero borrado de MEGA";
-"filesRemovedFromRubbishBin" = "%d ficheros borrados de MEGA";
+"fileRemovedFromRubbishBin" = "1 archivo borrado de MEGA";
+"filesRemovedFromRubbishBin" = "%d archivos borrados de MEGA";
 
 //(5) Settings - ChangePasswordViewController
 "passwordChanged"="Tu contraseña ha sido cambiada.";
@@ -403,30 +404,17 @@
 "simplePasscodeLabel"="Código de acceso simple";
 "eraseAllLocalDataLabel"="Borrar los datos locales";
 
-"failedAttempstSectionTitle"="Se cerrará la sesión y se borrarán los datos locales de la aplicación después de 10 intentos fallidos";
+"failedAttempstSectionTitle"="Cerrar sesión y se borrar los datos locales después de 10 intentos fallidos";
 
 //(5) Settings - FeedbackTableViewController
-"sendFeedbackLabel"="Enviar comentarios";
 "helpCentreLabel"="Centro de ayuda";
 "rateUsLabel"="¡Vótenos!";
 
-"sendFeedbackFooter"="Ponte en contacto con el equipo de asistencia técnica a través de correo electrónico. Todos los correos electrónicos se leen pero dado el gran número de solicitudes es posible que no vayamos a responder a cada uno por separado.";
 "helpCentreFooter"="Obtén asistencia técnica o lee los temas más populares.";
-"rateUsFooter"="Oh, ¡no puedes añadir más estrellas!";
-
-//(5) Settings - UpgradeTableViewController
-"upgradeAccount"="Mejorar cuenta";
-
-"productSpace"="Almacenamiento %@";
-"productBandwidth"="Ancho de banda %@";
-"productPricePerMonth"="%.2f %@ al mes";
-"productMonthlyPrice"="Mensualmente (%.2f %@)";
-"productYearlyPrice"="Anualmente (%.2f %@)";
-
-"chooseDuration"="Elegir duracción";
 
 // HUD messages
-"logout" = "Cerrando sesión...";
+/* String shown when you are logging out of your account. */
+"loggingOut" = "Cerrando sesión";
 
 //(6) UITABBARCONTROLLER - TRANSFERS
 "transfers"="Transferencias";
@@ -446,6 +434,22 @@
 "uploadInUppercaseTransfers"="las transferencias de SUBIDA";
 "downloadInUppercaseTransfers"="las transferencias de DESCARGA";
 
+//(7)UITABBARCONTROLLER - MY ACCOUNT
+/* Title of the app section where you can see your account details */
+"myAccount" = "Mi cuenta";
+
+"logoutLabel" = "Desconectar";
+
+"localLabel" = "Local";
+"usedSpaceLabel" = "Usado";
+"availableLabel" = "Disponible";
+
+/* Expiry date of the account PRO level */
+"expiresOn" = "caduca el %@";
+
+"restorePurchases" = "Restaurar compras";
+"purchasesHistory" = "Historial de compras";
+
 //UsageViewController
 "incomingShares" = "Carpetas compartidas";
 
@@ -455,3 +459,14 @@
 "used of %@" = "usado de %@";
 /* Sentece showed under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@" = "disponible de %@";
+
+//UpgradeTableViewController
+"upgradeAccount" = "Mejorar cuenta";
+
+"productSpace" = "Almacenamiento %@";
+"productBandwidth" = "Ancho de banda %@";
+"productPricePerMonth" = "%.2f %@ al mes";
+"productMonthlyPrice" = "Mensualmente (%.2f %@)";
+"productYearlyPrice" = "Anualmente (%.2f %@)";
+
+"chooseDuration" = "Elegir duracción";

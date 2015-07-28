@@ -1,6 +1,6 @@
 /**
- * @file LanguageTableViewController.h
- * @brief View controller that allow change the app language on the fly
+ * @file SecurityOptionsTableViewController.h
+ * @brief View controller that shows advanved settings
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -21,6 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LanguageTableViewController : UITableViewController
+@interface SecurityOptionsTableViewController : UITableViewController
 
 @end
