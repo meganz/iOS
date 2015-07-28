@@ -97,6 +97,7 @@
     NSString *sessionV3 = [SSKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     if (sessionV2) {
+        // Save session for v3 and delete the previous one
         sessionV3 = [sessionV2 base64EncodedStringWithOptions:0];
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
@@ -107,6 +108,20 @@
         
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        // Rename attributes (thumbnails and previews)- handle to base64Handle
+        NSString *thumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+        [self renameAttributesAtPath:thumbsPath];
+        
+        NSString *previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+        [self renameAttributesAtPath:previewsPath];
+        
+        // Camera uploads settings
+        [self cameraUploadsSettingsCompatibility];
+        
+        // Remove unused objects from NSUserDefaults
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"autologin"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"asked"];
     }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
@@ -651,8 +666,60 @@
 
 #pragma mark - Compatibility with v2
 
-- (void)compatibilityWithV2 {
+// Rename thumbnails and previous to base64
+- (void)renameAttributesAtPath:(NSString *)path {
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+    
+    for (NSInteger count = 0; count < [directoryContent count]; count++) {
+        NSString *attributeFilename = [directoryContent objectAtIndex:count];
+        NSString *base64Filename = [MEGASdk base64HandleForHandle:[attributeFilename longLongValue]];
+        
+        NSString *attributePath = [path stringByAppendingPathComponent:attributeFilename];
+        NSString *newAttributePath = [path stringByAppendingPathComponent:base64Filename];
+        [[NSFileManager defaultManager] moveItemAtPath:attributePath toPath:newAttributePath error:nil];
+    }
+}
 
+- (void)cameraUploadsSettingsCompatibility {
+    // PhotoSync old location of completed uploads
+    NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:oldCompleted]) {
+        [[NSFileManager defaultManager] removeItemAtPath:oldCompleted error:nil];
+    }
+    
+    // PhotoSync v2 location of completed uploads
+    NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:v2Completed]) {
+        [[NSFileManager defaultManager] removeItemAtPath:v2Completed error:nil];
+    }
+    
+    // PhotoSync settings
+    NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
+    NSString *v2PspPath  = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
+    
+    // check for file in previous location
+    if ([[NSFileManager defaultManager] fileExistsAtPath:oldPspPath]) {
+        [[NSFileManager defaultManager] moveItemAtPath:oldPspPath toPath:v2PspPath error:nil];
+    }
+    
+    NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
+    
+    if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsCameraUploadsEnabled];
+        
+        if ([cameraUploadsSettings objectForKey:@"cellEnabled"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUseCellularConnectionEnabled];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUseCellularConnectionEnabled];
+        }
+        if ([cameraUploadsSettings objectForKey:@"videoEnabled"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUploadVideosEnabled];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUploadVideosEnabled];
+        }
+        
+        [[NSFileManager defaultManager] removeItemAtPath:v2PspPath error:nil];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
