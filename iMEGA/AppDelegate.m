@@ -122,6 +122,11 @@
         // Remove unused objects from NSUserDefaults
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"autologin"];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"asked"];
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"erase"]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
