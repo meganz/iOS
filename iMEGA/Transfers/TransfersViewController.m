@@ -157,6 +157,10 @@
         
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case 0: { //All
+                if (self.allActiveTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.allActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 if ([transfer type] == MEGATransferTypeDownload) {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
@@ -167,12 +171,20 @@
             }
                 
             case 1: { //Downloads
+                if (self.downloadActiveTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.downloadActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
                 break;
             }
                 
             case 2: { //Uploads
+                if (self.uploadActiveTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.uploadActiveTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
                 break;
@@ -194,6 +206,10 @@
         
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case 0: { //All
+                if (self.allQueuedTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.allQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 if ([transfer type] == MEGATransferTypeDownload) {
                     [self.allTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
@@ -204,12 +220,20 @@
             }
                 
             case 1: { //Downloads
+                if (self.downloadQueuedTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.downloadQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.downloadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[self keyForTransfer:transfer]];
                 break;
             }
                 
             case 2: { //Uploads
+                if (self.uploadQueuedTransfersMutableDictionary.count == 0) {
+                    break;
+                }
+                
                 transfer = [[self.uploadQueuedTransfersMutableDictionary allValues] objectAtIndex:indexPath.row];
                 [self.uploadTransfersIndexPathMutableDictionary setObject:indexPath forKey:[NSNumber numberWithInteger:transfer.tag]];
                 break;

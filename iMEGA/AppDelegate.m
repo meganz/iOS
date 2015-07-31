@@ -794,7 +794,7 @@
         }
             
         case MEGARequestTypeLogout:
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"logout", @"Logout...") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"%@...", AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")]];
             break;
             
         default:

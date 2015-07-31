@@ -1274,7 +1274,11 @@
             if ([self.parentNode type] == MEGANodeTypeRoot) {
                 [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
             } else {
-                [self.navigationItem setTitle:[self.parentNode name]];
+                if (!self.parentNode) {
+                    [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
+                } else {
+                    [self.navigationItem setTitle:[self.parentNode name]];
+                }
             }
             
             //Sort configuration by default is "default ascending"

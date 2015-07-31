@@ -434,7 +434,7 @@
             [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
             [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
             [moviePlayerViewController.moviePlayer play];
-        } else {
+        } else if (isDocument(itemNameString.pathExtension)) {
             [Helper setPathForPreviewDocument:itemPath];
             
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
