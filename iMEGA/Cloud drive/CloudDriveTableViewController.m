@@ -169,7 +169,7 @@
     
     [self toolbarActionsForShareType:shareType];
 
-    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -177,7 +177,7 @@
         }
     }
     
-    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
@@ -298,9 +298,11 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
         
-        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:node.base64Handle];
+        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:node];
+        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
         
-        if (offlineNode != nil) {
+        // Check fingerprint, if we download a file with NULL fingerprint, all folders are marked as downloaded because the fingerprinf for folders are NULL
+        if (offlineNode && fingerprint) {
             [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
         } else {
             [cell.downloadedImageView setImage:nil];
@@ -331,7 +333,7 @@
     if ([node type] == MEGANodeTypeFile) {
         
         // check if the thumbnail exist in the cache directory
-        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
         
         if (!fileExists) {
@@ -387,8 +389,8 @@
                                           NSString *nodeCRC = [[MEGASdkManager sharedMEGASdk] CRCForNode:node];
                                           
                                           if ([localCRC isEqualToString:nodeCRC]) {
-                                              [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
-                                              [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+                                              [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
+                                              [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
                                               
                                               dispatch_async(dispatch_get_main_queue(), ^(){
                                                   NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:[node base64Handle]];
@@ -403,11 +405,11 @@
                                               }
                                               
                                               if (![node hasThumbnail]) {
-                                                  [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
+                                                  [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
                                               }
                                               
                                               if (![node hasPreview]) {
-                                                  [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+                                                  [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
                                               }
                                           } else {
                                               [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
@@ -1790,7 +1792,7 @@
             for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {
                 if ([request nodeHandle] == [ntvc nodeHandle]) {
                     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
@@ -1801,7 +1803,7 @@
             for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
                 if ([request nodeHandle] == [ntvc nodeHandle]) {
                     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];

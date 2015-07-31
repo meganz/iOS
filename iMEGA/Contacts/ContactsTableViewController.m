@@ -278,7 +278,7 @@
     
     cell.nameLabel.text = [user email];
     
-    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbs"];
+    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
     if (fileExists) {
@@ -582,7 +582,7 @@
                 if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {
                     NSString *fileName = [request email];                    
                     NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                    NSString *avatarFilePath = [cacheDirectory stringByAppendingPathComponent:@"thumbs"];
+                    NSString *avatarFilePath = [cacheDirectory stringByAppendingPathComponent:@"thumbnailsV3"];
                     avatarFilePath = [avatarFilePath stringByAppendingPathComponent:fileName];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {

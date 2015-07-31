@@ -109,7 +109,7 @@
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
         if ([self.node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbs"];
+            NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             if (!thumbnailExists) {
                 [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
@@ -338,7 +338,7 @@
             return cell;
         } else {
             
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:self.node.base64Handle];
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
             
             if (offlineNode != nil) {
                 [cell.imageView setImage:[UIImage imageNamed:@"downloaded"]];
@@ -635,7 +635,7 @@
         case MEGARequestTypeGetAttrFile: {
             if ([request nodeHandle] == [self.node handle]) {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+                NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                 BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                 if (fileExists) {
                     [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
