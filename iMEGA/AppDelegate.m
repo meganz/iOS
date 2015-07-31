@@ -104,20 +104,11 @@
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
         [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+        
+        [self removeOldStateCache];
         
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        // Rename attributes (thumbnails and previews)- handle to base64Handle
-        NSString *thumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-        [self renameAttributesAtPath:thumbsPath];
-        
-        NSString *previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-        [self renameAttributesAtPath:previewsPath];
-        
-        // Camera uploads settings
-        [self cameraUploadsSettingsCompatibility];
         
         // Remove unused objects from NSUserDefaults
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"autologin"];
@@ -127,6 +118,36 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
         }
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        // Camera uploads settings
+        [self cameraUploadsSettingsCompatibility];
+        
+        [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+    }
+
+    // Rename attributes (thumbnails and previews)- handle to base64Handle
+    NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+    if ([[NSFileManager defaultManager]  fileExistsAtPath:v2ThumbsPath]) {
+        NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSError *error;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+            }
+        }
+        [self renameAttributesAtPath:v2ThumbsPath v3Path:v3ThumbsPath];
+    }
+    
+    NSString *v2previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+    if ([[NSFileManager defaultManager]  fileExistsAtPath:v2previewsPath]) {
+        NSString *v3PreviewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+        NSError *error;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
+            if (![[NSFileManager defaultManager] createDirectoryAtPath:v3PreviewsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+            }
+        }
+        [self renameAttributesAtPath:v2previewsPath v3Path:v3PreviewsPath];
     }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
@@ -672,16 +693,37 @@
 #pragma mark - Compatibility with v2
 
 // Rename thumbnails and previous to base64
-- (void)renameAttributesAtPath:(NSString *)path {
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+- (void)renameAttributesAtPath:(NSString *)v2Path v3Path:(NSString *)v3Path {
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:v2Path error:nil];
     
     for (NSInteger count = 0; count < [directoryContent count]; count++) {
         NSString *attributeFilename = [directoryContent objectAtIndex:count];
         NSString *base64Filename = [MEGASdk base64HandleForHandle:[attributeFilename longLongValue]];
         
-        NSString *attributePath = [path stringByAppendingPathComponent:attributeFilename];
-        NSString *newAttributePath = [path stringByAppendingPathComponent:base64Filename];
+        NSString *attributePath = [v2Path stringByAppendingPathComponent:attributeFilename];
+        
+        if ([base64Filename isEqualToString:@"AAAAAAAA"]) {
+            if (isImage(attributePath.pathExtension)) {
+                if ([[NSFileManager defaultManager] fileExistsAtPath:attributePath]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:attributePath error:nil];
+                }
+            } else {
+                NSString *newAttributePath = [v3Path stringByAppendingPathComponent:attributeFilename];
+                [[NSFileManager defaultManager] moveItemAtPath:attributePath toPath:newAttributePath error:nil];
+            }
+            continue;
+        }
+        
+        NSString *newAttributePath = [v3Path stringByAppendingPathComponent:base64Filename];
         [[NSFileManager defaultManager] moveItemAtPath:attributePath toPath:newAttributePath error:nil];
+    }
+    
+    directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:v2Path error:nil];
+    
+    if ([directoryContent count] == 0) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:v2Path]) {
+            [[NSFileManager defaultManager] removeItemAtPath:v2Path error:nil];
+        }
     }
 }
 
@@ -724,6 +766,20 @@
         }
         
         [[NSFileManager defaultManager] removeItemAtPath:v2PspPath error:nil];
+    }
+}
+
+- (void)removeOldStateCache {
+    NSString *libraryDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:libraryDirectory error:nil];
+    
+    for (NSString *item in directoryContent) {
+        if([item.pathExtension isEqualToString:@"db"]) {
+            NSString *stateCachePath = [libraryDirectory stringByAppendingPathComponent:item];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:stateCachePath]) {
+                [[NSFileManager defaultManager] removeItemAtPath:stateCachePath error:nil];
+            }
+        }
     }
 }
 
@@ -905,10 +961,15 @@
     }
     
     //Delete transfer from dictionary file even if we get an error
-    NSString *base64Handle;
+    MEGANode *node = nil;
     if ([transfer type] == MEGATransferTypeDownload) {
-        base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        [[Helper downloadingNodes] removeObjectForKey:base64Handle];
+        node = [api nodeForHandle:transfer.nodeHandle];
+        if (!node) {
+            node = [transfer publicNode];
+        }
+        if (node) {
+            [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
+        }
     }
     
     if ([error type]) {
@@ -916,26 +977,22 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:transfer.path]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] insertOfflineNode];
-            [offlineNode setBase64Handle:base64Handle];
-            [offlineNode setParentBase64Handle:[[[MEGASdkManager sharedMEGASdk] parentNodeForNode:[[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle]] base64Handle]];
-            [offlineNode setLocalPath:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
-            [[MEGAStore shareInstance] saveContext];
+            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
         }
         
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
             
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
             if (!thumbnailExists) {
                 [api createThumbnail:[transfer path] destinatioPath:thumbnailFilePath];
             }
             
-            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"];
+            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
             BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
             
             if (!previewExists) {
@@ -947,8 +1004,8 @@
     if ([transfer type] == MEGATransferTypeUpload) {
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
-            [api createPreview:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+            [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
+            [api createPreview:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
         }
     }
 }

@@ -88,11 +88,15 @@ static MEGAStore *_megaStore = nil;
         return persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationLibraryDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
+    NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
     
     NSError *error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption : @YES,
+                              NSInferMappingModelAutomaticallyOption : @YES
+                              };
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -100,8 +104,8 @@ static MEGAStore *_megaStore = nil;
     return persistentStoreCoordinator;
 }
 
-- (NSURL *)applicationLibraryDirectory {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
+- (NSURL *)applicationSupportDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 - (void)saveContext {
@@ -117,11 +121,15 @@ static MEGAStore *_megaStore = nil;
 
 #pragma mark - MOOfflineNode entity
 
-- (MOOfflineNode *)insertOfflineNode {
-    MOOfflineNode *offlineNode;
+- (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path {
+    MOOfflineNode *offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+
+    [offlineNode setBase64Handle:node.base64Handle];
+    [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
+    [offlineNode setLocalPath:path];
+    [offlineNode setFingerprint:[api fingerprintForNode:node]];
     
-    offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
-    return offlineNode;
+     [self saveContext];
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
@@ -152,6 +160,24 @@ static MEGAStore *_megaStore = nil;
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
                               @"base64Handle == %@", base64Handle];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+}
+
+- (MOOfflineNode *)fetchOfflineNodeWithFingerprint:(NSString *)fingerprint {
+    NSEntityDescription *entityDescription = [NSEntityDescription
+                                              entityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"fingerprint == %@", fingerprint];
     [request setPredicate:predicate];
     
     NSError *error;

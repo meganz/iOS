@@ -36,6 +36,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAStore.h"
 
 @interface FileLinkViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate>
 
@@ -146,6 +147,11 @@
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[Helper pathForPreviewDocument] error:&error];
         if (!success || error) {
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        } else {
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:path]];
+            if (offlineNode) {
+                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+            }
         }
     }
 }

@@ -563,8 +563,16 @@ static NSInteger linkNodeOption;
     NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
-            [api startDownloadNode:node localPath:absoluteFilePath];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {            
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
+            
+            if (offlineNodeExist) {
+                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
+                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
+            } else {
+                [api startDownloadNode:node localPath:absoluteFilePath];
+            }
         } else {
 //            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
         }
@@ -574,15 +582,6 @@ static NSInteger linkNodeOption;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
             if (error != nil) {
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
-            } else {
-                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:node.base64Handle];
-                if (!offlineNode) {
-                    MOOfflineNode *offNode = [[MEGAStore shareInstance] insertOfflineNode];
-                    [offNode setBase64Handle:node.base64Handle];
-                    [offNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
-                    [offNode setLocalPath:[[Helper pathRelativeToOfflineDirectory:[Helper pathRelativeToOfflineDirectory:absoluteFilePath]] decomposedStringWithCanonicalMapping]];
-                    [[MEGAStore shareInstance] saveContext];
-                }
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];
@@ -673,13 +672,13 @@ static NSInteger linkNodeOption;
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
     NSError *error = nil;
     
-    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
     if (!success || error) {
         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
     }
     
-    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
     if (!success || error) {
         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];

@@ -299,13 +299,28 @@
         NSString *extension = [[nameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
         
+        if (!handleString) {
+            NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
+            if (fpLocal) {
+                MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fpLocal];
+                if (node) {
+                    handleString = [node base64Handle];
+                    [[MEGAStore shareInstance] insertOfflineNode:node api:[MEGASdkManager sharedMEGASdk] path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
+                }
+            }
+        }
+        
         if (isImage(nameString.pathExtension)) {
             [cell.thumbnailImageView.layer setCornerRadius:4];
             [cell.thumbnailImageView.layer setMasksToBounds:YES];
             
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbs"];
+            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
+            
+            if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+                [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
+            }
             
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage == nil) {
@@ -350,7 +365,7 @@
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
         offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
-        if (offlineNode != nil) {
+        if (offlineNode) {
             [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
         }
         if (!success || error) {
@@ -360,12 +375,12 @@
             if (isDirectory) {
                 for (NSString *localPathAux in offlinePathsOnFolderArray) {
                     offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                    if (offlineNode != nil) {
+                    if (offlineNode) {
                         [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
                     }
                 }
             } else {
-                if (offlineNode != nil) {
+                if (offlineNode) {
                     [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
                 }
             }

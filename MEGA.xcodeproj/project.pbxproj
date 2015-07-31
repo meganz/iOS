@@ -247,6 +247,7 @@
 		41B2D4241A6D925F0002E29E /* TourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourViewController.m; sourceTree = "<group>"; };
 		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
 		41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasscodeTableViewController.m; sourceTree = "<group>"; };
+		41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 2.xcdatamodel"; sourceTree = "<group>"; };
 		41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MNZCategory.h"; sourceTree = "<group>"; };
 		41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MNZCategory.m"; sourceTree = "<group>"; };
 		41BADDAE1A8E28FD008408B3 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
@@ -1230,9 +1231,10 @@
 		4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */,
 				4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */,
 			);
-			currentVersion = 4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */;
+			currentVersion = 41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */;
 			path = MEGACD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -424,7 +424,7 @@
     node = [array objectAtIndex:indexPath.row];
     
     // check if the thumbnail exist in the cache directory
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
     
     // check if the photo exist in photo library
@@ -479,8 +479,8 @@
                                       NSString *nodeCRC = [[MEGASdkManager sharedMEGASdk] CRCForNode:node];
                                       
                                       if ([localCRC isEqualToString:nodeCRC]) {
-                                          [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"]];
-                                          [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"]];
+                                          [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
+                                          [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
                                           
                                           dispatch_async(dispatch_get_main_queue(), ^(){
                                               [self.photosCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]]];
@@ -492,11 +492,11 @@
                                           }
                                           
                                           if (![node hasThumbnail]) {
-                                              [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"] delegate:self];
+                                              [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"] delegate:self];
                                           }
                                           
                                           if (![node hasPreview]) {
-                                              [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previews"] delegate:self];
+                                              [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"] delegate:self];
                                           }
                                       } else {
                                           [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
@@ -822,7 +822,7 @@
             for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
                 if ([request nodeHandle] == [pcvc nodeHandle]) {
                     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbs"];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [pcvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];

@@ -26,5 +26,6 @@
 @dynamic base64Handle;
 @dynamic localPath;
 @dynamic parentBase64Handle;
+@dynamic fingerprint;
 
 @end

@@ -58,7 +58,7 @@
 #pragma mark - MWPhoto Protocol Methods
 
 - (UIImage *)underlyingImage {
-    self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"previews"];
+    self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"previewsV3"];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
         return nil;
     }
@@ -147,7 +147,9 @@
     [[NSFileManager defaultManager] removeItemAtPath:[transfer path] error:nil];
     
     MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:transfer.path]];
-    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+    if (offlineNode) {
+        [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+    }
 }
 
 @end
