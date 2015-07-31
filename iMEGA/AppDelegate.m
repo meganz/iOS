@@ -105,6 +105,8 @@
         
         [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
         
+        [self languageCompatibility];
+        
         [self removeOldStateCache];
         
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
@@ -781,6 +783,14 @@
                 [[NSFileManager defaultManager] removeItemAtPath:stateCachePath error:nil];
             }
         }
+    }
+}
+
+- (void)languageCompatibility {
+    NSString *v2Language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0];
+    
+    if (![v2Language isEqualToString:@"en"] && ![v2Language isEqualToString:@"es"]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
     }
 }
 
