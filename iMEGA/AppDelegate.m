@@ -324,6 +324,7 @@
 - (void)setupAppearance {    
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
+    [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
     
@@ -360,13 +361,13 @@
         case 1: { //IMPORT
             MEGANode *node = [Helper linkNode];
             if ([node type] == MEGANodeTypeFile) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
-                [browserVC setIsPublicNode:YES];
+                [browserVC setBrowserAction:BrowserActionImport];
             }
             break;
         }
@@ -819,7 +820,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiESid) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"loggetOutTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alertView show];
             [Helper logout];
         }

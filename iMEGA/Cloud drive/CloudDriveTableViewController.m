@@ -1572,14 +1572,14 @@
 }
 
 - (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
-    MEGANavigationController *mcnc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
-    [self presentViewController:mcnc animated:YES completion:nil];
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
     
-    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
-    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
     if (lowShareType == MEGAShareTypeAccessOwner) {
-        [mcnvc setBrowseAction:BrowseActionCopyAndMove];
+        [browserVC setBrowserAction:BrowserActionMove];
     }
     
     if (isSearchTableViewDisplay) {
@@ -1856,7 +1856,7 @@
             if (remainingOperations == 0) {
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
                 
                 if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
                     activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;

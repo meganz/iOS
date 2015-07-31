@@ -23,9 +23,11 @@
 
 #import "MEGASdkManager.h"
 
-typedef NS_ENUM(NSUInteger, BrowseAction) {
-    BrowseActionCopy = 0,
-    BrowseActionCopyAndMove
+typedef NS_ENUM(NSUInteger, BrowserAction) {
+    BrowserActionCopy = 0,
+    BrowserActionMove,
+    BrowserActionImport,
+    BrowserActionSelectFolderToShare
 };
 
 @interface BrowserViewController : UIViewController <MEGADelegate, UIActionSheetDelegate>
@@ -34,7 +36,6 @@ typedef NS_ENUM(NSUInteger, BrowseAction) {
 @property (nonatomic, strong) NSArray *selectedNodesArray;
 @property (nonatomic, strong) NSArray *selectedUsersArray;
 
-@property (nonatomic) BOOL isPublicNode;
-@property (nonatomic) BrowseAction browseAction;
+@property (nonatomic) BrowserAction browserAction;
 
 @end

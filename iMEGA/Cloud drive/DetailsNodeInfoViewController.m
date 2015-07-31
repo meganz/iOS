@@ -25,12 +25,13 @@
 
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
+#import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 
 #import "MEGAStore.h"
 
-@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
+@interface DetailsNodeInfoViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
@@ -39,10 +40,12 @@
     MEGAShareType accessType;
 }
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *modificationTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *foldersFilesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -54,6 +57,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
     
     accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
@@ -71,14 +76,8 @@
                 actions = 4; //Download, copy, rename and leave (contacts) or delete (cloud drive)
             break;
             
-        case MEGAShareTypeAccessOwner:
-            //Cloud drive
-            if (self.displayMode == DisplayModeCloudDrive) {
-                actions = 5; //Download, get link, *share*, move & copy, rename, move to rubbish bin
-            } else {
-                //Rubbish bin
-                actions = 4; //Download, move or copy, rename, remove
-            }
+        case MEGAShareTypeAccessOwner: //Cloud Drive & Rubbish Bin
+            actions = 5; //Download, move, copy, rename and move to rubbish bin or remove
             break;
             
         default:
@@ -108,6 +107,7 @@
 
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
+        
         if ([self.node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -119,11 +119,19 @@
         } else {
             [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
         }
+        
+        [_foldersFilesLabel setHidden:YES];
+        
     } else if ([self.node type] == MEGANodeTypeFolder) {
+        
         [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
+        
+        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:_node];
+        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:_node];
+        
+        NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
+        [_foldersFilesLabel setText:filesAndFolders];
     }
-    
-    self.nameLabel.text = [self.node name];
     
     struct tm *timeinfo;
     char buffer[80];
@@ -137,15 +145,15 @@
     
     strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
-    self.modificationTimeLabel.text = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    [self setTitle:[self.node name]];
     
-    if ([self.node isFile]) {
-        self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    } else {
-        self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdk] sizeForNode:self.node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    }
+    [self.nameLabel setText:[self.node name]];
     
-    self.title = [self.node name];
+    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    NSString *size = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdk] sizeForNode:self.node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
+    
+    [_infoLabel setText:sizeAndDate];
     
     [self.tableView reloadData];
 }
@@ -173,16 +181,15 @@
     }
 }
 
-- (void)copyAndMove:(BOOL)move {
+- (void)browserWithAction:(NSInteger)browserAction {
     if ([MEGAReachabilityManager isReachable]) {
-        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-        
-        move ? [browserVC setBrowseAction:BrowseActionCopyAndMove] : [browserVC setBrowseAction:BrowseActionCopy];
+        [browserVC setBrowserAction:browserAction]; //
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
@@ -230,6 +237,96 @@
         }
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
+- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
+    if (files > 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
+    }
+    
+    if (files == 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
+    }
+    
+    if (!files && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
+    }
+    
+    if (!files && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
+    }
+    
+    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+}
+
+#pragma mark - IBActions
+
+- (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
+    if ([self.node type] == MEGANodeTypeFolder) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:AMLocalizedString(@"shareFolder", nil), AMLocalizedString(@"getLink", nil), nil];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            [actionSheet showFromBarButtonItem:_shareBarButtonItem animated:YES];
+        } else {
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        }
+    } else if ([self.node type] == MEGANodeTypeFile) {
+        [self getLink];
+    }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+            
+        case 0: { //Share folder
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            [contactsVC setNode:self.node];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [self presentViewController:navigationController animated:YES completion:nil];
+            }];
+            break;
+        }
+            
+        case 1: { //Get link
+            [self getLink];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+//For iOS 7 UIActionSheet color
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:megaRed forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -370,7 +467,7 @@
             switch (indexPath.row) {
                 case 1:
                     [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
-                    [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
+                    [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
                     break;
                 
                 case 2:
@@ -395,13 +492,13 @@
             if (self.displayMode == DisplayModeCloudDrive) {
                 switch (indexPath.row) {
                     case 1:
-                        [cell.imageView setImage:[UIImage imageNamed:@"getLink"]];
-                        [cell.textLabel setText:AMLocalizedString(@"getLink", @"Get link")];
+                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
+                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
                         break;
                         
                     case 2:
-                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
-                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
+                        [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
+                        [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
                         break;
                         
                     case 3:
@@ -448,7 +545,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (indexPath.row) {
-        case 0: {
+        case 0: { //Save for Offline
             if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
                 if (!cancelDownloadAlertView) {
                     cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"downloading", @"Downloading...")
@@ -470,15 +567,11 @@
                 case MEGAShareTypeAccessRead:
                 case MEGAShareTypeAccessReadWrite:
                 case MEGAShareTypeAccessFull:
-                    [self copyAndMove:NO];
+                    [self browserWithAction:BrowserActionCopy];
                     break;
                     
                 case MEGAShareTypeAccessOwner:
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [self getLink];
-                    } else {
-                        [self copyAndMove:YES];
-                    }
+                    [self browserWithAction:BrowserActionMove];
                     break;
                     
                 default:
@@ -486,7 +579,7 @@
             }
             break;
             
-        case 2:
+        case 2: //Copy
             switch (accessType) {
                 case MEGAShareTypeAccessRead:
                 case MEGAShareTypeAccessReadWrite:
@@ -498,11 +591,7 @@
                     break;
                     
                 case MEGAShareTypeAccessOwner:
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [self copyAndMove:YES];
-                    } else {
-                        [self rename];
-                    }
+                    [self browserWithAction:BrowserActionCopy];
                     break;
                     
                 default:
@@ -510,18 +599,14 @@
             }
             break;
             
-        case 3:
+        case 3: //Rename
             switch (accessType) {
                 case MEGAShareTypeAccessFull:
                     [self delete];
                     break;
                     
                 case MEGAShareTypeAccessOwner:
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [self rename];
-                    } else {
-                        [self delete];
-                    }
+                    [self rename];
                     break;
                     
                 default:
@@ -529,7 +614,7 @@
             }
             break;
             
-        case 4:
+        case 4: //Move to the Rubbish Bin / Remove
             [self delete];
             break;
     }
@@ -654,11 +739,10 @@
             
             NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
-            activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+            activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
             
             if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                activityVC.popoverPresentationController.sourceView = self.view;
-                activityVC.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width / 2, self.view.frame.size.height / 4, 0, 0);
+                [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
             }
             
             [self presentViewController:activityVC animated:YES completion:nil];
