@@ -175,14 +175,13 @@
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([self.node type] == MEGANodeTypeFile) {
-                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"moveNodeNav"];
+                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                     [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
                     
                     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                     browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
                     browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-                    
-                    [browserVC setIsPublicNode:YES];
+                    [browserVC setBrowserAction:BrowserActionImport];
                 }
             }];
         } else {

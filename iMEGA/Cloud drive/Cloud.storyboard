@@ -14,6 +14,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="scaleToFill" id="9hw-Ke-gwX">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -321,43 +322,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNO-Cb-1Vd">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="133"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r08-az-XN8">
-                                        <rect key="frame" x="123" y="58" width="469" height="18"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="18" id="0nD-iB-s3g"/>
-                                            <constraint firstAttribute="height" constant="18" id="lcM-Se-YEM"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="lcM-Se-YEM"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AaT-lc-NKa">
-                                        <rect key="frame" x="123" y="94" width="469" height="18"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="18" id="yMi-tg-42s"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJ6-4l-egM">
-                                        <rect key="frame" x="123" y="17" width="469" height="23"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="23" id="OsT-7t-vth"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                                        <color key="textColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2zt-gN-F0L">
-                                        <rect key="frame" x="16" y="24" width="86" height="86"/>
+                                        <rect key="frame" x="257" y="22" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="86" id="0G8-eE-rTf"/>
                                             <constraint firstAttribute="height" constant="86" id="Vj5-QY-Pdm"/>
@@ -366,37 +334,54 @@
                                             <rect key="frame" x="150" y="13" width="100" height="100"/>
                                         </variation>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r08-az-XN8" userLabel="Name Label">
+                                        <rect key="frame" x="30" y="113" width="540" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="jz7-xx-pbU"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AaT-lc-NKa" userLabel="Folders Files Label">
+                                        <rect key="frame" x="30" y="135" width="540" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="nOc-8q-wXy"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Xy-WI-wWd" userLabel="Info Label">
+                                        <rect key="frame" x="30" y="154" width="540" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="cMq-e3-RYd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.9604189395904541" green="0.95535403490066528" blue="0.960532546043396" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.9686274528503418" green="0.9686274528503418" blue="0.9686274528503418" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="AaT-lc-NKa" firstAttribute="leading" secondItem="2zt-gN-F0L" secondAttribute="trailing" constant="21" id="12z-gG-Tqw"/>
-                                    <constraint firstAttribute="trailing" secondItem="AaT-lc-NKa" secondAttribute="trailing" constant="8" id="2BE-AP-QyH"/>
-                                    <constraint firstAttribute="height" constant="133" id="3KA-pz-SCn"/>
-                                    <constraint firstAttribute="centerX" secondItem="2zt-gN-F0L" secondAttribute="centerX" constant="224" id="7OJ-dL-t6z"/>
-                                    <constraint firstItem="AaT-lc-NKa" firstAttribute="top" secondItem="r08-az-XN8" secondAttribute="bottom" constant="18" id="8bc-eY-6tH"/>
-                                    <constraint firstAttribute="bottom" secondItem="AaT-lc-NKa" secondAttribute="bottom" constant="21" id="BJA-XD-vF3"/>
-                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="16" id="DWe-Dk-ZVf"/>
-                                    <constraint firstItem="r08-az-XN8" firstAttribute="leading" secondItem="2zt-gN-F0L" secondAttribute="trailing" constant="21" id="ISe-IR-tox"/>
-                                    <constraint firstAttribute="centerY" secondItem="2zt-gN-F0L" secondAttribute="centerY" id="N1Y-7b-1ZH"/>
-                                    <constraint firstAttribute="trailing" secondItem="r08-az-XN8" secondAttribute="trailing" constant="8" id="Vzb-Z7-bIA"/>
-                                    <constraint firstAttribute="bottom" secondItem="2zt-gN-F0L" secondAttribute="bottom" constant="16" id="Y4d-1r-WzP"/>
-                                    <constraint firstAttribute="trailing" secondItem="pJ6-4l-egM" secondAttribute="trailing" constant="8" id="aiC-CX-L29"/>
-                                    <constraint firstItem="r08-az-XN8" firstAttribute="top" secondItem="pJ6-4l-egM" secondAttribute="bottom" constant="18" id="bgC-NO-5Na"/>
-                                    <constraint firstItem="pJ6-4l-egM" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="17" id="bmf-Lm-pd2"/>
-                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="17" id="c6w-Vo-dKl"/>
-                                    <constraint firstItem="pJ6-4l-egM" firstAttribute="leading" secondItem="2zt-gN-F0L" secondAttribute="trailing" constant="21" id="cT5-HW-aUJ"/>
-                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="41" id="d1A-BT-Lxx"/>
-                                    <constraint firstAttribute="centerY" secondItem="2zt-gN-F0L" secondAttribute="centerY" constant="-7.5" id="eB2-q9-T8h"/>
-                                    <constraint firstAttribute="centerY" secondItem="2zt-gN-F0L" secondAttribute="centerY" constant="6.5" id="mzx-Ys-poa"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Xy-WI-wWd" secondAttribute="bottom" constant="11" id="1N4-Au-aPQ"/>
+                                    <constraint firstAttribute="height" constant="180" id="3KA-pz-SCn"/>
+                                    <constraint firstItem="r08-az-XN8" firstAttribute="top" secondItem="2zt-gN-F0L" secondAttribute="bottom" constant="5" id="7EG-e2-DRJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="r08-az-XN8" secondAttribute="trailing" constant="30" id="BYA-FL-ZRg"/>
+                                    <constraint firstItem="AaT-lc-NKa" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="FzU-Uk-LYt"/>
+                                    <constraint firstItem="8Xy-WI-wWd" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="RIK-Jl-z70"/>
+                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="ULH-Zd-yIl"/>
+                                    <constraint firstItem="8Xy-WI-wWd" firstAttribute="top" secondItem="AaT-lc-NKa" secondAttribute="bottom" constant="4" id="WEV-CW-ZJW"/>
+                                    <constraint firstItem="AaT-lc-NKa" firstAttribute="top" secondItem="r08-az-XN8" secondAttribute="bottom" constant="4" id="XUN-pN-rKZ"/>
+                                    <constraint firstItem="r08-az-XN8" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="h5K-TM-GHE"/>
+                                    <constraint firstAttribute="bottom" secondItem="AaT-lc-NKa" secondAttribute="bottom" constant="19" id="n8q-gI-8Zm"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Xy-WI-wWd" secondAttribute="trailing" constant="30" id="tr6-5P-beI"/>
+                                    <constraint firstAttribute="centerX" secondItem="2zt-gN-F0L" secondAttribute="centerX" id="w48-dQ-hKo"/>
+                                    <constraint firstAttribute="trailing" secondItem="AaT-lc-NKa" secondAttribute="trailing" constant="30" id="zIq-9j-EuL"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="7OJ-dL-t6z"/>
-                                        <exclude reference="Y4d-1r-WzP"/>
-                                        <exclude reference="c6w-Vo-dKl"/>
-                                        <exclude reference="d1A-BT-Lxx"/>
-                                        <exclude reference="eB2-q9-T8h"/>
-                                        <exclude reference="mzx-Ys-poa"/>
+                                        <exclude reference="n8q-gI-8Zm"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
@@ -404,7 +389,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-CY-kSq">
-                                <rect key="frame" x="0.0" y="133" width="600" height="359"/>
+                                <rect key="frame" x="0.0" y="180" width="600" height="312"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NodeDetailsTableViewCellID" textLabel="xHi-U5-M1l" style="IBUITableViewCellStyleDefault" id="THc-cs-Lln">
@@ -414,7 +399,7 @@
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xHi-U5-M1l">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -432,25 +417,39 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YNO-Cb-1Vd" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="8HU-zy-88f"/>
+                            <constraint firstAttribute="trailing" secondItem="Thh-CY-kSq" secondAttribute="trailing" id="2aW-GO-898"/>
+                            <constraint firstItem="YNO-Cb-1Vd" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="LaS-nr-Rr1"/>
                             <constraint firstItem="rue-95-cLa" firstAttribute="top" secondItem="Thh-CY-kSq" secondAttribute="bottom" id="ROf-c8-c22"/>
-                            <constraint firstItem="Thh-CY-kSq" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="S6J-8d-tc4"/>
-                            <constraint firstAttribute="width" secondItem="YNO-Cb-1Vd" secondAttribute="width" id="TIm-Ee-GwE"/>
-                            <constraint firstAttribute="trailing" secondItem="Thh-CY-kSq" secondAttribute="trailing" id="Trl-ya-Wq6"/>
+                            <constraint firstItem="Thh-CY-kSq" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="bottom" id="TcT-eF-BBt"/>
+                            <constraint firstAttribute="trailing" secondItem="YNO-Cb-1Vd" secondAttribute="trailing" id="XRx-lg-7z8"/>
                             <constraint firstItem="Thh-CY-kSq" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="bottom" id="hFk-68-bxE"/>
                             <constraint firstItem="YNO-Cb-1Vd" firstAttribute="top" secondItem="hrr-0G-qoa" secondAttribute="bottom" id="jYL-Dy-7X5"/>
                             <constraint firstItem="YNO-Cb-1Vd" firstAttribute="width" secondItem="Thh-CY-kSq" secondAttribute="width" id="qHv-aP-CsB"/>
+                            <constraint firstItem="Thh-CY-kSq" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="yD1-7c-wfP"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qHv-aP-CsB"/>
+                                <exclude reference="hFk-68-bxE"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <toolbarItems/>
                     <connections>
-                        <outlet property="modificationTimeLabel" destination="r08-az-XN8" id="Y69-QO-u50"/>
-                        <outlet property="nameLabel" destination="pJ6-4l-egM" id="CBQ-Jp-PDi"/>
-                        <outlet property="sizeLabel" destination="AaT-lc-NKa" id="4NV-bm-SkK"/>
+                        <outlet property="foldersFilesLabel" destination="AaT-lc-NKa" id="MQf-9Q-H3z"/>
+                        <outlet property="infoLabel" destination="8Xy-WI-wWd" id="gRr-6G-4QN"/>
+                        <outlet property="nameLabel" destination="r08-az-XN8" id="yQ9-t4-Lro"/>
+                        <outlet property="shareBarButtonItem" destination="kBw-p6-aPX" id="qe6-1b-vQe"/>
                         <outlet property="tableView" destination="Thh-CY-kSq" id="b1U-SS-Xrv"/>
                         <outlet property="thumbnailImageView" destination="2zt-gN-F0L" id="h0f-Ei-W7W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o1I-s2-yUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="shareRed" width="22" style="plain" id="kBw-p6-aPX" userLabel="Share Bar Button Item">
+                    <connections>
+                        <action selector="shareTouchUpInside:" destination="6WJ-kt-Qao" id="xsj-M3-7AV"/>
+                    </connections>
+                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="1764" y="-3935"/>
         </scene>
@@ -589,7 +588,7 @@
         <!--Navigation Controller-->
         <scene sceneID="J0U-BP-QZ2">
             <objects>
-                <navigationController storyboardIdentifier="moveNodeNav" automaticallyAdjustsScrollViewInsets="NO" id="ycj-sT-1OK" customClass="MEGANavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="BrowserNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="ycj-sT-1OK" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="reU-k6-eBZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -607,7 +606,7 @@
         <!--Browser View Controller-->
         <scene sceneID="QN9-Nw-lfs">
             <objects>
-                <viewController storyboardIdentifier="moveNodeID" id="Z2F-Nr-ypX" customClass="BrowserViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BrowserViewControllerID" id="Z2F-Nr-ypX" customClass="BrowserViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M5n-Ss-cZV"/>
                         <viewControllerLayoutGuide type="bottom" id="sx2-EY-zn3"/>
@@ -616,36 +615,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OqO-k1-16S">
-                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Move" id="7Sv-uf-KA4">
-                                        <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="moveNode:" destination="Z2F-Nr-ypX" id="ufS-m8-fHx"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8Bd-4d-eIW"/>
-                                    <barButtonItem title="New folder" id="Rgo-oZ-vnm">
-                                        <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="newFolder:" destination="Z2F-Nr-ypX" id="UKy-Qz-pfk"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="jYy-XS-nTG"/>
-                                    <barButtonItem title="Copy" id="lKS-IO-O01">
-                                        <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="copyNode:" destination="Z2F-Nr-ypX" id="ceo-sa-1GJ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7Nx-88-DiR">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeCell" id="1TT-fR-WJh" customClass="NodeTableViewCell">
                                         <rect key="frame" x="0.0" y="246" width="600" height="44"/>
@@ -716,6 +689,21 @@
                                     <action selector="selectSharedFolder:" destination="Z2F-Nr-ypX" eventType="touchUpInside" id="PXG-aF-4BG"/>
                                 </connections>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OqO-k1-16S">
+                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <barButtonItem title="New folder" id="Rgo-oZ-vnm">
+                                        <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="newFolder:" destination="Z2F-Nr-ypX" id="UKy-Qz-pfk"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="jYy-XS-nTG"/>
+                                </items>
+                                <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -751,6 +739,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UcK-nc-stP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem tag="1" title="Move" id="7Sv-uf-KA4">
+                    <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="moveNode:" destination="Z2F-Nr-ypX" id="ufS-m8-fHx"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem tag="1" title="Copy" id="lKS-IO-O01">
+                    <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="copyNode:" destination="Z2F-Nr-ypX" id="ceo-sa-1GJ"/>
+                    </connections>
+                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="1709" y="-3109"/>
         </scene>
@@ -786,6 +786,7 @@
         <image name="nodeInfo" width="46" height="44"/>
         <image name="rename" width="32" height="32"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="shareRed" width="16" height="22"/>
         <image name="sortBy" width="22" height="22"/>
     </resources>
 </document>

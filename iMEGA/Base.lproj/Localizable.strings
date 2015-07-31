@@ -20,8 +20,8 @@
 "noInternetConnection"="No Internet Connection";
 
 "attention"="Attention";
-"cameraPermissions"="Please give MEGA app permission to access your Camera in your settings app!";
-"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in your settings app!";
+"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings!";
+"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings!";
 
 "emptyFolderMessage" = "You can't download an empty folder";
 
@@ -36,7 +36,7 @@
 "folderEncrypted" = "Folder encrypted";
 "folderEncryptedMessage" = "For the moment you can't import or download an encrypted folder.";
 
-"loggetOutTitle" = "Logged out";
+"loggedOut_alertTitle" = "Logged out";
 "loggedOutFromAnotherLocation" = "You have been logged out of this device from another location";
 
 //TourViewController
@@ -103,7 +103,6 @@
 "fileTooBigMessage_open"="The file you are trying to open is bigger than the avaliable memory.";
 
 "importAction" = "Import file";
-"importActionMessage" = "For the moment you can't import a file.";
 
 "fileLinkUnavailableTitle"="File link unavailable";
 "fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
@@ -116,9 +115,6 @@
 "megaFolder"="MEGA Folder Link";
 
 "downloadButton"="Download";
-
-"importFolderAction"="Import folder";
-"importFolderActionMessage"="For the moment you can't import a folder.";
 
 "folderTooBigMessage"="The file you are trying to download is bigger than the avaliable memory.";
 
@@ -197,6 +193,7 @@
 "savedForOffline"="Saved for Offline";
 "getLink"="Get link";
 "generatingLink" = "Generating link...";
+"copy"="Copy";
 "moveToRubbishBin"="Move to the Rubbish Bin";
 
 "cancelDownloadAlertViewText"="Do you want to cancel the download?";
@@ -221,11 +218,9 @@
 
 "sharedFolder_success"="Folder shared!";
 
-"browserVC_copyButton"="Copy";
-
 // BrowserVC - Links
 "importTitle"="Import to ";
-"browserVC_importButton"="Import";
+"import"="Import";
 "fileImported"="File imported!";
 
 "quotaExceeded"="Storage quota exceeded";

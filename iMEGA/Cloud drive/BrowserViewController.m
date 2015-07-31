@@ -19,6 +19,8 @@
  * program.
  */
 
+#import "MEGAReachabilityManager.h"
+
 #import "BrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "Helper.h"
@@ -52,25 +54,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+    [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+    [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
     
-    if (self.browseAction == BrowseActionCopy) {
-        NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-        [toolbarButtons removeObject:self.toolBarMoveBarButtonItem];
-        [toolbarButtons removeObject:[self.toolbar.items objectAtIndex:1]]; // Remove the 1st flexible space
-        [self.toolbar setItems:toolbarButtons];
-    } else {
-        [self.toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
-    }
+    [_toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"newFolder", @"New Folder")];
+    [_toolBarNewFolderBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarNewFolderBarButtonItem.tag] forState:UIControlStateNormal];
     
-    [self.toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"newFolder", @"New Folder")];
-    
-    if (self.isPublicNode) {
-        [self.toolBarMoveBarButtonItem setEnabled:NO];
-        [self.toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"browserVC_importButton", @"Import")];
-    } else {
-        [self.toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"browserVC_copyButton", @"Copy")];
-    }
+    [self setupBrowser];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,6 +92,47 @@
 
 #pragma mark - Private
 
+- (void)setupBrowser {
+    switch (self.browserAction) {
+        case BrowserActionCopy: {
+            [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"copy", nil)];
+            [_toolBarCopyBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarCopyBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarCopyBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
+            break;
+        }
+            
+        case BrowserActionMove: {
+            [_toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
+            [_toolBarMoveBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarMoveBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarMoveBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
+            break;
+        }
+            
+        case BrowserActionImport: {
+            [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
+            [_toolBarCopyBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarCopyBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarCopyBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
+            break;
+        }
+            
+        case BrowserActionSelectFolderToShare: {
+            [_toolbar setHidden:YES];
+            [_shareFolderButton setEnabled:YES];
+            [_shareFolderButton setHidden:NO];
+            break;
+        }
+    }
+}
+
 - (void)reloadUI {
     self.folderNodes = [NSMutableArray new];
     
@@ -113,7 +144,7 @@
         self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
     }
     
-    if (self.isPublicNode) {
+    if (self.browserAction == BrowserActionImport) {
         NSString *importTitle = AMLocalizedString(@"importTitle", @"Import to ");
         importTitle = [importTitle stringByAppendingString:[self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
@@ -128,11 +159,6 @@
     }
     
     if (self.selectedUsersArray) {
-        [self.toolbar setFrame:CGRectMake(0, 0, 0, 0)];
-        
-        [self.shareFolderButton setEnabled:YES];
-        [self.shareFolderButton setHidden:NO];
-        
         NSString *sharedFolderString = [AMLocalizedString(@"select", nil) stringByAppendingString:[self.navigationItem title]];
         [self.shareFolderButton setTitle:sharedFolderString forState:UIControlStateNormal];
     }
@@ -140,6 +166,24 @@
     [self.tableView reloadData];
 }
 
+- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
+    
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    
+    switch (buttonTag) {
+        case 0:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+            break;
+            
+        case 1:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"HelveticaNeue-Regular" size:17.0] forKey:NSFontAttributeName];
+            break;
+    }
+    
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    
+    return titleTextAttributesDictionary;
+}
 
 
 - (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
@@ -212,12 +256,20 @@
 }
 
 - (IBAction)selectSharedFolder:(UIButton *)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    if ([MEGAReachabilityManager isReachable]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            [actionSheet showInView:self.view];
+        } else {
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -245,6 +297,16 @@
     
     for (MEGAUser *u in self.selectedUsersArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:u level:level];
+    }
+}
+
+//For iOS 7 UIActionSheet color
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            [button setTitleColor:megaRed forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -285,6 +347,11 @@
     
     cell.infoLabel.text = filesAndFolders;
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGray];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
     return cell;
 }
 
@@ -293,21 +360,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *newParent = [self.folderNodes objectAtIndex:indexPath.row];
     
-    BrowserViewController *mcnvc = [self.storyboard instantiateViewControllerWithIdentifier:@"moveNodeID"];
-    [mcnvc setParentNode:newParent];
-    [mcnvc setSelectedNodesArray:self.selectedNodesArray];
+    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
+    [browserVC setParentNode:newParent];
+    [browserVC setSelectedNodesArray:self.selectedNodesArray];
     
     if (self.selectedUsersArray) {
-        [mcnvc setSelectedUsersArray:self.selectedUsersArray];
+        [browserVC setSelectedUsersArray:self.selectedUsersArray];
     }
     
-    if(self.isPublicNode) {
-        [mcnvc setIsPublicNode:YES];
-    }
+    [browserVC setBrowserAction:self.browserAction];
     
-    [mcnvc setBrowseAction:self.browseAction];
-    
-    [self.navigationController pushViewController:mcnvc animated:YES];
+    [self.navigationController pushViewController:browserVC animated:YES];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -334,7 +397,7 @@
         }
         
         case MEGARequestTypeCopy: {
-            if (self.isPublicNode) {
+            if (self.browserAction == BrowserActionImport) {
                 [self dismissViewControllerAnimated:YES completion:nil];
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"File imported!")];
                 break;

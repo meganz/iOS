@@ -93,7 +93,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"megaFolder", nil)];
     
     [self.importBarButtonItem setEnabled:NO];
-    [self.importBarButtonItem setTitle:AMLocalizedString(@"browserVC_importButton", @"Import")];
+    [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
     [self.downloadBarButtonItem setEnabled:NO];
     [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
     
@@ -283,12 +283,6 @@
 
 - (IBAction)importFolderTouchUpInside:(UIBarButtonItem *)sender {
     //TODO: Import folder
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"importFolderAction", @"Import folder")
-                                                        message:AMLocalizedString(@"importFolderActionMessage", @"For the moment you can't import a folder.")
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                              otherButtonTitles:nil];
-    [alertView show];
     return;
 }
 

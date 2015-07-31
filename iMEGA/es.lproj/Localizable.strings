@@ -20,8 +20,8 @@
 "noInternetConnection"="No hay conexión a internet";
 
 "attention"="Atención";
-"cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en la configuración de la aplicación!";
-"photoLibraryPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú librería de fotos en la configuración de la aplicación!";
+"cameraPermissions"="¡Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en Ajustes!";
+"photoLibraryPermissions"="¡Por favor dale permisos a la aplicación de MEGA para acceder a tú librería de fotos en Ajustes!";
 
 "emptyFolderMessage" = "No se pueden descargar carpetas vacias";
 
@@ -36,7 +36,7 @@
 "folderEncrypted" = "Enlace a carpeta encriptada";
 "folderEncryptedMessage" = "De momento no se puede importar o descargar una carpeta encriptada.";
 
-"loggetOutTitle" = "Sesión cerrada";
+"loggedOut_alertTitle" = "Sesión cerrada";
 "loggedOutFromAnotherLocation" = "Tu sesión ha sido cerrada de este dispositivo desde otra localización";
 
 //TourViewController
@@ -103,7 +103,6 @@
 "fileTooBigMessage_open"="El fichero que estás intentado abrir es más grande que el espacio disponible.";
 
 "importAction" = "Importar fichero";
-"importActionMessage" = "De momento no se puede importar un fichero.";
 
 "fileLinkUnavailableTitle"="Enlace del archivo no disponible";
 "fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
@@ -116,9 +115,6 @@
 "megaFolder"="Enlace a carpeta";
 
 "downloadButton"="Descargar";
-
-"importFolderAction"="Importar carpeta";
-"importFolderActionMessage"="De momento no se puede importar una carpeta.";
 
 "folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
 
@@ -197,6 +193,7 @@
 "savedForOffline"="Guardado en Offline";
 "getLink"="Obtener link";
 "generatingLink" = "Generando link...";
+"copy"="Copiar";
 "moveToRubbishBin"="Mover a la Papelera";
 
 "cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
@@ -221,11 +218,9 @@
 
 "sharedFolder_success"="¡Carpeta compartida!";
 
-"browserVC_copyButton"="Copiar";
-
 // BrowserVC - Links
 "importTitle"="Importar a ";
-"browserVC_importButton"="Importar";
+"import"="Importar";
 "fileImported"="¡Fichero importado!";
 
 "quotaExceeded"="Cuota de almacenamiento excedida";
