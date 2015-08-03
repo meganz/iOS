@@ -673,27 +673,51 @@ static NSInteger linkNodeOption;
     NSError *error = nil;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-    success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
     }
     
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
-    success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
     }
     
-    success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
+    }
+    
+    // Delete v2 thumbnails & previews directory
+    NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
+    }
+    
+    NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
     }
 }
 
