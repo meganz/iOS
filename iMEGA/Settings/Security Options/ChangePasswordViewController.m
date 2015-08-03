@@ -27,11 +27,12 @@
 
 @interface ChangePasswordViewController () <MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *changePasswordView;
-
-@property (weak, nonatomic) IBOutlet UITextField *oldPasswordTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *currentPasswordImageView;
+@property (weak, nonatomic) IBOutlet UITextField *currentPasswordTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *theNewPasswordImageView;
 @property (weak, nonatomic) IBOutlet UITextField *theNewPasswordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *retypeNewPasswordTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *confirmPasswordImageView;
+@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
 
@@ -46,18 +47,17 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"changePasswordLabel", @"The title of the change password view")];
     
-    self.changePasswordButton.layer.cornerRadius = 6;
-    self.changePasswordButton.layer.masksToBounds = YES;
+    [_currentPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.")]];
+    [_theNewPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.")]];
+    [_confirmPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.")]];
     
-    self.changePasswordView.backgroundColor = [[UIColor colorWithWhite:0.933 alpha:1.000] colorWithAlphaComponent:.25f];
-    self.changePasswordView.layer.borderWidth = 2.0f;
-    self.changePasswordView.layer.borderColor =[[UIColor colorWithWhite:0.933 alpha:1.000] CGColor];
-    self.changePasswordView.layer.cornerRadius = 6;
-    self.changePasswordView.layer.masksToBounds = YES;
+    [_changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", nil) forState:UIControlStateNormal];
+    [self.changePasswordButton.layer setBorderWidth:2.5f];
+    [self.changePasswordButton.layer setBorderColor:[megaRed CGColor]];
+    [self.changePasswordButton.layer setCornerRadius:6];
+    [self.changePasswordButton.layer setMasksToBounds:YES];
     
-    [self.changePasswordButton setBackgroundColor:megaDarkGray];
-    
-    [self.oldPasswordTextField becomeFirstResponder];
+    [_currentPasswordTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,9 +66,9 @@
 }
 
 - (BOOL)validateForm {
-    if (self.oldPasswordTextField.text.length == 0) {
+    if (_currentPasswordTextField.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.oldPasswordTextField becomeFirstResponder];
+        [_currentPasswordTextField becomeFirstResponder];
         return NO;
     }
     if (![self validatePassword:self.theNewPasswordTextField.text]) {
@@ -78,16 +78,16 @@
         } else {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Passwords do not match")];
             [self.theNewPasswordTextField setText:@""];
-            [self.retypeNewPasswordTextField setText:@""];
+            [self.confirmPasswordTextField setText:@""];
             [self.theNewPasswordTextField becomeFirstResponder];
         }
         return NO;
     }
     
-    if ([self.oldPasswordTextField.text isEqualToString:self.theNewPasswordTextField.text]) {
+    if ([_currentPasswordTextField.text isEqualToString:self.theNewPasswordTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"oldAndNewPasswordMatch", @"The old and the new password can not match")];
         [self.theNewPasswordTextField setText:@""];
-        [self.retypeNewPasswordTextField setText:@""];
+        [self.confirmPasswordTextField setText:@""];
         [self.theNewPasswordTextField becomeFirstResponder];
         return NO;
     }
@@ -96,7 +96,7 @@
 }
 
 - (BOOL)validatePassword:(NSString *)password {
-    if (password.length == 0 || ![password isEqualToString:self.retypeNewPasswordTextField.text]) {
+    if (password.length == 0 || ![password isEqualToString:_confirmPasswordTextField.text]) {
         return NO;
     } else {
         return YES;
@@ -107,12 +107,38 @@
 
 - (IBAction)changePasswordTouchUpIndise:(UIButton *)sender {
     if ([self validateForm]) {
+        [_changePasswordButton setEnabled:NO];
         if ([MEGAReachabilityManager isReachable]) {
-            [[MEGASdkManager sharedMEGASdk] changePassword:[self.oldPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
+            [[MEGASdkManager sharedMEGASdk] changePassword:[_currentPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
         } else {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            [_changePasswordButton setEnabled:YES];
         }
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    switch ([textField tag]) {
+        case 0:
+            [self.theNewPasswordTextField becomeFirstResponder];
+            break;
+            
+        case 1:
+            [_confirmPasswordTextField becomeFirstResponder];
+            break;
+            
+        case 2:
+            [_confirmPasswordTextField resignFirstResponder];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return YES;
 }
 
 #pragma mark - MEGARequestDelegate
@@ -122,11 +148,12 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        [self.oldPasswordTextField setText:@""];
+        [_currentPasswordTextField setText:@""];
         [self.theNewPasswordTextField setText:@""];
-        [self.retypeNewPasswordTextField setText:@""];
-        [self.oldPasswordTextField becomeFirstResponder];
+        [_confirmPasswordTextField setText:@""];
+        [_currentPasswordTextField becomeFirstResponder];
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [_changePasswordButton setEnabled:YES];
         return;
     }
     
