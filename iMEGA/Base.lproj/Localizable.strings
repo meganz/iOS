@@ -391,6 +391,10 @@
 "filesRemovedFromRubbishBin" = "%d files removed from MEGA";
 
 //(5) Settings - ChangePasswordViewController
+"currentPassword" = "Current Password";
+"newPassword" = "New Password";
+"confirmPassword" = "Confirm Password";
+
 "passwordChanged"="Your password has been changed.";
 "oldAndNewPasswordMatch"="The new and the old password can not match.";
 

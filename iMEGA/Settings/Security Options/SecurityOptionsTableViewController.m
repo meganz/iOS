@@ -19,11 +19,13 @@
  * program.
  */
 
-#import "SecurityOptionsTableViewController.h"
-#import "CloudDriveTableViewController.h"
 #import "MEGASdkManager.h"
 
-@interface SecurityOptionsTableViewController () <UIAlertViewDelegate> {
+#import "SecurityOptionsTableViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "ChangePasswordViewController.h"
+
+@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isMasterKeyExported;
 }
 
@@ -139,6 +141,22 @@
             
         default:
             return @"";
+            break;
+    }
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 1: {
+            ChangePasswordViewController *changePasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+            [self.navigationController pushViewController:changePasswordVC animated:YES];
+            
+            break;
+        }
+            
+        default:
             break;
     }
 }

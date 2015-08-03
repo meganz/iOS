@@ -391,6 +391,10 @@
 "filesRemovedFromRubbishBin" = "%d archivos borrados de MEGA";
 
 //(5) Settings - ChangePasswordViewController
+"currentPassword" = "Contraseña actual";
+"newPassword" = "Nueva contraseña";
+"confirmPassword" = "Confirma la contraseña";
+
 "passwordChanged"="Tu contraseña ha sido cambiada.";
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
 
