@@ -129,7 +129,7 @@
 
     // Rename attributes (thumbnails and previews)- handle to base64Handle
     NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    if ([[NSFileManager defaultManager]  fileExistsAtPath:v2ThumbsPath]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:v2ThumbsPath]) {
         NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
         NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
@@ -141,7 +141,7 @@
     }
     
     NSString *v2previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    if ([[NSFileManager defaultManager]  fileExistsAtPath:v2previewsPath]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:v2previewsPath]) {
         NSString *v3PreviewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
         NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
