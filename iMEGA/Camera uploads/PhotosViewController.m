@@ -271,7 +271,7 @@
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
-    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"cameraUploadsSettingsID"];
+    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
     
