@@ -520,11 +520,16 @@
                         break;
                         
                     case 2:
+                        [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
+                        [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
+                        break;
+                        
+                    case 3:
                         [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
                         [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
                         break;
                         
-                    case 3:
+                    case 4:
                         [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
                         [cell.textLabel setText:AMLocalizedString(@"remove", nil)];
                         break;
