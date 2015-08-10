@@ -302,16 +302,34 @@
 
 //Move to rubbish bin
 "moveNodeToRubbishBinTitle" = "Move to the rubbish bin";
-"moveNodeToRubbishBinMessage" = "Are you sure you want to move 1 file to the rubbish bin?";
-"moveMultipleNodesToRubbishBinMessage" = "Are you sure you want to move %d files to the rubbish bin?";
+"moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the rubbish bin?";
+"moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the rubbish bin?";
+"moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the rubbish bin?";
+"moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the rubbish bin?";
+"moveFileFolderToRubbishBinMessage"="Are you sure you want to move 1 file and 1 folder to the rubbish bin?";
+"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the rubbish bin?";
+"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the rubbish bin?";
+"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move %d files and %d folders to the rubbish bin?";
 
 //Move
-"fileMoved" = "File moved";
-"filesMoved" = "%d files moved";
+"moveFileMessage"="1 file moved";
+"moveFilesMessage"="%d files moved";
+"moveFolderMessage"="1 folder moved";
+"moveFoldersMessage"="%d folders moved";
+"moveFileFolderMessage"="1 file and 1 folder moved";
+"moveFileFoldersMessage"="1 file and %d folders moved";
+"moveFilesFolderMessage"="%d files and 1 folder moved";
+"moveFilesFoldersMessage"="%d files and %d folders moved";
 
 //Copy
-"fileCopied" = "File copied";
-"filesCopied" = "%d files copied";
+"copyFileMessage"="1 file copied";
+"copyFilesMessage"="%d files copied";
+"copyFolderMessage"="1 folder copied";
+"copyFoldersMessage"="%d folders copied";
+"copyFileFolderMessage"="1 file and 1 folder copied";
+"copyFileFoldersMessage"="1 file and %d folders copied";
+"copyFilesFolderMessage"="%d files and 1 folder copied";
+"copyFilesFoldersMessage"="%d files and %d folders copied";
 
 //Generate links
 "folder"="Folder";
@@ -384,8 +402,14 @@
 
 //(5) Settings - Rubbish Bin
 "removeNodeFromRubbishBinTitle" = "Confirm removal";
-"removeNodeFromRubbishBinMessage" = "You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
-"removeMultipleNodesFromRubbishBinMessage" = "You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
+"removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
+"removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFileFolderToRubbishBinMessage"="You are about to permanently remove 1 file and 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFileFoldersToRubbishBinMessage"="You are about to permanently remove 1 file and %d folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
 
 "fileRemovedFromRubbishBin" = "1 file removed from MEGA";
 "filesRemovedFromRubbishBin" = "%d files removed from MEGA";
