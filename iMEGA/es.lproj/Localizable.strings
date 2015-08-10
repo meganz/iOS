@@ -304,16 +304,34 @@
 
 //Move to rubbish bin
 "moveNodeToRubbishBinTitle" = "Mover a la papelera";
-"moveNodeToRubbishBinMessage" = "¿Estás seguro de que quieres mover 1 archivo a la papelera?";
-"moveMultipleNodesToRubbishBinMessage" = "¿Estás seguro de que quieres mover %d archivos a la papelera?";
+"moveFileToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo a la papelera?";
+"moveFilesToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos a la papelera?";
+"moveFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 carpeta a la papelera?";
+"moveFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover %d carpetas a la papelera?";
+"moveFileFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo y 1 carpeta a la papelera?";
+"moveFileFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo y %d carpetas a la papelera?";
+"moveFilesFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y 1 carpeta a la papelera?";
+"moveFilesFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y %d carpetas a la papelera?";
 
 //Move
-"fileMoved" = "Fichero movido";
-"filesMoved" = "%d ficheros movidos";
+"moveFileMessage"="1 fichero movido";
+"moveFilesMessage"="%d ficheros movidos";
+"moveFolderMessage"="1 carpeta movida";
+"moveFoldersMessage"="%d carpetas movidas";
+"moveFileFolderMessage"="1 fichero y 1 carpeta movidos";
+"moveFileFoldersMessage"="1 fichero y %d carpeta movidos";
+"moveFilesFolderMessage"="%d ficheros y 1 carpeta movidos";
+"moveFilesFoldersMessage"="%d ficheros y %d carpetas movidos";
 
 //Copy
-"fileCopied" = "Fichero copiado";
-"filesCopied" = "%d ficheros copiados";
+"copyFileMessage"="1 fichero copiado";
+"copyFilesMessage"="%d ficheros copiados";
+"copyFolderMessage"="1 carpeta copiada";
+"copyFoldersMessage"="%d carpetas copiadas";
+"copyFileFolderMessage"="1 fichero y 1 carpeta copiados";
+"copyFileFoldersMessage"="1 fichero y %d carpeta copiados";
+"copyFilesFolderMessage"="%d ficheros y 1 carpeta copiados";
+"copyFilesFoldersMessage"="%d ficheros y %d carpetas copiados";
 
 //Generate links
 "folder"="Carpeta";
@@ -386,8 +404,14 @@
 
 //(5) Settings - Rubbish Bin
 "removeNodeFromRubbishBinTitle" = "Confirmar";
-"removeNodeFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
-"removeMultipleNodesFromRubbishBinMessage" = "Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
 
 "fileRemovedFromRubbishBin" = "1 archivo borrado de MEGA";
 "filesRemovedFromRubbishBin" = "%d archivos borrados de MEGA";
