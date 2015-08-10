@@ -1499,12 +1499,68 @@
             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
         }
     } else {
+        NSInteger files = 0;
+        NSInteger folders = 0;
+        for (MEGANode *n in self.selectedNodesArray) {
+            if ([n type] == MEGANodeTypeFolder) {
+                folders++;
+            } else {
+                files++;
+            }
+        }
+        
         if (self.displayMode == DisplayModeCloudDrive) {
-            NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+            NSString *message;
+            if (files == 0) {
+                if (folders == 1) {
+                    message = AMLocalizedString(@"moveFolderToRubbishBinMessage", nil);
+                } else { //folders > 1
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), folders];
+                }
+            } else if (files == 1) {
+                if (folders == 0) {
+                    message = AMLocalizedString(@"moveFileToRubbishBinMessage", nil);
+                } else if (folders == 1) {
+                    message = AMLocalizedString(@"moveFileFolderToRubbishBinMessage", nil);
+                } else {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), folders];
+                }
+            } else {
+                if (folders == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), files];
+                } else if (folders == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), files];
+                } else {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil), files, folders];
+                }
+            }
             
             removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         } else {
-            NSString *message = (self.selectedNodesArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleNodesFromRubbishBinMessage", nil), self.selectedNodesArray.count] : [NSString stringWithString:AMLocalizedString(@"removeNodeFromRubbishBinMessage", nil)];
+            NSString *message;
+            if (files == 0) {
+                if (folders == 1) {
+                    message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
+                } else { //folders > 1
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), folders];
+                }
+            } else if (files == 1) {
+                if (folders == 0) {
+                    message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
+                } else if (folders == 1) {
+                    message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
+                } else {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), folders];
+                }
+            } else {
+                if (folders == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), files];
+                } else if (folders == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), files];
+                } else {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil), files, folders];
+                }
+            }
             
             removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         }

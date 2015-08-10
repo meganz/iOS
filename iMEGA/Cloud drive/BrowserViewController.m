@@ -389,7 +389,40 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileMoved", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
+                NSInteger files = 0;
+                NSInteger folders = 0;
+                for (MEGANode *n in self.selectedNodesArray) {
+                    if ([n type] == MEGANodeTypeFolder) {
+                        folders++;
+                    } else {
+                        files++;
+                    }
+                }
+                
+                NSString *message;
+                if (files == 0) {
+                    if (folders == 1) {
+                        message = AMLocalizedString(@"moveFolderMessage", nil);
+                    } else { //folders > 1
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersMessage", nil), folders];
+                    }
+                } else if (files == 1) {
+                    if (folders == 0) {
+                        message = AMLocalizedString(@"moveFileMessage", nil);
+                    } else if (folders == 1) {
+                        message = AMLocalizedString(@"moveFileFolderMessage", nil);
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersMessage", nil), folders];
+                    }
+                } else {
+                    if (folders == 0) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesMessage", nil), files];
+                    } else if (folders == 1) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", nil), files];
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersMessage", nil), files, folders];
+                    }
+                }
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -406,7 +439,41 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileCopied", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesCopied", nil), self.selectedNodesArray.count];
+                
+                NSInteger files = 0;
+                NSInteger folders = 0;
+                for (MEGANode *n in self.selectedNodesArray) {
+                    if ([n type] == MEGANodeTypeFolder) {
+                        folders++;
+                    } else {
+                        files++;
+                    }
+                }
+                
+                NSString *message;
+                if (files == 0) {
+                    if (folders == 1) {
+                        message = AMLocalizedString(@"copyFolderMessage", nil);
+                    } else { //folders > 1
+                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFoldersMessage", nil), folders];
+                    }
+                } else if (files == 1) {
+                    if (folders == 0) {
+                        message = AMLocalizedString(@"copyFileMessage", nil);
+                    } else if (folders == 1) {
+                        message = AMLocalizedString(@"copyFileFolderMessage", nil);
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFileFoldersMessage", nil), folders];
+                    }
+                } else {
+                    if (folders == 0) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesMessage", nil), files];
+                    } else if (folders == 1) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFolderMessage", nil), files];
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFoldersMessage", nil), files, folders];
+                    }
+                }
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
