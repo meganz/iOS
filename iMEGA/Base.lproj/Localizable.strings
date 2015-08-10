@@ -192,6 +192,8 @@
 "saveForOffline"="Save for Offline";
 "savedForOffline"="Saved for Offline";
 "getLink"="Get link";
+"removeLink"="Remove link";
+"removeLinkSuccess"="The link has been removed";
 "generatingLink" = "Generating link...";
 "copy"="Copy";
 "moveToRubbishBin"="Move to the Rubbish Bin";

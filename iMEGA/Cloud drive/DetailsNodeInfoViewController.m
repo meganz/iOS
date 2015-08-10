@@ -181,6 +181,14 @@
     }
 }
 
+- (void)disableLink {
+    if ([MEGAReachabilityManager isReachable]) {
+        [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
 - (void)browserWithAction:(NSInteger)browserAction {
     if ([MEGAReachabilityManager isReachable]) {
         MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -280,11 +288,31 @@
 
 - (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
     if ([self.node type] == MEGANodeTypeFolder) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                   destructiveButtonTitle:nil
+        UIActionSheet *actionSheet;
+        BOOL isPublicLink = NO;
+        
+        MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
+        for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
+            if ([[outSharesList shareAtIndex:i] user] == nil) {
+                isPublicLink = TRUE;
+                break;
+            }
+        }
+        
+        if (isPublicLink) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                      delegate:self
+                                             cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                        destructiveButtonTitle:nil
+                                             otherButtonTitles:AMLocalizedString(@"shareFolder", nil), AMLocalizedString(@"getLink", nil), AMLocalizedString(@"removeLink", nil), nil];
+            
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                      delegate:self
+                                             cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                        destructiveButtonTitle:nil
                                                         otherButtonTitles:AMLocalizedString(@"shareFolder", nil), AMLocalizedString(@"getLink", nil), nil];
+        }
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [actionSheet showFromBarButtonItem:_shareBarButtonItem animated:YES];
         } else {
@@ -312,6 +340,11 @@
             
         case 1: { //Get link
             [self getLink];
+            break;
+        }
+            
+        case 2: { //Disable link
+            [self disableLink];
             break;
         }
             
@@ -707,7 +740,10 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            //If export link only. Not if disable link
+            if ([request access]) {
+                [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            }
             break;
             
         default:
@@ -734,23 +770,29 @@
             break;
         }
         case MEGARequestTypeExport: {
-            [SVProgressHUD dismiss];
-            
-            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
-            NSString *link = [request link];
-            
-            NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
-            activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
-            
-            if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
+            //If export link
+            if ([request access]) {
+                [SVProgressHUD dismiss];
+                
+                MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                
+                NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
+                NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
+                NSString *link = [request link];
+                
+                NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
+                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                
+                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
+                    [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
+                }
+                
+                [self presentViewController:activityVC animated:YES completion:nil];
+            } else { //Disable link
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"removeLinkSuccess", @"Message shown inside an alert if the user remove a link")];
             }
             
-            [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
             
