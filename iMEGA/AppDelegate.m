@@ -250,21 +250,13 @@
         [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
         
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
-        
-        if ([Helper renamePathForPreviewDocument] != nil) {
-            NSError *error = nil;
-            BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
-            if (!success || error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-            }
-        }
     }
     
     // Clean up temporary directory
     NSError *error = nil;
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
     if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
     }
 }
 
@@ -988,6 +980,10 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
+        if ([transfer.path isEqualToString:[Helper pathForPreviewDocument]]) {
+            return;
+        }
+        
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
             [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
