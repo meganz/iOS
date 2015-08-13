@@ -244,16 +244,12 @@
             return;
         }
         
-        [Helper setRenamePathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:[self.node name]]];
-        
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
+        NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
+        [Helper setPathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:name]];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper pathForPreviewDocument]];
         if (!fileExists) {
-            NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
-            NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-            [Helper setPathForPreviewDocument:path];
-            
             [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:path];
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:[Helper pathForPreviewDocument]];
         } else {
             [self openTempFile];
         }
@@ -280,7 +276,7 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:[Helper renamePathForPreviewDocument]];
+    return [NSURL fileURLWithPath:[Helper pathForPreviewDocument]];
 }
 
 #pragma mark - QLPreviewControllerDelegate
@@ -291,7 +287,6 @@
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     [Helper setPathForPreviewDocument:nil];
-    [Helper setRenamePathForPreviewDocument:nil];
     
     [self.importButton setEnabled:YES];
     [self.downloadButton setEnabled:YES];
@@ -356,7 +351,11 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (([transfer type] == MEGATransferTypeDownload)  && (!transfer.isStreamingTransfer) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
+    if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
+        return;
+    }
+    
+    if (([transfer type] == MEGATransferTypeDownload) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
         [SVProgressHUD show];
     }
 }
@@ -371,15 +370,9 @@
     
     if ([transfer type] == MEGATransferTypeDownload && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
         
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper pathForPreviewDocument] toPath:[Helper renamePathForPreviewDocument] error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-        }
-        
         [self openTempFile];
         
-        [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
+        [api removeMEGATransferDelegate:self];
         [SVProgressHUD dismiss];
     }
 }
