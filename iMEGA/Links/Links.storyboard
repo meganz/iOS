@@ -248,6 +248,81 @@
                                             <outlet property="thumbnailImageView" destination="5ad-Bd-qox" id="wUc-J0-VhZ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="downloadingNodeCell" id="XRh-Lv-sht" customClass="NodeTableViewCell">
+                                        <rect key="frame" x="0.0" y="246" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XRh-Lv-sht" id="PZh-A5-ML8">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J4Q-ZJ-bV0" userLabel="Arrow Image View">
+                                                    <rect key="frame" x="0.0" y="16" width="12" height="12"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="12" id="Iwl-iu-TeQ"/>
+                                                        <constraint firstAttribute="height" constant="12" id="my2-EP-0q6"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aET-r5-uxb">
+                                                    <rect key="frame" x="12" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="cU3-qb-bv5"/>
+                                                        <constraint firstAttribute="width" constant="40" id="jFq-SJ-PxB"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6w-um-VsC">
+                                                    <rect key="frame" x="60" y="6" width="483" height="18"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="AEw-YW-Rmc">
+                                                    <rect key="frame" x="60" y="24" width="483" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="oba-9G-7st"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fs-Zg-hSR" userLabel="Cancel Button">
+                                                    <rect key="frame" x="554" y="0.0" width="46" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="Xre-bG-7fW"/>
+                                                    </constraints>
+                                                    <state key="normal" image="cancel">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="cancelTransfer:" destination="XRh-Lv-sht" eventType="touchUpInside" id="rjp-Ku-QfY"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="J4Q-ZJ-bV0" firstAttribute="top" secondItem="PZh-A5-ML8" secondAttribute="topMargin" constant="8" id="35G-32-6Wl"/>
+                                                <constraint firstItem="1Fs-Zg-hSR" firstAttribute="leading" secondItem="S6w-um-VsC" secondAttribute="trailing" constant="11" id="6MS-HS-917"/>
+                                                <constraint firstItem="S6w-um-VsC" firstAttribute="leading" secondItem="AEw-YW-Rmc" secondAttribute="leading" id="EOv-fY-5Mb"/>
+                                                <constraint firstItem="1Fs-Zg-hSR" firstAttribute="top" secondItem="PZh-A5-ML8" secondAttribute="top" id="JBf-S4-dH9"/>
+                                                <constraint firstItem="S6w-um-VsC" firstAttribute="top" secondItem="PZh-A5-ML8" secondAttribute="topMargin" constant="-2" id="KiN-fJ-1BX"/>
+                                                <constraint firstItem="S6w-um-VsC" firstAttribute="trailing" secondItem="AEw-YW-Rmc" secondAttribute="trailing" id="O5B-CA-A2b"/>
+                                                <constraint firstItem="S6w-um-VsC" firstAttribute="leading" secondItem="aET-r5-uxb" secondAttribute="trailing" constant="8" symbolic="YES" id="VKf-Si-Get"/>
+                                                <constraint firstItem="aET-r5-uxb" firstAttribute="top" secondItem="PZh-A5-ML8" secondAttribute="topMargin" constant="-6" id="Xd5-47-PS6"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Fs-Zg-hSR" secondAttribute="trailing" id="ZwF-zW-ke6"/>
+                                                <constraint firstItem="aET-r5-uxb" firstAttribute="leading" secondItem="J4Q-ZJ-bV0" secondAttribute="trailing" id="avr-qL-IJu"/>
+                                                <constraint firstItem="J4Q-ZJ-bV0" firstAttribute="leading" secondItem="PZh-A5-ML8" secondAttribute="leading" id="e7H-rs-rO0"/>
+                                                <constraint firstItem="AEw-YW-Rmc" firstAttribute="top" secondItem="S6w-um-VsC" secondAttribute="bottom" id="gPm-ok-9Mq"/>
+                                                <constraint firstItem="aET-r5-uxb" firstAttribute="centerY" secondItem="J4Q-ZJ-bV0" secondAttribute="centerY" id="koB-XR-3z9"/>
+                                                <constraint firstItem="aET-r5-uxb" firstAttribute="centerY" secondItem="1Fs-Zg-hSR" secondAttribute="centerY" id="rIX-La-iKb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="cancelButton" destination="1Fs-Zg-hSR" id="bKC-UK-wZv"/>
+                                            <outlet property="downloadedImageView" destination="J4Q-ZJ-bV0" id="Z6B-ZN-fcu"/>
+                                            <outlet property="infoLabel" destination="AEw-YW-Rmc" id="WiN-Gw-7h2"/>
+                                            <outlet property="nameLabel" destination="S6w-um-VsC" id="hEf-J5-G7e"/>
+                                            <outlet property="thumbnailImageView" destination="aET-r5-uxb" id="ddR-3C-2zw"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="9ZV-tM-uu1" id="BXS-QM-2AN"/>
@@ -333,4 +408,7 @@
             <point key="canvasLocation" x="-1737" y="-4619"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cancel" width="46" height="44"/>
+    </resources>
 </document>
