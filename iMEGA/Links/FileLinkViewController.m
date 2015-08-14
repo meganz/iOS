@@ -82,6 +82,8 @@
     self.openButton.layer.masksToBounds = YES;
     [self.openButton setTitle:AMLocalizedString(@"openButton", nil) forState:UIControlStateNormal];
     
+    [Helper setPathForPreviewDocument:@""];
+    
     [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
 }
@@ -139,19 +141,17 @@
         return;
     }
     
-    NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
-    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    NSString *path = [NSTemporaryDirectory() stringByAppendingString:[[Helper pathForPreviewDocument] lastPathComponent]];
+    if (![[Helper pathForPreviewDocument] isEqualToString:path]) { //Avoid deletion of an Offline file
+        return;
+    }
+    
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper pathForPreviewDocument]];
     if (fileExists) {
         NSError *error = nil;
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[Helper pathForPreviewDocument] error:&error];
         if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
-        } else {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:path]];
-            if (offlineNode) {
-                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-            }
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
         }
     }
 }
@@ -232,30 +232,34 @@
         [self.downloadButton setEnabled:NO];
         [self.openButton setEnabled:NO];
         
-        NSNumber *nodeSizeNumber = [self.node size];
-        NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-        if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
-                                                                message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            return;
-        }
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:_node]];
         
-        [Helper setRenamePathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:[self.node name]]];
-        
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper renamePathForPreviewDocument]];
-        if (!fileExists) {
-            NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
-            NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-            [Helper setPathForPreviewDocument:path];
-            
-            [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:path];
-        } else {
+        if (offlineNodeExist) {
+            NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+            [Helper setPathForPreviewDocument:itemPath];
             [self openTempFile];
+        } else {
+            NSNumber *nodeSizeNumber = [self.node size];
+            NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
+            if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
+                                                                    message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
+                                                                   delegate:self
+                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                return;
+            }
+            
+            NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]];
+            [Helper setPathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:name]];
+            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper pathForPreviewDocument]];
+            if (!fileExists) {
+                [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:[Helper pathForPreviewDocument]];
+            } else {
+                [self openTempFile];
+            }
         }
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
@@ -280,7 +284,7 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:[Helper renamePathForPreviewDocument]];
+    return [NSURL fileURLWithPath:[Helper pathForPreviewDocument]];
 }
 
 #pragma mark - QLPreviewControllerDelegate
@@ -290,8 +294,7 @@
 }
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    [Helper setPathForPreviewDocument:nil];
-    [Helper setRenamePathForPreviewDocument:nil];
+    [Helper setPathForPreviewDocument:@""];
     
     [self.importButton setEnabled:YES];
     [self.downloadButton setEnabled:YES];
@@ -356,7 +359,11 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (([transfer type] == MEGATransferTypeDownload)  && (!transfer.isStreamingTransfer) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
+    if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
+        return;
+    }
+    
+    if (([transfer type] == MEGATransferTypeDownload) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
         [SVProgressHUD show];
     }
 }
@@ -371,15 +378,9 @@
     
     if ([transfer type] == MEGATransferTypeDownload && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
         
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper pathForPreviewDocument] toPath:[Helper renamePathForPreviewDocument] error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-        }
-        
         [self openTempFile];
         
-        [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
+        [api removeMEGATransferDelegate:self];
         [SVProgressHUD dismiss];
     }
 }
