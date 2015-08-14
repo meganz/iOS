@@ -323,22 +323,22 @@
     
     cell.nameLabel.text = [node name];
     
+    [cell.thumbnailImageView.layer setCornerRadius:4];
+    [cell.thumbnailImageView.layer setMasksToBounds:YES];
+    
     if ([node type] == MEGANodeTypeFile) {
-        
-        // check if the thumbnail exist in the cache directory
-        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-        
-        if (!fileExists) {
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        if ([node hasThumbnail]) {
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+            if (!thumbnailExists) {
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            } else {
+                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            }
         } else {
-            [cell.thumbnailImageView.layer setCornerRadius:4];
-            [cell.thumbnailImageView.layer setMasksToBounds:YES];
-            
-            [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
-        
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
