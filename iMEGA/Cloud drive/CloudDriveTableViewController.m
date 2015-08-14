@@ -185,6 +185,7 @@
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
+    [Helper setPathForPreviewDocument:@""];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
@@ -1809,7 +1810,7 @@
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
     [self deleteTempFile];
     
-    [Helper setPathForPreviewDocument:nil];
+    [Helper setPathForPreviewDocument:@""];
 }
 
 #pragma mark - MEGARequestDelegate
