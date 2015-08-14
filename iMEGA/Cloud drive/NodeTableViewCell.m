@@ -27,8 +27,12 @@
 
 - (IBAction)cancelTransfer:(id)sender {
     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
-    if (transferTag != nil) {
+    if ([[MEGASdkManager sharedMEGASdk] transferByTag:transferTag.integerValue] != nil) {
         [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+    } else {
+        if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:transferTag.integerValue] != nil) {
+            [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transferTag.integerValue];
+        }
     }
 }
 

@@ -90,7 +90,7 @@
 
 //LINKS
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig" = "Necesitas más espacio";
+"nodeTooBig" = "Tiene que liberar espacio";
 
 //FileLinkViewController
 "megaLink"="Enlace a MEGA";
