@@ -31,6 +31,8 @@
 #import "SettingsTableViewController.h"
 
 @interface MyAccountViewController () <MEGARequestDelegate> {
+    BOOL isAccountDetailsAvailable;
+    
     long long availableSize;
     
     NSNumber *localSize;
@@ -39,6 +41,8 @@
     NSNumber *incomingSharesSize;
     NSNumber *usedStorage;
     NSNumber *maxStorage;
+    
+    NSByteCountFormatter *byteCountFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
@@ -88,7 +92,7 @@
     self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
     self.userAvatarImageView.layer.masksToBounds = YES;
     
-    self.upgradeToProButton.layer.borderWidth = 1.0f;
+    self.upgradeToProButton.layer.borderWidth = 2.0f;
     self.upgradeToProButton.layer.borderColor =[megaRed CGColor];
     self.upgradeToProButton.layer.cornerRadius = 6;
     self.upgradeToProButton.layer.masksToBounds = YES;
@@ -111,6 +115,10 @@
     
     [self.purchasesHistoryButton setTitle:AMLocalizedString(@"purchasesHistory", @"Purchases history") forState:UIControlStateNormal];
     
+    isAccountDetailsAvailable = NO;
+    byteCountFormatter = [[NSByteCountFormatter alloc] init];
+    [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
+    
     [_emailLabel setText:[[MEGASdkManager sharedMEGASdk] myEmail]];
 }
 
@@ -123,11 +131,8 @@
     
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
-    NSString *stringFromByteCount = [NSByteCountFormatter stringFromByteCount:[localSize longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    if ([stringFromByteCount isEqualToString:@"Zero bytes"] || [stringFromByteCount isEqualToString:@"Zero KB"]) {
-        stringFromByteCount = @"0 KB";
-    }
-    [_localUsedSpaceLabel setText:stringFromByteCount];
+    NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
+    [_localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     
     
     _fullname = @"";
@@ -164,6 +169,59 @@
     }
 }
 
+- (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
+    
+    NSMutableAttributedString *firstPartMutableAttributedString;
+    NSMutableAttributedString *secondPartMutableAttributedString;
+    
+    NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
+    NSRange firstPartRange;
+    
+    NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
+    NSString *secondPartString;
+    if ([stringComponentsArray count] > 1) {
+        NSString *integerPartString = [stringComponentsArray objectAtIndex:0];
+        NSString *fractionalPartString = [stringComponentsArray objectAtIndex:1];
+        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:integerPartString];
+        firstPartRange = [integerPartString rangeOfString:integerPartString];
+        secondPartString = [NSString stringWithFormat:@".%@ %@", fractionalPartString, [self stringWithoutCount:stringFromByteCount]];
+    } else {
+        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
+        firstPartRange = [firstPartString rangeOfString:firstPartString];
+        secondPartString = [NSString stringWithFormat:@" %@", [self stringWithoutCount:stringFromByteCount]];
+    }
+    NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
+    secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
+    
+    [firstPartMutableAttributedString addAttribute:NSFontAttributeName
+                                             value:[UIFont fontWithName:kFont size:20.0]
+                                             range:firstPartRange];
+    
+    [secondPartMutableAttributedString addAttribute:NSFontAttributeName
+                                              value:[UIFont fontWithName:kFont size:12.0]
+                                              range:secondPartRange];
+    
+    [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
+    
+    return firstPartMutableAttributedString;
+}
+
+- (NSString *)stringWithoutUnit:(NSString *)stringFromByteCount {
+    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:0];
+    if ([string isEqualToString:@"Zero"]) {
+        string = @"0";
+    }
+    return string;
+}
+
+- (NSString *)stringWithoutCount:(NSString *)stringFromByteCount {
+    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:1];
+    if ([string isEqualToString:@"bytes"]) {
+        string = @"KB";
+    }
+    return string;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
@@ -176,12 +234,14 @@
 
 - (IBAction)usageTouchUpInside:(UIButton *)sender {
     
-    NSArray *sizesArray = @[localSize, cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage];
-    
-    UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
-    [self.navigationController pushViewController:usageVC animated:YES];
-    
-    [usageVC setSizesArray:sizesArray];
+    if (isAccountDetailsAvailable) {
+        NSArray *sizesArray = @[cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage];
+        
+        UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
+        [self.navigationController pushViewController:usageVC animated:YES];
+        
+        [usageVC setSizesArray:sizesArray];
+    }
 }
 
 - (IBAction)settingsTouchUpInside:(UIButton *)sender {
@@ -221,7 +281,7 @@
             
             MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
             NSUInteger count = [incomingShares.size unsignedIntegerValue];
-            long long incomingSharesSizeLongLong;
+            long long incomingSharesSizeLongLong = 0;
             for (NSUInteger i = 0; i < count; i++) {
                 MEGANode *node = [incomingShares nodeAtIndex:i];
                 incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
@@ -231,11 +291,11 @@
             usedStorage = [request.megaAccountDetails storageUsed];
             maxStorage = [request.megaAccountDetails storageMax];
             
-            NSString *usedStorageString = [NSByteCountFormatter stringFromByteCount:[usedStorage longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory];
-            NSString *availableStorageString = [NSByteCountFormatter stringFromByteCount:([maxStorage longLongValue] - [usedStorage longLongValue])  countStyle:NSByteCountFormatterCountStyleMemory];
+            NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
+            NSString *availableStorageString = [byteCountFormatter stringFromByteCount:([maxStorage longLongValue] - [usedStorage longLongValue])];
             
-            [_usedSpaceLabel setText:usedStorageString];
-            [_availableSpaceLabel setText:availableStorageString];
+            [_usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
+            [_availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
             
             NSString *expiresString;
             if ([request.megaAccountDetails type]) {
@@ -285,6 +345,8 @@
                 default:
                     break;
             }
+            
+            isAccountDetailsAvailable = YES;
             
             break;
         }

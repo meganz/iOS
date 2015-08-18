@@ -23,7 +23,7 @@
 
 @interface UsageViewController : UIViewController
 
-/* @[localSize, cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage] */
+/* @[cloudDriveSize, rubbishBinSize, incomingSharesSize, usedStorage, maxStorage] */
 @property (strong, nonatomic) NSArray *sizesArray;
 
 @end
