@@ -459,14 +459,6 @@ static NSInteger linkNodeOption;
     return destinationFilePath;
 }
 
-+ (NSString *)pathForPreviewDocument {
-    return pathForPreview;
-}
-
-+ (void)setPathForPreviewDocument:(NSString *)path {
-    pathForPreview = path;
-}
-
 #pragma mark - Utils for links when you are not logged
 
 + (MEGANode *)linkNode {

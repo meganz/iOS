@@ -40,12 +40,15 @@
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
+#import "PreviewDocumentViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     BOOL isFetchNodesDone;
     
     NSMutableArray *matchSearchNodes;
+    
+    NSString *previewDocumentPath;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -78,7 +81,6 @@
     
     isFetchNodesDone = NO;
     
-    [Helper setPathForPreviewDocument:@""];
     _nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
@@ -255,15 +257,6 @@
 
 - (void)hideSearchBar {
     [self.tableView setContentOffset:CGPointMake(0, 44)];
-}
-
-- (void)openTempFile {
-    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-    [previewController setDelegate:self];
-    [previewController setDataSource:self];
-    [previewController setTransitioningDelegate:self];
-    [previewController setTitle:[[Helper pathForPreviewDocument] lastPathComponent]];
-    [self presentViewController:previewController animated:YES completion:nil];
 }
 
 - (void)deleteTempDocuments {
@@ -514,29 +507,34 @@
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
-                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    [Helper setPathForPreviewDocument:itemPath];
-                    [self openTempFile];
-                } else {
-                    NSNumber *nodeSizeNumber = [node size];
-                    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-                    if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
-                                                                            message:AMLocalizedString(@"fileTooBigMessage_open", @"The file you are trying to open is bigger than the avaliable memory.")
-                                                                           delegate:self
-                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                  otherButtonTitles:nil];
-                        [alertView show];
-                        return;
-                    }
+                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
                     
-                    NSString *name = [[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[node name]];
-                    [Helper setPathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:name]];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[Helper pathForPreviewDocument]];
-                    if (!fileExists) {
-                        [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:node localPath:[Helper pathForPreviewDocument] delegate:self];
+                    QLPreviewController *previewController = [[QLPreviewController alloc] init];
+                    [previewController setDelegate:self];
+                    [previewController setDataSource:self];
+                    [previewController setTransitioningDelegate:self];
+                    [previewController setTitle:node.name];
+                    [self presentViewController:previewController animated:YES completion:nil];
+                } else {
+                    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
+                                                                            message:@"Try later or cancel the pending downloads"
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:@"ok"
+                                                                  otherButtonTitles:nil, nil];
+                        [alertView show];
                     } else {
-                        [self openTempFile];
+                        // There isn't enough space in the device for preview the document
+                        if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                            return;
+                        }
+                        
+                        PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
+                        [previewDocumentVC setNode:node];
+                        
+                        [self.navigationController pushViewController:previewDocumentVC animated:YES];
+                        
+                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     }
                 }
             }
@@ -619,7 +617,7 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:[Helper pathForPreviewDocument]];
+    return [NSURL fileURLWithPath:previewDocumentPath];
 }
 
 #pragma mark - QLPreviewControllerDelegate
@@ -629,7 +627,6 @@
 }
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    [Helper setPathForPreviewDocument:@""];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -861,23 +858,6 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        if ([transfer.path isEqualToString:[Helper pathForPreviewDocument]]) {
-            NSString *name = [api unescapeFsIncompatible:transfer.fileName];
-            if (![transfer.fileName isEqualToString:name]) {
-                NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
-                NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper pathForPreviewDocument] toPath:path error:&error];
-                
-                if (!success || error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Preview document move error: %@", error]];
-                }
-            }
-            
-            [Helper setPathForPreviewDocument:[NSTemporaryDirectory() stringByAppendingPathComponent:name]];
-            
-            [self openTempFile];
-        }
-        
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {

@@ -107,9 +107,6 @@
 
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
 
-+ (NSString *)pathForPreviewDocument;
-+ (void)setPathForPreviewDocument:(NSString *)path;
-
 #pragma mark - Utils for links when you are not logged
 
 + (MEGANode *)linkNode;
