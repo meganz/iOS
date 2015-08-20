@@ -238,8 +238,8 @@
             [self presentViewController:previewController animated:YES completion:nil];
         } else {
             if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hay descargas"
-                                                                    message:@"Intentalo luego o cancela las descargas pendientes"
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
+                                                                    message:@"Try later or cancel the pending downloads"
                                                                    delegate:nil
                                                           cancelButtonTitle:@"ok"
                                                           otherButtonTitles:nil, nil];
@@ -356,7 +356,7 @@
         return;
     }
     
-    if (([transfer type] == MEGATransferTypeDownload) && ([transfer.path isEqualToString:[Helper pathForPreviewDocument]])) {
+    if (([transfer type] == MEGATransferTypeDownload) && ([transfer.path isEqualToString:previewDocumentPath])) {
         [SVProgressHUD show];
     }
 }
