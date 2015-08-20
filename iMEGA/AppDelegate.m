@@ -980,7 +980,8 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        if ([transfer.path isEqualToString:[Helper pathForPreviewDocument]]) {
+        // Don't add to the database downloads to the tmp folder
+        if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
             return;
         }
         

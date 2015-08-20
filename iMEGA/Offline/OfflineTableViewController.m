@@ -34,7 +34,9 @@
 
 #import "MEGAStore.h"
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate>
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate> {
+    NSString *previewDocumentPath;
+}
 
 @property (nonatomic, strong) NSMutableArray *offlineDocuments;
 @property (nonatomic, strong) NSMutableArray *offlineImages;
@@ -395,12 +397,12 @@
     
     OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *itemNameString = [cell itemNameString];
-    NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
+    previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
     
     BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+    [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath isDirectory:&isDirectory];
     if (isDirectory) {
-        NSString *folderPathFromOffline = [self folderPathFromOffline:itemPath folder:[cell itemNameString]];
+        NSString *folderPathFromOffline = [self folderPathFromOffline:previewDocumentPath folder:[cell itemNameString]];
         
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
@@ -428,15 +430,13 @@
             [browser setCurrentPhotoIndex:selectedIndexPhoto];
             
         } else if (isVideo(itemNameString.pathExtension)) {
-            NSURL *fileURL = [NSURL fileURLWithPath:itemPath];
+            NSURL *fileURL = [NSURL fileURLWithPath:previewDocumentPath];
             
             MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
             [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
             [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
             [moviePlayerViewController.moviePlayer play];
         } else if (isDocument(itemNameString.pathExtension)) {
-            [Helper setPathForPreviewDocument:itemPath];
-            
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
             previewController.delegate=self;
             previewController.dataSource=self;
@@ -547,7 +547,7 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:[Helper pathForPreviewDocument]];
+    return [NSURL fileURLWithPath:previewDocumentPath];
 }
 
 #pragma mark - QLPreviewControllerDelegate

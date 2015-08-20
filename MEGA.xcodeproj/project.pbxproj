@@ -82,6 +82,7 @@
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
 		41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDB51A8E2E92008408B3 /* PhotosViewController.m */; };
 		41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
+		41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */; };
 		41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */; };
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
@@ -255,6 +256,8 @@
 		41BADDB51A8E2E92008408B3 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewController.m; sourceTree = "<group>"; };
 		41D1E0B91B58F0B800982830 /* MOOfflineNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOOfflineNode.h; sourceTree = "<group>"; };
 		41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOOfflineNode.m; sourceTree = "<group>"; };
+		41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewDocumentViewController.h; sourceTree = "<group>"; };
+		41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewDocumentViewController.m; sourceTree = "<group>"; };
 		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		41FC83A61AA732ED008FA551 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Vendor/Reachability/Reachability.h; sourceTree = "<group>"; };
 		41FC83A71AA732ED008FA551 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Vendor/Reachability/Reachability.m; sourceTree = "<group>"; };
@@ -431,6 +434,8 @@
 				41319F541B14968600696BA8 /* SortByTableViewController.m */,
 				41319F571B149D4500696BA8 /* SortFieldsTableViewController.h */,
 				41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */,
+				41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */,
+				41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */,
 			);
 			path = "Cloud drive";
 			sourceTree = "<group>";
@@ -964,6 +969,7 @@
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
+				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,

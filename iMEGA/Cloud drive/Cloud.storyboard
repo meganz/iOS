@@ -198,6 +198,7 @@
                         <outlet property="sortByBarButtonItem" destination="Nq1-wJ-mHM" id="8kx-am-2NN"/>
                         <outlet property="toolbar" destination="OOx-vz-vej" id="O9Z-vK-sKV"/>
                         <segue destination="6WJ-kt-Qao" kind="show" identifier="showNodeInfoDetails" id="wms-fr-tEb"/>
+                        <segue destination="zUo-yM-mbH" kind="show" identifier="showPreviewForNode" id="0ut-Zn-xdP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bYw-MF-Zjk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -451,7 +452,7 @@
                     </connections>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="1764" y="-3935"/>
+            <point key="canvasLocation" x="1764" y="-3932"/>
         </scene>
         <!--Sort By Table View Controller-->
         <scene sceneID="4eE-xy-Jk2">
@@ -601,7 +602,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NrI-gE-uVw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="-3109"/>
+            <point key="canvasLocation" x="128" y="-2609"/>
         </scene>
         <!--Browser View Controller-->
         <scene sceneID="QN9-Nw-lfs">
@@ -752,7 +753,56 @@
                     </connections>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="1709" y="-3109"/>
+            <point key="canvasLocation" x="952" y="-2609"/>
+        </scene>
+        <!--Preview Document View Controller-->
+        <scene sceneID="Rad-Bz-MUx">
+            <objects>
+                <viewController storyboardIdentifier="previewDocumentID" hidesBottomBarWhenPushed="YES" id="zUo-yM-mbH" customClass="PreviewDocumentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7OD-cO-9LH"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mfa-Dj-had"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="be2-KZ-HQH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PvF-fF-Mki">
+                                <rect key="frame" x="290" y="258" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-69-jRQ">
+                                <rect key="frame" x="225" y="267" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="aBH-9X-cH8"/>
+                                </constraints>
+                            </progressView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VJh-z4-8vz">
+                                <rect key="frame" x="257" y="152" width="86" height="86"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="86" id="7a7-jd-lI6"/>
+                                    <constraint firstAttribute="height" constant="86" id="hRE-m5-OgP"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="PvF-fF-Mki" secondAttribute="centerY" id="aaw-Tu-Rqv"/>
+                            <constraint firstItem="VYB-69-jRQ" firstAttribute="centerY" secondItem="PvF-fF-Mki" secondAttribute="centerY" id="e95-vn-8fd"/>
+                            <constraint firstAttribute="centerX" secondItem="VJh-z4-8vz" secondAttribute="centerX" id="oNY-z3-H6B"/>
+                            <constraint firstItem="PvF-fF-Mki" firstAttribute="top" secondItem="VJh-z4-8vz" secondAttribute="bottom" constant="20" id="sYV-2T-dHF"/>
+                            <constraint firstAttribute="centerX" secondItem="PvF-fF-Mki" secondAttribute="centerX" id="u6s-6v-pC4"/>
+                            <constraint firstItem="VYB-69-jRQ" firstAttribute="centerX" secondItem="PvF-fF-Mki" secondAttribute="centerX" id="z3W-Fw-gSY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
+                        <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
+                        <outlet property="progressView" destination="VYB-69-jRQ" id="PbI-03-tZe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1764" y="-3178"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xI5-qd-9ig">
