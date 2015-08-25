@@ -12,7 +12,6 @@
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
 		41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41319F541B14968600696BA8 /* SortByTableViewController.m */; };
-		41319F591B149D4500696BA8 /* SortFieldsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */; };
 		414236F41B298800004276AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414236F31B298800004276AA /* Fabric.framework */; };
 		414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 414296101B133EFA00639A20 /* libMEGASDK.a */; };
 		4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
@@ -131,8 +130,6 @@
 		4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-PrefixHeader.pch"; sourceTree = "<group>"; };
 		41319F531B14968600696BA8 /* SortByTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortByTableViewController.h; sourceTree = "<group>"; };
 		41319F541B14968600696BA8 /* SortByTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortByTableViewController.m; sourceTree = "<group>"; };
-		41319F571B149D4500696BA8 /* SortFieldsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortFieldsTableViewController.h; sourceTree = "<group>"; };
-		41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortFieldsTableViewController.m; sourceTree = "<group>"; };
 		414236F31B298800004276AA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		414296101B133EFA00639A20 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MEGACD.xcdatamodel; sourceTree = "<group>"; };
@@ -432,8 +429,6 @@
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
 				41319F531B14968600696BA8 /* SortByTableViewController.h */,
 				41319F541B14968600696BA8 /* SortByTableViewController.m */,
-				41319F571B149D4500696BA8 /* SortFieldsTableViewController.h */,
-				41319F581B149D4500696BA8 /* SortFieldsTableViewController.m */,
 				41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */,
 				41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */,
 			);
@@ -1013,7 +1008,6 @@
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
-				41319F591B149D4500696BA8 /* SortFieldsTableViewController.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				41FC83A81AA732ED008FA551 /* Reachability.m in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,

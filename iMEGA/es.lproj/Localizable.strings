@@ -227,20 +227,26 @@
 
 "quotaExceeded"="Cuota de almacenamiento excedida";
 
-//"Sort by"
+//SORT BY
 
-"sortTitle"="Ordenar";
+/* Section title of the "Sort by" */
+"sortTitle" = "Ordenar por";
 
-"orderByTableHeader"="Ordernar por";
+/* Button title to "Save" the selected option */
+"save" = "Guardar";
 
-"fieldLabel"="Campo";
-"ascendingLabel"="Ascendente";
-
-"save"="Guardar";
-
-"dateField"="Fecha";
-
-"fieldsTitle"="Campos";
+/* Sort by option (1/6). This one order the files on alphabethical order */
+"nameAscending" = "Nombre (ascendente)";
+/* Sort by option (2/6). This one order the files on reverse alphabethical order */
+"nameDescending" = "Nombre (descendente)";
+/* Sort by option (3/6). This one order the files by its size, in this case bigger to smaller size */
+"largest" = "Más grande";
+/* Sort by option (4/6). This one order the files by its size, in this case smaller to bigger size */
+"smallest" = "Más pequeño";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest" = "Más nuevo";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest" = "Más antiguo";
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Fotos";
