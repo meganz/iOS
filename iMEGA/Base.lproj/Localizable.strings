@@ -227,20 +227,26 @@
 
 "quotaExceeded"="Storage quota exceeded";
 
-//"Sort by"
+//SORT BY
 
-"sortTitle"="Sort";
+/* Section title of the "Sort by" */
+"sortTitle" = "Sort by";
 
-"orderByTableHeader"="Order by";
+/* Button title to "Save" the selected option */
+"save" = "Save";
 
-"fieldLabel"="Field";
-"ascendingLabel"="Ascending";
-
-"save"="Save";
-
-"dateField"="Date";
-
-"fieldsTitle"="Fields";
+/* Sort by option (1/6). This one order the files on alphabethical order */
+"nameAscending" = "Name (ascending)";
+/* Sort by option (2/6). This one order the files on reverse alphabethical order */
+"nameDescending" = "Name (descending)";
+/* Sort by option (3/6). This one order the files by its size, in this case bigger to smaller size */
+"largest" = "Largest";
+/* Sort by option (4/6). This one order the files by its size, in this case smaller to bigger size */
+"smallest" = "Smallest";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest" = "Newest";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest" = "Oldest";
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Photos";
