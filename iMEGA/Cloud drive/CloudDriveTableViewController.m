@@ -908,7 +908,12 @@
                                                                                                                                  (@"com.apple.iwork.keynote.key")]
                                                                                                                         inMode:UIDocumentPickerModeImport];
                 documentMenuViewController.delegate = self;
-                documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                if ([documentMenuViewController respondsToSelector:@selector(popoverPresentationController)]) {
+                    documentMenuViewController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
+                } else {
+                    documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                }
+
                 [self presentViewController:documentMenuViewController animated:YES completion:nil];
             }
             break;
