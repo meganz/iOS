@@ -26,8 +26,6 @@
 
 @interface SortByTableViewController () {
     NSArray *sortByArray;
-    
-    NSIndexPath *sortOptionSelectedIndexPath;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
@@ -97,10 +95,10 @@
     
     switch (row) {
         case 0: //Name (ascending)
-            sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+            sortOrderType = MEGASortOrderTypeDefaultAsc;
             break;
         case 1: //Name (descending)
-            sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
+            sortOrderType = MEGASortOrderTypeDefaultDesc;
             break;
         case 2: //Largest
             sortOrderType = MEGASortOrderTypeSizeDesc;
@@ -114,7 +112,6 @@
         case 5: //Oldest
             sortOrderType = MEGASortOrderTypeModificationAsc;
             break;
-            
         default:
             sortOrderType = MEGASortOrderTypeDefaultAsc;
             break;
@@ -185,7 +182,8 @@
     
     if (self.sortType == [self orderTypeForRow:indexPath.row]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        sortOptionSelectedIndexPath = indexPath;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     UIView *view = [[UIView alloc] init];
@@ -199,23 +197,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.sortType = [self orderTypeForRow:indexPath.row];
     
-    if ([indexPath isEqual:sortOptionSelectedIndexPath]) {
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-        sortOptionSelectedIndexPath = nil;
-        self.sortType = MEGASortOrderTypeDefaultAsc;
-    } else {
-        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        
-        cell = [tableView cellForRowAtIndexPath:sortOptionSelectedIndexPath];
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-        
-        sortOptionSelectedIndexPath = indexPath;
-        self.sortType = [self orderTypeForRow:indexPath.row];
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView reloadData];
 }
 
 @end
