@@ -20,11 +20,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MEGAPricing.h"
 
 @interface UpgradeTableViewController : UITableViewController
-
-@property (nonatomic, strong) MEGAPricing *pricing;
-@property (nonatomic) MEGAAccountType megaAccountType;
 
 @end
