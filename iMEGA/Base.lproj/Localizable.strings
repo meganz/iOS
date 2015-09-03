@@ -488,10 +488,30 @@
 //UpgradeTableViewController
 "upgradeAccount" = "Upgrade account";
 
-"productSpace" = "Storage %@";
-"productBandwidth" = "Bandwidth %@";
-"productPricePerMonth" = "%.2f %@ per month";
-"productMonthlyPrice" = "Monthly (%.2f %@)";
-"productYearlyPrice" = "Yearly (%.2f %@)";
+"productSpace" = "Storage";
+"productBandwidth" = "Bandwidth";
+"productPricePerMonth" = "from %.2f %@ / month *";
 
-"chooseDuration" = "Choose duration";
+"choosePlan" = "Choose from one of the plans below:";
+"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+
+"selectMembership" = "Select membership:";
+"save17" = "Save 17%";
+
+"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"allowPurchase_title" = "Allow purchases";
+"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"restore" = "Restore";
+"monthly" = "Monthly";
+"yearly" = "Yearly";
+"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"thankYou_title" = "Thank you!";
+"purchaseRestore_message" = "Your purchase was restored!";
+"failedPurchase_title" = "Purchase stopped";
+"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+"incompleteRestore_title" = "Restore issue";
+"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"failedRestore_title" = "Restore stopped";
+"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";

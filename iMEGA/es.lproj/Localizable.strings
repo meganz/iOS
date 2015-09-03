@@ -488,10 +488,32 @@
 //UpgradeTableViewController
 "upgradeAccount" = "Mejorar cuenta";
 
-"productSpace" = "Almacenamiento %@";
-"productBandwidth" = "Ancho de banda %@";
-"productPricePerMonth" = "%.2f %@ al mes";
-"productMonthlyPrice" = "Mensualmente (%.2f %@)";
-"productYearlyPrice" = "Anualmente (%.2f %@)";
+"productSpace" = "Almacenamiento";
+"productBandwidth" = "Ancho de banda";
+"productPricePerMonth" = "desde %.2f %@ / mes *";
 
 "chooseDuration" = "Elegir duracción";
+
+"choosePlan" = "Elige uno de los siguientes planes:";
+"twoMonthsFree" = "* Obtén dos meses gratis subscribiéndote a un plan PRO anual";
+
+"selectMembership" = "Seleccione un plan:";
+"save17" = "Ahorre 17%";
+
+"wrongPurchase" = "Compra incorrecta %@ (%ld)";
+"appPurchaseDisabled" = "Compras en la App Store desactivadas, por favor actívalo en Ajustes";
+"productNotFound" = "Producto %@ no encontrado, por favor contacta con ios@mega.nz";
+"allowPurchase_title" = "Permitir compras";
+"allowPurchase_message" = "Debes activar compras en la App Store en Ajustes antes de restaurar una compra";
+"restore" = "Restaurar";
+"monthly" = "Mensualmente";
+"yearly" = "Anualmente";
+"productNotAvailable" = "Este producto no está disponible en la App Store en estos momentos. Por favor inténtelo de nuevo más tarde";
+"thankYou_title" = "¡Gracias!";
+"purchaseRestore_message" = "¡Su compra fue restaurada!";
+"failedPurchase_title" = "Compra cancelada";
+"failedPurchase_message" = "O usted ha cancelado la solicitud o Apple ha reportado un problema en la transación. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz";
+"incompleteRestore_title" = "Problema al restaurar";
+"incompleteRestore_message" = "Una transación anterior no ha sido encontrada. Para restaurar la compra de un producto, selecciona un producto. Los clientes que hayan pagado no se les cobrará de nuevo, pero su compra será restaurada";
+"failedRestore_title" = "Restauración cancelada";
+"failedRestore_message" = "O usted ha cancelado la petición o una compra anterior no puede ser restaurada. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz";
