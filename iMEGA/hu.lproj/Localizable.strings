@@ -167,15 +167,15 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Átvitelek szüneteltetve";
 /* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
+"transfersEmptyState_titleAll"="Nincsenek átvitelek";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
+"transfersEmptyState_titleDownload"="Nincsenek letöltések";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+"transfersEmptyState_titleUpload"="Nincsenek feltöltések";
 /* Text shown under the upper title when the transfers are paused */
 "transfersEmptyState_textPaused"="Folytassa az átviteleket a fenti gombbal.";
 /* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
+"transfersEmptyState_textAll"="Nem rendelkezik függőben lévő átvitellel.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
 "transfersEmptyState_textDownload"="Nem rendelkezik függőben lévő letöltéssel.";
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */

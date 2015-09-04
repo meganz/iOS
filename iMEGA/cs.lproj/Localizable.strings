@@ -167,15 +167,15 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Přenosy pozastaveny";
 /* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No Transfers";
+"transfersEmptyState_titleAll"="Žádné Přenosy";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No Downloads";
+"transfersEmptyState_titleDownload"="Žádná Stahování";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No Uploads";
+"transfersEmptyState_titleUpload"="Žádná Nahrávání";
 /* Text shown under the upper title when the transfers are paused */
 "transfersEmptyState_textPaused"="Obnovte přenosy pomocí horního tlačítka.";
 /* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
+"transfersEmptyState_textAll"="Nemáte žádné čekající přenosy.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
 "transfersEmptyState_textDownload"="Nemáte žádná čekající stahování.";
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
