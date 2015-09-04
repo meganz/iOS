@@ -242,9 +242,9 @@
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
-    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder") message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
+    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
     [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [folderAlertView textFieldAtIndex:0].text = @"";
+    [folderAlertView textFieldAtIndex:0].text = AMLocalizedString(@"newFolderMessage", nil);
     [folderAlertView show];
     [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
         [folderAlertView dismissWithClickedButtonIndex:0 animated:NO];

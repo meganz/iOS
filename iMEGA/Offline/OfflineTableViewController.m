@@ -371,7 +371,7 @@
             [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
         }
         if (!success || error) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"itemDeletingError", @"Error at deleting")];
+            [SVProgressHUD showErrorWithStatus:@""];
             return;
         } else {
             if (isDirectory) {
@@ -493,7 +493,7 @@
         if (self.folderPathFromOffline == nil) {
             text = AMLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
         } else {
-            text = AMLocalizedString(@"offlineEmptyState_textForEmptyFolder", @"When you downloaded this folder it was empty.");
+            text = AMLocalizedString(@"emptyFolder", nil);
         }
     } else {
         text = @"";

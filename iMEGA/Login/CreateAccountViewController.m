@@ -59,7 +59,7 @@
     [self.nameTextField setPlaceholder:AMLocalizedString(@"name", nil)];
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
-    [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Retype Password")];
+    [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
     [self.termsOfServiceButton setTitleColor:megaRed forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
