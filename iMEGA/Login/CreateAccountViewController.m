@@ -24,11 +24,10 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "SVProgressHUD.h"
-#import "SVWebViewController.h"
+#import "SVModalWebViewController.h"
 
-@interface CreateAccountViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
+@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -40,7 +39,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
+@property (weak, nonatomic) IBOutlet UILabel *accountCreatedTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLoginLabel;
+@property (weak, nonatomic) IBOutlet UIButton *accountCreatedLoginButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -50,12 +55,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
-    self.credentialsView.layer.borderWidth = 2.0f;
-    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
-    self.credentialsView.layer.cornerRadius = 6;
-    self.credentialsView.layer.masksToBounds = YES;
     
     [self.nameTextField setPlaceholder:AMLocalizedString(@"name", nil)];
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
@@ -67,15 +66,17 @@
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setBackgroundColor:megaDarkGray];
+    [self.createAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
-    [self.accountCreatedView.layer setCornerRadius:6];
     [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedView setBackgroundColor:megaRed];
+    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awesome", nil)];
     [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
+    [self.accountCreatedLoginLabel setText:AMLocalizedString(@"alreadyHaveAnAccount", nil)];
+    [self.accountCreatedLoginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
     
-    [self.nameTextField becomeFirstResponder];
+    [self.loginLabel setText:AMLocalizedString(@"alreadyHaveAnAccount", nil)];
+    [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,8 +164,9 @@
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachable]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
-        SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
-        [self.navigationController pushViewController:webViewController animated:YES];
+        SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:URL];
+        [webViewController setBarsTintColor:megaRed];
+        [self presentViewController:webViewController animated:YES completion:nil];
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
@@ -180,13 +182,6 @@
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
         }
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [self.accountCreatedView setHidden:NO];
-    [self.accountCreatedLabel setHidden:NO];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -251,12 +246,7 @@
             [self.termsCheckboxButton setUserInteractionEnabled:NO];
             [self.createAccountButton setEnabled:NO];
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"awesome", @"Awesome")
-                                                            message:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self.accountCreatedView setHidden:NO];
         }
             
         default:

@@ -1,0 +1,93 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : 0,
+    "1945E551F17CC8F4796C756EF87EADA8A3EADD91" : 0,
+    "3E02169055262138F7D692446C25677927AC13EE" : 0,
+    "C16576B571172538D95183F9515DC5DB064EAF7F" : 0,
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : 0,
+    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : 0,
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : 0,
+    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : 0,
+    "7070BA961BCA286ED2393408B1E3D78393C99B33" : 0,
+    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : 0,
+    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E0E59F3C-ECC8-4B12-BC45-F37C2054C81B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : "meganz:iOS3iMEGA\/Vendor\/DZNEmptyDataSet",
+    "1945E551F17CC8F4796C756EF87EADA8A3EADD91" : "meganz:iOS3iMEGA\/Vendor\/AMLocalizedString",
+    "3E02169055262138F7D692446C25677927AC13EE" : "meganz:iOS3iMEGA\/Vendor\/LTHPasscodeViewController",
+    "C16576B571172538D95183F9515DC5DB064EAF7F" : "meganz:iOS3iMEGA\/Vendor\/sskeychain",
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "meganz:iOS3iMEGA\/Vendor\/SVProgressHUD",
+    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : "meganz:iOS3iMEGA\/Vendor\/SVWebViewController",
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : "meganz:iOS3iMEGA\/Vendor\/MWPhotoBrowser",
+    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : "meganz:iOS3iMEGA\/Vendor\/GKContactImage",
+    "7070BA961BCA286ED2393408B1E3D78393C99B33" : "meganz:iOS3iMEGA\/Vendor\/Reachability",
+    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : "meganz:iOS3iMEGA\/Vendor\/SDK",
+    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : "meganz:iOS3"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "iMEGA",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iMEGA.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/SVWebViewController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "00DEE37500E6C7998F4D113C875F3996AE26D5BE"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tagyro\/AMLocalizedString.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1945E551F17CC8F4796C756EF87EADA8A3EADD91"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2AADEAED908340583C88E195E0B330D50D5EFB2E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jnavarrom\/LTHPasscodeViewController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3E02169055262138F7D692446C25677927AC13EE"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/Reachability.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7070BA961BCA286ED2393408B1E3D78393C99B33"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/SVProgressHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/MWPhotoBrowser.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9F9B14DA276794D9192F387F0CC62561009373D0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/iOS3.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/sskeychain.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C16576B571172538D95183F9515DC5DB064EAF7F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/DZNEmptyDataSet.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/GKContactImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FFD45562D681BCF3154B3744FD74B029E1BBF63E"
+    }
+  ]
+}
