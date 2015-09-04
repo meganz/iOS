@@ -1,572 +1,572 @@
 /* Button title to cancel something */
-"cancel"="Cancelar";
+"cancel"="Diddymu";
 /* Button title to accept something */
-"ok"="Aceptar";
+"ok"="Iawn";
 /*  */
-"error"="Error";
+"error"="Gwall";
 /*  */
-"name"="Nombre";
+"name"="Enw";
 /*  */
-"passcode"="Código de acceso";
+"passcode"="Cod cyfrinachol";
 /* "Size" of the file or folder you are sharing */
-"size"="Tamaño";
+"size"="Maint";
 /*  */
-"folder"="Carpeta";
+"folder"="Plygell";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="No hay cámara disponible";
+"noCamera"="No camera available";
 /* Alert title to attract attention */
-"attention"="Atención";
+"attention"="Rhybudd";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="¡Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en Ajustes!";
+"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="¡Por favor dale permisos a la aplicación de MEGA para acceder a tú librería de fotos en Ajustes!";
+"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="No se pueden descargar carpetas vacias";
+"emptyFolderMessage"="Ni allwch lawrlwytho plygell wag";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Tu cuenta ya ha sido activada. Por favor, inicia sesión.";
+"accountAlreadyConfirmed"="Bywiogwyd eich cyfrif eisoes. Mewngofnodwch.";
 /* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Enlace incorrecto a MEGA";
+"invalidLink"="Dolen MEGA annilys";
 /* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Fichero encriptado";
+"fileEncrypted"="File encrypted";
 /* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="De momento no se puede importar o descargar un fichero encriptado.";
+"fileEncryptedMessage"="You can't import or download an encrypted file as the decryption key is missing.";
 /* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Enlace a carpeta encriptada";
+"folderEncrypted"="Folder encrypted";
 /* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="De momento no se puede importar o descargar una carpeta encriptada.";
+"folderEncryptedMessage"="You can't import or download an encrypted folder as the decryption key is missing.";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="Sesión cerrada";
+"loggedOut_alertTitle"="Allgofnodwyd";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Tu sesión ha sido cerrada de este dispositivo desde otra localización";
+"loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA ESPACIO";
+"megaSpace"="STORFA MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA VELOCIDAD";
+"megaSpeed"="CYFLYMDER MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA PRIVACIDAD";
+"megaPrivacy"="PREIFATRWYDD MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="ACCESO MEGA";
+"megaAccess"="MEGA ACCESS";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Regístrate ahora y consigue 50 GB de espacio gratis.";
+"megaSpaceText"="Cofrestrwch nawr i gael storfa 50GB am ddim.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Las subidas son rápidas.Comparte archivos con todo el mundo.";
+"megaSpeedText"="Uwchlwytho cyflym.Rhannwch ffeiliau â phawb.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Mantén todos tus archivos a salvo con el encriptado punto-a-punto de MEGA.";
+"megaPrivacyText"="Cadwch eich ffeiliau'n ddiogel gydag amgryptio o un pen i'r llall.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Obtén acceso totalmente encriptado en cualquier lugar, en cualquier momento.";
+"megaAccessText"="Cewch fynediad wedi'i amgryptio'n llawn unrhyw le, unrhyw bryd.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Iniciar sesión";
+"login"="Mewngofnodi";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Crear cuenta";
+"createAccount"="Creu cyfrif";
 /* Text shown next to a switch button on login, which if it's enabled keeps you logged after the app is closed. Otherwise you will be logged out as soon as the app's gets out of the memory */
-"remainLoggedIn"="Permacer conectado";
+"remainLoggedIn"="Aros wedi mewngofnodi";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email o contraseña no válida.";
+"invalidMailOrPassword"="E-bost a/neu gyfrinair annilys. Rhowch gynnig arall arni";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Introduzca un email válido";
+"emailInvalidFormat"="Rhowch e-bost dilys";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Introduzca una contraseña válida";
+"passwordInvalidFormat"="Rhowch gyfrinair dilys";
 /* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Recuperando nodos...";
+"fetchingNodes"="Fetching nodes";
 /* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparando nodos...";
+"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Correo electrónico";
+"emailPlaceholder"="E-bost";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Contraseña";
+"passwordPlaceholder"="Cyfrinair";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Acepto los términos del servicio de MEGA";
+"termsOfServiceButton"="I agree with the MEGA Terms of Service";
 /* Error text shown when you have not entered a correct name  */
-"nameInvalidFormat"="Introduce un nombre";
+"nameInvalidFormat"="Rhowch enw dilys";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="La contraseña no coincide.";
+"passwordsDoNotMatch"="Dyw'r cyfrineiriau ddim yn cyd-fynd";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
+"termsCheckboxUnselected"="Rhaid i chi gytuno â'r telerau defnyddio i gofrestru cyfrif ar MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta con MEGA.";
+"emailAlreadyRegistered"="Mae'r cyfeiriad e-bost eisoes wedi cofrestru cyfrif gyda Mega.";
 /* Message displayed when an action is completed successfully */
-"awesome"="¡Increíble!";
+"awesome"="Gwych!";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Por favor, comprueba tu correo y haz clic en el enlace para confirmar tu cuenta.";
+"accountCreated"="Gwiriwch eich e-bost a chliciwch ar y ddolen i gadarnhau eich cyfrif.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
+"confirmText"="Rhowch eich cyfrinair i gadarnhau eich cyfrif";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirma tu cuenta";
+"confirmAccountButton"="Cadarnhau eich cyfrif";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Contraseña incorrecta";
+"passwordWrong"="Cyfrinair anghywir";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Hay iniciada una sesión con otra cuenta";
+"alreadyLoggedInAlertTitle"="Rydych wedi mewngofnodi i gyfrif arall";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Offline serán borrados. ¿Quieres continuar?";
+"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Tiene que liberar espacio";
+"nodeTooBig"="You need to free some space on your device";
 /* Title for the MEGA link view */
-"megaLink"="Enlace a MEGA";
+"megaLink"="Dolen MEGA";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Importar a tu disco en la nube";
+"importButton"="Mewnforio i'ch storfa gwmwl";
 /* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Descargar a tu aplicación de MEGA";
+"downloadButton_fileLink"="Lawrlwytho i'ch ap MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Abrir archivo";
+"openButton"="Agor ffeil";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="El fichero que estás intentado descargar es más grande que el espacio disponible.";
+"fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="El fichero que estás intentado abrir es más grande que el espacio disponible.";
+"fileTooBigMessage_open"="The file you are trying to open is bigger than the available memory.";
 /* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Enlace del archivo no disponible";
+"fileLinkUnavailableTitle"="File link unavailable";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
-"fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
+"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="El fichero que está intentando descargar ya existe en Offline";
+"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="¡Descarga iniciada!";
+"downloadStarted"="Dechreuwyd lawrlwytho!";
 /* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="Enlace a carpeta de MEGA";
+"megaFolder"="MEGA Folder Link";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Descargar";
+"downloadButton"="Lawrlwytho";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
+"folderTooBigMessage"="The folder you are trying to download is bigger than the avaliable memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="La carpeta '%@' no puede ser creada";
+"folderCreationError"="Methu creu'r blygell '%@'";
 /* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
+"folderLinkUnavailableTitle"="Dyw dolen y blygell ddim ar gael";
 /* Error message shown when a folder link doesn't exist. */
-"folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
+"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="No hay conexión a internet";
+"noInternetConnection"="Dim cysylltiad â'r we";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Carpeta vacía";
+"emptyFolder"="Dim ffeiliau yn y blygell";
 /* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Enlace a carpeta vacía";
+"folderLinkEmptyState_title"="Empty folder link";
 /* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Actualmente, este enlace no contiene ningún archivo.";
+"folderLinkEmptyState_text"="This folder link doesn't have any files";
 /* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Actualmente, esta carpeta no contiene ningún archivo.";
+"folderLinkEmptyState_textFolder"="This sub folder doesn't have any files.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="No hay archivos en tu Cloud Drive";
+"cloudDriveEmptyState_title"="Does dim ffeiliau yn eich storfa gwmwl";
 /* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="No hay ficheros en esta carpeta compartida";
+"cloudDriveEmptyState_titleContact"="No files in this shared folder";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="No hay archivos en la papelera";
+"cloudDriveEmptyState_titleRubbishBin"="Clirio'r bin sbwriel";
 /* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Añade archivos utilizando el botón superior.";
+"cloudDriveEmptyState_text"="Add files using the above button";
 /* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="¡Comparte algo! Añade archivos utilizando el botón superior.";
+"cloudDriveEmptyState_textContact"="Share something. Add files using the above button.";
 /* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Camera Uploads esta desactivado";
+"cameraUploadsEmptyState_title"="Camera Uploads is disabled";
 /* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Activa Camera Uploads para tener una copia de las fotos de tu dispositivo en MEGA.";
+"cameraUploadsEmptyState_text"="Enable Camera Uploads to have a copy of your device photos on MEGA.";
 /* Title shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_title"="No hay archivos disponibles sin conexión";
+"offlineEmptyState_title"="No files saved for offline";
 /* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Descarga archivos para utilizarlos cuando no tengas conexión a internet.";
+"offlineEmptyState_text"="Download files to use them when you don't have internet connection.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="¡Todavía no tienes contactos!";
+"contactsEmptyState_title"="You don't have any contacts";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Añade contactos utilizando el botón superior.";
+"contactsEmptyState_text"="Add contacts using the above button.";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Transferencias en pausa";
+"transfersEmptyState_titlePaused"="Transfers paused";
 /* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No hay transferencias";
+"transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
-"transfersEmptyState_titleDownload"="No hay descargas";
+"transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
-"transfersEmptyState_titleUpload"="No hay subidas";
+"transfersEmptyState_titleUpload"="No Uploads";
 /* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Reanuda las transferencias utilizando el botón superior.";
+"transfersEmptyState_textPaused"="Resume the transfers using the above button.";
 /* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="No tienes transferencias pendientes";
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="No tienes ninguna descarga pendiente.";
+"transfersEmptyState_textDownload"="You don't have any pending downloads.";
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="No tienes ninguna subida pendiente.";
+"transfersEmptyState_textUpload"="You don't have any pending uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Storfa gwmwl";
 /* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Actualizando nodos...";
+"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fichero";
+"oneFile"="%d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d ficheros";
+"files"="%d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d carpeta";
+"oneFolder"="%d plygell";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="Compartiendo %d carpeta";
+"folders"="%d o blygellau";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d carpeta • %d fichero";
+"folderAndFile"="%d blygell • %d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1+} file" */
-"foldersAndFiles"="%d carpetas • %d ficheros";
+"foldersAndFiles"="%d plygell • %d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d carpetas • %d fichero";
+"foldersAndFile"="%d plygell • %d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="%d carpeta • %d ficheros";
+"folderAndFiles"="%d blygell • %d ffeil";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d carpeta • %d fichero";
+"folderAndFile"="%d blygell • %d ffeil";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="En cola";
+"queued"="Yn y ciw";
 /* Message shown when a transfer has been canceled */
-"transferCanceled"="¡Transferencia cancelada!";
+"transferCanceled"="Transfer canceled!";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Hay descargas pendientes";
+"documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Inténtalo más tarde o cancela las descargas.";
+"documentOpening_alertMessage"="Try again later or cancel";
 /* Section title of the "Sort by" */
-"sortTitle"="Ordenar por";
+"sortTitle"="TREFNU YN ÔL";
 /* Button title to "Save" the selected option */
-"save"="Guardar";
+"save"="Cadw";
 /* Sort by option (1/6). This one orders the files alphabethically*/
-"nameAscending"="Nombre (ascendente)";
+"nameAscending"="enw (esgynnol)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="Nombre (descendente)";
+"nameDescending"="enw (disgynnol)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="Más grande";
+"largest"="mwyaf";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="Más pequeño";
+"smallest"="lleiaf";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="Más nuevo";
+"newest"="diweddaraf";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="Más antiguo";
+"oldest"="hynaf";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Elegir";
+"choosePhotoVideo"="Dewis";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Capturar";
+"capturePhotoVideo"="Tynnu";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
-"newFolder"="Nueva carpeta";
+"newFolder"="Plygell newydd";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="Nombre para la carpeta";
+"newFolderMessage"="Enw'r blygell newydd";
 /* Title button for the create folder alert.  */
-"createFolderButton"="Crear";
+"createFolderButton"="Creu";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Subir desde...";
+"uploadFrom"="Wrthi'n uwchlwytho o...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ subido previamente";
+"fileExistAlertController_Message"="%@ already uploaded";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="¡Subida iniciada!";
+"uploadStarted_Message"="Upload started";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Guardar en Offline";
+"saveForOffline"="Cadw all-lein";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Guardado en Offline";
+"savedForOffline"="Cadwyd all-lein";
 /* List option shown on the details of a file or folder */
-"getLink"="Obtener link";
+"getLink"="Estyn y ddolen";
 /* Message shown when a link to the file is being generated */
-"generatingLink"="Generando link...";
+"generatingLink"="Generating link...";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Eliminar enlace";
+"removeLink"="Tynnu'r ddolen";
 /* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="¡El enlace se ha eliminado correctamente!";
+"removeLinkSuccess"="Tynnwyd y ddolen!";
 /* Title show when a file is being downloaded */
-"downloading"="Descargando...";
+"downloading"="Wrthi'n lawrlwytho: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
+"cancelDownloadAlertViewText"="Hoffech chi ddiddymu'r lawrlwythiad?";
 /* Title for the action that allows you to move a file or folder */
-"move"="Mover";
+"move"="Symud";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 fichero movido";
+"moveFileMessage"="Symudwyd 1 llun!";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d ficheros movidos";
+"moveFilesMessage"="Symudwyd %d ffeil!";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 carpeta movida";
+"moveFolderMessage"="Symudwyd 1 blygell!";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d carpetas movidas";
+"moveFoldersMessage"="%d folders moved";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 fichero y 1 carpeta movidos";
+"moveFileFolderMessage"="Symudwyd 1 ffeil ac 1 blygell";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 fichero y %d carpeta movidos";
+"moveFileFoldersMessage"="Symudwyd 1 ffeil a %d plygell!";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d ficheros y 1 carpeta movidos";
+"moveFilesFolderMessage"="Symudwyd %d ffeil ac 1 blygell!";
 /* Success message shown when you have moved {1+} files and {1+} folders */
-"moveFilesFoldersMessage"="%d ficheros y %d carpetas movidos";
+"moveFilesFoldersMessage"="Symudwyd %d ffeil a %d plygell!";
 /* List option shown on the details of a file or folder */
-"copy"="Copiar";
+"copy"="Copïo";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 fichero copiado";
+"copyFileMessage"="Copïwyd 1 ffeil";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d ficheros copiados";
+"copyFilesMessage"="Copïwyd %d ffeil";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="1 carpeta copiada";
+"copyFolderMessage"="Copïwyd 1 blygell";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d carpetas copiadas";
+"copyFoldersMessage"="%d folders copied";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="1 fichero y 1 carpeta copiados";
+"copyFileFolderMessage"="Copïwyd 1 ffeil ac 1 blygell";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 fichero y %d carpeta copiados";
+"copyFileFoldersMessage"="Copïwyd 1 ffeil a %d plygell";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d ficheros y 1 carpeta copiados";
+"copyFilesFolderMessage"="Copïwyd %d ffeil ac 1 blygell";
 /* Success message shown when you have copied {1+} files and {1+} folders */
-"copyFilesFoldersMessage"="%d ficheros y %d carpetas copiados";
+"copyFilesFoldersMessage"="Copïwyd %d ffeil a %d plygell";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Renombrar";
+"rename"="Ailenwi";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Introduce otro nombre";
+"renameNodeMessage"="Rhowch yr enw newydd";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="Mover a la Papelera";
+"moveToTheRubbishBin"="Symud i'r bin sbwriel";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo a la papelera?";
+"moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos a la papelera?";
+"moveFilesToRubbishBinMessage"="Ydych chi'n siŵr eich bod am symud %d ffeil i'r bin sbwriel?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 carpeta a la papelera?";
+"moveFolderToRubbishBinMessage"="Ydych chi'n siŵr eich bod am symud 1 blygell i'r bin sbwriel?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover %d carpetas a la papelera?";
+"moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo y 1 carpeta a la papelera?";
+"moveFileFolderToRubbishBinMessage"="Are you sure you want to move 1 file and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover 1 archivo y %d carpetas a la papelera?";
+"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y 1 carpeta a la papelera?";
+"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y %d carpetas a la papelera?";
+"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move %d files and %d folders to the Rubbish Bin?";
 /* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 fichero movido a la papelera";
+"fileMovedToRubbishBin"="Symudwyd 1 ffeil i'r bin sbwriel!";
 /* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d ficheros movidos a la papelera";
+"filesMovedToRubbishBin"="Symudwyd %d ffeil i'r bin sbwriel!";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Error de permisos";
+"permissionTitle"="Permissions error";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Compruebe sus permisos sobre esta carpeta";
+"permissionMessage"="Check your permissions on this folder";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="¡Carpeta compartida!";
+"sharedFolder_success"="Rhannwyd y blygell!";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importar a ";
+"importTitle"="Mewnforio i";
 /* Button title that triggers the importing link action */
-"import"="Importar";
+"import"="Mewnforio";
 /* Message shown when a file have been imported */
-"fileImported"="¡Fichero importado!";
+"fileImported"="Mewnforiwyd y ffeil!";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cuota superada";
+"quotaExceeded"="Aethpwyd dros y cyfyngiad";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Seleccionar elementos";
+"selectTitle"="Select items";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu fotos";
+"photosPerMonth"="%lu o luniau";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu foto";
+"photoPerMonth"="%lu llun";
 /* Button title that skips the current action */
-"skipButton"="Saltar";
+"skipButton"="Hepgor";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activar subidas de la cámara";
+"enableCameraUploadsButton"="Galluogi uwchlwythiadau camera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="¡Subidas de la cámara activadas!";
+"cameraUploadsEnabled"="Camera Uploads enabled!";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu elemento seleccionado";
+"oneItemSelected"="%lu item selected";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu elementos seleccionados";
+"itemsSelected"="%lu items selected";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tiene suficiente espacio en su dispositivo";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
 /* Title of the Offline section */
-"offline"="Offline";
+"offline"="All-lein";
 /* Title of the Contacts section */
-"contactsTitle"="Contactos";
+"contactsTitle"="Cysylltiadau";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Ninguna carpeta compartida";
+"noFoldersShared"="No folders shared";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="Compartiendo una carpeta";
+"oneFolderShared"="1 blygell";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="Compartiendo %d carpeta";
+"foldersShared"="%d o blygellau";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Introducir un email";
+"addFromEmail"="Insert an email";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Añadir desde contactos";
+"addFromContacts"="Ychwanegu o'ch cysylltiadau";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Añadir contacto";
+"addContact"="Ychwanegu cyswllt";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Email del contacto";
+"contactEmail"="E-bost y cysylltiad";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="Añadir";
+"addContactButton"="Ychwanegu";
 /* Success message shown when a contact has been added */
-"contactAdded"="Contacto añadido";
+"contactAdded"="Contact added!";
 /* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="Error al añadir contacto";
+"addContactError"="Error adding contact";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Eliminar contacto";
+"removeUserTitle"="Tynnu'r cyswllt";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="¿Estás seguro de que deseas eliminar a %@ de la lista de contactos?";
+"removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="¿Estás seguro de que deseas eliminar %d usuarios de la lista de contactos?";
+"removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contactos eliminados";
+"removedContacts"="%d contacts removed";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed!" */
-"removedContact"="Contacto %@ eliminado";
+"removedContact"="Contact %@ removed!";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="El contacto no tiene email";
+"contactWithoutEmail"="The contact does not have an email";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Abandonar";
+"leaveFolder"="Gadael";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Carpeta abandonada";
+"shareFolderLeaved"="Folder left!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Compartir carpeta";
+"shareFolder"="Rhannu'r blygell";
 /* Button that allows you to select a given folder */
-"select"="Seleccionar ";
+"select"="Dewis";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Lectura";
+"readOnly"="Read only";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lectura y escritura";
+"readAndWrite"="Darllen ac ysgrifennu";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Acceso completo";
+"fullAccess"="Mynediad llawn";
 /* Title of the Settings section */
-"settingsTitle"="Ajustes";
+"settingsTitle"="Gosodiadau";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Subidas de la cámara";
+"cameraUploadsLabel"="Uwchlwythiadau camera";
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
-"rubbishBinLabel"="Papelera";
+"rubbishBinLabel"="Bin sbwriel";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Opciones de seguridad";
+"securityOptions"="Dewisiadau diogelwch";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="Acerca de";
+"about"="Ynghylch";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Idioma";
+"language"="Iaith";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Español";
+"applicationLanguage"="Iaith y rhaglen";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
-"sendFeedbackLabel"="Enviar comentarios";
+"sendFeedbackLabel"="Anfon adborth";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="No hay una cuenta de email configurada";
+"noEmailAccountConfigured"="No email account set up on your device";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Politica de Privacidad";
+"privacyPolicyLabel"="Polisi preifatrwydd";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Términos del Servicio";
+"termsOfServicesLabel"="Telerau defnyddio";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="No";
+"off"="I ffwrdd";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="Sí";
+"on"="Ymlaen";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
-"options"="Opciones";
+"options"="Dewisiadau";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Subir videos";
+"uploadVideosLabel"="Uwchwlytho fideos";
 /* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Usar conexión de datos";
+"useCellularConnectionLabel"="Defnyddio cysylltiad ffôn symudol";
 /* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Subir solo cuando está cargando";
+"onlyWhenChargingLabel"="Tra'n gwefru'n unig";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Si está activado, se subirán nuevas fotos y vídeos.";
+"cameraUploads_footer"="When enabled new photos and videos will be uploaded.";
 /* Label for the "Version" number of the app */
-"version"="Versión";
+"version"="Fersiwn";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Agradecimientos";
+"acknowledgements"="Cydnabyddiaeth";
 /* Title for the MEGA Master Key */
-"masterKey"="Clave maestra";
+"masterKey"="Prifallwedd";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Cambiar contraseña";
+"changePasswordLabel"="Newid eich cyfrinair";
 /* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Exportar clave maestra";
+"exportMasterKey"="Allforio'r brifallwedd";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Desea continuar?";
+"exportMasterKey_alertMessage"="Rhybudd diogelwch! Mae hyn yn weithred risg uchel. Hoffech chi barhau?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Exportando la clave maestra y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
+"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Master Key exportada";
+"masterKeyExported"="Allforiwyd y brifallwedd";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Tu clave maestra (MasterKey.txt) ha sido guardada en este dispositivo. Conéctate a tu ordenador y abre iTunes para poder acceder a ella en los documentos de MEGA. ¡Aconsejamos mantener este fichero seguro!";
+"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
 /* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Llave maestra borrada";
+"masterKeyRemoved"="Master Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt fue borrado de la carpeta de documentos.";
+"masterKeyRemoved_alertMessage"="Tynnwyd MasterKey.txt o'r blygell Dogfennau.";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Eliminar";
+"remove"="Dileu";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
-"removeNodeFromRubbishBinTitle"="Confirmar borrado";
+"removeNodeFromRubbishBinTitle"="Cadarnhau'r dileu";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFolderToRubbishBinMessage"="You are about to permanently remove 1 file and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFoldersToRubbishBinMessage"="You are about to permanently remove 1 file and %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="¡1 archivo borrado de MEGA!";
+"fileRemovedFromRubbishBin"="Tynnwyd 1 ffeil oddi ar MEGA!";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="¡%d archivos borrados de MEGA!";
+"filesRemovedFromRubbishBin"="Tynnwyd %d ffeil oddi ar MEGA!";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Contraseña actual";
+"currentPassword"="Cyfrinair cyfredol";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Nueva contraseña";
+"newPassword"="Cyfrinair newydd";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Confirma la contraseña";
+"confirmPassword"="Cadarnhau'r cyfrinair";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Tu contraseña ha sido cambiada.";
+"passwordChanged"="Newidiwyd eich cyfrinair.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
-"oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
+"oldAndNewPasswordMatch"="Rhaid i'ch cyfrinair newydd fod yn wahanol i'r hen un.";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambiar código de acceso";
+"changePasscodeLabel"="Newid eich cod cyfrinachol";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Código de acceso simple";
+"simplePasscodeLabel"="Simple passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Borrar los datos locales";
+"eraseAllLocalDataLabel"="Erase local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Cerrar sesión y se borrar los datos locales después de 10 intentos fallidos";
+"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centro de ayuda";
+"helpCentreLabel"="Canolfan Gymorth";
 /* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Obtén asistencia técnica o lee los temas más populares.";
+"helpCentreFooter"="Mynnwch gymorth neu gallwch ddarllen pynciau poblogaidd.";
 /* Title to rate the app */
-"rateUsLabel"="¡Vótenos!";
+"rateUsLabel"="Dywedwch eich dweud amdanom ni!";
 /* Title of the Transfers section */
-"transfers"="Transferencias";
+"transfers"="Trosglwyddiadau";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Todas";
+"all"="All";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Descargas";
+"downloads"="lawrlwythiadau";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Subidas";
+"uploads"="uwchlwythiadau";
 /* Success message shown when the transfers have been resumed */
-"transfersResumed"="¡Transferencias reanudadas!";
+"transfersResumed"="Transfers resumed!";
 /* Success message shown when the transfers have been paused */
-"transfersPaused"="¡Transferencias pausadas!";
+"transfersPaused"="Transfers paused!";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="¡Transferencias canceladas!";
+"transfersCanceled"="Transfers cancelled!";
 /* Title of the alert shown when you try to cancel transfers */
-"cancelTransfersTitle"="Cancelar transferencias";
+"cancelTransfersTitle"="Cancel transfers";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="¿Quieres cancelar %@?";
+"cancelTransfersText"="Do you want to cancel %@?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="TODAS las transferencias";
+"allInUppercaseTransfers"="ALL transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="las transferencias de SUBIDA";
+"uploadInUppercaseTransfers"="UPLOAD transfers";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="las transferencias de DESCARGA";
+"downloadInUppercaseTransfers"="DOWNLOAD transfers";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Mi cuenta";
+"myAccount"="Fy nghyfrif";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Desconectar";
+"logoutLabel"="Allgofnodi";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Cerrando sesión";
+"loggingOut"="Wrthi'n allgofnodi";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="Uso";
+"usage"="Defnydd";
 /* Title for "Local" used space. */
-"localLabel"="Local";
+"localLabel"="Lleol";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Usado";
+"usedSpaceLabel"="Defnyddir";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Disponible";
+"availableLabel"="Ar gael";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATIS";
+"free"="AM DDIM";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="caduca el %@";
+"expiresOn"="expires on %@";
 /* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restaurar compras";
+"restorePurchases"="Adfer pryniannau";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Carpetas compartidas";
+"incomingShares"="Ffeiliau a rennir â chi";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
+"of %@"="o %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usado de %@";
+"used of %@"="used of %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponible de %@";
+"available of %@"="available of %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Mejorar cuenta";
+"upgradeAccount"="Uwchraddio fy nghyfrif";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Almacenamiento %@";
+"productSpace"="Lle storio %@";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Ancho de banda %@";
+"productBandwidth"="Bandwidth %@";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ al mes";
+"productPricePerMonth"="%.2f %@ y mis";
