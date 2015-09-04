@@ -125,7 +125,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Lawrlwytho";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="The folder you are trying to download is bigger than the avaliable memory.";
+"folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Methu creu'r blygell '%@'";
 /* Error title shown when a folder link doesn't exist. */
