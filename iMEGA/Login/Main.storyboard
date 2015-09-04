@@ -152,7 +152,7 @@
                                     <action selector="tapLogin:" destination="y7g-EC-7mD" eventType="touchUpInside" id="a04-W6-hXS"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpS-TQ-htQ">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpS-TQ-htQ">
                                 <rect key="frame" x="30" y="457" width="250" height="17.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="ysL-PQ-bS1"/>
@@ -161,14 +161,14 @@
                                 <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ety-kE-DRx">
-                                <rect key="frame" x="370" y="451" width="200" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ety-kE-DRx">
+                                <rect key="frame" x="200" y="451" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="cM2-AJ-Mis"/>
                                     <constraint firstAttribute="width" constant="200" id="hrJ-KR-Lod"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Create one!">
+                                <state key="normal" title="Create one">
                                     <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -199,11 +199,17 @@
                             <constraint firstItem="1ap-A2-BES" firstAttribute="leading" secondItem="HNb-vZ-9Rz" secondAttribute="leading" constant="30" id="hNL-yb-t8h"/>
                             <constraint firstItem="bpS-TQ-htQ" firstAttribute="leading" secondItem="HNb-vZ-9Rz" secondAttribute="leading" constant="30" id="hWe-rJ-X2j"/>
                             <constraint firstItem="EcF-LZ-UjW" firstAttribute="top" secondItem="yWC-os-01i" secondAttribute="bottom" constant="44" id="inv-TG-1aZ"/>
+                            <constraint firstAttribute="centerX" secondItem="ety-kE-DRx" secondAttribute="centerX" id="nXQ-Dz-Lbd"/>
                             <constraint firstItem="yWC-os-01i" firstAttribute="leading" secondItem="HNb-vZ-9Rz" secondAttribute="leading" constant="30" id="oXQ-R8-x08"/>
                             <constraint firstItem="GQN-0T-D2M" firstAttribute="leading" secondItem="HNb-vZ-9Rz" secondAttribute="leading" constant="30" id="oim-4F-hs1"/>
                             <constraint firstItem="sOe-JK-Yli" firstAttribute="leading" secondItem="GQN-0T-D2M" secondAttribute="trailing" constant="18" id="xC8-SN-j1E"/>
                             <constraint firstItem="aOs-mq-CX2" firstAttribute="top" secondItem="99Q-lh-rLG" secondAttribute="bottom" constant="75" id="zik-wv-HhP"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="aKk-gf-QgS"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Login" id="5it-Nq-awd"/>
@@ -378,7 +384,7 @@
                                     <action selector="createAccountTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="X1E-98-mtl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-Lw-26s">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-Lw-26s">
                                 <rect key="frame" x="30" y="462" width="250" height="17.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="65k-IC-58l"/>
@@ -387,8 +393,8 @@
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-eK-8Sh">
-                                <rect key="frame" x="420" y="456" width="150" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-eK-8Sh">
+                                <rect key="frame" x="225" y="456" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="JEj-yA-z6A"/>
                                     <constraint firstAttribute="height" constant="30" id="Wrk-Et-1fi"/>
@@ -404,7 +410,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0h-b9-ygd" userLabel="Please check your email View">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6b6-K4-JUo">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6b6-K4-JUo">
                                         <rect key="frame" x="30" y="449" width="250" height="17.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="tfD-qb-c49"/>
@@ -413,8 +419,8 @@
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yj2-gK-lf9">
-                                        <rect key="frame" x="420" y="443" width="150" height="30.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yj2-gK-lf9">
+                                        <rect key="frame" x="225" y="443" width="150" height="30.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="5K9-Hc-fss"/>
                                             <constraint firstAttribute="height" constant="30" id="fUi-so-aEc"/>
@@ -472,6 +478,7 @@
                                     <constraint firstAttribute="trailing" secondItem="yj2-gK-lf9" secondAttribute="trailing" constant="30" id="Ad8-Yr-6Fc"/>
                                     <constraint firstAttribute="trailing" secondItem="yDd-uX-Kxx" secondAttribute="trailing" constant="8" id="Drd-qd-PfA"/>
                                     <constraint firstItem="yj2-gK-lf9" firstAttribute="centerY" secondItem="6b6-K4-JUo" secondAttribute="centerY" id="Lg5-au-jj8"/>
+                                    <constraint firstAttribute="centerX" secondItem="yj2-gK-lf9" secondAttribute="centerX" id="btf-WW-mCy"/>
                                     <constraint firstItem="3hZ-hv-g3O" firstAttribute="top" secondItem="MQS-YI-mUh" secondAttribute="bottom" constant="36" id="cT7-JF-dEA"/>
                                     <constraint firstItem="yDd-uX-Kxx" firstAttribute="top" secondItem="l0h-b9-ygd" secondAttribute="top" constant="8" id="fz4-1D-tve"/>
                                     <constraint firstItem="yDd-uX-Kxx" firstAttribute="top" secondItem="3hZ-hv-g3O" secondAttribute="bottom" constant="24" id="gxj-ZL-iVq"/>
@@ -487,6 +494,7 @@
                                         <exclude reference="Drd-qd-PfA"/>
                                         <exclude reference="fz4-1D-tve"/>
                                         <exclude reference="ylt-vl-Qsb"/>
+                                        <exclude reference="Ad8-Yr-6Fc"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -539,9 +547,15 @@
                             <constraint firstItem="l0h-b9-ygd" firstAttribute="width" secondItem="AWH-xe-qAi" secondAttribute="width" id="khQ-3X-Jfz"/>
                             <constraint firstItem="fqq-un-Bih" firstAttribute="leading" secondItem="l5v-Oj-XXr" secondAttribute="trailing" constant="22" id="oFK-kJ-LSC"/>
                             <constraint firstItem="jJK-uV-V7Y" firstAttribute="top" secondItem="bVu-yv-OMn" secondAttribute="bottom" constant="14" id="pyj-BU-Z9x"/>
+                            <constraint firstAttribute="centerX" secondItem="7zJ-eK-8Sh" secondAttribute="centerX" id="slY-O6-fvD"/>
                             <constraint firstAttribute="trailing" secondItem="2T9-ef-E6L" secondAttribute="trailing" constant="30" id="tsk-XN-UWa"/>
                             <constraint firstAttribute="trailing" secondItem="bak-ZA-1ZU" secondAttribute="trailing" constant="30" id="zao-1f-dwx"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="BVa-7k-2i8"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Create Account" id="bf9-8f-AVR"/>
