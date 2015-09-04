@@ -54,7 +54,7 @@
     [self.loginButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     
     [self.createAccountLabel setText:AMLocalizedString(@"doNotHaveAnAccount", nil)];
-    [self.createAccountButton setTitle:AMLocalizedString(@"createOne", nil) forState:UIControlStateNormal];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
