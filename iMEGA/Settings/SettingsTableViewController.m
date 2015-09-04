@@ -67,7 +67,7 @@
         selectedLanguage = nil;
     }
     
-    languagesCodes = [NSArray arrayWithObjects:@"en", @"es", nil];
+    languagesCodes = [NSArray arrayWithObjects:@"ca", @"en", @"es", @"it", @"hu", @"nl", @"pt", @"pt-br", @"fi", @"sv", @"cs", @"ru", @"zh-Hant", nil];
     
     isLanguagePickerViewShown = NO;
     _languagePickerCellRowHeight = 216.0;
@@ -226,7 +226,7 @@
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
     NSString *titleForRow = languagesCodes[row];
     NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(titleForRow, nil)];
-    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:20.0] range:[titleForRow rangeOfString:titleForRow]];
+//    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:10.0] range:[titleForRow rangeOfString:titleForRow]];
     return mutableAttributedString;
 }
 
