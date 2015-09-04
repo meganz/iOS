@@ -236,7 +236,7 @@
     }
     
     selectedLanguage = languagesCodes[row];
-    [[LocalizationSystem sharedLocalSystem] setLanguage:@"de"];
+    [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
     
     [self.tableView reloadData];
 }
