@@ -90,7 +90,7 @@
 
 //LINKS
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig" = "You need more free space";
+"nodeTooBig" = "You need to free up some space";
 
 //FileLinkViewController
 "megaLink"="MEGA Link";
@@ -192,6 +192,8 @@
 "saveForOffline"="Save for Offline";
 "savedForOffline"="Saved for Offline";
 "getLink"="Get link";
+"removeLink"="Remove link";
+"removeLinkSuccess"="The link has been removed";
 "generatingLink" = "Generating link...";
 "copy"="Copy";
 "moveToRubbishBin"="Move to the Rubbish Bin";
@@ -225,20 +227,26 @@
 
 "quotaExceeded"="Storage quota exceeded";
 
-//"Sort by"
+//SORT BY
 
-"sortTitle"="Sort";
+/* Section title of the "Sort by" */
+"sortTitle" = "Sort by";
 
-"orderByTableHeader"="Order by";
+/* Button title to "Save" the selected option */
+"save" = "Save";
 
-"fieldLabel"="Field";
-"ascendingLabel"="Ascending";
-
-"save"="Save";
-
-"dateField"="Date";
-
-"fieldsTitle"="Fields";
+/* Sort by option (1/6). This one order the files on alphabethical order */
+"nameAscending" = "Name (ascending)";
+/* Sort by option (2/6). This one order the files on reverse alphabethical order */
+"nameDescending" = "Name (descending)";
+/* Sort by option (3/6). This one order the files by its size, in this case bigger to smaller size */
+"largest" = "Largest";
+/* Sort by option (4/6). This one order the files by its size, in this case smaller to bigger size */
+"smallest" = "Smallest";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest" = "Newest";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest" = "Oldest";
 
 //UITABBARCONTROLLER (2) PHOTOS
 "photosTitle"="Photos";
@@ -486,10 +494,30 @@
 //UpgradeTableViewController
 "upgradeAccount" = "Upgrade account";
 
-"productSpace" = "Storage %@";
-"productBandwidth" = "Bandwidth %@";
-"productPricePerMonth" = "%.2f %@ per month";
-"productMonthlyPrice" = "Monthly (%.2f %@)";
-"productYearlyPrice" = "Yearly (%.2f %@)";
+"productSpace" = "Storage";
+"productBandwidth" = "Bandwidth";
+"productPricePerMonth" = "from %.2f %@ / month *";
 
-"chooseDuration" = "Choose duration";
+"choosePlan" = "Choose from one of the plans below:";
+"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+
+"selectMembership" = "Select membership:";
+"save17" = "Save 17%";
+
+"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"allowPurchase_title" = "Allow purchases";
+"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"restore" = "Restore";
+"monthly" = "Monthly";
+"yearly" = "Yearly";
+"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"thankYou_title" = "Thank you!";
+"purchaseRestore_message" = "Your purchase was restored!";
+"failedPurchase_title" = "Purchase stopped";
+"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+"incompleteRestore_title" = "Restore issue";
+"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"failedRestore_title" = "Restore stopped";
+"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";

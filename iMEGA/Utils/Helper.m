@@ -459,23 +459,6 @@ static NSInteger linkNodeOption;
     return destinationFilePath;
 }
 
-+ (NSString *)pathForPreviewDocument {
-    return pathForPreview;
-}
-
-+ (void)setPathForPreviewDocument:(NSString *)path {
-    pathForPreview = path;
-}
-
-+ (NSString *)renamePathForPreviewDocument {
-    return renamePathForPreview;
-
-}
-
-+ (void)setRenamePathForPreviewDocument:(NSString *)path {
-    renamePathForPreview = path;
-}
-
 #pragma mark - Utils for links when you are not logged
 
 + (MEGANode *)linkNode {
@@ -699,7 +682,7 @@ static NSInteger linkNodeOption;
     if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
         if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
         }
     }
     

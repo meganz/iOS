@@ -20,16 +20,13 @@
  */
 
 #import "SortByTableViewController.h"
-#import "SortFieldsTableViewController.h"
+
 #import "MEGASdk.h"
+#import "Helper.h"
 
-@interface SortByTableViewController ()
-
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *alphabeticallySwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *fieldLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ascendingLabel;
+@interface SortByTableViewController () {
+    NSArray *sortByArray;
+}
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -45,21 +42,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = AMLocalizedString(@"sortTitle", @"Sort");
+    self.title = AMLocalizedString(@"sortTitle", nil);
     
-    [self.fieldLabel setText:AMLocalizedString(@"fieldLabel", @"Campo")];
-    [self.ascendingLabel setText:AMLocalizedString(@"ascendingLabel", @"Ascending")];
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+    [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
+
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
+    [_saveBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_saveBarButtonItem.tag] forState:UIControlStateNormal];
     
     self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
-    [self setDetailLabelText];
     
-    if (self.sortType % 2) {
-        [self.alphabeticallySwitch setOn:YES];
-    } else {
-        [self.alphabeticallySwitch setOn:NO];
-    }
+    sortByArray = @[AMLocalizedString(@"nameAscending", nil), AMLocalizedString(@"nameDescending", nil), AMLocalizedString(@"largest", nil), AMLocalizedString(@"smallest", nil), AMLocalizedString(@"newest", nil), AMLocalizedString(@"oldest", nil)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,7 +68,88 @@
     return UIInterfaceOrientationPortrait;
 }
 
+#pragma mark - Private
+
+- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
+    
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    
+    switch (buttonTag) {
+        case 0:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+            break;
+            
+        case 1:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"HelveticaNeue-Regular" size:17.0] forKey:NSFontAttributeName];
+            break;
+    }
+    
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    
+    return titleTextAttributesDictionary;
+}
+
+- (MEGASortOrderType)orderTypeForRow:(NSInteger)row {
+    
+    MEGASortOrderType sortOrderType;
+    
+    switch (row) {
+        case 0: //Name (ascending)
+            sortOrderType = MEGASortOrderTypeDefaultAsc;
+            break;
+        case 1: //Name (descending)
+            sortOrderType = MEGASortOrderTypeDefaultDesc;
+            break;
+        case 2: //Largest
+            sortOrderType = MEGASortOrderTypeSizeDesc;
+            break;
+        case 3: //Smallest
+            sortOrderType = MEGASortOrderTypeSizeAsc;
+            break;
+        case 4: //Newest
+            sortOrderType = MEGASortOrderTypeModificationDesc;
+            break;
+        case 5: //Oldest
+            sortOrderType = MEGASortOrderTypeModificationAsc;
+            break;
+        default:
+            sortOrderType = MEGASortOrderTypeDefaultAsc;
+            break;
+    }
+    
+    return sortOrderType;
+}
+
+- (NSString *)imageNameForRow:(NSInteger)row {
+    
+    NSString *imageName;
+    
+    switch (row) {
+        case 0: //Name (ascending)
+            imageName = @"ascending";
+            break;
+        case 1: //Name (descending)
+            imageName = @"descending";
+            break;
+        case 2: //Largest
+            imageName = @"largest";
+            break;
+        case 3: //Smallest
+            imageName = @"smallest";
+            break;
+        case 4: //Newest
+            imageName = @"newest";
+            break;
+        case 5: //Oldest
+            imageName = @"oldest";
+            break;
+    }
+    
+    return imageName;
+}
+
 #pragma mark - IBActions
+
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -87,48 +161,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)alphabeticallySwitchValueChanged:(UISwitch *)sender {
-    if (sender.isOn) {
-        self.sortType--;
-    } else {
-        self.sortType++;
-    }
-    
-}
-
-- (IBAction)unwindFromSortFieldsTableViewController:(UIStoryboardSegue *)segue {
-    if ([segue.sourceViewController isKindOfClass:[SortFieldsTableViewController class]]) {
-        SortFieldsTableViewController *sortFieldsTableViewController = segue.sourceViewController;
-        self.sortType = sortFieldsTableViewController.sortType;
-        [self setDetailLabelText];
-    }
-}
-
-#pragma mark - 
-
-- (void)setDetailLabelText {
-    
-    switch (self.sortType) {
-        case 1:
-        case 2:
-            self.detailLabel.text = AMLocalizedString(@"name", nil);
-            break;
-            
-        case 3:
-        case 4:
-            self.detailLabel.text = AMLocalizedString(@"size", nil);
-            break;
-            
-        case 5:
-        case 6:
-            self.detailLabel.text = AMLocalizedString(@"dateField", @"Date");
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -136,25 +168,38 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [sortByArray count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return AMLocalizedString(@"orderByTableHeader", @"Order by");
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SortByTableViewCellID"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SortByTableViewCellID"];
+    }
+    
+    [cell.imageView setImage:[UIImage imageNamed:[self imageNameForRow:indexPath.row]]];
+    [cell.textLabel setText:[sortByArray objectAtIndex:indexPath.row]];
+    
+    if (self.sortType == [self orderTypeForRow:indexPath.row]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGray];
+    [cell setSelectedBackgroundView:view];
+
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-        SortFieldsTableViewController *sortFieldsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"SortFieldsTableViewControllerID"];
-        
-        [self.navigationController pushViewController:sortFieldsTableViewController animated:YES];
-        
-        [sortFieldsTableViewController setSortType:self.sortType];
-        [sortFieldsTableViewController setAscending:self.alphabeticallySwitch.isOn];
-    }
+    
+    self.sortType = [self orderTypeForRow:indexPath.row];
+    
+    [self.tableView reloadData];
 }
 
 @end
