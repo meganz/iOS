@@ -36,6 +36,7 @@
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
+#import "MEGAPurchase.h"
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -44,6 +45,7 @@
 #import <QuickLook/QuickLook.h>
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <StoreKit/StoreKit.h>
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -57,6 +59,8 @@
 
 @property (nonatomic, strong) NSString *IpAddress;
 @property (nonatomic, strong) NSString *link;
+
+@property (nonatomic, weak) MainTabBarController *mainTBC;
 
 @end
 
@@ -76,7 +80,7 @@
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
     [MEGASdkManager sharedMEGASdk];
-    [MEGASdk setLogLevel:MEGALogLevelInfo];
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -188,8 +192,8 @@
                                                                      andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
-                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                [self.window setRootViewController:mainTBC];
+                _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                [self.window setRootViewController:_mainTBC];
             }
         }
     }
@@ -242,6 +246,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
+    
     if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
     } else {
@@ -250,21 +256,13 @@
         [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
         
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
-        
-        if ([Helper renamePathForPreviewDocument] != nil) {
-            NSError *error = nil;
-            BOOL success = [[NSFileManager defaultManager] moveItemAtPath:[Helper renamePathForPreviewDocument] toPath:[Helper pathForPreviewDocument] error:&error];
-            if (!success || error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Move file error %@", error]];
-            }
-        }
     }
     
     // Clean up temporary directory
     NSError *error = nil;
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
     if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
     }
 }
 
@@ -678,8 +676,8 @@
             self.link = nil;
         }
     } else {
-        MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        [self.window setRootViewController:mainTBC];
+        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        [self.window setRootViewController:_mainTBC];
     }
 }
 
@@ -844,6 +842,11 @@
             [alert show];
         }
         
+        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
+        }
+        
         return;
     }
     
@@ -856,14 +859,15 @@
                 isAccountFirstLogin = YES;
                 self.link = nil;
             }
-            
+                        
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:mainTBC];
+            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:_mainTBC];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -888,7 +892,7 @@
                 }
             }
             
-            [[CameraUploads syncManager] setTabBarController:mainTBC];
+            [[CameraUploads syncManager] setTabBarController:_mainTBC];
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
                 [[CameraUploads syncManager] getAllAssetsForUpload];
             }
@@ -928,6 +932,11 @@
         case MEGARequestTypeLogout: {
             [Helper logout];
             [SVProgressHUD dismiss];
+            break;
+        }
+            
+        case MEGARequestTypeSubmitPurchaseReceipt: {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
         }
             
@@ -988,6 +997,11 @@
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
+        // Don't add to the database downloads to the tmp folder
+        if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return;
+        }
+        
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
             [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];

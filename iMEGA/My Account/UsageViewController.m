@@ -32,19 +32,15 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UIScrollView *usageScrollView;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartMainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartSecondaryLabel;
 
 @property (weak, nonatomic) IBOutlet UIPageControl *usagePageControl;
-
-@property (weak, nonatomic) IBOutlet UILabel *localLabel;
-@property (weak, nonatomic) IBOutlet UILabel *localSizeLabel;
-@property (weak, nonatomic) IBOutlet UIProgressView *localProgressView;
 
 @property (weak, nonatomic) IBOutlet UILabel *cloudDriveLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cloudDriveSizeLabel;
@@ -70,9 +66,12 @@
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
+    if (!iPhone4X) {
+        [_usageScrollView setScrollEnabled:NO];
+    }
+    
     [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
     
-    [self.localLabel setText:AMLocalizedString(@"localLabel", @"Local")];
     [self.cloudDriveLabel setText:AMLocalizedString(@"cloudDrive", @"")];
     [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
     [self.incomingSharesLabel setText:AMLocalizedString(@"incomingShares", @"")];
@@ -85,21 +84,16 @@
     [self changePieChartText:_usagePageControl.currentPage];
     
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:0] longLongValue]];
-    NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
-    [_localSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_localProgressView setProgress:([[self.sizesArray objectAtIndex:0] floatValue] / [freeSizeNumber floatValue]) animated:NO];
+    [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
+    [_cloudDriveProgressView setProgress:([[self.sizesArray objectAtIndex:0] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
     
     stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:1] longLongValue]];
-    [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_cloudDriveProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / [[self.sizesArray objectAtIndex:5] floatValue]) animated:NO];
-    
-    stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:2] longLongValue]];
     [_rubbishBinSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / [[self.sizesArray objectAtIndex:5] floatValue]) animated:NO];
+    [_rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
      
-    stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:3] longLongValue]];
+    stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:2] longLongValue]];
     [_incomingSharesSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:3] floatValue] / [[self.sizesArray objectAtIndex:5] floatValue]) animated:NO];
+    [_incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,17 +119,17 @@
     NSString *textSecondaryLabel;
     switch (currentPage) {
         case 0: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:5] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
             
         case 1: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:5] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
             
         case 2: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:5] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
     }
@@ -157,7 +151,7 @@
     
     switch (currentPage) {
         case 0: {
-            NSNumber *number = [NSNumber numberWithFloat:(([[self.sizesArray objectAtIndex:4] floatValue] / [[self.sizesArray objectAtIndex:5] floatValue]) * 100)];
+            NSNumber *number = [NSNumber numberWithFloat:(([[self.sizesArray objectAtIndex:3] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) * 100)];
             NSString *firstPartString = [numberFormatter stringFromNumber:number];
             firstPartRange = [firstPartString rangeOfString:firstPartString];
             firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
@@ -169,12 +163,12 @@
         }
             
         case 1: {
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]];
+            stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:3] longLongValue]];
             break;
         }
             
         case 2: {
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:([[self.sizesArray objectAtIndex:5] longLongValue] - [[self.sizesArray objectAtIndex:4] longLongValue])];
+            stringFromByteCount = [byteCountFormatter stringFromByteCount:([[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue])];
             break;
         }
     }
@@ -207,13 +201,34 @@
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
     
     NSMutableAttributedString *firstPartMutableAttributedString;
+    NSMutableAttributedString *firstFractionalPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     
     NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
-    NSRange firstPartRange = [firstPartString rangeOfString:firstPartString];
-    firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
+    NSRange firstPartRange;
     
-    NSString *secondPartString = [NSString stringWithFormat:@" %@", [self stringWithoutCount:stringFromByteCount]];
+    NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
+    NSString *secondPartString;
+    if ([stringComponentsArray count] > 1) {
+        NSString *integerPartString = [stringComponentsArray objectAtIndex:0];
+        NSString *fractionalPartString = [stringComponentsArray objectAtIndex:1];
+        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:integerPartString];
+        firstPartRange = [integerPartString rangeOfString:integerPartString];
+        
+        fractionalPartString = [NSString stringWithFormat:@".%@ ", fractionalPartString];
+        firstFractionalPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:fractionalPartString];
+        NSRange firstFractionalPartRange = [fractionalPartString rangeOfString:fractionalPartString];
+        [firstFractionalPartMutableAttributedString addAttribute:NSFontAttributeName
+                                                           value:[UIFont fontWithName:kFont size:12.0]
+                                                           range:firstFractionalPartRange];
+        [firstPartMutableAttributedString appendAttributedString:firstFractionalPartMutableAttributedString];
+        
+        secondPartString = [self stringWithoutCount:stringFromByteCount];
+    } else {
+        firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
+        firstPartRange = [firstPartString rangeOfString:firstPartString];
+        secondPartString = [NSString stringWithFormat:@" %@", [self stringWithoutCount:stringFromByteCount]];
+    }
     NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
@@ -280,6 +295,17 @@
     [_usagePageControl setCurrentPage:(page-1)];
 }
 
+- (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender {
+    NSInteger page = _usagePageControl.currentPage;
+    if (page == 2) {
+        page = 0;
+    } else {
+        ++page;
+    }
+    
+    [self changePieChartText:page];
+    [_usagePageControl setCurrentPage:page];
+}
 
 #pragma mark - PieChartViewDelegate
 
@@ -290,50 +316,63 @@
 #pragma mark - PieChartViewDataSource
 
 - (int)numberOfSlicesInPieChartView:(PieChartView *)pieChartView {
-    return 4;
+    return 7;
 }
 
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
-    switch (index+1) {
-        case 1: //Cloud Drive
+    switch (index) {
+        case 0: //Cloud Drive
             return megaBlue;
+            break;
+            
+        case 1:
+        case 3:
+        case 5:
+            return [UIColor whiteColor];
             break;
             
         case 2: //Rubbish Bin
             return megaGreen;
             break;
             
-        case 3: //Incoming Shares
+        case 4: //Incoming Shares
             return megaOrange;
             break;
             
         default: //Available space
-            return [UIColor whiteColor];
+            return megaInfoGray;
             break;
     }
 }
 
 - (double)pieChartView:(PieChartView *)pieChartView valueForSliceAtIndex:(NSUInteger)index {
     double valueForSlice;
-    switch (index+1) {
-        case 1: //Cloud Drive
-            valueForSlice = [[self.sizesArray objectAtIndex:(index+1)] doubleValue];
+    switch (index) {
+        case 1:
+        case 3:
+        case 5: //Spaces between Cloud Drive and Rubbish Bin, Rubbish Bin and Incoming Shares, Incoming Shares and available space
+            valueForSlice = 0.2f;
+            break;
+            
+        case 0: //Cloud Drive
+            valueForSlice = ([[self.sizesArray objectAtIndex:0] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
             break;
             
         case 2: //Rubbish Bin
-            valueForSlice = [[self.sizesArray objectAtIndex:(index+1)] doubleValue];
+            valueForSlice = ([[self.sizesArray objectAtIndex:1] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
             break;
             
-        case 3: //Incoming Shares
-            valueForSlice = [[self.sizesArray objectAtIndex:(index+1)] doubleValue];
+        case 4: //Incoming Shares
+            valueForSlice = ([[self.sizesArray objectAtIndex:2] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
             break;
             
-        default: //Available space
-            valueForSlice = ([[self.sizesArray objectAtIndex:5] doubleValue] - [[self.sizesArray objectAtIndex:4] doubleValue]);
+        case 6: //Available space
+            valueForSlice = (([[self.sizesArray objectAtIndex:4] doubleValue] - [[self.sizesArray objectAtIndex:3] doubleValue]) / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94;
             break;
-    }
-    if (valueForSlice == 0) {
-        valueForSlice = 1;
+            
+        default:
+            valueForSlice = 0;
+            break;
     }
     return valueForSlice;
 }

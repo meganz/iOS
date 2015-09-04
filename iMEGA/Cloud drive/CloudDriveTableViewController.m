@@ -25,6 +25,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
+#import <QuickLook/QuickLook.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
@@ -44,13 +45,14 @@
 #import "CameraUploads.h"
 #import "PhotosViewController.h"
 #import "SortByTableViewController.h"
+#import "PreviewDocumentViewController.h"
 
 #import "AppDelegate.h"
 #import "MEGAProxyServer.h"
-
+#import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAStore.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -67,6 +69,8 @@
     BOOL isSearchTableViewDisplay; //YES if the search table view is displayed, NO otherwise
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
+    
+    NSString *previewDocumentPath;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -183,7 +187,6 @@
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
@@ -321,22 +324,22 @@
     
     cell.nameLabel.text = [node name];
     
+    [cell.thumbnailImageView.layer setCornerRadius:4];
+    [cell.thumbnailImageView.layer setMasksToBounds:YES];
+    
     if ([node type] == MEGANodeTypeFile) {
-        
-        // check if the thumbnail exist in the cache directory
-        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-        
-        if (!fileExists) {
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        if ([node hasThumbnail]) {
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+            if (!thumbnailExists) {
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            } else {
+                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            }
         } else {
-            [cell.thumbnailImageView.layer setCornerRadius:4];
-            [cell.thumbnailImageView.layer setMasksToBounds:YES];
-            
-            [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
-        
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
@@ -496,15 +499,41 @@
                     return;
                 }
                 
-            } else {
-                MEGANode *node = nil;
+            } else if (isDocument(name.pathExtension)) {
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
-                if (tableView == self.searchDisplayController.searchResultsTableView) {
-                    node = [matchSearchNodes objectAtIndex:indexPath.row];
+                if (offlineNodeExist) {
+                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                    
+                    QLPreviewController *previewController = [[QLPreviewController alloc] init];
+                    [previewController setDelegate:self];
+                    [previewController setDataSource:self];
+                    [previewController setTransitioningDelegate:self];
+                    [previewController setTitle:name];
+                    [self presentViewController:previewController animated:YES completion:nil];
                 } else {
-                    node = [self.nodes nodeAtIndex:indexPath.row];
+                    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
+                                                                            message:@"Try later or cancel the pending downloads"
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:@"ok"
+                                                                  otherButtonTitles:nil, nil];
+                        [alertView show];
+                    } else {
+                        // There isn't enough space in the device for preview the document
+                        if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                            return;
+                        }
+                        
+                        PreviewDocumentViewController *previewDocumentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"previewDocumentID"];
+                        [previewDocumentVC setNode:node];
+                        
+                        [self.navigationController pushViewController:previewDocumentVC animated:YES];
+                        
+                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                    }
                 }
-                
+            } else {
                 DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
                 [detailsNodeInfoVC setNode:node];
                 
@@ -1728,6 +1757,44 @@
     [self presentViewController:documentPicker animated:YES completion:nil];
 }
 
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    
+    if ([presented isKindOfClass:[QLPreviewController class]]) {
+        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
+    }
+    
+    return nil;
+}
+
+#pragma mark - QLPreviewControllerDataSource
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
+    return 1;
+}
+
+- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
+    return [NSURL fileURLWithPath:previewDocumentPath];
+}
+
+#pragma mark - QLPreviewControllerDelegate
+
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
+    return YES;
+}
+
+- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath];
+    if (fileExists) {
+        NSError *error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
+        }
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1757,7 +1824,7 @@
         case MEGARequestTypeGetAttrFile: {
             for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {
                 if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
+                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
                     NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
@@ -1768,7 +1835,7 @@
             
             for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
                 if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
+                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
                     NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
@@ -1808,7 +1875,7 @@
         case MEGARequestTypeExport: {
             remainingOperations--;
             
-            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            MEGANode *n = [api nodeForHandle:request.nodeHandle];
             
             NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
             
@@ -1839,6 +1906,10 @@
                 [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
                 [self.searchDisplayController.searchResultsTableView reloadData];
             }
+            break;
+            
+        case MEGARequestTypeCancelTransfer:
+            break;
             
         default:
             break;
@@ -1862,7 +1933,11 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeDownload && !transfer.isStreamingTransfer) {
+    if (transfer.isStreamingTransfer) {
+        return;
+    }
+    
+    if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
@@ -1872,9 +1947,13 @@
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (transfer.isStreamingTransfer) {
+        return;
+    }
+    
     NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
     
-    if (transfer.type == MEGATransferTypeDownload  && !transfer.isStreamingTransfer && [[Helper downloadingNodes] objectForKey:base64Handle]) {
+    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
@@ -1917,14 +1996,14 @@
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
         if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[transfer nodeHandle]];
+            MEGANode *node = [api nodeForHandle:[transfer nodeHandle]];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
             NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
             [formatter setLocale:locale];
             NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"MOV"];
-            [[MEGASdkManager sharedMEGASdk] renameNode:node newName:name];
+            [api renameNode:node newName:name];
         } 
     }
 }
