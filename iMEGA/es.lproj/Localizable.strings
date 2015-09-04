@@ -565,8 +565,50 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Mejorar cuenta";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Almacenamiento %@";
+"productSpace"="Almacenamiento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Ancho de banda %@";
+"productBandwidth"="Ancho de banda";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ al mes";
+"productPricePerMonth"="desde %.2f %@ / mes";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan" = "Elige un plan de la lista:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree" = "* Obten dos meses gratis si te subcribes a un plan PRO anual";
+/* Header shown to help on the purchasin process */
+"selectMembership" = "Selecione una subcripción:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17" = "Ahorre 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase" = "Compra incorrecta %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled" = "Compras en la App Store desactivadas, por favor actívalo en Ajustes";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound" = "Producto %@ no encontrado, por favor contacta con ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title" = "Permitir compras";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message" = "Debes activar compras en la App Store en Ajustes antes de restaurar una compra.";
+/* Button title to restore failed purchases */
+"restore" = "Restaurar";
+/* "Monthly" subscriptions */
+"monthly" = "Mensualmente";
+/* "Yearly" subscriptions */
+"yearly" = "Anualmente";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable" = "Este producto no está disponible en la App Store en estos momentos. Por favor inténtelo de nuevo más tarde.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title" = "¡Gracias!";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message" = "¡Su compra fue restaurada!";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title" = "Compra cancelada";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message" = "O usted ha cancelado la solicitud o Apple ha reportado un problema en la transación. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title" = "Problema al restaurar";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message" = "Una transación anterior no ha sido encontrada. Para restaurar la compra de un producto, selecciona un producto. Los clientes que hayan pagado no se les cobrará de nuevo, pero su compra será restaurada.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title" = "Restauración cancelada";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message" = "O usted ha cancelado la petición o una compra anterior no puede ser restaurada. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz.";

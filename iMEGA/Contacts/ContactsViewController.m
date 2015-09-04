@@ -348,11 +348,11 @@
     
     int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
     if (numFilesShares == 0) {
-        cell.shareLabel.text = AMLocalizedString(@"noFoldersShare", @"No folders shared");
+        cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
     } else  if (numFilesShares == 1 ) {
-        cell.shareLabel.text = AMLocalizedString(@"oneFolderShare", @" folder shared");
+        cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
     } else {
-        cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShare", @" folders shared"), numFilesShares];
+        cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
     }
     
     BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
