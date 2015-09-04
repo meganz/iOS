@@ -513,10 +513,10 @@
                     [self presentViewController:previewController animated:YES completion:nil];
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
-                                                                            message:@"Try later or cancel the pending downloads"
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
+                                                                            message:AMLocalizedString(@"documentOpening_alertMessage", nil)
                                                                            delegate:nil
-                                                                  cancelButtonTitle:@"ok"
+                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                                   otherButtonTitles:nil, nil];
                         [alertView show];
                     } else {
@@ -774,7 +774,7 @@
                 
             case DisplayModeRubbishBin:
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_textRubbishBin",  @"Awesome!");
+                    text = AMLocalizedString(@"awesome",  nil);
                 } else {
                     text = @"";
                 }
@@ -854,12 +854,12 @@
         //New folder
         case 0:
             folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder")
-                                                         message:AMLocalizedString(@"newFolderMessage", @"Name for the new folder")
+                                                         message:nil
                                                         delegate:self
                                                cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
             [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [folderAlertView textFieldAtIndex:0].text = @"";
+            [folderAlertView textFieldAtIndex:0].text = AMLocalizedString(@"newFolderMessage", nil);
             folderAlertView.tag = 1;
             [folderAlertView show];
             break;
@@ -1456,8 +1456,7 @@
                                                   delegate:self
                                          cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                     destructiveButtonTitle:nil
-                                         otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), @"Upload a file", nil];
-    
+                                         otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider."), nil];
     } else {
         actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                   delegate:self
@@ -1569,7 +1568,7 @@
                 }
             }
             
-            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveNodeToRubbishBinTitle", @"Remove node from rubbish bin") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         } else {
             NSString *message;
             if (files == 0) {
