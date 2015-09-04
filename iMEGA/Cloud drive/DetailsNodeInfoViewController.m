@@ -545,7 +545,7 @@
                         
                     case 4:
                         [cell.imageView setImage:[UIImage imageNamed:@"rubbishBin"]];
-                        [cell.textLabel setText:AMLocalizedString(@"moveToRubbishBin", @"Move to the rubbish bin")];
+                        [cell.textLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
                         break;
                 }
                 // Rubbish bin

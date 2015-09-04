@@ -565,9 +565,9 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade account";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Storage";
+"productSpace"="Storage %@";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Bandwidth";
+"productBandwidth"="Bandwidth %@";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="from %.2f %@ / month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -612,5 +612,3 @@
 "failedRestore_title" = "Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
-
-
