@@ -565,8 +565,50 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Kontua hobetu";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Storage %@";
+"productSpace"="Storage";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Bandwidth %@";
+"productBandwidth"="Bandwidth";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ per month";
+"productPricePerMonth"="from %.2f %@ / month";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan" = "Choose from one of the plans below:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+/* Header shown to help on the purchasin process */
+"selectMembership" = "Select membership:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17" = "Save 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title" = "Allow purchases";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+/* Button title to restore failed purchases */
+"restore" = "Restore";
+/* "Monthly" subscriptions */
+"monthly" = "Monthly";
+/* "Yearly" subscriptions */
+"yearly" = "Yearly";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title" = "Thank you!";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message" = "Your purchase was restored!";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title" = "Purchase stopped";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title" = "Restore issue";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title" = "Restore stopped";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
