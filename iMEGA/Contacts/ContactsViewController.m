@@ -464,9 +464,9 @@
     switch (actionSheet.tag) {
         case 0: {
             if (buttonIndex == 0) {
-                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:AMLocalizedString(@"contactMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
+                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
                 [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                [emailAlertView textFieldAtIndex:0].text = @"";
+                [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
                 emailAlertView.tag = 0;
                 [emailAlertView show];
             } else if (buttonIndex == 1) {
@@ -540,7 +540,7 @@
     if (email) {
         [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmailTitle", nil) message:AMLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
         [noEmailAlertView show];
     }
@@ -568,7 +568,7 @@
     if (email) {
         [[MEGASdkManager sharedMEGASdk] addContactWithEmail:email delegate:self];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmailTitle", nil) message:AMLocalizedString(@"contactWithoutEmailMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
         noEmailAlertView.tag = 2;
         [noEmailAlertView show];
     }
@@ -652,7 +652,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeAddContact:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"adding", nil)];
+            [SVProgressHUD show];
             break;
             
         default:
@@ -689,7 +689,7 @@
         }
             
         case MEGARequestTypeAddContact:
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"added", nil)];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactAdded", nil)];
             break;
             
         case MEGARequestTypeRemoveContact: {

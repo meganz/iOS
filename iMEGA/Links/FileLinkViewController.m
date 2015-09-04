@@ -79,7 +79,8 @@
     
     self.downloadButton.layer.cornerRadius = 6;
     self.downloadButton.layer.masksToBounds = YES;
-    [self.downloadButton setTitle:AMLocalizedString(@"downloadButton", nil) forState:UIControlStateNormal];
+    [self.downloadButton setTitle:AMLocalizedString(@"downloadButton_fileLink", nil) forState:UIControlStateNormal];
+
     
     self.openButton.layer.cornerRadius = 6;
     self.openButton.layer.masksToBounds = YES;
@@ -87,6 +88,12 @@
     
     [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

@@ -27,15 +27,13 @@
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *credentialsView;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *remainLoggedInLabel;
-
-@property (weak, nonatomic) IBOutlet UISwitch *loggedInSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *createAccountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @end
 
@@ -49,25 +47,20 @@
     self.loginButton.layer.cornerRadius = 6;
     self.loginButton.layer.masksToBounds = YES;
     
-    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
-    self.credentialsView.layer.borderWidth = 2.0f;
-    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
-    self.credentialsView.layer.cornerRadius = 6;
-    self.credentialsView.layer.masksToBounds = YES;
-    
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
-    [self.remainLoggedInLabel setText:AMLocalizedString(@"remainLoggedIn", @"Remain logged in")];
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
+    [self.loginButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     
-    [self.emailTextField becomeFirstResponder];
+    [self.createAccountLabel setText:AMLocalizedString(@"doNotHaveAnAccount", nil)];
+    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"login", @"Login")];
+    [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -201,10 +194,8 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            if (self.loggedInSwitch.on) {
-                NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-                [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-            }
+            NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
             break;
         }
             

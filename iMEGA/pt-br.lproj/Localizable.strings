@@ -1,0 +1,658 @@
+/* Button title to cancel something */
+"cancel"="Cancelar";
+/* Button title to accept something */
+"ok"="OK";
+/*  */
+"error"="Erro";
+/*  */
+"name"="Nome";
+/*  */
+"passcode"="Código de acesso";
+/* "Size" of the file or folder you are sharing */
+"size"="Tamanho";
+/*  */
+"folder"="Pasta";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="Câmera não disponível";
+/* Alert title to attract attention */
+"attention"="Atenção";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="Por favor, dê permissão à MEGA para aceder à sua Câmera nas suas Definições";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="Por favor, dê permissão à MEGA para aceder às suas fotos nas Definições";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="Não pode descarregar uma pasta vazia";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="Sua conta já foi ativada. Por favor, faça o login.";
+/* Message shown when the user clicks on an invalid link  */
+"invalidLink"="Mega link inválido";
+/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncrypted"="Arquivo criptografado";
+/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncryptedMessage"="Você não pode importar ou baixar um arquivo criptografado quando a chave de descodificação está faltando.";
+/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncrypted"="Pasta criptografada";
+/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncryptedMessage"="Você não pode importar ou baixar uma pasta criptografada quando a chave de descodificação está faltando.";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="Desconectado";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="ESPAÇO MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="VELOCIDADE MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="PRIVACIDADE MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="ACESSO MEGA";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="Cadastre-se agora e ganhe 50GB de espaço gratuito.";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="Os envios são rápidos.Compartilhe rapidamente com todo mundo.";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="Mantenha todos os seus arquivos seguros com a criptografia MEGA de ponta a ponta.";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="Tenha acesso completamente criptografado em qualquer lugar, a qualquer momento.";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="Entrar";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="Criar conta";
+/* Text shown next to a switch button on login, which if it's enabled keeps you logged after the app is closed. Otherwise you will be logged out as soon as the app's gets out of the memory */
+"remainLoggedIn"="Manter conectado";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="E-mail inválido e / ou senha. Por favor, tente novamente";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="Digite  e-mail válido";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="Digite uma palavra-passe válida";
+/* DO NOT TRANSLATE, it will change */
+"fetchingNodes"="Buscando nodes";
+/* DO NOT TRANSLATE, it will change */
+"preparingNodes"="Preparing nodes";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="E-mail";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="Senha";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="Concordo com os Termos de Serviço MEGA";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="Digite um nome válido";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="As senhas não são iguais";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="Você precisa concordar com os termos de serviço para se registrar em uma conta no MEGA.";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="Este endereço de e-mail já está cadastrado com uma conta MEGA.";
+/* Message displayed when an action is completed successfully */
+"awesome"="Incrível!";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="Por favor verifique seu e-mail e clique no link para confirmar sua conta.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="Por favor, digite sua senha para confirmar sua conta";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="Confirme sua conta";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="Senha incorreta";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="Você está logado com outra conta";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar? ";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
+/* Title for the MEGA link view */
+"megaLink"="Mega link";
+/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
+"importButton"="Importar para a Cloud Drive";
+/* Button title to trigger the action of downloading the file to your device. */
+"downloadButton_fileLink"="Baixe para a sua Mega App";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="Abrir arquivo";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="O arquivo que você está tentando baixar é maior do que a memória disponível.";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="O arquivo que você está tentando abrir é maior do que a memória disponível.";
+/* Error title shown when you open a file link and it's no longer available */
+"fileLinkUnavailableTitle"="Link de arquivo indisponível";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
+"fileLinkUnavailableText"="Isto pode ter acontecido devido às seguintes razões:- O arquivo foi removido devido a uma violação ToS / AUP.- URL inválido - o link que você está tentando aceder não existe.- O arquivo foi apagado pelo usuário.";
+/* DO NOT TRANSLATE, it will change (Process) */
+"fileAlreadyExist"="O arquivo que você deseja baixar já existe off-line";
+/* Message shown when a download starts */
+"downloadStarted"="Descarregamento iniciado";
+/* DO NOT TRANSLATE, it will change (Design) */
+"megaFolder"="MEGA Folder Link";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="Download";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="A pasta que você está tentando descarregar é maior do que a memória disponível.";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="O arquivo '%@' não pode ser criado";
+/* Error title shown when a folder link doesn't exist. */
+"folderLinkUnavailableTitle"="O link da pasta está indisponível";
+/* Error message shown when a folder link doesn't exist. */
+"folderLinkUnavailableText"="Isto pode ter acontecido devido às seguintes razões:- O link da pasta foi removido devido a uma violação ToS / AUP.- URL inválido - o link que está a tentar aceder não existe.- O link da pasta foi apagado pelo utilizador.";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="Sem ligação à internet";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="Pasta Vazia";
+/* Title shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_title"="Link de pasta vazia";
+/* Message shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_text"="Este link de pasta não tem nenhum arquivo";
+/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
+"folderLinkEmptyState_textFolder"="Esta sub pasta não tem nenhum arquivo.";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="Nenhum arquivo na sua pasta Cloud";
+/* Title shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_titleContact"="Não há arquivos nesta pasta compartilhada";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="Limpar Lixeira";
+/* Message shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_text"="Adicione arquivos usando o botão acima";
+/* Message shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_textContact"="Compartilhe algo. Adicione arquivos usando o botão acima.";
+/* Title shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_title"="Camera Uploads esta desativada";
+/* Message shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_text"="Ativar Camera Uploads para ter uma cópia das suas fotos do dispositivo na MEGA.";
+/* Title shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_title"="Não há arquivos salvos para off-line";
+/* Message shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_text"="Baixar arquivos para usá-los quando você não tem ligação à Internet.";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="Você não tem contatos";
+/* Message shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_text"="Adicione contatos através do botão acima.";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="Transferências em pausa";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="Não há Transferências";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="Não há Descarregamentos";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="Sem Uploads";
+/* Text shown under the upper title when the transfers are paused */
+"transfersEmptyState_textPaused"="Retome as transferências usando o botão acima.";
+/* Text shown under the upper title when there's no transfers */
+"transfersEmptyState_textAll"="Não tem transferências pendentes.";
+/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
+"transfersEmptyState_textDownload"="Não tem descarregamentos pendentes.";
+/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
+"transfersEmptyState_textUpload"="Não tem carregamentos pendentes";
+/* Title of the Cloud Drive section */
+"cloudDrive"="Unidade em Nuvem (Cloud Drive)";
+/* DO NOT TRANSLATE, it will change */
+"updatingNodes"="Atualizando nodes ...";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d arquivo";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d arquivos";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%d pasta";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d pastas";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="%d pasta • %d arquivo";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1+} file" */
+"foldersAndFiles"="%d pastas • %d ficheiros";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d pastas • %d arquivo";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="%d pasta • %d arquivos";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="%d pasta • %d arquivo";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="Na fila";
+/* Message shown when a transfer has been canceled */
+"transferCanceled"="Transferência cancelada!";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="Há descarregamentos pendentes";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="Tente novamente mais tarde ou cancele";
+/* Section title of the "Sort by" */
+"sortTitle"="ORGANIZAR POR";
+/* Button title to "Save" the selected option */
+"save"="Salvar";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="nome (crescente)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="nome (decrescente)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="maior";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="menor";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="mais novo";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="mais velho";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="Escolha";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="Captar";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="Nova pasta";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="Nome da nova pasta";
+/* Title button for the create folder alert.  */
+"createFolderButton"="Criar";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="Importado de...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
+"fileExistAlertController_Message"="%@ já carregado";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="Carregamento iniciado";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="Salvo para off-line";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="Salvo offline";
+/* List option shown on the details of a file or folder */
+"getLink"="Obter link";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="Gerando link...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="Remover link";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="O link foi removido";
+/* Title show when a file is being downloaded */
+"downloading"="Baixando: [X]%";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="Você quer cancelar o download?";
+/* Title for the action that allows you to move a file or folder */
+"move"="Mover";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="1 ficheiro movido";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%d arquivos movidos";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="1 arquivo movido";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d pastas movidas";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 arquivo e 1 pasta movidos";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 arquivo e %d pastas movidos";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d arquivos e 1 pasta movidos";
+/* Success message shown when you have moved {1+} files and {1+} folders */
+"moveFilesFoldersMessage"="%d arquivos e %d pastas movidos";
+/* List option shown on the details of a file or folder */
+"copy"="Copiar";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="1 arquivo copiado";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d arquivos copiados";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 ficheiro copiado";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d pastas copiadas";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 arquivo e 1 pasta copiados";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 arquivo e %d pastas copiados";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%ds arquivos e 1 pasta copiados";
+/* Success message shown when you have copied {1+} files and {1+} folders */
+"copyFilesFoldersMessage"="%d arquivos e %d pastas copiados";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="Renomear";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="Digite o novo nome";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="Mover para a Lixeira";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="Este aplicativo não tem acesso às suas fotos ou vídeos.";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="Tem a certeza que pretende mover  %d arquivos para a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="Tem a certeza que pretende mover 1 pasta para a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="Tem a certeza que pretende mover %d pastas para  a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="Tem a certeza que deseja mover 1 arquivo e 1 pasta para a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="Tem a certeza que deseja mover 1 arquivo e %d pastas para a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="Tem a certeza que deseja mover %d arquivos e 1 pasta para a Lixeira?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="Tem a certeza que deseja mover %d arquivos e %d pastas para o Lixo?";
+/* Success message shown when one file has been moved to the Rubbish Bin */
+"fileMovedToRubbishBin"="1 arquivo movido para a Lixeira!";
+/* Success message shown when {1+} files have been moved to the Rubbish Bin */
+"filesMovedToRubbishBin"="%d arquivos movidos para a Lixeira!";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="Erro de permissões";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="Verifique suas permissões nesta pasta";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="Pasta compartilhada!";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="Importar para";
+/* Button title that triggers the importing link action */
+"import"="Importar";
+/* Message shown when a file have been imported */
+"fileImported"="Arquivo importado!";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="Cota de armazenamento excedida";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="Selecione os itens";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu fotos";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu foto";
+/* Button title that skips the current action */
+"skipButton"="Avançar";
+/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="Habilitar uploads da câmera";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="Camera Uploads ativada!";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu item selecionado";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu itens selecionados";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="Camera Uploads será desativada, porque você não tem espaço suficiente no seu dispositivo";
+/* Title of the Offline section */
+"offline"="Offline";
+/* Title of the Contacts section */
+"contactsTitle"="Contatos";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="Não há pastas compartilhadas";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 pasta";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d pastas";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="Insira um email";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="Adicionar a partir dos contatos";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="Adicionar contato";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="E-mail do contato";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="Adicionar";
+/* Success message shown when a contact has been added */
+"contactAdded"="Contacto adicionado!";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="Erro ao adicionar contatos";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="Remover contato";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="Tem certeza que deseja remover% @ da sua lista de contatos?";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d contatos removidos ";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed!" */
+"removedContact"="Contato %@ removido!";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="Este contato não tem e-mail";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="Sair";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="Esta pasta já não se encontra partilhada";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="Compartilhar pasta";
+/* Button that allows you to select a given folder */
+"select"="Selecionar";
+/* Permissions given to the user you share your folder with */
+"readOnly"="Apenas de leitura";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="Ler e Gravar";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="Acesso total";
+/* Title of the Settings section */
+"settingsTitle"="Configurações";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="Uploads da câmera";
+/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"rubbishBinLabel"="Lixeira";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="Opções de segurança";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="Sobre";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="Língua";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="Inglês - Idioma do aplicativo";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="Enviar comentários";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="Política de Privacidade";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="Termos de Serviço";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="Desligado";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="Ativado";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="Opções";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="Carregamento de vídeos";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="Usar plano de dados";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="Apenas quando estiver carregando";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="Quando ativado novas fotos e vídeos serão carregados.";
+/* Label for the "Version" number of the app */
+"version"="Versão";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="Agradecimentos";
+/* Title for the MEGA Master Key */
+"masterKey"="MasterKey";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="Mudar a senha";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="Exportar Chave Mestra";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="Alerta de segurança! Esta é uma operação de alto risco. Deseja continuar?";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="Exportar a Chave Mestra e guardá-la num lugar seguro permitir-lhe-á recuperar a sua conta, caso perca a palavra-passe, sem perder os seus dados.";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="Chave Mestra exportada";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Masterkey.txt foi salvo neste dispositivo. Ligue o seu computador e abra o iTunes para o aceder nos Documentos MEGA. Nós aconselhamo-lo a manter este arquivo seguro!";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="Chave Mestra removida";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="MasterKey.txt foi removido da pasta Documentos.";
+/* Title for the action that allows to remove a file or folder */
+"remove"="Remover";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="Confirmar remoção";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="Você está prestes a remover permanentemente um arquivo. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="Você está prestes a remover permanentemente  %d arquivos. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="Você está prestes a remover permanentemente 1 arquivo. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="Está prestes a remover permanentemente %d pastas. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="Está prestes a remover permanentemente 1 arquivo e 1 pasta. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="Está prestes a remover permanentemente  1 arquivo e %d pastas. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="Está prestes a remover permanentemente  %d arquivos e 1 pasta. Pretende continuar? (Esta ação é irreversível.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="Está prestes a remover permanentemente %d arquivos e %d pastas. Pretende continuar? (Esta ação é irreversível.)";
+/* Success message shown when one file has been removed from MEGA */
+"fileRemovedFromRubbishBin"="1 arquivo removido da MEGA!";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedFromRubbishBin"="%d arquivos removidos da MEGA!";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="Senha atual";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nova senha";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="Confirmar senha";
+/* Success message shown when the password has been changed */
+"passwordChanged"="Sua senha foi alterada.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="A nova e a antiga palavra-passe não podem ser iguais.";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="Mudar código de acesso";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="Código de acesso simples";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="Apagar dados locais";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="Deslogado e dados locais apagados depois de 10 tentativas fracassadas de senha";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="Centro de Ajuda";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="Obtenha ajuda ou leia os tópicos mais populares.";
+/* Title to rate the app */
+"rateUsLabel"="Avalie-nos!";
+/* Title of the Transfers section */
+"transfers"="Transferências";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="Todas";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="downloads";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="envios";
+/* Success message shown when the transfers have been resumed */
+"transfersResumed"="Transferências retomadas!";
+/* Success message shown when the transfers have been paused */
+"transfersPaused"="Transferências em pausa!";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCanceled"="Transferências canceladas!";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="Transferências canceladas";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="Quer cancelar  %@?";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="TODAS as transferências";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="Carregamento de transferências";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="Descarregamento de transferências";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="Minha Conta";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="Deslogar";
+/* String shown when you are logging out of your account. */
+"loggingOut"="Deslogando";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="Utilização";
+/* Title for "Local" used space. */
+"localLabel"="Local";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="Utilizado";
+/* Title for MEGA "Available" space. */
+"availableLabel"="Disponível";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="GRÁTIS";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="expira em %@";
+/* DO NOT TRANSLATE, it will change */
+"restorePurchases"="Restaurar pedidos de compra";
+/* DO NOT TRANSLATE, it will change */
+"purchasesHistory"="Histórico de compras";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="Compartilhamentos de entrada";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="de %@";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="usado %@ ";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="disponível de %@";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="Atualizar conta";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="Armazenamento";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="Largura de banda";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="%.2f %@ por mês";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan" = "Choose from one of the plans below:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+/* Header shown to help on the purchasin process */
+"selectMembership" = "Select membership:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17" = "Save 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title" = "Allow purchases";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+/* Button title to restore failed purchases */
+"restore" = "Restore";
+/* "Monthly" subscriptions */
+"monthly" = "Monthly";
+/* "Yearly" subscriptions */
+"yearly" = "Yearly";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title" = "Thank you!";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message" = "Your purchase was restored!";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title" = "Purchase stopped";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title" = "Restore issue";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title" = "Restore stopped";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
+
+// WRITE THE NAME OF YOUR OWN LANGUAGE, IN YOUR LANGUAGE
+"af"="Afrikaans";
+"ar"="Arabic";
+"bg"="Bulgarian";
+"bs"="Bosnian";
+"ca"="Català";
+"cs"="Čeština";
+"da"="Danish";
+"de"="German";
+"ee"="Ewe";
+// DO NOT TRANSLATE. Already translated
+"en"="English";
+"es"="Español";
+"et"="Eesti";
+"eu"="Basque";
+"fi"="Suomi";
+"fr"="French";
+"gl"="Galician";
+"he"="Hebrew";
+"hr"="Croatian";
+"hu"="Magyar";
+"id"="Indonesian";
+"it"="Italiano";
+"ja"="Japanese";
+"ko"="Korean";
+"lt"="Lithuanian";
+"lv"="Latvian";
+"ms"="Malay";
+"nb"="Norwegian";
+"nl"="Nederlands";
+"pl"="Polish";
+"pt-br"="Português Brasil";
+"pt"="Português";
+"ro"="Română";
+"ru"="Pусский";
+"sk"="Slovak";
+"sl"="Slovenian";
+"sv"="Svenska";
+"th"="Thai";
+"tr"="Turkish";
+"uk"="Ukrainian";
+"zh-Hans"="Simplified Chinese";
+"zh-Hant"="中文繁體";

@@ -265,7 +265,10 @@
                 if (request.paramType == MEGAUserAttributeLastname) {
                     _fullname = [_fullname stringByAppendingString:@" "];
                 }
-                _fullname = [_fullname stringByAppendingString:request.text];
+                
+                if(request.text){
+                    _fullname = [_fullname stringByAppendingString:request.text];
+                }
                 [self.nameLabel setText:_fullname];
             } else {
                 [self setUserAvatar];
