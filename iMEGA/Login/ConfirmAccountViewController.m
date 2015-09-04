@@ -28,9 +28,8 @@
 
 @interface ConfirmAccountViewController () <UIAlertViewDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *logoView;
 @property (weak, nonatomic) IBOutlet UILabel *confirmTextLabel;
-@property (weak, nonatomic) IBOutlet UIView *credentialsView;
+
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
@@ -45,22 +44,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitleView:_logoView];
-    
     [self.confirmTextLabel setText:AMLocalizedString(@"confirmText", @"Please enter your password to confirm your account")];
     
     self.confirmAccountButton.layer.cornerRadius = 6;
     self.confirmAccountButton.layer.masksToBounds = YES;
     [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
+    [self.confirmAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
+    
     self.cancelButton.layer.cornerRadius = 6;
     self.cancelButton.layer.masksToBounds = YES;
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
-    self.credentialsView.backgroundColor = [megaLightGray colorWithAlphaComponent:.25f];
-    self.credentialsView.layer.borderWidth = 2.0f;
-    self.credentialsView.layer.borderColor =[megaLightGray CGColor];
-    self.credentialsView.layer.cornerRadius = 6;
-    self.credentialsView.layer.masksToBounds = YES;
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
