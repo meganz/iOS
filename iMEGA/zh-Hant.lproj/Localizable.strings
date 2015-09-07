@@ -200,8 +200,6 @@
 "foldersAndFile"="%d 個資料夾 • %d 個檔案";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="%d 個資料夾 • %d 個檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d 個資料夾 • %d 個檔案";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="序列";
 /* Message shown when a transfer has been canceled */
@@ -623,7 +621,6 @@
 "da"="Danish";
 "de"="German";
 "ee"="Ewe";
-// DO NOT TRANSLATE. Already translated
 "en"="English";
 "es"="Español";
 "et"="Eesti";

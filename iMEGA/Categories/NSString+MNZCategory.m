@@ -36,4 +36,41 @@
     return nil;
 }
 
+- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
+    if (files > 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
+    }
+    
+    if (files > 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
+    }
+    
+    if (files == 1 && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
+    }
+    
+    if (files == 1 && !folders) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
+    }
+    
+    if (!files && folders > 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
+    }
+    
+    if (!files && folders == 1) {
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
+    }
+    
+    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+}
+
+
 @end

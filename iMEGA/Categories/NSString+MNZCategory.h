@@ -24,5 +24,6 @@
 @interface NSString (MNZCategory)
 
 - (NSString*)stringBetweenString:(NSString*)start andString:(NSString*)end;
+- (NSString*)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders;
 
 @end
