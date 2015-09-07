@@ -204,12 +204,10 @@
 "foldersAndFile"="%d folders • %d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="%d folder • %d files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d folder • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
 /* Message shown when a transfer has been canceled */
-"transferCanceled"="Transfer canceled!";
+"transferCanceled"="Transfer canceled";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -321,21 +319,21 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move %d files and %d folders to the Rubbish Bin?";
 /* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 file moved to the Rubbish Bin!";
+"fileMovedToRubbishBin"="1 file moved to the Rubbish Bin";
 /* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d files moved to the Rubbish Bin!";
+"filesMovedToRubbishBin"="%d files moved to the Rubbish Bin";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Permissions error";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Check your permissions on this folder";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="Folder shared!";
+"sharedFolder_success"="Folder shared";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Import to ";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file have been imported */
-"fileImported"="File imported!";
+"fileImported"="File imported";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Storage quota exceeded";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -349,7 +347,7 @@
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Enable Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Camera Uploads enabled!";
+"cameraUploadsEnabled"="Camera Uploads enabled";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu item selected";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -377,7 +375,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Add";
 /* Success message shown when a contact has been added */
-"contactAdded"="Contact added!";
+"contactAdded"="Contact added";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Error adding contact";
 /* Alert title shown when you want to remove one or more contacts */
@@ -388,14 +386,14 @@
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts removed";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed!" */
-"removedContact"="Contact %@ removed!";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="Contact %@ removed";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="The contact does not have an email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Leave";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Folder left!";
+"shareFolderLeaved"="Folder left";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Share folder";
 /* Button that allows you to select a given folder */
@@ -459,7 +457,7 @@
 /* Alert title shown when you have exported your MEGA master key */
 "masterKeyExported"="Master Key exported";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
+"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure";
 /* Alert title shown when you have removed your MEGA master key */
 "masterKeyRemoved"="Master Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
@@ -485,9 +483,9 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="1 file removed from MEGA!";
+"fileRemovedFromRubbishBin"="1 file removed from MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="%d files removed from MEGA!";
+"filesRemovedFromRubbishBin"="%d files removed from MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Current Password";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -511,7 +509,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Get support or read popular topics.";
 /* Title to rate the app */
-"rateUsLabel"="Rate us!";
+"rateUsLabel"="Rate us";
 /* Title of the Transfers section */
 "transfers"="Transfers";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -521,11 +519,11 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploads";
 /* Success message shown when the transfers have been resumed */
-"transfersResumed"="Transfers resumed!";
+"transfersResumed"="Transfers resumed";
 /* Success message shown when the transfers have been paused */
-"transfersPaused"="Transfers paused!";
+"transfersPaused"="Transfers paused";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Transfers cancelled!";
+"transfersCanceled"="Transfers cancelled";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancel transfers";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -601,9 +599,9 @@
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title" = "Thank you!";
+"thankYou_title" = "Thank you";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message" = "Your purchase was restored!";
+"purchaseRestore_message" = "Your purchase was restored";
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title" = "Purchase stopped";
 /* Alert message shown when a purchase has stopped because some error between the process */
@@ -627,7 +625,6 @@
 "da"="Danish";
 "de"="German";
 "ee"="Ewe";
-// DO NOT TRANSLATE. Already translated
 "en"="English";
 "es"="Español";
 "et"="Eesti";

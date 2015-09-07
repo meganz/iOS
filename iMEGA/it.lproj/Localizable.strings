@@ -200,8 +200,6 @@
 "foldersAndFile"="%d cartelle • %d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="%d cartelle • %d files";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d cartella • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="In coda";
 /* Message shown when a transfer has been canceled */
@@ -623,7 +621,6 @@
 "da"="Danish";
 "de"="German";
 "ee"="Ewe";
-// DO NOT TRANSLATE. Already translated
 "en"="English";
 "es"="Español";
 "et"="Eesti";
