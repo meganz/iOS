@@ -58,8 +58,6 @@
 "login"="登入";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="建立帳號";
-/* Text shown next to a switch button on login, which if it's enabled keeps you logged after the app is closed. Otherwise you will be logged out as soon as the app's gets out of the memory */
-"remainLoggedIn"="保持登錄狀態";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
 /* Message shown when the user writes an invalid format in the email field  */
