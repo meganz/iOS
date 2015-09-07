@@ -71,6 +71,8 @@
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
     
     NSString *previewDocumentPath;
+    
+    NSUInteger numFilesAction, numFoldersAction;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -859,7 +861,7 @@
                                                cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
             [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [folderAlertView textFieldAtIndex:0].text = AMLocalizedString(@"newFolderMessage", nil);
+            [folderAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"newFolderMessage", nil);
             folderAlertView.tag = 1;
             [folderAlertView show];
             break;
@@ -1496,66 +1498,74 @@
             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
         }
     } else {
-        NSInteger files = 0;
-        NSInteger folders = 0;
+        numFilesAction = 0;
+        numFoldersAction = 0;
         for (MEGANode *n in self.selectedNodesArray) {
             if ([n type] == MEGANodeTypeFolder) {
-                folders++;
+                numFoldersAction++;
             } else {
-                files++;
+                numFilesAction++;
             }
         }
         
         if (self.displayMode == DisplayModeCloudDrive) {
             NSString *message;
-            if (files == 0) {
-                if (folders == 1) {
+            if (numFilesAction == 0) {
+                if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"moveFolderToRubbishBinMessage", nil);
                 } else { //folders > 1
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
-            } else if (files == 1) {
-                if (folders == 0) {
+            } else if (numFilesAction == 1) {
+                if (numFoldersAction == 0) {
                     message = AMLocalizedString(@"moveFileToRubbishBinMessage", nil);
-                } else if (folders == 1) {
+                } else if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"moveFileFolderToRubbishBinMessage", nil);
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
             } else {
-                if (folders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), files];
-                } else if (folders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), files];
+                if (numFoldersAction == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), numFilesAction];
+                } else if (numFoldersAction == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), numFilesAction];
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil), files, folders];
+                    message = AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil);
+                    NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                    NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }
             }
             
             removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         } else {
             NSString *message;
-            if (files == 0) {
-                if (folders == 1) {
+            if (numFilesAction == 0) {
+                if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
                 } else { //folders > 1
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
-            } else if (files == 1) {
-                if (folders == 0) {
+            } else if (numFilesAction == 1) {
+                if (numFoldersAction == 0) {
                     message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
-                } else if (folders == 1) {
+                } else if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
             } else {
-                if (folders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), files];
-                } else if (folders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), files];
-                } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil), files, folders];
+                if (numFoldersAction == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
+                } else if (numFoldersAction == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
+                } else {                    
+                    message = AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
+                    NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                    NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }
             }
             
@@ -1813,7 +1823,36 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
+                
+                NSString *message;
+                if (numFilesAction == 0) {
+                    if (numFoldersAction == 1) {
+                        message = AMLocalizedString(@"folderMovedToRubbishBinMessage", nil);
+                    } else { //folders > 1
+                        message = [NSString stringWithFormat:AMLocalizedString(@"foldersMovedToRubbishBinMessage", nil), numFoldersAction];
+                    }
+                } else if (numFilesAction == 1) {
+                    if (numFoldersAction == 0) {
+                        message = AMLocalizedString(@"fileMovedToRubbishBinMessage", nil);
+                    } else if (numFoldersAction == 1) {
+                        message = AMLocalizedString(@"fileFolderMovedToRubbishBinMessage", nil);
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"fileFoldersMovedToRubbishBinMessage", nil), numFoldersAction];
+                    }
+                } else {
+                    if (numFoldersAction == 0) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), numFilesAction];
+                    } else if (numFoldersAction == 1) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderMovedToRubbishBinMessage", nil), numFilesAction];
+                    } else {
+                        message = AMLocalizedString(@"filesFoldersMovedToRubbishBinMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                    }
+                }
+                
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self setEditing:NO animated:NO];
             }
@@ -1825,7 +1864,33 @@
             if (remainingOperations == 0) {
                 NSString *message;
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
-                    message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileRemovedFromRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                    if (numFilesAction == 0) {
+                        if (numFoldersAction == 1) {
+                            message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", nil);
+                        } else { //folders > 1
+                            message = [NSString stringWithFormat:AMLocalizedString(@"foldersRemovedToRubbishBinMessage", nil), numFoldersAction];
+                        }
+                    } else if (numFilesAction == 1) {
+                        if (numFoldersAction == 0) {
+                            message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", nil);
+                        } else if (numFoldersAction == 1) {
+                            message = AMLocalizedString(@"fileFolderRemovedToRubbishBinMessage", nil);
+                        } else {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"fileFoldersRemovedToRubbishBinMessage", nil), numFoldersAction];
+                        }
+                    } else {
+                        if (numFoldersAction == 0) {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"filesRemovedToRubbishBinMessage", nil), numFilesAction];
+                        } else if (numFoldersAction == 1) {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderRemovedToRubbishBinMessage", nil), numFilesAction];
+                        } else {
+                            message = AMLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", nil);
+                            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                        }
+                    }
                 } else {
                     message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave!");
                 }

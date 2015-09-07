@@ -384,7 +384,11 @@
                     } else if (folders == 1) {
                         message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", nil), files];
                     } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersMessage", nil), files, folders];
+                        message = AMLocalizedString(@"moveFilesFoldersMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
                 [SVProgressHUD showSuccessWithStatus:message];
@@ -435,7 +439,11 @@
                     } else if (folders == 1) {
                         message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFolderMessage", nil), files];
                     } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFoldersMessage", nil), files, folders];
+                        message = AMLocalizedString(@"copyFilesFoldersMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
                 [SVProgressHUD showSuccessWithStatus:message];

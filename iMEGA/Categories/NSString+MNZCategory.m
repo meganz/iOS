@@ -21,6 +21,9 @@
 
 #import "NSString+MNZCategory.h"
 
+static NSString* const A = @"[A]";
+static NSString* const B = @"[B]";
+
 @implementation NSString (MNZCategory)
 
 - (NSString*)stringBetweenString:(NSString*)start andString:(NSString*)end {
@@ -37,8 +40,14 @@
 }
 
 - (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
+    NSString *filesString = [NSString stringWithFormat:@"%ld", files];
+    NSString *foldersString = [NSString stringWithFormat:@"%ld", folders];
+    
     if (files > 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
+        NSString *filesAndFoldersString = AMLocalizedString(@"foldersAndFiles", @"Folders, files");
+        filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:A withString:foldersString];
+        filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:B withString:filesString];
+        return filesAndFoldersString;
     }
     
     if (files > 1 && folders == 1) {
