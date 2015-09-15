@@ -22,7 +22,7 @@
 @protocol MEGAPurchaseDelegate <NSObject>
 
 - (void)requestedProduct;
-- (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore identifier:(NSString *)productId receipt:(NSData *)receipt;
+- (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore;
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
 - (void)incompleteRestore;
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage;
