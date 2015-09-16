@@ -128,7 +128,9 @@
             case SKPaymentTransactionStatePurchased:
                 // Item was successfully purchased!
                 
-                [_delegate successfulPurchase:self restored:NO identifier:transaction.payment.productIdentifier receipt:transaction.transactionReceipt];
+                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedDataWithOptions:0]];
+                
+                [_delegate successfulPurchase:self restored:NO];
                 
                 // After customer has successfully received purchased content,
                 // remove the finished transaction from the payment queue.
@@ -140,8 +142,10 @@
                 // Verified that user has already paid for this item.
                 // Ideal for restoring item across all devices of this customer.
                 
+                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedDataWithOptions:0]];
+                
                 // Return transaction data. App should provide user with purchased product.
-                [_delegate successfulPurchase:self restored:YES identifier:transaction.payment.productIdentifier receipt:transaction.transactionReceipt];
+                [_delegate successfulPurchase:self restored:YES];
                 
                 // After customer has restored purchased content on this device,
                 // remove the finished transaction from the payment queue.
@@ -190,7 +194,8 @@
         // App should provide user with purchased product.
         
         for(SKPaymentTransaction *transaction in queue.transactions) {
-            [_delegate successfulPurchase:self restored:YES identifier:transaction.payment.productIdentifier receipt:transaction.transactionReceipt];
+            [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedDataWithOptions:0]];
+            [_delegate successfulPurchase:self restored:YES];
         }
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
