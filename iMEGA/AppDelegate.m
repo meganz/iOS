@@ -607,37 +607,51 @@
     struct ifaddrs *temp_addr = NULL;
     
     int success = 0;
-    // retrieve the current interfaces - returns 0 on success
     success = getifaddrs(&interfaces);
     if (success == 0) {
-        // Loop through linked list of interfaces
+        
         temp_addr = interfaces;
         while(temp_addr != NULL) {
             if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                // Check if interface is en0 which is the wifi connection on the iPhone
                 if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    // Get NSString from C String
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                    char straddr[INET_ADDRSTRLEN];
+                    inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "127.", 4) && strncasecmp(straddr, "169.254.", 8)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
                 }
             }
+            
+            if(temp_addr->ifa_addr->sa_family == AF_INET6) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
+                    char straddr[INET6_ADDRSTRLEN];
+                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
+                }
+            }
+            
             temp_addr = temp_addr->ifa_next;
         }
     }
-    // Free memory
+    
     freeifaddrs(interfaces);
+    
     return address;
 }
 
 #pragma mark - Reachability Changes
 
 - (void)reachabilityDidChange:(NSNotification *)notification {
-    if (!self.IpAddress) {
-        self.IpAddress = [self getIpAddress];
-    }
     
     if ([MEGAReachabilityManager isReachable]) {
-        if (![self.IpAddress isEqualToString:[self getIpAddress]]) {
+        NSString *currentIP = [self getIpAddress];
+        if (![self.IpAddress isEqualToString:currentIP]) {
             [[MEGASdkManager sharedMEGASdk] reconnect];
+            self.IpAddress = currentIP;
         }
     }
     
