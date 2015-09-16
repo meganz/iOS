@@ -80,7 +80,11 @@
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
     [MEGASdkManager sharedMEGASdk];
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+#else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
