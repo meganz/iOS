@@ -193,7 +193,7 @@
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                          withLogout:YES
-                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -449,7 +449,7 @@
     NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
     
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
         return;
     }
     
@@ -465,7 +465,7 @@
         return;
     }
     
-    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
+    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
     return;
 }
 
@@ -492,10 +492,10 @@
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
         if (isEncryptedFileLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileEncrypted", @"File encrypted")
-                                                                message:NSLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileEncrypted", @"File encrypted")
+                                                                message:AMLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -531,10 +531,10 @@
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
         if (isEncryptedFolderLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
-                                                                message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"folderEncrypted", @"Folder encrypted")
+                                                                message:AMLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -851,7 +851,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
             break;
         }
             
@@ -872,9 +872,9 @@
     if ([request type] == MEGARequestTypeFetchNodes){
         float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
         if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:progress status:AMLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
         } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:1 status:AMLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
         }
     }
 }
@@ -882,16 +882,22 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiESid) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alertView show];
+            [Helper logout];
+        }
+        
+        if ([error type] == MEGAErrorTypeApiESSL) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
             [alertView show];
             [Helper logout];
         }
         
         if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", nil)
-                                                            message:NSLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                            message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -930,7 +936,7 @@
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                          withLogout:YES
-                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
             } else {
                 if (isAccountFirstLogin) {
                     [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
