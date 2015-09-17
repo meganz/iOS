@@ -38,6 +38,8 @@
 "loggedOut_alertTitle"="Loggade ut";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Du har loggats ut från den här enheten från en annan plats";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA UTRYMME";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
