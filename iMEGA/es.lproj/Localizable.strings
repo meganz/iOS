@@ -229,7 +229,7 @@
 /* Sort by option (6/6). This one order the files by its modification date, older first */
 "oldest"="Más antiguo";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Elegir";
+"choosePhotoVideo"="Subir";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
@@ -518,10 +518,6 @@
 "downloads"="Descargas";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Subidas";
-/* Success message shown when the transfers have been resumed */
-"transfersResumed"="¡Transferencias reanudadas!";
-/* Success message shown when the transfers have been paused */
-"transfersPaused"="¡Transferencias pausadas!";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCanceled"="¡Transferencias canceladas!";
 /* Title of the alert shown when you try to cancel transfers */
@@ -614,46 +610,3 @@
 "failedRestore_title" = "Restauración cancelada";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message" = "O usted ha cancelado la petición o una compra anterior no puede ser restaurada. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz.";
-
-// WRITE THE NAME OF YOUR OWN LANGUAGE, IN YOUR LANGUAGE
-"af"="Afrikaans";
-"ar"="Arabic";
-"bg"="Bulgarian";
-"bs"="Bosnian";
-"ca"="Català";
-"cs"="Čeština";
-"da"="Danish";
-"de"="German";
-"ee"="Ewe";
-"en"="English";
-"es"="Español";
-"et"="Eesti";
-"eu"="Basque";
-"fi"="Suomi";
-"fr"="French";
-"gl"="Galician";
-"he"="Hebrew";
-"hr"="Croatian";
-"hu"="Magyar";
-"id"="Indonesian";
-"it"="Italiano";
-"ja"="Japanese";
-"ko"="Korean";
-"lt"="Lithuanian";
-"lv"="Latvian";
-"ms"="Malay";
-"nb"="Norwegian";
-"nl"="Nederlands";
-"pl"="Polish";
-"pt-br"="Português Brasil";
-"pt"="Português";
-"ro"="Română";
-"ru"="Pусский";
-"sk"="Slovak";
-"sl"="Slovenian";
-"sv"="Svenska";
-"th"="Thai";
-"tr"="Turkish";
-"uk"="Ukrainian";
-"zh-Hans"="Simplified Chinese";
-"zh-Hant"="中文繁體";

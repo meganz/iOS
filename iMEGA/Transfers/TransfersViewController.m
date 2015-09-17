@@ -682,7 +682,7 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {
-            text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the upper button.");
+            text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the above button.");
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case 0: //All

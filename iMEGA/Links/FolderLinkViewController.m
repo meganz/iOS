@@ -482,10 +482,10 @@
                     [self presentViewController:previewController animated:YES completion:nil];
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
-                                                                            message:@"Try later or cancel the pending downloads"
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
+                                                                            message:AMLocalizedString(@"documentOpening_alertMessage", nil)
                                                                            delegate:nil
-                                                                  cancelButtonTitle:@"ok"
+                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                                   otherButtonTitles:nil, nil];
                         [alertView show];
                     } else {
