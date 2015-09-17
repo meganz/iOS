@@ -71,6 +71,11 @@
 
 @interface Helper : NSObject
 
+#pragma mark - Languages
+
++ (BOOL)isLanguageSupported:(NSString *)languageID;
++ (NSString *)languageID:(NSUInteger)index;
+
 #pragma mark - Images
 
 + (NSString *)fileTypeIconForExtension:(NSString *)extension;

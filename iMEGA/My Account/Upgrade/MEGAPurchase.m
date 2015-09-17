@@ -44,7 +44,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), productId]
                                                             message:nil
                                                            delegate:nil
-                                                  cancelButtonTitle:@"Ok"
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                   otherButtonTitles:nil, nil];
         [alertView show];
     }

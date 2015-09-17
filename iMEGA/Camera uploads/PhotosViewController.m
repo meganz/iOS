@@ -236,7 +236,7 @@
         [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
     } else {
         
-        [self.navigationItem setTitle:@"Camera Uploads"];
+        [self.navigationItem setTitle:@"Camera Uploads"]; //TODO: Translate or not?
     }
 }
 
@@ -389,7 +389,7 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveMultipleNodesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveNodeToRubbishBinMessage", nil)];
+    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", nil)];
     
     UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     removeAlertView.tag = 1;
@@ -860,8 +860,8 @@
             if (remainingOperations == 0) {
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
-                [self presentViewController:activityVC animated:YES completion:nil ];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                [self presentViewController:activityVC animated:YES completion:nil];
                 [self setEditing:NO animated:NO];
             }
             break;

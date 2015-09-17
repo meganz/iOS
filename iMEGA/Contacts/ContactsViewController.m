@@ -464,7 +464,7 @@
     switch (actionSheet.tag) {
         case 0: {
             if (buttonIndex == 0) {
-                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
+                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
                 [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
                 emailAlertView.tag = 0;
@@ -619,7 +619,7 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the upper button.");
+        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the above button.");
     } else {
         text = @"";
     }

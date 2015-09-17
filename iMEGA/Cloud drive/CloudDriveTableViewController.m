@@ -767,7 +767,7 @@
         
         switch (self.displayMode) {
             case DisplayModeCloudDrive:
-                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
+                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the above button.");
                 break;
                 
             case DisplayModeContact:
@@ -1713,7 +1713,7 @@
                                                           alertControllerWithTitle:nil
                                                           message:alertMessage
                                                           preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"OK", @"Ok") style:UIAlertActionStyleDefault handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
                     [self presentViewController:alertController animated:YES completion:nil];
                 });
             } else {

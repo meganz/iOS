@@ -94,6 +94,8 @@
 
     [Fabric with:@[CrashlyticsKit]];
     
+    [self languageCompatibility];
+    
     // Delete username and password if exists - V1
     if ([SSKeychain passwordForService:@"MEGA" account:@"username"] && [SSKeychain passwordForService:@"MEGA" account:@"password"]) {
         [SSKeychain deletePasswordForService:@"MEGA" account:@"username"];
@@ -112,8 +114,6 @@
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
         [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
-        
-        [self languageCompatibility];
         
         [self removeOldStateCache];
         
@@ -803,11 +803,47 @@
 }
 
 - (void)languageCompatibility {
-    NSString *v2Language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0];
     
-    if (![v2Language isEqualToString:@"en"] && ![v2Language isEqualToString:@"es"]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    
+    if ([Helper isLanguageSupported:currentLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+    } else {
+        [self setLanguage:currentLanguageID];
     }
+}
+
+- (void)setLanguage:(NSString *)languageID {
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setSystemLanguage];
+    }
+}
+
+- (void)setSystemLanguage {
+    NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
+    NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
+    NSString *systemLanguageID = [languages objectAtIndex:0];
+    
+    if ([Helper isLanguageSupported:systemLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
+        return;
+    }
+    
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:systemLanguageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setDefaultLanguage];
+    }
+}
+
+- (void)setDefaultLanguage {
+    [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -820,7 +856,7 @@
         }
             
         case MEGARequestTypeLogout:
-            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"%@...", AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")]];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
             
         default:
