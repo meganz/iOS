@@ -1275,8 +1275,11 @@
     self.imagePickerController = imagePickerController;
     
     if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
-        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
-        [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }];
     } else {
         [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
     }
