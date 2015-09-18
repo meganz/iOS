@@ -314,10 +314,22 @@
 "moveFilesFolderToRubbishBinMessage"="Sei sicuro di voler spostare %d files e 1 cartella nel Cestino?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Sei sicuro di voler spostare %d files e %d cartelle nel Cestino?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 file mosso nel Cestino!";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d file spostati nel Cestino!";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Errori di permessi";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -478,10 +490,22 @@
 "removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="1 file rimosso da MEGA!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="%d files rimossi da MEGA!";
+"filesRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Password corrente";
 /* Hint text to suggest that the user have to write the new password on it */

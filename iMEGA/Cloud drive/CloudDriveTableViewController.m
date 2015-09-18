@@ -646,6 +646,14 @@
         }
         remainingOperations = 1;
         
+        if ([node isFolder]) {
+            numFoldersAction = 1;
+            numFilesAction = 0;
+        } else {
+            numFilesAction = 1;
+            numFoldersAction = 0;
+        }
+        
         MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
         if (accessType == MEGAShareTypeAccessOwner) {

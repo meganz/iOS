@@ -95,7 +95,7 @@
                             //@"nb":@"Norsk bokmål",
                             @"nl":@"Nederlands",
                             //@"pl":@"Język Polski",
-                            @"pt-BR":@"Português Brasileiro",
+                            @"pt-br":@"Português Brasileiro",
                             @"pt":@"Português",
                             //@"ro":@"Limba Română",
                             @"ru":@"Pусский язык",

@@ -314,10 +314,22 @@
 "moveFilesFolderToRubbishBinMessage"="Estàs segur de voler moure %d fitxers i 1 carpeta a la paperera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Estàs segur de voler moure %d fitxers i %d carpetes a la paperera?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="S'ha mogut 1 fitxer a la paperera!";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="S'ha mogut %d fitxers a la paperera!";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -478,10 +490,22 @@
 "removeFilesFolderToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent %d fitxers i 1 carpeta. Vols continuar? (no podràs desfer aquesta acció.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent %d fitxers i %d carpetes. Vols continuar? (no podràs desfer aquesta acció.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="S'ha eliminat un fitxer de MEGA!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="S'ha eliminat  2d fitxers de MEGA!";
+"filesRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Contrasenya actual";
 /* Hint text to suggest that the user have to write the new password on it */

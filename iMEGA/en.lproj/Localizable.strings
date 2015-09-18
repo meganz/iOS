@@ -314,10 +314,22 @@
 "moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move %d files and %d folders to the Rubbish Bin?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 file moved to the Rubbish Bin!";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d files moved to the Rubbish Bin!";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Permissions error";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -478,10 +490,22 @@
 "removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="1 file removed from MEGA!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="%d files removed from MEGA!";
+"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Current Password";
 /* Hint text to suggest that the user have to write the new password on it */
