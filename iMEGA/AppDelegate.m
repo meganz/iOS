@@ -881,25 +881,42 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiESid) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alertView show];
-            [Helper logout];
-        }
-        
-        if ([error type] == MEGAErrorTypeApiESSL) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-            [alertView show];
-            [Helper logout];
-        }
-        
-        if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                            message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+        switch ([error type]) {
+            case MEGAErrorTypeApiEArgs: {
+                if ([request type] == MEGARequestTypeLogin) {
+                    [Helper logout];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiENoent: {
+                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                                    message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
+                                                                   delegate:self
+                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiESid: {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [alertView show];
+                [Helper logout];
+                break;
+            }
+                
+            case MEGAErrorTypeApiESSL: {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                [alertView show];
+                [Helper logout];
+                break;
+            }
+                
+            default:
+                break;
         }
         
         if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
