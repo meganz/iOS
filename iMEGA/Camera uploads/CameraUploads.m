@@ -400,9 +400,9 @@ static CameraUploads *instance = nil;
             self.lastUploadVideoDate = [asset valueForProperty:ALAssetPropertyDate];
             [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
         }
+        [self.assetUploadArray removeObjectAtIndex:0];
     }
-    
-    [self.assetUploadArray removeObjectAtIndex:0];
+
 }
 
 - (uint64_t)freeDiskSpace {
