@@ -20,6 +20,7 @@
  */
 
 #import <QuickLook/QuickLook.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
@@ -227,12 +228,16 @@
 - (void)deleteTempDocuments {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
     for (NSString *item in directoryContents) {
-        if (isDocument(item.pathExtension)) {
+        CFStringRef fileUTI = [Helper fileUTI:[item pathExtension]];
+        if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
             NSError *error = nil;
             BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error];
             if (!success || error) {
                 [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
             }
+        }
+        if (fileUTI) {
+            CFRelease(fileUTI);
         }
     }
 }
@@ -414,7 +419,8 @@
 
         case MEGANodeTypeFile: {
             NSString *name = [node name];
-            if (isImage(name.pathExtension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -423,7 +429,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];
@@ -438,7 +444,7 @@
                     for (NSInteger i = 0; i < nodeListSize; i++) {
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];
@@ -468,7 +474,7 @@
                 [photoBrowser showNextPhotoAnimated:YES];
                 [photoBrowser showPreviousPhotoAnimated:YES];
                 [photoBrowser setCurrentPhotoIndex:offsetIndex];
-            } else if (isDocument(name.pathExtension)) {
+            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -481,7 +487,7 @@
                     [previewController setTitle:node.name];
                     [self presentViewController:previewController animated:YES completion:nil];
                 } else {
-                    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
+                    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
                                                                             message:AMLocalizedString(@"documentOpening_alertMessage", nil)
                                                                            delegate:nil
@@ -496,12 +502,16 @@
                         
                         PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                         [previewDocumentVC setNode:node];
+                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
                         
                         [self.navigationController pushViewController:previewDocumentVC animated:YES];
                         
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     }
                 }
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
             break;
         }
@@ -582,7 +592,11 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:previewDocumentPath];
+    if (previewDocumentPath != nil) {
+        return [NSURL fileURLWithPath:previewDocumentPath];
+    }
+    
+    return nil;
 }
 
 #pragma mark - QLPreviewControllerDelegate

@@ -21,6 +21,8 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import <QuickLook/QuickLook.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -119,11 +121,15 @@
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
             [self.offlineDocuments addObject:tempDictionary];
             
-            if (isImage(fileName.pathExtension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[fileName pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 offsetIndex++;
                 MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
                 photo.caption = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName];
                 [self.offlineImages addObject:photo];
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
         }
     }
@@ -312,7 +318,8 @@
             }
         }
         
-        if (isImage(nameString.pathExtension)) {
+        CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
             [cell.thumbnailImageView.layer setCornerRadius:4];
             [cell.thumbnailImageView.layer setMasksToBounds:YES];
             
@@ -332,6 +339,9 @@
         } else {
             UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
             [cell.thumbnailImageView setImage:iconImage];
+        }
+        if (fileUTI) {
+            CFRelease(fileUTI);
         }
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
@@ -408,7 +418,8 @@
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
     } else {
-        if (isImage(itemNameString.pathExtension)) {
+        CFStringRef fileUTI = [Helper fileUTI:[itemNameString pathExtension]];
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
             MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
             
             browser.displayActionButton = YES;
@@ -429,22 +440,24 @@
             NSInteger selectedIndexPhoto = [[[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
             [browser setCurrentPhotoIndex:selectedIndexPhoto];
             
-        } else if (isVideo(itemNameString.pathExtension)) {
+        } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
             NSURL *fileURL = [NSURL fileURLWithPath:previewDocumentPath];
             
             MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
             [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
             [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
             [moviePlayerViewController.moviePlayer play];
-        } else if (isDocument(itemNameString.pathExtension)) {
+        } else {
             QLPreviewController *previewController = [[QLPreviewController alloc]init];
-            previewController.delegate=self;
-            previewController.dataSource=self;
+            previewController.delegate = self;
+            previewController.dataSource = self;
             [previewController setTransitioningDelegate:self];
             [previewController setTitle:itemNameString];
             [self presentViewController:previewController animated:YES completion:nil];
         }
-        
+        if (fileUTI) {
+            CFRelease(fileUTI);
+        }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }

@@ -20,6 +20,7 @@
  */
 
 #import <QuickLook/QuickLook.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
@@ -115,9 +116,12 @@
     [self.importButton setEnabled:boolValue];
     [self.downloadButton setEnabled:boolValue];
     
-    NSString *extension = [self.node.name pathExtension];
-    if (isDocument(extension) || isImage(extension)) {
+    CFStringRef fileUTI = [Helper fileUTI:[self.node.name pathExtension]];
+    if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
         [self.openButton setEnabled:boolValue];
+    }
+    if (fileUTI) {
+        CFRelease(fileUTI);
     }
 }
 
@@ -259,6 +263,7 @@
                 
                 PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                 [previewDocumentVC setNode:self.node];
+                [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
                 
                 [self.navigationController pushViewController:previewDocumentVC animated:YES];
             }
@@ -338,9 +343,13 @@
             UIImage *image = [UIImage imageNamed:fileTypeIconString];
             [self.thumbnailImageView setImage:image];
             
-            if (isDocument(extension) || isImage(extension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[self.node.name pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
                 [self.openButton setEnabled:YES];
                 [self.openButton setHidden:NO];
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
             
             [self setUIItemsEnabled:YES];
