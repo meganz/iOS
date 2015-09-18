@@ -343,8 +343,12 @@
     [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
     
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
+    [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setBackgroundColor:megaInfoGray];
     [SVProgressHUD setForegroundColor:megaBlack];
+    
+    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
+    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
 - (void)startBackgroundTask {
