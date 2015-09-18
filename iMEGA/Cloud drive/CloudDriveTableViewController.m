@@ -424,8 +424,10 @@
         }
             
         case MEGANodeTypeFile: {
+            
             NSString *name = [node name];
-            if (isImage(name.pathExtension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -434,7 +436,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -447,7 +449,7 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -476,7 +478,7 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
-            } else if (isMultimedia(name.pathExtension)) {
+            } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
                 NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
                 if (link) {
                     MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
@@ -501,7 +503,8 @@
                     return;
                 }
                 
-            } else if (isDocument(name.pathExtension)) {
+            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
+                
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -529,6 +532,7 @@
                         
                         PreviewDocumentViewController *previewDocumentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                         [previewDocumentVC setNode:node];
+                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
                         
                         [self.navigationController pushViewController:previewDocumentVC animated:YES];
                         
@@ -542,6 +546,9 @@
                 [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
                 
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
             break;
         }
@@ -1760,17 +1767,6 @@
     return YES;
 }
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath];
-    if (fileExists) {
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
-        }
-    }
-}
-
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1857,7 +1853,7 @@
                 }
                 
                 [SVProgressHUD showSuccessWithStatus:message];
-                [self setEditing:NO animated:NO];
+                [self setEditing:NO animated:YES];
             }
             break;
         }
@@ -1895,10 +1891,10 @@
                         }
                     }
                 } else {
-                    message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave!");
+                    message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave");
                 }
                 [SVProgressHUD showSuccessWithStatus:message];
-                [self setEditing:NO animated:NO];
+                [self setEditing:NO animated:YES];
             }
             break;
         }
@@ -1926,8 +1922,8 @@
                     activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
                 }
                 
-                [self presentViewController:activityVC animated:YES completion:nil ];
-                [self setEditing:NO animated:NO];
+                [self presentViewController:activityVC animated:YES completion:nil];
+                [self setEditing:NO animated:YES];
             }
             break;
         }

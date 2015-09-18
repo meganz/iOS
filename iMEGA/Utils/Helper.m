@@ -19,6 +19,8 @@
  * program.
  */
 
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
@@ -35,6 +37,15 @@ static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 
 @implementation Helper
+
+#pragma mark - File UTIs
+
++ (CFStringRef)fileUTI:(NSString *)fileExtension {
+    CFStringRef extension = (__bridge CFStringRef) fileExtension;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
+
+    return fileUTI;
+}
 
 #pragma mark - Languages
 
