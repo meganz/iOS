@@ -390,23 +390,35 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if ([alertView tag] == 0) {
         if (buttonIndex == 1) {
-            UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-            [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
+            if ([MEGAReachabilityManager isReachable]) {
+                UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
+                [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            }
         }
     } else if ([alertView tag] == 1) {
         if (buttonIndex == 1) {
-            if (self.displayMode == DisplayModeRubbishBin) {
-                [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+            if ([MEGAReachabilityManager isReachable]) {
+                if (self.displayMode == DisplayModeRubbishBin) {
+                    [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                }
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
-                [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
-            [self.navigationController popViewControllerAnimated:YES];
         }
     } else if ([alertView tag] == 2) {
         if (buttonIndex == 1) {
-            NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
-            if (transferTag != nil) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+            if ([MEGAReachabilityManager isReachable]) {
+                NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
+                if (transferTag != nil) {
+                    [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+                }
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
         }
     }

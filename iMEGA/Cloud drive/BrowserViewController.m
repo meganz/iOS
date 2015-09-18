@@ -189,20 +189,27 @@
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.selectedNodesArray.count;
-    
-    for (MEGANode *n in self.selectedNodesArray) {
-        [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        remainingOperations = self.selectedNodesArray.count;
+        
+        for (MEGANode *n in self.selectedNodesArray) {
+            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.selectedNodesArray.count;
-    
-    for (MEGANode *n in self.selectedNodesArray) {
-        [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        remainingOperations = self.selectedNodesArray.count;
+        
+        for (MEGANode *n in self.selectedNodesArray) {
+            [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
-    
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
@@ -278,7 +285,11 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+        if ([MEGAReachabilityManager isReachable]) {
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
 

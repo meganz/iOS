@@ -583,13 +583,21 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
+            if ([MEGAReachabilityManager isReachable]) {
+                [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            }
         }
     } else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
-            remainingOperations = self.selectedUsersArray.count;
-            for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
+            if ([MEGAReachabilityManager isReachable]) {
+                remainingOperations = self.selectedUsersArray.count;
+                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
+                }
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
         }
     } else if (alertView.tag == 2) {

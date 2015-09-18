@@ -1004,13 +1004,17 @@
     switch ([alertView tag]) {
         case 0: {
             if (buttonIndex == 1) {
-                UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-                MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-                [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
-                
-                if (isSearchTableViewDisplay) {
-                    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-                    [self.searchDisplayController.searchResultsTableView reloadData];
+                if ([MEGAReachabilityManager isReachable]) {
+                    UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
+                    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
+                    [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
+                    
+                    if (isSearchTableViewDisplay) {
+                        [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+                        [self.searchDisplayController.searchResultsTableView reloadData];
+                    }
+                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
                 }
             }
             break;
@@ -1018,20 +1022,27 @@
             
         case 1: {
             if (buttonIndex == 1) {
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+                if ([MEGAReachabilityManager isReachable]) {
+                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                }
             }
             break;
         }
             
         case 2: {
             if (buttonIndex == 1) {
-                remainingOperations = self.selectedNodesArray.count;
-                for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                    } else {
-                        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
-                    }
+                if ([MEGAReachabilityManager isReachable]) {
+                    remainingOperations = self.selectedNodesArray.count;
+                    for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
+                        if (self.displayMode == DisplayModeCloudDrive) {
+                            [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                        } else {
+                            [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
+                        }
+                    }                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
                 }
             }
             break;
