@@ -275,11 +275,11 @@
 /* Success message shown when you have moved 1 file and 1 folder */
 "moveFileFolderMessage"="1 fichero y 1 carpeta movidos";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 fichero y %d carpeta movidos";
+"moveFileFoldersMessage"="1 fichero y %d carpeta movidas";
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d ficheros y 1 carpeta movidos";
 /* Success message shown when you have moved {1+} files and {1+} folders */
-"moveFilesFoldersMessage"="%d ficheros y %d carpetas movidos";
+"moveFilesFoldersMessage"="%d ficheros y %d carpetas movidas";
 /* List option shown on the details of a file or folder */
 "copy"="Copiar";
 /* Success message shown when you have copied 1 file */
@@ -320,10 +320,22 @@
 "moveFilesFolderToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y 1 carpeta a la papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="¿Estás seguro de que quieres mover %d archivos y %d carpetas a la papelera?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 fichero movido a la papelera";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d ficheros movidos a la papelera";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 fichero movido a la Papelera";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d ficheros movidos a la Papelera";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 carpeta movido a la Papelera";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d carpetas movidas a la Papelera";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 fichero y 1 carpeta movidos a la Papelera";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 fichero y %d carpetas movidos a la Papelera";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d ficheros y 1 carpeta movidos a la Papelera";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] ficheros y [B] carpetas movidos a la Papelera";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -484,10 +496,22 @@
 "removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="¡1 archivo borrado de MEGA!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 fichero eliminado de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="¡%d archivos borrados de MEGA!";
+"filesRemovedToRubbishBinMessage"="%d fichero eliminados de MEGA";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 carpeta eliminada de MEGA";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d carpetas eliminadas de MEGA";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 fichero y 1 carpeta eliminada de MEGA";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 fichero y %d carpetas eliminadas de MEGA";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d ficheros y 1 carpeta eliminados de MEGA";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] ficheros y [B] carpetas eliminadas de MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Contraseña actual";
 /* Hint text to suggest that the user have to write the new password on it */

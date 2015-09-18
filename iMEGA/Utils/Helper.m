@@ -83,7 +83,7 @@ static NSInteger linkNodeOption;
                                  //                      @"nb",
                                  @"nl",
                                  //                      @"pl",
-                                 @"pt-BR",
+                                 @"pt-br",
                                  @"pt",
                                  //                      @"ro",
                                  @"ru",
