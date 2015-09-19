@@ -25,6 +25,7 @@
 #import "NodeTableViewCell.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
+#import "NSString+MNZCategory.h"
 
 @interface BrowserViewController () <UIAlertViewDelegate> {
     UIAlertView *folderAlertView;
@@ -185,66 +186,36 @@
     return titleTextAttributesDictionary;
 }
 
-
-- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
-    if (files > 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
-    }
-    
-    if (files == 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
-    }
-    
-    if (!files && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
-    }
-    
-    if (!files && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
-    }
-    
-    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-}
-
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.selectedNodesArray.count;
-    
-    for (MEGANode *n in self.selectedNodesArray) {
-        [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        remainingOperations = self.selectedNodesArray.count;
+        
+        for (MEGANode *n in self.selectedNodesArray) {
+            [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
-    remainingOperations = self.selectedNodesArray.count;
-    
-    for (MEGANode *n in self.selectedNodesArray) {
-        [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+    if ([MEGAReachabilityManager isReachable]) {
+        remainingOperations = self.selectedNodesArray.count;
+        
+        for (MEGANode *n in self.selectedNodesArray) {
+            [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+        }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
-    
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
     folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
     [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [folderAlertView textFieldAtIndex:0].text = AMLocalizedString(@"newFolderMessage", nil);
+    [folderAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"newFolderMessage", nil);
     [folderAlertView show];
     [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
         [folderAlertView dismissWithClickedButtonIndex:0 animated:NO];
@@ -314,7 +285,11 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+        if ([MEGAReachabilityManager isReachable]) {
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        }
     }
 }
 
@@ -343,7 +318,7 @@
     NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
     NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
     
-    NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
+    NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
     
     cell.infoLabel.text = filesAndFolders;
     
@@ -420,7 +395,11 @@
                     } else if (folders == 1) {
                         message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", nil), files];
                     } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersMessage", nil), files, folders];
+                        message = AMLocalizedString(@"moveFilesFoldersMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
                 [SVProgressHUD showSuccessWithStatus:message];
@@ -471,7 +450,11 @@
                     } else if (folders == 1) {
                         message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFolderMessage", nil), files];
                     } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFoldersMessage", nil), files, folders];
+                        message = AMLocalizedString(@"copyFilesFoldersMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
                 [SVProgressHUD showSuccessWithStatus:message];

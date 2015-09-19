@@ -38,6 +38,8 @@
 "loggedOut_alertTitle"="Afgemeld";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA OPSLAGRUIMTE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -58,8 +60,6 @@
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Account Aanmaken";
-/* Text shown next to a switch button on login, which if it's enabled keeps you logged after the app is closed. Otherwise you will be logged out as soon as the app's gets out of the memory */
-"remainLoggedIn"="Blijf ingelogd";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ongeldig e-mail en/of wachtwoord. Probeer aub opnieuw";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -200,8 +200,6 @@
 "foldersAndFile"="%d mappen • %d bestand";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="%d map • %d bestanden";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d map • %d bestand";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="wachtrij";
 /* Message shown when a transfer has been canceled */
@@ -316,10 +314,22 @@
 "moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move %d files and %d folders to the Rubbish Bin?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 bestand verplaatst naar de Vuilnisbak";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d bestanden gewijzigd naar de Vuilnisbak";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Permissie fout";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -480,10 +490,22 @@
 "removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove %d files and %d folders. Would you like to proceed? (You cannot undo this action.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="1 bestand verwijderd van MEGA!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="%d bestanden verwijderd van MEGA!";
+"filesRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Huidige wachtwoord";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -516,10 +538,6 @@
 "downloads"="downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="uploads";
-/* Success message shown when the transfers have been resumed */
-"transfersResumed"="Overdracht hervat!";
-/* Success message shown when the transfers have been paused */
-"transfersPaused"="Overdrachten gepauzeerd";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCanceled"="Overdrachten geannulleerd";
 /* Title of the alert shown when you try to cancel transfers */
@@ -612,47 +630,3 @@
 "failedRestore_title" = "Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
-
-// WRITE THE NAME OF YOUR OWN LANGUAGE, IN YOUR LANGUAGE
-"af"="Afrikaans";
-"ar"="Arabic";
-"bg"="Bulgarian";
-"bs"="Bosnian";
-"ca"="Català";
-"cs"="Čeština";
-"da"="Danish";
-"de"="German";
-"ee"="Ewe";
-// DO NOT TRANSLATE. Already translated
-"en"="English";
-"es"="Español";
-"et"="Eesti";
-"eu"="Basque";
-"fi"="Suomi";
-"fr"="French";
-"gl"="Galician";
-"he"="Hebrew";
-"hr"="Croatian";
-"hu"="Magyar";
-"id"="Indonesian";
-"it"="Italiano";
-"ja"="Japanese";
-"ko"="Korean";
-"lt"="Lithuanian";
-"lv"="Latvian";
-"ms"="Malay";
-"nb"="Norwegian";
-"nl"="Nederlands";
-"pl"="Polish";
-"pt-br"="Português Brasil";
-"pt"="Português";
-"ro"="Română";
-"ru"="Pусский";
-"sk"="Slovak";
-"sl"="Slovenian";
-"sv"="Svenska";
-"th"="Thai";
-"tr"="Turkish";
-"uk"="Ukrainian";
-"zh-Hans"="Simplified Chinese";
-"zh-Hant"="中文繁體";

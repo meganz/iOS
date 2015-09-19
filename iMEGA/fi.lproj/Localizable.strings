@@ -38,6 +38,8 @@
 "loggedOut_alertTitle"="Kirjauduttu ulos";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Olet kirjautunut ulos tästä laitteesta, koska kirjauduit sisään toisaalla";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA-TILA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -58,8 +60,6 @@
 "login"="Kirjaudu";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Luo tili";
-/* Text shown next to a switch button on login, which if it's enabled keeps you logged after the app is closed. Otherwise you will be logged out as soon as the app's gets out of the memory */
-"remainLoggedIn"="Pysy sisäänkirjautuneena";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Epäkelpo sähköposti ja/tai salasana. Ole hyvä ja yritä uudelleen.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -200,8 +200,6 @@
 "foldersAndFile"="%d kansiota • %d tiedosto";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="%d kansio • %d tiedostoa";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d kansio • %d tiedosto";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Jonossa";
 /* Message shown when a transfer has been canceled */
@@ -316,10 +314,22 @@
 "moveFilesFolderToRubbishBinMessage"="Haluatko varmasti siirtää %d tiedostoa ja 1 kansiota roskakoriin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Haluatko varmasti siirtää %d tiedostoa ja %d kansiota roskakoriin?";
-/* Success message shown when one file has been moved to the Rubbish Bin */
-"fileMovedToRubbishBin"="1 tiedosto siirretty roskakoriin!";
-/* Success message shown when {1+} files have been moved to the Rubbish Bin */
-"filesMovedToRubbishBin"="%d tiedostoa siirretty roskakoriin!";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Käyttöoikeusvirhe";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -480,10 +490,22 @@
 "removeFilesFolderToRubbishBinMessage"="Olet poistamassa lopullisesti %d tiedostoa ja 1 kansion. Haluatko jatkaa? (Toimintoa ei voi perua.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Olet poistamassa lopullisesti %d tiedostoa ja %d kansiota. Haluatko jatkaa? (Toimintoa ei voi perua.)";
-/* Success message shown when one file has been removed from MEGA */
-"fileRemovedFromRubbishBin"="1 tiedosto poistettu MEGAsta!";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedFromRubbishBin"="%d tiedostoa poistettu MEGAsta!";
+"filesRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Nykyinen salasana";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -516,10 +538,6 @@
 "downloads"="lataukset";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="lähetykset";
-/* Success message shown when the transfers have been resumed */
-"transfersResumed"="Lataus jatkuu!";
-/* Success message shown when the transfers have been paused */
-"transfersPaused"="Siirrot keskeytetty!";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCanceled"="Siirrot keskeytetty!";
 /* Title of the alert shown when you try to cancel transfers */
@@ -612,47 +630,3 @@
 "failedRestore_title" = "Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
-
-// WRITE THE NAME OF YOUR OWN LANGUAGE, IN YOUR LANGUAGE
-"af"="Afrikaans";
-"ar"="Arabic";
-"bg"="Bulgarian";
-"bs"="Bosnian";
-"ca"="Català";
-"cs"="Čeština";
-"da"="Danish";
-"de"="German";
-"ee"="Ewe";
-// DO NOT TRANSLATE. Already translated
-"en"="English";
-"es"="Español";
-"et"="Eesti";
-"eu"="Basque";
-"fi"="Suomi";
-"fr"="French";
-"gl"="Galician";
-"he"="Hebrew";
-"hr"="Croatian";
-"hu"="Magyar";
-"id"="Indonesian";
-"it"="Italiano";
-"ja"="Japanese";
-"ko"="Korean";
-"lt"="Lithuanian";
-"lv"="Latvian";
-"ms"="Malay";
-"nb"="Norwegian";
-"nl"="Nederlands";
-"pl"="Polish";
-"pt-br"="Português Brasil";
-"pt"="Português";
-"ro"="Română";
-"ru"="Pусский";
-"sk"="Slovak";
-"sl"="Slovenian";
-"sv"="Svenska";
-"th"="Thai";
-"tr"="Turkish";
-"uk"="Ukrainian";
-"zh-Hans"="Simplified Chinese";
-"zh-Hant"="中文繁體";

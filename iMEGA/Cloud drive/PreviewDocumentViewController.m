@@ -5,7 +5,7 @@
 #import "Helper.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate> {
+@interface PreviewDocumentViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     NSString *localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_node.name];
-    [[MEGASdkManager sharedMEGASdk] startDownloadNode:_node localPath:localPath delegate:self];
+    [self.api startDownloadNode:_node localPath:localPath delegate:self];
     
     [self setTitle:_node.name];
     [_imageView setImage:[Helper infoImageForNode:self.node]];
@@ -31,13 +31,32 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isMovingFromParentViewController && previewDocumentTransfer) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfer:previewDocumentTransfer];
+        [self.api cancelTransfer:previewDocumentTransfer];
     }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    
+    if ([presented isKindOfClass:[QLPreviewController class]]) {
+        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
+    }
+    
+    return nil;
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -47,7 +66,11 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:previewDocumentTransfer.path];
+    if (previewDocumentTransfer.path != nil) {
+        return [NSURL fileURLWithPath:previewDocumentTransfer.path];
+    }
+
+    return nil;
 }
 
 #pragma mark - QLPreviewControllerDelegate
@@ -65,8 +88,19 @@
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
         }
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    
     previewDocumentTransfer = nil;
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+}
+
+- (void)previewControllerDidDismiss:(QLPreviewController *)controller {
+    //Avoid crash on iOS 7 and 8
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedDescending)) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -90,8 +124,11 @@
     QLPreviewController *previewController = [[QLPreviewController alloc] init];
     [previewController setDelegate:self];
     [previewController setDataSource:self];
+    [previewController setTransitioningDelegate:self];
     [previewController setTitle:transfer.fileName];
-    [self presentViewController:previewController animated:YES completion:nil];
+    [self presentViewController:previewController animated:YES completion:^{
+        [_progressView setHidden:YES];
+    }];
 }
 
 @end

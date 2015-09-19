@@ -85,7 +85,7 @@
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:nil];
         
         if (success) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyRemoved", nil) message:AMLocalizedString(@"masterKeyRemoved_alertMessage", @"MasterKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyRemoved", nil) message:AMLocalizedString(@"masterKeyRemoved_alertMessage", @"MasterKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
             [alertView show];
         }
         

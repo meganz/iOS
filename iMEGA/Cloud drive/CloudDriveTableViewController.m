@@ -71,6 +71,8 @@
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
     
     NSString *previewDocumentPath;
+    
+    NSUInteger numFilesAction, numFoldersAction;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -346,7 +348,7 @@
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
-        NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
+        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
         cell.infoLabel.text = filesAndFolders;
     }
     
@@ -422,8 +424,10 @@
         }
             
         case MEGANodeTypeFile: {
+            
             NSString *name = [node name];
-            if (isImage(name.pathExtension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -432,7 +436,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -445,7 +449,7 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        if (isImage([n name].pathExtension) && [n type] == MEGANodeTypeFile) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
                             [self.cloudImages addObject:photo];
@@ -474,7 +478,7 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
-            } else if (isMultimedia(name.pathExtension)) {
+            } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
                 NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
                 if (link) {
                     MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
@@ -499,7 +503,8 @@
                     return;
                 }
                 
-            } else if (isDocument(name.pathExtension)) {
+            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
+                
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -527,6 +532,7 @@
                         
                         PreviewDocumentViewController *previewDocumentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                         [previewDocumentVC setNode:node];
+                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
                         
                         [self.navigationController pushViewController:previewDocumentVC animated:YES];
                         
@@ -540,6 +546,9 @@
                 [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
                 
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
             break;
         }
@@ -636,6 +645,14 @@
             node = [self.nodes nodeAtIndex:indexPath.row];
         }
         remainingOperations = 1;
+        
+        if ([node isFolder]) {
+            numFoldersAction = 1;
+            numFilesAction = 0;
+        } else {
+            numFilesAction = 1;
+            numFoldersAction = 0;
+        }
         
         MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
@@ -765,7 +782,7 @@
         
         switch (self.displayMode) {
             case DisplayModeCloudDrive:
-                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the upper button.");
+                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the above button.");
                 break;
                 
             case DisplayModeContact:
@@ -859,7 +876,7 @@
                                                cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
             [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [folderAlertView textFieldAtIndex:0].text = AMLocalizedString(@"newFolderMessage", nil);
+            [folderAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"newFolderMessage", nil);
             folderAlertView.tag = 1;
             [folderAlertView show];
             break;
@@ -995,13 +1012,17 @@
     switch ([alertView tag]) {
         case 0: {
             if (buttonIndex == 1) {
-                UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-                MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-                [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
-                
-                if (isSearchTableViewDisplay) {
-                    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-                    [self.searchDisplayController.searchResultsTableView reloadData];
+                if ([MEGAReachabilityManager isReachable]) {
+                    UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
+                    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
+                    [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
+                    
+                    if (isSearchTableViewDisplay) {
+                        [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+                        [self.searchDisplayController.searchResultsTableView reloadData];
+                    }
+                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
                 }
             }
             break;
@@ -1009,20 +1030,27 @@
             
         case 1: {
             if (buttonIndex == 1) {
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+                if ([MEGAReachabilityManager isReachable]) {
+                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
+                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                }
             }
             break;
         }
             
         case 2: {
             if (buttonIndex == 1) {
-                remainingOperations = self.selectedNodesArray.count;
-                for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                    } else {
-                        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
-                    }
+                if ([MEGAReachabilityManager isReachable]) {
+                    remainingOperations = self.selectedNodesArray.count;
+                    for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
+                        if (self.displayMode == DisplayModeCloudDrive) {
+                            [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                        } else {
+                            [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
+                        }
+                    }                } else {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
                 }
             }
             break;
@@ -1273,47 +1301,14 @@
     self.imagePickerController = imagePickerController;
     
     if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
-        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:self.imagePickerController];
-        [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }];
     } else {
         [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
     }
-}
-
-- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
-    if (files > 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
-    }
-    
-    if (files == 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
-    }
-    
-    if (!files && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
-    }
-    
-    if (!files && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
-    }
-    
-    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
 - (void)toolbarActionsForShareType:(MEGAShareType )shareType {
@@ -1532,66 +1527,74 @@
             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
         }
     } else {
-        NSInteger files = 0;
-        NSInteger folders = 0;
+        numFilesAction = 0;
+        numFoldersAction = 0;
         for (MEGANode *n in self.selectedNodesArray) {
             if ([n type] == MEGANodeTypeFolder) {
-                folders++;
+                numFoldersAction++;
             } else {
-                files++;
+                numFilesAction++;
             }
         }
         
         if (self.displayMode == DisplayModeCloudDrive) {
             NSString *message;
-            if (files == 0) {
-                if (folders == 1) {
+            if (numFilesAction == 0) {
+                if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"moveFolderToRubbishBinMessage", nil);
                 } else { //folders > 1
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
-            } else if (files == 1) {
-                if (folders == 0) {
+            } else if (numFilesAction == 1) {
+                if (numFoldersAction == 0) {
                     message = AMLocalizedString(@"moveFileToRubbishBinMessage", nil);
-                } else if (folders == 1) {
+                } else if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"moveFileFolderToRubbishBinMessage", nil);
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
             } else {
-                if (folders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), files];
-                } else if (folders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), files];
+                if (numFoldersAction == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), numFilesAction];
+                } else if (numFoldersAction == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), numFilesAction];
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil), files, folders];
+                    message = AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil);
+                    NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                    NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }
             }
             
             removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         } else {
             NSString *message;
-            if (files == 0) {
-                if (folders == 1) {
+            if (numFilesAction == 0) {
+                if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
                 } else { //folders > 1
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
-            } else if (files == 1) {
-                if (folders == 0) {
+            } else if (numFilesAction == 1) {
+                if (numFoldersAction == 0) {
                     message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
-                } else if (folders == 1) {
+                } else if (numFoldersAction == 1) {
                     message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
                 } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), folders];
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
                 }
             } else {
-                if (folders == 0) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), files];
-                } else if (folders == 1) {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), files];
-                } else {
-                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil), files, folders];
+                if (numFoldersAction == 0) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
+                } else if (numFoldersAction == 1) {
+                    message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
+                } else {                    
+                    message = AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
+                    NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                    NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }
             }
             
@@ -1739,7 +1742,7 @@
                                                           alertControllerWithTitle:nil
                                                           message:alertMessage
                                                           preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"OK", @"Ok") style:UIAlertActionStyleDefault handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
                     [self presentViewController:alertController animated:YES completion:nil];
                 });
             } else {
@@ -1781,17 +1784,6 @@
 
 - (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
     return YES;
-}
-
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath];
-    if (fileExists) {
-        NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
-        }
-    }
 }
 
 #pragma mark - MEGARequestDelegate
@@ -1849,9 +1841,38 @@
         case MEGARequestTypeMove: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                NSString *message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBin", nil), self.selectedNodesArray.count];
+                
+                NSString *message;
+                if (numFilesAction == 0) {
+                    if (numFoldersAction == 1) {
+                        message = AMLocalizedString(@"folderMovedToRubbishBinMessage", nil);
+                    } else { //folders > 1
+                        message = [NSString stringWithFormat:AMLocalizedString(@"foldersMovedToRubbishBinMessage", nil), numFoldersAction];
+                    }
+                } else if (numFilesAction == 1) {
+                    if (numFoldersAction == 0) {
+                        message = AMLocalizedString(@"fileMovedToRubbishBinMessage", nil);
+                    } else if (numFoldersAction == 1) {
+                        message = AMLocalizedString(@"fileFolderMovedToRubbishBinMessage", nil);
+                    } else {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"fileFoldersMovedToRubbishBinMessage", nil), numFoldersAction];
+                    }
+                } else {
+                    if (numFoldersAction == 0) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), numFilesAction];
+                    } else if (numFoldersAction == 1) {
+                        message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderMovedToRubbishBinMessage", nil), numFilesAction];
+                    } else {
+                        message = AMLocalizedString(@"filesFoldersMovedToRubbishBinMessage", nil);
+                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                    }
+                }
+                
                 [SVProgressHUD showSuccessWithStatus:message];
-                [self setEditing:NO animated:NO];
+                [self setEditing:NO animated:YES];
             }
             break;
         }
@@ -1861,12 +1882,38 @@
             if (remainingOperations == 0) {
                 NSString *message;
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin) {
-                    message = (self.selectedNodesArray.count <= 1 ) ? AMLocalizedString(@"fileRemovedFromRubbishBin", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesRemovedFromRubbishBin", nil), self.selectedNodesArray.count];
+                    if (numFilesAction == 0) {
+                        if (numFoldersAction == 1) {
+                            message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", nil);
+                        } else { //folders > 1
+                            message = [NSString stringWithFormat:AMLocalizedString(@"foldersRemovedToRubbishBinMessage", nil), numFoldersAction];
+                        }
+                    } else if (numFilesAction == 1) {
+                        if (numFoldersAction == 0) {
+                            message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", nil);
+                        } else if (numFoldersAction == 1) {
+                            message = AMLocalizedString(@"fileFolderRemovedToRubbishBinMessage", nil);
+                        } else {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"fileFoldersRemovedToRubbishBinMessage", nil), numFoldersAction];
+                        }
+                    } else {
+                        if (numFoldersAction == 0) {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"filesRemovedToRubbishBinMessage", nil), numFilesAction];
+                        } else if (numFoldersAction == 1) {
+                            message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderRemovedToRubbishBinMessage", nil), numFilesAction];
+                        } else {
+                            message = AMLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", nil);
+                            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+                            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+                            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+                            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+                        }
+                    }
                 } else {
-                    message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave!");
+                    message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave");
                 }
                 [SVProgressHUD showSuccessWithStatus:message];
-                [self setEditing:NO animated:NO];
+                [self setEditing:NO animated:YES];
             }
             break;
         }
@@ -1894,8 +1941,8 @@
                     activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
                 }
                 
-                [self presentViewController:activityVC animated:YES completion:nil ];
-                [self setEditing:NO animated:NO];
+                [self presentViewController:activityVC animated:YES completion:nil];
+                [self setEditing:NO animated:YES];
             }
             break;
         }

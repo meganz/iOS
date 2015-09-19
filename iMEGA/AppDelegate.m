@@ -80,7 +80,11 @@
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
     [MEGASdkManager sharedMEGASdk];
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+#else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -89,6 +93,8 @@
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
 
     [Fabric with:@[CrashlyticsKit]];
+    
+    [self languageCompatibility];
     
     // Delete username and password if exists - V1
     if ([SSKeychain passwordForService:@"MEGA" account:@"username"] && [SSKeychain passwordForService:@"MEGA" account:@"password"]) {
@@ -108,8 +114,6 @@
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
         [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
-        
-        [self languageCompatibility];
         
         [self removeOldStateCache];
         
@@ -189,7 +193,7 @@
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                          withLogout:YES
-                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -339,8 +343,12 @@
     [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
     
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
+    [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setBackgroundColor:megaInfoGray];
     [SVProgressHUD setForegroundColor:megaBlack];
+    
+    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
+    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
 - (void)startBackgroundTask {
@@ -445,7 +453,7 @@
     NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
     
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
         return;
     }
     
@@ -461,7 +469,7 @@
         return;
     }
     
-    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"invalidLink", nil)];
+    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
     return;
 }
 
@@ -488,10 +496,10 @@
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
         if (isEncryptedFileLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"fileEncrypted", @"File encrypted")
-                                                                message:NSLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileEncrypted", @"File encrypted")
+                                                                message:AMLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -527,10 +535,10 @@
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
         if (isEncryptedFolderLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"folderEncrypted", @"Folder encrypted")
-                                                                message:NSLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"folderEncrypted", @"Folder encrypted")
+                                                                message:AMLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
                                                                delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
             
@@ -603,37 +611,51 @@
     struct ifaddrs *temp_addr = NULL;
     
     int success = 0;
-    // retrieve the current interfaces - returns 0 on success
     success = getifaddrs(&interfaces);
     if (success == 0) {
-        // Loop through linked list of interfaces
+        
         temp_addr = interfaces;
         while(temp_addr != NULL) {
             if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                // Check if interface is en0 which is the wifi connection on the iPhone
                 if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    // Get NSString from C String
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                    char straddr[INET_ADDRSTRLEN];
+                    inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "127.", 4) && strncasecmp(straddr, "169.254.", 8)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
                 }
             }
+            
+            if(temp_addr->ifa_addr->sa_family == AF_INET6) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
+                    char straddr[INET6_ADDRSTRLEN];
+                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
+                }
+            }
+            
             temp_addr = temp_addr->ifa_next;
         }
     }
-    // Free memory
+    
     freeifaddrs(interfaces);
+    
     return address;
 }
 
 #pragma mark - Reachability Changes
 
 - (void)reachabilityDidChange:(NSNotification *)notification {
-    if (!self.IpAddress) {
-        self.IpAddress = [self getIpAddress];
-    }
     
     if ([MEGAReachabilityManager isReachable]) {
-        if (![self.IpAddress isEqualToString:[self getIpAddress]]) {
+        NSString *currentIP = [self getIpAddress];
+        if (![self.IpAddress isEqualToString:currentIP]) {
             [[MEGASdkManager sharedMEGASdk] reconnect];
+            self.IpAddress = currentIP;
         }
     }
     
@@ -785,11 +807,47 @@
 }
 
 - (void)languageCompatibility {
-    NSString *v2Language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0];
     
-    if (![v2Language isEqualToString:@"en"] && ![v2Language isEqualToString:@"es"]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    
+    if ([Helper isLanguageSupported:currentLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+    } else {
+        [self setLanguage:currentLanguageID];
     }
+}
+
+- (void)setLanguage:(NSString *)languageID {
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setSystemLanguage];
+    }
+}
+
+- (void)setSystemLanguage {
+    NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
+    NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
+    NSString *systemLanguageID = [languages objectAtIndex:0];
+    
+    if ([Helper isLanguageSupported:systemLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
+        return;
+    }
+    
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:systemLanguageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setDefaultLanguage];
+    }
+}
+
+- (void)setDefaultLanguage {
+    [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -797,12 +855,12 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithStatus:NSLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
             break;
         }
             
         case MEGARequestTypeLogout:
-            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"%@...", AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")]];
+            [SVProgressHUD showWithStatus:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
             
         default:
@@ -818,28 +876,51 @@
     if ([request type] == MEGARequestTypeFetchNodes){
         float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
         if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:NSLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:progress status:AMLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
         } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:1 status:NSLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:1 status:AMLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
         }
     }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiESid) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alertView show];
-            [Helper logout];
-        }
-        
-        if (([error type] == MEGAErrorTypeApiENoent) && ([request type] == MEGARequestTypeQuerySignUpLink)) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"error", nil)
-                                                            message:NSLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+        switch ([error type]) {
+            case MEGAErrorTypeApiEArgs: {
+                if ([request type] == MEGARequestTypeLogin) {
+                    [Helper logout];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiENoent: {
+                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                                    message:AMLocalizedString(@"accountAlreadyConfirmed", @"Account already confirmed.")
+                                                                   delegate:self
+                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiESid: {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [alertView show];
+                [Helper logout];
+                break;
+            }
+                
+            case MEGAErrorTypeApiESSL: {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                [alertView show];
+                [Helper logout];
+                break;
+            }
+                
+            default:
+                break;
         }
         
         if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
@@ -876,7 +957,7 @@
                 
                 [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                          withLogout:YES
-                                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", "Log out")];
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
             } else {
                 if (isAccountFirstLogin) {
                     [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];

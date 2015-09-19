@@ -106,6 +106,7 @@
 		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
+		E8E1BD441BA98F5B00AB689D /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E1BD431BA98F5B00AB689D /* libresolv.dylib */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
 		E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */; };
@@ -315,6 +316,7 @@
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConfirmAccountViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAccountViewController.m; sourceTree = "<group>"; };
+		E8E1BD431BA98F5B00AB689D /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */,
 				415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */,
 				4152273C1A692F1800EC7BB6 /* libMWPhotoBrowser.a in Frameworks */,
+				E8E1BD441BA98F5B00AB689D /* libresolv.dylib in Frameworks */,
 				418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */,
 				418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */,
 				418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */,
@@ -590,6 +593,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8E1BD431BA98F5B00AB689D /* libresolv.dylib */,
 				41D9D8E71B7123F100D9B850 /* StoreKit.framework */,
 				E85946861B5D16AC00527153 /* CoreText.framework */,
 				414236F31B298800004276AA /* Fabric.framework */,

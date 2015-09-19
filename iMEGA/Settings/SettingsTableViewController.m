@@ -41,8 +41,7 @@
     
     BOOL isLanguagePickerViewShown;
     
-    NSArray *languages;
-    NSArray *languagesCodes;
+    NSDictionary *languagesDictionary;
     NSString *selectedLanguage;
 }
 
@@ -67,7 +66,48 @@
         selectedLanguage = nil;
     }
     
-    languagesCodes = [NSArray arrayWithObjects:@"ca", @"en", @"es", @"it", @"hu", @"nl", @"pt", @"pt-br", @"fi", @"sv", @"cs", @"ru", @"zh-Hant", nil];
+    languagesDictionary = @{//@"ar":@"Afrikaans",
+                            //@"ar":@"العربية",
+                            //@"bg":@"Bulgarian",
+                            //@"bs":@"Bosanski Jezik",
+                            @"ca":@"Català",
+                            @"cs":@"Čeština",
+                            //@"da":@"Dansk",
+                            //@"de":@"Deutsch",
+                            //@"ee":@"Ewe",
+                            @"en":@"English",
+                            @"es":@"Español",
+                            //@"et":@"Estonian",
+                            //@"eu":@"Euskera",
+                            @"fi":@"Suomi",
+                            //@"fr":@"Français",
+                            //@"gl":@"Galician",
+                            //@"he":@"עברית",
+                            //@"hr":@"Hrvatski Jezik",
+                            @"hu":@"Hungarian",
+                            //@"id":@"Indonesian",
+                            @"it":@"Italiano",
+                            //@"ja":@"日本語",
+                            //@"ko":@"한국어",
+                            //@"lt":@"Lithuanian",
+                            //@"lv":@"Latvian",
+                            //@"ms":@"Malay",
+                            //@"nb":@"Norsk bokmål",
+                            @"nl":@"Nederlands",
+                            //@"pl":@"Język Polski",
+                            @"pt-br":@"Português Brasileiro",
+                            @"pt":@"Português",
+                            //@"ro":@"Limba Română",
+                            @"ru":@"Pусский язык",
+                            //@"sk":@"Slovenský ",
+                            //@"sl":@"Slovenščina",
+                            @"sv":@"Svenska",
+                            //@"th":@"Thai",
+                            //@"tr":@"Türkçe",
+                            //@"uk":@"Ukrainian",
+                            //@"zh-Hans":@"简体中文",
+                            @"zh-Hant":@"中文繁體"
+                            };
     
     isLanguagePickerViewShown = NO;
     _languagePickerCellRowHeight = 216.0;
@@ -169,8 +209,9 @@
         
         if (_languagePickerView != nil) {
             UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:(_languagePickerViewIndexPath.row - 1) inSection:_languagePickerViewIndexPath.section]];
-            NSString *titleForRow = languagesCodes[[_languagePickerView selectedRowInComponent:0]];
-            [tableViewCell.detailTextLabel setText:AMLocalizedString(titleForRow, nil)];
+            NSString *languageID = [Helper languageID:(_languagePickerViewIndexPath.row - 1)];
+            NSString *titleForRow = [languagesDictionary objectForKey:languageID];
+            [tableViewCell.detailTextLabel setText:titleForRow];
             [_languagePickerView selectRow:[_languagePickerView selectedRowInComponent:0] inComponent:0 animated:NO];
         }
     }
@@ -181,7 +222,7 @@
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
             [mailComposeVC setMailComposeDelegate:self];
-            [mailComposeVC setToRecipients:@[@"ios@mega.co.nz"]];
+            [mailComposeVC setToRecipients:@[@"ios@mega.nz"]];
             
             NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
             
@@ -218,24 +259,25 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return languagesCodes.count;
+    return languagesDictionary.count;
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSString *titleForRow = languagesCodes[row];
+    NSString *languageID = [Helper languageID:row];
+    NSString *titleForRow = [languagesDictionary objectForKey:languageID];
     NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(titleForRow, nil)];
-//    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:10.0] range:[titleForRow rangeOfString:titleForRow]];
+    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:20.0] range:[titleForRow rangeOfString:titleForRow]];
     return mutableAttributedString;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (row >= languagesCodes.count) {
+    if (row >= languagesDictionary.count) {
         return;
     }
     
-    selectedLanguage = languagesCodes[row];
+    selectedLanguage = [Helper languageID:row];
     [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
     
     [self.tableView reloadData];
@@ -336,7 +378,7 @@
                 [cell.textLabel setText:AMLocalizedString(@"about", @"")];
             } else if (indexPath.row == 1) {
                 [cell.textLabel setText:AMLocalizedString(@"language", @"")];
-                [cell.detailTextLabel setText:AMLocalizedString(selectedLanguage, nil)];
+                [cell.detailTextLabel setText:[languagesDictionary objectForKey:selectedLanguage]];
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             } else if (indexPath.row == 2) {
                 if (!isLanguagePickerViewShown) {

@@ -464,7 +464,7 @@
     switch (actionSheet.tag) {
         case 0: {
             if (buttonIndex == 0) {
-                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
+                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
                 [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
                 emailAlertView.tag = 0;
@@ -583,13 +583,21 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
-            [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
+            if ([MEGAReachabilityManager isReachable]) {
+                [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            }
         }
     } else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
-            remainingOperations = self.selectedUsersArray.count;
-            for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
+            if ([MEGAReachabilityManager isReachable]) {
+                remainingOperations = self.selectedUsersArray.count;
+                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
+                }
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
         }
     } else if (alertView.tag == 2) {
@@ -619,7 +627,7 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the upper button.");
+        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the above button.");
     } else {
         text = @"";
     }
