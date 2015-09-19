@@ -138,7 +138,7 @@
     }
 }
 
-- (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore identifier:(NSString *)productId receipt:(NSData *)receipt {    
+- (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore {
     // Purchase or Restore request was successful, so...
     // 1 - Unlock the purchased content for your new customer!
     // 2 - Notify the user that the transaction was successful.
@@ -164,8 +164,6 @@
             UIAlertView *updatedAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"thankYou_title", nil) message:AMLocalizedString(@"purchaseRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
             [updatedAlert show];
         }
-        
-        [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receipt base64EncodedStringWithOptions:0]];
     }
 }
 

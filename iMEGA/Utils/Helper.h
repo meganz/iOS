@@ -27,14 +27,10 @@
 #define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
 #define videoSet        [[NSSet alloc] initWithObjects:/*@"mkv",*/ @"avi", @"mp4", @"m4v", @"mpg", @"mpeg", @"mov", @"3gp",/*@"aaf",*/ nil]
 #define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", nil]
-#define documentsSet    [[NSSet alloc] initWithObjects:@"pdf", @"rtf", @"csv", @"key", @"keynote", @"numbers", @"pages", @"doc", @"docx", @"dotx", @"wps", @"xls", @"xlsx", @"xlt", @"xltm", @"pps", @"ppt", @"pptx", nil]
-#define openDocumentsSet [[NSSet alloc] initWithObjects:@"odb", @"odt", @"odm", @"ods", @"odg", @"odp", @"odf", @"odf", nil]
 
 #define isImage(n)        [imagesSet containsObject:n.lowercaseString]
 #define isVideo(n)        [videoSet containsObject:n.lowercaseString]
 #define isMultimedia(n)   [multimediaSet containsObject:n.lowercaseString]
-#define isDocument(n)     [documentsSet containsObject:n.lowercaseString]
-#define isOpenDocument(n) [openDocumentsSet containsObject:n.lowercaseString]
 
 #define kMEGANode @"kMEGANode"
 #define kIndex @"kIndex"
@@ -70,6 +66,15 @@
 #define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 
 @interface Helper : NSObject
+
+#pragma mark - File UTIs
+
++ (CFStringRef)fileUTI:(NSString *)fileExtension;
+
+#pragma mark - Languages
+
++ (BOOL)isLanguageSupported:(NSString *)languageID;
++ (NSString *)languageID:(NSUInteger)index;
 
 #pragma mark - Images
 

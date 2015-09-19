@@ -19,6 +19,8 @@
  * program.
  */
 
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
@@ -35,6 +37,77 @@ static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 
 @implementation Helper
+
+#pragma mark - File UTIs
+
++ (CFStringRef)fileUTI:(NSString *)fileExtension {
+    CFStringRef extension = (__bridge CFStringRef) fileExtension;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
+
+    return fileUTI;
+}
+
+#pragma mark - Languages
+
++ (NSArray *)languagesSupportedIDs {
+    static NSArray *languagesSupportedIDs = nil;
+    
+    if (languagesSupportedIDs == nil) {
+        languagesSupportedIDs = [NSArray arrayWithObjects:
+                                 //                      @"af",
+                                 //                      @"ar",
+                                 //                      @"bg",
+                                 //                      @"bs",
+                                 @"ca",
+                                 @"cs",
+                                 //                      @"da",
+                                 //                      @"de",
+                                 //                      @"ee",
+                                 @"en",
+                                 @"es",
+                                 //                      @"et",
+                                 //                      @"eu",
+                                 @"fi",
+                                 //                      @"fr",
+                                 //                      @"gl",
+                                 //                      @"he",
+                                 //                      @"hr",
+                                 @"hu",
+                                 //                      @"id",
+                                 @"it",
+                                 //                      @"ja",
+                                 //                      @"ko",
+                                 //                      @"lt",
+                                 //                      @"lv",
+                                 //                      @"ms",
+                                 //                      @"nb",
+                                 @"nl",
+                                 //                      @"pl",
+                                 @"pt-br",
+                                 @"pt",
+                                 //                      @"ro",
+                                 @"ru",
+                                 //                      @"sk",
+                                 //                      @"sl",
+                                 @"sv",
+                                 //                      @"th",
+                                 //                      @"tr",
+                                 //                      @"uk",
+                                 //                      @"zh-Hans",
+                                 @"zh-Hant",
+                                 nil];
+    }
+    
+    return languagesSupportedIDs;
+}
+
++ (BOOL)isLanguageSupported:(NSString *)languageID {
+    return [self.languagesSupportedIDs containsObject:languageID];
+}
+
++ (NSString *)languageID:(NSUInteger)index {
+    return [self.languagesSupportedIDs objectAtIndex:index];
+}
 
 #pragma mark - Images
 
@@ -505,7 +578,7 @@ static NSInteger linkNodeOption;
         alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")
                                                message:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")
                                               delegate:self
-                                     cancelButtonTitle:AMLocalizedString(@"ok", @"OK")
+                                     cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                      otherButtonTitles:nil];
         [alertView show];
         return NO;

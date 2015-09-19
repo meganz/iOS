@@ -20,6 +20,7 @@
  */
 
 #import <QuickLook/QuickLook.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
@@ -41,6 +42,7 @@
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
+#import "NSString+MNZCategory.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -208,42 +210,6 @@
     }
 }
 
-- (NSString *)stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
-    if (files > 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFiles", @"Folders, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
-    }
-    
-    if (files > 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
-    }
-    
-    if (files == 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
-    }
-    
-    if (files == 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
-    }
-    
-    if (!files && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
-    }
-    
-    if (!files && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
-    }
-    
-    return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-}
-
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
@@ -262,12 +228,16 @@
 - (void)deleteTempDocuments {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
     for (NSString *item in directoryContents) {
-        if (isDocument(item.pathExtension)) {
+        CFStringRef fileUTI = [Helper fileUTI:[item pathExtension]];
+        if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
             NSError *error = nil;
             BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error];
             if (!success || error) {
                 [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
             }
+        }
+        if (fileUTI) {
+            CFRelease(fileUTI);
         }
     }
 }
@@ -407,7 +377,7 @@
         NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:node];
         
-        NSString *filesAndFolders = [self stringByFiles:files andFolders:folders];
+        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
         cell.infoLabel.text = filesAndFolders;
     }
     
@@ -449,7 +419,8 @@
 
         case MEGANodeTypeFile: {
             NSString *name = [node name];
-            if (isImage(name.pathExtension)) {
+            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
@@ -458,7 +429,7 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];
@@ -473,7 +444,7 @@
                     for (NSInteger i = 0; i < nodeListSize; i++) {
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
                         
-                        if (isImage([n name].pathExtension)) {
+                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
                             megaPreview.caption = [n name];
@@ -503,7 +474,7 @@
                 [photoBrowser showNextPhotoAnimated:YES];
                 [photoBrowser showPreviousPhotoAnimated:YES];
                 [photoBrowser setCurrentPhotoIndex:offsetIndex];
-            } else if (isDocument(name.pathExtension)) {
+            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -516,11 +487,11 @@
                     [previewController setTitle:node.name];
                     [self presentViewController:previewController animated:YES completion:nil];
                 } else {
-                    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"There are pending downloads"
-                                                                            message:@"Try later or cancel the pending downloads"
+                    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
+                                                                            message:AMLocalizedString(@"documentOpening_alertMessage", nil)
                                                                            delegate:nil
-                                                                  cancelButtonTitle:@"ok"
+                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                                   otherButtonTitles:nil, nil];
                         [alertView show];
                     } else {
@@ -531,12 +502,16 @@
                         
                         PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                         [previewDocumentVC setNode:node];
+                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
                         
                         [self.navigationController pushViewController:previewDocumentVC animated:YES];
                         
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     }
                 }
+            }
+            if (fileUTI) {
+                CFRelease(fileUTI);
             }
             break;
         }
@@ -617,7 +592,11 @@
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:previewDocumentPath];
+    if (previewDocumentPath != nil) {
+        return [NSURL fileURLWithPath:previewDocumentPath];
+    }
+    
+    return nil;
 }
 
 #pragma mark - QLPreviewControllerDelegate

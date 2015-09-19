@@ -47,9 +47,9 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"changePasswordLabel", @"The title of the change password view")];
     
-    [_currentPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.")]];
-    [_theNewPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.")]];
-    [_confirmPasswordTextField setPlaceholder:[NSString stringWithFormat:@"%@:", AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.")]];
+    [_currentPasswordTextField setPlaceholder:AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.")];
+    [_theNewPasswordTextField setPlaceholder:AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.")];
+    [_confirmPasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.")];
     
     [_changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", nil) forState:UIControlStateNormal];
     [self.changePasswordButton.layer setBorderWidth:2.5f];

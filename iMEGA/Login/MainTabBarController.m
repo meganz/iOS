@@ -40,13 +40,13 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
     [[[defaultViewControllersMutableArray objectAtIndex:2] tabBarItem] setTitle:@"Offline"];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:3] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
+    [[[defaultViewControllersMutableArray objectAtIndex:3] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:4] tabBarItem] setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+    [[[defaultViewControllersMutableArray objectAtIndex:4] tabBarItem] setTitle:AMLocalizedString(@"transfers", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
+    [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:6] tabBarItem] setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
+    [[[defaultViewControllersMutableArray objectAtIndex:6] tabBarItem] setTitle:AMLocalizedString(@"myAccount", nil)];
     
     for (NSInteger i = 0; i< [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
