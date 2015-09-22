@@ -47,7 +47,6 @@
 #import "SortByTableViewController.h"
 #import "PreviewDocumentViewController.h"
 
-#import "AppDelegate.h"
 #import "MEGAProxyServer.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAStore.h"
@@ -95,9 +94,6 @@
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
-
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
-@property (nonatomic, strong) ALAssetsLibrary *library;
 
 @end
 
@@ -189,13 +185,6 @@
     [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [self.dateFormatter setLocale:locale];
-    
-    self.library = [[ALAssetsLibrary alloc] init];
     
     matchSearchNodes = [[NSMutableArray alloc] init];
 }
