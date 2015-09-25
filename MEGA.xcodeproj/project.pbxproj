@@ -154,7 +154,7 @@
 		4152266A1A692ECC00EC7BB6 /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		4152266B1A692ECC00EC7BB6 /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CloudDriveTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4152266C1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsNodeInfoViewController.h; sourceTree = "<group>"; };
-		4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsNodeInfoViewController.m; sourceTree = "<group>"; };
+		4152266D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DetailsNodeInfoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4152266E1A692ECC00EC7BB6 /* MEGAPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAPreview.h; sourceTree = "<group>"; };
 		4152266F1A692ECC00EC7BB6 /* MEGAPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPreview.m; sourceTree = "<group>"; };
 		415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTableViewCell.h; sourceTree = "<group>"; };

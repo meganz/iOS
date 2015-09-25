@@ -246,6 +246,18 @@
 "fileExistAlertController_Message"="%@ already uploaded";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Upload started";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="This file has been moved";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="This folder has been moved";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Save for offline";
 /* List option shown on the details of a file or folder */
@@ -595,7 +607,7 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="from %.2f %@ / month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan" = "Choose from one of the plans below:";
+"choosePlan" = "Choose one of the plans below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
 /* Header shown to help on the purchasin process */
@@ -605,13 +617,13 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"appPurchaseDisabled" = "In-App Purchases is disabled, please enable it in iOS Settings";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"productNotFound" = "Product %@ is not found, please contact ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title" = "Allow purchases";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"allowPurchase_message" = "You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
 "restore" = "Restore";
 /* "Monthly" subscriptions */
@@ -631,7 +643,7 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title" = "Restore issue";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"incompleteRestore_message" = "The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title" = "Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
