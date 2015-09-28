@@ -23,7 +23,6 @@
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-#import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
@@ -36,12 +35,12 @@
 
 #import "MEGAStore.h"
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
 }
 
-@property (nonatomic, strong) NSMutableArray *offlineDocuments;
-@property (nonatomic, strong) NSMutableArray *offlineImages;
+@property (nonatomic, strong) NSMutableArray *offlineFilesAndFolders;
+@property (nonatomic, strong) NSMutableArray *offlineFiles;
 
 @property (nonatomic, strong) NSString *folderPathFromOffline;
 
@@ -103,8 +102,8 @@
 
 - (void)reloadUI {
     
-    self.offlineDocuments = [NSMutableArray new];
-    self.offlineImages = [NSMutableArray new];
+    self.offlineFilesAndFolders = [NSMutableArray new];
+    self.offlineFiles = [NSMutableArray new];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
@@ -119,17 +118,13 @@
             NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
             [tempDictionary setValue:fileName forKey:kMEGANode];
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
-            [self.offlineDocuments addObject:tempDictionary];
+            [self.offlineFilesAndFolders addObject:tempDictionary];
             
-            CFStringRef fileUTI = [Helper fileUTI:[fileName pathExtension]];
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+            BOOL isDirectory;
+            [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
+            if (!isDirectory) {
                 offsetIndex++;
-                MWPhoto *photo = [MWPhoto photoWithURL:[NSURL fileURLWithPath:filePath]];
-                photo.caption = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:fileName];
-                [self.offlineImages addObject:photo];
-            }
-            if (fileUTI) {
-                CFRelease(fileUTI);
+                [self.offlineFiles addObject:filePath];
             }
         }
     }
@@ -260,12 +255,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.offlineDocuments.count == 0) {
+    if (self.offlineFilesAndFolders.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
-    return self.offlineDocuments.count;
+    return self.offlineFilesAndFolders.count;
 }
 
 
@@ -278,7 +273,7 @@
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
-    NSString *nameString = [[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kMEGANode];
+    NSString *nameString = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kMEGANode];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
     NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
@@ -418,46 +413,15 @@
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
     } else {
-        CFStringRef fileUTI = [Helper fileUTI:[itemNameString pathExtension]];
-        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-            MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-            
-            browser.displayActionButton = YES;
-            browser.displayNavArrows = YES;
-            browser.displaySelectionButtons = NO;
-            browser.zoomPhotosToFill = YES;
-            browser.alwaysShowControls = NO;
-            browser.enableGrid = YES;
-            browser.startOnGrid = NO;
-            
-            // Optionally set the current visible photo before displaying
-            //    [browser setCurrentPhotoIndex:1];
-            
-            [self.navigationController pushViewController:browser animated:YES];
-            
-            [browser showNextPhotoAnimated:YES];
-            [browser showPreviousPhotoAnimated:YES];
-            NSInteger selectedIndexPhoto = [[[self.offlineDocuments objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
-            [browser setCurrentPhotoIndex:selectedIndexPhoto];
-            
-        } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-            NSURL *fileURL = [NSURL fileURLWithPath:previewDocumentPath];
-            
-            MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:fileURL];
-            [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-            [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-            [moviePlayerViewController.moviePlayer play];
-        } else {
-            QLPreviewController *previewController = [[QLPreviewController alloc]init];
-            previewController.delegate = self;
-            previewController.dataSource = self;
-            [previewController setTransitioningDelegate:self];
-            [previewController setTitle:itemNameString];
-            [self presentViewController:previewController animated:YES completion:nil];
-        }
-        if (fileUTI) {
-            CFRelease(fileUTI);
-        }
+        QLPreviewController *previewController = [[QLPreviewController alloc]init];
+        previewController.delegate = self;
+        previewController.dataSource = self;
+        
+        NSInteger selectedIndexFile = [[[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        
+        [previewController setCurrentPreviewItemIndex:selectedIndexFile];
+        [previewController setTransitioningDelegate:self];
+        [self presentViewController:previewController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -541,25 +505,14 @@
     return [UIColor whiteColor];
 }
 
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.offlineImages.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.offlineImages.count)
-        return [self.offlineImages objectAtIndex:index];
-    return nil;
-}
-
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return 1;
+    return self.offlineFiles.count;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
+    previewDocumentPath = [self.offlineFiles objectAtIndex:index];
     return [NSURL fileURLWithPath:previewDocumentPath];
 }
 

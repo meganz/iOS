@@ -397,18 +397,14 @@
     
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
-                [Helper changeToViewController:[PhotosViewController class] onTabBarController:self.tabBarController];
-            } else {
-                CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                [cdvc setParentNode:node];
-                
-                if (self.displayMode == DisplayModeRubbishBin) {
-                    [cdvc setDisplayMode:self.displayMode];
-                }
-                
-                [self.navigationController pushViewController:cdvc animated:YES];
+            CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cdvc setParentNode:node];
+            
+            if (self.displayMode == DisplayModeRubbishBin) {
+                [cdvc setDisplayMode:self.displayMode];
             }
+            
+            [self.navigationController pushViewController:cdvc animated:YES];
             break;
         }
             
@@ -425,6 +421,8 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
+                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
                             photo.caption = [n name];
@@ -437,6 +435,8 @@
                 } else {
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
+                        
+                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
@@ -467,33 +467,7 @@
                 [browser showNextPhotoAnimated:YES];
                 [browser showPreviousPhotoAnimated:YES];
                 [browser setCurrentPhotoIndex:offsetIndex];
-            } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-                NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
-                if (link) {
-                    MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                    // Remove the movie player view controller from the "playback did finish" notification observers
-                    [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                  object:moviePlayerViewController.moviePlayer];
-                    
-                    // Register this class as an observer instead
-                    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                             selector:@selector(movieFinishedCallback:)
-                                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-                                                               object:moviePlayerViewController.moviePlayer];
-                    
-                    [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                    
-                    [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                    
-                    [moviePlayerViewController.moviePlayer prepareToPlay];
-                    [moviePlayerViewController.moviePlayer play];
-                    
-                    return;
-                }
-                
-            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-                
+            } else {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -505,6 +479,31 @@
                     [previewController setTransitioningDelegate:self];
                     [previewController setTitle:name];
                     [self presentViewController:previewController animated:YES completion:nil];
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
+                    NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
+                    [[MEGAProxyServer sharedInstance] setApi:[MEGASdkManager sharedMEGASdk]];
+                    if (link) {
+                        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
+                        // Remove the movie player view controller from the "playback did finish" notification observers
+                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
+                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                      object:moviePlayerViewController.moviePlayer];
+                        
+                        // Register this class as an observer instead
+                        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                 selector:@selector(movieFinishedCallback:)
+                                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                   object:moviePlayerViewController.moviePlayer];
+                        
+                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+                        
+                        [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
+                        
+                        [moviePlayerViewController.moviePlayer prepareToPlay];
+                        [moviePlayerViewController.moviePlayer play];
+                        
+                        return;
+                    }
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
@@ -527,15 +526,9 @@
                         
                         [tableView deselectRowAtIndexPath:indexPath animated:YES];
                     }
-                }
-            } else {
-                DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
-                [detailsNodeInfoVC setNode:node];
-                
-                [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
-                
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                } 
             }
+            
             if (fileUTI) {
                 CFRelease(fileUTI);
             }
