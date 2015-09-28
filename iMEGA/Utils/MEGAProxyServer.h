@@ -20,11 +20,12 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MEGANode.h"
+#import "MEGASdk.h"
 
 @interface MEGAProxyServer : NSObject 
 
 @property (readonly, assign) UInt64 port;
+@property (nonatomic, strong) MEGASdk *api;
 
 + (instancetype)sharedInstance;
 
