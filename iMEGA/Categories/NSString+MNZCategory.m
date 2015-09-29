@@ -44,38 +44,38 @@ static NSString* const B = @"[B]";
     NSString *foldersString = [NSString stringWithFormat:@"%ld", folders];
     
     if (files > 1 && folders > 1) {
-        NSString *filesAndFoldersString = AMLocalizedString(@"foldersAndFiles", @"Folders, files");
+        NSString *filesAndFoldersString = AMLocalizedString(@"foldersAndFiles", @"Subtitle shown on folders that gives you information about its content. This case \"[A] = {1+} folders ‚ [B] = {1+} files\"");
         filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:A withString:foldersString];
         filesAndFoldersString = [filesAndFoldersString stringByReplacingOccurrencesOfString:B withString:filesString];
         return filesAndFoldersString;
     }
     
     if (files > 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Folder, files"), (int)folders, (int)files];
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFiles", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\""), (int)files];
     }
     
     if (files > 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Files"), (int)files];
+        return [NSString stringWithFormat:AMLocalizedString(@"files", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} files\""), (int)files];
     }
     
     if (files == 1 && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Folders, file"), (int)folders, (int)files];
+        return [NSString stringWithFormat:AMLocalizedString(@"foldersAndFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1+} file\""), (int)folders];
     }
     
     if (files == 1 && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Folder, file"), (int)folders, (int)files];
+        return [NSString stringWithFormat:AMLocalizedString(@"folderAndFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder • {1} file\""), (int)folders];
     }
     
     if (files == 1 && !folders) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"File"), (int)files];
+        return AMLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\"");
     }
     
     if (!files && folders > 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Folders"), (int)folders];
+        return [NSString stringWithFormat:AMLocalizedString(@"folders", @"Subtitle shown on folders that gives you information about its content. This case \"{1+} folders\""), (int)folders];
     }
     
     if (!files && folders == 1) {
-        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Folder"), (int)folders];
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFolder", @"Subtitle shown on folders that gives you information about its content. This case \"{1} folder\""), (int)folders];
     }
     
     return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");

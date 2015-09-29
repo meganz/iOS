@@ -39,7 +39,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Has tancat el compte d'aquest dispositiu des d'una altra ubicació";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="No es pot verificar el certificat SSL del servidor. Podries estar afectat per un atac man-in-the-middle.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA-ESPAI";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -58,8 +58,14 @@
 "megaAccessText"="Aconsegueix accés complet i xifrat a qualsevol lloc i en qualsevol moment.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Inicia la sessió";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Encara no tens un compte?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Crea'n un";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crea un compte";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="Ja tens un compte?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="La contrasenya i/o l'adreça de correu electrònic no són vàlides. Torna a intentar-ho.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -85,7 +91,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Aquesta adreça de correu electrònic ja ha estat registrada en un compte de Mega.";
 /* Message displayed when an action is completed successfully */
-"awesome"="Genial!";
+"awesome"="Genial";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Si us plau, verifica el teu correu electrònic i fes clic a l'enllaç per confirmar el teu compte.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -119,7 +125,7 @@
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Ha començat la descàrrega!";
+"downloadStarted"="Ha començat la descàrrega";
 /* DO NOT TRANSLATE, it will change (Design) */
 "megaFolder"="MEGA Folder Link";
 /* Button title which downloads a file/folder to your device */
@@ -161,7 +167,7 @@
 /* Message shown when the Offline section is empty, when you don't have download any files. */
 "offlineEmptyState_text"="Descarrega fitxers per fer-los servir quan no tinguis connexió a internet.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Encara no has afegit cap contacte!";
+"contactsEmptyState_title"="Encara no has afegit cap contacte";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_text"="Afegeix contactes fent servir el botó superior.";
 /* Title shown when the transfers are paused */
@@ -193,17 +199,17 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d carpetes";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="%d carpeta • %d fitxer";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1+} file" */
-"foldersAndFiles"="%d carpetes • %d fitxers";
+"folderAndFile"="1 carpeta • 1 fitxer";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] carpetes • [B] fitxers";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d carpetes • %d fitxer";
+"foldersAndFile"="%d carpetes • 1 fitxer";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="%d carpeta • %d fitxers";
+"folderAndFiles"="1 carpeta • %d fitxers";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cua";
 /* Message shown when a transfer has been canceled */
-"transferCanceled"="S'ha cancel·lat la transferència!";
+"transferCanceled"="S'ha cancel·lat la transferència";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hi ha descàrregues pendents";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -239,7 +245,19 @@
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
 "fileExistAlertController_Message"="El fitxer %@ ja s'havia pujat";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Ha començat la pujada!";
+"uploadStarted_Message"="Ha començat la pujada";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="El fichero ha sido movido a la Papelera";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="La carpeta ha sido movida a la Papelera";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="El fichero ha sido movido";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="La carpeta ha sido movida";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="Ya no tiene acceso a este fichero";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Ya no tienes acceso a esta carpeta";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Desa per a ús Fora de línia";
 /* List option shown on the details of a file or folder */
@@ -251,7 +269,7 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Elimina l'enllaç";
 /* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="S'ha eliminat l'enllaç!";
+"removeLinkSuccess"="S'ha eliminat l'enllaç";
 /* Title show when a file is being downloaded */
 "downloading"="Descarregant: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -259,21 +277,21 @@
 /* Title for the action that allows you to move a file or folder */
 "move"="Mou";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="S'ha mogut un fitxer!";
+"moveFileMessage"="S'ha mogut un fitxer";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="S'ha mogut %d fitxers!";
+"moveFilesMessage"="S'ha mogut %d fitxers";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="S'ha mogut 1 fitxer!";
+"moveFolderMessage"="S'ha mogut 1 fitxer";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="S'ha mogut %d carpetes!";
+"moveFoldersMessage"="S'ha mogut %d carpetes";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="S'ha eliminat 1 fitxer i 1 carpeta!";
+"moveFileFolderMessage"="S'ha eliminat 1 fitxer i 1 carpeta";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="S'ha mogut 1 fitxer i %d carpetes!";
+"moveFileFoldersMessage"="S'ha mogut 1 fitxer i %d carpetes";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="S'ha mogut %d fitxers i 1 carpeta!";
-/* Success message shown when you have moved {1+} files and {1+} folders */
-"moveFilesFoldersMessage"="S'ha mogut %d fitxers i %d carpetes";
+"moveFilesFolderMessage"="S'ha mogut %d fitxers i 1 carpeta";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="S'ha mogut [A] fitxers i [B] carpetes";
 /* List option shown on the details of a file or folder */
 "copy"="Copia";
 /* Success message shown when you have copied 1 file */
@@ -287,11 +305,11 @@
 /* Success message shown when you have copied 1 file and 1 folder */
 "copyFileFolderMessage"="S'ha copiat 1 fitxer i 1 carpeta";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="S'ha copiat 1 fitxer i %d carpetes!";
+"copyFileFoldersMessage"="S'ha copiat 1 fitxer i %d carpetes";
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="S'ha copiat %d fitxers i 1 carpeta";
-/* Success message shown when you have copied {1+} files and {1+} folders */
-"copyFilesFoldersMessage"="S'ha copiat %d fitxers i %d carpetes";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="S'ha copiat [A] fitxers i [B] carpetes";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Canvia el nom";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -312,36 +330,36 @@
 "moveFileFoldersToRubbishBinMessage"="Estàs segur de voler moure 1 fitxer i %d carpetes a la paperera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="Estàs segur de voler moure %d fitxers i 1 carpeta a la paperera?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Estàs segur de voler moure %d fitxers i %d carpetes a la paperera?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="Estàs segur de voler moure [A] fitxers i [B] carpetes a la paperera?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="";
+"fileMovedToRubbishBinMessage"="S'ha mogut 1 fitxer a la paperera";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="";
+"filesMovedToRubbishBinMessage"="S'ha mogut %d fitxers a la paperera";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="";
+"folderMovedToRubbishBinMessage"="S'ha mogut 1 carpeta a la paperera";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="";
+"foldersMovedToRubbishBinMessage"="S'ha mogut %d carpetes a la paperera";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="";
+"fileFolderMovedToRubbishBinMessage"="S'ha mogut 1 fitxer i 1 carpeta a la paperera";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="";
+"fileFoldersMovedToRubbishBinMessage"="S'ha mogut 1 fitxer i %d carpetes a la paperera";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="";
+"filesFolderMovedToRubbishBinMessage"="S'ha mogut %d fitxers i 1 carpeta a la paperera";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="";
+"filesFoldersMovedToRubbishBinMessage"="S'ha mogut [A] fitxers i [B] carpetes a la paperera";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Revisa els teus permisos sobre aquesta carpeta";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="S'ha compartit la carpeta!";
+"sharedFolder_success"="S'ha compartit la carpeta";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Importa a";
 /* Button title that triggers the importing link action */
 "import"="Importa";
 /* Message shown when a file have been imported */
-"fileImported"="S'ha importat el fitxer!";
+"fileImported"="S'ha importat el fitxer";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="S'ha excedit la quota";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -355,7 +373,7 @@
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activa les pujades de la càmera";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="S'ha autoritzat les pujades de la càmera!";
+"cameraUploadsEnabled"="S'ha autoritzat les pujades de la càmera";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="has seleccionat %lu elements";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -383,7 +401,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Afegeix";
 /* Success message shown when a contact has been added */
-"contactAdded"="S'ha afegit el contacte!";
+"contactAdded"="S'ha afegit el contacte";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Error a l'afegir el contacte";
 /* Alert title shown when you want to remove one or more contacts */
@@ -394,14 +412,14 @@
 "removeMultipleUsersMessage"="Estàs segur de voler eliminar %d usuaris de la teva llista de contactes?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="S'ha eliminat %d contactes";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed!" */
-"removedContact"="S'ha eliminat el contacte %@!";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="S'ha eliminat el contacte %@";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="El contacte no té una adreça de correu electrònic";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Abandona";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Has abandonat la carpeta!";
+"shareFolderLeaved"="Has abandonat la carpeta";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Comparteix la carpeta";
 /* Button that allows you to select a given folder */
@@ -488,24 +506,24 @@
 "removeFileFoldersToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent 1 fitxer i %d carpetes. Vols continuar? (no podràs desfer aquesta acció.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent %d fitxers i 1 carpeta. Vols continuar? (no podràs desfer aquesta acció.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent %d fitxers i %d carpetes. Vols continuar? (no podràs desfer aquesta acció.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="Estàs a punt d'eliminar de forma permanent [A] fitxers i [B] carpetes. Vols continuar? (no podràs desfer aquesta acció.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="";
+"fileRemovedToRubbishBinMessage"="S'ha eliminat 1 fitxer a MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="";
+"filesRemovedToRubbishBinMessage"="S'ha eliminat %d fitxers a MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="";
+"folderRemovedToRubbishBinMessage"="S'ha eliminat una carpeta a MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="";
+"foldersRemovedToRubbishBinMessage"="S'ha eliminat %d carpetes a MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="";
+"fileFolderRemovedToRubbishBinMessage"="S'ha eliminat 1 fitxer i 1 carpeta a MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="";
+"fileFoldersRemovedToRubbishBinMessage"="S'ha eliminat 1 fitxer i %d carpetes a MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="";
+"filesFolderRemovedToRubbishBinMessage"="S'ha eliminat %d fitxers i 1 carpeta a MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="";
+"filesFoldersRemovedToRubbishBinMessage"="S'ha eliminat [A] fitxers i [B] carpetes a MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Contrasenya actual";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -529,7 +547,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Aconsegueix ajuda o llegeix els problemes més freqüents.";
 /* Title to rate the app */
-"rateUsLabel"="Puntua'ns!";
+"rateUsLabel"="Puntua'ns";
 /* Title of the Transfers section */
 "transfers"="Transferències";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -539,7 +557,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="pujades";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="S'ha cancel·lat les transferències!";
+"transfersCanceled"="S'ha cancel·lat les transferències";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancel·la transferències";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -569,7 +587,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira el %@";
 /* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restaura les compres";
+"restorePurchases"="Restore purchases";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -589,44 +607,44 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ al mes";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan" = "Choose from one of the plans below:";
+"choosePlan"="Tria un dels plans de sota:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Aconsegueix dos mesos de franc en comprar un pla PRO anual";
 /* Header shown to help on the purchasin process */
-"selectMembership" = "Select membership:";
+"selectMembership"="Tria el tipus de subscripció";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17" = "Save 17%";
+"save17"="Estalvia un 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="COMPRA ERRÒNIA %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"appPurchaseDisabled"="Les compres en aplicacions estan deshabilitades. Si us plau, activa-les a la configuració";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"productNotFound"="No trobem el producte %@. Si us plau, contacta amb ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title" = "Allow purchases";
+"allowPurchase_title"="Permet les compres";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="Has d'activar les compres en aplicacions a la configuració del teu iOS abans de restaurar la compra.";
 /* Button title to restore failed purchases */
-"restore" = "Restore";
+"restore"="Restaura";
 /* "Monthly" subscriptions */
-"monthly" = "Monthly";
+"monthly"="Mensual";
 /* "Yearly" subscriptions */
-"yearly" = "Yearly";
+"yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="En aquests moments quest element no està disponible a l'App Store. Torna a provar-ho més tard.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title" = "Thank you!";
+"thankYou_title"="Gràcies";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message" = "Your purchase was restored!";
+"purchaseRestore_message"="S'ha restaurat la teva compra";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title" = "Purchase stopped";
+"failedPurchase_title"="La compra s'ha detingut";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+"failedPurchase_message"="O has cancel·lat la petició o Apple ha reportat un error a la transacció. Si us plau, intenta-ho de nou més tard o posa't en contacte amb ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title" = "Restore issue";
+"incompleteRestore_title"="Error al restaurar";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"incompleteRestore_message"="No s'ha pogut trobar la compra anterior. Si us plau, selecciona el producte que havies comprat anteriorment per tal de restablir-lo.  No te'l tornarem a cobrar.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title" = "Restore stopped";
+"failedRestore_title"="La restauració s'ha detingut";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
+"failedRestore_message"="O la petició ha estat cancel·lada o la compra prèvia no s'ha pogut restaurar. Si us plau, intenta-ho de nou més tard o posa't en contacte amb ios@mega.nz.";
