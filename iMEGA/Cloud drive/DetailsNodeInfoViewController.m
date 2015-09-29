@@ -59,7 +59,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
+    if (self.displayMode == DisplayModeCloudDrive) {
+        [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
+    }
     
     accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
@@ -278,6 +280,13 @@
                     alertTitle = @"folderMoved_alertTitle";
                 }
             }
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            [alertView setTag:3];
+            [alertView show];
         }
     } else {
         //Node removed from the Rubbish Bin or moved outside of the shared folder
@@ -286,14 +295,14 @@
         } else {
             alertTitle = @"youNoLongerHaveAccessToThisFolder_alertTitle";
         }
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        [alertView setTag:3];
+        [alertView show];
     }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [alertView setTag:3];
-    [alertView show];
 }
 
 #pragma mark - IBActions
