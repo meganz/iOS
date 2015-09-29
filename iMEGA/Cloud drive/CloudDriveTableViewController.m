@@ -148,6 +148,7 @@
             
         case DisplayModeContact:
             self.navigationItem.rightBarButtonItems = nil;
+            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
             [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
         
@@ -1090,6 +1091,7 @@
             }
             
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
         } failureBlock:nil];
     } else {
         NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
@@ -1119,6 +1121,7 @@
             
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
         }
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
     }
     
     [self dismissViewControllerAnimated:YES completion:NULL];
@@ -1300,7 +1303,9 @@
     switch (shareType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
+            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
             if (self.displayMode == DisplayModeContact) {
+                [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"leaveShare"]];
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             } else {
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem]];                
@@ -1309,14 +1314,20 @@
         }
             
         case MEGAShareTypeAccessFull: {
+            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
+            if (self.displayMode == DisplayModeContact) {
+                [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"leaveShare"]];
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            } else {
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            }
             break;
         }
             
         case MEGAShareTypeAccessOwner: {
             if (self.displayMode == DisplayModeCloudDrive) {
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
-            } else {
+            } else { //Rubbish Bin
                 [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
             

@@ -67,7 +67,7 @@ static NSString* const B = @"[B]";
     }
     
     if (files == 1 && !folders) {
-        return AMLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\"");
+        return [NSString stringWithFormat:AMLocalizedString(@"oneFile", @"Subtitle shown on folders that gives you information about its content. This case \"{1} file\""), (int)files];
     }
     
     if (!files && folders > 1) {
