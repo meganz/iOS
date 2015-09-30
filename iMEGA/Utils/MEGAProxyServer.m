@@ -149,7 +149,9 @@ fail:
 
 - (void)acceptConnection:(CFSocketNativeHandle)fd {
     [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Accepting connection for fd: %d", fd]];
-    [_connectionHandlers addObject:[[MEGAHttpSession alloc] initWithFd:fd]];
+    MEGAHttpSession *httpSession = [[MEGAHttpSession alloc] initWithFd:fd];
+    [httpSession setApi:self.api];
+    [_connectionHandlers addObject:httpSession];
 }
 
 

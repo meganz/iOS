@@ -20,7 +20,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MEGASdkManager.h"
+#import "MEGASdk.h"
 
 typedef struct {
     off_t location;
@@ -32,6 +32,7 @@ typedef struct {
 @property (nonatomic, assign) MEGARange range;
 @property (nonatomic, assign, readonly) UInt64 handle;
 @property (nonatomic, assign) NSUInteger operationID;
+@property (nonatomic, strong) MEGASdk *api;
 
 - (id)initWithFd:(CFSocketNativeHandle)fd;
 - (void)haveData:(NSData *)data withOffset:(off_t)offset;

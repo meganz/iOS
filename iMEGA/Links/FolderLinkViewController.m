@@ -21,6 +21,8 @@
 
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <MediaPlayer/MPMoviePlayerViewController.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
@@ -43,6 +45,7 @@
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAProxyServer.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -429,6 +432,8 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
+                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
                             megaPreview.isFromFolderLink = YES;
@@ -443,6 +448,8 @@
                     NSUInteger nodeListSize = [[self.nodeList size] integerValue];
                     for (NSInteger i = 0; i < nodeListSize; i++) {
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
+                        
+                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
@@ -474,7 +481,7 @@
                 [photoBrowser showNextPhotoAnimated:YES];
                 [photoBrowser showPreviousPhotoAnimated:YES];
                 [photoBrowser setCurrentPhotoIndex:offsetIndex];
-            } else if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
+            } else {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
@@ -484,8 +491,33 @@
                     [previewController setDelegate:self];
                     [previewController setDataSource:self];
                     [previewController setTransitioningDelegate:self];
-                    [previewController setTitle:node.name];
+                    [previewController setTitle:name];
                     [self presentViewController:previewController animated:YES completion:nil];
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
+                    NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
+                    [[MEGAProxyServer sharedInstance] setApi:[MEGASdkManager sharedMEGASdkFolder]];
+                    if (link) {
+                        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
+                        // Remove the movie player view controller from the "playback did finish" notification observers
+                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
+                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                      object:moviePlayerViewController.moviePlayer];
+                        
+                        // Register this class as an observer instead
+                        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                 selector:@selector(movieFinishedCallback:)
+                                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                                   object:moviePlayerViewController.moviePlayer];
+                        
+                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+                        
+                        [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
+                        
+                        [moviePlayerViewController.moviePlayer prepareToPlay];
+                        [moviePlayerViewController.moviePlayer play];
+                        
+                        return;
+                    }
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
@@ -510,6 +542,7 @@
                     }
                 }
             }
+            
             if (fileUTI) {
                 CFRelease(fileUTI);
             }
@@ -699,6 +732,17 @@
     return nil;
 }
 
+
+#pragma mark - Movie player
+
+- (void)movieFinishedCallback:(NSNotification*)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:moviePlayer];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
@@ -723,7 +767,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEAccess) {
+        if ([error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeFetchNodes) {
                 [self showUnavailableLinkView];
                 [SVProgressHUD dismiss];
