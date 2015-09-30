@@ -21,6 +21,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSError * error = nil;
+    [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory()
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:&error];
+    if (error != nil) {
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+    }
+
     NSString *localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_node.name];
     [self.api startDownloadNode:_node localPath:localPath delegate:self];
     

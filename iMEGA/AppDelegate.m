@@ -44,7 +44,6 @@
 #import <Fabric/Fabric.h>
 #import <QuickLook/QuickLook.h>
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <StoreKit/StoreKit.h>
 
 #define kUserAgent @"MEGAiOS"
@@ -215,10 +214,6 @@
     
     // Start Proxy server for streaming
     [[MEGAProxyServer sharedInstance] start];
-       
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
-        [self photosUrlByModificationDate];
-    }
     
     return YES;
 }
@@ -402,51 +397,6 @@
     
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
-}
-    
-// Get all photos from camera roll (key:modification date - Value:assetUrl), the photos taken in the same seconds are ignored
-- (void)photosUrlByModificationDate {
-    self.photosUrlDictionary = [[NSMutableDictionary alloc] init];
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-        if(result != nil && [[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-            NSURL *url = [[result defaultRepresentation]url];
-            [library assetForURL:url
-                     resultBlock:^(ALAsset *asset) {
-                         NSDate *assetModificationTime = [asset valueForProperty:ALAssetPropertyDate];
-                         NSString *key = [NSString stringWithFormat:@"%lld", (long long)[assetModificationTime timeIntervalSince1970]];
-                         
-                         if ([self.photosUrlDictionary objectForKey:key] == nil) {
-                             [self.photosUrlDictionary setValue:url forKey:key];
-                         }
-                     }
-             
-                    failureBlock:^(NSError *error) {
-                        [MEGASdk logWithLevel:MEGALogLevelError message:@"assetForURL failureBlock"];
-                    }];
-        }
-    };
-    
-    NSMutableArray *assetGroups = [[NSMutableArray alloc] init];
-    
-    void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop) {
-        if(group != nil) {
-            if ([[group valueForProperty:@"ALAssetsGroupPropertyType"] intValue] == ALAssetsGroupSavedPhotos) {
-                [group enumerateAssetsUsingBlock:assetEnumerator];
-                [assetGroups addObject:group];
-            }
-        }
-    };
-    
-    assetGroups = [[NSMutableArray alloc] init];
-    
-    [library enumerateGroupsWithTypes:ALAssetsGroupAll
-                                usingBlock:assetGroupEnumerator
-                              failureBlock:^(NSError *error) {
-                                  [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
-                              }];
-
 }
 
 - (void)processLink:(NSString *)url {

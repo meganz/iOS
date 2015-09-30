@@ -39,7 +39,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="شما از محل دیگری از این دستگاه خارج شده اید.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="فضای ارائه شده توسط مگا";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -58,8 +58,14 @@
 "megaAccessText"="همه جا دسترسی کاملا رمزنگاری شده داشته باشید, در هر زمانی";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ورود";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Don't have an account?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Create one";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="ساختن شناسه";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="ایا از قبل حساب کاربری دارید؟";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="ایمیل / پسورد اشتباه. اطفا دوباره تلاش کنید";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -85,7 +91,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="حسابی با این آدرس ایمیل از قبل در مگا ثبت شده است";
 /* Message displayed when an action is completed successfully */
-"awesome"="خارق العاده !";
+"awesome"="خارق العاده ";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="لطفا ایمیل خود رو چک کنید و روی لینک ارسال شده کلیک کنید تا حساب شما تایید شود";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -193,17 +199,17 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="پوشه های %d";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="فولدر %d . فایل %d";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1+} file" */
-"foldersAndFiles"="پوشه های %d . فایل های %d";
+"folderAndFile"="فولدر 1 . فایل 1";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="پوشه های [A] . فایل های [B]";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="پوشه های %d . فایل %d";
+"foldersAndFile"="پوشه های %d . فایل 1";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="پوشه %d . فایل های %d";
+"folderAndFiles"="پوشه 1 . فایل های %d";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="در صف قرار گرفت";
 /* Message shown when a transfer has been canceled */
-"transferCanceled"="انتقال کنسل شد!";
+"transferCanceled"="انتقال کنسل شد";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="این ها دانلود های در حالت تعلیق هستند";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -240,6 +246,18 @@
 "fileExistAlertController_Message"="%@ قبلا اپلود شده";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="اپلود شروع شد";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="This file has been moved";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="This folder has been moved";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="برای افلاین ذخیره کن";
 /* List option shown on the details of a file or folder */
@@ -272,8 +290,8 @@
 "moveFileFoldersMessage"="1 فایل و %d پوشه جابجا شد";
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="فایل های %d و 1 پوشه جابجا شد";
-/* Success message shown when you have moved {1+} files and {1+} folders */
-"moveFilesFoldersMessage"="%d فایل و %d پوشه جابجا شد";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] فایل و [B] پوشه جابجا شد";
 /* List option shown on the details of a file or folder */
 "copy"="کپی";
 /* Success message shown when you have copied 1 file */
@@ -290,8 +308,8 @@
 "copyFileFoldersMessage"="1 فایل و %d پوشه کپی شد";
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="%d فایل  و 1 پوشه کپی شد";
-/* Success message shown when you have copied {1+} files and {1+} folders */
-"copyFilesFoldersMessage"="%d فایل و %d پوشه کپی گردید";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] فایل و [B] پوشه کپی گردید";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="تغییر نام";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -312,36 +330,36 @@
 "moveFileFoldersToRubbishBinMessage"="ایا شما مطمئن هستید که می خواهید 1 فایل و %d پوشه را به سطل اشغال منتقل کنید؟";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="ایا مطمئن هستید می خواهید %d فایل و 1 پوشه را به سطل اشغال منتقل کنید؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="ایا مطمئن هستید که می خواهید %d فایل و %d پوشه را به سطل اشغال منتقل کنید؟";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="ایا مطمئن هستید که می خواهید [A] فایل و [B] پوشه را به سطل اشغال منتقل کنید؟";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="";
+"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="";
+"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="";
+"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="";
+"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="";
+"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="";
+"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="";
+"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="";
+"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="خطا ی اجازه ها";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="اجازه های خود را روی این پوشه چک کنید";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="پوشه اشتراک گذاری شد!";
+"sharedFolder_success"="پوشه اشتراک گذاری شد";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="وارد کن به";
 /* Button title that triggers the importing link action */
 "import"="وارد کردن";
 /* Message shown when a file have been imported */
-"fileImported"="فایل وارد شد!";
+"fileImported"="فایل وارد شد";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="از محدودیت مقرر عبور کرده اید";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -355,7 +373,7 @@
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="اپلود های دوربین را فعال کن";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="اپلود های دوربین فعال گردید!";
+"cameraUploadsEnabled"="اپلود های دوربین فعال گردید";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu ایتم انتخاب شد";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -383,7 +401,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="اضافه";
 /* Success message shown when a contact has been added */
-"contactAdded"="کانتکت اضافه شد!";
+"contactAdded"="کانتکت اضافه شد";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="خطای اضافه کردن کانتکت";
 /* Alert title shown when you want to remove one or more contacts */
@@ -394,14 +412,14 @@
 "removeMultipleUsersMessage"="ایا مطمئن هستید می خواهید %d  کاربر را از لیست کانتکت خود حذف کنید؟";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d کانتکت حذف گردید";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed!" */
-"removedContact"="کانتکت %@ حذف گردید!";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="کانتکت %@ حذف گردید";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="کانتکت یک ایمیل ندارد";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="ترک کن";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="فولدر ترک شد!";
+"shareFolderLeaved"="فولدر ترک شد";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="به اشتراک گذاری پوشه";
 /* Button that allows you to select a given folder */
@@ -488,24 +506,24 @@
 "removeFileFoldersToRubbishBinMessage"="شما در حال پاک کردن دائمی 1 فایل و  %d پوشه هستید. ایا می خواهید ادامه دهید؟ (بعدا نمی توانید به عقب برگردید.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="شما در حال پاک کردن دائمی  %d فایل و 1 پوشه هستید. ایا می خواهید ادامه دهید؟ (بعدا نمی توانید به عقب برگردید.)";
-/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="شما در حال پاک کردن دائمی %d فایل و %d پوشه هستید. ایا می خواهید ادامه دهید؟ (بعدا نمی توانید به عقب برگردید.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="شما در حال پاک کردن دائمی [A] فایل و [B] پوشه هستید. ایا می خواهید ادامه دهید؟ (بعدا نمی توانید به عقب برگردید.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="";
+"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="";
+"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="";
+"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="";
+"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="";
+"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="";
+"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="";
+"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="";
+"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="بسورد فعلی";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -529,7 +547,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="کمک بگیر و موضوعات معروف رو بخون";
 /* Title to rate the app */
-"rateUsLabel"="به ما امتیاز دهید!";
+"rateUsLabel"="به ما امتیاز دهید";
 /* Title of the Transfers section */
 "transfers"="انتقالها";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -539,7 +557,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="اپلود ها";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="انتقال ها کنسل شد!";
+"transfersCanceled"="انتقال ها کنسل شد";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="انتقال ها را کنسل کن";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -569,7 +587,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="روز  %@ انقضا می یابد";
 /* DO NOT TRANSLATE, it will change */
-"restorePurchases"="بازیافت خریدها";
+"restorePurchases"="Restore purchases";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -583,50 +601,50 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="اکونت خود را ارتقا دهید";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ذخیره سازی";
+"productSpace"="ذخیره سازی ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="پهنای باند";
+"productBandwidth"="پهنای باند ";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ هر ماه";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan" = "Choose from one of the plans below:";
+"choosePlan"="Choose one of the plans from below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
 /* Header shown to help on the purchasin process */
-"selectMembership" = "Select membership:";
+"selectMembership"="Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17" = "Save 17%";
+"save17"="Save 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"appPurchaseDisabled"="In-App Purchase is disabled, please enable it in the settings";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title" = "Allow purchases";
+"allowPurchase_title"="Allow purchases";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
-"restore" = "Restore";
+"restore"="یازگردان";
 /* "Monthly" subscriptions */
-"monthly" = "Monthly";
+"monthly"="ماهیانه";
 /* "Yearly" subscriptions */
-"yearly" = "Yearly";
+"yearly"="سالیانه";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title" = "Thank you!";
+"thankYou_title"="Thank you";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message" = "Your purchase was restored!";
+"purchaseRestore_message"="Your purchase was restored";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title" = "Purchase stopped";
+"failedPurchase_title"="Purchase stopped";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title" = "Restore issue";
+"incompleteRestore_title"="Restore issue";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title" = "Restore stopped";
+"failedRestore_title"="Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
+"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";

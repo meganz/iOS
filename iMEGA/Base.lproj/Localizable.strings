@@ -39,7 +39,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle" = "Our SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle" = "Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -87,11 +87,11 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="You need to agree with the Tefrms of Service to register an account on MEGA.";
+"termsCheckboxUnselected"="You need to agree with the Terms of Service to register an account on MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="This e-mail address has already registered an account with MEGA";
 /* Message displayed when an action is completed successfully */
-"awesome"="Awesome!";
+"awesome"="Awesome";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Please check your e-mail and click the link to confirm your account.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -131,7 +131,7 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="The folder you are trying to download is bigger than the avaliable memory.";
+"folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
 /* Error title shown when a folder link doesn't exist. */
@@ -246,6 +246,18 @@
 "fileExistAlertController_Message"="%@ already uploaded";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Upload started";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="This file has been moved";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="This folder has been moved";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Save for offline";
 /* List option shown on the details of a file or folder */
@@ -471,7 +483,7 @@
 /* Alert title shown when you have exported your MEGA master key */
 "masterKeyExported"="Master Key exported";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure";
+"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
 /* Alert title shown when you have removed your MEGA master key */
 "masterKeyRemoved"="Master Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
@@ -521,7 +533,7 @@
 /* Success message shown when the password has been changed */
 "passwordChanged"="Your password has been changed.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
-"oldAndNewPasswordMatch"="The new and the old password can not match.";
+"oldAndNewPasswordMatch"="The new and the old password must not match.";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Change passcode";
 /* Title to describe a simple (four digit) passcode */
@@ -595,9 +607,9 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="from %.2f %@ / month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan" = "Choose from one of the plans below:";
+"choosePlan" = "Choose one of the plans from below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree" = "* Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree" = "Get two months free if you subscribe to a one-year PRO plan";
 /* Header shown to help on the purchasin process */
 "selectMembership" = "Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -605,13 +617,13 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "In App Purchase disabled, please enable it in settings";
+"appPurchaseDisabled" = "In-App Purchases is disabled, please enable it in the iOS Settings";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound" = "Product %@ not found, please contact with ios@mega.nz";
+"productNotFound" = "Product %@ is not found, please contact ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title" = "Allow purchases";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "You must enable In-App Purchase in your iOS Settings before restoring a purchase.";
+"allowPurchase_message" = "You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
 "restore" = "Restore";
 /* "Monthly" subscriptions */
@@ -627,12 +639,12 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title" = "Purchase stopped";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact with ios@mega.nz.";
+"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title" = "Restore issue";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "A prior purchase transaction could not be found. To restore the purchased product, select one product. Paid customers will NOT be charged again, but the purchase will be restored.";
+"incompleteRestore_message" = "The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title" = "Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message" = "Either you cancelled the request or your prior purchase could not be restored. Please try again later, or contact with ios@mega.nz.";
+"failedRestore_message" = "Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";

@@ -59,7 +59,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
+    if (self.displayMode == DisplayModeCloudDrive) {
+        [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
+    }
     
     accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
@@ -253,6 +255,56 @@
     }
 }
 
+- (void)showWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
+    NSString *alertTitle = @"";
+    
+    nodeUpdated = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[self.node handle]];
+    if (nodeUpdated != nil) { //Is nil if you don't have access to it
+        if (nodeUpdated.parentHandle == self.node.parentHandle) { //Same place as before
+            //Node renamed, update UI with the new info.
+            //Also when you get link, share folder or remove link
+            self.node = nodeUpdated;
+            [self reloadUI];
+        } else {
+            //Node moved to the Rubbish Bin or moved inside the same shared folder
+            if (nodeUpdated.parentHandle == [[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]) {
+                if ([self.node isFile]) {
+                    alertTitle = @"fileMovedToTheRubbishBin_alertTitle";
+                } else {
+                    alertTitle = @"folderMovedToTheRubbishBin_alertTitle";
+                }
+            } else {
+                if ([self.node isFile]) {
+                    alertTitle = @"fileMoved_alertTitle";
+                } else {
+                    alertTitle = @"folderMoved_alertTitle";
+                }
+            }
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            [alertView setTag:3];
+            [alertView show];
+        }
+    } else {
+        //Node removed from the Rubbish Bin or moved outside of the shared folder
+        if ([self.node isFile]) {
+            alertTitle = @"youNoLongerHaveAccessToThisFile_alertTitle";
+        } else {
+            alertTitle = @"youNoLongerHaveAccessToThisFolder_alertTitle";
+        }
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(alertTitle, nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:nil otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        [alertView setTag:3];
+        [alertView show];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
@@ -388,38 +440,40 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([alertView tag] == 0) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+    switch ([alertView tag]) {
+        case 0: {
+            if (buttonIndex == 1) {
                 UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
                 [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
-            } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
+            break;
         }
-    } else if ([alertView tag] == 1) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+            
+        case 1: {
+            if (buttonIndex == 1) {
                 if (self.displayMode == DisplayModeRubbishBin) {
                     [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                 } else {
                     [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
                 }
                 [self.navigationController popViewControllerAnimated:YES];
-            } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
+            break;
         }
-    } else if ([alertView tag] == 2) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+            
+        case 2: {
+            if (buttonIndex == 1) {
                 NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
                 if (transferTag != nil) {
                     [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
                 }
-            } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
             }
+            break;
+        }
+            
+        case 3: {
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
         }
     }
 }
@@ -802,8 +856,17 @@
 }
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    self.node = [nodeList nodeAtIndex:0];
-    [self reloadUI];
+    MEGANode *nodeUpdated;
+    
+    NSUInteger size = [[nodeList size] unsignedIntegerValue];
+    for (NSUInteger i = 0; i < size; i++) {
+        nodeUpdated = [nodeList nodeAtIndex:i];
+        
+        if ([nodeUpdated handle] == [self.node handle]) {
+            [self showWarningAfterActionOnNode:nodeUpdated];
+            break;
+        }
+    }
 }
 
 #pragma mark - MEGATransferDelegate

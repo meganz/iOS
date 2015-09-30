@@ -265,7 +265,7 @@ static NSString * rfc1123CurrentDate(void) {
     NSURL *url = (__bridge_transfer NSURL *)CFHTTPMessageCopyRequestURL(_request);
     _handle = url.lastPathComponent.stringByDeletingPathExtension.longLongValue;
     
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:_handle];
+    MEGANode *node = [self.api nodeForHandle:_handle];
     if (!node) {
         [MEGASdk logWithLevel:MEGALogLevelDebug message:[NSString stringWithFormat:@"Can't find node for handle %lld", _handle]];
         return CFHTTPMessageCreateResponse(kCFAllocatorDefault, 404, NULL, kCFHTTPVersion1_0);
@@ -292,7 +292,7 @@ static NSString * rfc1123CurrentDate(void) {
     NSString *contentLength = [[NSString alloc] initWithFormat:@"%lld", _range.length];
     CFHTTPMessageSetHeaderFieldValue(response, CFSTR("Content-Length"), (__bridge CFStringRef)contentLength);
     
-    [[MEGASdkManager sharedMEGASdk] startStreamingNode:node startPos:[NSNumber numberWithLongLong:_range.location] size:[NSNumber numberWithLongLong:_range.length] delegate:self];
+    [self.api startStreamingNode:node startPos:[NSNumber numberWithLongLong:_range.location] size:[NSNumber numberWithLongLong:_range.length] delegate:self];
 
     return response;
 }
