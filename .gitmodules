@@ -28,3 +28,6 @@
 [submodule "iMEGA/Vendor/AMLocalizedString"]
 	path = iMEGA/Vendor/AMLocalizedString
 	url = https://github.com/tagyro/AMLocalizedString.git
+[submodule "iMEGA/Vendor/CTAssetsPickerController"]
+	path = iMEGA/Vendor/CTAssetsPickerController
+	url = https://github.com/meganz/CTAssetsPickerController.git

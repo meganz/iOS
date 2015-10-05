@@ -131,6 +131,7 @@
 
 + (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
++ (uint64_t)freeDiskSpace;
 
 #pragma mark - Logout
 
