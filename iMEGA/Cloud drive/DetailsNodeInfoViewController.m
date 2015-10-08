@@ -19,20 +19,25 @@
  * program.
  */
 
-#import "DetailsNodeInfoViewController.h"
+#import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
+
 #import "Helper.h"
 
+#import "DetailsNodeInfoViewController.h"
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
-#import "NSString+MNZCategory.h"
-
+#import "GetLinkActivity.h"
+#import "ShareFolderActivity.h"
+#import "OpenInActivity.h"
+#import "RemoveLinkActivity.h"
+#import "MEGAActivityItemProvider.h"
 #import "MEGAStore.h"
 
-@interface DetailsNodeInfoViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
+@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
@@ -59,11 +64,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.displayMode == DisplayModeCloudDrive) {
+    accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
+    
+    if (self.displayMode == DisplayModeCloudDrive && (accessType == MEGAShareTypeAccessOwner)) {
         [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
     }
-    
-    accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
     switch (accessType) {
         case MEGAShareTypeAccessRead:
@@ -170,7 +175,10 @@
         }
         [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        if ([self.node isFolder]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
@@ -308,80 +316,80 @@
 #pragma mark - IBActions
 
 - (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
-    if ([self.node type] == MEGANodeTypeFolder) {
-        UIActionSheet *actionSheet;
-        BOOL isPublicLink = NO;
-        
-        MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
-        for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
-            if ([[outSharesList shareAtIndex:i] user] == nil) {
-                isPublicLink = TRUE;
-                break;
+    
+    UIActivityViewController *activityVC;
+    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
+    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] init];
+    [excludedActivityTypesMutableArray addObjectsFromArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    
+    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNode:self.node];
+    [activitiesMutableArray addObject:getLinkActivity];
+    
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+    if (offlineNodeExist) {
+        if ([self.node type] == MEGANodeTypeFolder) {
+            ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
+            [activitiesMutableArray addObject:shareFolderActivity];
+            
+            BOOL isPublicLink = NO;
+            MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
+            for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
+                if ([[outSharesList shareAtIndex:i] user] == nil) {
+                    isPublicLink = TRUE;
+                    break;
+                }
             }
+            if (isPublicLink) {
+                RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
+                [activitiesMutableArray addObject:removeLinkActivity];
+            }
+            
+        } else {
+            NSURL *fileURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]];
+            [activityItemsMutableArray addObject:fileURL];
+            [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
+            
+            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:_shareBarButtonItem];
+            [activitiesMutableArray addObject:openInActivity];
         }
         
-        if (isPublicLink) {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                      delegate:self
-                                             cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                        destructiveButtonTitle:nil
-                                             otherButtonTitles:AMLocalizedString(@"shareFolder", nil), AMLocalizedString(@"getLink", nil), AMLocalizedString(@"removeLink", nil), nil];
+    } else {
+        
+        if ([self.node type] == MEGANodeTypeFolder) {
             
-        } else {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                      delegate:self
-                                             cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                        destructiveButtonTitle:nil
-                                                        otherButtonTitles:AMLocalizedString(@"shareFolder", nil), AMLocalizedString(@"getLink", nil), nil];
+            ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
+            [activitiesMutableArray addObject:shareFolderActivity];
+            
+            BOOL isPublicLink = NO;
+            MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
+            for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
+                if ([[outSharesList shareAtIndex:i] user] == nil) {
+                    isPublicLink = TRUE;
+                    break;
+                }
+            }
+            if (isPublicLink) {
+                RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
+                [activitiesMutableArray addObject:removeLinkActivity];
+            }
+            
         }
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            [actionSheet showFromBarButtonItem:_shareBarButtonItem animated:YES];
-        } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
-        }
-    } else if ([self.node type] == MEGANodeTypeFile) {
-        [self getLink];
-    }
-}
+        
+        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:self.node.name node:self.node];
+        [activityItemsMutableArray addObject:activityItemProvider];
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-            
-        case 0: { //Share folder
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-            [contactsVC setNode:self.node];
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [self presentViewController:navigationController animated:YES completion:nil];
-            }];
-            break;
-        }
-            
-        case 1: { //Get link
-            [self getLink];
-            break;
-        }
-            
-        case 2: { //Disable link
-            [self disableLink];
-            break;
-        }
-            
-        default:
-            break;
     }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
-        }
+    
+    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
+    
+    if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
+        [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
     }
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 #pragma mark - UIAlertDelegate
@@ -476,6 +484,12 @@
             break;
         }
     }
+}
+
+#pragma mark - UIDocumentInteractionController
+
+- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
+    return self;
 }
 
 #pragma mark - UITableViewDataSource
@@ -630,12 +644,15 @@
                 [cancelDownloadAlertView setTag:2];
                 [cancelDownloadAlertView show];
             } else {
-                [self download];
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+                if (!offlineNodeExist) {
+                    [self download];
+                }
             }
             break;
         }
             
-        case 1:
+        case 1: {
             switch (accessType) {
                 case MEGAShareTypeAccessRead:
                 case MEGAShareTypeAccessReadWrite:
@@ -651,8 +668,9 @@
                     break;
             }
             break;
+        }
             
-        case 2: //Copy
+        case 2: {
             switch (accessType) {
                 case MEGAShareTypeAccessRead:
                 case MEGAShareTypeAccessReadWrite:
@@ -671,8 +689,9 @@
                     break;
             }
             break;
+        }
             
-        case 3: //Rename
+        case 3: {
             switch (accessType) {
                 case MEGAShareTypeAccessFull:
                     [self delete];
@@ -686,6 +705,7 @@
                     break;
             }
             break;
+        }
             
         case 4: //Move to the Rubbish Bin / Remove
             [self delete];
@@ -773,17 +793,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            //If export link only. Not if disable link
-            if ([request access]) {
-                [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
-            }
-            break;
-            
-        default:
-            break;
-    }
+    
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -809,21 +819,10 @@
             if ([request access]) {
                 [SVProgressHUD dismiss];
                 
-                MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                [pasteboard setString:[request link]];
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
                 
-                NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
-                NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
-                NSString *link = [request link];
-                
-                NSArray *itemsArray = [NSArray arrayWithObjects:name, size, link, nil];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsArray applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
-                
-                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                    [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
-                }
-                
-                [self presentViewController:activityVC animated:YES completion:nil];
             } else { //Disable link
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"removeLinkSuccess", @"Message shown inside an alert if the user remove a link")];
             }

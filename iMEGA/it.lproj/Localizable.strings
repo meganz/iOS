@@ -2,6 +2,8 @@
 "cancel"="Annulla";
 /* Button title to accept something */
 "ok"="Ok";
+/* */
+"upload"="Upload";
 /*  */
 "error"="Errore";
 /*  */
@@ -262,10 +264,16 @@
 "saveForOffline"="Salva per l'Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvato in locale";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Ottieni link";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Generando link...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copied";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Rimuovi link";
 /* Message shown when the link to a file has been removed */

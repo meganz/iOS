@@ -2002,21 +2002,13 @@
         case MEGARequestTypeExport: {
             remainingOperations--;
             
-            MEGANode *n = [api nodeForHandle:request.nodeHandle];
-            
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
-            
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
-            
-            NSString *link = [request link];
-            
-            NSArray *tempArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ \n %@ \n %@\n", name, size, link], nil];
-            [exportLinks addObjectsFromArray:tempArray];
+            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
+            [exportLinks addObject:link];
             
             if (remainingOperations == 0) {
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
                 
                 if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
                     activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
