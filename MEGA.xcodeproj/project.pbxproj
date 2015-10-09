@@ -375,6 +375,7 @@
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
 		E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTableViewCell.m; sourceTree = "<group>"; };
+		E8B64EFB1BC6E48C005C726E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGANavigationController.h; sourceTree = "<group>"; };
 		E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGANavigationController.m; sourceTree = "<group>"; };
 		E8C8D7831B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAQLPreviewControllerTransitionAnimator.h; path = Animators/MEGAQLPreviewControllerTransitionAnimator.h; sourceTree = "<group>"; };
@@ -1299,6 +1300,7 @@
 				E84F87061BB9A0A600436A0D /* sk */,
 				E84F87071BB9A0E200436A0D /* tr */,
 				E84F87091BB9A27600436A0D /* vi */,
+				E8B64EFB1BC6E48C005C726E /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

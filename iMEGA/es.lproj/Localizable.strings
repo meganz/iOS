@@ -244,8 +244,12 @@
 "createFolderButton"="Crear";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Subir desde...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ subido previamente";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] ya ha sido subido como [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Este fichero ya ha sido subido como %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d ficheros de los seleccionados ya han sido subidos a esta carpeta.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Subida iniciada";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -271,7 +275,7 @@
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Generando link...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copiado";
+"linkCopied"="Enlace copiado";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Abrir en...";
 /* Message shown when there is an active link that can be removed or disabled */

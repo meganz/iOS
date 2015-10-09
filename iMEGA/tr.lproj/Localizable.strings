@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="Tamam";
 /* */
-"upload"="Upload";
+"upload"="Yükle";
 /*  */
 "error"="Hata";
 /*  */
@@ -244,34 +244,38 @@
 "createFolderButton"="Yeni Oluştur";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Şuradan içe aktar...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ daha önce yüklendi";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Bu dosya %@ ismiyle zaten yüklendi";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="Seçilen %d dosya zaten bu klasör içine yüklendi.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Yükleme başladı";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="Bu dosya Çöp Kutusu\'na taşındı";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="Bu klasör Çöp Kutusu\'na taşındı";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="This file has been moved";
+"fileMoved_alertTitle"="Bu dosya taşındı";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="This folder has been moved";
+"folderMoved_alertTitle"="Bu klasör taşındı";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Artık bu dosyaya erişim hakkınız yok";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Artık bu klasöre erişim hakkınız yok";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Çevrimdışı için kaydet";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Çevrimdışı için Kaydedildi";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Gelen etiketi Apple tarafından kullanılmak üzere ayrılmıştır.";
 /* List option shown on the details of a file or folder */
 "getLink"="Link al";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Bağlantı oluşturuluyor...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="Bağlantı kopyalandı";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */

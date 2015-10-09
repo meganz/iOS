@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="ОК";
 /* */
-"upload"="Upload";
+"upload"="загрузка";
 /*  */
 "error"="Ошибка";
 /*  */
@@ -41,7 +41,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="SSL ключ сервера не может быть проверен. Возможно вы находитесь под атакой \"человек посередине\" (англ. Man in the middle (MITM)).";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ПРОСТРАНСТВО MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -244,8 +244,12 @@
 "createFolderButton"="Создать";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Загрузить из...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ уже загружен";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Загрузка начата";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -639,7 +643,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Ежегодно";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="Покупки внутри приложения (In-App Purchase) в данный момент недоступны в App Store. Пожалуйста, повторите попытку позже.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Спасибо";
 /* Alert message shown when a purchase was restored succesfully */
@@ -647,12 +651,12 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Покупка остановлена";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
+"failedPurchase_message"="Вы отменили запрос, либо Apple сообщил об ошибке транзакции. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Проблема с восстановлением";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="Предыдущая покупка не может быть найдена. Пожалуйста, выберите ранее купленный продукт для восстановления. Вы НЕ будете платить еще раз.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Восстановление остановлено";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact  ios@mega.nz.";
+"failedRestore_message"="Запрос был отменен, либо предыдущая покупка не может быть восстановлена. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.nz.";
