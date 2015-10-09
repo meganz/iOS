@@ -96,7 +96,7 @@ static NSInteger linkNodeOption;
                                  @"tr",
                                  //                      @"uk",
                                  @"vi",
-                                 //                      @"zh-Hans",
+                                 @"zh-Hans",
                                  @"zh-Hant",
                                  nil];
     }

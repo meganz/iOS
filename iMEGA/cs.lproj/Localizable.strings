@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="Ok";
 /* */
-"upload"="Upload";
+"upload"="Nahrávání";
 /*  */
 "error"="Chyba";
 /*  */
@@ -244,34 +244,38 @@
 "createFolderButton"="Vytvořit";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Nahrát z...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ již nahrán";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Tento soubor byl již nahrán pod názvem %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="Vybraných %d souborů již bylo nahráno do této složky.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Nahrávání spuštěno";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="Tento soubor byl přesunut do koše";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="Tato složka byla přesunuta do koše";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="This file has been moved";
+"fileMoved_alertTitle"="Tento soubor byl přesunut";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="This folder has been moved";
+"folderMoved_alertTitle"="Tato složka byla přesunuta";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Již nemáte přístup k tomuto souboru";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Již nemáte přístup k této složce";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Uložit pro offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Uloženo offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Štítek Příchozí má vyhrazeno pro použití Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Získat odkaz";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Generování odkazu...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="Odkaz zkopírován";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -611,7 +615,7 @@
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložiště ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Šířka pásma %@";
+"productBandwidth"="Šířka pásma";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ měsíčně";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
