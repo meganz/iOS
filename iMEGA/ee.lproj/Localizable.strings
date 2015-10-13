@@ -74,10 +74,6 @@
 "emailInvalidFormat"="Sisestage õige e-posti aadress";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Sisestage õige parool";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-post";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="Ootelolevaid üleslaadimisi pole.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Pilve Majutus";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fail";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */

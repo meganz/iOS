@@ -74,10 +74,6 @@
 "emailInvalidFormat"="Introduzca un email válido";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Introduzca una contraseña válida";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Recuperando nodos...";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparando nodos...";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Correo electrónico";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="No tienes ninguna subida pendiente.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Actualizando nodos...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fichero";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */

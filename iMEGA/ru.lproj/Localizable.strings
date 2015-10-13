@@ -74,10 +74,6 @@
 "emailInvalidFormat"="Введите правильный email";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Введите правильный пароль";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="У Вас нет загрузок в режиме ожидания.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d файл";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
