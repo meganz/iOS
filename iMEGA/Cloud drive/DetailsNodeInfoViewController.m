@@ -27,7 +27,6 @@
 #import "DetailsNodeInfoViewController.h"
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
-#import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "GetLinkActivity.h"

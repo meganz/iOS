@@ -805,7 +805,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"updatingNodes", @"Updating nodes...") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
             break;
         }
             
@@ -826,9 +826,9 @@
     if ([request type] == MEGARequestTypeFetchNodes){
         float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
         if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:AMLocalizedString(@"fetchingNodes", @"Fetching nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:progress status:@"" maskType:SVProgressHUDMaskTypeClear];
         } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:1 status:AMLocalizedString(@"preparingNodes", @"Preparing nodes") maskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD showProgress:0.99 status:@"" maskType:SVProgressHUDMaskTypeClear];
         }
     }
 }

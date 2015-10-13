@@ -74,10 +74,6 @@
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Xin nhập một mật khẩu hợp lệ";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="Bạn không có tiến trình tải lên nào đang chờ";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Ổ đám-mây";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d tệp";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */

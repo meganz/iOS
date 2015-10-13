@@ -74,10 +74,6 @@
 "emailInvalidFormat"="Geçerli bir e-posta girin";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Geçerli bir parola girin";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Eposta";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="Bekleyen yüklemeler yok";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Bulut Sürücüsü";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d dosya";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */

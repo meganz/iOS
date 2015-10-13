@@ -35,6 +35,8 @@
 #import "CloudDriveTableViewController.h"
 #import "BrowserViewController.h"
 
+#import "ShareFolderActivity.h"
+
 
 @interface ContactsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
     UIAlertView *emailAlertView;
@@ -91,7 +93,7 @@
     [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
     
     if (self.node != nil) {
-        [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolderWith", @"Share folder with") forState:UIControlStateNormal];
+        [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
         [_shareFolderWithButton setEnabled:YES];
         [_shareFolderWithButton setHidden:NO];
         
@@ -105,11 +107,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    if (self.node == nil) {
-        [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"shareFolderWith", @"Contacts")];
-    }
+    [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
@@ -278,11 +276,23 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.shareFolderActivity != nil) {
+        [self.shareFolderActivity activityDidFinish:YES];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)shareFolderWithTouchUpInside:(UIButton *)sender {
+    if (_selectedUsersArray.count == 0) {
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.shareFolderActivity != nil) {
+            [self.shareFolderActivity activityDidFinish:YES];
+        }
+        
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
@@ -293,7 +303,16 @@
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [actionSheet showInView:self.view];
         } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+                if ([window.subviews containsObject:self.view]) {
+                    [actionSheet showInView:self.view];
+                } else {
+                    [actionSheet showInView:window];
+                }
+            } else {
+                [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            }
         }
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];

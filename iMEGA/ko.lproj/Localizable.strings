@@ -74,10 +74,6 @@
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="올바른 비밀번호를 입력하세요";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="이메일";
 /* Hint text to suggest that the user has to write his password */
@@ -190,8 +186,6 @@
 "transfersEmptyState_textUpload"="대기중인 업로드가 없습니다";
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d개의 파일";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
