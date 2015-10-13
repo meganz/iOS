@@ -45,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 
 @end
 
@@ -129,6 +130,16 @@
             [_toolbar setHidden:YES];
             [_shareFolderButton setEnabled:YES];
             [_shareFolderButton setHidden:NO];
+            break;
+        }
+            
+        case BrowserActionOpenIn: {
+            [_toolBarSaveInMegaBarButtonItem setTitle:AMLocalizedString(@"upload", nil)];
+            [_toolBarSaveInMegaBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarSaveInMegaBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarSaveInMegaBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
             break;
         }
     }
@@ -223,6 +234,18 @@
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
+    if (self.browserAction == BrowserActionOpenIn) {
+        NSError *error = nil;
+        NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+        for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
+            error = nil;
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
+            if (!success || error) {
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+            }
+        }
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -238,6 +261,16 @@
         } else {
             [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }
+    } else {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+    }
+}
+
+- (IBAction)uploadToMega:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachable]) {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode];
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
     }
@@ -341,6 +374,10 @@
     
     if (self.selectedUsersArray) {
         [browserVC setSelectedUsersArray:self.selectedUsersArray];
+    }
+    
+    if (self.localpath) {
+        [browserVC setLocalpath:self.localpath];
     }
     
     [browserVC setBrowserAction:self.browserAction];

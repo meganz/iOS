@@ -51,6 +51,13 @@
 
 #define kFirstRun @"FirstRun"
 
+typedef NS_ENUM(NSUInteger, URLType) {
+    URLTypeFileLink,
+    URLTypeFolderLink,
+    URLTypeConfirmationLink,
+    URLTypeOpenInLink
+};
+
 @interface AppDelegate () <LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -58,6 +65,7 @@
 
 @property (nonatomic, strong) NSString *IpAddress;
 @property (nonatomic, strong) NSString *link;
+@property (nonatomic) URLType urlType;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -263,6 +271,16 @@
     if (!success || error) {
         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
     }
+    
+    // Clean up Documents/Inbox directory
+    NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
+        error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
+    }
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -271,12 +289,16 @@
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
-            self.link = nil;
+            if (self.urlType != URLTypeOpenInLink) {
+                self.link = nil;
+            }
         }
     } else {
         if (![LTHPasscodeViewController doesPasscodeExist]) {
             [self processLink:self.link];
-            self.link = nil;
+            if (self.urlType != URLTypeOpenInLink) {
+                self.link = nil;
+            }
         }
     }
     
@@ -400,27 +422,38 @@
 }
 
 - (void)processLink:(NSString *)url {
-    NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
+    // Open in
+    if ([url rangeOfString:@"file:///"].location != NSNotFound) {
+        self.urlType = URLTypeOpenInLink;
+        [self openIn];
+        return;
+    }
     
+    NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
+        
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
         return;
     }
-    
+        
     [self dissmissPreviousLinkIfPresented];
-    
+        
     if ([self isFileLink:afterSlashesString]) {
-        return;
-    }
-    if ([self isFolderLink:afterSlashesString]) {
-        return;
-    }
-    if ([self isConfirmationLink:afterSlashesString]) {
+        self.urlType = URLTypeFileLink;
         return;
     }
     
+    if ([self isFolderLink:afterSlashesString]) {
+        self.urlType = URLTypeFolderLink;
+        return;
+    }
+    
+    if ([self isConfirmationLink:afterSlashesString]) {
+        self.urlType = URLTypeConfirmationLink;
+        return;
+    }
+        
     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
-    return;
 }
 
 - (void)dissmissPreviousLinkIfPresented {
@@ -534,6 +567,27 @@
     return NO;
 }
 
+- (void)openIn {
+    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        [browserVC setLocalpath:[self.link substringFromIndex:7]]; // "file://" = 7 characters
+        [browserVC setBrowserAction:BrowserActionOpenIn];
+        
+        if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+            MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+            if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+                [cameraUploadsPopUpNavigationController.topViewController presentViewController:browserNavigationController animated:YES completion:nil];
+            } else {
+                [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
+            }
+        } else {
+            [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
+        }
+    }
+}
+
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     for (NSString *item in directoryContents) {
@@ -645,7 +699,9 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.link != nil) {
             [self processLink:self.link];
-            self.link = nil;
+            if (self.urlType != URLTypeOpenInLink) {
+                self.link = nil;
+            }
         }
     } else {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -888,7 +944,9 @@
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
-                self.link = nil;
+                if (self.urlType != URLTypeOpenInLink) {
+                    self.link = nil;
+                }
             }
                         
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
@@ -915,11 +973,16 @@
                     if ([Helper selectedOptionOnLink] != 0) {
                         [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
                     }
+                    if (self.urlType == URLTypeOpenInLink) {
+                        [self performSelector:@selector(processLink:) withObject:self.link afterDelay:0.75f];
+                    }
                 }
                 
                 if (self.link != nil) {
                     [self processLink:self.link];
-                    self.link = nil;
+                    if (self.urlType != URLTypeOpenInLink) {
+                        self.link = nil;
+                    }
                 }
             }
             

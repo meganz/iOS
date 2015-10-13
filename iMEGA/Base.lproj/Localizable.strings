@@ -12,6 +12,8 @@
 "size"="Size";
 /*  */
 "folder"="Folder";
+/* */
+"upload"="Upload";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="No camera available";
 /* Alert title to attract attention */
@@ -134,6 +136,8 @@
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* Error title shown when a folder link doesn't exist. */
 "folderLinkUnavailableTitle"="Folder link unavailable";
 /* Error message shown when a folder link doesn't exist. */

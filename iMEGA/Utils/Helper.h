@@ -100,8 +100,6 @@
 
 #pragma mark - Paths
 
-+ (NSString *)pathForOfflineDirectory:(NSString *)directory;
-
 + (NSString *)pathForOffline;
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;

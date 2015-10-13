@@ -270,8 +270,8 @@
             MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
             
-            [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+            [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
         }];
     } else {
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

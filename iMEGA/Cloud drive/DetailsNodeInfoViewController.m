@@ -168,8 +168,8 @@
         if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
             return;
         }
-        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
