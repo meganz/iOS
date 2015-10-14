@@ -362,7 +362,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setBackgroundColor:megaInfoGray];
-    [SVProgressHUD setForegroundColor:megaBlack];
+    [SVProgressHUD setForegroundColor:megaDarkGray];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
