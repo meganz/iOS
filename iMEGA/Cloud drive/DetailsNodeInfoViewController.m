@@ -172,8 +172,9 @@
         if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
             return;
         }
-        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+        
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
         
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];

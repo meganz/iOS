@@ -491,16 +491,15 @@ static NSInteger linkNodeOption;
 
 #pragma mark - Paths
 
-+ (NSString *)pathForOfflineDirectory:(NSString *)directory {
++ (NSString *)pathForOffline {
+    static NSString *pathString = nil;
     
-    NSString *pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    pathString = [directory isEqualToString:@""] ? [pathString stringByAppendingString:@"/"] : [pathString stringByAppendingPathComponent:directory];
+    if (pathString == nil) {
+        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = [pathString stringByAppendingString:@"/"];
+    }
     
     return pathString;
-}
-
-+ (NSString *)pathForOffline {
-    return [self pathForOfflineDirectory:@""];
 }
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath {
@@ -611,6 +610,12 @@ static NSInteger linkNodeOption;
 
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
     MEGASdk *api;
+    
+    // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
+    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self pathForOffline]]) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
+        return;
+    }
     
     if (isFolderLink) {
         api = [MEGASdkManager sharedMEGASdkFolder];
@@ -766,9 +771,11 @@ static NSInteger linkNodeOption;
         }
     }
     
+    // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
+        error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error];
         if (!success || error) {
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
