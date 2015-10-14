@@ -217,8 +217,8 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
-                [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+                [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
             }];
         } else {
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

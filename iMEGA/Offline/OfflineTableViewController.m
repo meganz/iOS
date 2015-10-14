@@ -113,6 +113,11 @@
         NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
         NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContents objectAtIndex:i]];
         
+        // Inbox folder in documents folder is created by the system. Don't show it
+        if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:filePath]) {
+            continue;
+        }
+        
         if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
             
             NSMutableDictionary *tempDictionary = [NSMutableDictionary new];

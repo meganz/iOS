@@ -651,6 +651,7 @@
                         <outlet property="toolBarCopyBarButtonItem" destination="lKS-IO-O01" id="oL1-Km-hve"/>
                         <outlet property="toolBarMoveBarButtonItem" destination="7Sv-uf-KA4" id="g3C-EQ-WoC"/>
                         <outlet property="toolBarNewFolderBarButtonItem" destination="Rgo-oZ-vnm" id="RJE-19-g4s"/>
+                        <outlet property="toolBarSaveInMegaBarButtonItem" destination="haa-Y0-WYS" id="ENt-m3-MJB"/>
                         <outlet property="toolbar" destination="OqO-k1-16S" id="13A-dN-ZA4"/>
                     </connections>
                 </viewController>
@@ -665,6 +666,12 @@
                     <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="copyNode:" destination="Z2F-Nr-ypX" id="ceo-sa-1GJ"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem tag="1" title="Save" id="haa-Y0-WYS">
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="uploadToMega:" destination="Z2F-Nr-ypX" id="I9K-ql-n04"/>
                     </connections>
                 </barButtonItem>
             </objects>
