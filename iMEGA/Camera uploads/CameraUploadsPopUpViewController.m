@@ -130,7 +130,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         
         [self dismissViewControllerAnimated:YES completion:^{
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"cameraUploadsEnabled", @"Camera Uploads enabled!")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
         }];
     }
 }

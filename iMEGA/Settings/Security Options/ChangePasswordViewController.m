@@ -111,7 +111,7 @@
         if ([MEGAReachabilityManager isReachable]) {
             [[MEGASdkManager sharedMEGASdk] changePassword:[_currentPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             [_changePasswordButton setEnabled:YES];
         }
     }

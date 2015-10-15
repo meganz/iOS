@@ -108,7 +108,7 @@
                             @"tr":@"Türkçe",
                             //@"uk":@"українська мова",
                             @"vi":@"Tiếng Việt",
-                            //@"zh-Hans":@"简体中文",
+                            @"zh-Hans":@"简体中文",
                             @"zh-Hant":@"中文繁體"
                             };
     
@@ -232,10 +232,10 @@
             [mailComposeVC setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
             [self presentViewController:mailComposeVC animated:YES completion:nil];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noEmailAccountConfigured", @"No email account configured")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"noEmailAccountConfigured", nil)];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -245,7 +245,7 @@
         SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
         [self.navigationController pushViewController:webViewController animated:YES];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -472,7 +472,7 @@
                     break;
                 }
             } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 break;
             }
         }

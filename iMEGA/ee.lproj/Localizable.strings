@@ -2,6 +2,8 @@
 "cancel"="Loobu";
 /* Button title to accept something */
 "ok"="OK";
+/* */
+"upload"="üleslaadimine";
 /*  */
 "error"="Viga";
 /*  */
@@ -72,10 +74,6 @@
 "emailInvalidFormat"="Sisestage õige e-posti aadress";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Sisestage õige parool";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-post";
 /* Hint text to suggest that the user has to write his password */
@@ -188,8 +186,6 @@
 "transfersEmptyState_textUpload"="Ootelolevaid üleslaadimisi pole.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Pilve Majutus";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fail";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -242,8 +238,12 @@
 "createFolderButton"="Koosta";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Lae üles asukohast...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ on juba üles laetud";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Algas üleslaadimine";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -262,10 +262,16 @@
 "saveForOffline"="Salvestage internetita oleku jaoks";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Failid võrguta olekus kasutamiseks";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Saa link";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Lingi loomine...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copied";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Eemaldage link";
 /* Message shown when the link to a file has been removed */

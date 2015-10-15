@@ -270,8 +270,8 @@
             MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
             
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
         }];
     } else {
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -775,7 +775,7 @@
         }
         
         if ([error type] == MEGAErrorTypeApiEOverQuota) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"quotaExceeded", nil)];
         }
         return;
     }
@@ -870,7 +870,7 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

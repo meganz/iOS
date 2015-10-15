@@ -2,6 +2,8 @@
 "cancel"="Mégse";
 /* Button title to accept something */
 "ok"="OK";
+/* */
+"upload"="Feltöltés";
 /*  */
 "error"="Hiba";
 /*  */
@@ -39,7 +41,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ebből a készülékből másik helyről jelentkezett ki";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="A szerver SSL kulcsa nem erősíthető meg. Lehetséges, hogy Ön közbeékelődéses támadás áldozata.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA TÁRHELY";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -59,9 +61,9 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Bejelentkezés";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Don't have an account?";
+"doNotHaveAnAccount"="Nem rendelkezik fiókkal?";
 /* Button that bring you to section where you can create an account */
-"createOne"="Create one";
+"createOne"="Fiók létrehozása";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Fiók létrehozása";
 /* Question to focus the user to the zone of the app where he/she can go to login */
@@ -72,10 +74,6 @@
 "emailInvalidFormat"="Írjon be érvényes emailt";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Írjon be érvényes jelszót";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
 /* Hint text to suggest that the user has to write his password */
@@ -188,8 +186,6 @@
 "transfersEmptyState_textUpload"="Nem rendelkezik függőben lévő feltöltéssel.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fájl";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -242,8 +238,12 @@
 "createFolderButton"="Létrehozás";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Feltöltés máshonnan...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ már fel van töltve";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Feltöltés megkezdve";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -262,10 +262,16 @@
 "saveForOffline"="Mentés Offline-ba";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Offline mentve";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Link megszerzése";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Link előállítása...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copied";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Link eltávolítása";
 /* Message shown when the link to a file has been removed */
@@ -333,21 +339,21 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Biztosan át szeretne helyezni [A] fájlt és [B] mappát a Szemetesládába?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
+"fileMovedToRubbishBinMessage"="1 fájl áthelyezve a szemetesládába";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+"filesMovedToRubbishBinMessage"="%d fájl áthelyezve a szemetesládába";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+"folderMovedToRubbishBinMessage"="1 mappa áthelyezve a szemetesládába";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+"foldersMovedToRubbishBinMessage"="% mappa áthelyezve a szemetesládába";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+"fileFolderMovedToRubbishBinMessage"="1 fájl és 1 mappa áthelyezve a szemetesládába";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+"fileFoldersMovedToRubbishBinMessage"="1 fájl és %d mappa áthelyezve a szemetesládába";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+"filesFolderMovedToRubbishBinMessage"="%d fájl és 1 mappa áthelyezve a szemetesládába";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
+"filesFoldersMovedToRubbishBinMessage"="[A] fájl és [B] mappa áthelyezve a szemetesládába";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Engedély hiba";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -509,21 +515,21 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Ön véglegesen készül törölni [A] fájlt és [B] mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
+"fileRemovedToRubbishBinMessage"="1 fájl törölve a MEGÁ-ról";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+"filesRemovedToRubbishBinMessage"="% fájl törölve a MEGÁ-ról";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+"folderRemovedToRubbishBinMessage"="1 mappa törölve a MEGÁ-ról";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+"foldersRemovedToRubbishBinMessage"="% mappa törölve a MEGÁ-ról";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+"fileFolderRemovedToRubbishBinMessage"="1 fájl és 1 mappa törölve a MEGÁ-ról";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 fájl és %d mappa törölve a MEGÁ-ról";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d fájl és 1 mappa törölve a MEGÁ-ról";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="[A] fájl és [B] mappa törölve a MEGÁ-ról";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Jelenlegi jelszó";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -607,23 +613,23 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ havonta";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choose one of the plans from below:";
+"choosePlan"="Válasszon egyet az alábbi csomagok közül:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Két hónapot ingyen megkaphat, ha előfizet egy egyéves PRO csomagra";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Select membership:";
+"selectMembership"="Tagság kiválasztása:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="17%-os megtakarítás";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="HIBÁS VÁSÁRLÁS %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchase is disabled, please enable it in the settings";
+"appPurchaseDisabled"="Az alkalmazáson belüli vásárlás le van tiltva, kérjük engedélyezze azt a beállításokban";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
+"productNotFound"="A(z) %@ termék nem található, kérjük írjon a ios@mega.nz címre";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Allow purchases";
+"allowPurchase_title"="Vásárlások engedélyezése";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="A vásárlás visszaállítása előtt az iOS beállításokban engedélyeznie kell az alkalmazáson belüli vásárlásokat.";
 /* Button title to restore failed purchases */
 "restore"="Visszaállítás";
 /* "Monthly" subscriptions */
@@ -631,20 +637,20 @@
 /* "Yearly" subscriptions */
 "yearly"="Évenként";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="Ez az Alkalmazáson belüli vásárlási tétel jelen pillanatban nem érhető el az App Store-ban. Kérjük később próbálja újra.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Thank you";
+"thankYou_title"="Köszönjük";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Your purchase was restored";
+"purchaseRestore_message"="A vásárlás helyreállítva";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Purchase stopped";
+"failedPurchase_title"="A vásárlás leállt";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="Visszaállítási hiba";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="Az előző vásárlás nem található. Kérjük válassza ki az előzőleg vásárolt terméket a visszaállításhoz. Az ár NEM kerül újra felszámításra.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restore stopped";
+"failedRestore_title"="A visszaállítás leállt";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact  ios@mega.nz.";
+"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";

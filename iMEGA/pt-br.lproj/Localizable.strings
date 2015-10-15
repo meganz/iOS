@@ -2,6 +2,8 @@
 "cancel"="Cancelar";
 /* Button title to accept something */
 "ok"="OK";
+/* */
+"upload"="Enviar";
 /*  */
 "error"="Erro";
 /*  */
@@ -72,10 +74,6 @@
 "emailInvalidFormat"="Digite  e-mail válido";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Digite uma palavra-passe válida";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-mail";
 /* Hint text to suggest that the user has to write his password */
@@ -188,8 +186,6 @@
 "transfersEmptyState_textUpload"="Não tem carregamentos pendentes";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unidade em Nuvem (Cloud Drive)";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -242,8 +238,12 @@
 "createFolderButton"="Criar";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importado de...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ já carregado";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] já foi carregado com o nome [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Carregamento iniciado";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -262,10 +262,16 @@
 "saveForOffline"="Salvo para off-line";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvo offline";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox está reservada para uso da Apple";
 /* List option shown on the details of a file or folder */
 "getLink"="Obter link";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Gerando link...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copiado";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Abrir em...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Remover link";
 /* Message shown when the link to a file has been removed */

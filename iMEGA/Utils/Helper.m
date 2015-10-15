@@ -96,7 +96,7 @@ static NSInteger linkNodeOption;
                                  @"tr",
                                  //                      @"uk",
                                  @"vi",
-                                 //                      @"zh-Hans",
+                                 @"zh-Hans",
                                  @"zh-Hant",
                                  nil];
     }
@@ -491,16 +491,15 @@ static NSInteger linkNodeOption;
 
 #pragma mark - Paths
 
-+ (NSString *)pathForOfflineDirectory:(NSString *)directory {
++ (NSString *)pathForOffline {
+    static NSString *pathString = nil;
     
-    NSString *pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    pathString = [directory isEqualToString:@""] ? [pathString stringByAppendingString:@"/"] : [pathString stringByAppendingPathComponent:directory];
+    if (pathString == nil) {
+        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = [pathString stringByAppendingString:@"/"];
+    }
     
     return pathString;
-}
-
-+ (NSString *)pathForOffline {
-    return [self pathForOfflineDirectory:@""];
 }
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath {
@@ -612,6 +611,12 @@ static NSInteger linkNodeOption;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink {
     MEGASdk *api;
     
+    // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
+    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self pathForOffline]]) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
+        return;
+    }
+    
     if (isFolderLink) {
         api = [MEGASdkManager sharedMEGASdkFolder];
     } else {
@@ -640,7 +645,7 @@ static NSInteger linkNodeOption;
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
             if (error != nil) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];
@@ -680,6 +685,25 @@ static NSInteger linkNodeOption;
     }
     
     return folderSize;
+}
+
++ (uint64_t)freeDiskSpace {
+    uint64_t totalSpace = 0;
+    uint64_t totalFreeSpace = 0;
+    NSError *error = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    
+    if (dictionary) {
+        NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSystemSize];
+        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
+        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
+        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
+    } else {
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]]];
+    }
+    
+    return totalFreeSpace;
 }
 
 #pragma mark - Logout
@@ -747,9 +771,11 @@ static NSInteger linkNodeOption;
         }
     }
     
+    // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:offlineDirectory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:offlineDirectory error:&error];
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
+        error = nil;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error];
         if (!success || error) {
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }

@@ -35,6 +35,8 @@
 #import "CloudDriveTableViewController.h"
 #import "BrowserViewController.h"
 
+#import "ShareFolderActivity.h"
+
 
 @interface ContactsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
     UIAlertView *emailAlertView;
@@ -91,7 +93,7 @@
     [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
     
     if (self.node != nil) {
-        [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolderWith", @"Share folder with") forState:UIControlStateNormal];
+        [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
         [_shareFolderWithButton setEnabled:YES];
         [_shareFolderWithButton setHidden:NO];
         
@@ -105,11 +107,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    if (self.node == nil) {
-        [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"shareFolderWith", @"Contacts")];
-    }
+    [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
@@ -278,11 +276,23 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.shareFolderActivity != nil) {
+        [self.shareFolderActivity activityDidFinish:YES];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)shareFolderWithTouchUpInside:(UIButton *)sender {
+    if (_selectedUsersArray.count == 0) {
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.shareFolderActivity != nil) {
+            [self.shareFolderActivity activityDidFinish:YES];
+        }
+        
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
@@ -293,10 +303,19 @@
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [actionSheet showInView:self.view];
         } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+                if ([window.subviews containsObject:self.view]) {
+                    [actionSheet showInView:self.view];
+                } else {
+                    [actionSheet showInView:window];
+                }
+            } else {
+                [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            }
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -586,7 +605,7 @@
             if ([MEGAReachabilityManager isReachable]) {
                 [[MEGASdkManager sharedMEGASdk] addContactWithEmail:[[alertView textFieldAtIndex:0] text] delegate:self];
             } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
         }
     } else if (alertView.tag == 1) {
@@ -597,7 +616,7 @@
                     [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
                 }
             } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
         }
     } else if (alertView.tag == 2) {
@@ -704,7 +723,7 @@
             remainingOperations--;
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedUsersArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"removedContact", nil), [request email]] : [NSString stringWithFormat:AMLocalizedString(@"removedContacts", nil), self.selectedUsersArray.count];
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
                 [self setTableViewEditing:NO animated:NO];
             }
             
@@ -714,7 +733,7 @@
         case MEGARequestTypeShare: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharedFolder_success", @"Folder shared!")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;

@@ -86,7 +86,7 @@
                                                                                       object:nil];
             [operationQueue addOperation:operation];
         } else if ([self validateForm]) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }
@@ -176,7 +176,7 @@
             case MEGAErrorTypeApiEArgs:
             case MEGAErrorTypeApiENoent: {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"invalidMailOrPassword", @"Email or password invalid.")
+                                                                message:AMLocalizedString(@"invalidMailOrPassword", nil)
                                                                delegate:self
                                                       cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];

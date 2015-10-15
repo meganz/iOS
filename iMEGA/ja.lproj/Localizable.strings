@@ -2,6 +2,8 @@
 "cancel"="キャンセル";
 /* Button title to accept something */
 "ok"="OK";
+/* */
+"upload"="アップロード";
 /*  */
 "error"="エラー";
 /*  */
@@ -37,7 +39,7 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ログアウト済み";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
+"loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -59,9 +61,9 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Don't have an account?";
+"doNotHaveAnAccount"="まだアカウントをお持ちでない？";
 /* Button that bring you to section where you can create an account */
-"createOne"="Create one";
+"createOne"="作成する";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="アカウント作成";
 /* Question to focus the user to the zone of the app where he/she can go to login */
@@ -72,10 +74,6 @@
 "emailInvalidFormat"="正しいメールを入力して下さい";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="有効パスワードを入力して下さい";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="メール";
 /* Hint text to suggest that the user has to write his password */
@@ -188,8 +186,6 @@
 "transfersEmptyState_textUpload"="待機中アップロードはありません。";
 /* Title of the Cloud Drive section */
 "cloudDrive"="クラウドドライブ";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="ファイル%dこ";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -242,8 +238,12 @@
 "createFolderButton"="作成";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="インポート...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@はアップロード済み";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="アップロード開始";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -262,10 +262,16 @@
 "saveForOffline"="オフラインで保存";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="オフラインで保存";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="リンクを取得";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="リンク作成中";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copied";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="リンクを外す";
 /* Message shown when the link to a file has been removed */
@@ -333,21 +339,21 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
+"fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+"filesMovedToRubbishBinMessage"="ゴミ箱にファイル%dこ、移動しました。";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+"folderMovedToRubbishBinMessage"="ゴミ箱にフォルダ１こ、移動しました。";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+"foldersMovedToRubbishBinMessage"="ゴミ箱にフォルダ%dこ、移動しました。";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+"fileFolderMovedToRubbishBinMessage"="ゴミ箱にファイル１ことフォルダ１こ、移動しました。";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+"fileFoldersMovedToRubbishBinMessage"="ゴミ箱にファイル１ことフォルダ%dこ移動しました。";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+"filesFolderMovedToRubbishBinMessage"="ゴミ箱にファイル%dことフォルダ１こ移動しました。";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
+"filesFoldersMovedToRubbishBinMessage"="ゴミ箱にファイル[A]ことフォルダ[B]こ移動しました。";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="許可エラー";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -509,21 +515,21 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
+"fileRemovedToRubbishBinMessage"="MEGAからファイル１こ除去しました";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+"filesRemovedToRubbishBinMessage"="MEGAからファイル%dこ、除去しました。";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+"folderRemovedToRubbishBinMessage"="MEGAからフォルダ１こ、除去しました。";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+"foldersRemovedToRubbishBinMessage"="MEGAからフォルダ%dこ、除去しました。";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+"fileFolderRemovedToRubbishBinMessage"="MEGAからファイル１ことフォルダ１こ、除去しました。";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="MEGAからファイル１ことフォルダ%dこ、除去しました。";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+"filesFolderRemovedToRubbishBinMessage"="MEGAからファイル%dことフォルダ１こ、除去しました。";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="MEGAからファイル[A]ことフォルダ[B]こ、除去しました。";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="現在のパスワード";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -541,7 +547,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
+"failedAttempstSectionTitle"="間違ったパスコードが１０回入力されると、ログアウトし、ローカルデータは消去されます。";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -607,21 +613,21 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="ひと月%.2f %@";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choose one of the plans from below:";
+"choosePlan"="次のプランのうち、１つお選び下さい:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="プロプラン１年間契約を購入すると、２ヶ月分無料となります。";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Select membership:";
+"selectMembership"="メンバーシップを選択:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="17%割引";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="購入エラー%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchase is disabled, please enable it in the settings";
+"appPurchaseDisabled"="アプリ内購入が無効となっています。設定から有効として下さい。";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
+"productNotFound"="%@ が見つかりません。ios@mega.nzまでご連絡下さい。";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Allow purchases";
+"allowPurchase_title"="購入を有効にして下さい。";
 /* Alert message to remenber the user that needs to enable purchases before continue */
 "allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
@@ -633,18 +639,18 @@
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Thank you";
+"thankYou_title"="ありがとうございました。";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Your purchase was restored";
+"purchaseRestore_message"="あなたの購入は復活しました。";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Purchase stopped";
+"failedPurchase_title"="購入中断";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="復活エラー";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restore stopped";
+"failedRestore_title"="復活中断";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact  ios@mega.nz.";
+"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
