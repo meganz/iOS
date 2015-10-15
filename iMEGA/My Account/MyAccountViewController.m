@@ -227,7 +227,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

@@ -1006,7 +1006,7 @@
                         [self.searchDisplayController.searchResultsTableView reloadData];
                     }
                 } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1017,7 +1017,7 @@
                 if ([MEGAReachabilityManager isReachable]) {
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
                 } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1034,7 +1034,7 @@
                             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
                         }
                     }                } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1346,7 +1346,7 @@
     
     if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noCamera", @"No camera available")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudNoCamera"] status:AMLocalizedString(@"noCamera", nil)];
         }
         return;
     }
@@ -1550,7 +1550,7 @@
         }
     }
     
-    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *n in self.selectedNodesArray) {
         [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
@@ -1872,7 +1872,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
             break;
             
         default:
@@ -1952,7 +1952,7 @@
                     }
                 }
                 
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
                 [self setEditing:NO animated:YES];
             }
             break;
@@ -1993,7 +1993,7 @@
                 } else {
                     message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave");
                 }
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
                 [self setEditing:NO animated:YES];
             }
             break;
@@ -2097,7 +2097,7 @@
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

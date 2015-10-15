@@ -64,7 +64,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         [[MEGASdkManager sharedMEGASdk] disableExportNode:node];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

@@ -56,7 +56,7 @@
             if ([MEGAReachabilityManager isReachable]) {
                 [[MEGASdkManager sharedMEGASdk] exportNode:_node delegate:self];
             } else {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", nil)];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
             
         });
@@ -86,7 +86,7 @@
     switch ([request type]) {
         case MEGARequestTypeExport: {
             if ([request access]) {
-                [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", nil)];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
             }
             break;
         }

@@ -433,7 +433,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
         
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
         return;
     }
         
@@ -453,8 +453,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         self.urlType = URLTypeConfirmationLink;
         return;
     }
-        
-    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"invalidLink", nil)];
+    
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
 }
 
 - (void)dissmissPreviousLinkIfPresented {
@@ -867,7 +867,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeLogout:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
             
         default:
