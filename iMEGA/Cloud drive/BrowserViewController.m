@@ -45,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 
 @end
 
@@ -131,6 +132,16 @@
             [_shareFolderButton setHidden:NO];
             break;
         }
+            
+        case BrowserActionOpenIn: {
+            [_toolBarSaveInMegaBarButtonItem setTitle:AMLocalizedString(@"upload", nil)];
+            [_toolBarSaveInMegaBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarSaveInMegaBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarSaveInMegaBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
+            break;
+        }
     }
 }
 
@@ -196,7 +207,7 @@
             [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -208,7 +219,7 @@
             [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -223,6 +234,18 @@
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
+    if (self.browserAction == BrowserActionOpenIn) {
+        NSError *error = nil;
+        NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+        for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
+            error = nil;
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
+            if (!success || error) {
+                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+            }
+        }
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -239,7 +262,17 @@
             [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    }
+}
+
+- (IBAction)uploadToMega:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachable]) {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -288,7 +321,7 @@
         if ([MEGAReachabilityManager isReachable]) {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }
@@ -343,6 +376,10 @@
         [browserVC setSelectedUsersArray:self.selectedUsersArray];
     }
     
+    if (self.localpath) {
+        [browserVC setLocalpath:self.localpath];
+    }
+    
     [browserVC setBrowserAction:self.browserAction];
     
     [self.navigationController pushViewController:browserVC animated:YES];
@@ -353,7 +390,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEOverQuota) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"quotaExceeded", @"Storage quota exceeded")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"quotaExceeded", nil)];
         }
         
         return;
@@ -468,7 +505,7 @@
             
             if (remainingOperations == 0) {
 //                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sharedFolder_success", @"Folder shared!")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;

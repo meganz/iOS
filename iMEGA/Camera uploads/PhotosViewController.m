@@ -699,7 +699,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
             break;
             
         default:
@@ -732,7 +732,7 @@
             remainingOperations--;
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
 //                [self setEditing:NO animated:NO];
             }
             break;
@@ -741,21 +741,13 @@
         case MEGARequestTypeExport: {
             remainingOperations--;
             
-            MEGANode *n = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
-            
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
-            
-            NSString *link = [request link];
-            
-            NSArray *tempArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ \n %@ \n %@\n", name, size, link], nil];
-            [exportLinks addObjectsFromArray:tempArray];
+            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
+            [exportLinks addObject:link];
             
             if (remainingOperations == 0) {
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
                 [self presentViewController:activityVC animated:YES completion:nil];
                 [self setEditing:NO animated:NO];
             }

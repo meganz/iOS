@@ -27,7 +27,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionCopy = 0,
     BrowserActionMove,
     BrowserActionImport,
-    BrowserActionSelectFolderToShare
+    BrowserActionSelectFolderToShare,
+    BrowserActionOpenIn
 };
 
 @interface BrowserViewController : UIViewController <MEGADelegate, UIActionSheetDelegate>
@@ -37,5 +38,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, strong) NSArray *selectedUsersArray;
 
 @property (nonatomic) BrowserAction browserAction;
+
+@property (nonatomic, strong) NSString *localpath;
 
 @end

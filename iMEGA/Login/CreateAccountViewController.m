@@ -114,7 +114,7 @@
         }
         return NO;
     } else if (![self.termsCheckboxButton isSelected]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"termsCheckboxUnselected", @"You need to agree with the terms of service to register an account on MEGA.")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", nil)];
         return NO;
     }
     return YES;
@@ -168,8 +168,7 @@
         [webViewController setBarsTintColor:megaRed];
         [self presentViewController:webViewController animated:YES completion:nil];
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
-    }
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];    }
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
@@ -179,7 +178,7 @@
             [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
             [self.createAccountButton setEnabled:NO];
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }
@@ -222,7 +221,7 @@
         switch ([error type]) {
                 
             case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyRegistered", @"This e-mail address has already registered an account with MEGA")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"emailAlreadyRegistered", nil)];
                 [self.emailTextField becomeFirstResponder];
                 
                 [self.createAccountButton setEnabled:YES];

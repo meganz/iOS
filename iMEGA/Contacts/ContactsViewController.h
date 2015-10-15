@@ -21,8 +21,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class ShareFolderActivity;
+
 @interface ContactsViewController : UIViewController
 
 @property (nonatomic, strong) MEGANode *node;
+@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
 @end

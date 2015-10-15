@@ -100,8 +100,6 @@
 
 #pragma mark - Paths
 
-+ (NSString *)pathForOfflineDirectory:(NSString *)directory;
-
 + (NSString *)pathForOffline;
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;
@@ -131,6 +129,7 @@
 
 + (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
++ (uint64_t)freeDiskSpace;
 
 #pragma mark - Logout
 

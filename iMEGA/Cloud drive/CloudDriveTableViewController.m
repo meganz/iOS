@@ -31,6 +31,7 @@
 #import "SVProgressHUD.h"
 #import "NSString+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "CTAssetsPickerController.h"
 
 #import "Helper.h"
 
@@ -51,7 +52,7 @@
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAStore.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
@@ -1005,7 +1006,7 @@
                         [self.searchDisplayController.searchResultsTableView reloadData];
                     }
                 } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1016,7 +1017,7 @@
                 if ([MEGAReachabilityManager isReachable]) {
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
                 } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1033,7 +1034,7 @@
                             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
                         }
                     }                } else {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1051,78 +1052,151 @@
     }
 }
 
-#pragma mark - UIImagePickerControllerDelegate
+#pragma mark - CTAssetsPickerControllerDelegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    if (assets.count==0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
     
-    // if assetURL != nil then is picked from camera roll else is a capture from camera.
-    if (assetURL) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library assetForURL:assetURL resultBlock:^(ALAsset *asset)  {
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            [formatter setLocale:locale];
-            
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [formatter setLocale:locale];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSString *nameExist = nil;
+        int numFilesExist = 0;
+        BOOL startUpload = NO;
+        
+        for (ALAsset *asset in assets) {
             NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
+            ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
             NSString *name = [[formatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
             NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
             
-            ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+            NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForAssetRepresentation:assetRepresentation modificationTime:modificationTime];
             
-            if (!assetRepresentation) {
-                return;
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:self.parentNode];
+            
+            if (node == nil) {
+                
+                long long asize = assetRepresentation.size;
+                long long freeSpace = (long long)[Helper freeDiskSpace];
+                
+                if (asize > freeSpace) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
+                                                                            message:nil
+                                                                           delegate:self
+                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                                  otherButtonTitles:nil];
+                        [alertView show];
+                    });
+                    
+                    return;
+                }
+                
+                [[NSFileManager defaultManager] createFileAtPath:localFilePath contents:nil attributes:nil];
+                NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:localFilePath];
+                
+                static const NSUInteger kBufferSize = 10 * 1024;
+                uint8_t *buffer = calloc(kBufferSize, sizeof(*buffer));
+                NSUInteger offset = 0, bytesRead = 0;
+                
+                do {
+                    bytesRead = [assetRepresentation getBytes:buffer fromOffset:offset length:kBufferSize error:nil];
+                    [handle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
+                    
+                    offset += bytesRead;
+                    
+                } while (bytesRead > 0);
+                
+                free(buffer);
+                [handle closeFile];
+                
+                NSError *error = nil;
+                NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
+                [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
+                if (error) {
+                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
+                }
+                
+                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+                
+                if (!startUpload) {
+                    startUpload = YES;
+                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
+                }
+                
+                
+            } else {
+                if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] != [self.parentNode handle]) {
+                    [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode newName:name];
+                } else {
+                    numFilesExist ++;
+                    nameExist = node.name;
+                }
             }
-            
-            Byte *buffer = (Byte *)malloc(assetRepresentation.size);
-            NSUInteger buffered = [assetRepresentation getBytes:buffer fromOffset:0 length:assetRepresentation.size error:nil];
-            
-            NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-            [data writeToFile:localFilePath atomically:YES];
-            
-            NSError *error = nil;
-            NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
-            [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
-            if (error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
-            }
-            
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-        } failureBlock:nil];
-    } else {
-        NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-        
-        if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
-            NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
-            NSString *moviePath = [videoUrl path];
-            
-            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-                UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
-            }
-            
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
-            
-        } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            [formatter setLocale:locale];
-            
-            NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
-            NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
-            UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-            NSData *imageData = UIImageJPEGRepresentation(image, 1);
-            [imageData writeToFile:imagePath atomically:YES];
-            
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
         }
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
+        
+        if (numFilesExist == 1) {
+            //Wait 1.5 sec in order to see the "uploadStarted_message" first.
+            if (startUpload) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"fileAlreadyExistMessage", nil), nameExist]];
+                });
+            } else {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"fileAlreadyExistMessage", nil), nameExist]];
+            }
+        }
+        
+        if (numFilesExist > 1) {
+            if (startUpload) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"filesAlreadyExistMessage", nil), numFilesExist]];
+                });
+            } else {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"filesAlreadyExistMessage", nil), numFilesExist]];
+            }
+            
+        }
+    }];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
+        NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
+        NSString *moviePath = [videoUrl path];
+        
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
+            UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
+        }
+        
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
+        
+    } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+        [formatter setLocale:locale];
+        
+        NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
+        NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSData *imageData = UIImageJPEGRepresentation(image, 1);
+        [imageData writeToFile:imagePath atomically:YES];
+        
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
     }
+    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;
@@ -1272,27 +1346,35 @@
     
     if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noCamera", @"No camera available")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudNoCamera"] status:AMLocalizedString(@"noCamera", nil)];
         }
         return;
     }
     
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = sourceType;
-    imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
-    imagePickerController.delegate = self;
-    
-    self.imagePickerController = imagePickerController;
-    
-    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
-            UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+        imagePickerController.sourceType = sourceType;
+        imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
+        imagePickerController.delegate = self;
         
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        }];
+        self.imagePickerController = imagePickerController;
+        
+        if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
+            UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [popoverController presentPopoverFromBarButtonItem:self.addBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }];
+        } else {
+            [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
+        }
     } else {
-        [self.tabBarController presentViewController:self.imagePickerController animated:YES completion:nil];
+        CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+        picker.delegate = self;
+        picker.assetsFilter = [ALAssetsFilter allAssets];
+        picker.showsCancelButton    = (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad);
+        [self presentViewController:picker animated:YES completion:nil];
     }
 }
 
@@ -1468,7 +1550,7 @@
         }
     }
     
-    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *n in self.selectedNodesArray) {
         [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
@@ -1722,14 +1804,20 @@
             });
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
         } else {
-            if ([node.name isEqualToString:url.lastPathComponent]) {
+            if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;
                 BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
                 if (!success || error) {
                     [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
                 }
                 
-                NSString *alertMessage = [NSString stringWithFormat:AMLocalizedString(@"fileExistAlertController_Message", nil), [url lastPathComponent]];
+                NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);
+                
+                NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
+                NSString *megaNameString = [NSString stringWithFormat:@"%@", [node name]];
+                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:localNameString];
+                alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[B]" withString:megaNameString];
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIAlertController *alertController = [UIAlertController
                                                           alertControllerWithTitle:nil
@@ -1784,7 +1872,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
             break;
             
         default:
@@ -1864,7 +1952,7 @@
                     }
                 }
                 
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
                 [self setEditing:NO animated:YES];
             }
             break;
@@ -1905,7 +1993,7 @@
                 } else {
                     message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave");
                 }
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
                 [self setEditing:NO animated:YES];
             }
             break;
@@ -1914,21 +2002,13 @@
         case MEGARequestTypeExport: {
             remainingOperations--;
             
-            MEGANode *n = [api nodeForHandle:request.nodeHandle];
-            
-            NSString *name = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"name", nil), n.name];
-            
-            NSString *size = [NSString stringWithFormat:@"%@: %@", AMLocalizedString(@"size", nil), n.isFile ? [NSByteCountFormatter stringFromByteCount:[[n size] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory] : AMLocalizedString(@"folder", nil)];
-            
-            NSString *link = [request link];
-            
-            NSArray *tempArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@ \n %@ \n %@\n", name, size, link], nil];
-            [exportLinks addObjectsFromArray:tempArray];
+            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
+            [exportLinks addObject:link];
             
             if (remainingOperations == 0) {
                 [SVProgressHUD dismiss];
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
+                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
                 
                 if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
                     activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
@@ -2017,7 +2097,7 @@
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"transferCanceled", @"Transfer canceled")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

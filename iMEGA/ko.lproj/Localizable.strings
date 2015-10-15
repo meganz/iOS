@@ -2,6 +2,8 @@
 "cancel"="취소";
 /* Button title to accept something */
 "ok"="확인";
+/* */
+"upload"="업로드";
 /*  */
 "error"="오류";
 /*  */
@@ -72,10 +74,6 @@
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="올바른 비밀번호를 입력하세요";
-/* DO NOT TRANSLATE, it will change */
-"fetchingNodes"="Fetching nodes";
-/* DO NOT TRANSLATE, it will change */
-"preparingNodes"="Preparing nodes";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="이메일";
 /* Hint text to suggest that the user has to write his password */
@@ -188,8 +186,6 @@
 "transfersEmptyState_textUpload"="대기중인 업로드가 없습니다";
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
-/* DO NOT TRANSLATE, it will change */
-"updatingNodes"="Updating nodes...";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d개의 파일";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -242,8 +238,12 @@
 "createFolderButton"="생성";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="다음에서 들여오기...";
-/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "{File name} already uploaded" */
-"fileExistAlertController_Message"="%@ 이미 업로드됨";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="업로드가 시작되었습니다";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -262,10 +262,16 @@
 "saveForOffline"="오프라인용으로 저장";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="오프라인으로 저장됨";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Inbox is reserved for use by Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="링크 얻기";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="링크 생성중...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link copied";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Open in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="링크 제거";
 /* Message shown when the link to a file has been removed */
