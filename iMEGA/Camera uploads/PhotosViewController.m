@@ -699,7 +699,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeExport:
-            [SVProgressHUD showWithStatus:AMLocalizedString(@"generatingLink", @"Generating link...")];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
             break;
             
         default:
@@ -732,7 +732,7 @@
             remainingOperations--;
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
-                [SVProgressHUD showSuccessWithStatus:message];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
 //                [self setEditing:NO animated:NO];
             }
             break;

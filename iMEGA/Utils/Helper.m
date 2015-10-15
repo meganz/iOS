@@ -645,7 +645,7 @@ static NSInteger linkNodeOption;
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
             if (error != nil) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:[NSString stringWithFormat:AMLocalizedString(@"folderCreationError", nil), absoluteFilePath]];
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];

@@ -200,7 +200,7 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -217,7 +217,7 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"downloadStarted", nil)];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
                 [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
             }];
         } else {
@@ -229,7 +229,7 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -269,7 +269,7 @@
             }
         }
     } else {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noInternetConnection", @"No Internet Connection")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
