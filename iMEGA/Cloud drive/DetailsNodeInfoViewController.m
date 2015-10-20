@@ -328,23 +328,11 @@
     [activitiesMutableArray addObject:getLinkActivity];
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+    
     if (offlineNodeExist) {
         if ([self.node type] == MEGANodeTypeFolder) {
             ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
             [activitiesMutableArray addObject:shareFolderActivity];
-            
-            BOOL isPublicLink = NO;
-            MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
-            for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
-                if ([[outSharesList shareAtIndex:i] user] == nil) {
-                    isPublicLink = TRUE;
-                    break;
-                }
-            }
-            if (isPublicLink) {
-                RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
-                [activitiesMutableArray addObject:removeLinkActivity];
-            }
             
         } else {
             NSURL *fileURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]];
@@ -356,30 +344,19 @@
         }
         
     } else {
-        
         if ([self.node type] == MEGANodeTypeFolder) {
-            
             ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
             [activitiesMutableArray addObject:shareFolderActivity];
-            
-            BOOL isPublicLink = NO;
-            MEGAShareList *outSharesList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.node];
-            for (NSInteger i = 0; i < outSharesList.size.integerValue; i++) {
-                if ([[outSharesList shareAtIndex:i] user] == nil) {
-                    isPublicLink = TRUE;
-                    break;
-                }
-            }
-            if (isPublicLink) {
-                RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
-                [activitiesMutableArray addObject:removeLinkActivity];
-            }
-            
         }
         
         MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:self.node.name node:self.node];
         [activityItemsMutableArray addObject:activityItemProvider];
-
+    }
+    
+    
+    if ([self.node isExported]) {
+        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
+        [activitiesMutableArray addObject:removeLinkActivity];
     }
     
     activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
