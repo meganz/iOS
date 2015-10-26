@@ -168,6 +168,30 @@
 "contactsEmptyState_title"="Todavía no tienes contactos";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_text"="Añade contactos utilizando el botón superior.";
+/* Title of My Contacts section */
+"myContacts" = "Contactos";
+/* Title of one of the filters in "My Contacts" section. In this case "Sent requests". */
+"sentRequests" = "Solicitudes enviadas";
+/* Title of one of the filters in "My Contacts" section. In this case "Received requests". */
+"receivedRequests" = "Solicitudes recibidas";
+/* Option given to ignore a contact request */
+"contactIgnore" = "Ignorar";
+/* Option given to decline a contact request */
+"contactDecline" = "Declinar";
+/* Option given to accept a contact request */
+"contactAccept" = "Aceptar";
+/* Option given to reinvite a contact */
+"contactReinvite" = "Reinvitar";
+/* Success message shown when you add a contact */
+"contactAdded" = "Solicitud enviada";
+/* Success message shown when you remove a contact request */
+"contactInvitationDeleted" = "Solicitud borrada";
+/* Success message shown when you resend a contact request */
+"contactInvitationResent" = "Solicitud reenviada";
+/* Success message shown when you reply an invitation request */
+"contactInvitationReply" = "Contestación a la invitación enviada";
+/* Title shown when there's no pending request */
+"noRequestPending" = "No hay peticiones pendientes en este momento";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferencias en pausa";
 /* Title shown when the there's no transfers and they aren't paused */

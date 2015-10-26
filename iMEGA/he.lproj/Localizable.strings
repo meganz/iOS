@@ -168,6 +168,30 @@
 "contactsEmptyState_title"="אין לך אנשי קשר";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_text"="הוסף אנשי קשר בעזרת הכפתור למעלה.";
+/* Title of My Contacts section */
+"myContacts" = "Contacts";
+/* Title of one of the filters in "My Contacts" section. In this case "Sent requests". */
+"sentRequests" = "Sent requests";
+/* Title of one of the filters in "My Contacts" section. In this case "Received requests". */
+"receivedRequests" = "Received requests";
+/* Option given to ignore a contact request */
+"contactIgnore" = "Ignore";
+/* Option given to decline a contact request */
+"contactDecline" = "Decline";
+/* Option given to accept a contact request */
+"contactAccept" = "Accept";
+/* Option given to reinvite a contact */
+"contactReinvite" = "Reinvite";
+/* Success message shown when you add a contact */
+"contactAdded" = "Request sent";
+/* Success message shown when you remove a contact request */
+"contactInvitationDeleted" = "Request deleted";
+/* Success message shown when you resend a contact request */
+"contactInvitationResent" = "Request resent";
+/* Success message shown when you reply an invitation request */
+"contactInvitationReply" = "Reply to the invitation sent";
+/* Title shown when there's no pending request */
+"noRequestPending" = "No requests pending at this time";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="ההעברה נעצרה";
 /* Title shown when the there's no transfers and they aren't paused */
