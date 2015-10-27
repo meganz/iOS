@@ -64,7 +64,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
-@property (nonatomic, strong) NSString *link;
+@property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
@@ -284,7 +284,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    self.link = [url absoluteString];
+    self.link = url;
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
@@ -422,15 +422,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [Helper setSelectedOptionOnLink:0];
 }
 
-- (void)processLink:(NSString *)url {
-    // Open in
-    if ([url rangeOfString:@"file:///"].location != NSNotFound) {
+- (void)processLink:(NSURL *)url {
+    // Open in 
+    if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
         self.urlType = URLTypeOpenInLink;
         [self openIn];
         return;
     }
     
-    NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
+    NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
@@ -573,7 +573,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-        [browserVC setLocalpath:[self.link substringFromIndex:7]]; // "file://" = 7 characters
+        [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
         if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
