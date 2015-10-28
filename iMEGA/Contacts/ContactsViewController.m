@@ -71,6 +71,8 @@
 
 @property (nonatomic, strong) MEGAContactRequest *selectedContactRequest;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottonConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 @end
 
 @implementation ContactsViewController
@@ -82,10 +84,6 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    
-    [self.contactsSegmentedControl setTitle:AMLocalizedString(@"myContacts", nil) forSegmentAtIndex:0];
-    [self.contactsSegmentedControl setTitle:AMLocalizedString(@"sentRequests", nil) forSegmentAtIndex:1];
-    [self.contactsSegmentedControl setTitle:AMLocalizedString(@"receivedRequests", nil) forSegmentAtIndex:2];
     
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
@@ -107,8 +105,15 @@
         [_shareFolderWithButton setEnabled:YES];
         [_shareFolderWithButton setHidden:NO];
         
+        [_tableViewTopConstraint setConstant:2.0];
+        [_tableViewBottonConstraint setConstant:60.0];
+        
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
         [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
+    } else {
+        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"myContacts", nil) forSegmentAtIndex:0];
+        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"sentRequests", nil) forSegmentAtIndex:1];
+        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"receivedRequests", nil) forSegmentAtIndex:2];
     }
 }
 
