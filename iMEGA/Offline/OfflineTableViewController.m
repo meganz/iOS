@@ -377,9 +377,6 @@
         NSError *error = nil;
         BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
         offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
-        if (offlineNode) {
-            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-        }
         if (!success || error) {
             [SVProgressHUD showErrorWithStatus:@""];
             return;
