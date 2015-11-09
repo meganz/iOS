@@ -46,6 +46,8 @@
 
 #import <StoreKit/StoreKit.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
 
@@ -75,6 +77,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error: nil];
+    
     self.IpAddress = [self getIpAddress];
     [MEGAReachabilityManager sharedManager];
     
