@@ -34,9 +34,6 @@
 - (id)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem {
     openInBarButtonItem = barButtonItem;
     
-    documentInteractionController = [[UIDocumentInteractionController alloc] init];
-    [documentInteractionController setDelegate:self];
-    
     return self;
 }
 
@@ -57,15 +54,23 @@
 }
 
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
-    [documentInteractionController setURL:[activityItems objectAtIndex:0]];
+
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
+        [documentInteractionController setDelegate:self];
+    }
 }
 
 - (void)performActivity {
     
-    BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:openInBarButtonItem animated:YES];
-    
-    if (canOpenIn) {
-        [documentInteractionController presentPreviewAnimated:YES];
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:openInBarButtonItem animated:YES];
+        
+        if (canOpenIn) {
+            [documentInteractionController presentPreviewAnimated:YES];
+        }
+    } else {
+        [self activityDidFinish:YES];
     }
 }
 
