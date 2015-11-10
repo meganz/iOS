@@ -36,7 +36,7 @@
 #import "MEGAActivityItemProvider.h"
 #import "MEGAStore.h"
 
-@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
+@interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
     UIAlertView *cancelDownloadAlertView;
     UIAlertView *renameAlertView;
     UIAlertView *removeAlertView;
@@ -53,6 +53,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
 @end
 
@@ -367,6 +369,22 @@
     }
     
     [self presentViewController:activityVC animated:YES completion:nil];
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+        [activityVC setCompletionHandler:^(NSString *activityType, BOOL completed){
+            
+            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
+                _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
+                [_documentInteractionController setDelegate:self];
+            }
+            
+            BOOL canOpenIn = [_documentInteractionController presentOpenInMenuFromBarButtonItem:_shareBarButtonItem animated:YES];
+            
+            if (canOpenIn) {
+                [_documentInteractionController presentPreviewAnimated:YES];
+            }
+        }];
+    }
 }
 
 #pragma mark - UIAlertDelegate

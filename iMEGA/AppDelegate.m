@@ -294,16 +294,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     } else {
         if (![LTHPasscodeViewController doesPasscodeExist]) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     }
     
@@ -428,12 +424,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)processLink:(NSURL *)url {
-    // Open in 
-    if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
-        self.urlType = URLTypeOpenInLink;
-        [self openIn];
-        return;
-    }
     
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
@@ -442,7 +432,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
         
-    [self dissmissPreviousLinkIfPresented];
+    [self dissmissPresentedViews];
+    
+    if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
+        self.urlType = URLTypeOpenInLink;
+        [self openIn];
+        return;
+    }
         
     if ([self isFileLink:afterSlashesString]) {
         self.urlType = URLTypeFileLink;
@@ -462,16 +458,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
 }
 
-- (void)dissmissPreviousLinkIfPresented {
-    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-        MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-        if ([navigationController.topViewController isKindOfClass:[FileLinkViewController class]] || [navigationController.topViewController isKindOfClass:[FolderLinkViewController class]]) {
-            [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:^{
-                if ([navigationController.presentedViewController isKindOfClass:[QLPreviewController class]]) {
-                    [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-                }
-            }];
-        }
+- (void)dissmissPresentedViews {
+    if (self.window.rootViewController.presentedViewController != nil) {
+        [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -705,9 +694,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([MEGAReachabilityManager isReachable]) {
         if (self.link != nil) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     } else {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -950,9 +937,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
-                if (self.urlType != URLTypeOpenInLink) {
-                    self.link = nil;
-                }
+                self.link = nil;
             }
                         
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
@@ -978,17 +963,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     
                     if ([Helper selectedOptionOnLink] != 0) {
                         [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                    }
-                    if (self.urlType == URLTypeOpenInLink) {
-                        [self performSelector:@selector(processLink:) withObject:self.link afterDelay:0.75f];
+                    } else {
+                        if (self.urlType == URLTypeOpenInLink) {
+                            [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                        }
                     }
                 }
                 
                 if (self.link != nil) {
                     [self processLink:self.link];
-                    if (self.urlType != URLTypeOpenInLink) {
-                        self.link = nil;
-                    }
+                    self.link = nil;
                 }
             }
             

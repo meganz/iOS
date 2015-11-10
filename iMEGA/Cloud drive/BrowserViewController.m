@@ -259,7 +259,16 @@
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             [actionSheet showInView:self.view];
         } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+                if ([window.subviews containsObject:self.view]) {
+                    [actionSheet showInView:self.view];
+                } else {
+                    [actionSheet showInView:window];
+                }
+            } else {
+                [actionSheet showFromTabBar:self.tabBarController.tabBar];
+            }
         }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
