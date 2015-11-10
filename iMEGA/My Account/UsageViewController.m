@@ -174,7 +174,7 @@
     }
     
     if (currentPage == 1 || currentPage == 2) {
-        NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];;
+        NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
         NSNumber *number = [numberFormatter numberFromString:firstPartString];
         firstPartString = [numberFormatter stringFromNumber:number];
         firstPartRange = [firstPartString rangeOfString:firstPartString];
@@ -249,18 +249,29 @@
 }
 
 - (NSString *)stringWithoutUnit:(NSString *)stringFromByteCount {
+    
     NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:0];
-    if ([string isEqualToString:@"Zero"]) {
+    if ([string isEqualToString:@"Zero"] || ([string length] == 0)) {
         string = @"0";
     }
     return string;
 }
 
 - (NSString *)stringWithoutCount:(NSString *)stringFromByteCount {
-    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:1];
-    if ([string isEqualToString:@"bytes"]) {
+    
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *string;
+    
+    if (componentsSeparatedByStringArray.count == 1) {
         string = @"KB";
+    } else {
+        string = [componentsSeparatedByStringArray objectAtIndex:1];
+        
+        if ([string isEqualToString:@"bytes"] || ([string length] == 0)) {
+            string = @"KB";
+        }
     }
+    
     return string;
 }
 
@@ -367,13 +378,18 @@
             break;
             
         case 6: //Available space
-            valueForSlice = (([[self.sizesArray objectAtIndex:4] doubleValue] - [[self.sizesArray objectAtIndex:3] doubleValue]) / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94;
+            valueForSlice = (([[self.sizesArray objectAtIndex:4] doubleValue] - [[self.sizesArray objectAtIndex:3] doubleValue]) / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
             break;
             
         default:
             valueForSlice = 0;
             break;
     }
+    
+    if (valueForSlice < 0) {
+        valueForSlice = 0;
+    }
+    
     return valueForSlice;
 }
 
