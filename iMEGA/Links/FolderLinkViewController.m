@@ -773,10 +773,6 @@
                 [SVProgressHUD dismiss];
             }
         }
-        
-        if ([error type] == MEGAErrorTypeApiEOverQuota) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"quotaExceeded", nil)];
-        }
         return;
     }
     
