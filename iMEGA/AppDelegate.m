@@ -33,6 +33,7 @@
 #import "MEGAProxyServer.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
+#import "UpgradeTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -60,9 +61,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeOpenInLink
 };
 
-@interface AppDelegate () <LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    BOOL isOverquota;
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
@@ -688,6 +690,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag == 0) && (buttonIndex == 1)) {
+        
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dissmissPresentedViews)];
+        [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+        
+        [self dissmissPresentedViews];
+        
+        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -911,6 +929,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEOverQuota: {
+                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                isOverquota = YES;
+                break;
+            }
+                
             case MEGAErrorTypeApiESSL: {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
@@ -1024,6 +1048,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeAccountDetails: {
+            
+            if (isOverquota) {
+                UIAlertView *alertView;
+                if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
+                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
+                } else {
+                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                }
+                [alertView setTag:0];
+                [alertView show];
+                isOverquota = NO;
+            }
+            
+            break;
+        }
+            
         default:
             break;
     }
@@ -1051,6 +1092,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    
+    if ([error type]) {
+        switch ([error type]) {
+            case MEGAErrorTypeApiEOverQuota: {
+                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                isOverquota = YES;
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
+    
     if (transfer.isStreamingTransfer) {
         return;
     }

@@ -1790,18 +1790,8 @@
         
         // If file doesn't exist in MEGA then upload it
         if (node == nil) {
-            UIAlertView *toastAlertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                     message:AMLocalizedString(@"uploadStarted_Message", @"Message shown when the user select upload a file")
-                                                                    delegate:nil
-                                                           cancelButtonTitle:nil
-                                                           otherButtonTitles:nil, nil];
-            [toastAlertView show];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            int duration = 1; // duration in seconds
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [toastAlertView dismissWithClickedButtonIndex:0 animated:YES];
-            });
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {

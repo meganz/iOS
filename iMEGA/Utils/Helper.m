@@ -577,12 +577,7 @@ static NSInteger linkNodeOption;
     
     UIAlertView *alertView;
     if ([nodeSizeNumber longLongValue] == 0) {
-        alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")
-                                               message:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")
-                                              delegate:self
-                                     cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                     otherButtonTitles:nil];
-        [alertView show];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
     }
     

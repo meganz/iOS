@@ -392,6 +392,10 @@
 "fileImported"="Fichero importado";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Cuota superada";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title" = "¡Alerta de cuota superada!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message" = "Operación no permitida, se excede el límite de almacenamiento permitido para la cuenta. ¿Quiere mejorar su cuenta?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Seleccionar elementos";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
