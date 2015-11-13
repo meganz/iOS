@@ -73,6 +73,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Text-Light.otf</string>
+		<string>SF-UI-Text-Regular.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -105,11 +111,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-UI-Display-Light.otf</string>
-		<string>SF-UI-Text-Light.otf</string>
-		<string>SF-UI-Text-Regular.otf</string>
-	</array>
 </dict>
 </plist>
