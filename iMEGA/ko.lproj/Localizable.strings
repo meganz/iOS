@@ -170,26 +170,12 @@
 "contactsEmptyState_text"="위의 버튼을 이용하여 연락처를 추가하세요.";
 /* Title of My Contacts section */
 "myContacts" = "Contacts";
-/* Title of one of the filters in "My Contacts" section. In this case "Sent requests". */
-"sentRequests" = "Sent requests";
-/* Title of one of the filters in "My Contacts" section. In this case "Received requests". */
-"receivedRequests" = "Received requests";
-/* Option given to ignore a contact request */
-"contactIgnore" = "Ignore";
-/* Option given to decline a contact request */
-"contactDecline" = "Decline";
-/* Option given to accept a contact request */
-"contactAccept" = "Accept";
-/* Option given to reinvite a contact */
-"contactReinvite" = "Reinvite";
-/* Success message shown when you add a contact */
-"contactAdded" = "Request sent";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent" = "Sent";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests" = "Requests";
 /* Success message shown when you remove a contact request */
-"contactInvitationDeleted" = "Request deleted";
-/* Success message shown when you resend a contact request */
-"contactInvitationResent" = "Request resent";
-/* Success message shown when you reply an invitation request */
-"contactInvitationReply" = "Reply to the invitation sent";
+"requestDeleted" = "Request deleted";
 /* Title shown when there's no pending request */
 "noRequestPending" = "No requests pending at this time";
 /* Title shown when the transfers are paused */
@@ -430,8 +416,8 @@
 "contactEmail"="연락처 이메일";
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="추가";
-/* Success message shown when a contact has been added */
-"contactAdded"="연락처 추가됨";
+/* Success message shown when a contact has been invited */
+"contactInvited"="연락처 추가됨";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="연락처 추가 실패";
 /* Alert title shown when you want to remove one or more contacts */

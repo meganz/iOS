@@ -170,24 +170,12 @@
 "contactsEmptyState_text"="Añade contactos utilizando el botón superior.";
 /* Title of My Contacts section */
 "myContacts" = "Contactos";
-/* Title of one of the filters in "My Contacts" section. In this case "Sent requests". */
-"sentRequests" = "Solicitudes enviadas";
-/* Title of one of the filters in "My Contacts" section. In this case "Received requests". */
-"receivedRequests" = "Solicitudes recibidas";
-/* Option given to ignore a contact request */
-"contactIgnore" = "Ignorar";
-/* Option given to decline a contact request */
-"contactDecline" = "Declinar";
-/* Option given to accept a contact request */
-"contactAccept" = "Aceptar";
-/* Option given to reinvite a contact */
-"contactReinvite" = "Reinvitar";
-/* Success message shown when you add a contact */
-"contactAdded" = "Solicitud enviada";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent" = "Enviadas";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"received" = "Recibidas";
 /* Success message shown when you remove a contact request */
-"contactInvitationDeleted" = "Solicitud borrada";
-/* Success message shown when you resend a contact request */
-"contactInvitationResent" = "Solicitud reenviada";
+"requestDeleted" = "Solicitud borrada";
 /* Success message shown when you reply an invitation request */
 "contactInvitationReply" = "Contestación a la invitación enviada";
 /* Title shown when there's no pending request */
@@ -434,8 +422,8 @@
 "contactEmail"="Email del contacto";
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Añadir";
-/* Success message shown when a contact has been added */
-"contactAdded"="Contacto añadido";
+/* Success message shown when a contact has been invited */
+"contactInvited"="Contacto añadido";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Error al añadir contacto";
 /* Alert title shown when you want to remove one or more contacts */

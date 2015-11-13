@@ -24,7 +24,6 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
-#import "DateTools.h"
 
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -40,7 +39,6 @@
 
 
 @interface ContactsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
-    UIAlertView *emailAlertView;
     UIAlertView *removeAlertView;
     
     NSUInteger remainingOperations;
@@ -50,17 +48,15 @@
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *contactsSegmentedControl;
 
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
-@property (nonatomic, strong) NSMutableArray *outgoingContactRequestArray;
-@property (nonatomic, strong) NSMutableArray *incomingContactRequestArray;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *contactRequestsBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
@@ -69,10 +65,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareFolderWithButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
-@property (nonatomic, strong) MEGAContactRequest *selectedContactRequest;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottonConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 @end
 
 @implementation ContactsViewController
@@ -94,7 +86,7 @@
         [negativeSpaceBarButtonItem setWidth:-4.0];
     }
     
-    NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem];
+    NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
     
     [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
@@ -105,15 +97,8 @@
         [_shareFolderWithButton setEnabled:YES];
         [_shareFolderWithButton setHidden:NO];
         
-        [_tableViewTopConstraint setConstant:2.0];
-        [_tableViewBottonConstraint setConstant:60.0];
-        
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
         [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
-    } else {
-        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"myContacts", nil) forSegmentAtIndex:0];
-        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"sentRequests", nil) forSegmentAtIndex:1];
-        [self.contactsSegmentedControl setTitle:AMLocalizedString(@"receivedRequests", nil) forSegmentAtIndex:2];
     }
 }
 
@@ -197,32 +182,6 @@
 #pragma mark - Private
 
 - (void)reloadUI {
-    switch (self.contactsSegmentedControl.selectedSegmentIndex) {
-        case 0:
-            [self reloadContactsView];
-            [self.editBarButtonItem setEnabled:YES];
-            break;
-            
-        case 1:
-            [self reloadOutgoingContactsRequestsView];
-            [self setTableViewEditing:NO animated:YES];
-            [self.editBarButtonItem setEnabled:NO];
-            break;
-            
-        case 2:
-            [self reloadIncomingContactsRequestsView];
-            [self setTableViewEditing:NO animated:YES];
-            [self.editBarButtonItem setEnabled:NO];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [self.tableView reloadData];
-}
-
-- (void)reloadContactsView {
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     
     self.users = [[MEGASdkManager sharedMEGASdk] contacts];
@@ -231,26 +190,8 @@
         if ([u access] == MEGAUserVisibilityVisible)
             [self.visibleUsersArray addObject:u];
     }
-}
-
-- (void)reloadOutgoingContactsRequestsView {
-    self.outgoingContactRequestArray = [[NSMutableArray alloc] init];
     
-    MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-    for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
-        MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
-        [self.outgoingContactRequestArray addObject:contactRequest];
-    }
-}
-
-- (void)reloadIncomingContactsRequestsView {
-    self.incomingContactRequestArray = [[NSMutableArray alloc] init];
-    
-    MEGAContactRequestList *incomingContactRequestList = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    for (NSInteger i = 0; i < [[incomingContactRequestList size] integerValue]; i++) {
-        MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
-        [self.incomingContactRequestArray addObject:contactRequest];
-    }
+    [self.tableView reloadData];
 }
 
 - (void)internetConnectionChanged {
@@ -378,9 +319,6 @@
     }
 }
 
-- (IBAction)contactsSegmentedControlValueChanged:(UISegmentedControl *)sender {
-    [self reloadUI];
-}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -389,21 +327,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    switch (self.contactsSegmentedControl.selectedSegmentIndex) {
-        case 0:
-            numberOfRows = [self.visibleUsersArray count];
-            break;
-            
-        case 1:
-            numberOfRows = [self.outgoingContactRequestArray count];
-            break;
-            
-        case 2:
-            numberOfRows = [self.incomingContactRequestArray count];
-            break;
-            
-        default:
-            break;
+    if ([MEGAReachabilityManager isReachable]) {
+        numberOfRows = [self.visibleUsersArray count];
     }
     
     if (numberOfRows == 0) {
@@ -424,177 +349,82 @@
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
-    switch (self.contactsSegmentedControl.selectedSegmentIndex) {
-        // CONTACTS
-        case 0: {
-            MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-            
-            cell.nameLabel.text = [user email];
-            
-            NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-            
-            if (fileExists) {
-                [cell.avatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-                cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.width/2;
-                cell.avatarImageView.layer.masksToBounds = YES;
-            } else {
-                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-                [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    cell.nameLabel.text = [user email];
+    
+    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+    
+    if (fileExists) {
+        [cell.avatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
+        cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.width/2;
+        cell.avatarImageView.layer.masksToBounds = YES;
+    } else {
+        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
+        [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
+    }
+    
+    int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
+    if (numFilesShares == 0) {
+        cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
+    } else  if (numFilesShares == 1 ) {
+        cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
+    } else {
+        cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
+    }
+    
+    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
+    
+    if (value) {
+        // Check if selectedNodesArray contains the current node in the tableView
+        for (MEGAUser *u in self.selectedUsersArray) {
+            if ([[u email] isEqualToString:[user email]]) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
-            
-            int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
-            if (numFilesShares == 0) {
-                cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
-            } else  if (numFilesShares == 1 ) {
-                cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
-            } else {
-                cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
-            }
-            
-            BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
-            
-            if (value) {
-                // Check if selectedNodesArray contains the current node in the tableView
-                for (MEGAUser *u in self.selectedUsersArray) {
-                    if ([[u email] isEqualToString:[user email]]) {
-                        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                    }
-                }
-            }
-            break;
         }
-        
-        //OUTGOING CONTACTS REQUESTS
-        case 1: {
-            MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
-            [cell.avatarImageView setImage:[UIImage imageForName:[contactRequest targetEmail].uppercaseString size:CGSizeMake(30, 30)]];
-            cell.nameLabel.text = [contactRequest targetEmail];
-            cell.shareLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:@" (Pending)"];
-            break;
-        }
-            
-        //INCOMING CONTACTS REQUESTS
-        case 2: {
-            MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
-            [cell.avatarImageView setImage:[UIImage imageForName:[contactRequest sourceEmail].uppercaseString size:CGSizeMake(30, 30)]];
-            cell.nameLabel.text = [contactRequest sourceEmail];
-            cell.shareLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:@" (Pending)"];
-            break;
-        }
-            
-        default:
-            break;
     }
     
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.contactsSegmentedControl.selectedSegmentIndex != 0) {
-        return NO;
-    }
-    
     return YES;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (self.contactsSegmentedControl.selectedSegmentIndex) {
-        case 0: {
-            
-            MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-            
-            if (tableView.isEditing) {
-                [self.selectedUsersArray addObject:user];
-                [self.deleteBarButtonItem setEnabled:YES];
-                [self.shareFolderBarButtonItem setEnabled:YES];
-                
-                if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
-                    allUsersSelected = YES;
-                } else {
-                    allUsersSelected = NO;
-                }
-                
-                return;
-            }
-            
-            if (!user) {
-                [SVProgressHUD showErrorWithStatus:@"Invalid user"];
-                return;
-            }
-            
-            if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-                CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                
-                [self.navigationController pushViewController:cloud animated:YES];
-                cloud.navigationItem.title = [user email];
-                
-                [cloud setUser:user];
-                [cloud setDisplayMode:DisplayModeContact];
-            }
-            
-            break;
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        [self.selectedUsersArray addObject:user];
+        [self.deleteBarButtonItem setEnabled:YES];
+        [self.shareFolderBarButtonItem setEnabled:YES];
+        
+        if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
+            allUsersSelected = YES;
+        } else {
+            allUsersSelected = NO;
         }
-            
-        case 1: {
-            self.selectedContactRequest = [self.outgoingContactRequestArray objectAtIndexedSubscript:indexPath.row];
-            DTTimePeriod *timePeriod = [[DTTimePeriod alloc] initWithStartDate:[self.selectedContactRequest modificationTime] endDate:[NSDate date]];
-            
-            UIActionSheet *actionSheet = nil;
-            
-            if ([timePeriod durationInWeeks] >= 2) {
-                actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                          delegate:self
-                                                 cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                            destructiveButtonTitle:nil
-                                                 otherButtonTitles:AMLocalizedString(@"remove", nil), AMLocalizedString(@"contactReinvite", nil), nil];
-            } else {
-                actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                          delegate:self
-                                                 cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                            destructiveButtonTitle:nil
-                                                 otherButtonTitles:AMLocalizedString(@"remove", nil), nil];
-            }
-            
-            [actionSheet setTag:2];
-            
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-                CGRect cellRect = [tableView cellForRowAtIndexPath:indexPath].frame;
-                cellRect.origin.y += 60;
-                [actionSheet showFromRect:cellRect inView:self.view animated:YES];
-            } else {
-                [actionSheet showFromTabBar:self.tabBarController.tabBar];
-            }
-            
-            break;
-        }
-            
-        case 2: {
-            self.selectedContactRequest = [self.incomingContactRequestArray objectAtIndexedSubscript:indexPath.row];
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                     delegate:self
-                                                            cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                       destructiveButtonTitle:nil
-                                                            otherButtonTitles:AMLocalizedString(@"contactAccept", nil), AMLocalizedString(@"contactDecline", nil), AMLocalizedString(@"contactIgnore", nil), nil];
-            [actionSheet setTag:3];
-            
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-                CGRect cellRect = [tableView cellForRowAtIndexPath:indexPath].frame;
-                cellRect.origin.y += 60;
-                [actionSheet showFromRect:cellRect inView:self.view animated:YES];
-            } else {
-                [actionSheet showFromTabBar:self.tabBarController.tabBar];
-            }
+        
+        return;
+    }
+    
+    if (!user) {
+        [SVProgressHUD showErrorWithStatus:@"Invalid user"];
+        return;
+    }
+    
+    if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+        CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
 
-            
-            break;
-        }
-            
-        default:
-            break;
+        [self.navigationController pushViewController:cloud animated:YES];
+        cloud.navigationItem.title = [user email];
+
+        [cloud setUser:user];
+        [cloud setDisplayMode:DisplayModeContact];
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -602,32 +432,26 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (self.contactsSegmentedControl.selectedSegmentIndex) {
-        case 0: {
-            MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-            
-            if (tableView.isEditing) {
-                
-                //tempArray avoid crash: "was mutated while being enumerated."
-                NSMutableArray *tempArray = [self.selectedUsersArray copy];
-                for (MEGAUser *u in tempArray) {
-                    if ([u.email isEqualToString:user.email]) {
-                        [self.selectedUsersArray removeObject:u];
-                    }
-                }
-                
-                if (self.selectedUsersArray.count == 0) {
-                    [self.deleteBarButtonItem setEnabled:NO];
-                    [self.shareFolderBarButtonItem setEnabled:NO];
-                }
-                
-                allUsersSelected = NO;
+    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        
+        //tempArray avoid crash: "was mutated while being enumerated."
+        NSMutableArray *tempArray = [self.selectedUsersArray copy];
+        for (MEGAUser *u in tempArray) {
+            if ([u.email isEqualToString:user.email]) {
+                [self.selectedUsersArray removeObject:u];
             }
-            break;
         }
-            
-        default:
-            break;
+        
+        if (self.selectedUsersArray.count == 0) {
+            [self.deleteBarButtonItem setEnabled:NO];
+            [self.shareFolderBarButtonItem setEnabled:NO];
+        }
+        
+        allUsersSelected = NO;
+        
+        return;
     }
 }
 
@@ -659,7 +483,7 @@
     switch (actionSheet.tag) {
         case 0: {
             if (buttonIndex == 0) {
-                emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
+                UIAlertView *emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
                 [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
                 emailAlertView.tag = 0;
@@ -696,55 +520,6 @@
             
             for (MEGAUser *u in self.selectedUsersArray) {
                 [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
-            }
-            break;
-        }
-          
-        // Outgoing contact requests
-        case 2: {
-            if ([actionSheet numberOfButtons] == 3) {
-                switch (buttonIndex) {
-                    case 0: //Delete
-                        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.selectedContactRequest targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
-                        break;
-                        
-                    case 1: //Remind
-                        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.selectedContactRequest targetEmail] message:@"" action:MEGAInviteActionRemind delegate:self];
-                        break;
-                        
-                    default:
-                        break;
-                }
-            } else {
-                switch (buttonIndex) {
-                    case 0: //Delete
-                        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.selectedContactRequest targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }
-            break;
-        }
-        
-        // Incoming contact requests
-        case 3: {
-            switch (buttonIndex) {
-                case 0: //Acccept
-                    [[MEGASdkManager sharedMEGASdk] replyContactRequest:self.selectedContactRequest action:MEGAReplyActionAccept delegate:self];
-                    break;
-                    
-                case 1: //Deny
-                    [[MEGASdkManager sharedMEGASdk] replyContactRequest:self.selectedContactRequest action:MEGAReplyActionDeny delegate:self];
-                    break;
-                    
-                case 2: //Ignore
-                    [[MEGASdkManager sharedMEGASdk] replyContactRequest:self.selectedContactRequest action:MEGAReplyActionIgnore delegate:self];
-                    break;
-                    
-                default:
-                    break;
             }
             break;
         }
@@ -852,21 +627,14 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text;
+    
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    if (self.contactsSegmentedControl.selectedSegmentIndex == 0) {
-        if ([MEGAReachabilityManager isReachable]) {
-            text = AMLocalizedString(@"contactsEmptyState_title", @"You don't have any contacts added yet!");
-        } else {
-            text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
-        }
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        text = AMLocalizedString(@"contactsEmptyState_title", @"You don't have any contacts added yet!");
     } else {
-        if ([MEGAReachabilityManager isReachable]) {
-            text = @"No requests pending at this time";
-        } else {
-            text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
-        }
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
@@ -948,27 +716,7 @@
         }
             
         case MEGARequestTypeInviteContact:
-            switch (request.number.integerValue) {
-                case 0:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactAdded", nil)];
-                    break;
-                    
-                case 1:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvitationDeleted", nil)];
-                    break;
-                    
-                case 2:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvitationResent", nil)];
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-            
-            
-        case MEGARequestTypeReplyContactRequest:
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvitationReply", nil)];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvited", nil)];
             break;
             
         case MEGARequestTypeRemoveContact: {
@@ -1005,10 +753,6 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
-    [self reloadUI];
-}
-
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     [self reloadUI];
 }
 
