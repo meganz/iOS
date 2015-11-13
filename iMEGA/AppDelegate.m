@@ -346,7 +346,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIDisplay-Light" size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
     
@@ -355,8 +355,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UIBarButtonItem appearance] setTintColor:megaRed];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0]} forState:UIControlStateNormal];
-        
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaMediumGray} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateSelected];
+    
     [[UITextField appearance] setTintColor:megaRed];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
     

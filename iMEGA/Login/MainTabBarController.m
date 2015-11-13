@@ -36,54 +36,60 @@
     NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:7];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:1] tabBarItem] setTitle:@"Camera Uploads"];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:2] tabBarItem] setTitle:@"Offline"];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:3] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:4] tabBarItem] setTitle:AMLocalizedString(@"transfers", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:5] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", nil)];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
-    [[[defaultViewControllersMutableArray objectAtIndex:6] tabBarItem] setTitle:AMLocalizedString(@"myAccount", nil)];
     
     for (NSInteger i = 0; i< [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
         switch (tabBarItem.tag) {
             case 0:
+                [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cloudDriveSelectedIcon"]];
                 break;
                 
             case 1:
+                [tabBarItem setImage:[[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cameraUploadsSelectedIcon"]];
+                [tabBarItem setTitle:@"Camera Uploads"];
                 break;
                 
             case 2:
+                [tabBarItem setImage:[[UIImage imageNamed:@"offlineIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"offlineSelectedIcon"]];
+                [tabBarItem setTitle:@"Offline"];
                 break;
                 
             case 3:
+                [tabBarItem setImage:[[UIImage imageNamed:@"contactsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"contactsSelectedIcon"]];
+                [tabBarItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
                 break;
                 
             case 4:
+                [tabBarItem setImage:[[UIImage imageNamed:@"transfersIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"transfersSelectedIcon"]];
+                [tabBarItem setTitle:AMLocalizedString(@"transfers", nil)];
                 break;
                 
             case 5:
+                [tabBarItem setImage:[[UIImage imageNamed:@"settingsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"settingsSelectedIcon"]];
+                [tabBarItem setTitle:AMLocalizedString(@"settingsTitle", nil)];
                 break;
                 
             case 6:
+                [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
+                [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
                 break;
         }
     }
     
     [self.view setTintColor:megaRed];
-    [self.moreNavigationController.view setTintColor:megaRed];
-    
+
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
     if (tabsOrderArray) {
         NSMutableArray *customOrderMutableArray = [NSMutableArray arrayWithCapacity:defaultViewControllersMutableArray.count];
@@ -97,6 +103,7 @@
     
     [self setDelegate:self];
     
+    [self customizeMoreNavigationController];
 }
 
 - (BOOL)shouldAutorotate {
@@ -126,6 +133,23 @@
         return [self.selectedViewController preferredInterfaceOrientationForPresentation];
     }
     return UIInterfaceOrientationPortrait;
+}
+
+#pragma mark - Private
+
+- (void)customizeMoreNavigationController {
+    
+    UITableView *moreTableView = (UITableView *)self.moreNavigationController.topViewController.view;
+    if ([moreTableView isKindOfClass:[UITableView class]]) {
+        for (UITableViewCell *cell in [moreTableView visibleCells]) {
+            
+            UIView *view = [[UIView alloc] init];
+            [view setBackgroundColor:megaInfoGray];
+            [cell setSelectedBackgroundView:view];
+            
+            [cell.textLabel setFont:[UIFont fontWithName:@"SFUIText-Regular" size:18.0]];
+        }
+    }
 }
 
 #pragma mark - UITabBarControllerDelegate

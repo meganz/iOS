@@ -80,7 +80,7 @@
             break;
             
         case 1:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"HelveticaNeue-Regular" size:17.0] forKey:NSFontAttributeName];
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"SFUIText-Regular" size:17.0] forKey:NSFontAttributeName];
             break;
     }
     
