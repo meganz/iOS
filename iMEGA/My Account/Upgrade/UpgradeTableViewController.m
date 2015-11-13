@@ -133,7 +133,7 @@
             break;
     }
     
-    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:12.0], NSForegroundColorAttributeName:megaBlack}];
+    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaBlack}];
     
     NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Space")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaDarkGray}];
     
@@ -141,7 +141,7 @@
     
     [cell.productStorageLabel setAttributedText:storageSizeString];
     
-    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue" size:12.0], NSForegroundColorAttributeName:megaBlack}];
+    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaBlack}];
     
     NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwidth")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaDarkGray}];
     
