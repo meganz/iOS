@@ -34,17 +34,18 @@
 
 @property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) NSMutableArray *folderNodes;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-
-@property (weak, nonatomic) IBOutlet UIButton *shareFolderButton;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarShareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 
 @end
@@ -127,9 +128,12 @@
         }
             
         case BrowserActionSelectFolderToShare: {
-            [_toolbar setHidden:YES];
-            [_shareFolderButton setEnabled:YES];
-            [_shareFolderButton setHidden:NO];
+            [_toolBarShareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
+            [_toolBarShareFolderBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarShareFolderBarButtonItem.tag] forState:UIControlStateNormal];
+            
+            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
+            [toolbarButtons addObject:_toolBarShareFolderBarButtonItem];
+            [self.toolbar setItems:toolbarButtons];
             break;
         }
             
@@ -168,11 +172,6 @@
         if (node.isFolder) {
             [self.folderNodes addObject:node];
         }
-    }
-    
-    if (self.selectedUsersArray) {
-        NSString *sharedFolderString = [AMLocalizedString(@"select", nil) stringByAppendingString:[self.navigationItem title]];
-        [self.shareFolderButton setTitle:sharedFolderString forState:UIControlStateNormal];
     }
     
     [self.tableView reloadData];
@@ -249,7 +248,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)selectSharedFolder:(UIButton *)sender {
+- (IBAction)shareFolder:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachable]) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
