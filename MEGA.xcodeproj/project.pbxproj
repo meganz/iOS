@@ -99,6 +99,7 @@
 		41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
 		41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
 		41D9D8E81B7123F100D9B850 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D9D8E71B7123F100D9B850 /* StoreKit.framework */; };
+		41DB620C1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */; };
 		41E566851BBD6160007569A2 /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566631BBD6160007569A2 /* ALAsset+accessibilityLabel.m */; };
 		41E566861BBD6160007569A2 /* ALAsset+assetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566651BBD6160007569A2 /* ALAsset+assetType.m */; };
 		41E566871BBD6160007569A2 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566671BBD6160007569A2 /* ALAsset+isEqual.m */; };
@@ -339,6 +340,8 @@
 		41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		41D9D8E71B7123F100D9B850 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		41DFFB071B9A33A00003FB72 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41DFFB081B9A34C50003FB72 /* ee */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ee; path = ee.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -928,6 +931,8 @@
 			children = (
 				41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */,
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
+				41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */,
+				41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1275,6 +1280,7 @@
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
+				41DB620C1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,

@@ -24,6 +24,7 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "UIBarButtonItem+Badge.h"
 
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -192,6 +193,9 @@
     }
     
     [self.tableView reloadData];
+    
+    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
 }
 
 - (void)internetConnectionChanged {
@@ -754,6 +758,11 @@
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self reloadUI];
+}
+
+- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
+    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
 }
 
 @end
