@@ -103,6 +103,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
 
@@ -604,6 +605,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)setBadgeValueForIncomingContactRequests {
+    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    if ([[incomingContactsLists size] integerValue]) {
+        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = [NSString stringWithFormat:@"%ld", (long)[[incomingContactsLists size] integerValue]];
+    } else {
+        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = nil;
+    }
+}
+
 #pragma mark - Get IP Address
 
 - (NSString *)getIpAddress {
@@ -1015,6 +1025,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             isFetchNodesDone = YES;
             
             [SVProgressHUD dismiss];
+            
+            [self setBadgeValueForIncomingContactRequests];
             break;
         }
             
@@ -1179,6 +1191,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #ifdef DEBUG
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
+}
+
+- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
+    [self setBadgeValueForIncomingContactRequests];
 }
 
 @end
