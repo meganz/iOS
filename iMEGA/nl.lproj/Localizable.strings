@@ -214,8 +214,8 @@
 "folderAndFiles"="1 map • %d bestanden";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="wachtrij";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Overdracht geannuleerd";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Overdracht geannuleerd";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Er zijn  wachtende downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="uploads";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Overdrachten geannulleerd";
+"transfersCancelled"="Overdrachten geannulleerd";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Overdrachten annuleren";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

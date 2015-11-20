@@ -214,8 +214,8 @@
 "folderAndFiles"="1 kansio • %d tiedostoa";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Jonossa";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Siirto keskeytetty!";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Siirto keskeytetty!";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Avoimia tiedostolatauksia";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="lähetykset";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Siirrot keskeytetty!";
+"transfersCancelled"="Siirrot keskeytetty!";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Keskeytä siirrot";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

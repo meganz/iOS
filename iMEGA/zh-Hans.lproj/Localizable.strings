@@ -214,8 +214,8 @@
 "folderAndFiles"="1 个文件夹 • %d 个文件";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="置于队列中";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="传输已取消";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="传输已取消";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="还有尚未处理的下载";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="上传";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="传输已取消";
+"transfersCancelled"="传输已取消";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="取消传输";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

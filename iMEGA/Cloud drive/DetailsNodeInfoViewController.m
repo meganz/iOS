@@ -827,7 +827,7 @@
             
         case MEGARequestTypeCancelTransfer:
             [self.tableView reloadData];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             break;
             
         default:

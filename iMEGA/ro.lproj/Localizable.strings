@@ -214,8 +214,8 @@
 "folderAndFiles"="1 folder • %d fişiere";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de aşteptare";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Transfer anulat";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Transfer anulat";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Există descărcări în aşteptare";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="încărcări";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Transferuri anulate";
+"transfersCancelled"="Transferuri anulate";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Anulează transferurile";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
