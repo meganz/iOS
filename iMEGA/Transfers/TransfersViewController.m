@@ -800,7 +800,7 @@
         case MEGARequestTypeCancelTransfers: {
             [self cleanTransfersList];
             [self.tableView reloadData];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transfersCanceled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transfersCancelled", nil)];
             break;
         }
             
@@ -861,7 +861,7 @@
     
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             [self removeTransfer:transfer];
             [self.tableView reloadData];
         }

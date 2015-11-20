@@ -14,8 +14,6 @@
 "size"="Size";
 /*  */
 "folder"="Folder";
-/* */
-"upload"="Upload";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="No camera available";
 /* Alert title to attract attention */
@@ -120,8 +118,8 @@
 "fileTooBigMessage_open"="The file you are trying to open is bigger than the available memory.";
 /* Error title shown when you open a file link and it's no longer available */
 "fileLinkUnavailableTitle"="File link unavailable";
-/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
-"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
@@ -134,12 +132,10 @@
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
-/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
 /* Error title shown when a folder link doesn't exist. */
 "folderLinkUnavailableTitle"="Folder link unavailable";
-/* Error message shown when a folder link doesn't exist. */
-"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -172,6 +168,10 @@
 "contactsEmptyState_title"="You don't have any contacts";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_text"="Add contacts using the above button.";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text" = "No incoming shared folders";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text" = "No outgoing shared folders";
 /* Title of My Contacts section */
 "myContacts" = "Contacts";
 /* Title of Contacts requests section */
@@ -181,8 +181,8 @@
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
 "requests" = "Requests";
 /* Success message shown when you acepted a contact request */
-"requestAcepted"="Request acepted";
-/* Success message shown when you canceled a contact request */
+"requestAccepted"="Request accepted";
+/* Success message shown when you Cancelled a contact request */
 "requestCancelled"="Request cancelled";
 /* Success message shown when you remove a contact request */
 "requestDeleted" = "Request deleted";
@@ -224,8 +224,8 @@
 "folderAndFiles"="1 folder • %d files";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Transfer canceled";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Transfer Cancelled";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -381,7 +381,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder shared";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Import to ";
+"importTitle"="Import to";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file have been imported */
@@ -422,6 +422,34 @@
 "foldersShared"="%d folders";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insert an email";
+/* Title of Shared Items section */
+"sharedItems" = "Shared Items";
+/* Title of the tab bar item for the Shared Items section */
+"shared" = "Shared";
+/* Title of the "Incoming" Shared Items. */
+"incoming" = "Incoming";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing" = "Outgoing";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts" = "Shared with %d contacts";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged" = "Permissions changed";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="Remove sharing";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (shared with 1 contact)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (shared with %d contacts)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (shared with %d contacts)";
+/* Message shown when a share have been removed */
+"shareRemoved" = "Share removed";
+/* Message shown when some shares have been removed */
+"sharesRemoved" = "Shares removed";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner" = "Owner";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith" = "Shared with";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Add from contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
@@ -587,7 +615,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploads";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Transfers cancelled";
+"transfersCancelled"="Transfers cancelled";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancel transfers";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -635,7 +663,7 @@
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Bandwidth";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="from %.2f %@ / month";
+"productPricePerMonth"="%.2f %@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan" = "Choose one of the plans from below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */

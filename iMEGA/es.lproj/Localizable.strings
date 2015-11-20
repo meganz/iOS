@@ -216,8 +216,8 @@
 "folderAndFiles"="1 carpeta • %d ficheros";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Transferencia cancelada";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Transferencia cancelada";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hay descargas pendientes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -579,7 +579,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Subidas";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Transferencias canceladas";
+"transfersCancelled"="Transferencias canceladas";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancelar transferencias";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

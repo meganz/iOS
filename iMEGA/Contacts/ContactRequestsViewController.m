@@ -459,7 +459,7 @@
         case MEGARequestTypeReplyContactRequest:
             switch (request.number.integerValue) {
                 case 0:
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudSuccess"] status:AMLocalizedString(@"requestAcepted", nil)];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudSuccess"] status:AMLocalizedString(@"requestAccepted", nil)];
                     break;
                     
                 case 1:

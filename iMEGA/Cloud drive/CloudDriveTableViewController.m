@@ -2087,7 +2087,7 @@
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

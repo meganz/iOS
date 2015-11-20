@@ -214,8 +214,8 @@
 "folderAndFiles"="1 thư mục • %d tệp tin";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="Phiên tuyền tải đã bị hủy";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="Phiên tuyền tải đã bị hủy";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hiện đang có phiên tải xuống đang chờ";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Phiên Tải Lên";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="Phiên truyền tải đã bị hủy";
+"transfersCancelled"="Phiên truyền tải đã bị hủy";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Hủy các phiên truyền tải";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

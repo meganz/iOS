@@ -214,8 +214,8 @@
 "folderAndFiles"="フォルダ1 - ファイル%d";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="待機中";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="転送停止";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="転送停止";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="待機中ダウンロードあり";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="アップロード";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="転送キャンセルしました";
+"transfersCancelled"="転送キャンセルしました";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="転送キャンセル";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

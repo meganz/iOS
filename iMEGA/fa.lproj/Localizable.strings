@@ -214,8 +214,8 @@
 "folderAndFiles"="پوشه 1 . فایل های %d";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="در صف قرار گرفت";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="انتقال کنسل شد";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="انتقال کنسل شد";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="این ها دانلود های در حالت تعلیق هستند";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="اپلود ها";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="انتقال ها کنسل شد";
+"transfersCancelled"="انتقال ها کنسل شد";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="انتقال ها را کنسل کن";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */

@@ -214,8 +214,8 @@
 "folderAndFiles"="1 carpeta • %d fitxers";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cua";
-/* Message shown when a transfer has been canceled */
-"transferCanceled"="S'ha cancel·lat la transferència";
+/* Message shown when a transfer has been Cancelled */
+"transferCancelled"="S'ha cancel·lat la transferència";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hi ha descàrregues pendents";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -573,7 +573,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="pujades";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCanceled"="S'ha cancel·lat les transferències";
+"transfersCancelled"="S'ha cancel·lat les transferències";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Cancel·la transferències";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
