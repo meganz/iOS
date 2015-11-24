@@ -93,7 +93,7 @@
     [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
     [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
     
-    if (self.node != nil) {
+    if (self.contactsMode == ContactsShareFolderWith || self.contactsMode == ContactsShareFoldersWith) {
         [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
         [_shareFolderWithButton setEnabled:YES];
         [_shareFolderWithButton setHidden:NO];
@@ -115,7 +115,7 @@
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
-    if (self.node != nil) {
+    if (self.contactsMode == ContactsShareFolderWith || self.contactsMode == ContactsShareFoldersWith) {
         [self editTapped:_editBarButtonItem];
     }
     
@@ -293,8 +293,10 @@
     }
     
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.shareFolderActivity != nil) {
-            [self.shareFolderActivity activityDidFinish:YES];
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+            if (self.shareFolderActivity != nil) {
+                [self.shareFolderActivity activityDidFinish:YES];
+            }
         }
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -505,15 +507,15 @@
             NSInteger level;
             switch (buttonIndex) {
                 case 0:
-                    level = 0;
+                    level = MEGAShareTypeAccessRead;
                     break;
                     
                 case 1:
-                    level = 1;
+                    level = MEGAShareTypeAccessReadWrite;
                     break;
                     
                 case 2:
-                    level = 2;
+                    level = MEGANodeAccessLevelFull;
                     break;
                     
                 default:
@@ -522,9 +524,18 @@
             
             remainingOperations = self.selectedUsersArray.count;
             
-            for (MEGAUser *u in self.selectedUsersArray) {
-                [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
+            if (self.contactsMode == ContactsShareFolderWith) {
+                for (MEGAUser *u in self.selectedUsersArray) {
+                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
+                }
+            } else if (self.contactsMode == ContactsShareFoldersWith) {
+                for (MEGAUser *u in self.selectedUsersArray) {
+                    for (MEGANode *node in self.nodesArray) {
+                        [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:u level:level delegate:self];
+                    }
+                }
             }
+            
             break;
         }
             

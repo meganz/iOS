@@ -1,6 +1,6 @@
 /**
- * @file ContactsTableViewController.h
- * @brief View controller that show your contacts
+ * @file SharedItemsTableViewCell.h
+ * @brief Custom node table view cell of the app.
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -21,20 +21,14 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, ContactsMode) {
-    Contacts = 0,
-    ContactsShareFolderWith,
-    ContactsShareFoldersWith
-};
+@interface SharedItemsTableViewCell : UITableViewCell
 
-@class ShareFolderActivity;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *permissionsButton;
+@property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
-@interface ContactsViewController : UIViewController
-
-@property (nonatomic) ContactsMode contactsMode;
-
-@property (nonatomic, strong) MEGANode *node;
-@property (nonatomic, strong) NSArray *nodesArray;
-@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
+@property (nonatomic) uint64_t nodeHandle;
 
 @end

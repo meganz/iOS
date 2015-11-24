@@ -33,16 +33,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:7];
+    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:8];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
+    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
     
-    for (NSInteger i = 0; i< [defaultViewControllersMutableArray count]; i++) {
+    for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
         switch (tabBarItem.tag) {
             case 0:
@@ -63,24 +64,30 @@
                 break;
                 
             case 3:
+                [tabBarItem setImage:[[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"sharedItemsSelectedIcon"]];
+                [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
+                break;
+                
+            case 4:
                 [tabBarItem setImage:[[UIImage imageNamed:@"contactsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"contactsSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
                 break;
                 
-            case 4:
+            case 5:
                 [tabBarItem setImage:[[UIImage imageNamed:@"transfersIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"transfersSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"transfers", nil)];
                 break;
                 
-            case 5:
+            case 6:
                 [tabBarItem setImage:[[UIImage imageNamed:@"settingsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"settingsSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"settingsTitle", nil)];
                 break;
                 
-            case 6:
+            case 7:
                 [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
@@ -89,7 +96,8 @@
     }
     
     [self.view setTintColor:megaRed];
-
+    [self.moreNavigationController.view setTintColor:megaRed];
+    
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
     if (tabsOrderArray) {
         NSMutableArray *customOrderMutableArray = [NSMutableArray arrayWithCapacity:defaultViewControllersMutableArray.count];
