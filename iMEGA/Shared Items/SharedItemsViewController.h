@@ -1,6 +1,6 @@
 /**
- * @file ContactsTableViewController.h
- * @brief View controller that show your contacts
+ * @file SharedItemsViewController.h
+ * @brief View controller that allows to see and manage the incoming and outgoing shares of your account.
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -21,20 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, ContactsMode) {
-    Contacts = 0,
-    ContactsShareFolderWith,
-    ContactsShareFoldersWith
-};
-
-@class ShareFolderActivity;
-
-@interface ContactsViewController : UIViewController
-
-@property (nonatomic) ContactsMode contactsMode;
-
-@property (nonatomic, strong) MEGANode *node;
-@property (nonatomic, strong) NSArray *nodesArray;
-@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
+@interface SharedItemsViewController : UIViewController
 
 @end

@@ -1,6 +1,6 @@
 /**
- * @file ContactsTableViewController.h
- * @brief View controller that show your contacts
+ * @file SharedItemsTableViewCell.m
+ * @brief Custom node table view cell of the app.
  *
  * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
  *
@@ -19,22 +19,23 @@
  * program.
  */
 
-#import <UIKit/UIKit.h>
+#import "MEGASdkManager.h"
+#import "MEGAReachabilityManager.h"
+#import "Helper.h"
 
-typedef NS_ENUM(NSUInteger, ContactsMode) {
-    Contacts = 0,
-    ContactsShareFolderWith,
-    ContactsShareFoldersWith
-};
+#import "SharedItemsTableViewCell.h"
 
-@class ShareFolderActivity;
 
-@interface ContactsViewController : UIViewController
+@implementation SharedItemsTableViewCell
 
-@property (nonatomic) ContactsMode contactsMode;
+#pragma mark - IBActions
 
-@property (nonatomic, strong) MEGANode *node;
-@property (nonatomic, strong) NSArray *nodesArray;
-@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
+- (IBAction)permissionsTouchUpInside:(UIButton *)sender {
+    
+}
+
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    
+}
 
 @end

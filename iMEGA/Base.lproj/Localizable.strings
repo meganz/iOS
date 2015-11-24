@@ -224,8 +224,6 @@
 "folderAndFiles"="1 folder • %d files";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Queued";
-/* Message shown when a transfer has been Cancelled */
-"transferCancelled"="Transfer Cancelled";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -434,6 +432,10 @@
 "sharedWithXContacts" = "Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged" = "Permissions changed";
+/* Message shown when a share has been left */
+"shareLeft"="Share left";
+/* Message shown when some shares have been left */
+"sharesLeft"="Shares left";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remove sharing";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */

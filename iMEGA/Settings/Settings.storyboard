@@ -1031,7 +1031,7 @@
         <scene sceneID="WR9-WA-C2Y">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qvR-uV-YnP" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="" image="settingsIcon" id="aSa-xA-PrR"/>
+                    <tabBarItem key="tabBarItem" tag="6" title="" image="settingsIcon" id="aSa-xA-PrR"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="aFF-r7-bca">
