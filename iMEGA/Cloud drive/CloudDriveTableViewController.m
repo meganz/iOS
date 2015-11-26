@@ -797,7 +797,7 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
+    UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
@@ -806,28 +806,31 @@
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    return [UIImage imageNamed:@"emptyCloudDrive"];
+                    image = [UIImage imageNamed:@"emptyCloudDrive"];
                 } else {
-                    return [UIImage imageNamed:@"emptyFolder"];
+                    image = [UIImage imageNamed:@"emptyFolder"];
                 }
                 break;
             }
                 
             case DisplayModeContact:
-                return [UIImage imageNamed:@"emptyFolder"];
+                image = [UIImage imageNamed:@"emptyFolder"];
                 break;
                 
-            case DisplayModeRubbishBin:
+            case DisplayModeRubbishBin: {
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    return [UIImage imageNamed:@"emptyRubbishBin"];
+                    image = [UIImage imageNamed:@"emptyRubbishBin"];
                 } else {
-                    return [UIImage imageNamed:@"emptyFolder"];
+                    image = [UIImage imageNamed:@"emptyFolder"];
                 }
                 break;
+            }
         }
     } else {
-         return [UIImage imageNamed:@"noInternetConnection"];
+         image = [UIImage imageNamed:@"noInternetConnection"];
     }
+    
+    return image;
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
