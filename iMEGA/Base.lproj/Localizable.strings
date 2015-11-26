@@ -428,6 +428,8 @@
 "incoming" = "Incoming";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing" = "Outgoing";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact" = "Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts" = "Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -439,11 +441,11 @@
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remove sharing";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (shared with 1 contact)";
+"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved" = "Share removed";
 /* Message shown when some shares have been removed */

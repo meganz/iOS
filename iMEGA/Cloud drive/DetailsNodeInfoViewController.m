@@ -21,12 +21,15 @@
 
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
+#import "UIImage+GKContact.h"
 
 #import "Helper.h"
 
 #import "DetailsNodeInfoViewController.h"
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
+#import "NodeTableViewCell.h"
+
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "GetLinkActivity.h"
@@ -43,6 +46,11 @@
     
     NSInteger actions;
     MEGAShareType accessType;
+    
+    NSUInteger remainingOperations;
+    NSUInteger numberOfShares;
+    
+    UILabel *navigationBarLabel;
 }
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
@@ -67,7 +75,7 @@
     
     accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     
-    if (self.displayMode == DisplayModeCloudDrive && (accessType == MEGAShareTypeAccessOwner)) {
+    if ((self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         [self.navigationItem setRightBarButtonItem:_shareBarButtonItem];
     }
     
@@ -85,12 +93,20 @@
                 actions = 4; //Download, copy, rename and leave (contacts) or delete (cloud drive)
             break;
             
-        case MEGAShareTypeAccessOwner: //Cloud Drive & Rubbish Bin
-            actions = 5; //Download, move, copy, rename and move to rubbish bin or remove
+        case MEGAShareTypeAccessOwner: //Cloud Drive / Rubbish Bin / Outgoing Shared Item
+            if ((self.displayMode == DisplayModeSharedItem) && [self.node isOutShare]) {
+                actions = 3; //Copy, rename and remove sharing
+            } else {
+                actions = 5; //Download, move, copy, rename and move to rubbish bin or remove
+            }
             break;
             
         default:
             break;
+    }
+    
+    if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
+        [self setNavigationBarTitleLabel];
     }
 }
 
@@ -133,7 +149,15 @@
         
     } else if ([self.node type] == MEGANodeTypeFolder) {
         
-        [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
+        if (self.displayMode == DisplayModeSharedItem) {
+            if ([self.node isInShare]) {
+                [self.thumbnailImageView setImage:[UIImage imageNamed:@"info_folder_incoming"]];
+            } else if ([self.node isOutShare]) {
+                [self.thumbnailImageView setImage:[UIImage imageNamed:@"info_folder_outgoing"]];
+            }
+        } else {
+            [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
+        }
         
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:_node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:_node];
@@ -154,7 +178,11 @@
     
     strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
-    [self setTitle:[self.node name]];
+    if (self.displayMode == DisplayModeSharedItem && accessType != MEGAShareTypeAccessOwner) {
+        [self.navigationItem setTitleView:navigationBarLabel];
+    } else {
+        [self setTitle:[self.node name]];
+    }
     
     [self.nameLabel setText:[self.node name]];
     
@@ -167,7 +195,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)download {
     if ([MEGAReachabilityManager isReachable]) {
@@ -265,6 +293,38 @@
     }
 }
 
+- (void)confirmRemoveSharing {
+    if ([MEGAReachabilityManager isReachable]) {
+
+        NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
+        NSUInteger outSharesCount = [outSharesOfNodeMutableArray count];
+        remainingOperations = outSharesCount;
+        numberOfShares = outSharesCount;
+        
+        NSString *alertMessage;
+        if (outSharesCount == 1) {
+            alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
+        } else if (outSharesCount > 1) {
+            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), (NSInteger)outSharesCount];
+        }
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        [alertView setTag:4];
+        [alertView setDelegate:self];
+        [alertView show];
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    }
+}
+
+- (void)removeSharing {
+    NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
+    for (MEGAShare *share in outSharesOfNodeMutableArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:[share user] level:MEGAShareTypeAccessUnkown];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)showWarningAfterActionOnNode:(MEGANode *)nodeUpdated {
     NSString *alertTitle = @"";
     
@@ -313,6 +373,62 @@
         [alertView setTag:3];
         [alertView show];
     }
+}
+
+- (void)setNavigationBarTitleLabel {
+    NSString *accessTypeString = @"";
+    switch (accessType) {
+        case MEGAShareTypeAccessRead:
+            accessTypeString = AMLocalizedString(@"readOnly", nil);
+            break;
+            
+        case MEGAShareTypeAccessReadWrite:
+            accessTypeString = AMLocalizedString(@"readAndWrite", nil);
+            break;
+            
+        case MEGAShareTypeAccessFull:
+            accessTypeString = AMLocalizedString(@"fullAccess", nil);
+            break;
+    }
+    
+    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", accessTypeString];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                            value:megaRed
+                                            range:[subtitle rangeOfString:subtitle]];
+    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
+                                            value:[UIFont fontWithName:kFont size:12.0]
+                                            range:[subtitle rangeOfString:subtitle]];
+    
+    NSString *title = [self.node name];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleMutableAttributedString addAttribute:NSFontAttributeName
+                                         value:[UIFont fontWithName:kFont size:18.0]
+                                         range:[title rangeOfString:title]];
+    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
+    navigationBarLabel = label;
+    [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAttributedText:titleMutableAttributedString];
+    [self.navigationItem setTitleView:label];
+}
+
+- (NSMutableArray *)outSharesForNode:(MEGANode *)node {
+    
+    NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
+    
+    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
+    NSUInteger outSharesForNodeCount = [[outSharesForNodeShareList size] unsignedIntegerValue];
+    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+        if ([share user] != nil) {
+            [outSharesForNodeMutableArray addObject:share];
+        }
+    }
+    
+    return outSharesForNodeMutableArray;
 }
 
 #pragma mark - IBActions
@@ -478,6 +594,14 @@
             [self.navigationController popViewControllerAnimated:YES];
             break;
         }
+            
+        case 4: {
+            if (buttonIndex == 1) {
+                [self removeSharing];
+            }
+            break;
+        }
+
     }
 }
 
@@ -490,221 +614,411 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    
+    NSInteger numberOfSections;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive:
+        case DisplayModeRubbishBin:
+        case DisplayModeContact: {
+            numberOfSections = 1;
+            break;
+        }
+            
+        case DisplayModeSharedItem: {
+            numberOfSections = 2;
+            break;
+        }
+    }
+    
+    return numberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return actions;
+    NSInteger numberOfRows;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive:
+        case DisplayModeRubbishBin:
+        case DisplayModeContact: {
+            numberOfRows = actions;
+            break;
+        }
+            
+        case DisplayModeSharedItem: {
+            if (section == 0) {
+                numberOfRows = 1;
+            } else {
+                numberOfRows = actions;
+            }
+            break;
+        }
+    }
+    
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
-    }
-    
-    //Is the same for all posibilities
-    if (indexPath.row == 0) {
-        if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-            [cell.imageView setImage:[UIImage imageNamed:@"download"]];
-            [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
-            return cell;
-        } else {
-            
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
-            
-            if (offlineNode != nil) {
-                [cell.imageView setImage:[UIImage imageNamed:@"downloaded"]];
-                [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
-            } else {
-                [cell.imageView setImage:[UIImage imageNamed:@"download"]];
-                [cell.textLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
+    NodeTableViewCell *cell;
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive:
+        case DisplayModeRubbishBin:
+        case DisplayModeContact: {
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
+            if (cell == nil) {
+                cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
             }
+            break;
+        }
+            
+        case DisplayModeSharedItem: {
+            if (indexPath.section == 0) {
+                if (([self.node isInShare] && [self.userName isEqualToString:self.email]) || [self.node isOutShare]) {
+                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"SharedItemContactsTableViewCellID" forIndexPath:indexPath];
+                    if (cell == nil) {
+                        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SharedItemContactsTableViewCellID"];
+                    }
+                } else {
+                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"SharedItemContactTableViewCellID" forIndexPath:indexPath];
+                    if (cell == nil) {
+                        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SharedItemContactTableViewCellID"];
+                    }
+                    
+                    [cell.infoLabel setText:self.email];
+                }
+            } else if (indexPath.section == 1) {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
+                if (cell == nil) {
+                    cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
+                }
+            }
+            break;
         }
     }
     
-    switch (accessType) {
-        case MEGAShareTypeAccessReadWrite:
-        case MEGAShareTypeAccessRead:
-            switch (indexPath.row) {
-                case 1:
-                    [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
-                    [cell.textLabel setText:AMLocalizedString(@"copy", @"Copy")];
-                    break;
-                    
-                case 2:
-                    [cell.imageView setImage:[UIImage imageNamed:@"leaveShare"]];
-                    [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
-                    break;
-            }
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            switch (indexPath.row) {
-                case 1:
-                    [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
-                    [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
-                    break;
-                
-                case 2:
-                    [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                    [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
-                    break;
-                    
-                case 3:
-                    if (self.displayMode == DisplayModeCloudDrive) {
-                        [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
-                        [cell.textLabel setText:AMLocalizedString(@"remove", nil)];
-                    } else {
-                        [cell.imageView setImage:[UIImage imageNamed:@"leaveShare"]];
-                        [cell.textLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
-                    }
-                    
-                    break;
-            }
-            break;
-            
-        case MEGAShareTypeAccessOwner:
-            if (self.displayMode == DisplayModeCloudDrive) {
-                switch (indexPath.row) {
-                    case 1:
-                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
-                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
-                        break;
-                        
-                    case 2:
-                        [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
-                        [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
-                        break;
-                        
-                    case 3:
-                        [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                        [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
-                        break;
-                        
-                    case 4:
-                        [cell.imageView setImage:[UIImage imageNamed:@"rubbishBin"]];
-                        [cell.textLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
-                        break;
-                }
-                // Rubbish bin
+    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+        if ([self.node isInShare]) {
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
+            NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            BOOL avatarExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+            if (avatarExists) {
+                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
+                cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width/2;
+                cell.thumbnailImageView.layer.masksToBounds = YES;
             } else {
+                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
+                [cell.thumbnailImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
+            }
+            
+            NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", nil)];
+            NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];
+            [ownerMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                                 value:megaRed
+                                                 range:[owner rangeOfString:owner]];
+            
+            NSMutableAttributedString *userNameMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.userName];
+            [userNameMutableAttributedString appendAttributedString:ownerMutableAttributedString];
+            [cell.nameLabel setAttributedText:userNameMutableAttributedString];
+            
+        } else if ([self.node isOutShare]) {
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"info_sharedWith"]];
+            
+            NSMutableArray *outSharesMutableArray = [self outSharesForNode:self.node];
+            NSString *sharedWithXContacts;
+            if ([outSharesMutableArray count] > 1) {
+                sharedWithXContacts = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), [outSharesMutableArray count]];
+            } else {
+                NSString *tempString = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
+                sharedWithXContacts = [tempString stringBetweenString:@"(" andString:@")"];
+            }
+            NSArray *sharedWithXContactsArray = [sharedWithXContacts componentsSeparatedByString:@" "];
+            NSString *sharedWith = [[sharedWithXContactsArray objectAtIndex:0] stringByAppendingString:[NSString stringWithFormat:@" %@ ", [sharedWithXContactsArray objectAtIndex:1]]];
+            NSString *xContacts = [[sharedWithXContactsArray objectAtIndex:2] stringByAppendingString:[NSString stringWithFormat:@" %@", [sharedWithXContactsArray objectAtIndex:3]]];
+            
+            NSMutableAttributedString *xContactsMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:xContacts];
+            [xContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                                     value:megaRed
+                                                     range:[xContacts rangeOfString:xContacts]];
+            
+            NSMutableAttributedString *sharedWithMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:sharedWith];
+            [sharedWithMutableAttributedString appendAttributedString:xContactsMutableAttributedString];
+            [cell.nameLabel setAttributedText:sharedWithMutableAttributedString];
+            
+            [cell.arrowImageView setImage:[UIImage imageNamed:@"info_sharedWithArrow"]];
+        }
+        
+        [cell.horizontalLineLayoutConstraint setConstant:0.5f];
+        
+    } else if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 1) && (accessType == MEGAShareTypeAccessOwner)) {
+        switch (indexPath.row) {
+            case 0:
+                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"copy"]];
+                [cell.nameLabel setText:AMLocalizedString(@"copy", nil)];
+                break;
+                
+            case 1:
+                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rename"]];
+                [cell.nameLabel setText:AMLocalizedString(@"rename", nil)];
+                break;
+                
+            case 2:
+                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"removeShare"]];
+                [cell.nameLabel setText:AMLocalizedString(@"removeSharing", nil)];
+                break;
+        }
+    } else {
+        //Is the same for all posibilities
+        if (indexPath.row == 0) {
+            if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"download"]];
+                [cell.nameLabel setText:AMLocalizedString(@"queued", @"Queued")];
+                return cell;
+            } else {
+                
+                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+                
+                if (offlineNode != nil) {
+                    [cell.thumbnailImageView setImage:[UIImage imageNamed:@"downloaded"]];
+                    [cell.nameLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
+                } else {
+                    [cell.thumbnailImageView setImage:[UIImage imageNamed:@"download"]];
+                    [cell.nameLabel setText:AMLocalizedString(@"saveForOffline", @"Save for Offline")];
+                }
+            }
+        }
+        
+        switch (accessType) {
+            case MEGAShareTypeAccessReadWrite:
+            case MEGAShareTypeAccessRead:
                 switch (indexPath.row) {
                     case 1:
-                        [cell.imageView setImage:[UIImage imageNamed:@"move"]];
-                        [cell.textLabel setText:AMLocalizedString(@"move", nil)];
+                        [cell.thumbnailImageView setImage:[UIImage imageNamed:@"copy"]];
+                        [cell.nameLabel setText:AMLocalizedString(@"copy", @"Copy")];
                         break;
                         
                     case 2:
-                        [cell.imageView setImage:[UIImage imageNamed:@"copy"]];
-                        [cell.textLabel setText:AMLocalizedString(@"copy", nil)];
+                        [cell.thumbnailImageView setImage:[UIImage imageNamed:@"leaveShare"]];
+                        [cell.nameLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
+                        break;
+                }
+                break;
+                
+            case MEGAShareTypeAccessFull:
+                switch (indexPath.row) {
+                    case 1:
+                        [cell.thumbnailImageView setImage:[UIImage imageNamed:@"copy"]];
+                        [cell.nameLabel setText:AMLocalizedString(@"copy", nil)];
+                        break;
+                        
+                    case 2:
+                        [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rename"]];
+                        [cell.nameLabel setText:AMLocalizedString(@"rename", nil)];
                         break;
                         
                     case 3:
-                        [cell.imageView setImage:[UIImage imageNamed:@"rename"]];
-                        [cell.textLabel setText:AMLocalizedString(@"rename", nil)];
-                        break;
+                        if (self.displayMode == DisplayModeCloudDrive) {
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"remove"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"remove", nil)];
+                        } else {
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"leaveShare"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];
+                        }
                         
-                    case 4:
-                        [cell.imageView setImage:[UIImage imageNamed:@"remove"]];
-                        [cell.textLabel setText:AMLocalizedString(@"remove", nil)];
                         break;
                 }
-            }
-            
-            break;
-            
-        default:
-            break;
+                break;
+                
+            case MEGAShareTypeAccessOwner:
+                if (self.displayMode == DisplayModeCloudDrive) {
+                    switch (indexPath.row) {
+                        case 1:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"move"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"move", nil)];
+                            break;
+                            
+                        case 2:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"copy"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"copy", nil)];
+                            break;
+                            
+                        case 3:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rename"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"rename", nil)];
+                            break;
+                            
+                        case 4:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rubbishBin"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Move to the rubbish bin")];
+                            break;
+                    }
+                    // Rubbish bin
+                } else {
+                    switch (indexPath.row) {
+                        case 1:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"move"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"move", nil)];
+                            break;
+                            
+                        case 2:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"copy"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"copy", nil)];
+                            break;
+                            
+                        case 3:
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rename"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"rename", nil)];
+                            break;
+                            
+                        case 4:
+                            if ([self.node isOutShare]) {
+                                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"removeShare"]];
+                                [cell.nameLabel setText:AMLocalizedString(@"removeSharing", nil)];
+                            } else {
+                                [cell.thumbnailImageView setImage:[UIImage imageNamed:@"remove"]];
+                                [cell.nameLabel setText:AMLocalizedString(@"remove", nil)];
+                            }
+                            break;
+                    }
+                }
+                
+                break;
+                
+            default:
+                break;
+        }
+    
     }
     
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGray];
+    [cell setSelectedBackgroundView:view];
+    
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+        return 66.0;
+    }
+    
+    return 44.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
+        return 66.0;
+    }
+    
+    return 44.0;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    switch (indexPath.row) {
-        case 0: { //Save for Offline
-            if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
-                if (!cancelDownloadAlertView) {
-                    cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"downloading", @"Downloading...")
-                                                                         message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
-                                                                        delegate:self
-                                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                               otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                }
-                [cancelDownloadAlertView setTag:2];
-                [cancelDownloadAlertView show];
-            } else {
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
-                if (!offlineNodeExist) {
-                    [self download];
-                }
-            }
-            break;
-        }
-            
-        case 1: {
-            switch (accessType) {
-                case MEGAShareTypeAccessRead:
-                case MEGAShareTypeAccessReadWrite:
-                case MEGAShareTypeAccessFull:
+    if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
+        if (indexPath.section == 0) {
+            //TODO: Contacts view
+        } else {
+            switch (indexPath.row) {
+                case  0:
                     [self browserWithAction:BrowserActionCopy];
                     break;
                     
-                case MEGAShareTypeAccessOwner:
-                    [self browserWithAction:BrowserActionMove];
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-            
-        case 2: {
-            switch (accessType) {
-                case MEGAShareTypeAccessRead:
-                case MEGAShareTypeAccessReadWrite:
-                    [self delete];
-                    break;
-                    
-                case MEGAShareTypeAccessFull:
+                case 1:
                     [self rename];
                     break;
                     
-                case MEGAShareTypeAccessOwner:
-                    [self browserWithAction:BrowserActionCopy];
-                    break;
-                    
-                default:
+                case 2:
+                    [self confirmRemoveSharing];
                     break;
             }
-            break;
         }
-            
-        case 3: {
-            switch (accessType) {
-                case MEGAShareTypeAccessFull:
-                    [self delete];
-                    break;
-                    
-                case MEGAShareTypeAccessOwner:
-                    [self rename];
-                    break;
-                    
-                default:
-                    break;
+    } else {
+         if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0) && ([self.node isInShare])) {
+             [tableView deselectRowAtIndexPath:indexPath animated:YES];
+             return;
+         }
+        
+        switch (indexPath.row) {
+            case 0: { //Save for Offline
+                if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] != nil) {
+                    if (!cancelDownloadAlertView) {
+                        cancelDownloadAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"downloading", @"Downloading...")
+                                                                             message:AMLocalizedString(@"cancelDownloadAlertViewText", @"Do you want to cancel the download?")
+                                                                            delegate:self
+                                                                   cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                                   otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    }
+                    [cancelDownloadAlertView setTag:2];
+                    [cancelDownloadAlertView show];
+                } else {
+                    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+                    if (!offlineNodeExist) {
+                        [self download];
+                    }
+                }
+                break;
             }
-            break;
+                
+            case 1: {
+                switch (accessType) {
+                    case MEGAShareTypeAccessRead:
+                    case MEGAShareTypeAccessReadWrite:
+                    case MEGAShareTypeAccessFull:
+                        [self browserWithAction:BrowserActionCopy];
+                        break;
+                        
+                    case MEGAShareTypeAccessOwner:
+                        [self browserWithAction:BrowserActionMove];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+                
+            case 2: {
+                switch (accessType) {
+                    case MEGAShareTypeAccessRead:
+                    case MEGAShareTypeAccessReadWrite:
+                        [self delete];
+                        break;
+                        
+                    case MEGAShareTypeAccessFull:
+                        [self rename];
+                        break;
+                        
+                    case MEGAShareTypeAccessOwner:
+                        [self browserWithAction:BrowserActionCopy];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+                
+            case 3: {
+                switch (accessType) {
+                    case MEGAShareTypeAccessFull:
+                        [self delete];
+                        break;
+                        
+                    case MEGAShareTypeAccessOwner:
+                        [self rename];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+            }
+                
+            case 4: //Move to the Rubbish Bin / Remove
+                [self delete];
+                break;
         }
-            
-        case 4: //Move to the Rubbish Bin / Remove
-            [self delete];
-            break;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -830,6 +1144,35 @@
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             break;
             
+        case MEGARequestTypeShare: {
+            
+            remainingOperations--;
+            
+            if (remainingOperations == 0) {
+                switch ([request access]) {
+                    case MEGAShareTypeAccessUnkown:
+                        if (numberOfShares > 1) {
+                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"sharesRemoved", nil)];
+                        } else {
+                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
+            
+            break;
+        }
+            
+        case MEGARequestTypeRemove: {
+            if (self.displayMode == DisplayModeSharedItem) {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", nil)];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -874,8 +1217,13 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:base64Handle];
         if (([transferTag integerValue] == transfer.tag) && ([self.node.base64Handle isEqualToString:base64Handle])) {
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [cell.textLabel setText:AMLocalizedString(@"queued", @"Queued")];
+            NodeTableViewCell *cell;
+            if (self.displayMode == DisplayModeSharedItem) {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            } else {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            }
+            [cell.nameLabel setText:AMLocalizedString(@"queued", @"Queued")];
         }
     }
 }
@@ -893,8 +1241,13 @@
             NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
             NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
             
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [cell.textLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
+            NodeTableViewCell *cell;
+            if (self.displayMode == DisplayModeSharedItem) {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            } else {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            }
+            [cell.nameLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
     }
 }
@@ -912,8 +1265,13 @@
                 [cancelDownloadAlertView dismissWithClickedButtonIndex:0 animated:YES];
             }
             
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:0];
-            [cell.textLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
+            NodeTableViewCell *cell;
+            if (self.displayMode == DisplayModeSharedItem) {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            } else {
+                cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            }
+            [cell.nameLabel setText:AMLocalizedString(@"savedForOffline", @"Saved for offline")];
             [self.tableView reloadData];
         }
     }

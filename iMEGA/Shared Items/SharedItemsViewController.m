@@ -30,6 +30,7 @@
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "SharedItemsViewController.h"
+#import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
 @interface SharedItemsViewController () <UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
@@ -413,6 +414,39 @@
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    MEGANode *node = nil;
+    MEGAShare *share = nil;
+    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Incoming
+            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
+            share = [_incomingShareList shareAtIndex:indexPath.row];
+            break;
+        }
+            
+        case 1: { //Outgoing
+            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
+            share = [_outgoingSharesMutableArray objectAtIndex:indexPath.row];
+            break;
+        }
+    }
+    
+    DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
+    [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
+    
+    NSString *email = [share user];
+    NSString *userName = [_namesMutableDictionary objectForKey:email];
+    if (userName == nil) {
+        [detailsNodeInfoVC setUserName:email];
+    } else {
+        [detailsNodeInfoVC setUserName:userName];
+    }
+    [detailsNodeInfoVC setEmail:email];
+    [detailsNodeInfoVC setNode:node];
+
+    [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -484,7 +518,7 @@
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
         [contactsVC setContactsMode:ContactsShareFoldersWith];
-        [contactsVC setNodesArray:_selectedNodesMutableArray];
+        [contactsVC setNodesArray:[_selectedNodesMutableArray copy]];
         [self presentViewController:navigationController animated:YES completion:nil];
         
         [self setEditing:NO animated:YES];
