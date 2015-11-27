@@ -318,8 +318,11 @@
             }
         }
         
-        CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
-        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+        NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
+        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
+            
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
             [cell.thumbnailImageView.layer setCornerRadius:4];
             [cell.thumbnailImageView.layer setMasksToBounds:YES];
             
@@ -327,21 +330,26 @@
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
-            if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
-            }
-            
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage == nil) {
                 thumbnailImage = [Helper defaultPhotoImage];
             }
+            
             [cell.thumbnailImageView setImage:thumbnailImage];
         } else {
-            UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-            [cell.thumbnailImageView setImage:iconImage];
-        }
-        if (fileUTI) {
-            CFRelease(fileUTI);
+            CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+                if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+                    [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
+                }
+            } else {
+                UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
+                [cell.thumbnailImageView setImage:iconImage];
+            }
+            
+            if (fileUTI) {
+                CFRelease(fileUTI);
+            }
         }
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];

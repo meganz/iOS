@@ -40,6 +40,7 @@
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
+#import "UIImage+Utils.h"
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -962,6 +963,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if ([request type] == MEGARequestTypeSetAttrFile && [[NSFileManager defaultManager] fileExistsAtPath:request.file.stringByDeletingPathExtension]) {
+        [[NSFileManager defaultManager] removeItemAtPath:request.file.stringByDeletingPathExtension error:nil];
+    }
+    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1229,8 +1234,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (isImage([transfer fileName].pathExtension)) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            
             NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
@@ -1244,6 +1247,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (!previewExists) {
                 [api createPreview:[transfer path] destinatioPath:previewFilePath];
             }
+        }
+        
+        if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
+            NSURL *videoURL = [NSURL fileURLWithPath:transfer.path];
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            generator.appliesPreferredTrackTransform = YES;
+            CMTime requestedTime = CMTimeMake(1, 60);
+            CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
+            UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
+            
+            UIImage *croppedImage = [thumbnailImage imageByScalingAndCroppingForSize:CGSizeMake(120, 120)];
+            NSString *thumbnailFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:transfer.fileName.stringByDeletingPathExtension];
+            
+            [UIImageJPEGRepresentation(croppedImage, 1) writeToFile:thumbnailFilePath atomically:YES];
+            
+            CGImageRelease(imgRef);
+            
+            [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
         }
     }
     
