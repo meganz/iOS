@@ -99,7 +99,7 @@
     [self.moreNavigationController.view setTintColor:megaRed];
     
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
-    if (tabsOrderArray) {
+    if (tabsOrderArray && ([tabsOrderArray count] == [defaultViewControllersMutableArray count])) {
         NSMutableArray *customOrderMutableArray = [NSMutableArray arrayWithCapacity:defaultViewControllersMutableArray.count];
         for (NSNumber *tabBarNumber in tabsOrderArray) {
             [customOrderMutableArray addObject:[defaultViewControllersMutableArray objectAtIndex:tabBarNumber.unsignedIntegerValue]];
@@ -169,6 +169,7 @@
             [tabsOrderMutableArray addObject:[NSNumber numberWithInteger:navigationController.tabBarItem.tag]];
         }
         [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:tabsOrderMutableArray] forKey:@"TabsOrderInTabBar"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 

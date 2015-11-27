@@ -151,6 +151,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    if ([self.tableView isEditing]) {
+        [self setEditing:NO animated:NO];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
