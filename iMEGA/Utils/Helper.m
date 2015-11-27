@@ -202,6 +202,7 @@ static NSInteger linkNodeOption;
                                 @"m":@"source_code",
                                 @"mm":@"source_code",
                                 @"m3u":@"playlist",
+                                @"m4v":@"video",
                                 @"m4a":@"audio",
                                 @"max":@"3d",
                                 @"mdb":@"database",
