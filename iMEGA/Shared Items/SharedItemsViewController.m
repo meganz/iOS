@@ -776,7 +776,10 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            //TODO: Node details
+            CloudDriveTableViewController *cloudTVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cloudTVC setParentNode:node];
+            [cloudTVC setDisplayMode:DisplayModeCloudDrive];
+            [self.navigationController pushViewController:cloudTVC animated:YES];
             break;
         }
         
