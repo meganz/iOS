@@ -117,6 +117,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    if ([self.tableView isEditing]) {
+        [self setEditing:NO animated:NO];
+    }
+    
     [_namesMutableDictionary removeAllObjects];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -699,8 +703,8 @@
                         [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
                     }
                 }
-                
-                [cell.permissionsButton setImage:[self permissionsButtonImageFor:[share access]] forState:UIControlStateNormal];
+                MEGAShare *currentShare = [outSharesMutableArray objectAtIndex:0];
+                [cell.permissionsButton setImage:[self permissionsButtonImageFor:[currentShare access]] forState:UIControlStateNormal];
             }
             
             [cell.infoLabel setText:userName];

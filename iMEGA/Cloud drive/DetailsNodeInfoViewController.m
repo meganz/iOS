@@ -82,7 +82,7 @@
     switch (accessType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite:
-            if (self.displayMode == DisplayModeContact) {
+            if ((self.displayMode == DisplayModeContact) || (self.displayMode == DisplayModeSharedItem)) {
                 actions = 3; //Download, copy and leave
             } else {
                 actions = 2; //Download and copy
@@ -266,7 +266,7 @@
 - (void)delete {
     if ([MEGAReachabilityManager isReachable]) {
         //Leave folder or remove folder in a incoming shares
-        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull)) {
+        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
             [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
