@@ -601,6 +601,9 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="epU-tf-jJu">
+                        <barButtonItem key="backBarButtonItem" title=" " id="nAa-92-1hE"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="foldersFilesLabel" destination="AaT-lc-NKa" id="MQf-9Q-H3z"/>
                         <outlet property="infoLabel" destination="8Xy-WI-wWd" id="gRr-6G-4QN"/>

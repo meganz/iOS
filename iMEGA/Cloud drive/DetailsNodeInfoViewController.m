@@ -29,7 +29,7 @@
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "NodeTableViewCell.h"
-
+#import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "GetLinkActivity.h"
@@ -917,7 +917,10 @@
     
     if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         if (indexPath.section == 0) {
-            //TODO: Contacts view
+            ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            [contactsVC setContactsMode:ContactsFolderSharedWith];
+            [contactsVC setNode:self.node];
+            [self.navigationController pushViewController:contactsVC animated:YES];
         } else {
             switch (indexPath.row) {
                 case  0:

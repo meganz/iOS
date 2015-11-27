@@ -46,6 +46,8 @@
     
     BOOL allUsersSelected;
     BOOL isSwipeEditing;
+    
+    MEGAUser *userTapped;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -53,6 +55,7 @@
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
+@property (nonatomic, strong) NSMutableArray *outSharesForNodeMutableArray;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -87,20 +90,39 @@
         [negativeSpaceBarButtonItem setWidth:-4.0];
     }
     
-    NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
-    self.navigationItem.rightBarButtonItems = buttonsItems;
-    
-    [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", @"Share folder")];
     [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
     
-    if (self.contactsMode == ContactsShareFolderWith || self.contactsMode == ContactsShareFoldersWith) {
-        [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
-        [_shareFolderWithButton setEnabled:YES];
-        [_shareFolderWithButton setHidden:NO];
-        
-        [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
+    switch (self.contactsMode) {
+        case Contacts: {
+            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
+            self.navigationItem.rightBarButtonItems = buttonsItems;
+            
+            [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
+            break;
+        }
+            
+        case ContactsShareFolderWith:
+        case ContactsShareFoldersWith: {
+            [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
+            [_shareFolderWithButton setEnabled:YES];
+            [_shareFolderWithButton setHidden:NO];
+            
+            [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+            [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
+            break;
+        }
+            
+        case ContactsFolderSharedWith: {
+            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
+            [self.navigationItem setRightBarButtonItems:buttonsItems];
+            
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            [_toolbar setItems:@[flexibleItem, _deleteBarButtonItem]];
+            
+            break;
+        }
     }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -108,7 +130,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
+    if (self.contactsMode == ContactsFolderSharedWith) {
+        [self.navigationItem setTitle:AMLocalizedString(@"sharedWith", nil)];
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
+    }
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
@@ -185,17 +211,25 @@
 - (void)reloadUI {
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     
-    self.users = [[MEGASdkManager sharedMEGASdk] contacts];
-    for (NSInteger i = 0; i < [[self.users size] integerValue] ; i++) {
-        MEGAUser *u = [self.users userAtIndex:i];
-        if ([u access] == MEGAUserVisibilityVisible)
-            [self.visibleUsersArray addObject:u];
+    if (self.contactsMode == ContactsFolderSharedWith) {
+        _outSharesForNodeMutableArray = [self outSharesForNode:self.node];
+        for (MEGAShare *share in _outSharesForNodeMutableArray) {
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
+            [self.visibleUsersArray addObject:user];
+        }
+    } else {
+        self.users = [[MEGASdkManager sharedMEGASdk] contacts];
+        for (NSInteger i = 0; i < [[self.users size] integerValue] ; i++) {
+            MEGAUser *u = [self.users userAtIndex:i];
+            if ([u access] == MEGAUserVisibilityVisible)
+                [self.visibleUsersArray addObject:u];
+        }
+        
+        MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+        self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
     }
     
     [self.tableView reloadData];
-    
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    self.contactRequestsBarButtonItem.badgeValue = [NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue];
 }
 
 - (void)internetConnectionChanged {
@@ -208,6 +242,69 @@
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     [self.addBarButtonItem setEnabled:boolValue];
     [self.editBarButtonItem setEnabled:boolValue];
+}
+
+- (NSMutableArray *)outSharesForNode:(MEGANode *)node {
+    
+    NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
+    
+    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
+    NSUInteger outSharesForNodeCount = [[outSharesForNodeShareList size] unsignedIntegerValue];
+    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+        if ([share user] != nil) {
+            [outSharesForNodeMutableArray addObject:share];
+        }
+    }
+    
+    return outSharesForNodeMutableArray;
+}
+
+- (void)selectPermissions {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
+    [actionSheet setTag:1];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [actionSheet showInView:self.view];
+    } else {
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+            UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+            if ([window.subviews containsObject:self.view]) {
+                [actionSheet showInView:self.view];
+            } else {
+                [actionSheet showInView:window];
+            }
+        } else {
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        }
+    }
+}
+
+- (UIImage *)permissionsButtonImageFor:(MEGAShareType)shareType {
+    UIImage *image;
+    switch (shareType) {
+        case MEGAShareTypeAccessRead:
+            image = [UIImage imageNamed:@"readPermissions"];
+            break;
+            
+        case MEGAShareTypeAccessReadWrite:
+            image =  [UIImage imageNamed:@"readWritePermissions"];
+            break;
+            
+        case MEGAShareTypeAccessFull:
+            image = [UIImage imageNamed:@"fullAccessPermissions"];
+            break;
+            
+        default:
+            image = nil;
+            break;
+    }
+    
+    return image;
 }
 
 #pragma mark - IBActions
@@ -258,12 +355,19 @@
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     
-    NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
-    
-    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [removeAlertView show];
-    removeAlertView.tag = 1;
-    [removeAlertView show];
+    if (self.contactsMode == ContactsFolderSharedWith) {
+        remainingOperations = [self.selectedUsersArray count];
+        for (MEGAUser *user in self.selectedUsersArray) {
+            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:self];
+        }
+    } else {
+        NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
+        
+        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        [removeAlertView show];
+        removeAlertView.tag = 1;
+        [removeAlertView show];
+    }
 }
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
@@ -299,27 +403,8 @@
             }
         }
         
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
-        [actionSheet setTag:1];
+        [self selectPermissions];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            [actionSheet showInView:self.view];
-        } else {
-            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-                if ([window.subviews containsObject:self.view]) {
-                    [actionSheet showInView:self.view];
-                } else {
-                    [actionSheet showInView:window];
-                }
-            } else {
-                [actionSheet showFromTabBar:self.tabBarController.tabBar];
-            }
-        }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
@@ -348,16 +433,41 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-    
-    UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
-    [cell setSelectedBackgroundView:view];
-    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     
-    cell.nameLabel.text = [user email];
+    ContactTableViewCell *cell;
+    NSString *userEmail = [user email];
+    NSString *userName = nil;
+    if (self.contactsMode == ContactsFolderSharedWith) {
+        userName = [self.namesMutableDictionary objectForKey:userEmail];
+        
+        if (userName != nil) {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
+            [cell.nameLabel setText:userName];
+            [cell.shareLabel setText:userEmail];
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
+            [cell.nameLabel setText:userEmail];
+            
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+        }
+        MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
+        [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        [cell.nameLabel setText:userEmail];
+        
+        int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
+        if (numFilesShares == 0) {
+            cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
+        } else  if (numFilesShares == 1 ) {
+            cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
+        } else {
+            cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
+        }
+    }
     
     NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
@@ -371,15 +481,6 @@
         [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
     }
     
-    int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
-    if (numFilesShares == 0) {
-        cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
-    } else  if (numFilesShares == 1 ) {
-        cell.shareLabel.text = AMLocalizedString(@"oneFolderShared", @" folder shared");
-    } else {
-        cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
-    }
-    
     BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
     
     if (value) {
@@ -390,6 +491,11 @@
             }
         }
     }
+    
+    UIView *view = [[UIView alloc] init];
+    [view setBackgroundColor:megaInfoGray];
+    [cell setSelectedBackgroundView:view];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     return cell;
 }
@@ -422,15 +528,20 @@
         return;
     }
     
-    if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-        CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-
-        [self.navigationController pushViewController:cloud animated:YES];
-        cloud.navigationItem.title = [user email];
-
-        [cloud setUser:user];
-        [cloud setDisplayMode:DisplayModeContact];
+    if (self.contactsMode == ContactsFolderSharedWith) {
+        userTapped = user;
+        [self selectPermissions];
+    } else {
+        if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+            CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            
+            [self.navigationController pushViewController:cloud animated:YES];
+            cloud.navigationItem.title = [user email];
+            
+            [cloud setUser:user];
+            [cloud setDisplayMode:DisplayModeContact];
+        }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -524,18 +635,32 @@
             
             remainingOperations = self.selectedUsersArray.count;
             
-            if (self.contactsMode == ContactsShareFolderWith) {
-                for (MEGAUser *u in self.selectedUsersArray) {
-                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
-                }
-            } else if (self.contactsMode == ContactsShareFoldersWith) {
-                for (MEGAUser *u in self.selectedUsersArray) {
-                    for (MEGANode *node in self.nodesArray) {
-                        [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:u level:level delegate:self];
+            switch (self.contactsMode) {
+                case ContactsShareFolderWith: {
+                    for (MEGAUser *u in self.selectedUsersArray) {
+                        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
                     }
+                    break;
                 }
+                    
+                case ContactsShareFoldersWith: {
+                    for (MEGAUser *u in self.selectedUsersArray) {
+                        for (MEGANode *node in self.nodesArray) {
+                            [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:u level:level delegate:self];
+                        }
+                    }
+                    break;
+                }
+                    
+                case ContactsFolderSharedWith: {
+                    remainingOperations = 1;
+                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:userTapped level:level delegate:self];
+                    break;
+                }
+                    
+                default:
+                    break;
             }
-            
             break;
         }
             
@@ -713,19 +838,42 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrUser: {
-            for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
-                if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {
-                    NSString *fileName = [request email];                    
-                    NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                    NSString *avatarFilePath = [cacheDirectory stringByAppendingPathComponent:@"thumbnailsV3"];
-                    avatarFilePath = [avatarFilePath stringByAppendingPathComponent:fileName];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                    if (fileExists) {
-                        [ctvc.avatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-                        ctvc.avatarImageView.layer.cornerRadius = ctvc.avatarImageView.frame.size.width/2;
-                        ctvc.avatarImageView.layer.masksToBounds = YES;
+            
+            if ([request file] != nil) {
+                for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
+                    if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {
+                        NSString *fileName = [request email];
+                        NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                        NSString *avatarFilePath = [cacheDirectory stringByAppendingPathComponent:@"thumbnailsV3"];
+                        avatarFilePath = [avatarFilePath stringByAppendingPathComponent:fileName];
+                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+                        if (fileExists) {
+                            [ctvc.avatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
+                            ctvc.avatarImageView.layer.cornerRadius = ctvc.avatarImageView.frame.size.width/2;
+                            ctvc.avatarImageView.layer.masksToBounds = YES;
+                        }
                     }
                 }
+            } else {
+                NSString *name;
+                switch ([request paramType]) {
+                    case MEGAUserAttributeFirstname:
+                        name = [request text];
+                        if (name != nil) {
+                            [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        } else {
+                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
+                        }
+                        break;
+                        
+                    case MEGAUserAttributeLastname:
+                        name = [self.namesMutableDictionary objectForKey:[request email]];
+                        name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
+                        [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        break;
+                }
+                
+                [self.tableView reloadData];
             }
             break;
         }
@@ -748,8 +896,26 @@
         case MEGARequestTypeShare: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                if (self.contactsMode == ContactsFolderSharedWith) {
+                    if ([request access] == MEGAShareTypeAccessUnkown) {
+                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
+                        
+                        [self setEditing:NO animated:NO];
+                        
+                        if ([self.visibleUsersArray count] == 1) {
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }
+                    } else {
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
+                    }
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self reloadUI];
+                    });
+                } else {
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             }
             break;
         }
