@@ -33,7 +33,7 @@
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
@@ -404,6 +404,15 @@
             }
                 
             case 1: { //Outgoing
+                ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+                [contactsVC setContactsMode:ContactsFolderSharedWith];
+                
+                CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+                NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+                MEGANode *node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                [contactsVC setNode:node];
+                [contactsVC setNamesMutableDictionary:_namesMutableDictionary];
+                [self.navigationController pushViewController:contactsVC animated:YES];
                 break;
             }
         }
@@ -547,7 +556,7 @@
         
         NSString *alertMessage;
         if ((outSharesCount == 1) && ([_selectedNodesMutableArray count] == 1)) {
-            alertMessage = AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil);
+            alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
         } else if ((outSharesCount > 1) && ([_selectedNodesMutableArray count] == 1)) {
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), _numberOfShares];
         } else {
@@ -561,53 +570,6 @@
         
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-    }
-}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        NSInteger shareType;
-        switch (buttonIndex) {
-            case 0:
-                shareType = MEGAShareTypeAccessRead;
-                break;
-                
-            case 1:
-                shareType = MEGAShareTypeAccessReadWrite;
-                break;
-                
-            case 2:
-                shareType = MEGAShareTypeAccessFull;
-                break;
-                
-            default:
-                return;
-        }
-        
-        MEGAShare *share = [_outgoingSharesMutableArray objectAtIndex:_indexPath.row];
-        
-        if ([share access] != shareType) {
-            _remainingOperations = 1;
-            MEGANode *node = [_outgoingNodesMutableArray objectAtIndex:_indexPath.row];
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
-            [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:user level:shareType delegate:self];
-        }
-        
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-    }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
-        }
     }
 }
 
@@ -633,7 +595,6 @@
             break;
     }
 }
-
 
 #pragma mark - UITableViewDataSource
 
