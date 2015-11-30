@@ -904,7 +904,7 @@
                     if ([request access] == MEGAShareTypeAccessUnkown) {
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
                         
-                        [self setEditing:NO animated:NO];
+                        [self editTapped:_editBarButtonItem];
                         
                         if ([self.visibleUsersArray count] == 1) {
                             [self.navigationController popToRootViewControllerAnimated:YES];

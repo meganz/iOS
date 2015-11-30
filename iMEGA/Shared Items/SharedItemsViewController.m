@@ -692,7 +692,6 @@
             outSharesCount = [outSharesMutableArray count];
             if (outSharesCount > 1) {
                 userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
-                [cell.permissionsButton setImage:[UIImage imageNamed:@"permissions"] forState:UIControlStateNormal];
             } else {
                 userName = [_namesMutableDictionary objectForKey:[share user]];
                 if (userName ==  nil) {
@@ -703,9 +702,9 @@
                         [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
                     }
                 }
-                MEGAShare *currentShare = [outSharesMutableArray objectAtIndex:0];
-                [cell.permissionsButton setImage:[self permissionsButtonImageFor:[currentShare access]] forState:UIControlStateNormal];
             }
+            
+            [cell.permissionsButton setImage:[UIImage imageNamed:@"permissions"] forState:UIControlStateNormal];
             
             [cell.infoLabel setText:userName];
             
