@@ -94,6 +94,8 @@
     
     switch (self.contactsMode) {
         case Contacts: {
+            self.namesMutableDictionary = [[NSMutableDictionary alloc] init];
+            
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             
@@ -113,6 +115,10 @@
         }
             
         case ContactsFolderSharedWith: {
+            if(self.namesMutableDictionary == nil) {
+                self.namesMutableDictionary = [[NSMutableDictionary alloc] init];
+            }
+            
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
             [self.navigationItem setRightBarButtonItems:buttonsItems];
             
@@ -154,6 +160,8 @@
     if ([self.tableView isEditing]) {
         [self setEditing:NO animated:NO];
     }
+    
+    [self.namesMutableDictionary removeAllObjects];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
