@@ -950,6 +950,14 @@
     [self reloadUI];
 }
 
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    for (NSInteger i = 0 ; i < userList.size.integerValue ; i++) {
+        NSString *userEmail = [[userList userAtIndex:i] email];
+        [self.namesMutableDictionary removeObjectForKey:userEmail];
+    }
+    [self reloadUI];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {

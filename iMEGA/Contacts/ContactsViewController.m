@@ -920,10 +920,6 @@
                     } else {
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
                     }
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self reloadUI];
-                    });
                 } else {
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                     [self dismissViewControllerAnimated:YES completion:nil];
@@ -946,6 +942,14 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    for (NSInteger i = 0 ; i < userList.size.integerValue ; i++) {
+        NSString *userEmail = [[userList userAtIndex:i] email];
+        [self.namesMutableDictionary removeObjectForKey:userEmail];
+    }
+    [self reloadUI];
+}
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self reloadUI];
 }
 
