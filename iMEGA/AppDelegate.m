@@ -606,11 +606,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
+    NSInteger i;
+    for (i = 0 ; i < self.mainTBC.viewControllers.count ; i++) {
+        if ([[[self.mainTBC.viewControllers objectAtIndex:i] tabBarItem] tag] == 4) {
+            break;
+        }
+    }
+    
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
     if ([[incomingContactsLists size] integerValue]) {
-        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = [NSString stringWithFormat:@"%ld", (long)[[incomingContactsLists size] integerValue]];
+        [[self.mainTBC.viewControllers objectAtIndex:i] tabBarItem].badgeValue = [NSString stringWithFormat:@"%ld", (long)[[incomingContactsLists size] integerValue]];
     } else {
-        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = nil;
+        [[self.mainTBC.viewControllers objectAtIndex:i] tabBarItem].badgeValue = nil;
     }
 }
 
