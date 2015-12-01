@@ -912,11 +912,12 @@
                     if ([request access] == MEGAShareTypeAccessUnkown) {
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
                         
-                        [self editTapped:_editBarButtonItem];
-                        
-                        if ([self.visibleUsersArray count] == 1) {
+                        if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
                             [self.navigationController popToRootViewControllerAnimated:YES];
                         }
+                        
+                        [self editTapped:_editBarButtonItem];
+                        
                     } else {
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
                     }
