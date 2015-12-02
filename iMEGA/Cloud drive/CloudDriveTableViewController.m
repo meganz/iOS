@@ -797,7 +797,7 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
+    UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
@@ -806,28 +806,31 @@
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    return [UIImage imageNamed:@"emptyCloudDrive"];
+                    image = [UIImage imageNamed:@"emptyCloudDrive"];
                 } else {
-                    return [UIImage imageNamed:@"emptyFolder"];
+                    image = [UIImage imageNamed:@"emptyFolder"];
                 }
                 break;
             }
                 
             case DisplayModeContact:
-                return [UIImage imageNamed:@"emptyFolder"];
+                image = [UIImage imageNamed:@"emptyFolder"];
                 break;
                 
-            case DisplayModeRubbishBin:
+            case DisplayModeRubbishBin: {
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    return [UIImage imageNamed:@"emptyRubbishBin"];
+                    image = [UIImage imageNamed:@"emptyRubbishBin"];
                 } else {
-                    return [UIImage imageNamed:@"emptyFolder"];
+                    image = [UIImage imageNamed:@"emptyFolder"];
                 }
                 break;
+            }
         }
     } else {
-         return [UIImage imageNamed:@"noInternetConnection"];
+         image = [UIImage imageNamed:@"noInternetConnection"];
     }
+    
+    return image;
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1790,18 +1793,8 @@
         
         // If file doesn't exist in MEGA then upload it
         if (node == nil) {
-            UIAlertView *toastAlertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                     message:AMLocalizedString(@"uploadStarted_Message", @"Message shown when the user select upload a file")
-                                                                    delegate:nil
-                                                           cancelButtonTitle:nil
-                                                           otherButtonTitles:nil, nil];
-            [toastAlertView show];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            int duration = 1; // duration in seconds
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [toastAlertView dismissWithClickedButtonIndex:0 animated:YES];
-            });
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
@@ -2097,7 +2090,7 @@
                 [alertView show];
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCanceled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

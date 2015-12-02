@@ -361,10 +361,17 @@ static CameraUploads *instance = nil;
 #pragma mark - Utils
 
 - (void)setBadgeValue {
+    NSInteger i;
+    for (i = 0 ; i < self.tabBarController.viewControllers.count ; i++) {
+        if ([[[self.tabBarController.viewControllers objectAtIndex:i] tabBarItem] tag] == 1) {
+            break;
+        }
+    }
+    
     if ([self.assetUploadArray count] > 0) {
-        [[self.tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long) [self.assetUploadArray count]];
+        [[self.tabBarController.viewControllers objectAtIndex:i] tabBarItem].badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long) [self.assetUploadArray count]];
     } else {
-        [[self.tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = nil;
+        [[self.tabBarController.viewControllers objectAtIndex:i] tabBarItem].badgeValue = nil;
     }
 }
 

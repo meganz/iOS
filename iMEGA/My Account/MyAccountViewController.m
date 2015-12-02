@@ -206,18 +206,29 @@
 }
 
 - (NSString *)stringWithoutUnit:(NSString *)stringFromByteCount {
+    
     NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:0];
-    if ([string isEqualToString:@"Zero"]) {
+    if ([string isEqualToString:@"Zero"] || ([string length] == 0)) {
         string = @"0";
     }
     return string;
 }
 
 - (NSString *)stringWithoutCount:(NSString *)stringFromByteCount {
-    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:1];
-    if ([string isEqualToString:@"bytes"]) {
+    
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *string;
+    
+    if (componentsSeparatedByStringArray.count == 1) {
         string = @"KB";
+    } else {
+        string = [componentsSeparatedByStringArray objectAtIndex:1];
+        
+        if ([string isEqualToString:@"bytes"] || ([string length] == 0)) {
+            string = @"KB";
+        }
     }
+    
     return string;
 }
 

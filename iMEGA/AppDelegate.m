@@ -33,6 +33,7 @@
 #import "MEGAProxyServer.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
+#import "UpgradeTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -46,6 +47,8 @@
 
 #import <StoreKit/StoreKit.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
 
@@ -58,13 +61,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeOpenInLink
 };
 
-@interface AppDelegate () <LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    BOOL isOverquota;
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
-@property (nonatomic, strong) NSString *link;
+@property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
@@ -75,6 +79,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error: nil];
+    
     self.IpAddress = [self getIpAddress];
     [MEGAReachabilityManager sharedManager];
     
@@ -96,6 +103,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
 
@@ -284,21 +292,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    self.link = [url absoluteString];
+    self.link = url;
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     } else {
         if (![LTHPasscodeViewController doesPasscodeExist]) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     }
     
@@ -343,7 +347,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIDisplay-Light" size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
     
@@ -352,8 +356,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UIBarButtonItem appearance] setTintColor:megaRed];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0]} forState:UIControlStateNormal];
-        
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaMediumGray} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateSelected];
+    
     [[UITextField appearance] setTintColor:megaRed];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
     
@@ -422,22 +427,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [Helper setSelectedOptionOnLink:0];
 }
 
-- (void)processLink:(NSString *)url {
-    // Open in
-    if ([url rangeOfString:@"file:///"].location != NSNotFound) {
-        self.urlType = URLTypeOpenInLink;
-        [self openIn];
-        return;
-    }
+- (void)processLink:(NSURL *)url {
     
-    NSString *afterSlashesString = [url substringFromIndex:7]; // "mega://" = 7 characters
+    NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
         return;
     }
         
-    [self dissmissPreviousLinkIfPresented];
+    [self dissmissPresentedViews];
+    
+    if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
+        self.urlType = URLTypeOpenInLink;
+        [self openIn];
+        return;
+    }
         
     if ([self isFileLink:afterSlashesString]) {
         self.urlType = URLTypeFileLink;
@@ -457,16 +462,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
 }
 
-- (void)dissmissPreviousLinkIfPresented {
-    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-        MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-        if ([navigationController.topViewController isKindOfClass:[FileLinkViewController class]] || [navigationController.topViewController isKindOfClass:[FolderLinkViewController class]]) {
-            [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:^{
-                if ([navigationController.presentedViewController isKindOfClass:[QLPreviewController class]]) {
-                    [self.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-                }
-            }];
-        }
+- (void)dissmissPresentedViews {
+    if (self.window.rootViewController.presentedViewController != nil) {
+        [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -573,7 +571,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-        [browserVC setLocalpath:[self.link substringFromIndex:7]]; // "file://" = 7 characters
+        [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
         if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
@@ -605,6 +603,29 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
+}
+
+- (void)setBadgeValueForIncomingContactRequests {
+    NSInteger contactsTabPosition;
+    for (contactsTabPosition = 0 ; contactsTabPosition < self.mainTBC.viewControllers.count ; contactsTabPosition++) {
+        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 4) {
+            break;
+        }
+    }
+    
+    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    long incomingContacts = [[incomingContactsLists size] longValue];
+    NSString *badgeValue;
+    if (incomingContacts) {
+        badgeValue = [NSString stringWithFormat:@"%ld", incomingContacts];
+    } else {
+        badgeValue = nil;
+    }
+    
+    if ((contactsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
+        [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
+    }
+    [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
 }
 
 #pragma mark - Get IP Address
@@ -694,15 +715,29 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag == 0) && (buttonIndex == 1)) {
+        
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dissmissPresentedViews)];
+        [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+        
+        [self dissmissPresentedViews];
+        
+        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
     if ([MEGAReachabilityManager isReachable]) {
         if (self.link != nil) {
             [self processLink:self.link];
-            if (self.urlType != URLTypeOpenInLink) {
-                self.link = nil;
-            }
+            self.link = nil;
         }
     } else {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
@@ -919,6 +954,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEOverQuota: {
+                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                isOverquota = YES;
+                break;
+            }
+                
             case MEGAErrorTypeApiESSL: {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
@@ -945,9 +986,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
-                if (self.urlType != URLTypeOpenInLink) {
-                    self.link = nil;
-                }
+                self.link = nil;
             }
                         
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
@@ -973,17 +1012,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     
                     if ([Helper selectedOptionOnLink] != 0) {
                         [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                    }
-                    if (self.urlType == URLTypeOpenInLink) {
-                        [self performSelector:@selector(processLink:) withObject:self.link afterDelay:0.75f];
+                    } else {
+                        if (self.urlType == URLTypeOpenInLink) {
+                            [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                        }
                     }
                 }
                 
                 if (self.link != nil) {
                     [self processLink:self.link];
-                    if (self.urlType != URLTypeOpenInLink) {
-                        self.link = nil;
-                    }
+                    self.link = nil;
                 }
             }
             
@@ -1001,6 +1039,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             isFetchNodesDone = YES;
             
             [SVProgressHUD dismiss];
+            
+            [self setBadgeValueForIncomingContactRequests];
             break;
         }
             
@@ -1035,6 +1075,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeAccountDetails: {
+            
+            if (isOverquota) {
+                UIAlertView *alertView;
+                if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
+                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
+                } else {
+                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                }
+                [alertView setTag:0];
+                [alertView show];
+                isOverquota = NO;
+            }
+            
+            break;
+        }
+            
         default:
             break;
     }
@@ -1062,6 +1119,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    
+    if ([error type]) {
+        switch ([error type]) {
+            case MEGAErrorTypeApiEOverQuota: {
+                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                isOverquota = YES;
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
+    
     if (transfer.isStreamingTransfer) {
         return;
     }
@@ -1134,6 +1205,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #ifdef DEBUG
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
+}
+
+- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
+    [self setBadgeValueForIncomingContactRequests];
 }
 
 @end

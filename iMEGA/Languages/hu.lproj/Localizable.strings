@@ -1,0 +1,712 @@
+/* Button title to cancel something */
+"cancel"="Mégse";
+/* Button title to accept something */
+"ok"="OK";
+/* */
+"upload"="Feltöltés";
+/*  */
+"error"="Hiba";
+/*  */
+"name"="Név";
+/*  */
+"passcode"="Számkód";
+/* "Size" of the file or folder you are sharing */
+"size"="Méret";
+/*  */
+"folder"="Mappa";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="Nem áll rendelkezésre kamera";
+/* Alert title to attract attention */
+"attention"="Figyelem";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="Kérjük adjon engedélyt a MEGA alkalmazásnak a Beállításokban, hogy hozzáférhessen a Kamerához";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="Kérjük adjon engedélyt a MEGA alkalmazásnak a Beállításokban, hogy hozzáférhessen a fénykép könyvtárhoz";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="Nem tölthet le üres mappát";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="A fiók már aktiválva van. Kérjük, jelentkezzél be.";
+/* Message shown when the user clicks on an invalid link  */
+"invalidLink"="Érvénytelen MEGA Link";
+/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncrypted"="A fájl titkosított";
+/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncryptedMessage"="Jelen pillanatban nem importálhat vagy tölthet le titkosított fájlt.";
+/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncrypted"="A mappa titkosított";
+/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncryptedMessage"="Jelen pillanatban nem importálhat vagy tölthet le titkosított mappát.";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="Kijelentkezve";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="Ebből a készülékből másik helyről jelentkezett ki";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle"="A szerver SSL kulcsa nem erősíthető meg. Lehetséges, hogy közbeékelődéses támadás áldozata.";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="MEGA TÁRHELY";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="MEGA SEBESSÉG";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="MEGA ADATVÉDELEM";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="MEGA HOZZÁFÉRÉS";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="Regisztrálj most 50GB inyenes tárhelyért";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="A feltöltések gyorsak. Osszon meg fájlokat gyorsan, mindenkivel.";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="Legyenek adataid biztonságban a MEGA titkosítási rendszerével.";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="Titkosított hozzáférés elérése bárhol, bármikor.";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="Bejelentkezés";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Nem rendelkezik fiókkal?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Fiók létrehozása";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="Fiók létrehozása";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="Már rendelkezik fiókkal?";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="Érvénytelen email és/vagy jelszó. Kérjük próbálja újra.";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="Írjon be érvényes emailt";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="Írjon be érvényes jelszót";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="Email";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="Jelszó";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="Egyetértek a MEGA Általános Szolgáltatási Feltételeivel";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="Írjon be érvényes nevet";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="A jelszavak nem egyeznek";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="El kell fogadnia az általános szolgáltatási feltételeket a MEGA-n fiók regisztrálásához.";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="Ez az e-mail cím már regisztrálva lett egy MEGA fiókhoz.";
+/* Message displayed when an action is completed successfully */
+"awesome"="Döbbenetes";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="Kérjük, ellenőrizze az e-mailjeit és kattintson a linkre a fiókja aktiválásához.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="Kérjük írja be jelszavát fiókja megerősítéséhez";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="Erősítse meg fiókját";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="Rossz jelszó";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="Másik fiókkal van bejelentkezve";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="Ha beleegyezik, akkor a jelenlegi fiók ki lesz jelentkeztetve és minden Offline adat törlésre kerül. Szeretné folytatni?";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="Fel kell szabadítania némi helyet";
+/* Title for the MEGA link view */
+"megaLink"="MEGA Link";
+/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
+"importButton"="Importálás a Felhőmeghajtóba";
+/* Button title to trigger the action of downloading the file to your device. */
+"downloadButton_fileLink"="Letöltés a MEGA alkalmazásra";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="Fájl megnyitása";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="A fájl, amelyet próbál letölteni nagyobb, mint a rendelkezésre álló memória.";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="A fájl, amelyet próbál megnyitni nagyobb, mint a rendelkezésre álló memória.";
+/* Error title shown when you open a file link and it's no longer available */
+"fileLinkUnavailableTitle"="A fájl link nem elérhető";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="Ez a következő okok miatt lehetséges:- A fájl törlésre került az ÁSZF/EFI (Elfogadható Felhasználási Irányelv, angolul AUP) megsértése miatt.- Érvénytelen URL – a link, amelyhez próbál hozzáférni, nem létezik.- A fájl törlésre került a felhasználó által.";
+/* DO NOT TRANSLATE, it will change (Process) */
+"fileAlreadyExist"="The file you want to download already exists Offline";
+/* Message shown when a download starts */
+"downloadStarted"="Letöltés megkezdve";
+/* DO NOT TRANSLATE, it will change (Design) */
+"megaFolder"="MEGA Folder Link";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="Letöltés";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="A mappa, amelyet próbál letölteni nagyobb, mint a rendelkezésre álló memória.";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="A '%@' nevű mappa nem hozható létre";
+/* Error title shown when a folder link doesn't exist. */
+"folderLinkUnavailableTitle"="A mappa link nem elérhető";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="Ez a következő okok miatt lehetséges:- A mappalink törlésre került az ÁSZF/EFI (Elfogadható Felhasználási Irányelv, angolul AUP) megsértése miatt.- Érvénytelen URL – a link, amelyhez próbál hozzáférni, nem létezik.- A mappalink törlésre került a felhasználó által.";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="Nincs internet kapcsolat";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="Üres mappa";
+/* Title shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_title"="Üres mappalink";
+/* Message shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_text"="Ez a link jelenleg nem rendelkezik fájlokkal.";
+/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
+"folderLinkEmptyState_textFolder"="Ez a gyermekmappa jelenleg nem rendelkezik fájlokkal.";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="Nincs fájl a Felhőmeghajtón";
+/* Title shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_titleContact"="Nincs fájl ebben a megosztott mappában";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="Szemetes kiürítése";
+/* Message shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_text"="Adjon hozzá fájlokat a fenti gombbal.";
+/* Message shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_textContact"="Osszon meg valamit! Adjon hozzá fájlokat a fenti gombbal.";
+/* Title shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_title"="Kamera feltöltések letiltva";
+/* Message shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_text"="Engedélyezze a Kamera feltöltéseket, hogy legyen egy másolata készüléke fényképeiről a MEGÁ-n.";
+/* Title shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_title"="Nincs Offline-ba mentett fájl";
+/* Message shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_text"="Töltsön le fájlokat, hogy használhassa azokat, amikor nincs internet kapcsolata.";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="Még nincs hozzáadva egy kapcsolat sem";
+/* Message shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_text"="Adjon hozzá kapcsolatokat a fenti gombbal.";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text"="Nincs bejövő megosztott mappa";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text"="Nincs kimenő megosztott mappa";
+/* Title of My Contacts section */
+"myContacts"="Kapcsolatok";
+/* Title of Contacts requests section */
+"contactRequests"="Kapcsolat kérések";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent"="Elküldve";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests"="Kérések";
+/* Success message shown when you acepted a contact request */
+"requestAccepted"="Kérés elfogadva";
+/* Success message shown when you Cancelled a contact request */
+"requestCancelled"="Kérés törölve";
+/* Success message shown when you remove a contact request */
+"requestDeleted"="Kérés törölve";
+/* Title shown when there's no pending request */
+"noRequestPending"="Nincsenek felkérések jelen pillanatban";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="Átvitelek szüneteltetve";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="No Transfers";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No Downloads";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No Uploads";
+/* Text shown under the upper title when the transfers are paused */
+"transfersEmptyState_textPaused"="Folytassa az átviteleket a fenti gombbal.";
+/* Text shown under the upper title when there's no transfers */
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
+/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
+"transfersEmptyState_textDownload"="Nem rendelkezik függőben lévő letöltéssel.";
+/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
+"transfersEmptyState_textUpload"="Nem rendelkezik függőben lévő feltöltéssel.";
+/* Title of the Cloud Drive section */
+"cloudDrive"="Tárhelyem ";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d fájl";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d fájl";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%d mappa";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d mappa";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="1 mappa • 1 fájl";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] mappa • [B] fájl";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d mappa • 1 fájl";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="1 mappa • %d fájl";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="Sorban áll";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="Letöltések vannak függőben";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="Próbálja később vagy szakítsa meg";
+/* Section title of the "Sort by" */
+"sortTitle"="RENDEZÉS";
+/* Button title to "Save" the selected option */
+"save"="Mentés";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="név (növekvő)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="név (csökkenő)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="Legnagyobb";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="legkisebb";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="legújabb";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="legrégebbi";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="Kiválaszt";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="Felvétel";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="Új mappa";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="Az új mappa neve";
+/* Title button for the create folder alert.  */
+"createFolderButton"="Létrehozás";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="Feltöltés máshonnan...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] már fel van töltve a következő néven: [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="A fájl már fel van töltve %@ néven";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="A(z) %d kijelölt fájl már fel van töltve ebbe a mappába.";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="Feltöltés megkezdve!";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="A fájl át lett helyezve a szemetesládába";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="A mappa át lett helyezve a szemetesládába";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="A fájl át lett helyezve";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="A mappa át lett helyezve";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="Már nem rendelkezik hozzáféréssel a fájlhoz";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Már nem rendelkezik hozzáféréssel a mappához";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="Mentés Offline-ba";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="Offline mentve";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="A Postaláda felirat az Apple általi használatra van fenntartva.";
+/* List option shown on the details of a file or folder */
+"getLink"="Link megszerzése";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="Link előállítása...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Link lemásolva";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Megnyitás máshol...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="Link eltávolítása";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="A link törlésre került";
+/* Title show when a file is being downloaded */
+"downloading"="Letöltés: [X]%";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="Meg szeretné szakítani a letöltést?";
+/* Title for the action that allows you to move a file or folder */
+"move"="Áthelyezés";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="1 fájl áthelyezve";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%d fájl áthelyezve";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="1 mappa áthelyezve";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d mappa áthelyezve";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 fájl és 1 mappa áthelyezve";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 fájl és %d mappa áthelyezve";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d fájl és 1 mappa áthelyezve";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] fájl és [B] mappa áthelyezve";
+/* List option shown on the details of a file or folder */
+"copy"="Másolás";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="1 fájl lemásolva";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d fájl lemásolva";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 mappa lemásolva";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d mappa lemásolva";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 fájl és 1 mappa lemásolva";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 fájl és %d mappa lemásolva";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%d fájl és 1 mappa lemásolva";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] fájl és [B] mappa lemásolva";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="Átnevezés";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="Mappa új neve";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="Áthelyezés a Szemetesládába";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="Biztosan át szeretne helyezni 1 fájlt a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="Biztosan át szeretne helyezni %d fájlt a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="Biztosan át szeretne helyezni 1 mappát a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="Biztosan át szeretne helyezni %d mappát a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="Biztosan át szeretne helyezni 1 fájlt és 1 mappát a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="Biztosan át szeretne helyezni 1 fájlt és %d mappát a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="Biztosan át szeretne helyezni %d fájlt és 1 mappát a Szemetesládába?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="Biztosan a Szemetesládába szeretné helyezni ezt a [A] fájlt és [B] mappát?";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 fájl áthelyezve a szemetesládába";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d fájl áthelyezve a szemetesládába";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 mappa áthelyezve a szemetesládába";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="% mappa áthelyezve a szemetesládába";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 fájl és 1 mappa áthelyezve a szemetesládába";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 fájl és %d mappa áthelyezve a szemetesládába";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d fájl és 1 mappa áthelyezve a szemetesládába";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] fájl és [B] mappa áthelyezve a szemetesládába";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="Engedély hiba";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="Ellenőrizze az engedélyeket a mappán";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="Mappa megosztva";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="Importálás";
+/* Button title that triggers the importing link action */
+"import"="Importálás";
+/* Message shown when a file have been imported */
+"fileImported"="Fájl importálva";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="Kvóta túllépve";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="Kvótatúllépési Figyelmeztetés!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="Művelet nem engedélyezett, túl fogod lépni a tárhely korlátozását fiókodnak. Szeretnél fiókot váltani?";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="Elemek kijelölése";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu fénykép";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu fénykép";
+/* Button title that skips the current action */
+"skipButton"="Kihagyás";
+/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="Fotók, videók feltöltésének engedélyezése";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="Kamerás feltöltések engedélyezve";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu elem kijelölve";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu elem kijelölve";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="A kamera feltöltések le lesz tiltva, mivel nincs elég terület a készülékén";
+/* Title of the Offline section */
+"offline"="Offline";
+/* Title of the Contacts section */
+"contactsTitle"="Kapcsolatok";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="Nincs megosztott mappa";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 mappa";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d mappa";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="Email megadása";
+/* Title of Shared Items section */
+"sharedItems"="Megosztott elemek";
+/* Title of the tab bar item for the Shared Items section */
+"shared"="Megosztva";
+/* Title of the "Incoming" Shared Items. */
+"incoming"="Bejövő";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing"="Kimenő";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact"="[$7886]";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts"="Megosztva %d kapcsolattal";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged"="Hozzáférési feltételek megváltoztatva";
+/* Message shown when a share has been left */
+"shareLeft"="Megosztást hagytak";
+/* Message shown when some shares have been left */
+"sharesLeft"="Megosztásokat hagytak";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="Megosztás törlése";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="Biztosan szeretné törölni ezt a megosztást? (Megosztva 1 kapcsolattal)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="Biztosan szeretné törölni ezt a megosztást? (Megosztva %d kapcsolattal)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="Biztosan szeretné törölni ezeket a megosztásokat? (Megosztva %d kapcsolattal)";
+/* Message shown when a share have been removed */
+"shareRemoved"="A megosztás eltávolítása sikeres";
+/* Message shown when some shares have been removed */
+"sharesRemoved"="Megosztások törölve";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner"="Tulajdonos";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith"="Megosztva:";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="Hozzáadás a kapcsolatokból";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="Kapcsolat hozzáadása";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="Kapcsolat e-mailje";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="Hozzáad";
+/* Success message shown when a contact has been invited */
+"requestSent"="Kérés elküldve";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="Kapcsolat hozzáadása sikertelen";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="Partner eltávolítása";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="Biztosan szeretné törölni %@-t a kapcsolatai listájáról?";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="Biztosan szeretne törölni %d felhasználót kapcsolatai listájáról?";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d kapcsolat törölve";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="%@ kapcsolat törölve";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="A kapcsolat nem rendelkezik emaillel";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="Elhagyás";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="Mappa meghagyva";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="Mappa megosztása";
+/* Button that allows you to select a given folder */
+"select"="Kiválasztás";
+/* Permissions given to the user you share your folder with */
+"readOnly"="Írásvédett";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="Olvasási és Írási jog";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="Teljes hozzáférés";
+/* Title of the Settings section */
+"settingsTitle"="Beállítások";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="Kamerafeltöltések";
+/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"rubbishBinLabel"="Szemetes";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="Biztonsági opciók";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="Névjegy";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="Nyelv";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="Alkalmazás nyelvezet";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="Visszajelzés küldése";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="Nincs beállítva email fiók a készüléken";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="Adatvédelmi Irányelvek";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="Szolgáltatási Feltételek";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="Ki";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="Be";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="Opciók";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="Videók feltöltése";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="Mobil kapcsoalt használata";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="Csak töltésnél";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="Ha engedélyezve van, új fényképek és videók kerülnek feltöltésre.";
+/* Label for the "Version" number of the app */
+"version"="Verzió";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="Köszönetnyilvánítás";
+/* Title for the MEGA Master Key */
+"masterKey"="MasterKulcs";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="Jelszócsere";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="Mesterkulcs kimentése";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="Biztonsági figyelmeztetés! Ez egy veszélyes művelet. Folytatni akarod?";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="A Főkulcs exportálása és biztonságos helyen történő tárolása lehetővé teszi fiókja helyreállítását elfelejtett jelszó esetében, az adatok elvesztése nélkül.";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="Mesterkulcs kimentve";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="A Főkulcs.txt elmentve ezen a készüléken. Csatlakoztassa számítógépéhez, majd nyissa meg az iTunes-t a MEGA Dokumentumokban való hozzáféréshez. Erősen javasoljuk e fájl biztonságos helyen történő tárolását!";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="Főkulcs törölve";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="A Főkulcs.txt törölve lett  a Dokumentumok mappából.";
+/* Title for the action that allows to remove a file or folder */
+"remove"="Eltávolítás";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="Eltávolítás megerősítése";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="Ön véglegesen készül törölni 1 fájlt. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="Ön véglegesen készül törölni %d fájlt. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="Ön véglegesen készül törölni 1 mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="Ön véglegesen készül törölni %d mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="Ön véglegesen készül törölni 1 fájlt és 1 mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="Ön véglegesen készül törölni 1 fájlt és %d mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="Ön véglegesen készül törölni %d fájlt és 1 mappát. Szeretné folytatni? (Ezt a műveletet nem vonhatja vissza.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="Épp véglegesen készül törölni [A] fájlt és [B] mappát. Szeretné folytatni? (Ez a művelet nem vonható vissza.)";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 fájl törölve a MEGÁ-ról";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedToRubbishBinMessage"="% fájl törölve a MEGÁ-ról";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 mappa törölve a MEGÁ-ról";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="% mappa törölve a MEGÁ-ról";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 fájl és 1 mappa törölve a MEGÁ-ról";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 fájl és %d mappa törölve a MEGÁ-ról";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d fájl és 1 mappa törölve a MEGÁ-ról";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] fájl és [B] mappa törölve a MEGÁ-ról";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="Jelenlegi jelszó";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Új jelszó";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="Jelszó megerősítése";
+/* Success message shown when the password has been changed */
+"passwordChanged"="A jelszavad meg lett változtatva.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="Az új és a régi jelszó nem egyezhet.";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="Számkódcsere";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="Egyszerű számkód";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="Helyi adatok törlése";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="Kijelentkezés és a helyi adatok törlése 10 sikertelen próbálkozás után";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="Segítségnyújtás";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="Kérhetsz támogatást vagy olvasd el a populáris témákat.";
+/* Title to rate the app */
+"rateUsLabel"="Értékeljen";
+/* Title of the Transfers section */
+"transfers"="Átvitelek";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="Összes";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="Letöltések";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="Feltöltések";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCancelled"="Átvitelek megszakítva";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="Átvitelek megszakítása";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="Meg szeretné szakítani a(z) %@t?";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="MINDEN átvitel";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="FELTÖLTÉSI átvitelek";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="LETÖLTÉSI átvitelek";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="Saját fiók";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="Kijelentkezés";
+/* String shown when you are logging out of your account. */
+"loggingOut"="Kijelentkezés";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="Használat";
+/* Title for "Local" used space. */
+"localLabel"="Lokális";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="Felhasználva";
+/* Title for MEGA "Available" space. */
+"availableLabel"="Elérhető";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="INGYENES";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="lejár ekkor: %@";
+/* DO NOT TRANSLATE, it will change */
+"restorePurchases"="Restore purchases";
+/* DO NOT TRANSLATE, it will change */
+"purchasesHistory"="Purchases history";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="Bejövő megosztások";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="a(z) %@-ból";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="felhasználva a(z) %@-ból";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="érhető el a(z) %@-ból";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="Fiók bővítése";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="Tárhely";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="Sávszélesség";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="%.2f %@ havonta";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan"="Válasszon egyet az alábbi csomagok közül:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree"="Két hónapot ingyen megkaphat, ha előfizet egy egyéves PRO csomagra";
+/* Header shown to help on the purchasin process */
+"selectMembership"="Tagság kiválasztása:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17"="17%-os megtakarítás";
+/* Error message shown when the purchase has failed */
+"wrongPurchase"="HIBÁS VÁSÁRLÁS %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled"="Az alkalmazáson belüli vásárlás le van tiltva, kérjük engedélyezze azt az iOS beállításokban.";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound"="A(z) %@ termék nem található, kérjük írjon a ios@mega.nz címre";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title"="Vásárlások engedélyezése";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message"="A vásárlás visszaállítása előtt az iOS beállításokban engedélyeznie kell az alkalmazáson belüli vásárlásokat.";
+/* Button title to restore failed purchases */
+"restore"="Visszaállítás";
+/* "Monthly" subscriptions */
+"monthly"="Havonként";
+/* "Yearly" subscriptions */
+"yearly"="Évenként";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable"="Ez az Alkalmazáson belüli vásárlási tétel jelen pillanatban nem érhető el az App Store-ban. Kérjük később próbálja újra.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title"="Köszönjük";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message"="A vásárlás helyreállítva";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title"="A vásárlás leállt";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message"="Vagy Ön vonta vissza a kérést vagy az Apple jelentett tranzakciós hibát. Kérjük később próbálja újra, vagy írjon az ios@mega.nz címre.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title"="Visszaállítási hiba";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message"="Az előző vásárlás nem található. Kérjük válassza ki az előzőleg vásárolt terméket a visszaállításhoz. Az ár NEM kerül újra felszámításra.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title"="A visszaállítás leállt";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message"="Vagy elvetették a kérést, vagy az előzetes vásárlást nem lehetett visszaállítani. Kérjük később próbálja újra, vagy írjon az ios@mega.nz címre.";

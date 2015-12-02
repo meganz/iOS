@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aAh-l2-z5Q">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+        </mutableArray>
+        <mutableArray key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Main Tab Bar Controller-->
         <scene sceneID="UWL-g5-vuV">
@@ -97,53 +125,53 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="LN4-af-Dww"/>
                                 </constraints>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="y7g-EC-7mD" id="T5c-IO-jzW"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-hX-zEf" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="241" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="241" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="ZT1-Rc-NZu"/>
+                                    <constraint firstAttribute="height" constant="1" id="ZT1-Rc-NZu"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="key" translatesAutoresizingMaskIntoConstraints="NO" id="1ap-A2-BES" userLabel="Key Image View">
-                                <rect key="frame" x="30" y="261" width="32" height="32"/>
+                                <rect key="frame" x="30" y="260" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="BVj-GU-DcO"/>
                                     <constraint firstAttribute="height" constant="32" id="rPX-T4-LrL"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZiB-Wx-xJc">
-                                <rect key="frame" x="80" y="262" width="504" height="31"/>
+                                <rect key="frame" x="80" y="261" width="504" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="235-Ch-c0K"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="y7g-EC-7mD" id="PJ0-ak-k3M"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWC-os-01i" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="307" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="306" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="6a9-tX-tw5"/>
+                                    <constraint firstAttribute="height" constant="1" id="6a9-tX-tw5"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
-                                <rect key="frame" x="30" y="353" width="540" height="64"/>
-                                <color key="backgroundColor" red="1" green="0.270588249" blue="0.32549020649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="351" width="540" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.30196078430000001" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="3Bn-dF-dHQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -153,21 +181,21 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpS-TQ-htQ">
-                                <rect key="frame" x="30" y="457" width="250" height="17.5"/>
+                                <rect key="frame" x="30" y="455" width="250" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="ysL-PQ-bS1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ety-kE-DRx">
-                                <rect key="frame" x="200" y="451" width="200" height="30"/>
+                                <rect key="frame" x="200" y="449" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="cM2-AJ-Mis"/>
                                     <constraint firstAttribute="width" constant="200" id="hrJ-KR-Lod"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Create one">
                                     <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -249,100 +277,100 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="v6u-LJ-BJA"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="Gay-aT-gQQ"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJK-uV-V7Y" userLabel="Name Line View">
-                                <rect key="frame" x="30" y="112" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="112" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="T7P-Qt-dJb"/>
+                                    <constraint firstAttribute="height" constant="1" id="T7P-Qt-dJb"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="7I0-ut-0r5" userLabel="Email Image View">
-                                <rect key="frame" x="30" y="133" width="32" height="32"/>
+                                <rect key="frame" x="30" y="132" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="Jiv-BI-OEq"/>
                                     <constraint firstAttribute="height" constant="32" id="qLg-HO-ESr"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZUP-K7-qha">
-                                <rect key="frame" x="72" y="134" width="498" height="30"/>
+                                <rect key="frame" x="72" y="133" width="498" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="epk-1c-1d7"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="aCM-f4-KOc"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx8-ts-Qmp" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="178" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="177" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="MMx-cR-RU4"/>
+                                    <constraint firstAttribute="height" constant="1" id="MMx-cR-RU4"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="key" translatesAutoresizingMaskIntoConstraints="NO" id="Kxh-Ev-1cq" userLabel="Key">
-                                <rect key="frame" x="30" y="199" width="32" height="32"/>
+                                <rect key="frame" x="30" y="197" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="0cf-An-k85"/>
                                     <constraint firstAttribute="height" constant="32" id="AYd-Qy-Wtd"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dFO-ce-qPx">
-                                <rect key="frame" x="72" y="200" width="498" height="30"/>
+                                <rect key="frame" x="72" y="198" width="498" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="pcv-83-n4I"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="hB7-kL-Mvl"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vc4-im-wz7" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="244" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="242" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="HJ0-fc-oNX"/>
+                                    <constraint firstAttribute="height" constant="1" id="HJ0-fc-oNX"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyDouble" translatesAutoresizingMaskIntoConstraints="NO" id="avh-b8-0Qh" userLabel="Double Key">
-                                <rect key="frame" x="30" y="265" width="32" height="32"/>
+                                <rect key="frame" x="30" y="262" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="H45-gY-42H"/>
                                     <constraint firstAttribute="width" constant="32" id="XIj-ol-ksf"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eu0-lv-GeT">
-                                <rect key="frame" x="72" y="266" width="498" height="30"/>
+                                <rect key="frame" x="72" y="263" width="498" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="1Qh-FZ-IyX"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="iJO-04-Aui"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T9-ef-E6L" userLabel="Confirm Password Line View">
-                                <rect key="frame" x="30" y="310" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="307" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="eUD-4l-rhS"/>
+                                    <constraint firstAttribute="height" constant="1" id="eUD-4l-rhS"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5v-Oj-XXr" userLabel="Checkbox">
-                                <rect key="frame" x="30" y="334" width="22" height="22"/>
+                                <rect key="frame" x="30" y="330" width="22" height="22"/>
                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="EAj-3p-sHn"/>
@@ -357,11 +385,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
-                                <rect key="frame" x="74" y="335" width="496" height="21"/>
+                                <rect key="frame" x="74" y="331" width="496" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="zn0-Q3-HDE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                 <state key="normal" title="I agree with the MEGA Terms of Service">
                                     <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -371,12 +399,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU">
-                                <rect key="frame" x="30" y="378" width="540" height="64"/>
-                                <color key="backgroundColor" red="1" green="0.270588249" blue="0.32549020649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="374" width="540" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.30196078431372547" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="QY2-jL-B7y"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                 <state key="normal" title="Create Account">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -385,21 +413,21 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-Lw-26s">
-                                <rect key="frame" x="30" y="462" width="250" height="17.5"/>
+                                <rect key="frame" x="30" y="458" width="250" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="65k-IC-58l"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-eK-8Sh">
-                                <rect key="frame" x="225" y="456" width="150" height="30"/>
+                                <rect key="frame" x="225" y="452" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="JEj-yA-z6A"/>
                                     <constraint firstAttribute="height" constant="30" id="Wrk-Et-1fi"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Login!">
                                     <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -410,22 +438,22 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0h-b9-ygd" userLabel="Please check your email View">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6b6-K4-JUo">
-                                        <rect key="frame" x="30" y="449" width="250" height="17.5"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Already have an account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6b6-K4-JUo">
+                                        <rect key="frame" x="30" y="449" width="250" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="tfD-qb-c49"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yj2-gK-lf9">
-                                        <rect key="frame" x="225" y="443" width="150" height="30.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yj2-gK-lf9">
+                                        <rect key="frame" x="225" y="443" width="150" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="5K9-Hc-fss"/>
                                             <constraint firstAttribute="height" constant="30" id="fUi-so-aEc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <state key="normal" title="Login">
                                             <color key="titleColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -441,22 +469,22 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awesome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hZ-hv-g3O">
-                                        <rect key="frame" x="200" y="284" width="200" height="23.5"/>
+                                        <rect key="frame" x="200" y="284" width="200" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="2gl-wK-DTb"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.19215686619281769" green="0.70980393886566162" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your e-mail and click the link to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDd-uX-Kxx">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please check your e-mail and click the link to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDd-uX-Kxx">
                                         <rect key="frame" x="30" y="331" width="540" height="88"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="88" id="FqO-eb-LWI"/>
                                             <constraint firstAttribute="height" constant="42" id="QdW-mQ-tF4"/>
                                             <constraint firstAttribute="height" constant="42" id="wcT-ED-Lx9"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
                                         <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
@@ -593,74 +621,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your password to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2P-8s-Lnf">
-                                <rect key="frame" x="30" y="95" width="540" height="66"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your password to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2P-8s-Lnf">
+                                <rect key="frame" x="30" y="94" width="540" height="66"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="66" id="NdV-JL-koH"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
                                 <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="NBL-tg-L4l" userLabel="Email">
-                                <rect key="frame" x="30" y="208" width="32" height="32"/>
+                                <rect key="frame" x="30" y="201" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="4uC-2k-OGV"/>
                                     <constraint firstAttribute="height" constant="32" id="VLF-ki-cBb"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Tl-b0-o2N">
-                                <rect key="frame" x="84" y="209" width="486" height="30"/>
+                                <rect key="frame" x="84" y="202" width="486" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="EZq-rW-2Sg"/>
                                 </constraints>
-                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Q0l-3c-nfd" id="tL4-5v-aug"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3J-fg-Bnu" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="253" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="246" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="WtU-mL-kZw"/>
+                                    <constraint firstAttribute="height" constant="1" id="WtU-mL-kZw"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="key" translatesAutoresizingMaskIntoConstraints="NO" id="qIA-Nt-gfX" userLabel="Key">
-                                <rect key="frame" x="30" y="274" width="32" height="32"/>
+                                <rect key="frame" x="30" y="266" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="rDl-He-LwE"/>
                                     <constraint firstAttribute="height" constant="32" id="zXR-cE-kwx"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BWU-XT-F9r">
-                                <rect key="frame" x="84" y="278" width="486" height="30"/>
+                                <rect key="frame" x="84" y="270" width="486" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="oMB-xU-ekt"/>
                                 </constraints>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="Q0l-3c-nfd" id="sh9-73-nwE"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kzq-lX-XwP" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="319" width="540" height="2"/>
-                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="30" y="311" width="540" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="mk0-Lb-o33"/>
+                                    <constraint firstAttribute="height" constant="1" id="mk0-Lb-o33"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm">
-                                <rect key="frame" x="30" y="365" width="540" height="64"/>
-                                <color key="backgroundColor" red="1" green="0.27058823529999998" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="356" width="540" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.30196078430000001" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="b8I-94-bDk"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                 <state key="normal" title="Confirm your account">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -670,12 +698,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg">
-                                <rect key="frame" x="200" y="469" width="200" height="30"/>
+                                <rect key="frame" x="200" y="455" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="B3N-lY-hn6"/>
                                     <constraint firstAttribute="width" constant="200" id="nCF-zm-ZMh"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -689,12 +717,12 @@
                         <constraints>
                             <constraint firstItem="1Tl-b0-o2N" firstAttribute="leading" secondItem="NBL-tg-L4l" secondAttribute="trailing" constant="22" id="4kv-ob-Zen"/>
                             <constraint firstItem="BWU-XT-F9r" firstAttribute="centerY" secondItem="qIA-Nt-gfX" secondAttribute="centerY" constant="3" id="5mK-cD-miQ"/>
-                            <constraint firstItem="4Wd-CD-LZg" firstAttribute="top" secondItem="urs-kB-QJB" secondAttribute="bottom" constant="40" id="8jw-5F-bp1"/>
+                            <constraint firstItem="4Wd-CD-LZg" firstAttribute="top" secondItem="urs-kB-QJB" secondAttribute="bottom" constant="35" id="8jw-5F-bp1"/>
                             <constraint firstItem="Kzq-lX-XwP" firstAttribute="top" secondItem="qIA-Nt-gfX" secondAttribute="bottom" constant="13" id="Ac2-aB-LkZ"/>
                             <constraint firstItem="urs-kB-QJB" firstAttribute="top" secondItem="Kzq-lX-XwP" secondAttribute="bottom" constant="44" id="BNh-5r-Aou"/>
                             <constraint firstItem="BWU-XT-F9r" firstAttribute="leading" secondItem="qIA-Nt-gfX" secondAttribute="trailing" constant="22" id="CIC-Cf-gVn"/>
                             <constraint firstItem="n3J-fg-Bnu" firstAttribute="top" secondItem="NBL-tg-L4l" secondAttribute="bottom" constant="13" id="DSJ-Hr-c6Z"/>
-                            <constraint firstItem="h2P-8s-Lnf" firstAttribute="top" secondItem="gZt-w1-22Y" secondAttribute="bottom" constant="75" id="Jum-cU-Bbj"/>
+                            <constraint firstItem="h2P-8s-Lnf" firstAttribute="top" secondItem="gZt-w1-22Y" secondAttribute="bottom" constant="74" id="Jum-cU-Bbj"/>
                             <constraint firstAttribute="trailing" secondItem="Kzq-lX-XwP" secondAttribute="trailing" constant="30" id="Lub-uZ-Qqg"/>
                             <constraint firstAttribute="trailing" secondItem="urs-kB-QJB" secondAttribute="trailing" constant="30" id="NpC-yz-SCV"/>
                             <constraint firstItem="Kzq-lX-XwP" firstAttribute="top" secondItem="n3J-fg-Bnu" secondAttribute="bottom" constant="64" id="PEM-Kl-O2y"/>
@@ -709,7 +737,7 @@
                             <constraint firstItem="n3J-fg-Bnu" firstAttribute="leading" secondItem="tEv-K7-MM9" secondAttribute="leading" constant="30" id="naw-UB-Wj9"/>
                             <constraint firstItem="h2P-8s-Lnf" firstAttribute="leading" secondItem="tEv-K7-MM9" secondAttribute="leading" constant="30" id="o6F-I5-gFh"/>
                             <constraint firstItem="Kzq-lX-XwP" firstAttribute="leading" secondItem="tEv-K7-MM9" secondAttribute="leading" constant="30" id="t2o-CZ-GKk"/>
-                            <constraint firstItem="n3J-fg-Bnu" firstAttribute="top" secondItem="h2P-8s-Lnf" secondAttribute="bottom" constant="92" id="tI4-b0-oXK"/>
+                            <constraint firstItem="n3J-fg-Bnu" firstAttribute="top" secondItem="h2P-8s-Lnf" secondAttribute="bottom" constant="86" id="tI4-b0-oXK"/>
                             <constraint firstAttribute="centerX" secondItem="4Wd-CD-LZg" secondAttribute="centerX" id="vJe-E5-F4a"/>
                         </constraints>
                     </view>
