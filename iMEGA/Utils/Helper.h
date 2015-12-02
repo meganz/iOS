@@ -40,7 +40,7 @@
 #define kLastUploadVideoDate @"LastUploadVideoDate"
 #define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
-#define kFont @"HelveticaNeue-Light"
+#define kFont @"SFUIText-Light"
 
 #define megaOrange      [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0.0 alpha:1.0]
 #define megaPink        [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0]
@@ -89,6 +89,8 @@
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
 + (UIImage *)folderSharedImage;
++ (UIImage *)incomingFolderImage;
++ (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;
 
 + (UIImage *)downloadingArrowImage;

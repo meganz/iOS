@@ -21,11 +21,24 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, ContactsMode) {
+    Contacts = 0,
+    ContactsShareFolderWith,
+    ContactsShareFoldersWith,
+    ContactsFolderSharedWith
+};
+
 @class ShareFolderActivity;
 
 @interface ContactsViewController : UIViewController
 
+@property (nonatomic) ContactsMode contactsMode;
+
+@property (nonatomic, strong) NSMutableDictionary *namesMutableDictionary;
+
 @property (nonatomic, strong) MEGANode *node;
+@property (nonatomic, strong) NSArray *nodesArray;
+
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
 @end

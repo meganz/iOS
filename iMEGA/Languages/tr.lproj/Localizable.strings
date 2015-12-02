@@ -1,0 +1,712 @@
+/* Button title to cancel something */
+"cancel"="İptal Et";
+/* Button title to accept something */
+"ok"="Tamam";
+/* */
+"upload"="Yükle";
+/*  */
+"error"="Hata";
+/*  */
+"name"="İsim";
+/*  */
+"passcode"="Parola";
+/* "Size" of the file or folder you are sharing */
+"size"="Boyut";
+/*  */
+"folder"="Klasör";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="Kamera yok";
+/* Alert title to attract attention */
+"attention"="Dikkat";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="Ayarlardan MEGA uygulamasının Kamera\'ya erişmesi için izin verin lütfen";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="Ayarlardan MEGA uygulamasının fotoğraf albümüne erişmesi için izin verin lütfen";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="Boş bir klasörü indiremezsiniz";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="Hesabınız aktive edildi. Lütfen giriş yapın.";
+/* Message shown when the user clicks on an invalid link  */
+"invalidLink"="Geçersiz MEGA Bağlantısı";
+/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncrypted"="Dosya kriptolu";
+/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
+"fileEncryptedMessage"="Kripto çözme anahtarı olmadığından, kriptolu dosyayı indiremez veya içe aktaramazsınız.";
+/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncrypted"="Klasör şifrelendi";
+/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
+"folderEncryptedMessage"="Kripto çözme anahtarı olmadığından, kriptolu klasörü indiremez veya içe aktaramazsınız.";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="Çıkış yapıldı";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="MEGA ALAN";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="MEGA HIZ";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="MEGA GİZLİLİK";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="MEGA ERİŞİM";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="Şimdi üye ol ve 50 GB boş alana sahip ol.";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="Yüklemeler hızlı.Dosyalarınızı herkesle hızlı bir şekilde paylaşın.";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="MEGA'nın uçtan uca şifrelemesi ile tüm dosyalarınızı güvenli bir şekilde saklayın.";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="Her zaman, her yerde tam şifreli erişiminiz olsun.";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="Oturum Aç";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Hesabınız yok mu?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Bir tane oluştur";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="Hesap oluştur";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="Zaten bir hesabınız var mı?";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="Geçersiz e-posta ve/veya şifre. Lütfen tekrar deneyin";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="Geçerli bir e-posta girin";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="Geçerli bir parola girin";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="Eposta";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="Şifre";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="MEGA Kullanım Koşulları\'nı kabul ediyorum";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="Geçerli bir isim girin";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="Şifreler eşleşmiyor";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="MEGA'da hesap açmak için hizmet koşullarını kabul etmeniz gerekli.";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="Bu e-posta adresi ile daha önceden bir Mega hesabı alınmış.";
+/* Message displayed when an action is completed successfully */
+"awesome"="Mükemmel";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="Lütfen e-posta kutunuzu kontrol edin, ve hesabınızı doğrulamak için gönderilen linke tıklayın.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="Hesabınızı onaylamak için şifrenizi girin";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="Hesabınızı onaylayın.";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="Hatalı şifre";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="Başka bir hesapla oturum açtınız";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="Kabul ederseniz, mevcut hesaıbınızın oturumu kapatılacak ve tüm Çevrimdışı veriler silinecek. Devam etmek istiyor musunuz?";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="Cihazınızda biraz alan boşaltmanız gerekiyor";
+/* Title for the MEGA link view */
+"megaLink"="MEGA Bağlantısı";
+/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
+"importButton"="Bulut Sürücüye Aktar";
+/* Button title to trigger the action of downloading the file to your device. */
+"downloadButton_fileLink"="MEGA uygulamanıza indirin";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="Dosyayı Aç";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="İndirmeye çalıştığınız dosya kullanılabilir bellekten daha büyük.";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="Açmaya çalıştığınız dosya kullanılabilir bellekten daha büyük.";
+/* Error title shown when you open a file link and it's no longer available */
+"fileLinkUnavailableTitle"="Dosya bağlantısı kullanılamıyor";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Dosya hizmet kullanım şartları/kabul edilebilir kullanım politikaları ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Dosya kullanıcı tarafından silindi.";
+/* DO NOT TRANSLATE, it will change (Process) */
+"fileAlreadyExist"="The file you want to download already exists Offline";
+/* Message shown when a download starts */
+"downloadStarted"="İndirme başladı";
+/* DO NOT TRANSLATE, it will change (Design) */
+"megaFolder"="MEGA Folder Link";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="İndir";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="İndirmeye çalıştığınız klasör kullanılabilir bellekten daha büyük.";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="'%@' klasörü oluşturulamadı";
+/* Error title shown when a folder link doesn't exist. */
+"folderLinkUnavailableTitle"="Klasör linki mevcut değil";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Klasör bağlantısı ToS/AUP ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Klasör bağlantısı kullanıcı tarafından silindi.";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="İnternet bağlantısı yok";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="Klasörde dosya yok";
+/* Title shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_title"="Boş klasör bağlantısı";
+/* Message shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_text"="Bu klasör bağlantısı herhangi bir dosya içermiyor";
+/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
+"folderLinkEmptyState_textFolder"="Bu alt klasör herhangi bir dosya içermiyor.";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="Bulut Sürücünüzde dosya yok";
+/* Title shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_titleContact"="Bu paylaşılan klasörde dosya yok";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="Çöp Kutusunu Boşalt";
+/* Message shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_text"="Yukarıdaki butonu kullanarak dosya ekleyin";
+/* Message shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_textContact"="Bir şeyler paylaşın. Yukarıdaki butonu kullanarak dosyalar ekleyin.";
+/* Title shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_title"="Kamera Yüklemeleri devre dışı bırakıldı";
+/* Message shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_text"="Cihazınızdaki fotoğrafların kopyasını MEGA\'ya almak için Kamera Yüklemeleri\'ni etkinleştirin.";
+/* Title shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_title"="Çevrimdışı için kaydedilen dosya yok";
+/* Message shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_text"="İnternet bağlantınız olmadığında kullanmak için dosyaları indirin.";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="Herhangi bir kişiniz yok";
+/* Message shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_text"="Yukarıdaki düğmeyi kullanarak kişi ekleyin.";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text"="Gelen paylaşım klasörü yok";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text"="Giden paylaşım klasörü yok";
+/* Title of My Contacts section */
+"myContacts"="Kişiler";
+/* Title of Contacts requests section */
+"contactRequests"="İrtibat talepleri";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent"="Gönderilen";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests"="İstekler";
+/* Success message shown when you acepted a contact request */
+"requestAccepted"="İstek kabul edildi";
+/* Success message shown when you Cancelled a contact request */
+"requestCancelled"="İstek iptal edildi";
+/* Success message shown when you remove a contact request */
+"requestDeleted"="İstek silindi";
+/* Title shown when there's no pending request */
+"noRequestPending"="Şu anda bekleyen istek yok";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="Transferler duraklatıldı";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="No Transfers";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No Downloads";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No Uploads";
+/* Text shown under the upper title when the transfers are paused */
+"transfersEmptyState_textPaused"="Yukarıdaki butonu kullanarak aktarımları devam ettirin.";
+/* Text shown under the upper title when there's no transfers */
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
+/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
+"transfersEmptyState_textDownload"="Bekleyen indirme yok.";
+/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
+"transfersEmptyState_textUpload"="Bekleyen yüklemeler yok";
+/* Title of the Cloud Drive section */
+"cloudDrive"="Bulut Sürücüsü";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d dosya";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d dosya";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%d klasör";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d klasör";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="1 klasör • 1 dosya";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] klasör • [B] dosya";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d klasör • 1 dosya";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="1 klasör • %d dosya";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="Sıraya alındı";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="Bekleyen indirmeler var";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="Daha sonra tekrar deneyin veya iptal edin";
+/* Section title of the "Sort by" */
+"sortTitle"="SIRALA";
+/* Button title to "Save" the selected option */
+"save"="Kaydet";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="isim (artan)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="isim (azalan)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="en büyük";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="en ufak";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="en yeni";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="en eski";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="Seç";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="Yakala";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="Yeni klasör";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="Yeni klasör için isim";
+/* Title button for the create folder alert.  */
+"createFolderButton"="Yeni Oluştur";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="Şuradan içe aktar...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A], [B] adıyla zaten yüklendi";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Bu dosya %@ ismiyle zaten yüklendi";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="Seçilen %d dosya zaten bu klasör içine yüklendi.";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="Yükleme başladı";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="Bu dosya Çöp Kutusu\'na taşındı";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="Bu klasör Çöp Kutusu\'na taşındı";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="Bu dosya taşındı";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="Bu klasör taşındı";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="Artık bu dosyaya erişim hakkınız yok";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Artık bu klasöre erişim hakkınız yok";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="Çevrimdışı için kaydet";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="Çevrimdışı için Kaydedildi";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Gelen etiketi Apple tarafından kullanılmak üzere ayrılmıştır.";
+/* List option shown on the details of a file or folder */
+"getLink"="Link al";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="Bağlantı oluşturuluyor...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Bağlantı kopyalandı";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Uygulamada aç...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="Bağlantıyı kaldır";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="Bağlantı kaldırıldı";
+/* Title show when a file is being downloaded */
+"downloading"="İndiriliyor: %[X]";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="İndirme işlemi iptal edilsin mi?";
+/* Title for the action that allows you to move a file or folder */
+"move"="Taşı";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="1 dosya taşındı";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%d dosya taşındı";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="1 klasör taşındı";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d klasör taşındı";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 dosya ve 1 klasör taşındı";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 dosya ve %d klasör taşındı";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d dosya ve 1 klasör taşındı";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] dosya ve [B] klasör taşındı";
+/* List option shown on the details of a file or folder */
+"copy"="Kopyala";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="1 dosya kopyalandı";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d dosya kopyalandı";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 klasör kopyalandı";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d klasör kopyalandı";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 dosya ve 1 klasör kopyalandı";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 dosya ve %d klasör kopyaladı";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%d dosya ve 1 klasör kopyaladı";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] dosya ve [B] klasör kopyalandı";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="Yeniden Adlandır";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="Yeni adı girin";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="Çöp Kutusu\'na Taşı";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="1 dosyayı Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="%d dosyayı Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="1 klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="%d klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="1 dosya ve 1 klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="1 dosya ve %d klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="%d dosya ve 1 klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d dosya Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 klasör Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d klasör Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 dosya ve 1 klasör Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 dosya ve %d klasör Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d dosya ve 1 klasör Çöp Kutusu\'na taşındı";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] dosya ve [B] klasör Çöp Kutusu\'na taşındı";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="İzin hatası";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="Bu klasördeki izinlerinizi denetleyin";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="Klasör paylaşıldı";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="İçe aktar";
+/* Button title that triggers the importing link action */
+"import"="Hesaba Ekle";
+/* Message shown when a file have been imported */
+"fileImported"="Dosya içe aktarıldı";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="Kota aşıldı";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="Kota Aşımı Uyarısı!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="Operasyona izin verilmiyor, hesabınızın depolama sınırını aşacaksınız. Hesabınızı yükseltmek istiyor musunuz?";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="Öğeleri seçin";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu foto";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu foto";
+/* Button title that skips the current action */
+"skipButton"="Atla";
+/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="Kamera Yüklemelerini Etkinleştir";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="Kamera Yüklemeleri etkinleştirildi";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu öğe seçildi";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu öğe seçildi";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="Cihazınızda yeterli alan olmadığı için Kamera Yüklemeleri devre dışı bırakılacak";
+/* Title of the Offline section */
+"offline"="Çevrim dışı";
+/* Title of the Contacts section */
+"contactsTitle"="Kişiler";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="Paylaşılan klasör yok";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 klasör";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d klasör";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="E-posta ekleyin";
+/* Title of Shared Items section */
+"sharedItems"="Paylaşılan Öğeler";
+/* Title of the tab bar item for the Shared Items section */
+"shared"="Paylaşılan";
+/* Title of the "Incoming" Shared Items. */
+"incoming"="Gelen";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing"="Giden";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact"="[$7886]";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts"="%d kişi ile paylaşıldı";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged"="İzinler değiştirildi";
+/* Message shown when a share has been left */
+"shareLeft"="Share left";
+/* Message shown when some shares have been left */
+"sharesLeft"="Shares left";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="Paylaşımı kaldır";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="Bu paylaşımı kaldırmak istediğinizden emin misiniz? (1 kişiyle paylaşılmış)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+/* Message shown when a share have been removed */
+"shareRemoved"="Paylaşım doğru bir şekilde kaldırıldı";
+/* Message shown when some shares have been removed */
+"sharesRemoved"="Paylaşım kaldırıldı";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner"="Sahip";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith"="Paylaşılıyor";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="Kişilerden ekle";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="Kişi ekle";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="Kişi epostası";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="Ekle";
+/* Success message shown when a contact has been invited */
+"requestSent"="İstek gönderildi";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="Kişi eklenirken hata oluştu";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="Kişi sil";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="Kişi listenizden %@ kaldırmak istediğinizden emin misiniz?";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="Kişi listenizden %d kullanıcı kaldırmak istediğinizden emin misiniz?";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d kişi kaldırıldı";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="%@ kişisi kaldırıldı";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="Kişinin eposta adresi yok";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="Ayrıl";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="Klasör kaldı";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="Klasörü Paylaş";
+/* Button that allows you to select a given folder */
+"select"="Seç";
+/* Permissions given to the user you share your folder with */
+"readOnly"="Salt okunur";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="Okuma ve Yazma";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="Tam erişim";
+/* Title of the Settings section */
+"settingsTitle"="Ayarlar";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="Kamera Yüklemeleri";
+/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"rubbishBinLabel"="Çöp Kutusu";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="Güvenlik Seçenekleri";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="Hakkında";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="Dil";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="Uygulama dili";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="Görüş Gönder";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="Cihazınızda ayarlı e-posta hesabı yok";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="Gizlilik İlkeleri";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="Hizmet Koşulları";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="Kapalı";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="Açık";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="Seçenekler";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="Videoları yükle";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="Hücresel bağlantı kullan";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="Sadece şarj ederken";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="Etkinleştirildiğinde yeni fotoğraflar ve videolar yüklenecektir.";
+/* Label for the "Version" number of the app */
+"version"="Versiyon";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="Teşekkür";
+/* Title for the MEGA Master Key */
+"masterKey"="AnaAnahtar";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="Şifre değiştir";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="Ana Anahtarı Dışa Aktar";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="Güvenlik uyarısı! Bu yüksek riskli bir işlemdir. Devam etmek istiyor musunuz?";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="Ana anahtarı dışa aktarmanız ve güvenli bir yerde tutmanız, şifrenizi unutmanız durumunda veri kaybı olmadan hesabınızı kurtamak için olanak sağlar.";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="Ana Anahtar dışa aktarıldı";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Masterkey.txt bu cihaza kaydedildi. Bilgisayarınıza bağlanın ve MEGA Belgeler üzerinden erişmek için iTunes'u açın. Bu dosyayı güvenli bir şekilde tutmanızı öneriyoruz!";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="Ana Anahtar kaldırıldı";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="MasterKey.txt Belgelerim klasöründen çıkarıldı.";
+/* Title for the action that allows to remove a file or folder */
+"remove"="Sil";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="Silmeyi Onayla";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="1 dosyayı kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="%d dosyayı kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="1 klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="%d klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="1 dosya ve 1 klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="1 dosya ve %d  klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="%d dosya ve 1 klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü kalıcı olarak kaldırmak üzeresiniz. Devam etmek ister misiniz? (Bu eylemi geri alamazsınız.)";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 dosya MEGA\'dan kaldırıldı";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedToRubbishBinMessage"="%d dosya MEGA\'dan kaldırıldı";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 klasör MEGA\'dan kaldırıldı";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d klasör MEGA\'dan kaldırıldı";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 dosya ve 1 klasör MEGA\'dan kaldırıldı";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 dosya ve %d klasör MEGA\'dan kaldırıldı";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d dosya ve 1 klasör MEGA\'dan kaldırıldı";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] dosya ve [B] klasör MEGA\'dan kaldırıldı";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="Mevcut şifre:";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Yeni şifre";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="Şifreyi onaylayın";
+/* Success message shown when the password has been changed */
+"passwordChanged"="Şifreniz değiştirildi.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="Yeni ve eski şifre aynı  olamaz.";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="Şifre Değiştir";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="Basit şifre";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="Yerel verileri silin";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="10 başarısız parola girişiminden sonra oturumu kapat ve yerel verileri sil";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="Destek Merkezi";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="Destek alın veya popüler konuları okuyun.";
+/* Title to rate the app */
+"rateUsLabel"="Bizi değerlendirin";
+/* Title of the Transfers section */
+"transfers"="Transferler";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="Tümü";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="İndirilenler";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="Yüklemeler";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCancelled"="Transferler iptal edildi";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="Transferleri iptal et";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="İptal etmek istiyor musunuz: %@ ?";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="TÜM transferler";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="YÜKLEME transferleri";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="İNDİRME transferleri";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="Hesabım";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="Çıkış yap";
+/* String shown when you are logging out of your account. */
+"loggingOut"="Çıkıyor";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="Kullanım";
+/* Title for "Local" used space. */
+"localLabel"="Yerel";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="Kullanılan";
+/* Title for MEGA "Available" space. */
+"availableLabel"="Kullanılabilir";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="ÜCRETSİZ";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="%@ tarihinde sona eriyor";
+/* DO NOT TRANSLATE, it will change */
+"restorePurchases"="Restore purchases";
+/* DO NOT TRANSLATE, it will change */
+"purchasesHistory"="Purchases history";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="Gelen Paylaşımlar";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="/ %@";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="%@ kullanımda";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="%@ mevcut";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="Hesabı yükselt";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="Saklama alanı";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="Bant genişliği";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="Ayda %.2f %@";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan"="Aşağıdaki planlardan birini seçin:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree"="1 Yıllık PRO planına abone olursanız 2 ay ücretsiz";
+/* Header shown to help on the purchasin process */
+"selectMembership"="Üyelik seçin:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17"="%17 daha ucuz";
+/* Error message shown when the purchase has failed */
+"wrongPurchase"="YANLIŞ SATINALMA %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled"="Uygulama-içi alımları devre dışı, iOS Ayarlar'dan etkinleştirin lütfen";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound"="%@ ürünü bulunamadı, lütfen ios@mega.nz ile irtibata geçin";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title"="Satınalmalara izin ver";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message"="Bir satınalmayı geri yüklemeden önce iOS Ayarlarında Uygulama İçi Satınalmaları etkinleştirmeniz gerekir.";
+/* Button title to restore failed purchases */
+"restore"="Geri yükle";
+/* "Monthly" subscriptions */
+"monthly"="Aylık";
+/* "Yearly" subscriptions */
+"yearly"="Yıllık";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable"="Bu Uygulama İçi Satın Alma öğesi şu anda App Store\'da mevcut değil. Lütfen daha sonra tekrar deneyin.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title"="Teşekkürler";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message"="Satınalma geri yüklendi";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title"="Satınalma durduruldu";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message"="Ya isteği iptal ettiniz ya da Apple işlem hatası bildirdi. Lütfen daha sonra tekrar deneyin veya ios@mega.nz ile iletişime geçin.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title"="Geri yükleme sorunu";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message"="Önceki satınalmanız bulunamadı. Lütfen geri yüklemek için daha önce satın aldığınız ürünü seçin. Tekrar ödeme ALINMAYACAKTIR..";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title"="Geri yükleme durduruldu";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message"="İstek iptal edildi ya da önceki alım geri yüklenemedi. Lütfen daha sonra tekrar deneyin veya ios@mega.nz ile irtibata geçiniz.";

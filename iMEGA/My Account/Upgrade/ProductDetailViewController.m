@@ -5,7 +5,7 @@
 #import "MEGAPurchase.h"
 #import "AppDelegate.h"
 
-@interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
 }
 
@@ -87,6 +87,16 @@
     [[MEGAPurchase sharedInstance] restorePurchase];
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ((alertView.tag) == 0 && (buttonIndex == 0)) {
+        if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
+            [[[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -162,7 +172,13 @@
         if (isRestore) {
             // This was a Restore request.
             UIAlertView *updatedAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"thankYou_title", nil) message:AMLocalizedString(@"purchaseRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
+            [updatedAlert setDelegate:self];
+            [updatedAlert setTag:0];
             [updatedAlert show];
+        } else {
+            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
+                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
+            }
         }
     }
 }

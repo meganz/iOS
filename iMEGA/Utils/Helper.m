@@ -57,8 +57,8 @@ static NSInteger linkNodeOption;
                                  //                      @"af",
                                  //                      @"ar",
                                  //                      @"bg",
-                                 @"bs",
-                                 @"ca",
+                                 //                      @"bs",
+                                 //                      @"ca",
                                  @"cs",
                                  //                      @"da",
                                  @"de",
@@ -331,6 +331,24 @@ static NSInteger linkNodeOption;
     return folderSharedImage;
 }
 
++ (UIImage *)incomingFolderImage {
+    static UIImage *incomingFolderImage = nil;
+    
+    if (incomingFolderImage == nil) {
+        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
+    }
+    return incomingFolderImage;
+}
+
++ (UIImage *)outgoingFolderImage {
+    static UIImage *outgoingFolderImage = nil;
+    
+    if (outgoingFolderImage == nil) {
+        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
+    }
+    return outgoingFolderImage;
+}
+
 + (UIImage *)folderCameraUploadsImage {
     static UIImage *folderCameraUploadsImage = nil;
     
@@ -577,12 +595,7 @@ static NSInteger linkNodeOption;
     
     UIAlertView *alertView;
     if ([nodeSizeNumber longLongValue] == 0) {
-        alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files")
-                                               message:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")
-                                              delegate:self
-                                     cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                     otherButtonTitles:nil];
-        [alertView show];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emptyFolderMessage", @"Message fon an alert when the user tries download an empty folder")];
         return NO;
     }
     
