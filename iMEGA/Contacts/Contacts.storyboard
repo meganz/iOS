@@ -363,6 +363,7 @@
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
                         <outlet property="shareFolderBarButtonItem" destination="aEk-h4-ILY" id="EZp-aD-Rnp"/>
                         <outlet property="shareFolderWithButton" destination="FpA-vl-nCd" id="UKx-VO-1yd"/>
+                        <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
                     </connections>
                 </viewController>
