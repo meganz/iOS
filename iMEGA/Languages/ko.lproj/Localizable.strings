@@ -386,6 +386,10 @@
 "fileImported"="파일 들여옴";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="할당량 초과";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="할당량 초과 경고!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="계정의 저장 한도를 초과할 수 있어, 작업이 허가되지 않았습니다. 계정을 업그레이드 하시겠습니까?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="항목 선택";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
