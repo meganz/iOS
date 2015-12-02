@@ -140,6 +140,9 @@
 		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
 		E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */; };
 		E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */; };
+		E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */; };
+		E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */; };
+		E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */; };
 		E8E1BD441BA98F5B00AB689D /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E1BD431BA98F5B00AB689D /* libresolv.dylib */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
@@ -433,6 +436,11 @@
 		E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConfirmAccountViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAccountViewController.h; sourceTree = "<group>"; };
 		E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAccountViewController.m; sourceTree = "<group>"; };
+		E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SharedItems.storyboard; sourceTree = "<group>"; };
+		E8D5BF671BF35DC400955550 /* SharedItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedItemsViewController.h; sourceTree = "<group>"; };
+		E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E8D5BF6A1BF3B28500955550 /* SharedItemsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedItemsTableViewCell.h; sourceTree = "<group>"; };
+		E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsTableViewCell.m; sourceTree = "<group>"; };
 		E8E1BD431BA98F5B00AB689D /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
@@ -504,6 +512,7 @@
 				415226681A692ECC00EC7BB6 /* Cloud drive */,
 				41A602971A8A5CF9001AE538 /* Camera uploads */,
 				4152267E1A692ECC00EC7BB6 /* Offline */,
+				E8D5BF631BF359A000955550 /* Shared Items */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226821A692ECC00EC7BB6 /* Settings */,
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
@@ -1067,6 +1076,18 @@
 			name = Animators;
 			sourceTree = "<group>";
 		};
+		E8D5BF631BF359A000955550 /* Shared Items */ = {
+			isa = PBXGroup;
+			children = (
+				E8D5BF651BF35A4B00955550 /* SharedItems.storyboard */,
+				E8D5BF671BF35DC400955550 /* SharedItemsViewController.h */,
+				E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */,
+				E8D5BF6A1BF3B28500955550 /* SharedItemsTableViewCell.h */,
+				E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */,
+			);
+			path = "Shared Items";
+			sourceTree = "<group>";
+		};
 		E8F791731BC5754A00C58676 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1231,6 +1252,7 @@
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
+				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
@@ -1344,6 +1366,7 @@
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
 				416625281B66552800AEB579 /* SSKeychain.m in Sources */,
+				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
@@ -1356,6 +1379,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
+				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				4152268E1A692ECC00EC7BB6 /* MEGAPreview.m in Sources */,
 				94F56A521AFCC265000673D4 /* MEGAProxyServer.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,

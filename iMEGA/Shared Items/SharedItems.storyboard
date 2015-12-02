@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nfe-XI-un1">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Shared-->
+        <scene sceneID="JDd-0D-mnB">
+            <objects>
+                <navigationController storyboardIdentifier="navCloudDriveID" automaticallyAdjustsScrollViewInsets="NO" id="Nfe-XI-un1" customClass="MEGANavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="3" title="Shared" image="sharedItemsIcon" id="oTr-yE-1nT"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="dof-ct-lhZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="0.0"/>
+                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2AR-na-hSZ" kind="relationship" relationship="rootViewController" id="OGJ-ZU-zyl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cnX-Jd-qbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="211" y="-3932"/>
+        </scene>
+        <!--Shared Items View Controller-->
+        <scene sceneID="iAh-eN-ko9">
+            <objects>
+                <viewController storyboardIdentifier="SharedItemsViewControllerID" id="2AR-na-hSZ" customClass="SharedItemsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dh1-Ek-IuR"/>
+                        <viewControllerLayoutGuide type="bottom" id="fva-ER-85X"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DkV-FA-Q2Q">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="irZ-5P-oP0">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZP5-yh-meM">
+                                        <rect key="frame" x="8" y="7" width="584" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="k1T-uS-zCm"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Incoming"/>
+                                            <segment title="Outgoing"/>
+                                        </segments>
+                                        <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sharedItemsSegmentedControlValueChanged:" destination="2AR-na-hSZ" eventType="valueChanged" id="dW0-8L-wLF"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Bbd-Z7-Ihq"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZP5-yh-meM" secondAttribute="trailing" constant="8" id="C2T-pR-Lae"/>
+                                    <constraint firstItem="ZP5-yh-meM" firstAttribute="leading" secondItem="irZ-5P-oP0" secondAttribute="leading" constant="8" id="N0U-24-KXt"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="ZP5-yh-meM" secondAttribute="trailing" constant="8" id="OIs-jM-vTy"/>
+                                    <constraint firstAttribute="centerY" secondItem="ZP5-yh-meM" secondAttribute="centerY" id="nKz-Yk-JHr"/>
+                                    <constraint firstAttribute="centerX" secondItem="ZP5-yh-meM" secondAttribute="centerX" id="vOv-Sr-6dj"/>
+                                    <constraint firstItem="ZP5-yh-meM" firstAttribute="leading" secondItem="irZ-5P-oP0" secondAttribute="leadingMargin" constant="8" id="zkB-AE-qWv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="OIs-jM-vTy"/>
+                                        <exclude reference="zkB-AE-qWv"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
+                                <rect key="frame" x="0.0" y="44" width="600" height="443"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sharedItemsTableViewCell" id="SaV-xG-Opx" customClass="SharedItemsTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SaV-xG-Opx" id="gwY-ut-l2M">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d1A-d3-Oot">
+                                                    <rect key="frame" x="12" y="2" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="9u2-Gm-81G"/>
+                                                        <constraint firstAttribute="width" constant="40" id="tyV-S2-0iV"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B3N-a7-lQZ">
+                                                    <rect key="frame" x="60" y="6" width="429" height="18"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="lak-r6-LG2">
+                                                    <rect key="frame" x="60" y="24" width="429" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="LGu-xW-5bC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGf-9q-GJz" userLabel="Permissions Button">
+                                                    <rect key="frame" x="500" y="0.0" width="46" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="T6U-hC-sm9"/>
+                                                    </constraints>
+                                                    <state key="normal" image="readPermissions">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="permissionsTouchUpInside:" destination="SaV-xG-Opx" eventType="touchUpInside" id="HHF-Jy-ZU7"/>
+                                                        <action selector="permissionsTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="QVS-jV-2l0"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V39-yb-rzt" userLabel="Info Button">
+                                                    <rect key="frame" x="550" y="0.0" width="46" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="7Gi-3P-zPH"/>
+                                                    </constraints>
+                                                    <state key="normal" image="nodeInfo">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="infoTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="93d-dk-EKl"/>
+                                                        <action selector="infoTouchUpInside:" destination="SaV-xG-Opx" eventType="touchUpInside" id="rgk-Aa-two"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="B3N-a7-lQZ" firstAttribute="trailing" secondItem="lak-r6-LG2" secondAttribute="trailing" id="070-CI-ww0"/>
+                                                <constraint firstItem="V39-yb-rzt" firstAttribute="leading" secondItem="kGf-9q-GJz" secondAttribute="trailing" constant="4" id="0yk-HJ-14a"/>
+                                                <constraint firstItem="B3N-a7-lQZ" firstAttribute="leading" secondItem="d1A-d3-Oot" secondAttribute="trailing" constant="8" symbolic="YES" id="6nq-Y7-BpS"/>
+                                                <constraint firstItem="kGf-9q-GJz" firstAttribute="centerY" secondItem="V39-yb-rzt" secondAttribute="centerY" id="9ez-vO-3a8"/>
+                                                <constraint firstItem="V39-yb-rzt" firstAttribute="centerY" secondItem="d1A-d3-Oot" secondAttribute="centerY" id="CV6-K4-cz5"/>
+                                                <constraint firstItem="V39-yb-rzt" firstAttribute="leading" secondItem="B3N-a7-lQZ" secondAttribute="trailing" constant="11" id="FlW-d5-h8T"/>
+                                                <constraint firstItem="B3N-a7-lQZ" firstAttribute="leading" secondItem="lak-r6-LG2" secondAttribute="leading" id="LMe-bl-SIL"/>
+                                                <constraint firstItem="d1A-d3-Oot" firstAttribute="leading" secondItem="gwY-ut-l2M" secondAttribute="leadingMargin" constant="4" id="LaN-SI-gg8"/>
+                                                <constraint firstAttribute="trailing" secondItem="V39-yb-rzt" secondAttribute="trailing" constant="4" id="ZgF-df-Bbc"/>
+                                                <constraint firstItem="kGf-9q-GJz" firstAttribute="leading" secondItem="B3N-a7-lQZ" secondAttribute="trailing" constant="11" id="pLj-7o-mau"/>
+                                                <constraint firstItem="lak-r6-LG2" firstAttribute="width" secondItem="B3N-a7-lQZ" secondAttribute="width" id="qFL-3D-aAP"/>
+                                                <constraint firstItem="d1A-d3-Oot" firstAttribute="top" secondItem="gwY-ut-l2M" secondAttribute="topMargin" constant="-6" id="qYZ-aA-qUg"/>
+                                                <constraint firstItem="B3N-a7-lQZ" firstAttribute="top" secondItem="gwY-ut-l2M" secondAttribute="topMargin" constant="-2" id="thP-Sh-4KX"/>
+                                                <constraint firstItem="lak-r6-LG2" firstAttribute="top" secondItem="B3N-a7-lQZ" secondAttribute="bottom" id="uTb-nd-HaE"/>
+                                                <constraint firstItem="V39-yb-rzt" firstAttribute="top" secondItem="gwY-ut-l2M" secondAttribute="top" id="wxL-Hl-e9R"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="FlW-d5-h8T"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="infoButton" destination="V39-yb-rzt" id="ZA6-o2-oOG"/>
+                                            <outlet property="infoLabel" destination="lak-r6-LG2" id="BFa-jB-0gX"/>
+                                            <outlet property="nameLabel" destination="B3N-a7-lQZ" id="f9J-Eh-dLs"/>
+                                            <outlet property="permissionsButton" destination="kGf-9q-GJz" id="drq-Ew-BfS"/>
+                                            <outlet property="thumbnailImageView" destination="d1A-d3-Oot" id="ywR-VK-c1E"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2AR-na-hSZ" id="Sxu-Ha-E2y"/>
+                                    <outlet property="delegate" destination="2AR-na-hSZ" id="4s5-nh-RCq"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bc0-wE-0j5" firstAttribute="top" secondItem="irZ-5P-oP0" secondAttribute="bottom" constant="8" id="41P-RU-bV2"/>
+                            <constraint firstItem="fva-ER-85X" firstAttribute="top" secondItem="bc0-wE-0j5" secondAttribute="bottom" id="HOb-kI-RJb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="irZ-5P-oP0" secondAttribute="trailing" constant="-20" id="Ov4-Li-OIX"/>
+                            <constraint firstItem="bc0-wE-0j5" firstAttribute="leading" secondItem="DkV-FA-Q2Q" secondAttribute="leadingMargin" constant="-20" id="T2m-P8-q84"/>
+                            <constraint firstItem="irZ-5P-oP0" firstAttribute="top" secondItem="dh1-Ek-IuR" secondAttribute="bottom" id="V0f-UG-gHL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bc0-wE-0j5" secondAttribute="trailing" constant="-20" id="Wfo-de-XaJ"/>
+                            <constraint firstItem="irZ-5P-oP0" firstAttribute="leading" secondItem="DkV-FA-Q2Q" secondAttribute="leadingMargin" constant="-20" id="Ws8-VV-PIE"/>
+                            <constraint firstItem="bc0-wE-0j5" firstAttribute="top" secondItem="irZ-5P-oP0" secondAttribute="bottom" id="fy5-x5-HVa"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="41P-RU-bV2"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="dyl-mV-SkG">
+                        <barButtonItem key="backBarButtonItem" title=" " id="0b1-fX-6Hc"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="carbonCopyBarButtonItem" destination="CT0-ge-Xob" id="Coz-u9-sGC"/>
+                        <outlet property="downloadBarButtonItem" destination="eTZ-Oi-bPQ" id="7Px-DG-2eW"/>
+                        <outlet property="editBarButtonItem" destination="5z2-p0-4RD" id="x3Z-W6-efG"/>
+                        <outlet property="getLinkBarButtonItem" destination="BO7-Au-PHR" id="3qH-m3-665"/>
+                        <outlet property="leaveShareBarButtonItem" destination="F0i-bv-gDg" id="RUs-TL-o7P"/>
+                        <outlet property="removeShareBarButtonItem" destination="YAg-iE-4eX" id="xCW-eS-M5D"/>
+                        <outlet property="selectAllBarButtonItem" destination="CK5-xo-5rw" id="6hz-Sh-JEa"/>
+                        <outlet property="shareFolderBarButtonItem" destination="5Mi-qb-CMK" id="iRx-tQ-3A0"/>
+                        <outlet property="sharedItemsSegmentedControl" destination="ZP5-yh-meM" id="JFR-Mx-Y3i"/>
+                        <outlet property="tableView" destination="bc0-wE-0j5" id="hW1-dE-Ti0"/>
+                        <outlet property="toolbar" destination="D1l-ec-jJZ" id="fHc-Cf-lSi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0c6-5i-11D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="check_mark" width="22" id="CK5-xo-5rw" userLabel="Check Mark Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="2AR-na-hSZ" id="Nrq-Bj-fhr"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="edit" width="22" style="plain" id="5z2-p0-4RD" userLabel="Edit Bar Button Item">
+                    <connections>
+                        <action selector="editTapped:" destination="2AR-na-hSZ" id="un2-ST-0gb"/>
+                    </connections>
+                </barButtonItem>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="D1l-ec-jJZ">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <items/>
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                </toolbar>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="YkL-Id-Ryo"/>
+                <barButtonItem enabled="NO" image="download" width="32" id="eTZ-Oi-bPQ" userLabel="Download Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="downloadAction:" destination="2AR-na-hSZ" id="HhA-im-6OR"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="copy" width="32" id="CT0-ge-Xob" userLabel="Copy Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="copyAction:" destination="2AR-na-hSZ" id="kF3-WT-xny"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="leaveShare" width="32" id="F0i-bv-gDg" userLabel="Leave share Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="leaveShareAction:" destination="2AR-na-hSZ" id="ZTA-Cz-x2Y"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="getLink" width="32" id="BO7-Au-PHR" userLabel="Get Link Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="shareLinkAction:" destination="2AR-na-hSZ" id="72R-N2-Icl"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="shareWith" width="32" id="5Mi-qb-CMK" userLabel="Share Folder Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="shareFolderAction:" destination="2AR-na-hSZ" id="hfi-Fw-SBE"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="removeShare" width="32" id="YAg-iE-4eX" userLabel="Remove share Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="removeShareAction:" destination="2AR-na-hSZ" id="WTp-Az-PUR"/>
+                    </connections>
+                </barButtonItem>
+            </objects>
+            <point key="canvasLocation" x="983" y="-3932"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="check_mark" width="29" height="29"/>
+        <image name="copy" width="32" height="32"/>
+        <image name="download" width="32" height="32"/>
+        <image name="edit" width="22" height="22"/>
+        <image name="getLink" width="32" height="32"/>
+        <image name="leaveShare" width="32" height="32"/>
+        <image name="nodeInfo" width="46" height="44"/>
+        <image name="readPermissions" width="46" height="44"/>
+        <image name="removeShare" width="32" height="32"/>
+        <image name="shareWith" width="38" height="32"/>
+        <image name="sharedItemsIcon" width="29" height="26"/>
+    </resources>
+</document>

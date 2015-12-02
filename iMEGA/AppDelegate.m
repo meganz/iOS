@@ -606,12 +606,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    if ([[incomingContactsLists size] integerValue]) {
-        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = [NSString stringWithFormat:@"%ld", (long)[[incomingContactsLists size] integerValue]];
-    } else {
-        [[self.mainTBC.viewControllers objectAtIndex:3] tabBarItem].badgeValue = nil;
+    NSInteger contactsTabPosition;
+    for (contactsTabPosition = 0 ; contactsTabPosition < self.mainTBC.viewControllers.count ; contactsTabPosition++) {
+        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 4) {
+            break;
+        }
     }
+    
+    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    long incomingContacts = [[incomingContactsLists size] longValue];
+    NSString *badgeValue;
+    if (incomingContacts) {
+        badgeValue = [NSString stringWithFormat:@"%ld", incomingContacts];
+    } else {
+        badgeValue = nil;
+    }
+    
+    if ((contactsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
+        [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
+    }
+    [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
 }
 
 #pragma mark - Get IP Address
