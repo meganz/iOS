@@ -28,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalLineLayoutConstraint;
 
 @property (nonatomic) uint64_t nodeHandle;
 

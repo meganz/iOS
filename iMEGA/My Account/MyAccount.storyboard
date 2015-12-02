@@ -55,7 +55,7 @@
         <scene sceneID="Mfc-t9-8Fm">
             <objects>
                 <navigationController id="goA-hy-Wkg" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="6" title="My Account" image="myAccountIcon" id="aWE-TN-bqV"/>
+                    <tabBarItem key="tabBarItem" tag="7" title="My Account" image="myAccountIcon" id="aWE-TN-bqV"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PlA-rl-aKy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

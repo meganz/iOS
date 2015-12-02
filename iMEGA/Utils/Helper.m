@@ -331,6 +331,24 @@ static NSInteger linkNodeOption;
     return folderSharedImage;
 }
 
++ (UIImage *)incomingFolderImage {
+    static UIImage *incomingFolderImage = nil;
+    
+    if (incomingFolderImage == nil) {
+        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
+    }
+    return incomingFolderImage;
+}
+
++ (UIImage *)outgoingFolderImage {
+    static UIImage *outgoingFolderImage = nil;
+    
+    if (outgoingFolderImage == nil) {
+        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
+    }
+    return outgoingFolderImage;
+}
+
 + (UIImage *)folderCameraUploadsImage {
     static UIImage *folderCameraUploadsImage = nil;
     

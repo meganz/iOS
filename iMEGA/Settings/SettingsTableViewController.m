@@ -121,23 +121,28 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
     
-    //Tab bar item titles
-    for (NSInteger i = 0; i < [self.tabBarController.viewControllers count]; i++) {
-        switch ([[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] tag]) {
+    NSArray *viewControllersMutableArray = [self.tabBarController viewControllers];
+    for (NSInteger i = 0; i < [viewControllersMutableArray count]; i++) {
+        UITabBarItem *tabBarItem = [[viewControllersMutableArray objectAtIndex:i] tabBarItem];
+        switch (tabBarItem.tag) {
             case 3:
-                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"contactsTitle", @"Contacts")];
+                [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
                 break;
                 
             case 4:
-                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"transfers", @"Transfers")];
+                [tabBarItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
                 break;
                 
             case 5:
-                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"settingsTitle", @"Settings")];
+                [tabBarItem setTitle:AMLocalizedString(@"transfers", nil)];
                 break;
                 
             case 6:
-                [[[[[self tabBarController] viewControllers] objectAtIndex:i] tabBarItem] setTitle:AMLocalizedString(@"myAccount", @"My Account")];
+                [tabBarItem setTitle:AMLocalizedString(@"settingsTitle", nil)];
+                break;
+                
+            case 7:
+                [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
                 break;
                 
             default:
