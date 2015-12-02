@@ -463,7 +463,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="הוסף";
 /* Success message shown when a contact has been invited */
-"contactInvited"="איש קשר התווסף! ";
+"requestSent"="איש קשר התווסף! ";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="שגיאה בהוספת איש קשר";
 /* Alert title shown when you want to remove one or more contacts */

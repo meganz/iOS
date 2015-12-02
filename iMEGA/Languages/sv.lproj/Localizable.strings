@@ -463,7 +463,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Lägg till ";
 /* Success message shown when a contact has been invited */
-"contactInvited"="Lagt till kontakt";
+"requestSent"="Lagt till kontakt";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Problem med att lägga till kontakt";
 /* Alert title shown when you want to remove one or more contacts */

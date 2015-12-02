@@ -205,6 +205,7 @@
     cell.declineButton.tag = indexPath.row;
     [cell.declineButton addTarget:self action:@selector(declineOrDeleteTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     
+    NSString *pendingString = [[@" (" stringByAppendingString:AMLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
         case 0: { //INCOMING CONTACTS REQUESTS
             [cell.acceptButton setHidden:NO];
@@ -214,7 +215,7 @@
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             [cell.avatarImageView setImage:[UIImage imageForName:[contactRequest sourceEmail].uppercaseString size:CGSizeMake(30, 30)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
-            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:@" (Pending)"];
+            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
             break;
         }
@@ -225,7 +226,7 @@
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             [cell.avatarImageView setImage:[UIImage imageForName:[contactRequest targetEmail].uppercaseString size:CGSizeMake(30, 30)]];
             cell.nameLabel.text = [contactRequest targetEmail];
-            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:@" (Pending)"];
+            cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;
         }
             
@@ -443,7 +444,7 @@
         case MEGARequestTypeInviteContact:
             switch (request.number.integerValue) {
                 case 0:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvited", nil)];
+                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
                     break;
                     
                 case 1:
