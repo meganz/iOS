@@ -897,7 +897,7 @@
         }
             
         case MEGARequestTypeInviteContact:
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"contactInvited", nil)];
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
             break;
             
         case MEGARequestTypeRemoveContact: {

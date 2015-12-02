@@ -478,6 +478,8 @@
 "removedContacts"="%d contactos eliminados";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Contacto %@ eliminado";
+/* Label shown when a contact request is pending */
+"pending"="Pendiente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="El contacto no tiene email";
 /* Button title of the action that allows to leave a shared folder */
