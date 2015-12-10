@@ -297,6 +297,8 @@
     MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
     NSString *handleString = [offNode base64Handle];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
+    
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
@@ -333,9 +335,13 @@
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage == nil) {
                 thumbnailImage = [Helper defaultPhotoImage];
+            } else {
+                [cell.thumbnailImageView setImage:thumbnailImage];
+                if (isVideo(nameString.pathExtension)) {
+                    [cell.thumbnailPlayImageView setHidden:NO];
+                }
             }
             
-            [cell.thumbnailImageView setImage:thumbnailImage];
         } else {
             CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
             if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {

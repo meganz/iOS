@@ -402,6 +402,7 @@
     
     node = [array objectAtIndex:indexPath.row];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
     if ([node hasThumbnail]) {
         NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
         BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -410,6 +411,10 @@
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         } else {
             [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            if (isVideo(node.name.pathExtension)) {
+                [cell.thumbnailPlayImageView setHidden:NO];
+            }
+
         }
     } else {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -721,6 +726,9 @@
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [pcvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                        if (isVideo(node.name.pathExtension)) {
+                            [pcvc.thumbnailPlayImageView setHidden:NO];
+                        }
                     }
                 }
             }
