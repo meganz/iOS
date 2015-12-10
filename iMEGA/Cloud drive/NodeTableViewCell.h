@@ -32,6 +32,8 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalLineLayoutConstraint;
 
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
+
 @property (nonatomic) uint64_t nodeHandle;
 
 @end

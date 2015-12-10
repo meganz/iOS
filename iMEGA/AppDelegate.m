@@ -963,7 +963,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([request type] == MEGARequestTypeSetAttrFile && [[NSFileManager defaultManager] fileExistsAtPath:request.file.stringByDeletingPathExtension]) {
+    if ([request type] == MEGARequestTypeSetAttrFile && [[NSFileManager defaultManager] fileExistsAtPath:request.file]) {
         [[NSFileManager defaultManager] removeItemAtPath:request.file.stringByDeletingPathExtension error:nil];
     }
     
