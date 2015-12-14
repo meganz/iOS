@@ -35,6 +35,8 @@
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
 
+#import "LaunchViewController.h"
+
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
@@ -65,6 +67,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     BOOL isOverquota;
+    
+    BOOL isFirstFetchNodesRequestUpdate;
+    BOOL isFirstAPI_EAGAIN;
+    NSTimer *timerAPI_EAGAIN;
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
@@ -196,10 +202,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
-            NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
-            UIViewController *viewController = [[UIViewController alloc] init];
-            [viewController setView:[objectsArray objectAtIndex:0]];
-            self.window.rootViewController = viewController;
+            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+            [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
+                [self.window setRootViewController:launchVC];
+            } completion:nil];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -213,6 +220,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [self.window setRootViewController:_mainTBC];
+                [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
     }
@@ -628,6 +636,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
 }
 
+- (void)startTimerAPI_EAGAIN {
+    timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
+}
+
+- (void)showServersTooBusy {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        [launchVC.label setText:AMLocalizedString(@"serversTooBusy", nil)];
+    }
+}
+
 #pragma mark - Get IP Address
 
 - (NSString *)getIpAddress {
@@ -742,6 +761,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         [self.window setRootViewController:_mainTBC];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
     }
 }
 
@@ -896,8 +916,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
+            
+        case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+            if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+                isFirstAPI_EAGAIN = YES;
+                isFirstFetchNodesRequestUpdate = YES;
+                LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+                [launchVC.activityIndicatorView setHidden:NO];
+                [launchVC.activityIndicatorView startAnimating];
+            }
             break;
         }
             
@@ -916,11 +944,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #endif
     
     if ([request type] == MEGARequestTypeFetchNodes){
-        float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
-        if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:@"" maskType:SVProgressHUDMaskTypeClear];
-        } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:0.99 status:@"" maskType:SVProgressHUDMaskTypeClear];
+        if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+            float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
+            
+            if (isFirstFetchNodesRequestUpdate) {
+                [launchVC.activityIndicatorView stopAnimating];
+                [launchVC.activityIndicatorView setHidden:YES];
+                isFirstFetchNodesRequestUpdate = NO;
+            }
+            
+            if (progress > 0 && progress < 0.99) {
+                [launchVC.progressView setProgress:progress];
+            }
         }
     }
 }
@@ -981,6 +1017,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [timerAPI_EAGAIN invalidate];
+            
             if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
@@ -995,8 +1033,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
+            [timerAPI_EAGAIN invalidate];
+            
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [self.window setRootViewController:_mainTBC];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -1101,6 +1142,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #ifdef DEBUG
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
+    
+    switch ([request type]) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            if (isFirstAPI_EAGAIN) {
+                [self startTimerAPI_EAGAIN];
+                isFirstAPI_EAGAIN = NO;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MEGATransferDelegate

@@ -731,8 +731,11 @@ static NSInteger linkNodeOption;
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-    
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
+        [window setRootViewController:viewController];
+    } completion:nil];
+        
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     

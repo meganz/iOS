@@ -133,6 +133,8 @@
 		E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */; };
 		E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */; };
 		E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */; };
+		E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
+		E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
 		E8C8D7851B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D7841B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m */; };
 		E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */; };
@@ -169,7 +171,7 @@
 		1373618E1A6664C300B740E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		410333D01B9992A200380FF3 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -336,7 +338,7 @@
 		41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPurchase.m; sourceTree = "<group>"; };
 		41D578221B84A0FB00334ED3 /* PreviewDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewDocumentViewController.h; sourceTree = "<group>"; };
 		41D578231B84A0FB00334ED3 /* PreviewDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewDocumentViewController.m; sourceTree = "<group>"; };
-		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ../LaunchScreen.xib; sourceTree = "<group>"; };
 		41D8ECDA1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
@@ -422,6 +424,9 @@
 		E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Light.otf"; path = "Fonts/SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
 		E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Light.otf"; path = "Fonts/SF-UI-Text-Light.otf"; sourceTree = "<group>"; };
 		E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Regular.otf"; path = "Fonts/SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
+		E8C289FB1BF65B7800F7A034 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGANavigationController.h; sourceTree = "<group>"; };
 		E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGANavigationController.m; sourceTree = "<group>"; };
 		E8C8D7831B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAQLPreviewControllerTransitionAnimator.h; path = Animators/MEGAQLPreviewControllerTransitionAnimator.h; sourceTree = "<group>"; };
@@ -503,7 +508,7 @@
 			children = (
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
-				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
+				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
 				415226781A692ECC00EC7BB6 /* Login */,
@@ -1065,6 +1070,17 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		E8C289F91BF65B2200F7A034 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				41D77EA81A6E8E6300818BE8 /* LaunchScreen.xib */,
+				E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */,
+				E8C289FB1BF65B7800F7A034 /* LaunchViewController.h */,
+				E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 		E8C8D7821B219BBA00BCDBA4 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
@@ -1247,6 +1263,7 @@
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
+				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
@@ -1356,6 +1373,7 @@
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				41E5668A1BBD6160007569A2 /* CTAssetScrollView.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
+				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
 				41E566921BBD6160007569A2 /* CTAssetsViewControllerTransition.m in Sources */,
 				41E5668F1BBD6160007569A2 /* CTAssetsSupplementaryView.m in Sources */,
