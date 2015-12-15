@@ -40,7 +40,6 @@
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
-#import "UIImage+Utils.h"
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -963,10 +962,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([request type] == MEGARequestTypeSetAttrFile && [[NSFileManager defaultManager] fileExistsAtPath:request.file]) {
-        [[NSFileManager defaultManager] removeItemAtPath:request.file.stringByDeletingPathExtension error:nil];
-    }
-    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1256,16 +1251,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
             generator.appliesPreferredTrackTransform = YES;
             CMTime requestedTime = CMTimeMake(1, 60);
             CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
-            UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
+            UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
             
-            UIImage *croppedImage = [thumbnailImage imageByScalingAndCroppingForSize:CGSizeMake(120, 120)];
-            NSString *thumbnailFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:transfer.fileName.stringByDeletingPathExtension];
+            NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:node.base64Handle] stringByAppendingPathExtension:@"jpg"];
             
-            [UIImageJPEGRepresentation(croppedImage, 1) writeToFile:thumbnailFilePath atomically:YES];
+            [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
             
             CGImageRelease(imgRef);
             
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
             [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
+            
+            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+            [api createPreview:tmpImagePath destinatioPath:previewFilePath];
+            [api setPreviewNode:node sourceFilePath:previewFilePath];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     }
     
