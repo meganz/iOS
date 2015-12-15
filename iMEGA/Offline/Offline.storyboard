@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -41,15 +40,24 @@
                                             <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9" userLabel="Subtitle">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9" userLabel="Subtitle">
                                             <rect key="frame" x="64" y="23" width="528" height="15"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                             <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_list" translatesAutoresizingMaskIntoConstraints="NO" id="lZz-ne-Jif">
+                                            <rect key="frame" x="21" y="11" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="CqG-9d-bKb"/>
+                                                <constraint firstAttribute="width" constant="22" id="OCb-NZ-GbF"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="e5P-pC-mA9" firstAttribute="leading" secondItem="NDx-eK-6De" secondAttribute="trailing" constant="12" id="3Lh-u7-GUp"/>
+                                        <constraint firstItem="lZz-ne-Jif" firstAttribute="centerY" secondItem="NDx-eK-6De" secondAttribute="centerY" id="DXr-yk-uIU"/>
+                                        <constraint firstItem="lZz-ne-Jif" firstAttribute="centerX" secondItem="NDx-eK-6De" secondAttribute="centerX" id="EmK-H6-tL7"/>
                                         <constraint firstItem="Ine-fm-vKt" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="top" constant="5" id="a7Y-QP-yma"/>
                                         <constraint firstItem="NDx-eK-6De" firstAttribute="leading" secondItem="Ipo-hV-DSj" secondAttribute="leading" constant="12" id="ceI-oH-AYM"/>
                                         <constraint firstItem="NDx-eK-6De" firstAttribute="top" secondItem="Ipo-hV-DSj" secondAttribute="top" constant="2" id="iyf-ti-q9h"/>
@@ -64,6 +72,7 @@
                                     <outlet property="infoLabel" destination="e5P-pC-mA9" id="n8w-VC-TpJ"/>
                                     <outlet property="nameLabel" destination="Ine-fm-vKt" id="EtN-bs-ob5"/>
                                     <outlet property="thumbnailImageView" destination="NDx-eK-6De" id="APT-GW-6JC"/>
+                                    <outlet property="thumbnailPlayImageView" destination="lZz-ne-Jif" id="XNS-Q2-ylh"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -104,5 +113,6 @@
     </scenes>
     <resources>
         <image name="offlineIcon" width="26" height="24"/>
+        <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

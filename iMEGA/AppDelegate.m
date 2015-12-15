@@ -1229,8 +1229,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (isImage([transfer fileName].pathExtension)) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            
             NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
@@ -1244,6 +1242,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (!previewExists) {
                 [api createPreview:[transfer path] destinatioPath:previewFilePath];
             }
+        }
+        
+        if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
+            NSURL *videoURL = [NSURL fileURLWithPath:transfer.path];
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            generator.appliesPreferredTrackTransform = YES;
+            CMTime requestedTime = CMTimeMake(1, 60);
+            CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
+            UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
+            
+            NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:node.base64Handle] stringByAppendingPathExtension:@"jpg"];
+            
+            [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+            
+            CGImageRelease(imgRef);
+            
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+            [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
+            
+            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+            [api createPreview:tmpImagePath destinatioPath:previewFilePath];
+            [api setPreviewNode:node sourceFilePath:previewFilePath];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     }
     
