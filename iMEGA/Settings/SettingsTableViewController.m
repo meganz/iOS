@@ -235,7 +235,7 @@
             NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
             
             [mailComposeVC setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
-            [mailComposeVC setMessageBody:@"Write something here!" isHTML:NO];
+            [mailComposeVC setMessageBody:AMLocalizedString(@"pleaseWriteYourFeedback", nil) isHTML:NO];
             
             [self presentViewController:mailComposeVC animated:YES completion:nil];
         } else {

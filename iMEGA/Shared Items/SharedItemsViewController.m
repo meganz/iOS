@@ -1013,8 +1013,12 @@
                     
                 case MEGAUserAttributeLastname:
                     name = [_namesMutableDictionary objectForKey:[request email]];
-                    name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                    [_namesMutableDictionary setObject:name forKey:[request email]];
+                    if (name != nil) {
+                        name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
+                        [_namesMutableDictionary setObject:name forKey:[request email]];
+                    } else {
+                        [_namesMutableDictionary setObject:[request email] forKey:[request email]];
+                    }
                     break;
             }
             
