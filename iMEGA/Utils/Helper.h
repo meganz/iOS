@@ -26,7 +26,7 @@
 
 #define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
 #define videoSet        [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", /*@"mkv", @"avi", @"mpg", @"mpeg",@"aaf",*/ nil]
-#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", nil]
+#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", @"m4v", nil]
 
 #define isImage(n)        [imagesSet containsObject:n.lowercaseString]
 #define isVideo(n)        [videoSet containsObject:n.lowercaseString]

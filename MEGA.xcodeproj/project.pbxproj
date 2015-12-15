@@ -60,7 +60,6 @@
 		418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852001A668E4400FDBA15 /* libc++.dylib */; };
 		418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852021A668E4B00FDBA15 /* libz.dylib */; };
 		418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852041A668E5200FDBA15 /* libsqlite3.dylib */; };
-		419B8B6B1C061B8B005CFD53 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 419B8B6A1C061B8B005CFD53 /* UIImage+Utils.m */; };
 		41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */; };
 		41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */; };
@@ -269,8 +268,6 @@
 		418852001A668E4400FDBA15 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		418852021A668E4B00FDBA15 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		418852041A668E5200FDBA15 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		419B8B691C061B8B005CFD53 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
-		419B8B6A1C061B8B005CFD53 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
 		41A602981A8A5D11001AE538 /* CameraUploads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploads.h; sourceTree = "<group>"; };
 		41A602991A8A5D11001AE538 /* CameraUploads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploads.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeTableViewController.h; sourceTree = "<group>"; };
@@ -948,8 +945,6 @@
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
 				41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */,
 				41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */,
-				419B8B691C061B8B005CFD53 /* UIImage+Utils.h */,
-				419B8B6A1C061B8B005CFD53 /* UIImage+Utils.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1394,7 +1389,6 @@
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				41E5668D1BBD6160007569A2 /* CTAssetsPageViewController.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
-				419B8B6B1C061B8B005CFD53 /* UIImage+Utils.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				41FC83A81AA732ED008FA551 /* Reachability.m in Sources */,
