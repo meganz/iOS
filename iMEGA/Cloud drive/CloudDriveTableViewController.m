@@ -73,6 +73,8 @@
     NSString *previewDocumentPath;
     
     NSUInteger numFilesAction, numFoldersAction;
+    
+    MEGANode *selectedNode;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -320,6 +322,8 @@
     [cell.thumbnailImageView.layer setCornerRadius:4];
     [cell.thumbnailImageView.layer setMasksToBounds:YES];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
+    
     if ([node type] == MEGANodeTypeFile) {
         if ([node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
@@ -329,6 +333,9 @@
                 [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
             } else {
                 [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                if (isVideo(node.name.pathExtension)) {
+                    [cell.thumbnailPlayImageView setHidden:NO];
+                }
             }
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -498,6 +505,17 @@
                                                                    object:moviePlayerViewController.moviePlayer];
                         
                         [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+                        
+                        selectedNode = node;
+                        
+                        if (![node hasThumbnail]) {
+                            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                     selector:@selector(handleThumbnailImageRequestFinishNotification:)
+                                                                         name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                                       object:moviePlayerViewController.moviePlayer];
+                            
+                            [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
+                        }
                         
                         [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
                         
@@ -1359,6 +1377,7 @@
         imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         imagePickerController.sourceType = sourceType;
         imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
+        imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         imagePickerController.delegate = self;
         
         self.imagePickerController = imagePickerController;
@@ -1776,11 +1795,39 @@
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
     MPMoviePlayerController *moviePlayer = [aNotification object];
+    
+    [moviePlayer cancelAllThumbnailImageRequests];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
+
+- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                  object:moviePlayer];
+    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+    
+    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
+    
+    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
+    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
+    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    selectedNode = nil;
+}
+
 
 #pragma mark - UIDocumentPickerDelegate
 
@@ -1894,6 +1941,9 @@
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                        if (isVideo(node.name.pathExtension)) {
+                            [ntvc.thumbnailPlayImageView setHidden:NO];
+                        }
                     }
                 }
             }
@@ -2114,7 +2164,7 @@
             [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
             NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
             [formatter setLocale:locale];
-            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"MOV"];
+            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"mov"];
             [api renameNode:node newName:name];
         } 
     }
