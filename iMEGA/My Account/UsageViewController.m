@@ -177,6 +177,11 @@
         NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
         NSNumber *number = [numberFormatter numberFromString:firstPartString];
         firstPartString = [numberFormatter stringFromNumber:number];
+        
+        if ([firstPartString length] == 0) {
+            firstPartString = [self stringWithoutUnit:stringFromByteCount];
+        }
+        
         firstPartRange = [firstPartString rangeOfString:firstPartString];
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         
