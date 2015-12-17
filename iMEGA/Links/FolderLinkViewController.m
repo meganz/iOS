@@ -337,7 +337,7 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
         
-        [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
+        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
         [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
