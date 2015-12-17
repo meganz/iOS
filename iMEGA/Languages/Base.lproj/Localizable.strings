@@ -624,6 +624,8 @@
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploads";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transfers cancelled";
 /* Title of the alert shown when you try to cancel transfers */

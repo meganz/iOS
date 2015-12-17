@@ -327,7 +327,7 @@ static NSInteger linkNodeOption;
     static UIImage *folderSharedImage = nil;
     
     if (folderSharedImage == nil) {
-        folderSharedImage = [UIImage imageNamed:@"folder_shared"];
+        folderSharedImage = [UIImage imageNamed:@"folder_outgoing"];
     }
     return folderSharedImage;
 }
@@ -419,7 +419,7 @@ static NSInteger linkNodeOption;
                 return [UIImage imageNamed:@"info_folder_image"];
             } else {
                 if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [UIImage imageNamed:@"info_folder_shared"];
+                    return [UIImage imageNamed:@"info_folder_outgoing"];
                 } else {
                     return [UIImage imageNamed:@"info_folder"];
                 }
@@ -452,15 +452,6 @@ static NSInteger linkNodeOption;
         }
     }
     return image;
-}
-
-+ (UIImage *)downloadingArrowImage {
-    static UIImage *downloadingArrowImage = nil;
-    
-    if (downloadingArrowImage == nil) {
-        downloadingArrowImage = [UIImage imageNamed:@"downloadingArrow"];
-    }
-    return downloadingArrowImage;
 }
 
 + (UIImage *)downloadedArrowImage {

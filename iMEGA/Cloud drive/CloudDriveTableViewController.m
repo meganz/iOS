@@ -272,6 +272,8 @@
     
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
+    BOOL isDownloaded = NO;
+    
     NodeTableViewCell *cell;
     if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
@@ -279,7 +281,7 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
         
-        [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
+        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
         [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
@@ -292,9 +294,7 @@
         
         // Check fingerprint, if we download a file with NULL fingerprint, all folders are marked as downloaded because the fingerprinf for folders are NULL
         if (offlineNode && fingerprint) {
-            [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
-        } else {
-            [cell.downloadedImageView setImage:nil];
+            isDownloaded = YES;
         }
         
         struct tm *timeinfo;
@@ -310,6 +310,27 @@
         NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
         
         cell.infoLabel.text = sizeAndDate;
+    }
+    
+    if ([node isExported]) {
+        if (isDownloaded) {
+            [cell.upImageView setImage:[UIImage imageNamed:@"linked"]];
+            [cell.middleImageView setImage:nil];
+            [cell.downImageView setImage:[Helper downloadedArrowImage]];
+        } else {
+            [cell.upImageView setImage:nil];
+            [cell.middleImageView setImage:[UIImage imageNamed:@"linked"]];
+            [cell.downImageView setImage:nil];
+        }
+    } else {
+        [cell.upImageView setImage:nil];
+        [cell.downImageView setImage:nil];
+        
+        if (isDownloaded) {
+            [cell.middleImageView setImage:[Helper downloadedArrowImage]];
+        } else {
+            [cell.middleImageView setImage:nil];
+        }
     }
     
     UIView *view = [[UIView alloc] init];

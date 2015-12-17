@@ -93,7 +93,6 @@
 + (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;
 
-+ (UIImage *)downloadingArrowImage;
 + (UIImage *)downloadedArrowImage;
 + (UIImage *)downloadingTransferImage;
 + (UIImage *)uploadingTransferImage;

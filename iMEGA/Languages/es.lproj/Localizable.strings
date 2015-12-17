@@ -19,9 +19,9 @@
 /* Alert title to attract attention */
 "attention"="Atención";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú cámara en Ajustes";
+"cameraPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tu cámara en Ajustes";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tú librería de fotos en Ajustes";
+"photoLibraryPermissions"="Por favor dale permisos a la aplicación de MEGA para acceder a tus Fotos en Ajustes";
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="No se pueden descargar carpetas vacías";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
@@ -73,9 +73,9 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email o contraseña no válida.";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Introduzca un email válido";
+"emailInvalidFormat"="Introduce un email válido";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Introduzca una contraseña válida";
+"passwordInvalidFormat"="Introduce una contraseña válida";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Correo electrónico";
 /* Hint text to suggest that the user has to write his password */
@@ -89,7 +89,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta con MEGA.";
+"emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
 /* Message displayed when an action is completed successfully */
 "awesome"="Genial";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -105,7 +105,7 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Offline serán borrados. ¿Quieres continuar?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Tiene que liberar espacio";
+"nodeTooBig"="Tienes que liberar espacio";
 /* Title for the MEGA link view */
 "megaLink"="Enlace a MEGA";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
@@ -123,7 +123,7 @@
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
 "fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
 /* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="El archivo que está intentando descargar ya existe en Offline";
+"fileAlreadyExist"="El archivo que estás intentando descargar ya existe en Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
 /* DO NOT TRANSLATE, it will change (Design) */
@@ -277,7 +277,7 @@
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
 "folderMoved_alertTitle"="La carpeta ha sido movida";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="Ya no tiene acceso a este archivo";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Ya no tienes acceso a este archivo";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Ya no tienes acceso a esta carpeta";
 /* List option shown on the details of a file or folder */
@@ -379,7 +379,7 @@
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Compruebe sus permisos sobre esta carpeta";
+"permissionMessage"="Comprueba tus permisos sobre esta carpeta";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
@@ -411,7 +411,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tiene suficiente espacio en su dispositivo";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tienes suficiente espacio en tu dispositivo";
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
@@ -433,27 +433,27 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Saliente";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Compartida con 1 contacto";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Compartida con %d contactos";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permisos modificados";
 /* Message shown when a share has been left */
-"shareLeft"="Compartido abandonado";
+"shareLeft"="Carpeta abandonada";
 /* Message shown when some shares have been left */
-"sharesLeft"="Compartidos abandonados";
+"sharesLeft"="Carpetas abandonadas";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Eliminar compartido";
+"removeSharing"="Eliminar compartición";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="¿Seguro que quieres eliminar este compartido? (Compartido con un contacto)";
+"removeOneShareOneContactMessage"="¿Seguro que quieres eliminar esta compartición? (Compartido con un contacto)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="¿Seguro que quieres eliminar este compartido? (Compartido con %d contactos)";
+"removeOneShareMultipleContactsMessage"="¿Seguro que quieres eliminar este compartición? (Compartido con %d contactos)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="¿Seguro que quieres eliminar estes compartidos? (Compartidos con %d contactos)";
+"removeMultipleSharesMultipleContactsMessage"="¿Seguro que quieres eliminar estas comparticiones? (Compartido con %d contactos)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Compartición eliminada con éxito";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Compartidos eliminados";
+"sharesRemoved"="Comparticiones eliminadas";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Propietario";
 /* Title of the view where you see with who you have shared a folder */
@@ -547,7 +547,7 @@
 /* Title shown when you try to export your MEGA master key */
 "exportMasterKey"="Exportar clave maestra";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Desea continuar?";
+"exportMasterKey_alertMessage"="¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Deseas continuar?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
 "exportMasterKeyFooter"="Exportando la clave maestra y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
 /* Alert title shown when you have exported your MEGA master key */
@@ -563,21 +563,21 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmar borrado";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFileFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo y %d carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente [A] archivos y [B] carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer.)";
+"removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente [A] archivos y [B] carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 archivo eliminado de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -681,7 +681,7 @@
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree" = "Obtén dos meses gratis si te subscribes a un plan PRO anual";
 /* Header shown to help on the purchasin process */
-"selectMembership" = "Seleccione una subscripción:";
+"selectMembership" = "Selecciona una subscripción:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Ahorra un 17%";
 /* Error message shown when the purchase has failed */
@@ -701,20 +701,20 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable" = "Este producto no está disponible en la App Store en estos momentos. Por favor inténtelo de nuevo más tarde.";
+"productNotAvailable" = "Este producto no está disponible en la App Store en estos momentos. Por favor inténtalo de nuevo más tarde.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title" = "Gracias";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message" = "Su compra fue restaurada";
+"purchaseRestore_message" = "Tu compra ha sido restaurada";
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title" = "Compra cancelada";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message" = "O usted ha cancelado la solicitud o Apple ha reportado un problema en la transacción. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz.";
+"failedPurchase_message" = "O has cancelado la solicitud o Apple ha reportado un problema en la transacción. Por favor, inténtalo de nuevo más tarde o contacta con ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title" = "Problema al restaurar";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "La transacción anterior no ha sido encontrada. Por favor, selecciona el producto comprado anteriormente para restaurarlo. NO se le cobrará de nuevo.";
+"incompleteRestore_message" = "La transacción anterior no ha sido encontrada. Por favor, selecciona el producto comprado anteriormente para restaurarlo. NO se te cobrará de nuevo.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title" = "Restauración cancelada";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message" = "O la petición fue cancelada o la compra anterior no pudo ser restaurada. Por favor, inténtelo de nuevo más tarde o contacte con ios@mega.nz.";
+"failedRestore_message" = "O la petición fue cancelada o la compra anterior no pudo ser restaurada. Por favor, inténtalo de nuevo más tarde o contacta con ios@mega.nz.";
