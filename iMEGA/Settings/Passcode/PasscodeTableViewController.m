@@ -51,6 +51,7 @@
     [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
+    [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
