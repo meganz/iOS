@@ -459,8 +459,8 @@
     NSString *userName = nil;
     if (self.contactsMode == ContactsFolderSharedWith) {
         userName = [self.namesMutableDictionary objectForKey:userEmail];
-        
-        if (userName != nil) {
+        BOOL isNameEmpty = [[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+        if (userName != nil && !isNameEmpty) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
             [cell.shareLabel setText:userEmail];
