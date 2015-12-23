@@ -43,5 +43,6 @@
 
 + (CameraUploads *)syncManager;
 - (void)getAllAssetsForUpload;
+- (void)turnOffCameraUploads;
 
 @end

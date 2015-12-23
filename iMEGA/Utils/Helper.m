@@ -846,8 +846,6 @@ static NSInteger linkNodeOption;
 }
 
 + (void)resetCameraUploadsSettings {
-    [[CameraUploads syncManager].assetUploadArray removeAllObjects];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
     [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
     
@@ -856,15 +854,7 @@ static NSInteger linkNodeOption;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
     
-    [CameraUploads syncManager].isCameraUploadsEnabled = NO;
-    [CameraUploads syncManager].isUploadVideosEnabled = NO;
-    [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
-    [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    [[CameraUploads syncManager] turnOffCameraUploads];
 }
 
 + (void)deletePasscode {

@@ -66,6 +66,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    
+    UIAlertView *overquotaAlertView;
     BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
@@ -647,6 +649,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)showOverquotaAlert {
+    [self disableCameraUploads];
+    
+    if (!overquotaAlertView.visible) {
+        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+        isOverquota = YES;
+    }
+}
+
+- (void)disableCameraUploads {
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        [[CameraUploads syncManager] turnOffCameraUploads];
+    }
+}
+
 #pragma mark - Get IP Address
 
 - (NSString *)getIpAddress {
@@ -991,8 +1008,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiEOverQuota: {
-                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-                isOverquota = YES;
+                [self showOverquotaAlert];
                 break;
             }
                 
@@ -1119,14 +1135,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeAccountDetails: {
             
             if (isOverquota) {
-                UIAlertView *alertView;
                 if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
-                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
+                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
                 } else {
-                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 }
-                [alertView setTag:0];
-                [alertView show];
+                [overquotaAlertView setTag:0];
+                [overquotaAlertView show];
                 isOverquota = NO;
             }
             
@@ -1178,8 +1193,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
-                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-                isOverquota = YES;
+                [self showOverquotaAlert];
                 break;
             }
                 
