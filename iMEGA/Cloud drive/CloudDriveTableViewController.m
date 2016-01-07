@@ -211,12 +211,16 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
     if (self.tableView.isEditing) {
         self.selectedNodesArray = nil;
         [self setEditing:NO animated:NO];
     }
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (void)dealloc {
