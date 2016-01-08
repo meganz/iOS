@@ -888,10 +888,18 @@
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     if (index < self.cloudImages.count) {
-        return [self.cloudImages objectAtIndex:index];
+        MEGAPreview *preview = [self.cloudImages objectAtIndex:index];
+        preview.isGridMode = NO;
+        return preview;
     }
     
     return nil;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
+    MEGAPreview *thumbnail = [self.cloudImages objectAtIndex:index];
+    thumbnail.isGridMode = YES;
+    return thumbnail;
 }
 
 #pragma mark - UIActionSheetDelegate
