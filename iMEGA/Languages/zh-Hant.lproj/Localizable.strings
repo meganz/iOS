@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="伺服器忙碌中。請稍候...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 存儲空間";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -429,7 +431,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="傳出";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="已與 1 位聯絡人分享";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="已與 %d 位聯絡人分享";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -476,6 +478,8 @@
 "removedContacts"="已移除 %d 聯繫人";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="聯繫人 %@ 已移除";
+/* Label shown when a contact request is pending */
+"pending"="處理中";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="該聯繫人缺少郵箱地址";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="應用程式語言選項";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="寄發反饋";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="請於此處寫下您的意見";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您在該設備中尚未登錄";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -609,7 +615,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="獲得幫助或閱讀熱門主題";
 /* Title to rate the app */
-"rateUsLabel"="請給我們評分";
+"rateUsLabel"="請幫我們評分！";
 /* Title of the Transfers section */
 "transfers"="傳輸";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -618,6 +624,8 @@
 "downloads"="下載";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="上傳";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="已取消傳輸";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="傳輸已取消！";
 /* Title of the alert shown when you try to cancel transfers */

@@ -675,7 +675,7 @@
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Ancho de banda";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="desde %.2f %@ / mes";
+"productPricePerMonth"="%.2f %@ al mes";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan" = "Elige un plan:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */

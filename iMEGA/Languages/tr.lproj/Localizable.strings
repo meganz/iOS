@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Sunucular çok meşgul. Lütfen bekleyin...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA ALAN";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -429,23 +431,23 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Giden";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="1 kişiyle paylaşıldı";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="%d kişi ile paylaşıldı";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="İzinler değiştirildi";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Paylaşım kaldı";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Paylaşım kaldı";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Paylaşımı kaldır";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Bu paylaşımı kaldırmak istediğinizden emin misiniz? (1 kişiyle paylaşılmış)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Bu paylaşımı kaldırmak istediğinizden emin misiniz? (%d kişi ile paylaşılıyor)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Bu paylaşımları kaldırmak istediğinizden emin misiniz? (%d kişi ile paylaşılıyor)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Paylaşım doğru bir şekilde kaldırıldı";
 /* Message shown when some shares have been removed */
@@ -476,6 +478,8 @@
 "removedContacts"="%d kişi kaldırıldı";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="%@ kişisi kaldırıldı";
+/* Label shown when a contact request is pending */
+"pending"="Bekleyen";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Kişinin eposta adresi yok";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Uygulama dili";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Görüş Gönder";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Buraya görüşlerinizi yazınız:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Cihazınızda ayarlı e-posta hesabı yok";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -618,6 +624,8 @@
 "downloads"="İndirilenler";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Yüklemeler";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Aktarım iptal edildi";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferler iptal edildi";
 /* Title of the alert shown when you try to cancel transfers */
