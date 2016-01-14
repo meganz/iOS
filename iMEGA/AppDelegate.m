@@ -770,15 +770,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    if ([MEGAReachabilityManager isReachable]) {
+    if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        [self.window setRootViewController:_mainTBC];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    } else {
         if (self.link != nil) {
             [self processLink:self.link];
             self.link = nil;
         }
-    } else {
-        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        [self.window setRootViewController:_mainTBC];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
     }
 }
 
@@ -1051,34 +1051,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeFetchNodes: {
             [timerAPI_EAGAIN invalidate];
             
-            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:_mainTBC];
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                }
+            if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+                _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                [self.window setRootViewController:_mainTBC];
+                [[UIApplication sharedApplication] setStatusBarHidden:NO];
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-            } else {
-                if (isAccountFirstLogin) {
-                    [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
+                if ([LTHPasscodeViewController doesPasscodeExist]) {
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                    }
                     
-                    if ([Helper selectedOptionOnLink] != 0) {
-                        [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                    } else {
-                        if (self.urlType == URLTypeOpenInLink) {
-                            [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                             withLogout:YES
+                                                                         andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                } else {
+                    if (isAccountFirstLogin) {
+                        [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
+                        
+                        if ([Helper selectedOptionOnLink] != 0) {
+                            [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                        } else {
+                            if (self.urlType == URLTypeOpenInLink) {
+                                [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                            }
                         }
                     }
-                }
-                
-                if (self.link != nil) {
-                    [self processLink:self.link];
-                    self.link = nil;
+                    
+                    if (self.link != nil) {
+                        [self processLink:self.link];
+                        self.link = nil;
+                    }
                 }
             }
             
