@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="서버가 너무 바쁩니다. 잠시 기다리세요...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 저장공간";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -429,7 +431,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="나감";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="1명의 연락처와 공유됨";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="%d 명의 연락처와 공유됨";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -476,6 +478,8 @@
 "removedContacts"="%d 연락처 삭제됨";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="연락처 %@ 삭제됨";
+/* Label shown when a contact request is pending */
+"pending"="대기중";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="연락처가 이메일이 없습니다";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="어플리케이션 언어";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="여기에 피드백을 쓰세요:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -618,6 +624,8 @@
 "downloads"="다운로드";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="업로드";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="전송 취소됨";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="전송 취소됨";
 /* Title of the alert shown when you try to cancel transfers */

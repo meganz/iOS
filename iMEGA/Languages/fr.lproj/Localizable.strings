@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté(e) de cet appareil depuis un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="La clef SSL du serveur de ne pas être vérifiée. Il se peut que vous soyez affectée par une attaque de l'homme au milieu.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Les serveurs sont trop occupés. Veuillez patienter...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ESPACE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -175,17 +177,17 @@
 /* Title of My Contacts section */
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
-"contactRequests"="Contact requests";
+"contactRequests"="Demandes de contact";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Sent";
+"sent"="Envoyée(s)";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
+"requests"="Demandes";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Request accepted";
+"requestAccepted"="Demande acceptée";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request cancelled";
+"requestCancelled"="Demande annulée";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request deleted";
+"requestDeleted"="Demande supprimée";
 /* Title shown when there's no pending request */
 "noRequestPending"="Aucune requête en attente à l'heure actuelle";
 /* Title shown when the transfers are paused */
@@ -257,7 +259,7 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer depuis ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] déjà uploadé avec le nom [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="Ce fichier a déjà été uploadé avec le nom %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -315,7 +317,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d fichiers et %d dossier déplacés";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] fichiers et [B] dossiers déplacés";
+"moveFilesFoldersMessage"="[A] dossiers • [B] fichiers déplacés";
 /* List option shown on the details of a file or folder */
 "copy"="Copier";
 /* Success message shown when you have copied 1 file */
@@ -333,7 +335,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="%d fichiers et 1 dossier copiés";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] fichiers et [B] dossiers copiés";
+"copyFilesFoldersMessage"="[A] dossiers • [B] fichiers copiés";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -355,7 +357,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer %d fichiers et 1 dossier vers la Corbeille ?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer [A] fichiers et [B] dossiers vers la Corbeille ?";
+"moveFilesFoldersToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer [A] fichiers et [B] dossiers dans la Corbeille ?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fichier déplacé vers la Corbeille";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -421,35 +423,35 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insérez un e-mail";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Éléments partagés";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Shared";
+"shared"="Partagés";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="Entrants";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="Sortants";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Partagé avec un contact";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Partagé avec %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permissions changées";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Partage quitté";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Partages quittés";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Supprimer le partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Êtes-vous certain(e) de bien vouloir supprimer ce partage ? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Êtes-vous certain(e) de bien vouloir supprimé ce partage ? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Êtes-vous certain(e) de bien vouloir supprimé ces partages ? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Annulation du mode Partage réussi";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Partages supprimés";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Propriétaire";
 /* Title of the view where you see with who you have shared a folder */
@@ -463,7 +465,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Ajouter";
 /* Success message shown when a contact has been invited */
-"requestSent"="Contact ajouté ";
+"requestSent"="Demande envoyée";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Erreur lors de l'ajout d'un contact";
 /* Alert title shown when you want to remove one or more contacts */
@@ -475,7 +477,9 @@
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts supprimés";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Contact %@ supprimé ";
+"removedContact"="Contact %@ supprimé";
+/* Label shown when a contact request is pending */
+"pending"="En attente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Le contact n'a pas d'e-mail";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Langue";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Envoyer un Feedback";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Veuillez rédiger vos remarques ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Aucun compte e-mail défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -569,7 +575,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers et 1 dossier de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer [A] fichiers et [B] dossiers de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
+"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer de façon permanente [A] fichiers et [B] dossier. Voulez-vous poursuivre ? (Vous ne pourrez pas annuler cette action.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fichier supprimé de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -609,7 +615,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Trouvez de l'aide ou lire des sujets populaires.";
 /* Title to rate the app */
-"rateUsLabel"="Notez nous";
+"rateUsLabel"="Nous noter";
 /* Title of the Transfers section */
 "transfers"="Tranferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -618,6 +624,8 @@
 "downloads"="téléchargements";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="envois";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfert annulé";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferts annulés ";
 /* Title of the alert shown when you try to cancel transfers */
@@ -679,7 +687,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="MAUVAIS ACHAT  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Les achats In-App sont désactivés, veuillez les activer dans les paramètres";
+"appPurchaseDisabled"="Les achats intégrés dans l'application sont désactivés, veuillez les activer dans les Réglages d'iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Le produit %@ n'a pas été trouvé, veuillez contacter ios@mega.co.nz";
 /* Alert title to remenber the user that needs to enable purchases */
