@@ -1019,6 +1019,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEAccess: {
+                if ([request type] == MEGARequestTypeSetAttrFile) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+                    if (thumbnailExists) {
+                        [[NSFileManager defaultManager] removeItemAtPath:thumbnailFilePath error:nil];
+                    }
+                }
+                
+                break;
+            }
+                
             default:
                 break;
         }
