@@ -37,6 +37,7 @@
 
 @implementation MEGAPreview
 
+@synthesize underlyingImage;
 
 #pragma mark - Class Methods
 

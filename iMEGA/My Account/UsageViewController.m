@@ -102,7 +102,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"usage", nil)];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

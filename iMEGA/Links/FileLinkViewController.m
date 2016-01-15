@@ -97,7 +97,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

@@ -122,7 +122,7 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

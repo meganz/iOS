@@ -122,7 +122,7 @@
     }
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         if ([self.selectedViewController isEqual:self.moreNavigationController]) {
             return UIInterfaceOrientationMaskPortrait;
