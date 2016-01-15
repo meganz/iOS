@@ -835,14 +835,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeAddContact:
-            [SVProgressHUD show];
-            break;
-            
-        default:
-            break;
-    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -856,7 +848,6 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrUser: {
-            
             if ([request file] != nil) {
                 for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
                     if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {
