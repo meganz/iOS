@@ -143,7 +143,7 @@
     self.photosCollectionView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 

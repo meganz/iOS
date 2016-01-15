@@ -65,7 +65,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
