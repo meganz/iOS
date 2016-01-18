@@ -54,6 +54,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
     

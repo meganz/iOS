@@ -146,8 +146,8 @@
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     NSString *stringFromByteCount;
-    NSRange firstPartRange;
-    NSRange secondPartRange;
+    NSRange firstPartRange = NSMakeRange(0, 0);
+    NSRange secondPartRange  = NSMakeRange(0, 0);;
     
     switch (currentPage) {
         case 0: {

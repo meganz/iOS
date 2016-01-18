@@ -268,7 +268,7 @@
 - (void)delete {
     if ([MEGAReachabilityManager isReachable]) {
         //Leave folder or remove folder in a incoming shares
-        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
+        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
             [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
