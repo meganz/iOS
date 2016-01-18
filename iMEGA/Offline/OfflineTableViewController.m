@@ -333,9 +333,7 @@
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage == nil) {
-                thumbnailImage = [Helper defaultPhotoImage];
-            } else {
+            if (thumbnailImage != nil) {
                 [cell.thumbnailImageView setImage:thumbnailImage];
                 if (isVideo(nameString.pathExtension)) {
                     [cell.thumbnailPlayImageView setHidden:NO];
@@ -343,7 +341,7 @@
             }
             
         } else {
-            CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([nameString pathExtension]), NULL);
             if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];

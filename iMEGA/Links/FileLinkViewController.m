@@ -116,7 +116,7 @@
     [self.importButton setEnabled:boolValue];
     [self.downloadButton setEnabled:boolValue];
     
-    CFStringRef fileUTI = [Helper fileUTI:[self.node.name pathExtension]];
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([_node.name pathExtension]), NULL);
     if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
         [self.openButton setEnabled:boolValue];
     }
@@ -343,7 +343,7 @@
             UIImage *image = [UIImage imageNamed:fileTypeIconString];
             [self.thumbnailImageView setImage:image];
             
-            CFStringRef fileUTI = [Helper fileUTI:[self.node.name pathExtension]];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
             if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
                 [self.openButton setEnabled:YES];
                 [self.openButton setHidden:NO];

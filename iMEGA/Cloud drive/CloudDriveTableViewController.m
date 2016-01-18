@@ -445,7 +445,7 @@
         case MEGANodeTypeFile: {
             
             NSString *name = [node name];
-            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([name pathExtension]), NULL);
             if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
@@ -455,7 +455,11 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
@@ -470,7 +474,11 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
@@ -547,6 +555,9 @@
                         [moviePlayerViewController.moviePlayer prepareToPlay];
                         [moviePlayerViewController.moviePlayer play];
                         
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
                         return;
                     }
                 } else {
@@ -560,6 +571,9 @@
                     } else {
                         // There isn't enough space in the device for preview the document
                         if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                            if (fileUTI) {
+                                CFRelease(fileUTI);
+                            }
                             return;
                         }
                         

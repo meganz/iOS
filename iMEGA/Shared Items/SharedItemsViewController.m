@@ -803,7 +803,9 @@
     }
     
     if (tableView.isEditing) {
-        [_selectedNodesMutableArray addObject:node];
+        if (node != nil) {
+            [_selectedNodesMutableArray addObject:node];
+        }
         
         [self toolbarItemsSetEnabled:YES];
         
@@ -881,7 +883,6 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = nil;
     switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
         case 0: { //Incoming
@@ -896,7 +897,10 @@
     }
     
     _selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    [_selectedNodesMutableArray addObject:node];
+    
+    if (node != nil) {
+        [_selectedNodesMutableArray addObject:node];
+    }
     
     [self toolbarItemsSetEnabled:YES];
     

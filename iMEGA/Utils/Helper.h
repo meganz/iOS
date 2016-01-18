@@ -67,10 +67,6 @@
 
 @interface Helper : NSObject
 
-#pragma mark - File UTIs
-
-+ (CFStringRef)fileUTI:(NSString *)fileExtension;
-
 #pragma mark - Languages
 
 + (BOOL)isLanguageSupported:(NSString *)languageID;

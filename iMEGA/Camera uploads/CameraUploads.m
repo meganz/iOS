@@ -207,8 +207,6 @@ static CameraUploads *instance = nil;
         }
     };
     
-    assetGroups = [[NSMutableArray alloc] init];
-    
     [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                 usingBlock:assetGroupEnumerator
                               failureBlock:^(NSError *error) {
