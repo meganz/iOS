@@ -72,6 +72,12 @@
 @property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
 
+@property (nonatomic, strong) NSMutableArray *userNamesRequestedMutableArray;
+@property (nonatomic, strong) NSMutableDictionary *incomingNodesForEmailMutableDictionary;
+@property (nonatomic, strong) NSMutableDictionary *incomingIndexPathsMutableDictionary;
+@property (nonatomic, strong) NSMutableDictionary *outgoingNodesForEmailMutableDictionary;
+@property (nonatomic, strong) NSMutableDictionary *outgoingIndexPathsMutableDictionary;
+
 @end
 
 @implementation SharedItemsViewController
@@ -101,6 +107,13 @@
     
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"incoming", nil) forSegmentAtIndex:0];
     [_sharedItemsSegmentedControl setTitle:AMLocalizedString(@"outgoing", nil) forSegmentAtIndex:1];
+    
+    _userNamesRequestedMutableArray = [[NSMutableArray alloc] init];
+    _incomingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
+    _incomingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
+    _outgoingNodesForEmailMutableDictionary = [[NSMutableDictionary alloc] init];
+    _outgoingIndexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,8 +134,6 @@
         [self setEditing:NO animated:NO];
     }
     
-    [_namesMutableDictionary removeAllObjects];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
@@ -133,7 +144,7 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -184,6 +195,9 @@
 }
 
 - (void)incomingNodes {
+    [_incomingNodesForEmailMutableDictionary removeAllObjects];
+    [_incomingIndexPathsMutableDictionary removeAllObjects];
+    
     _incomingShareList = [[MEGASdkManager sharedMEGASdk] inSharesList];
     _incomingNodesMutableArray = [[NSMutableArray alloc] init];
     NSUInteger count = [[_incomingShareList size] unsignedIntegerValue];
@@ -195,6 +209,9 @@
 }
 
 - (void)outgoingNodes {
+    [_outgoingNodesForEmailMutableDictionary removeAllObjects];
+    [_outgoingIndexPathsMutableDictionary removeAllObjects];
+    
     _outgoingShareList = [[MEGASdkManager sharedMEGASdk] outShares];
     _outgoingSharesMutableArray = [[NSMutableArray alloc] init];
     
@@ -281,6 +298,39 @@
         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:[share user] level:MEGAShareTypeAccessUnkown delegate:self];
     }
 }
+
+- (void)requestUserName:(NSString *)userEmail {
+    
+    BOOL isUserNameAlreadyRequested = [_userNamesRequestedMutableArray containsObject:userEmail];
+    if (!isUserNameAlreadyRequested) {
+        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
+        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+        [_userNamesRequestedMutableArray addObject:userEmail];
+    }
+}
+
+- (NSArray *)indexPathsForUserEmail:(NSString *)email {
+    NSMutableArray *indexPathsMutableArray = [[NSMutableArray alloc] init];
+    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Incoming
+            NSArray *base64HandleArray = [_incomingNodesForEmailMutableDictionary allKeysForObject:email];
+            indexPathsMutableArray = [[_incomingIndexPathsMutableDictionary objectsForKeys:base64HandleArray notFoundMarker:[NSNull null]] mutableCopy];
+            break;
+        }
+            
+        case 1: { //Outgoing
+            NSArray *base64HandleArray = [_outgoingNodesForEmailMutableDictionary allKeysForObject:email];
+            indexPathsMutableArray = [[_outgoingIndexPathsMutableDictionary objectsForKeys:base64HandleArray notFoundMarker:[NSNull null]] mutableCopy];
+            break;
+        }
+    }
+    
+    [indexPathsMutableArray removeObjectsInArray:[NSArray arrayWithObject:[NSNull null]]];
+    
+    return indexPathsMutableArray;
+}
+
 
 #pragma mark - IBActions
 
@@ -657,6 +707,9 @@
             share = [_incomingShareList shareAtIndex:indexPath.row];
             node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
             
+            [_incomingNodesForEmailMutableDictionary setObject:[share user] forKey:node.base64Handle];
+            [_incomingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
+            
             [cell.thumbnailImageView setImage:[Helper incomingFolderImage]];
             
             [cell.nameLabel setText:[node name]];
@@ -664,9 +717,7 @@
             NSString *userName = [_namesMutableDictionary objectForKey:[share user]];
             if (userName ==  nil) {
                 userName = [share user];
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userName];
-                [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
-                [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+                [self requestUserName:userName];
             }
             
             [cell.infoLabel setText:userName];
@@ -683,6 +734,9 @@
             share = [_outgoingSharesMutableArray objectAtIndex:indexPath.row];
             node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
             
+            [_outgoingNodesForEmailMutableDictionary setObject:[share user] forKey:node.base64Handle];
+            [_outgoingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
+            
             [cell.thumbnailImageView setImage:[Helper outgoingFolderImage]];
             
             [cell.nameLabel setText:[node name]];
@@ -697,9 +751,7 @@
                 if (userName ==  nil) {
                     userName = [share user];
                     if (userName != nil) {
-                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userName];
-                        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
-                        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+                        [self requestUserName:userName];
                     }
                 }
             }
@@ -751,7 +803,9 @@
     }
     
     if (tableView.isEditing) {
-        [_selectedNodesMutableArray addObject:node];
+        if (node != nil) {
+            [_selectedNodesMutableArray addObject:node];
+        }
         
         [self toolbarItemsSetEnabled:YES];
         
@@ -829,7 +883,6 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = nil;
     switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
         case 0: { //Incoming
@@ -844,7 +897,10 @@
     }
     
     _selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    [_selectedNodesMutableArray addObject:node];
+    
+    if (node != nil) {
+        [_selectedNodesMutableArray addObject:node];
+    }
     
     [self toolbarItemsSetEnabled:YES];
     
@@ -1001,25 +1057,41 @@
             
         case MEGARequestTypeGetAttrUser: {
             NSString *name;
+            NSString *email = [request email];
             switch ([request paramType]) {
-                case MEGAUserAttributeFirstname:
+                case MEGAUserAttributeFirstname: {
                     name = [request text];
                     if (name != nil) {
-                        [_namesMutableDictionary setObject:name forKey:[request email]];
+                        [_namesMutableDictionary setObject:name forKey:email];
                     } else {
-                        [_namesMutableDictionary setObject:[request email] forKey:[request email]];
+                        [_namesMutableDictionary setObject:email forKey:email];
                     }
                     break;
+                }
                     
-                case MEGAUserAttributeLastname:
-                    name = [_namesMutableDictionary objectForKey:[request email]];
-                    name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                    [_namesMutableDictionary setObject:name forKey:[request email]];
+                case MEGAUserAttributeLastname: {
+                    name = [_namesMutableDictionary objectForKey:email];
+                    BOOL isNameEmpty = NO;
+                    if (name != nil) {
+                        name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
+                        isNameEmpty = [[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+                        if (isNameEmpty) {
+                            name = email;
+                        }
+                        [_namesMutableDictionary setObject:name forKey:email];
+                    } else {
+                        [_namesMutableDictionary setObject:email forKey:email];
+                    }
+                    
+                    [_userNamesRequestedMutableArray removeObject:email];
+                    
+                    NSArray *indexPathsArray = [self indexPathsForUserEmail:email];
+                    if (indexPathsArray != nil && !isNameEmpty) {
+                        [self.tableView reloadRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationNone];
+                    }
                     break;
+                }
             }
-            
-            [self.tableView reloadData];
-            
             break;
         }
             

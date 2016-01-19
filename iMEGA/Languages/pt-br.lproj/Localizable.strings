@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Upload";
+"upload"="Envio";
 /*  */
 "error"="Erro";
 /*  */
@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Chave SSL do servidor não pode ser verificada. Você pode ter sido afetado por um ataque \"man-in-the-middle\".";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Os servidores são muito ocupado. Por favor, aguarde...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ESPAÇO MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -217,7 +219,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 pasta • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] pastas • [B] ficheiros";
+"foldersAndFiles"="[A] Pastas • [B] Arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
 "foldersAndFile"="%d pastas • 1 arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
@@ -315,7 +317,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d arquivos e 1 pasta movidos";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] files and [B] folders moved";
+"moveFilesFoldersMessage"="[A] ficheiros e [B] pastas movido";
 /* List option shown on the details of a file or folder */
 "copy"="Copiar";
 /* Success message shown when you have copied 1 file */
@@ -421,7 +423,7 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insira um email";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Itens Compartilhados";
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Compartilhar";
 /* Title of the "Incoming" Shared Items. */
@@ -429,27 +431,27 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Extrovertido";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Compartilhado com um contato";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Compartilhado com% d contatos";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permissões alteradas";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="esquerda compartilhada";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="ações esquerda";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Remover compartilhamento";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Tem certeza de que deseja remover esta parte? (Compartilhado com 1 contato)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Tem certeza de que deseja remover esta parte? (Compartilhado com% d contatos)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Tem certeza de que deseja remover estas ações? (Compartilhado com% d contatos)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Compartilhamento removido com sucesso";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="ações removido";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Dono";
 /* Title of the view where you see with who you have shared a folder */
@@ -476,6 +478,8 @@
 "removedContacts"="%d contatos removidos ";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Contato %@ removido";
+/* Label shown when a contact request is pending */
+"pending"="Pendente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Este contato não tem e-mail";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Inglês - Idioma do aplicativo";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Enviar comentários";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Por favor, escreva seu comentário aqui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -615,9 +621,11 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Downloads";
+"downloads"="Transferências";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Uploads";
+"uploads"="Envios";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="transferência cancelada";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferências canceladas!";
 /* Title of the alert shown when you try to cancel transfers */

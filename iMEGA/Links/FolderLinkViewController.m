@@ -147,7 +147,7 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -231,7 +231,7 @@
 - (void)deleteTempDocuments {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
     for (NSString *item in directoryContents) {
-        CFStringRef fileUTI = [Helper fileUTI:[item pathExtension]];
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([item pathExtension]), NULL);
         if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
             NSError *error = nil;
             BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error];
@@ -337,7 +337,7 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
         
-        [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
+        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
         [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
@@ -422,7 +422,7 @@
 
         case MEGANodeTypeFile: {
             NSString *name = [node name];
-            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([name pathExtension]), NULL);
             if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
@@ -432,7 +432,11 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
@@ -449,7 +453,11 @@
                     for (NSInteger i = 0; i < nodeListSize; i++) {
                         MEGANode *n = [self.nodeList nodeAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                             MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
@@ -516,6 +524,10 @@
                         [moviePlayerViewController.moviePlayer prepareToPlay];
                         [moviePlayerViewController.moviePlayer play];
                         
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
                         return;
                     }
                 } else {
@@ -529,6 +541,9 @@
                     } else {
                         // There isn't enough space in the device for preview the document
                         if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                            if (fileUTI) {
+                                CFRelease(fileUTI);
+                            }
                             return;
                         }
                         

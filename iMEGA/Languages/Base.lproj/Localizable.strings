@@ -41,7 +41,9 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle" = "Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Servers are too busy. Please wait...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -61,13 +63,13 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount" = "Don't have an account?";
+"doNotHaveAnAccount"="Don't have an account?";
 /* Button that bring you to section where you can create an account */
-"createOne" = "Create one";
+"createOne"="Create one";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
 /* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount" = "Already have an account?";
+"alreadyHaveAnAccount"="Already have an account?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Invalid e-mail and/or password. Please try again";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -169,25 +171,25 @@
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_text"="Add contacts using the above button.";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text" = "No incoming shared folders";
+"noIncomingSharedItemsEmptyState_text"="No incoming shared folders";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text" = "No outgoing shared folders";
+"noOutgoingSharedItemsEmptyState_text"="No outgoing shared folders";
 /* Title of My Contacts section */
-"myContacts" = "Contacts";
+"myContacts"="Contacts";
 /* Title of Contacts requests section */
-"contactRequests" = "Contact requests";
+"contactRequests"="Contact requests";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent" = "Sent";
+"sent"="Sent";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests" = "Requests";
+"requests"="Requests";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Request accepted";
 /* Success message shown when you Cancelled a contact request */
 "requestCancelled"="Request cancelled";
 /* Success message shown when you remove a contact request */
-"requestDeleted" = "Request deleted";
+"requestDeleted"="Request deleted";
 /* Title shown when there's no pending request */
-"noRequestPending" = "No requests pending at this time";
+"noRequestPending"="No requests pending at this time";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transfers paused";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -387,9 +389,9 @@
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Storage quota exceeded";
 /* Alert title shown when the user is overquota */
-"overquotaAlert_title" = "Overquota Alert!";
+"overquotaAlert_title"="Overquota Alert!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message" = "Operation not allowed, you will exceed the storage limit of your account. Do you want to upgrade your account?";
+"overquotaAlert_message"="Operation not allowed, you will exceed the storage limit of your account. Do you want to upgrade your account?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Select items";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
@@ -421,19 +423,19 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insert an email";
 /* Title of Shared Items section */
-"sharedItems" = "Shared Items";
+"sharedItems"="Shared Items";
 /* Title of the tab bar item for the Shared Items section */
-"shared" = "Shared";
+"shared"="Shared";
 /* Title of the "Incoming" Shared Items. */
-"incoming" = "Incoming";
+"incoming"="Incoming";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing" = "Outgoing";
+"outgoing"="Outgoing";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact" = "Shared with 1 contact";
+"sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts" = "Shared with %d contacts";
+"sharedWithXContacts"="Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged" = "Permissions changed";
+"permissionsChanged"="Permissions changed";
 /* Message shown when a share has been left */
 "shareLeft"="Share left";
 /* Message shown when some shares have been left */
@@ -447,13 +449,13 @@
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
 /* Message shown when a share have been removed */
-"shareRemoved" = "Share removed";
+"shareRemoved"="Share removed";
 /* Message shown when some shares have been removed */
-"sharesRemoved" = "Shares removed";
+"sharesRemoved"="Shares removed";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner" = "Owner";
+"owner"="Owner";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith" = "Shared with";
+"sharedWith"="Shared with";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Add from contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
@@ -510,6 +512,8 @@
 "applicationLanguage"="English";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Send Feedback";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Please write your feedback here:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="No email account set up on your device";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -620,6 +624,8 @@
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploads";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transfers cancelled";
 /* Title of the alert shown when you try to cancel transfers */
@@ -671,44 +677,44 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ per month";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan" = "Choose one of the plans from below:";
+"choosePlan"="Choose one of the plans from below:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree" = "Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
 /* Header shown to help on the purchasin process */
-"selectMembership" = "Select membership:";
+"selectMembership"="Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17" = "Save 17%";
+"save17"="Save 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase" = "WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound" = "Product %@ is not found, please contact ios@mega.nz";
+"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title" = "Allow purchases";
+"allowPurchase_title"="Allow purchases";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message" = "You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
-"restore" = "Restore";
+"restore"="Restore";
 /* "Monthly" subscriptions */
-"monthly" = "Monthly";
+"monthly"="Monthly";
 /* "Yearly" subscriptions */
-"yearly" = "Yearly";
+"yearly"="Yearly";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable" = "This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title" = "Thank you";
+"thankYou_title"="Thank you";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message" = "Your purchase was restored";
+"purchaseRestore_message"="Your purchase was restored";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title" = "Purchase stopped";
+"failedPurchase_title"="Purchase stopped";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message" = "Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
+"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title" = "Restore issue";
+"incompleteRestore_title"="Restore issue";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message" = "The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title" = "Restore stopped";
+"failedRestore_title"="Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message" = "Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";

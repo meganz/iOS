@@ -73,6 +73,8 @@
     NSString *previewDocumentPath;
     
     NSUInteger numFilesAction, numFoldersAction;
+    
+    MEGANode *selectedNode;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -209,12 +211,16 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
     if (self.tableView.isEditing) {
         self.selectedNodesArray = nil;
         [self setEditing:NO animated:NO];
     }
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (void)dealloc {
@@ -222,7 +228,7 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -270,6 +276,8 @@
     
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
+    BOOL isDownloaded = NO;
+    
     NodeTableViewCell *cell;
     if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
@@ -277,7 +285,7 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
         
-        [cell.downloadedImageView setImage:[Helper downloadingArrowImage]];
+        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
         [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
@@ -290,9 +298,7 @@
         
         // Check fingerprint, if we download a file with NULL fingerprint, all folders are marked as downloaded because the fingerprinf for folders are NULL
         if (offlineNode && fingerprint) {
-            [cell.downloadedImageView setImage:[Helper downloadedArrowImage]];
-        } else {
-            [cell.downloadedImageView setImage:nil];
+            isDownloaded = YES;
         }
         
         struct tm *timeinfo;
@@ -310,6 +316,27 @@
         cell.infoLabel.text = sizeAndDate;
     }
     
+    if ([node isExported]) {
+        if (isDownloaded) {
+            [cell.upImageView setImage:[UIImage imageNamed:@"linked"]];
+            [cell.middleImageView setImage:nil];
+            [cell.downImageView setImage:[Helper downloadedArrowImage]];
+        } else {
+            [cell.upImageView setImage:nil];
+            [cell.middleImageView setImage:[UIImage imageNamed:@"linked"]];
+            [cell.downImageView setImage:nil];
+        }
+    } else {
+        [cell.upImageView setImage:nil];
+        [cell.downImageView setImage:nil];
+        
+        if (isDownloaded) {
+            [cell.middleImageView setImage:[Helper downloadedArrowImage]];
+        } else {
+            [cell.middleImageView setImage:nil];
+        }
+    }
+    
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:megaInfoGray];
     [cell setSelectedBackgroundView:view];
@@ -320,6 +347,8 @@
     [cell.thumbnailImageView.layer setCornerRadius:4];
     [cell.thumbnailImageView.layer setMasksToBounds:YES];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
+    
     if ([node type] == MEGANodeTypeFile) {
         if ([node hasThumbnail]) {
             NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
@@ -329,6 +358,9 @@
                 [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
             } else {
                 [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                if (isVideo(node.name.pathExtension)) {
+                    [cell.thumbnailPlayImageView setHidden:NO];
+                }
             }
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -413,7 +445,7 @@
         case MEGANodeTypeFile: {
             
             NSString *name = [node name];
-            CFStringRef fileUTI = [Helper fileUTI:[name pathExtension]];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([name pathExtension]), NULL);
             if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
                 
                 int offsetIndex = 0;
@@ -423,7 +455,11 @@
                     for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
                         MEGANode *n = [matchSearchNodes objectAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
@@ -438,7 +474,11 @@
                     for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
                         MEGANode *n = [self.nodes nodeAtIndex:i];
                         
-                        fileUTI = [Helper fileUTI:[n.name pathExtension]];
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
+                        
+                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
                             MEGAPreview *photo = [MEGAPreview photoWithNode:n];
@@ -499,11 +539,25 @@
                         
                         [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
                         
+                        selectedNode = node;
+                        
+                        if (![node hasThumbnail]) {
+                            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                                     selector:@selector(handleThumbnailImageRequestFinishNotification:)
+                                                                         name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                                       object:moviePlayerViewController.moviePlayer];
+                            
+                            [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
+                        }
+                        
                         [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
                         
                         [moviePlayerViewController.moviePlayer prepareToPlay];
                         [moviePlayerViewController.moviePlayer play];
                         
+                        if (fileUTI) {
+                            CFRelease(fileUTI);
+                        }
                         return;
                     }
                 } else {
@@ -517,6 +571,9 @@
                     } else {
                         // There isn't enough space in the device for preview the document
                         if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                            if (fileUTI) {
+                                CFRelease(fileUTI);
+                            }
                             return;
                         }
                         
@@ -845,10 +902,18 @@
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     if (index < self.cloudImages.count) {
-        return [self.cloudImages objectAtIndex:index];
+        MEGAPreview *preview = [self.cloudImages objectAtIndex:index];
+        preview.isGridMode = NO;
+        return preview;
     }
     
     return nil;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
+    MEGAPreview *thumbnail = [self.cloudImages objectAtIndex:index];
+    thumbnail.isGridMode = YES;
+    return thumbnail;
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -1359,6 +1424,7 @@
         imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         imagePickerController.sourceType = sourceType;
         imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
+        imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         imagePickerController.delegate = self;
         
         self.imagePickerController = imagePickerController;
@@ -1776,11 +1842,39 @@
 
 - (void)movieFinishedCallback:(NSNotification*)aNotification {
     MPMoviePlayerController *moviePlayer = [aNotification object];
+    
+    [moviePlayer cancelAllThumbnailImageRequests];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
+
+- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                  object:moviePlayer];
+    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+    
+    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
+    
+    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
+    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
+    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    selectedNode = nil;
+}
+
 
 #pragma mark - UIDocumentPickerDelegate
 
@@ -1894,6 +1988,9 @@
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                        if (isVideo(node.name.pathExtension)) {
+                            [ntvc.thumbnailPlayImageView setHidden:NO];
+                        }
                     }
                 }
             }
@@ -2114,7 +2211,7 @@
             [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
             NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
             [formatter setLocale:locale];
-            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"MOV"];
+            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"mov"];
             [api renameNode:node newName:name];
         } 
     }

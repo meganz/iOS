@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Servers are too busy. Please wait...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA ESPAÇO";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -63,7 +65,7 @@
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
 "doNotHaveAnAccount"="Don't have an account?";
 /* Button that bring you to section where you can create an account */
-"createOne"="Create one";
+"createOne"="Criar um";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Criar Conta";
 /* Question to focus the user to the zone of the app where he/she can go to login */
@@ -177,9 +179,9 @@
 /* Title of Contacts requests section */
 "contactRequests"="Contact requests";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Sent";
+"sent"="Enviado";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
+"requests"="Pedidos";
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Request accepted";
 /* Success message shown when you Cancelled a contact request */
@@ -223,7 +225,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 pasta • %d ficheiros";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Queued";
+"queued"="Na fila";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Há downloads pendentes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -287,9 +289,9 @@
 /* Message shown when a link to the file is being generated */
 "generatingLink"="A gerar link...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="Endereço copiado";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Open in...";
+"openIn"="Abrir em...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Remover endereço eletrónico";
 /* Message shown when the link to a file has been removed */
@@ -421,23 +423,23 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Insira um email";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Itens partilhados";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Shared";
+"shared"="Partilhados";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="Recebidos";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="Enviados";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permissões alteradas";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Saída da partilha";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Saída de partilhas";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Remove sharing";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -463,7 +465,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Adicionar";
 /* Success message shown when a contact has been invited */
-"requestSent"="Request sent";
+"requestSent"="Pedido enviado";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Error adding contact";
 /* Alert title shown when you want to remove one or more contacts */
@@ -476,6 +478,8 @@
 "removedContacts"="%d contatos removidos ";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Contato %@ removido";
+/* Label shown when a contact request is pending */
+"pending"="Pendente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Este contato não tem e-mail";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Inglês - Linguagem da aplicação";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Envie-nos comentários";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Please write your feedback here:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -615,9 +621,11 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Downloads";
+"downloads"="Descargas";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Uploads";
+"uploads"="Carregamentos";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferências canceladas";
 /* Title of the alert shown when you try to cancel transfers */
@@ -675,7 +683,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Select membership:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="Poupe 17%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="WRONG PURCHASE %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -695,7 +703,7 @@
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Thank you";
+"thankYou_title"="Obrigado";
 /* Alert message shown when a purchase was restored succesfully */
 "purchaseRestore_message"="Your purchase was restored";
 /* Alert title shown when a purchase has stopped because some error between the process */
@@ -703,7 +711,7 @@
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="Recuperação com erros";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */

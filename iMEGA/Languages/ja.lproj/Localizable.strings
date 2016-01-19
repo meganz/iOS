@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Servers are too busy. Please wait...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA の超デカスペース";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -429,7 +431,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Outgoing";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -476,6 +478,8 @@
 "removedContacts"="知り合い%d人除外";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="知り合い%@ 除外";
+/* Label shown when a contact request is pending */
+"pending"="ペンディング";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="その知り合いにはアドレスがありません。";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="アプリケーション言語";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Please write your feedback here:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="デバイス上にメールアカウントなし";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -618,6 +624,8 @@
 "downloads"="ダウンロード";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="アップロード";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="転送キャンセルしました";
 /* Title of the alert shown when you try to cancel transfers */

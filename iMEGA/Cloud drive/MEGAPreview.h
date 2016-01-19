@@ -26,6 +26,7 @@
 @interface MEGAPreview : NSObject
 
 @property (nonatomic) BOOL isFromFolderLink;
+@property (nonatomic) BOOL isGridMode;
 @property (strong, nonatomic) NSString *caption;
 @property (strong, nonatomic) NSString *imagePath;
 @property (strong, nonatomic) MEGANode *node;

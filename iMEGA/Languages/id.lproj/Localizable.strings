@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Anda telah keluar dari perangkat ini dari lokasi lain";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL key server tidak bisa diverifikasi. Anda mungkin mengalami serangan man-in-the-middle.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Server sedang sibuk. Harap tunggu...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -257,7 +259,7 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Impor dari...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] telah diupload dengan nama [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="File ini telah diupload dengan nama %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -315,7 +317,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d file dan 1 folder moved";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] files and [B] folders moved";
+"moveFilesFoldersMessage"="[A] file dan [B] folder dipindahkan";
 /* List option shown on the details of a file or folder */
 "copy"="Salin";
 /* Success message shown when you have copied 1 file */
@@ -333,7 +335,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="%d file dan 1 folder terkopi";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] files and [B] folders copied";
+"copyFilesFoldersMessage"="[A] file dan [B] folder terkopi";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Ubah nama";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -355,7 +357,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="Anda yakin ingin memindahkan %d file dan 1 folder ke Sampah?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
+"moveFilesFoldersToRubbishBinMessage"="Anda yakin ingin memindahkan [A] file dan [B] folder ke Sampah?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file dipindahkan ke Sampah";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -429,27 +431,27 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Membagikan";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Dibagikan dengan 1 kontak";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Dibagikan dengan %d kontak";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permission telah diubah";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Berbagi ditinggalkan";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Berbagi ditinggalkan";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Hapus berbagi";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Anda yakin ingin menghapus berbagi ini? (Dibagikan dengan 1 kontak)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Anda yakin ingin menghapus berbagi ini? (Dibagikan dengan %d kontak)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Anda yakin ingin menghapus berbagi ini? (Dibagikan dengan %d kontak)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Berbagi telah berhasil dihapus";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Berbagi terhapus";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Pemilik";
 /* Title of the view where you see with who you have shared a folder */
@@ -475,7 +477,9 @@
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontak telah terhapus";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Kontak %@ telah terhapus";
+"removedContact"="Kontak %@ telah terhapus!";
+/* Label shown when a contact request is pending */
+"pending"="Tertunda";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Kontak tidak memiliki email";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Bahasa application";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Kirim saran";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Harap tulis feedback anda disini:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -569,7 +575,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Anda sedang akan menghapus %d file dan 1 folder. Apakah anda ingin melanjutkan? (Anda tidak dapat membalikan aksi ini.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="Anda sedang akan menghapus [A] file dan [B] folder secara permanen. Apakah anda ingin melanjutkan? (Anda tidak dapat mengulang aksi ini.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 file dihapus dari MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -609,7 +615,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Dapatkan bantuan atau baca topik popular.";
 /* Title to rate the app */
-"rateUsLabel"="Rate us";
+"rateUsLabel"="Rate kami";
 /* Title of the Transfers section */
 "transfers"="Pemindahan";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -618,6 +624,8 @@
 "downloads"="Download";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Upload";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer dibatalkan";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transfer dibatalkan";
 /* Title of the alert shown when you try to cancel transfers */
@@ -679,7 +687,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="SALAH BELI %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="In-App Purchases di nonaktifkan, harap aktifkan pada iOS Settings";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Produk %@ tidak ditemukan, harap kontak ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */

@@ -122,7 +122,7 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -139,6 +139,8 @@
             if (!thumbnailExists) {
                 [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
             } else {
+                [_thumbnailImageView.layer setCornerRadius:4];
+                [_thumbnailImageView.layer setMasksToBounds:YES];
                 [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
             }
         } else {
@@ -266,7 +268,7 @@
 - (void)delete {
     if ([MEGAReachabilityManager isReachable]) {
         //Leave folder or remove folder in a incoming shares
-        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
+        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
             [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
             [self.navigationController popViewControllerAnimated:YES];
         } else {

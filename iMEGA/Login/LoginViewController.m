@@ -25,6 +25,8 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
+#import "LaunchViewController.h"
+
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -63,7 +65,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -196,6 +198,14 @@
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            
+            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+            UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+            [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
+                [window setRootViewController:launchVC];
+            } completion:nil];
+            [launchVC.progressView setHidden:NO];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES];
             break;
         }
             
