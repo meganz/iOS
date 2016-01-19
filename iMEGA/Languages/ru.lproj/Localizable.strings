@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="SSL-ключ сервера не удаётся проверить. Возможно, вы находитесь под «атакой посредника» (англ. Man in the middle (MitM)).";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Серверы слишком заняты. Пожалуйста, подождите…";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ПРОСТРАНСТВО MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -429,7 +431,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Исходящие";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Общая с 1 контактом";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Общая с %d контактами";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -475,7 +477,9 @@
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="Контактов удалено: %d";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Контакт %@ удален";
+"removedContact"="Контакт %@ удалён";
+/* Label shown when a contact request is pending */
+"pending"="В ожидании";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="У контакта не указан email";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Русский";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Пожалуйста, напишите свой отзыв здесь:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="На вашем устройстве не найдено ни одной учётной записи с адресом эл. почты";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -618,6 +624,8 @@
 "downloads"="Загрузки с сервера";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Загрузки на сервер";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Передача отменена";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Передачи отменены";
 /* Title of the alert shown when you try to cancel transfers */

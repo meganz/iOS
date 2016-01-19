@@ -182,7 +182,7 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -459,8 +459,8 @@
     NSString *userName = nil;
     if (self.contactsMode == ContactsFolderSharedWith) {
         userName = [self.namesMutableDictionary objectForKey:userEmail];
-        
-        if (userName != nil) {
+        BOOL isNameEmpty = [[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+        if (userName != nil && !isNameEmpty) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
             [cell.shareLabel setText:userEmail];
@@ -835,14 +835,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeAddContact:
-            [SVProgressHUD show];
-            break;
-            
-        default:
-            break;
-    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -856,7 +848,6 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrUser: {
-            
             if ([request file] != nil) {
                 for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
                     if ([[request email] isEqualToString:[ctvc.nameLabel text]]) {

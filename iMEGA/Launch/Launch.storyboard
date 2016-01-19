@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rbD-Pz-VTU">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="yVt-cW-ZQT">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="rbD-Pz-VTU" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uow-LZ-a7b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ET5-zm-Hhl">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="HY0-hE-P7y" kind="relationship" relationship="rootViewController" id="rpC-Ii-Ykw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Py-h8-LLo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-799" y="-197"/>
+        </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="I5a-Rx-4NL">
+            <objects>
+                <viewController storyboardIdentifier="LaunchViewControllerID" id="HY0-hE-P7y" customClass="LaunchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dfK-tm-FmH"/>
+                        <viewControllerLayoutGuide type="bottom" id="jGx-vA-vg8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8up-U9-46J">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashImage" translatesAutoresizingMaskIntoConstraints="NO" id="tbl-iP-H2s">
+                                <rect key="frame" x="-20" y="-180" width="640" height="960"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQK-qa-04H">
+                                <rect key="frame" x="40" y="460" width="520" height="21"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
+                                <color key="textColor" red="0.9686274528503418" green="0.9686274528503418" blue="0.9686274528503418" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QvI-0V-7aH">
+                                <rect key="frame" x="20" y="521" width="560" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="2UG-fg-uQc"/>
+                                </constraints>
+                                <color key="progressTintColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.70588235290000001" green="0.031372549020000001" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ZS5-1T-Yxh">
+                                <rect key="frame" x="290" y="563" width="20" height="20"/>
+                                <color key="color" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QvI-0V-7aH" firstAttribute="top" secondItem="hQK-qa-04H" secondAttribute="bottom" constant="40" id="6st-fw-Ceq"/>
+                            <constraint firstItem="ZS5-1T-Yxh" firstAttribute="centerX" secondItem="8up-U9-46J" secondAttribute="centerX" id="8s0-OS-ddK"/>
+                            <constraint firstItem="jGx-vA-vg8" firstAttribute="top" secondItem="QvI-0V-7aH" secondAttribute="bottomMargin" constant="85" id="Aim-Tu-DEs"/>
+                            <constraint firstItem="tbl-iP-H2s" firstAttribute="leading" secondItem="8up-U9-46J" secondAttribute="leadingMargin" constant="-40" id="Auh-zJ-fxD"/>
+                            <constraint firstItem="hQK-qa-04H" firstAttribute="leading" secondItem="8up-U9-46J" secondAttribute="leadingMargin" constant="20" id="E2H-f1-e6f"/>
+                            <constraint firstItem="tbl-iP-H2s" firstAttribute="centerY" secondItem="8up-U9-46J" secondAttribute="centerY" id="JEn-mC-f8j"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tbl-iP-H2s" secondAttribute="trailing" constant="-40" id="KMC-14-S8e"/>
+                            <constraint firstItem="tbl-iP-H2s" firstAttribute="centerX" secondItem="8up-U9-46J" secondAttribute="centerX" id="LrC-CW-P8h"/>
+                            <constraint firstItem="QvI-0V-7aH" firstAttribute="leading" secondItem="8up-U9-46J" secondAttribute="leading" constant="20" id="Pp8-Cy-rfh"/>
+                            <constraint firstItem="ZS5-1T-Yxh" firstAttribute="top" secondItem="QvI-0V-7aH" secondAttribute="bottom" constant="40" id="d8y-zb-RUa"/>
+                            <constraint firstItem="hQK-qa-04H" firstAttribute="centerX" secondItem="QvI-0V-7aH" secondAttribute="centerX" id="iVc-Cv-cfd"/>
+                            <constraint firstAttribute="trailing" secondItem="QvI-0V-7aH" secondAttribute="trailing" constant="20" id="qoU-9S-Kxk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Veb-37-CpH"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="ZS5-1T-Yxh" id="2Tj-Jl-4yM"/>
+                        <outlet property="label" destination="hQK-qa-04H" id="SlC-gh-ve3"/>
+                        <outlet property="progressView" destination="QvI-0V-7aH" id="CAV-TG-VLr"/>
+                        <outlet property="progressViewBottomLayoutConstraint" destination="Aim-Tu-DEs" id="ZJ7-GN-0R8"/>
+                        <outlet property="progressViewHeightLayoutConstraint" destination="2UG-fg-uQc" id="V8n-IZ-y47"/>
+                        <outlet property="progressViewLeadingLayoutConstraint" destination="Pp8-Cy-rfh" id="vgg-Q5-5bi"/>
+                        <outlet property="progressViewTrailingMarginLayoutConstraint" destination="qoU-9S-Kxk" id="9Zq-NJ-Q01"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iyh-56-RX8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-122" y="-197"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splashImage" width="640" height="960"/>
+    </resources>
+</document>

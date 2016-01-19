@@ -42,6 +42,8 @@
 "loggedOutFromAnotherLocation"="Na tomto zariadení ste boli odhlásený z iného miesta";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Servery sú príliš zaťažené. Prosím čakajte...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA PRIESTOR";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -257,7 +259,7 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importovať z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] je už uploadované pod menom [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="Tento súbor už bol uploadovaný pod menom %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -295,7 +297,7 @@
 /* Message shown when the link to a file has been removed */
 "removeLinkSuccess"="Odkaz bol odstránený";
 /* Title show when a file is being downloaded */
-"downloading"="Sťahovanie: [X]%";
+"downloading"="Sťahovaniee...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Chcete zrušiť toto sťahovanie?";
 /* Title for the action that allows you to move a file or folder */
@@ -429,27 +431,27 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Odchodzie";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Zdieľané s 1 kontaktom";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Zdieľané s %d kontaktami";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Povolenia zmenené";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Zdieľanie opustené";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Opustené zdieľania";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Odstrániť zdieľanie";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Ste si istý, že chcete odstrániť toto zdieľanie? (Zdieľané s 1 kontaktom)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Ste si istý, že chcete odstrániť toto zdieľanie? (Zdieľané s %d kontaktmi)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Ste si istý, že chcete odstrániť tieto zdieľania? (Zdieľané s %d kontaktmi).";
 /* Message shown when a share have been removed */
 "shareRemoved"="Zdieľanie úspešne odstránené";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Zdieľania odstránené";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Vlastník";
 /* Title of the view where you see with who you have shared a folder */
@@ -476,6 +478,8 @@
 "removedContacts"="%d kontaktov odstránených";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Kontakt %@ odstránený";
+/* Label shown when a contact request is pending */
+"pending"="Čakajúce";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Kontakt nemá email";
 /* Button title of the action that allows to leave a shared folder */
@@ -487,7 +491,7 @@
 /* Button that allows you to select a given folder */
 "select"="Vybrať";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Len na čítanie";
+"readOnly"="Iba na čítanie";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Na úpravu";
 /* Permissions given to the user you share your folder with */
@@ -501,13 +505,15 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Nastavenia bezpečnosti";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="O";
+"about"="O aplikácii";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
 "language"="Jazyk";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Jazyk aplikácie";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Zaslať názor";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Tu prosím napíšte vašu odozvu:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Na vašom zariadení nie je nastavený žiadny email";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -539,7 +545,7 @@
 /* Title shown when you try to export your MEGA master key */
 "exportMasterKey"="Exportovať Hlavný kľúč";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="Bezpečnostné varovanie. Táto operácia je veľmi riskantná. Chcete pokračovať?";
+"exportMasterKey_alertMessage"="Bezpečnostné varovanie! Táto operácia je veľmi riskantná. Chcete pokračovať?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
 "exportMasterKeyFooter"="Exportovanie hlavného klúča a uchovanie ho v bezpečí, vám umožňuje obnovu svojho účtu v prípade, ak ste stratili heslo, bez toho aby ste prišli o svoje údaje.";
 /* Alert title shown when you have exported your MEGA master key */
@@ -569,7 +575,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Chystáte sa permanentne odstrániť %d súborov a 1 priečinok. Chcete pokračovať? (Táto akcia je nezvratná.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="Chystáte sa permanentne odstrániť [A] súborov a [B] priečinkov. Chcete pokračovať? (Táto akcia je nezvratná.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 súbor odstránený z MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -595,11 +601,11 @@
 /* Success message shown when the password has been changed */
 "passwordChanged"="Vaše heslo bolo zmenené.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
-"oldAndNewPasswordMatch"="Nové a staré heslo sa nezhodujú.";
+"oldAndNewPasswordMatch"="Nové a staré heslo sa nesmú zhodovať.";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Zmeniť heslo";
+"changePasscodeLabel"="Zmeniť prístupový kód";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="jednoduché heslo";
+"simplePasscodeLabel"="Jednoduchý prístupový kód";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Zmazať lokálne data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
@@ -618,6 +624,8 @@
 "downloads"="Sťahovania";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Uploady";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="prenos zrušený";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Prenosy zrušené";
 /* Title of the alert shown when you try to cancel transfers */
@@ -679,7 +687,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="CHYBNÝ NÁKUP %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="Nákupy v aplikácii sú zakázané, prosím povoľte ich v nastaveniach iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Produkt %@ nebol nájdený, prosím kontaktujte ios@mega.nz.";
 /* Alert title to remenber the user that needs to enable purchases */

@@ -37,6 +37,7 @@
 
 @implementation MEGAPreview
 
+@synthesize underlyingImage;
 
 #pragma mark - Class Methods
 
@@ -58,16 +59,22 @@
 #pragma mark - MWPhoto Protocol Methods
 
 - (UIImage *)underlyingImage {
-    self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"previewsV3"];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
-        return nil;
+    if (self.isGridMode) {
+        self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+        if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
+            return nil;
+        }
+    } else {
+        self.imagePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"previewsV3"];
+        if(![[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
+            return nil;
+        }
     }
     
     return [UIImage imageWithContentsOfFile:self.imagePath];
 }
 
 - (void)loadUnderlyingImageAndNotify {
-  
     if(_isLoading) return;
     
     _isLoading = YES;
@@ -80,30 +87,42 @@
 }
 
 - (void)performLoadUnderlyingImageAndNotify {
-    if([self.node hasPreview]) {
-        if (self.isFromFolderLink) {
-            [[MEGASdkManager sharedMEGASdkFolder] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
-        } else {
-            [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+    if (self.isGridMode) {
+        if([self.node hasPreview]) {
+            if (self.isFromFolderLink) {
+                [[MEGASdkManager sharedMEGASdkFolder] getThumbnailNode:self.node destinationFilePath:self.imagePath delegate:self];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:self.node destinationFilePath:self.imagePath delegate:self];
+            }
         }
     } else {
-        
-        NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]];
-        if (self.isFromFolderLink) {
-            [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
+        if([self.node hasPreview]) {
+            if (self.isFromFolderLink) {
+                [[MEGASdkManager sharedMEGASdkFolder] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.imagePath delegate:self];
+            }
         } else {
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
+            NSString *offlineImagePath  = [[Helper pathForOffline] stringByAppendingPathComponent:[[MEGASdkManager sharedMEGASdk] escapeFsIncompatible:[self.node name]]];
+            if (self.isFromFolderLink) {
+                [[MEGASdkManager sharedMEGASdkFolder] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
+            } else {
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:offlineImagePath delegate:self];
+            }
         }
     }
 }
 
 - (void)unloadUnderlyingImage {
-
+    _isLoading = NO;
 }
 
 - (void)imageLoaded {
     _isLoading = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_LOADING_DID_END_NOTIFICATION object:self];
+}
+
+- (void)cancelAnyLoading {
 }
 
 

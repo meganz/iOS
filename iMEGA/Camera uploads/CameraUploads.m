@@ -207,8 +207,6 @@ static CameraUploads *instance = nil;
         }
     };
     
-    assetGroups = [[NSMutableArray alloc] init];
-    
     [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                 usingBlock:assetGroupEnumerator
                               failureBlock:^(NSError *error) {
@@ -413,6 +411,11 @@ static CameraUploads *instance = nil;
 }
 
 - (void)turnOffCameraUploads {
+    [self setBadgeValue];
+    
+    //TODO: Cancel only Camera Uploads upload transfers
+    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
+    
     [[CameraUploads syncManager].assetUploadArray removeAllObjects];
     
     [CameraUploads syncManager].isCameraUploadsEnabled = NO;
@@ -424,6 +427,14 @@ static CameraUploads *instance = nil;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
+    
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
+    if (!success || error) {
+        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate

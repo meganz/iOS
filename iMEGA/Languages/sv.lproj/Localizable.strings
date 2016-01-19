@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Ladda upp";
+"upload"="Uppladdat";
 /*  */
 "error"="Error";
 /*  */
@@ -41,7 +41,9 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Du har loggats ut från den här enheten från en annan plats";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Serverns SSL kan inte verifieras, du kan vara utsatt för intrång. ";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Servrarna är upptagna. Var vänlig vänta ";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA UTRYMME";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -61,9 +63,9 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Logga in";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Don't have an account?";
+"doNotHaveAnAccount"="Har du inget konto?";
 /* Button that bring you to section where you can create an account */
-"createOne"="Create one";
+"createOne"="Skapa ett";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Skapa konto";
 /* Question to focus the user to the zone of the app where he/she can go to login */
@@ -175,17 +177,17 @@
 /* Title of My Contacts section */
 "myContacts"="Kontakter";
 /* Title of Contacts requests section */
-"contactRequests"="Contact requests";
+"contactRequests"="Kontaktförfrågningar";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Sent";
+"sent"="Skickade";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
+"requests"="Förfrågningar";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Request accepted";
+"requestAccepted"="Förfrågan accepterad";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request cancelled";
+"requestCancelled"="Förfrågan avbruten";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request deleted";
+"requestDeleted"="Förfrågan borttagen";
 /* Title shown when there's no pending request */
 "noRequestPending"="Inga ansökningar som pågår vid denna tidpunkt";
 /* Title shown when the transfers are paused */
@@ -257,39 +259,39 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Ladda upp från...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] finns redan med namnet [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+"fileAlreadyExistMessage"="Denna fil har redan laddats upp med namnet %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
+"filesAlreadyExistMessage"="%d valda filer har redan blivit uppladdade i denna mapp. ";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Uppladdning påbörjad";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="Den här filen har blivit flyttad till papperskorgen";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="Denna mapp är flyttad till papperskorgen";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="This file has been moved";
+"fileMoved_alertTitle"="Denna fil har blivit borttagen";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="This folder has been moved";
+"folderMoved_alertTitle"="Denna mapp har flyttats";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Du har inte längre åtkomst till den här filen";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Du har inte längre åtkomst till denna mapp";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Spara för offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Sparat för frånkopplat läge";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Inkorg är reserverat för användning av Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Hämta länk";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Generar länk...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="Länk kopierad";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Open in...";
+"openIn"="Öppna i...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Ta bort länk";
 /* Message shown when the link to a file has been removed */
@@ -357,21 +359,21 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Är du säker på att du vill flytta [A] filer och [B] mappar till papperskorgen?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
+"fileMovedToRubbishBinMessage"="1 fil flyttad till papperskorgen";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+"filesMovedToRubbishBinMessage"="%d filer flyttade till papperskorgen";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+"folderMovedToRubbishBinMessage"="1 mapp flyttad till papperskorgen";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+"foldersMovedToRubbishBinMessage"="%d mappar flyttade tillpapperskorgen";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+"fileFolderMovedToRubbishBinMessage"="1 fil och en mapp har flyttats till papperskorgen";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+"fileFoldersMovedToRubbishBinMessage"="1 fil och %d mappar har flyttats till papperskorgen";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+"filesFolderMovedToRubbishBinMessage"="%d filer och 1 mapp har flyttats till papperskorgen";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
+"filesFoldersMovedToRubbishBinMessage"="[A] filer och [B] mappar blev flyttade till papperskorgen";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Tillträdes error";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -421,35 +423,35 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Skriv in en email";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Delat";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Shared";
+"shared"="Delat";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="Inkommande";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="Utgående";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Delas med 1 kontakt";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Delas med %d kontakter";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Rättigheterna har ändrats";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Delning avslutad";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Delningar kvar";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Ta bort delning";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Är du säker på att du vill ta bort denna delning (delas med 1 kontakt)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Är du säker på att du vill ta bort denna delning? (Delas med %d kontakter)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Är du säker på att du vill ta bort dessa delningar? (Delas med %d kontakter)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Delningen har tagits bort";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Delning borttagen";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Ägare";
 /* Title of the view where you see with who you have shared a folder */
@@ -463,7 +465,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Lägg till ";
 /* Success message shown when a contact has been invited */
-"requestSent"="Lagt till kontakt";
+"requestSent"="Förfrågan skickad";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Problem med att lägga till kontakt";
 /* Alert title shown when you want to remove one or more contacts */
@@ -476,6 +478,8 @@
 "removedContacts"="%d kontakter borttagna";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Kontakt %@ borttagen";
+/* Label shown when a contact request is pending */
+"pending"="i avvaktan på";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Kontakten har inte ett e-postmeddelande";
 /* Button title of the action that allows to leave a shared folder */
@@ -508,6 +512,8 @@
 "applicationLanguage"="Språk";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Skicka respons";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Var vänlig och lämna synpunkter här:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Ingen e-postkonto som inrättats på enheten";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -569,23 +575,23 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Du är på väg att permanent ta bort %d filer och en mapp. Vill du fortsätta? (Du kan inte ångra den här åtgärden.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Du är på väg att permanent ta bort [A] filer och [B] mappar. Vill du fortsätta? (Du kan inte ångra den här åtgärden.)";
+"removeFilesFoldersToRubbishBinMessage"="Du är på väg att permanent radera [A] filer och [B] mappar, vill du fortsätta? (Du kan inte ångra detta)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
+"fileRemovedToRubbishBinMessage"="1 fil borttagen från MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+"filesRemovedToRubbishBinMessage"="%d filer borttagna från MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+"folderRemovedToRubbishBinMessage"="1 mapp borttagen från MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+"foldersRemovedToRubbishBinMessage"="%d mappar borttagna från MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+"fileFolderRemovedToRubbishBinMessage"="1 fil och 1 mapp borttagna från MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 fil och %d mappar borttagna från MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d filer och 1 mapp borttagna från MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="[A] filer och [B] mappar borttagna från MEGA ";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Nuvarande lösenord";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -609,7 +615,7 @@
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Få hjälp eller läs populära artiklar.";
 /* Title to rate the app */
-"rateUsLabel"="Ranka oss";
+"rateUsLabel"="Betygsätt appen";
 /* Title of the Transfers section */
 "transfers"="Överföringar";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
@@ -617,9 +623,11 @@
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Nedladdningar";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="uppladdningar";
+"uploads"="Uppladdat";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Överföring avbruten";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Överföringar avbrytna";
+"transfersCancelled"="Överföringar avbrytna!";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Avbryt överföringar";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -669,23 +677,23 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%2.f%@ per månad";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choose one of the plans from below:";
+"choosePlan"="Välj en av prenumerationerna nedan:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Få två månader gratis om du köper en ett års prenumeration PRO-plan";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Select membership:";
+"selectMembership"="Välj medlemskap";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="Spara 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="Fel vid köpet %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="In-App-köp är avaktiverat, var vänlig slå på detta i iOS inställningar. ";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
+"productNotFound"="Produkten %@ hittades inte. Kontakta ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Allow purchases";
+"allowPurchase_title"="Tillåt köp ";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="Du måste tillåta In-App-köp i iOS inställningar innan du kan genomföra ett köp. ";
 /* Button title to restore failed purchases */
 "restore"="Återställ";
 /* "Monthly" subscriptions */
@@ -693,20 +701,20 @@
 /* "Yearly" subscriptions */
 "yearly"="Årsvis";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="Detta In-App-köp är inte tillgängligt i Appstore för närvarande. Var vänlig försök senare. ";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Thank you";
+"thankYou_title"="Tack för ditt köp!";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Your purchase was restored";
+"purchaseRestore_message"="Ditt köp har återställts";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Purchase stopped";
+"failedPurchase_title"="Köp avbrutet";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
+"failedPurchase_message"="Antingen så avbröt du förfrågan eller så har Apple rapporterat ett fel med transaktionen, var vänlig försök senare, eller kontakta ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="Återställnings problem";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="Det tidigare köpet kunde inte hittas. Var vänlig välj föregående köpt produkt för att återställa. Du kommer INTE att bli debiterad igen.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restore stopped";
+"failedRestore_title"="Återställning stoppad";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+"failedRestore_message"="Antingen blev förfrågan avbruten eller så blev inte föregående köp återställt. Försök igen senare, eller kontakta ios@mega.nz";

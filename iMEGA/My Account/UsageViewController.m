@@ -102,7 +102,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"usage", nil)];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -146,8 +146,8 @@
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     NSString *stringFromByteCount;
-    NSRange firstPartRange;
-    NSRange secondPartRange;
+    NSRange firstPartRange = NSMakeRange(0, 0);
+    NSRange secondPartRange  = NSMakeRange(0, 0);;
     
     switch (currentPage) {
         case 0: {
@@ -177,6 +177,11 @@
         NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
         NSNumber *number = [numberFormatter numberFromString:firstPartString];
         firstPartString = [numberFormatter stringFromNumber:number];
+        
+        if ([firstPartString length] == 0) {
+            firstPartString = [self stringWithoutUnit:stringFromByteCount];
+        }
+        
         firstPartRange = [firstPartString rangeOfString:firstPartString];
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         

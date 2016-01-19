@@ -44,6 +44,8 @@
     NSMutableArray *exportLinks;
     NSUInteger remainingOperations;
     NSUInteger itemsPerRow;
+    
+    MEGANode *selectedNode;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -141,7 +143,7 @@
     self.photosCollectionView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -402,6 +404,7 @@
     
     node = [array objectAtIndex:indexPath.row];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
     if ([node hasThumbnail]) {
         NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
         BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
@@ -410,6 +413,10 @@
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         } else {
             [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+            if (isVideo(node.name.pathExtension)) {
+                [cell.thumbnailPlayImageView setHidden:NO];
+            }
+
         }
     } else {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
@@ -535,6 +542,17 @@
                                                            object:moviePlayerViewController.moviePlayer];
                 
                 [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
+                
+                selectedNode = node;
+                
+                if (![node hasThumbnail]) {
+                    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                             selector:@selector(handleThumbnailImageRequestFinishNotification:)
+                                                                 name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                               object:moviePlayerViewController.moviePlayer];
+                    
+                    [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
+                }
                 
                 [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
                 
@@ -673,8 +691,36 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
+    
+    [moviePlayer cancelAllThumbnailImageRequests];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
+    MPMoviePlayerController *moviePlayer = [aNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
+                                                  object:moviePlayer];
+    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+    
+    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
+    
+    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+    
+    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
+    
+    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
+    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
+    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    selectedNode = nil;
+}
+
+
 
 #pragma mark - UIAlertViewDelegate
 
@@ -721,6 +767,9 @@
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (fileExists) {
                         [pcvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+                        if (isVideo(node.name.pathExtension)) {
+                            [pcvc.thumbnailPlayImageView setHidden:NO];
+                        }
                     }
                 }
             }

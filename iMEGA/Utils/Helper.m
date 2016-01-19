@@ -38,15 +38,6 @@ static NSInteger linkNodeOption;
 
 @implementation Helper
 
-#pragma mark - File UTIs
-
-+ (CFStringRef)fileUTI:(NSString *)fileExtension {
-    CFStringRef extension = (__bridge CFStringRef) fileExtension;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
-
-    return fileUTI;
-}
-
 #pragma mark - Languages
 
 + (NSArray *)languagesSupportedIDs {
@@ -202,6 +193,7 @@ static NSInteger linkNodeOption;
                                 @"m":@"source_code",
                                 @"mm":@"source_code",
                                 @"m3u":@"playlist",
+                                @"m4v":@"video",
                                 @"m4a":@"audio",
                                 @"max":@"3d",
                                 @"mdb":@"database",
@@ -326,7 +318,7 @@ static NSInteger linkNodeOption;
     static UIImage *folderSharedImage = nil;
     
     if (folderSharedImage == nil) {
-        folderSharedImage = [UIImage imageNamed:@"folder_shared"];
+        folderSharedImage = [UIImage imageNamed:@"folder_outgoing"];
     }
     return folderSharedImage;
 }
@@ -418,7 +410,7 @@ static NSInteger linkNodeOption;
                 return [UIImage imageNamed:@"info_folder_image"];
             } else {
                 if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [UIImage imageNamed:@"info_folder_shared"];
+                    return [UIImage imageNamed:@"info_folder_outgoing"];
                 } else {
                     return [UIImage imageNamed:@"info_folder"];
                 }
@@ -451,15 +443,6 @@ static NSInteger linkNodeOption;
         }
     }
     return image;
-}
-
-+ (UIImage *)downloadingArrowImage {
-    static UIImage *downloadingArrowImage = nil;
-    
-    if (downloadingArrowImage == nil) {
-        downloadingArrowImage = [UIImage imageNamed:@"downloadingArrow"];
-    }
-    return downloadingArrowImage;
 }
 
 + (UIImage *)downloadedArrowImage {
@@ -701,16 +684,13 @@ static NSInteger linkNodeOption;
 }
 
 + (uint64_t)freeDiskSpace {
-    uint64_t totalSpace = 0;
     uint64_t totalFreeSpace = 0;
     NSError *error = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
     
     if (dictionary) {
-        NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSystemSize];
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
         totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
     } else {
         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]]];
@@ -731,8 +711,11 @@ static NSInteger linkNodeOption;
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    [[[[UIApplication sharedApplication] delegate] window] setRootViewController:viewController];
-    
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
+        [window setRootViewController:viewController];
+    } completion:nil];
+        
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
@@ -851,8 +834,6 @@ static NSInteger linkNodeOption;
 }
 
 + (void)resetCameraUploadsSettings {
-    [[CameraUploads syncManager].assetUploadArray removeAllObjects];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
     [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
     
@@ -861,15 +842,7 @@ static NSInteger linkNodeOption;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
     
-    [CameraUploads syncManager].isCameraUploadsEnabled = NO;
-    [CameraUploads syncManager].isUploadVideosEnabled = NO;
-    [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
-    [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    [[CameraUploads syncManager] turnOffCameraUploads];
 }
 
 + (void)deletePasscode {

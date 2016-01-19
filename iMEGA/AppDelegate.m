@@ -35,6 +35,8 @@
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
 
+#import "LaunchViewController.h"
+
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
@@ -62,9 +64,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
+    UIVisualEffectView *visualEffectView;
+    
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    
+    UIAlertView *overquotaAlertView;
     BOOL isOverquota;
+    
+    BOOL isFirstFetchNodesRequestUpdate;
+    BOOL isFirstAPI_EAGAIN;
+    NSTimer *timerAPI_EAGAIN;
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
@@ -80,7 +90,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error: nil];
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     self.IpAddress = [self getIpAddress];
     [MEGAReachabilityManager sharedManager];
@@ -196,10 +206,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
-            NSArray *objectsArray = [[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil];
-            UIViewController *viewController = [[UIViewController alloc] init];
-            [viewController setView:[objectsArray objectAtIndex:0]];
-            self.window.rootViewController = viewController;
+            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+            [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
+                [self.window setRootViewController:launchVC];
+            } completion:nil];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -213,6 +224,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [self.window setRootViewController:_mainTBC];
+                [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
     }
@@ -243,11 +255,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        if (visualEffectView == nil ) {
+            UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+            visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+            [visualEffectView.contentView setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:0.75]];
+            visualEffectView.frame = self.window.bounds;
+        }
+        [self.window addSubview:visualEffectView];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [[CameraUploads syncManager] getAllAssetsForUpload];
+    }
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        [visualEffectView removeFromSuperview];
     }
 }
 
@@ -628,6 +654,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
 }
 
+- (void)startTimerAPI_EAGAIN {
+    timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
+}
+
+- (void)showServersTooBusy {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        [launchVC.label setText:AMLocalizedString(@"serversTooBusy", nil)];
+    }
+}
+
+- (void)showOverquotaAlert {
+    [self disableCameraUploads];
+    
+    if (!overquotaAlertView.visible) {
+        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+        isOverquota = YES;
+    }
+}
+
+- (void)disableCameraUploads {
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        [[CameraUploads syncManager] turnOffCameraUploads];
+    }
+}
+
 #pragma mark - Get IP Address
 
 - (NSString *)getIpAddress {
@@ -734,14 +786,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
-    if ([MEGAReachabilityManager isReachable]) {
+    if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+        [self.window setRootViewController:_mainTBC];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    } else {
         if (self.link != nil) {
             [self processLink:self.link];
             self.link = nil;
         }
-    } else {
-        _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        [self.window setRootViewController:_mainTBC];
     }
 }
 
@@ -896,8 +949,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
+            
+        case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+            if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+                isFirstAPI_EAGAIN = YES;
+                isFirstFetchNodesRequestUpdate = YES;
+                LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+                [launchVC.activityIndicatorView setHidden:NO];
+                [launchVC.activityIndicatorView startAnimating];
+            }
             break;
         }
             
@@ -916,11 +977,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #endif
     
     if ([request type] == MEGARequestTypeFetchNodes){
-        float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
-        if (progress > 0 && progress <0.99) {
-            [SVProgressHUD showProgress:progress status:@"" maskType:SVProgressHUDMaskTypeClear];
-        } else if (progress > 0.99 || progress < 0) {
-            [SVProgressHUD showProgress:0.99 status:@"" maskType:SVProgressHUDMaskTypeClear];
+        if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+            float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
+            
+            if (isFirstFetchNodesRequestUpdate) {
+                [launchVC.activityIndicatorView stopAnimating];
+                [launchVC.activityIndicatorView setHidden:YES];
+                isFirstFetchNodesRequestUpdate = NO;
+            }
+            
+            if (progress > 0 && progress < 0.99) {
+                [launchVC.progressView setProgress:progress];
+            }
         }
     }
 }
@@ -955,8 +1024,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiEOverQuota: {
-                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-                isOverquota = YES;
+                [self showOverquotaAlert];
                 break;
             }
                 
@@ -964,6 +1032,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
                 [Helper logout];
+                break;
+            }
+                
+            case MEGAErrorTypeApiEAccess: {
+                if ([request type] == MEGARequestTypeSetAttrFile) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
+                    if (thumbnailExists) {
+                        [[NSFileManager defaultManager] removeItemAtPath:thumbnailFilePath error:nil];
+                    }
+                }
+                
                 break;
             }
                 
@@ -981,6 +1062,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [timerAPI_EAGAIN invalidate];
+            
             if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
@@ -995,33 +1078,43 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
-            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:_mainTBC];
+            [timerAPI_EAGAIN invalidate];
             
-            if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                }
+            if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
                 
-                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                         withLogout:YES
-                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-            } else {
-                if (isAccountFirstLogin) {
-                    [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
+                if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+                    _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                    [self.window setRootViewController:_mainTBC];
+                    [[UIApplication sharedApplication] setStatusBarHidden:NO];
                     
-                    if ([Helper selectedOptionOnLink] != 0) {
-                        [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                    } else {
-                        if (self.urlType == URLTypeOpenInLink) {
-                            [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                    if ([LTHPasscodeViewController doesPasscodeExist]) {
+                        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                         }
+                        
+                        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                                 withLogout:YES
+                                                                             andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
                     }
                 }
                 
-                if (self.link != nil) {
-                    [self processLink:self.link];
-                    self.link = nil;
+                if (![LTHPasscodeViewController doesPasscodeExist]) {
+                    if (isAccountFirstLogin) {
+                        [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
+                        
+                        if ([Helper selectedOptionOnLink] != 0) {
+                            [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                        } else {
+                            if (self.urlType == URLTypeOpenInLink) {
+                                [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
+                            }
+                        }
+                    }
+                    
+                    if (self.link != nil) {
+                        [self processLink:self.link];
+                        self.link = nil;
+                    }
                 }
             }
             
@@ -1078,14 +1171,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeAccountDetails: {
             
             if (isOverquota) {
-                UIAlertView *alertView;
                 if ([[request megaAccountDetails] type] > MEGAAccountTypeFree) {
-                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
+                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"quotaExceeded", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
                 } else {
-                    alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    overquotaAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:AMLocalizedString(@"overquotaAlert_message", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 }
-                [alertView setTag:0];
-                [alertView show];
+                [overquotaAlertView setTag:0];
+                [overquotaAlertView show];
                 isOverquota = NO;
             }
             
@@ -1101,6 +1193,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #ifdef DEBUG
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
+    
+    switch ([request type]) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            if (isFirstAPI_EAGAIN) {
+                [self startTimerAPI_EAGAIN];
+                isFirstAPI_EAGAIN = NO;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -1123,8 +1229,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
-                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-                isOverquota = YES;
+                [self showOverquotaAlert];
                 break;
             }
                 
@@ -1174,8 +1279,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (isImage([transfer fileName].pathExtension)) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            
             NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
@@ -1189,6 +1292,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (!previewExists) {
                 [api createPreview:[transfer path] destinatioPath:previewFilePath];
             }
+        }
+        
+        if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
+            NSURL *videoURL = [NSURL fileURLWithPath:transfer.path];
+            AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+            AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            generator.appliesPreferredTrackTransform = YES;
+            CMTime requestedTime = CMTimeMake(1, 60);
+            CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:NULL];
+            UIImage *image = [[UIImage alloc] initWithCGImage:imgRef];
+            
+            NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:node.base64Handle] stringByAppendingPathExtension:@"jpg"];
+            
+            [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
+            
+            CGImageRelease(imgRef);
+            
+            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
+            [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
+            
+            NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
+            [api createPreview:tmpImagePath destinatioPath:previewFilePath];
+            [api setPreviewNode:node sourceFilePath:previewFilePath];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     }
     

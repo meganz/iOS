@@ -90,7 +90,7 @@
     self.tableView.emptyDataSetDelegate = nil;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
@@ -297,6 +297,8 @@
     MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
     NSString *handleString = [offNode base64Handle];
     
+    [cell.thumbnailPlayImageView setHidden:YES];
+    
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
@@ -318,8 +320,11 @@
             }
         }
         
-        CFStringRef fileUTI = [Helper fileUTI:[nameString pathExtension]];
-        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+        NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
+        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
+            
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
             [cell.thumbnailImageView.layer setCornerRadius:4];
             [cell.thumbnailImageView.layer setMasksToBounds:YES];
             
@@ -327,21 +332,28 @@
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
-            if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
+            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+            if (thumbnailImage != nil) {
+                [cell.thumbnailImageView setImage:thumbnailImage];
+                if (isVideo(nameString.pathExtension)) {
+                    [cell.thumbnailPlayImageView setHidden:NO];
+                }
             }
             
-            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage == nil) {
-                thumbnailImage = [Helper defaultPhotoImage];
-            }
-            [cell.thumbnailImageView setImage:thumbnailImage];
         } else {
-            UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
-            [cell.thumbnailImageView setImage:iconImage];
-        }
-        if (fileUTI) {
-            CFRelease(fileUTI);
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([nameString pathExtension]), NULL);
+            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+                if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+                    [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
+                }
+            } else {
+                UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
+                [cell.thumbnailImageView setImage:iconImage];
+            }
+            
+            if (fileUTI) {
+                CFRelease(fileUTI);
+            }
         }
         
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];

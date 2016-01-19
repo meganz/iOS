@@ -63,6 +63,9 @@
     
     [self.termsOfServiceButton setTitleColor:megaRed forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
+    if (iPhone4X || iPhone5X) {
+        [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
+    }
     
     self.createAccountButton.layer.cornerRadius = 6;
     self.createAccountButton.layer.masksToBounds = YES;
@@ -85,7 +88,7 @@
     [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", @"Create Account")];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
