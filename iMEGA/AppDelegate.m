@@ -64,6 +64,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
+    UIVisualEffectView *visualEffectView;
+    
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -253,11 +255,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        if (visualEffectView == nil ) {
+            UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+            visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+            [visualEffectView.contentView setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:0.75]];
+            visualEffectView.frame = self.window.bounds;
+        }
+        [self.window addSubview:visualEffectView];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [[CameraUploads syncManager] getAllAssetsForUpload];
+    }
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
+        [visualEffectView removeFromSuperview];
     }
 }
 
@@ -1065,19 +1081,24 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [timerAPI_EAGAIN invalidate];
             
             if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
-                _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                [self.window setRootViewController:_mainTBC];
-                [[UIApplication sharedApplication] setStatusBarHidden:NO];
                 
-                if ([LTHPasscodeViewController doesPasscodeExist]) {
-                    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                        [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                    }
+                if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+                    _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                    [self.window setRootViewController:_mainTBC];
+                    [[UIApplication sharedApplication] setStatusBarHidden:NO];
                     
-                    [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                             withLogout:YES
-                                                                         andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-                } else {
+                    if ([LTHPasscodeViewController doesPasscodeExist]) {
+                        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                        }
+                        
+                        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                                 withLogout:YES
+                                                                             andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                    }
+                }
+                
+                if (![LTHPasscodeViewController doesPasscodeExist]) {
                     if (isAccountFirstLogin) {
                         [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
                         
