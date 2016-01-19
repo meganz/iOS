@@ -37,6 +37,7 @@
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -186,7 +187,7 @@
                             <tableViewSection headerTitle="OPTIONS:" id="a2j-kz-PoZ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="bjq-rL-iXL" userLabel="Upload videos Table View Cell">
-                                        <rect key="frame" x="0.0" y="145" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="145.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bjq-rL-iXL" id="ZN6-17-aVw">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -227,7 +228,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="1de-lP-gVm" userLabel="Use cellular connection Table View Cell">
-                                        <rect key="frame" x="0.0" y="189" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="189.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1de-lP-gVm" id="pqg-Nh-tCN">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -268,7 +269,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="8s9-2V-CTH" userLabel="Only when charging Table View Cell">
-                                        <rect key="frame" x="0.0" y="233" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="233.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8s9-2V-CTH" id="kgj-c7-lI9">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -449,12 +450,56 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Yux-Cc-xqi" userLabel="Simple Passcode Table View Cell">
+                                        <rect key="frame" x="0.0" y="167" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yux-Cc-xqi" id="dbd-Us-eZz">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnW-qx-AM1">
+                                                    <rect key="frame" x="15" y="11" width="513" height="21"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dfh-jE-dvr">
+                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="touchIDSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="73M-jg-Znd"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Dfh-jE-dvr" secondAttribute="trailing" constant="15" id="1OO-yf-pqZ"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="leading" secondItem="dbd-Us-eZz" secondAttribute="leadingMargin" constant="7" id="620-RH-ylC"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="leading" secondItem="dbd-Us-eZz" secondAttribute="leadingMargin" constant="7" id="8Rv-nj-JW1"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="leading" secondItem="dbd-Us-eZz" secondAttribute="leadingMargin" constant="15" id="LMA-yO-5uS"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="leading" secondItem="dbd-Us-eZz" secondAttribute="leadingMargin" constant="15" id="NRM-Cv-Npf"/>
+                                                <constraint firstItem="Dfh-jE-dvr" firstAttribute="trailing" secondItem="dbd-Us-eZz" secondAttribute="trailingMargin" constant="15" id="S1N-WN-65G"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="leading" secondItem="dbd-Us-eZz" secondAttribute="leading" constant="15" id="d7D-08-pon"/>
+                                                <constraint firstItem="AnW-qx-AM1" firstAttribute="top" secondItem="dbd-Us-eZz" secondAttribute="topMargin" constant="3" id="fKq-Gw-RbB"/>
+                                                <constraint firstItem="Dfh-jE-dvr" firstAttribute="top" secondItem="dbd-Us-eZz" secondAttribute="topMargin" constant="-2" id="nr8-T3-CbW"/>
+                                                <constraint firstItem="Dfh-jE-dvr" firstAttribute="leading" secondItem="AnW-qx-AM1" secondAttribute="trailing" constant="8" id="rpF-b2-BOk"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="620-RH-ylC"/>
+                                                    <exclude reference="8Rv-nj-JW1"/>
+                                                    <exclude reference="LMA-yO-5uS"/>
+                                                    <exclude reference="NRM-Cv-Npf"/>
+                                                    <exclude reference="S1N-WN-65G"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection footerTitle="Log out and delete local data of the app after 10 failed passcode attempts" id="91f-Ih-KcR">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="inf-aX-HAP" userLabel="Erase Local Data Table View Cell">
-                                        <rect key="frame" x="0.0" y="187" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="231" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="inf-aX-HAP" id="TeB-Ow-QEG">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -507,6 +552,8 @@
                         <outlet property="eraseLocalDataSwitch" destination="gPu-Yh-6d1" id="1VR-bt-rKZ"/>
                         <outlet property="simplePasscodeLabel" destination="B2c-dr-838" id="sfi-gc-9SZ"/>
                         <outlet property="simplePasscodeSwitch" destination="HWU-ov-XJM" id="AOT-Ni-YUs"/>
+                        <outlet property="touchIDLabel" destination="AnW-qx-AM1" id="xd2-wJ-y1k"/>
+                        <outlet property="touchIDSwitch" destination="Dfh-jE-dvr" id="er2-gP-YbP"/>
                         <outlet property="turnOnOffPasscodeLabel" destination="SuP-oK-n1S" id="tHN-f6-IP0"/>
                         <outlet property="turnOnOffPasscodeSwitch" destination="4Zx-og-zQM" id="g4u-AJ-9a5"/>
                     </connections>
@@ -563,7 +610,7 @@
                             <tableViewSection footerTitle="Get support or read popular topics." id="lkd-E6-zox">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="rnm-ww-Rui">
-                                        <rect key="frame" x="0.0" y="131.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rnm-ww-Rui" id="d7g-dk-jXd">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -597,7 +644,7 @@
                             <tableViewSection footerTitle="" id="5GF-gq-9A5">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="e7M-6L-pKB">
-                                        <rect key="frame" x="0.0" y="212" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="213" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e7M-6L-pKB" id="mE5-t4-Ago">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -706,7 +753,7 @@
                                         <rect key="frame" x="0.0" y="132" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V2j-WF-imF" id="SBX-3I-0U5">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Change Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cVP-iG-p29">
@@ -961,8 +1008,8 @@
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="1f313ea" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2yk-9P-9uF">
-                                                    <rect key="frame" x="518.5" y="11" width="66.5" height="21.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="459bd73" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2yk-9P-9uF">
+                                                    <rect key="frame" x="507" y="11" width="78" height="21.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>

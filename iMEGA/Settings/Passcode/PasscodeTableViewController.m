@@ -23,6 +23,8 @@
 #import "LTHPasscodeViewController.h"
 #import "Helper.h"
 
+#import <LocalAuthentication/LAContext.h>
+
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
 }
@@ -34,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *simplePasscodeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *eraseLocalDataLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *eraseLocalDataSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *touchIDLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *touchIDSwitch;
 
 @end
 
@@ -48,6 +52,7 @@
     [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
     [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
+    [self.touchIDLabel setText:@"Touch ID"];
     [self.eraseLocalDataLabel setText:AMLocalizedString(@"eraseAllLocalDataLabel", @"Erase all local data")];
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
@@ -61,6 +66,7 @@
     [self.turnOnOffPasscodeSwitch setOn:doesPasscodeExist];
     if (doesPasscodeExist) {
         [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
+        [self.touchIDSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithTouchID]];
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
             [self.eraseLocalDataSwitch setOn:YES];
@@ -78,6 +84,7 @@
         
     } else {
         [self.simplePasscodeSwitch setOn:NO];
+        [self.touchIDSwitch setOn:NO];
         [self.eraseLocalDataSwitch setOn:NO];
     }
     
@@ -103,6 +110,13 @@
     } else {
         [self.eraseLocalDataSwitch setOn:NO];
     }
+}
+
+- (BOOL)isTouchIDAvailable {
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending) {
+        return [[[LAContext alloc] init] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil];
+    }
+    return NO;
 }
 
 #pragma mark - IBActions
@@ -132,6 +146,10 @@
     }
 }
 
+- (IBAction)touchIDSwitchValueChanged:(UISwitch *)sender {
+    [[LTHPasscodeViewController sharedUser] setAllowUnlockWithTouchID:sender.isOn];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -141,6 +159,8 @@
     [self.simplePasscodeSwitch setEnabled:doesPasscodeExist];
     [self.eraseLocalDataLabel setEnabled:doesPasscodeExist];
     [self.eraseLocalDataSwitch setEnabled:doesPasscodeExist];
+    [self.touchIDSwitch setEnabled:doesPasscodeExist];
+    [self.touchIDLabel setEnabled:doesPasscodeExist];
 
     return 2;
 }
@@ -150,7 +170,11 @@
     
     switch (section) {
         case 0:
-            numberOfRows = 3;
+            if ([self isTouchIDAvailable]) {
+                numberOfRows = 4;
+            } else {
+                numberOfRows = 3;
+            }
             break;
             
         case 1:
