@@ -89,6 +89,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    }
+    
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     

@@ -52,12 +52,6 @@
     [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
-    
-    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 5.0;
-    lpgr.delegate = self;
-    [self.versionCell addGestureRecognizer:lpgr];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,16 +88,6 @@
     }
 }
 
-- (void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Enter the API_URL (DEBUG /!\\)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alertView textFieldAtIndex:0].text = @"";
-        alertView.tag = 2;
-        [alertView show];
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -135,9 +119,13 @@
                 versionCounter++;
                 if (versionCounter == 5) {
                     versionCounter = 0;
-                    UIAlertView *gApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://g.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-                    gApiAlertView.tag = 0;
-                    [gApiAlertView show];
+                    UIAlertView *disableLogsAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"disableDebugMode_title", nil)
+                                                                                   message:AMLocalizedString(@"disableDebugMode_message", nil)
+                                                                                  delegate:self
+                                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                                         otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    disableLogsAlertView.tag = 0;
+                    [disableLogsAlertView show];
                 }
                 return;
             } else if ([indexPath row] == 1) {
@@ -146,9 +134,13 @@
                 if (megaSdkVersionCounter == 5) {
                     megaSdkVersionCounter = 0;
                     
-                    UIAlertView *stagingApiAlertView = [[UIAlertView alloc] initWithTitle:@"Switching api server" message:@"Do you want switch to 'https://staging.api.mega.co.nz/'?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-                    stagingApiAlertView.tag = 1;
-                    [stagingApiAlertView show];
+                    UIAlertView *enableLogsAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"enableDebugMode_title", nil)
+                                                                                  message:AMLocalizedString(@"enableDebugMode_message", nil)
+                                                                                 delegate:self
+                                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                                        otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    enableLogsAlertView.tag = 1;
+                    [enableLogsAlertView show];
                 }
                 return;
             }
@@ -168,22 +160,23 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
         if (alertView.tag == 0) {
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
-            for (UIView *view in [[[[UIApplication sharedApplication] delegate] window] subviews]) {
-                // Remove all overlapping views in the status bar
-                if (view.tag == 1) {
-                    [view removeFromSuperview];
-                }
+            [MEGASdk setLogLevel:MEGALogLevelFatal];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
+                [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
             }
-        } else if (alertView.tag == 1) {
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-            [self.debugView setBackgroundColor:[UIColor yellowColor]];
-            [[[[UIApplication sharedApplication] delegate] window] addSubview:self.debugView];
+            
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
-            [self.debugView setBackgroundColor:[UIColor orangeColor]];
-            [[[[UIApplication sharedApplication] delegate] window] addSubview:self.debugView];
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:[[alertView textFieldAtIndex:0] text] disablepkp:YES];
+            [MEGASdk setLogLevel:MEGALogLevelDebug];
+            
+            freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
     
