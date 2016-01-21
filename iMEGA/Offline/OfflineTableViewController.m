@@ -324,7 +324,7 @@
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
             [cell.thumbnailImageView.layer setCornerRadius:4];
             [cell.thumbnailImageView.layer setMasksToBounds:YES];
             
