@@ -45,7 +45,6 @@
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAProxyServer.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -501,9 +500,8 @@
                     [previewController setTransitioningDelegate:self];
                     [previewController setTitle:name];
                     [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-                    NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
-                    [[MEGAProxyServer sharedInstance] setApi:[MEGASdkManager sharedMEGASdkFolder]];
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                    NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
                     if (link) {
                         MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
                         // Remove the movie player view controller from the "playback did finish" notification observers
@@ -756,6 +754,7 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[MEGASdkManager sharedMEGASdk] httpServerStop];
 }
 
 #pragma mark - MEGAGlobalDelegate
