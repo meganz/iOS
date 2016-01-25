@@ -30,7 +30,6 @@
 #import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
 #import "LTHPasscodeViewController.h"
-#import "MEGAProxyServer.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
@@ -245,9 +244,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 //        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 //        [application registerForRemoteNotificationTypes:myTypes];
 //    }
-    
-    // Start Proxy server for streaming
-    [[MEGAProxyServer sharedInstance] start];
     
     return YES;
 }

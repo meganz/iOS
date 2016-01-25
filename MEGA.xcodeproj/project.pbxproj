@@ -121,8 +121,6 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
-		94F56A521AFCC265000673D4 /* MEGAProxyServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F56A511AFCC265000673D4 /* MEGAProxyServer.m */; };
-		94F56A581AFD0970000673D4 /* MEGAHttpSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F56A571AFD0970000673D4 /* MEGAHttpSession.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
@@ -392,10 +390,6 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		94F56A501AFCC265000673D4 /* MEGAProxyServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MEGAProxyServer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		94F56A511AFCC265000673D4 /* MEGAProxyServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MEGAProxyServer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		94F56A561AFD0970000673D4 /* MEGAHttpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAHttpSession.h; sourceTree = "<group>"; };
-		94F56A571AFD0970000673D4 /* MEGAHttpSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAHttpSession.m; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
 		E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FolderLinkViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E84CDB001A7292C9003F4C77 /* Links.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Links.storyboard; sourceTree = "<group>"; };
@@ -698,10 +692,6 @@
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
 				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
-				94F56A501AFCC265000673D4 /* MEGAProxyServer.h */,
-				94F56A511AFCC265000673D4 /* MEGAProxyServer.m */,
-				94F56A561AFD0970000673D4 /* MEGAHttpSession.h */,
-				94F56A571AFD0970000673D4 /* MEGAHttpSession.m */,
 				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
 				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 				E8C8D7821B219BBA00BCDBA4 /* Animators */,
@@ -1367,7 +1357,6 @@
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */,
 				41E566861BBD6160007569A2 /* ALAsset+assetType.m in Sources */,
-				94F56A581AFD0970000673D4 /* MEGAHttpSession.m in Sources */,
 				41E566951BBD6160007569A2 /* UIImage+CTAssetsPickerController.m in Sources */,
 				41E566881BBD6160007569A2 /* ALAssetsGroup+isEqual.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
@@ -1410,7 +1399,6 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				4152268E1A692ECC00EC7BB6 /* MEGAPreview.m in Sources */,
-				94F56A521AFCC265000673D4 /* MEGAProxyServer.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				41ADAA191ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m in Sources */,
@@ -1580,6 +1568,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/MEGA-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					HAVE_LIBUV,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1616,6 +1609,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/MEGA-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_LIBUV;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
