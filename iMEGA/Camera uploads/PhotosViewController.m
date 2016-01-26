@@ -37,8 +37,6 @@
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
 
-#import "MEGAProxyServer.h"
-
 @interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
     NSMutableArray *exportLinks;
@@ -526,8 +524,8 @@
             [photoBrowser showNextPhotoAnimated:YES];
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
-        } else if (isMultimedia(node.name.pathExtension)) {
-            NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
+        } else if (isMultimedia(node.name.pathExtension) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+            NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
             if (link) {
                 MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
                 // Remove the movie player view controller from the "playback did finish" notification observers
@@ -695,6 +693,7 @@
     [moviePlayer cancelAllThumbnailImageRequests];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[MEGASdkManager sharedMEGASdk] httpServerStop];
 }
 
 - (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
@@ -702,7 +701,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
                                                   object:moviePlayer];
-    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+    UIImage *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
     
     NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
     
