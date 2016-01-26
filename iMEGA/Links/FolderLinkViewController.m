@@ -130,7 +130,6 @@
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -177,6 +176,8 @@
 }
 
 - (void)showUnavailableLinkView {
+    [SVProgressHUD dismiss];
+    
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
@@ -251,6 +252,8 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     [[MEGASdkManager sharedMEGASdkFolder] logout];
+    
+    [SVProgressHUD dismiss];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -781,10 +784,9 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
+        if ([error type] == MEGAErrorTypeApiEArgs || [error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeFetchNodes) {
                 [self showUnavailableLinkView];
-                [SVProgressHUD dismiss];
             }
         }
         return;
@@ -798,6 +800,16 @@
         }
             
         case MEGARequestTypeFetchNodes: {
+            
+            MEGANode *rootNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+            if ([[rootNode name] isEqualToString:@"CRYPTO_ERROR"] || [[rootNode name] isEqualToString:@"NO_KEY"]) {
+                [[MEGASdkManager sharedMEGASdkFolder] logout];
+                
+                [self hideSearchBar];
+                [self showUnavailableLinkView];
+                return;
+            }
+            
             isFetchNodesDone = YES;
             [self reloadUI];
 //            [self.importBarButtonItem setEnabled:YES];

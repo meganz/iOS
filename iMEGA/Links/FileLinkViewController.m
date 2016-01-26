@@ -126,6 +126,8 @@
 }
 
 - (void)showUnavailableLinkView {
+    [SVProgressHUD dismiss];
+    
     [self setUIItemsEnabled:NO];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
@@ -171,6 +173,8 @@
     [Helper setSelectedOptionOnLink:0];
     
     [self deleteTempFile];
+    
+    [SVProgressHUD dismiss];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -318,9 +322,8 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiENoent) {
+        if ([error type] == MEGAErrorTypeApiEArgs || [error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeGetPublicNode) {
-                [SVProgressHUD dismiss];
                 [self showUnavailableLinkView];
             }
         }
@@ -333,6 +336,10 @@
             self.node = [request publicNode];
             
             NSString *name = [self.node name];
+            if ([name isEqualToString:@"CRYPTO_ERROR"] || [name isEqualToString:@"NO_KEY"]) {
+                [self showUnavailableLinkView];
+                return;
+            }
             [self.nameLabel setText:name];
             
             NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
