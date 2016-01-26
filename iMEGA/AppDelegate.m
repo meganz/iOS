@@ -30,7 +30,6 @@
 #import "CameraUploads.h"
 #import "MEGAReachabilityManager.h"
 #import "LTHPasscodeViewController.h"
-#import "MEGAProxyServer.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
@@ -89,6 +88,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    }
+    
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
@@ -239,9 +244,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 //        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 //        [application registerForRemoteNotificationTypes:myTypes];
 //    }
-    
-    // Start Proxy server for streaming
-    [[MEGAProxyServer sharedInstance] start];
     
     return YES;
 }

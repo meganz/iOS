@@ -718,3 +718,11 @@
 "failedRestore_title"="Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section";

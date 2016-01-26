@@ -45,7 +45,6 @@
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAProxyServer.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -131,7 +130,6 @@
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -178,6 +176,8 @@
 }
 
 - (void)showUnavailableLinkView {
+    [SVProgressHUD dismiss];
+    
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
@@ -252,6 +252,8 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     [[MEGASdkManager sharedMEGASdkFolder] logout];
+    
+    [SVProgressHUD dismiss];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -501,9 +503,8 @@
                     [previewController setTransitioningDelegate:self];
                     [previewController setTitle:name];
                     [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-                    NSURL *link = [NSURL URLWithString:[NSString stringWithFormat:@"http://127.0.0.1:%llu/%lld.%@", [[MEGAProxyServer sharedInstance] port], node.handle, node.name.pathExtension.lowercaseString]];
-                    [[MEGAProxyServer sharedInstance] setApi:[MEGASdkManager sharedMEGASdkFolder]];
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                    NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
                     if (link) {
                         MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
                         // Remove the movie player view controller from the "playback did finish" notification observers
@@ -756,6 +757,7 @@
                                                     name:MPMoviePlayerPlaybackDidFinishNotification
                                                   object:moviePlayer];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[MEGASdkManager sharedMEGASdk] httpServerStop];
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -782,10 +784,9 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
+        if ([error type] == MEGAErrorTypeApiEArgs || [error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
             if ([request type] == MEGARequestTypeFetchNodes) {
                 [self showUnavailableLinkView];
-                [SVProgressHUD dismiss];
             }
         }
         return;
@@ -799,6 +800,16 @@
         }
             
         case MEGARequestTypeFetchNodes: {
+            
+            MEGANode *rootNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+            if ([[rootNode name] isEqualToString:@"CRYPTO_ERROR"] || [[rootNode name] isEqualToString:@"NO_KEY"]) {
+                [[MEGASdkManager sharedMEGASdkFolder] logout];
+                
+                [self hideSearchBar];
+                [self showUnavailableLinkView];
+                return;
+            }
+            
             isFetchNodesDone = YES;
             [self reloadUI];
 //            [self.importBarButtonItem setEnabled:YES];
