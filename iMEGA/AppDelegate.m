@@ -1238,6 +1238,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             default:
                 break;
         }
+        return;
     }
     
     if (transfer.isStreamingTransfer) {
@@ -1337,6 +1338,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
 }
+
+#pragma mark - MEGAContactRequest
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     [self setBadgeValueForIncomingContactRequests];
