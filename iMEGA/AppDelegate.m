@@ -325,12 +325,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
-            self.link = nil;
         }
     } else {
         if (![LTHPasscodeViewController doesPasscodeExist]) {
             [self processLink:self.link];
-            self.link = nil;
         }
     }
     
@@ -460,7 +458,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
+        [self showLinkNotValid];
         return;
     }
         
@@ -487,7 +485,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
+    [self showLinkNotValid];
 }
 
 - (void)dissmissPresentedViews {
@@ -500,39 +498,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:2]; // mega://"#!"
     BOOL isFileLink = [megaURLTypeString isEqualToString:@"#!"];
     if (isFileLink) {
-        NSString *megaURLString = @"https://mega.nz/";
-        NSString *fileLinkCodeString = [afterSlashesString substringFromIndex:2]; // mega://#!"xxxxxxxx..."!
-        
-        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
-        BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
-        if (isEncryptedFileLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileEncrypted", @"File encrypted")
-                                                                message:AMLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-        } else {
-            MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-            FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-            NSString *megaFileLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
-            [fileLinkVC setFileLinkString:megaFileLinkURLString];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-                } else {
-                    [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-                }
-            } else {
-                [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-            }
-        }
+        NSString *fileLinkString = @"https://mega.nz/";
+        fileLinkString = [fileLinkString stringByAppendingString:afterSlashesString];
+        [self showFileLinkView:fileLinkString];
         return YES;
     }
     return NO;
+}
+
+- (void)showFileLinkView:(NSString *)fileLinkURLString {
+    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+    [fileLinkVC setFileLinkString:fileLinkURLString];
+    
+    [self presentLinkViewController:fileLinkNavigationController];
+    
+    self.link = nil;
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
@@ -545,36 +526,40 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
         BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
         if (isEncryptedFolderLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"folderEncrypted", @"Folder encrypted")
-                                                                message:AMLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
+            //TODO: Process Folder Link without key
         } else {
-            MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
-            
-            FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
-            
-            NSString *megaFolderLinkString = [megaURLString stringByAppendingString:afterSlashesString];
-            [folderlinkVC setIsFolderRootNode:YES];
-            [folderlinkVC setFolderLinkString:megaFolderLinkString];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:folderNavigationController animated:YES completion:nil];
-                } else {
-                    [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
-                }
-            } else {
-                [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
-            }
+            NSString *folderLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
+            [self showFolderLinkView:folderLinkURLString];
         }
         return YES;
     }
     return NO;
+}
+
+- (void)showFolderLinkView:(NSString *)folderLinkURLString {
+    MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+    
+    FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
+    
+    [folderlinkVC setIsFolderRootNode:YES];
+    [folderlinkVC setFolderLinkString:folderLinkURLString];
+    
+    [self presentLinkViewController:folderNavigationController];
+    
+    self.link = nil;
+}
+
+- (void)presentLinkViewController:(UINavigationController *)navigationController {
+    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+        MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+        if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+            [cameraUploadsPopUpNavigationController.topViewController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+        }
+    } else {
+        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    }
 }
 
 - (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
@@ -585,10 +570,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
         megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
+        self.link = nil;
         return YES;
     } else if (isMEGANZConfirmationLink) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:afterSlashesString];
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
+        self.link = nil;
         return YES;
     }
     return NO;
@@ -613,6 +600,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
         }
     }
+    self.link = nil;
 }
 
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
@@ -680,6 +668,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [[CameraUploads syncManager] turnOffCameraUploads];
     }
+}
+
+- (void)showLinkNotValid {
+    //TODO: Show empty state instead of HUD
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"linkNotValid", nil)];
+    self.link = nil;
 }
 
 #pragma mark - Get IP Address
@@ -795,7 +789,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         if (self.link != nil) {
             [self processLink:self.link];
-            self.link = nil;
         }
     }
 }
@@ -1115,7 +1108,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     
                     if (self.link != nil) {
                         [self processLink:self.link];
-                        self.link = nil;
                     }
                 }
             }
