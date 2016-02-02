@@ -42,6 +42,8 @@
 
 @interface FileLinkViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
+    
+    UIAlertView *decryptionAlertView;
 }
 
 @property (strong, nonatomic) MEGANode *node;
@@ -70,7 +72,7 @@
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
     
     [self setUIItemsEnabled:NO];
     
@@ -94,7 +96,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"megaLink", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -130,11 +132,15 @@
     
     [self setUIItemsEnabled:NO];
     
+    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:AMLocalizedString(@"fileLinkUnavailableText", nil)];
+}
+
+- (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView setFrame:self.view.bounds];
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
-    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"fileLinkUnavailableTitle", nil)];
-    [unavailableLinkView.textView setText:AMLocalizedString(@"fileLinkUnavailableText", nil)];
+    [unavailableLinkView.titleLabel setText:title];
+    [unavailableLinkView.textView setText:text];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:megaDarkGray];
     
@@ -163,6 +169,40 @@
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
         }
     }
+}
+
+- (void)showLinkNotValid {
+    [SVProgressHUD dismiss];
+    
+    [self setUIItemsEnabled:NO];
+    
+    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:@""];
+}
+
+
+- (void)showDecryptionAlert {
+    [SVProgressHUD dismiss];
+    
+    decryptionAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil)
+                                                     message:AMLocalizedString(@"decryptionKeyAlertMessage", nil)
+                                                    delegate:self
+                                           cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                           otherButtonTitles:AMLocalizedString(@"decrypt", nil), nil];
+    [decryptionAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    UITextField *textField = [decryptionAlertView textFieldAtIndex:0];
+    [textField setPlaceholder:AMLocalizedString(@"decryptionKey", nil)];
+    [decryptionAlertView setTag:1];
+    [decryptionAlertView show];
+}
+
+- (void)showDecryptionKeyNotValidAlert {
+    UIAlertView *decryptionKeyNotValidAlertView  = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil)
+                                                                              message:nil
+                                                                             delegate:self
+                                                                    cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                                    otherButtonTitles:nil];
+    [decryptionKeyNotValidAlertView setTag:2];
+    [decryptionKeyNotValidAlertView show];
 }
 
 #pragma mark - IBActions
@@ -277,6 +317,35 @@
     }
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else if (buttonIndex == 1) {
+            NSString *linkString = [self.fileLinkString stringByAppendingString:@"!"];
+            NSString *key = [[alertView textFieldAtIndex:0] text];
+            linkString = [linkString stringByAppendingString:key];
+            
+            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:self];
+        }
+    } else if (alertView.tag == 2) { //Decryption key not valid
+        [self showDecryptionAlert];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    if (alertView.tag == 1) {
+        NSString *decryptionKey = [[alertView textFieldAtIndex:0] text];
+        if ([decryptionKey isEqualToString:@""]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - UIViewControllerTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
@@ -322,24 +391,53 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEArgs || [error type] == MEGAErrorTypeApiENoent) {
-            if ([request type] == MEGARequestTypeGetPublicNode) {
-                [self showUnavailableLinkView];
+        switch ([error type]) {
+            case MEGAErrorTypeApiEArgs: {
+                if ([request type] == MEGARequestTypeGetPublicNode) {
+                    if (decryptionAlertView.visible) {
+                        [self showDecryptionKeyNotValidAlert];
+                    } else {
+                        [self showLinkNotValid];
+                    }
+                }
+                break;
             }
+                
+            case MEGAErrorTypeApiENoent: {
+                if ([request type] == MEGARequestTypeGetPublicNode) {
+                    [self showUnavailableLinkView];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiEIncomplete: {
+                if ([request type] == MEGARequestTypeGetPublicNode) {
+                    [self showDecryptionAlert];
+                }
+                break;
+            }
+                
+            default:
+                break;
         }
+        
         return;
     }
     
     switch ([request type]) {
             
         case MEGARequestTypeGetPublicNode: {
+            
+            if ([request flag]) {
+                [self showDecryptionKeyNotValidAlert];
+                return;
+            }
+            
+            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
+            
             self.node = [request publicNode];
             
             NSString *name = [self.node name];
-            if ([name isEqualToString:@"CRYPTO_ERROR"] || [name isEqualToString:@"NO_KEY"]) {
-                [self showUnavailableLinkView];
-                return;
-            }
             [self.nameLabel setText:name];
             
             NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
