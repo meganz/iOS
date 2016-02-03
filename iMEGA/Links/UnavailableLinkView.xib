@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SF-UI-Text-Light.otf">
@@ -18,20 +18,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
-                    <rect key="frame" x="229" y="25" width="142" height="160"/>
+                    <rect key="frame" x="180" y="130" width="240" height="211"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="142" id="7hi-wX-zCa"/>
-                        <constraint firstAttribute="height" constant="160" id="a2b-EF-YS0"/>
+                        <constraint firstAttribute="width" constant="240" id="7hi-wX-zCa"/>
+                        <constraint firstAttribute="height" constant="211" id="a2b-EF-YS0"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                    <rect key="frame" x="16" y="193" width="568" height="21"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="17"/>
+                    <rect key="frame" x="16" y="357" width="568" height="21.5"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaU-6T-JvV">
-                    <rect key="frame" x="16" y="222" width="568" height="150"/>
+                    <rect key="frame" x="16" y="386.5" width="568" height="150"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="eLP-ni-h1O"/>
@@ -47,13 +47,14 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="rvn-KO-Arx" firstAttribute="top" secondItem="tbQ-LB-Do7" secondAttribute="top" constant="25" id="6Dp-Zv-8Mi"/>
                 <constraint firstAttribute="trailing" secondItem="JaU-6T-JvV" secondAttribute="trailing" constant="16" id="6Km-9E-He8"/>
                 <constraint firstItem="Bur-Bl-fx0" firstAttribute="centerX" secondItem="rvn-KO-Arx" secondAttribute="centerX" id="EAg-cM-XtK"/>
                 <constraint firstItem="JaU-6T-JvV" firstAttribute="top" secondItem="Bur-Bl-fx0" secondAttribute="bottom" constant="8" id="Nrw-1j-ChR"/>
+                <constraint firstItem="rvn-KO-Arx" firstAttribute="centerX" secondItem="tbQ-LB-Do7" secondAttribute="centerX" id="Vuf-cO-KcF"/>
                 <constraint firstItem="JaU-6T-JvV" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="16" id="cql-8m-zTI"/>
                 <constraint firstAttribute="trailing" secondItem="Bur-Bl-fx0" secondAttribute="trailing" constant="16" id="eJR-rx-fae"/>
-                <constraint firstItem="Bur-Bl-fx0" firstAttribute="top" secondItem="rvn-KO-Arx" secondAttribute="bottom" constant="8" id="pDu-EN-WU7"/>
+                <constraint firstItem="rvn-KO-Arx" firstAttribute="centerY" secondItem="tbQ-LB-Do7" secondAttribute="centerY" constant="-64" id="fkN-Wx-co3"/>
+                <constraint firstItem="Bur-Bl-fx0" firstAttribute="top" secondItem="rvn-KO-Arx" secondAttribute="bottom" constant="16" id="pDu-EN-WU7"/>
                 <constraint firstItem="Bur-Bl-fx0" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="16" id="r0S-2v-Qot"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

@@ -138,7 +138,7 @@
 - (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     [unavailableLinkView setFrame:self.view.bounds];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFileLink"]];
     [unavailableLinkView.titleLabel setText:title];
     [unavailableLinkView.textView setText:text];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
