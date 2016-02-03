@@ -176,7 +176,7 @@
     
     [self setUIItemsEnabled:NO];
     
-    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:@""];
+    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:@""];
 }
 
 
@@ -429,7 +429,11 @@
         case MEGARequestTypeGetPublicNode: {
             
             if ([request flag]) {
-                [self showDecryptionKeyNotValidAlert];
+                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                    [self showDecryptionKeyNotValidAlert];
+                } else { //Link with invalid key
+                    [self showLinkNotValid];
+                }
                 return;
             }
             

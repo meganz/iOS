@@ -926,7 +926,12 @@
                 [[MEGASdkManager sharedMEGASdkFolder] logout];
                 
                 [SVProgressHUD dismiss];
-                [self showDecryptionKeyNotValidAlert];
+                
+                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                    [self showDecryptionKeyNotValidAlert];
+                } else { //Link with invalid key
+                    [self showLinkNotValid];
+                }
                 return;
             }
             
