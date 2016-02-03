@@ -188,7 +188,7 @@
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFolderLink"]];
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"linkUnavailable", nil)];
     [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
@@ -797,7 +797,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (!isFetchNodesDone && self.isFolderRootNode) {
             if (isFolderLinkNotValid) {
-                return [UIImage imageNamed:@"unavailableLink"];
+                return [UIImage imageNamed:@"invalidFolderLink"];
             }
             return nil;
         }
