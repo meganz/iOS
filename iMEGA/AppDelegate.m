@@ -520,17 +520,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
     BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
     if (isFolderLink) {
-        NSString *megaURLString = @"https://mega.nz/";
-        NSString *folderLinkCodeString = [afterSlashesString substringFromIndex:3]; // mega://#F!"xxxxxxxx..."!
-        
-        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
-        BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
-        if (isEncryptedFolderLink) {
-            //TODO: Process Folder Link without key
-        } else {
-            NSString *folderLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
-            [self showFolderLinkView:folderLinkURLString];
-        }
+        NSString *folderLinkString = @"https://mega.nz/";
+        folderLinkString = [folderLinkString stringByAppendingString:afterSlashesString];
+        [self showFolderLinkView:folderLinkString];
         return YES;
     }
     return NO;

@@ -128,16 +128,14 @@
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Folder Link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Folder link unavailable";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */

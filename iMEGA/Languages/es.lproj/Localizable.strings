@@ -136,8 +136,6 @@
 "folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La carpeta '%@' no puede ser creada";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
 /* Error message shown when a folder link doesn't exist. */
 "folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
