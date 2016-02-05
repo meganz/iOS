@@ -59,6 +59,8 @@
     UIAlertView *decryptionAlertView;
 }
 
+@property (weak, nonatomic) UILabel *navigationBarLabel;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -167,19 +169,46 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    NSString *titleString = AMLocalizedString(@"folderLink", nil);
-    if ([self.parentNode name] != nil) {
-        if (self.isFolderRootNode) {
-            titleString = [titleString stringByAppendingPathComponent:[self.parentNode name]];
-        } else {
-            titleString = [self.parentNode name];
+    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+        [self setNavigationBarTitleLabel];
+        
+        if (!self.isFolderRootNode) { //Enable and show search bar when you're on a child folder
+            [self.searchDisplayController.searchBar setHidden:NO];
+            [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
         }
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     }
-    [self.navigationItem setTitle:titleString];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     
     [self.tableView reloadData];
+}
+
+- (void)setNavigationBarTitleLabel {
+    NSString *title = [self.parentNode name];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleMutableAttributedString addAttribute:NSFontAttributeName
+                                         value:[UIFont fontWithName:kFont size:18.0]
+                                         range:[title rangeOfString:title]];
+    
+    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                            value:megaRed
+                                            range:[subtitle rangeOfString:subtitle]];
+    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
+                                            value:[UIFont fontWithName:kFont size:12.0]
+                                            range:[subtitle rangeOfString:subtitle]];
+    
+    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
+    [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAttributedText:titleMutableAttributedString];
+    _navigationBarLabel = label;
+    [self.navigationItem setTitleView:label];
 }
 
 - (void)showUnavailableLinkView {
