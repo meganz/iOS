@@ -119,6 +119,15 @@
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
+        [UIView animateWithDuration:0.1 animations:^{
+            self.uploadProgressViewTopLayoutConstraint.constant = -60;
+            self.photosCollectionViewTopLayoutConstraint.constant = 0;
+            
+            [self.view layoutIfNeeded];
+        }];
+    }
+    
     [self reloadUI];
 }
 
@@ -259,7 +268,6 @@
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [[CameraUploads syncManager] getAllAssetsForUpload];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [self reloadUI];
     }
@@ -833,7 +841,7 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([[[CameraUploads syncManager] assetUploadArray] count] == 1) {
+    if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1) {
         [self hideProgressView];
     }
 }
