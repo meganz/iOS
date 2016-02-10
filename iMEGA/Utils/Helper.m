@@ -800,6 +800,15 @@ static NSInteger linkNodeOption;
             [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
         }
     }
+    
+    // Delete CameraUploads directory
+    NSString *cameraUploadsDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"CameraUploads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:cameraUploadsDirectory]) {
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:cameraUploadsDirectory error:&error];
+        if (!success || error) {
+            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        }
+    }
 }
 
 + (void)deleteMasterKey {
@@ -834,15 +843,8 @@ static NSInteger linkNodeOption;
 }
 
 + (void)resetCameraUploadsSettings {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
-    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
-    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
+    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
-    
-    [[CameraUploads syncManager] turnOffCameraUploads];
 }
 
 + (void)deletePasscode {

@@ -106,7 +106,7 @@
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
     [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
     if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         [_useCellularConnectionSwitch setOn:YES animated:YES];
     } else {
         if (![MEGAReachabilityManager isReachableViaWiFi]) {
@@ -128,7 +128,6 @@
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [[CameraUploads syncManager] getAllAssetsForUpload];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         
         [self dismissViewControllerAnimated:YES completion:^{
@@ -153,13 +152,12 @@
     }
     
     if ([request type] == MEGARequestTypeCancelTransfers) {
-        [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+        [[CameraUploads syncManager] resetOperationQueue];
         
         if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            [[CameraUploads syncManager] getAllAssetsForUpload];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
 }
 
 @end
-

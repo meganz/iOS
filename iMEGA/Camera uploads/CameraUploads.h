@@ -29,20 +29,16 @@
 
 @interface CameraUploads : NSObject <NSFileManagerDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate, UITabBarControllerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *assetUploadArray;
+@property (nonatomic, strong) NSOperationQueue *assetsOperationQueue;
 
 @property (nonatomic, weak) UITabBarController *tabBarController;
 
-@property BOOL isCameraUploadsEnabled;
-@property BOOL isUploadVideosEnabled;
-@property BOOL isUseCellularConnectionEnabled;
-@property BOOL isOnlyWhenChargingEnabled;
-
-@property (nonatomic, strong) NSDate *lastUploadPhotoDate;
-@property (nonatomic, strong) NSDate *lastUploadVideoDate;
+@property (nonatomic) BOOL isCameraUploadsEnabled;
+@property (nonatomic) BOOL isUploadVideosEnabled;
+@property (nonatomic) BOOL isUseCellularConnectionEnabled;
+@property (nonatomic) BOOL isOnlyWhenChargingEnabled;
 
 + (CameraUploads *)syncManager;
-- (void)getAllAssetsForUpload;
-- (void)turnOffCameraUploads;
+- (void)resetOperationQueue;
 
 @end

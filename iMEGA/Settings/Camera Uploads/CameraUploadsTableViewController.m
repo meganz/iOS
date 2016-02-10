@@ -114,11 +114,11 @@
     } else {
         BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
         if (isCameraUploadsEnabled) {
-            [CameraUploads syncManager].isCameraUploadsEnabled = isCameraUploadsEnabled;
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-            [[CameraUploads syncManager] getAllAssetsForUpload];
         } else {
-            [[CameraUploads syncManager] turnOffCameraUploads];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
             
             [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
             [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
@@ -147,7 +147,7 @@
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
     [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
     if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     } else {
         if (![MEGAReachabilityManager isReachableViaWiFi]) {
             [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
@@ -165,7 +165,7 @@
             [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
         }
     } else {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     
@@ -239,10 +239,10 @@
     }
 
     if ([request type] == MEGARequestTypeCancelTransfers) {
-        [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
-        
+        [[CameraUploads syncManager] resetOperationQueue];
+
         if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            [[CameraUploads syncManager] getAllAssetsForUpload];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
 }
