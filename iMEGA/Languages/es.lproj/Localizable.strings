@@ -26,16 +26,18 @@
 "emptyFolderMessage"="No se pueden descargar carpetas vacías";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tu cuenta ya ha sido activada. Por favor, inicia sesión.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Enlace incorrecto a MEGA";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Archivo encriptado";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="De momento no se puede importar o descargar un archivo encriptado.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Enlace a carpeta encriptada";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="De momento no se puede importar o descargar una carpeta encriptada.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Enlace no válido";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Introducir la clave de descifrado";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Para acceder a esta carpeta/archivo, necesitas su clave de descifrado. Si no la tienes, contacta con el creador del enlace.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Clave de descifrado";
+/* Button title to try to decrypt the link */
+"decrypt"="Descifrar";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="La clave de descifrado no es válida";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Sesión cerrada";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Offline serán borrados. ¿Quieres continuar?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
-/* Title for the MEGA link view */
-"megaLink"="Enlace a MEGA";
+/* Title for the file link view */
+"fileLink"="Enlace a archivo";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importar a tu disco en la nube";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="El archivo que estás intentado descargar es más grande que el espacio disponible.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="El archivo que estás intentado abrir es más grande que el espacio disponible.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Enlace del archivo no disponible";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Enlace no disponible";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
 "fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="El archivo que estás intentando descargar ya existe en Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="Enlace a carpeta de MEGA";
+/* Title for the folder link view */
+"folderLink"="Enlace a carpeta";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descargar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="La carpeta que estás intentado descargar es más grande que el espacio disponible";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La carpeta '%@' no puede ser creada";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Enlace de la carpeta no disponible";
 /* Error message shown when a folder link doesn't exist. */
 "folderLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El enlace de la carpeta ha sido eliminado debido a una violación de los TdS/PdU.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El enlace de la carpeta ha sido desactivado por el usuario.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
