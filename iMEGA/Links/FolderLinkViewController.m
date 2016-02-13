@@ -48,12 +48,18 @@
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
+    BOOL isLoginDone;
     BOOL isFetchNodesDone;
+    BOOL isFolderLinkNotValid;
     
     NSMutableArray *matchSearchNodes;
     
     NSString *previewDocumentPath;
+    
+    UIAlertView *decryptionAlertView;
 }
+
+@property (weak, nonatomic) UILabel *navigationBarLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -81,8 +87,11 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
-    [self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:0.0f];
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
+    [self.searchDisplayController.searchBar setUserInteractionEnabled:NO];
+    [self.searchDisplayController.searchBar setHidden:YES];
     
+    isLoginDone = NO;
     isFetchNodesDone = NO;
     
     _nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -105,7 +114,7 @@
     [self.navigationController.view setBackgroundColor:megaLightGray];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"megaFolder", nil)];
+    [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
     [self.importBarButtonItem setEnabled:NO];
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
@@ -160,19 +169,46 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    NSString *titleString = AMLocalizedString(@"megaFolder", @"MEGA Folder Link");
-    if ([self.parentNode name] != nil) {
-        if (self.isFolderRootNode) {
-            titleString = [titleString stringByAppendingPathComponent:[self.parentNode name]];
-        } else {
-            titleString = [self.parentNode name];
+    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+        [self setNavigationBarTitleLabel];
+        
+        if (!self.isFolderRootNode) { //Enable and show search bar when you're on a child folder
+            [self.searchDisplayController.searchBar setHidden:NO];
+            [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
         }
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     }
-    [self.navigationItem setTitle:titleString];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     
     [self.tableView reloadData];
+}
+
+- (void)setNavigationBarTitleLabel {
+    NSString *title = [self.parentNode name];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleMutableAttributedString addAttribute:NSFontAttributeName
+                                         value:[UIFont fontWithName:kFont size:18.0]
+                                         range:[title rangeOfString:title]];
+    
+    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                            value:megaRed
+                                            range:[subtitle rangeOfString:subtitle]];
+    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
+                                            value:[UIFont fontWithName:kFont size:12.0]
+                                            range:[subtitle rangeOfString:subtitle]];
+    
+    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
+    [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAttributedText:titleMutableAttributedString];
+    _navigationBarLabel = label;
+    [self.navigationItem setTitleView:label];
 }
 
 - (void)showUnavailableLinkView {
@@ -181,8 +217,8 @@
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"unavailableLink"]];
-    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"folderLinkUnavailableTitle", @"")];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFolderLink"]];
+    [unavailableLinkView.titleLabel setText:AMLocalizedString(@"linkUnavailable", nil)];
     [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:megaDarkGray];
@@ -224,10 +260,6 @@
     [self.downloadBarButtonItem setEnabled:boolValue];
 }
 
-- (void)hideSearchBar {
-    [self.tableView setContentOffset:CGPointMake(0, 44)];
-}
-
 - (void)deleteTempDocuments {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
     for (NSString *item in directoryContents) {
@@ -245,13 +277,50 @@
     }
 }
 
+- (void)showLinkNotValid {
+    isFolderLinkNotValid = YES;
+    
+    [SVProgressHUD dismiss];
+    [self.tableView reloadData];
+}
+
+- (void)showDecryptionAlert {
+    if (decryptionAlertView == nil) {
+        decryptionAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil)
+                                                         message:AMLocalizedString(@"decryptionKeyAlertMessage", nil)
+                                                        delegate:self
+                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                               otherButtonTitles:AMLocalizedString(@"decrypt", nil), nil];
+    }
+    
+    [decryptionAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    UITextField *textField = [decryptionAlertView textFieldAtIndex:0];
+    [textField setPlaceholder:AMLocalizedString(@"decryptionKey", nil)];
+    [decryptionAlertView setTag:1];
+    [decryptionAlertView show];
+}
+
+- (void)showDecryptionKeyNotValidAlert {
+    UIAlertView *decryptionKeyNotValidAlertView  = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil)
+                                                                              message:nil
+                                                                             delegate:self
+                                                                    cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                                    otherButtonTitles:nil];
+    [decryptionKeyNotValidAlertView setTag:2];
+    [decryptionKeyNotValidAlertView show];
+}
+
 #pragma mark - IBActions
+
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
     [self deleteTempDocuments];
     
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
-    [[MEGASdkManager sharedMEGASdkFolder] logout];
+    
+    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
+        [[MEGASdkManager sharedMEGASdkFolder] logout];
+    }
     
     [SVProgressHUD dismiss];
     
@@ -292,6 +361,39 @@
     return;
 }
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 1) { //Decryption key
+        if (buttonIndex == 0) {
+            if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
+                [[MEGASdkManager sharedMEGASdkFolder] logout];
+            }
+            
+            [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else if (buttonIndex == 1) {
+            NSString *linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            NSString *key = [[alertView textFieldAtIndex:0] text];
+            linkString = [linkString stringByAppendingString:key];
+            
+            [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
+        }
+    } else if (alertView.tag == 2) { //Decryption key not valid
+        [self showDecryptionAlert];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    if (alertView.tag == 1) {
+        NSString *decryptionKey = [[alertView textFieldAtIndex:0] text];
+        if ([decryptionKey isEqualToString:@""]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -304,7 +406,11 @@
         if (tableView == self.searchDisplayController.searchResultsTableView) {
             numberOfRows = [matchSearchNodes count];
         } else {
-            numberOfRows = [[self.nodeList size] integerValue];
+            if (isFolderLinkNotValid) {
+                numberOfRows = 0;
+            } else {
+                numberOfRows = [[self.nodeList size] integerValue];
+            }
         }
     }
     
@@ -604,7 +710,7 @@
     }
 }
 
-#pragma mark - UISearchDisplayControllerDelegate
+#pragma mark - UISearchDisplayDelegate
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
@@ -666,13 +772,17 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (!isFetchNodesDone && self.isFolderRootNode) {
-            return nil;
-        }
-        
-        if (self.isFolderRootNode) {
-            text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
+            if (isFolderLinkNotValid) {
+                text = AMLocalizedString(@"linkNotValid", nil);
+            } else {
+                text = @"";
+            }
         } else {
-            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            if (self.isFolderRootNode) {
+                text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
+            } else {
+                text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            }
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -688,13 +798,13 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (!isFetchNodesDone && self.isFolderRootNode) {
-            return nil;
-        }
-        
-        if (self.isFolderRootNode) {
-            text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
+            text = @"";
         } else {
-            text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+            if (self.isFolderRootNode) {
+                text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
+            } else {
+                text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
+            }
         }
     } else {
         text = @"";
@@ -715,6 +825,9 @@
     
     if ([MEGAReachabilityManager isReachable]) {
         if (!isFetchNodesDone && self.isFolderRootNode) {
+            if (isFolderLinkNotValid) {
+                return [UIImage imageNamed:@"invalidFolderLink"];
+            }
             return nil;
         }
         
@@ -726,7 +839,7 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        if (!isFetchNodesDone && self.isFolderRootNode) {
+        if (!isFetchNodesDone && self.isFolderRootNode && !isFolderLinkNotValid) {
             return nil;
         }
     }
@@ -771,6 +884,11 @@
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
+        case MEGARequestTypeLogin: {
+            isFolderLinkNotValid = NO;
+            break;
+        }
+            
         case MEGARequestTypeFetchNodes: {
             [SVProgressHUD show];
             break;
@@ -782,18 +900,50 @@
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEArgs || [error type] == MEGAErrorTypeApiEAccess || [error type] == MEGAErrorTypeApiENoent) {
-            if ([request type] == MEGARequestTypeFetchNodes) {
-                [self showUnavailableLinkView];
+        switch ([error type]) {
+            case MEGAErrorTypeApiEArgs: {
+                if ([request type] == MEGARequestTypeLogin) {
+                    if (decryptionAlertView.visible) { //If the user have written the key
+                        [self showDecryptionKeyNotValidAlert];
+                    } else {
+                        [self showLinkNotValid];
+                    }
+                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                    [self showUnavailableLinkView];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiENoent: {
+                if ([request type] == MEGARequestTypeFetchNodes) {
+                    [self showLinkNotValid];
+                }
+                break;
+            }
+                
+            case MEGAErrorTypeApiEIncomplete: {
+                [self showDecryptionAlert];
+                break;
+            }
+                
+            default: {
+                if ([request type] == MEGARequestTypeLogin) {
+                    [self showUnavailableLinkView];
+                } else if ([request type] == MEGARequestTypeFetchNodes) {
+                    [[MEGASdkManager sharedMEGASdkFolder] logout];
+                    [self showUnavailableLinkView];
+                }
+                break;
             }
         }
+        
         return;
     }
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            isLoginDone = YES;
             isFetchNodesDone = NO;
             [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:self];
             break;
@@ -801,23 +951,36 @@
             
         case MEGARequestTypeFetchNodes: {
             
-            MEGANode *rootNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
-            if ([[rootNode name] isEqualToString:@"CRYPTO_ERROR"] || [[rootNode name] isEqualToString:@"NO_KEY"]) {
+            if ([request flag]) { //Invalid key
                 [[MEGASdkManager sharedMEGASdkFolder] logout];
                 
-                [self hideSearchBar];
-                [self showUnavailableLinkView];
+                [SVProgressHUD dismiss];
+                
+                if (decryptionAlertView.visible) { //Link without key, after entering a bad one
+                    [self showDecryptionKeyNotValidAlert];
+                } else { //Link with invalid key
+                    [self showLinkNotValid];
+                }
                 return;
             }
             
             isFetchNodesDone = YES;
             [self reloadUI];
+            [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
+            [self.searchDisplayController.searchBar setHidden:NO];
+            
 //            [self.importBarButtonItem setEnabled:YES];
             [self.downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
             }
             [SVProgressHUD dismiss];
+            break;
+        }
+            
+        case MEGARequestTypeLogout: {
+            isLoginDone = NO;
+            isFetchNodesDone = NO;
             break;
         }
             
