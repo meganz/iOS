@@ -33,6 +33,8 @@
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
+#import "LoginViewController.h"
+#import "CreateAccountViewController.h"
 
 #import "LaunchViewController.h"
 
@@ -59,7 +61,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeFileLink,
     URLTypeFolderLink,
     URLTypeConfirmationLink,
-    URLTypeOpenInLink
+    URLTypeOpenInLink,
+    URLTypeNewSignUpLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -79,6 +82,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (nonatomic, strong) NSString *IpAddress;
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
+@property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -485,6 +489,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isNewSignUpLink:afterSlashesString]) {
+        self.urlType = URLTypeNewSignUpLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -573,6 +582,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isNewSignUpLink:(NSString *)afterSlashesString {
+    BOOL isNewSignUpLink = [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]; // mega://"#newsignup"
+    if (isNewSignUpLink) {
+        NSString *megaURLString = @"https://mega.nz/";
+        megaURLString = [megaURLString stringByAppendingString:afterSlashesString];
+        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLString];
+        return YES;
+    }
+    return NO;
+}
+
 - (void)openIn {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -581,16 +601,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
-        if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-            if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                [cameraUploadsPopUpNavigationController.topViewController presentViewController:browserNavigationController animated:YES completion:nil];
-            } else {
-                [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
-            }
-        } else {
-            [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
-        }
+        [self presentLinkViewController:browserNavigationController];
     }
     self.link = nil;
 }
@@ -768,6 +779,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self dissmissPresentedViews];
         
         [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
+        if (buttonIndex == 0) {
+            _emailOfNewSignUpLink = nil;
+        } else if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }
     }
 }
 
@@ -987,6 +1004,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
+                } else if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    [self showLinkNotValid];
                 }
                 break;
             }
@@ -1032,6 +1051,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 }
                 
+                break;
+            }
+                
+            case MEGAErrorTypeApiEIncomplete: {
+                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    [self showLinkNotValid];
+                }
                 break;
             }
                 
@@ -1124,21 +1150,40 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeQuerySignUpLink: {
-            MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
-            
-            ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
-            [confirmAccountVC setConfirmationLinkString:[request link]];
-            [confirmAccountVC setEmailString:[request email]];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+            if (self.urlType == URLTypeConfirmationLink) {
+                MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
+                
+                ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
+                [confirmAccountVC setConfirmationLinkString:[request link]];
+                [confirmAccountVC setEmailString:[request email]];
+                
+                [self presentLinkViewController:confirmAccountNavigationController];
+            } else if (self.urlType == URLTypeNewSignUpLink) {
+
+                if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+                    _emailOfNewSignUpLink = [request email];
+                    UIAlertView *alreadyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil)
+                                                                        message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil)
+                                                                       delegate:self
+                                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    [alreadyLoggedInAlertView setTag:1];
+                    [alreadyLoggedInAlertView show];
                 } else {
-                    [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+                    if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                        MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                        
+                        if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                            LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                            [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:[request email]];
+                            _emailOfNewSignUpLink = nil;
+                        } else if ([navigationController.topViewController isKindOfClass:[CreateAccountViewController class]]) {
+                            CreateAccountViewController *createAccountVC = (CreateAccountViewController *)navigationController.topViewController;
+                            [createAccountVC setEmailString:[request email]];
+                            [createAccountVC viewDidLoad];
+                        }
+                    }
                 }
-            } else {
-                [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
             }
             break;
         }
@@ -1146,6 +1191,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeLogout: {
             [Helper logout];
             [SVProgressHUD dismiss];
+            
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
