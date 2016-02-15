@@ -25,6 +25,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
+#import "CreateAccountViewController.h"
 #import "LaunchViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
@@ -142,6 +143,14 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+
+#pragma mark - UIViewController
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"CreateAccountStoryboardSegueID"] && [sender isKindOfClass:[NSString class]]) {
+        CreateAccountViewController *createAccountVC = (CreateAccountViewController *)segue.destinationViewController;
+        [createAccountVC setEmailString:sender];
+    }
 }
 
 #pragma mark - UITextFieldDelegate
