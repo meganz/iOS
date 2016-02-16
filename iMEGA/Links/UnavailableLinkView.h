@@ -27,4 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewCenterYLayoutConstraint;
+
 @end
