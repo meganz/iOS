@@ -159,6 +159,12 @@
     return [emailTest evaluateWithObject:email];
 }
 
+#pragma mark - UIResponder
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {

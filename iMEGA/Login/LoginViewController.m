@@ -139,10 +139,11 @@
     
 }
 
-#pragma mark - Dismiss keyboard
+#pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+}
 
 #pragma mark - UIViewController
 
