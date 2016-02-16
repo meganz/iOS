@@ -35,7 +35,7 @@
 #import "UpgradeTableViewController.h"
 #import "LoginViewController.h"
 #import "CreateAccountViewController.h"
-
+#import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
 
 #import "BrowserViewController.h"
@@ -80,6 +80,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
+
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
@@ -466,7 +467,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
         
-    [self dissmissPresentedViews];
+    [self dismissPresentedViews];
     
     if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
         self.urlType = URLTypeOpenInLink;
@@ -497,7 +498,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self showLinkNotValid];
 }
 
-- (void)dissmissPresentedViews {
+- (void)dismissPresentedViews {
     if (self.window.rootViewController.presentedViewController != nil) {
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
@@ -674,9 +675,31 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)showLinkNotValid {
-    //TODO: Show empty state instead of HUD
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"linkNotValid", nil)];
+    [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
     self.link = nil;
+}
+
+- (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
+    UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:imageName]];
+    [unavailableLinkView.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [unavailableLinkView.titleLabel setText:title];
+    [unavailableLinkView.textView setText:text];
+    [unavailableLinkView setFrame:self.window.frame];
+
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleBordered target:nil action:@selector(dismissPresentedViews)];
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    [viewController.view addSubview:unavailableLinkView];
+    [viewController.navigationItem setTitle:title];
+    [viewController.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+    
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
+    [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - Get IP Address
@@ -773,10 +796,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dissmissPresentedViews)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
         [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
         
-        [self dissmissPresentedViews];
+        [self dismissPresentedViews];
         
         [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
     } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
