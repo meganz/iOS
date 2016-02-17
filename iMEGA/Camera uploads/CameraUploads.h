@@ -27,7 +27,7 @@
 #define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
 #define kIsOnlyWhenChargingEnabled @"IsOnlyWhenChargingEnabled"
 
-@interface CameraUploads : NSObject <NSFileManagerDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate, UITabBarControllerDelegate>
+@interface CameraUploads : NSObject <MEGARequestDelegate, MEGATransferDelegate>
 
 @property (nonatomic, strong) NSOperationQueue *assetsOperationQueue;
 
@@ -38,7 +38,11 @@
 @property (nonatomic) BOOL isUseCellularConnectionEnabled;
 @property (nonatomic) BOOL isOnlyWhenChargingEnabled;
 
+@property (nonatomic, strong) NSDate *lastUploadPhotoDate;
+@property (nonatomic, strong) NSDate *lastUploadVideoDate;
+
 + (CameraUploads *)syncManager;
 - (void)resetOperationQueue;
+- (void)setBadgeValue;
 
 @end
