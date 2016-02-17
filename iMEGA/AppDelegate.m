@@ -742,7 +742,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
             if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
                 [[CameraUploads syncManager] resetOperationQueue];
             }
             
@@ -759,7 +758,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
         // Status battery unplugged
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
             [[CameraUploads syncManager] resetOperationQueue];
         }
         // Status battery plugged
