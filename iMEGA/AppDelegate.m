@@ -245,6 +245,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 //        [application registerForRemoteNotificationTypes:myTypes];
 //    }
     
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+    }
+    
     return YES;
 }
 
