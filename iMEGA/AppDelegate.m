@@ -250,6 +250,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 //        [application registerForRemoteNotificationTypes:myTypes];
 //    }
     
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+    }
+    
     return YES;
 }
 
@@ -276,7 +280,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
@@ -670,7 +674,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)disableCameraUploads {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [[CameraUploads syncManager] turnOffCameraUploads];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
 }
 
@@ -762,12 +766,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
             if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-                [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+                [[CameraUploads syncManager] resetOperationQueue];
             }
             
             if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
         }
     }
@@ -779,12 +782,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
         // Status battery unplugged
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-            [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+            [[CameraUploads syncManager] resetOperationQueue];
         }
         // Status battery plugged
         else {
-            [[CameraUploads syncManager] getAllAssetsForUpload];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
 }
@@ -1155,7 +1157,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [[CameraUploads syncManager] setTabBarController:_mainTBC];
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
