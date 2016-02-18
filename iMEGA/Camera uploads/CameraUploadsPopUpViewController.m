@@ -92,37 +92,12 @@
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
-    }
-    
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-    
-    [[CameraUploads syncManager] resetOperationQueue];
-    
-    if ([[CameraUploads syncManager] isUploadVideosEnabled]) {
-        [_uploadVideosSwitch setOn:YES animated:YES];
-    } else {
-        [_uploadVideosSwitch setOn:NO animated:YES];
-    }
-    
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
     [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-    if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [_useCellularConnectionSwitch setOn:YES animated:YES];
-    } else {
-        if (![MEGAReachabilityManager isReachableViaWiFi]) {
-            [[CameraUploads syncManager] resetOperationQueue];
-        }
-        [_useCellularConnectionSwitch setOn:NO animated:YES];
-    }
-    
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
 }
 
