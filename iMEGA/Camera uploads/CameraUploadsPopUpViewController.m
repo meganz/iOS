@@ -52,6 +52,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (![MEGAReachabilityManager hasCellularConnection]) {
+        [_useCellularConnectionLabel setHidden:YES];
+        [_useCellularConnectionSwitch setHidden:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

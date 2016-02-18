@@ -246,7 +246,11 @@
             
         case 1:
             //TODO: numberOfRows = 3 => Shows upload only when charging option. Valid for uploads in background.
-            numberOfRows = 2;
+            if ([MEGAReachabilityManager hasCellularConnection]) {
+                numberOfRows = 2;
+            } else {
+                numberOfRows = 1;
+            }
             break;
             
         default:
