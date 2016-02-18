@@ -29,8 +29,8 @@
 + (MEGAReachabilityManager *)sharedManager;
 
 + (BOOL)isReachable;
-+ (BOOL)isUnreachable;
 + (BOOL)isReachableViaWWAN;
 + (BOOL)isReachableViaWiFi;
++ (bool)hasCellularConnection;
 
 @end

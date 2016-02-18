@@ -20,6 +20,7 @@
  */
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
 
@@ -31,7 +32,7 @@
 #import "CameraUploadsTableViewController.h"
 #import "PhotosViewController.h"
 
-@interface CameraUploadsPopUpViewController () <UIAlertViewDelegate, MEGARequestDelegate>
+@interface CameraUploadsPopUpViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -51,6 +52,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (![MEGAReachabilityManager hasCellularConnection]) {
+        [_useCellularConnectionLabel setHidden:YES];
+        [_useCellularConnectionSwitch setHidden:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,35 +92,12 @@
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
-    }
-    
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-    if ([[CameraUploads syncManager] isUploadVideosEnabled]) {
-        [_uploadVideosSwitch setOn:YES animated:YES];
-    } else {
-        [_uploadVideosSwitch setOn:NO animated:YES];
-    }
-    
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
     [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-    if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
-        [_useCellularConnectionSwitch setOn:YES animated:YES];
-    } else {
-        if (![MEGAReachabilityManager isReachableViaWiFi]) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1 delegate:self];
-        }
-        [_useCellularConnectionSwitch setOn:NO animated:YES];
-    }
-    
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
 }
 
@@ -123,12 +106,40 @@
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
-    if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            switch (status) {
+                case PHAuthorizationStatusNotDetermined:
+                    break;
+                case PHAuthorizationStatusAuthorized: {                    
+                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+                    
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
+                    }];
+                    break;
+                }
+                case PHAuthorizationStatusRestricted:
+                    break;
+                case PHAuthorizationStatusDenied:{
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
+                        [alert show];
+                    });
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+        
+    } else if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
         [alert show];
     } else {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [[CameraUploads syncManager] getAllAssetsForUpload];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         
         [self dismissViewControllerAnimated:YES completion:^{
@@ -145,21 +156,4 @@
     }
 }
 
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    if ([request type] == MEGARequestTypeCancelTransfers) {
-        [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
-        
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            [[CameraUploads syncManager] getAllAssetsForUpload];
-        }
-    }
-}
-
 @end
-

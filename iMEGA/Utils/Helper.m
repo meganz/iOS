@@ -839,10 +839,9 @@ static NSInteger linkNodeOption;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
     [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
+
+    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
-    
-    [[CameraUploads syncManager] turnOffCameraUploads];
 }
 
 + (void)deletePasscode {
