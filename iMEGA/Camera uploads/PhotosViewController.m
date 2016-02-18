@@ -119,15 +119,6 @@
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
-        [UIView animateWithDuration:0.1 animations:^{
-            self.uploadProgressViewTopLayoutConstraint.constant = -60;
-            self.photosCollectionViewTopLayoutConstraint.constant = 0;
-            
-            [self.view layoutIfNeeded];
-        }];
-    }
-    
     [self reloadUI];
 }
 
@@ -197,18 +188,6 @@
     [self.photosCollectionView reloadData];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-        NSInteger transferListSize = [[transferList size] integerValue];
-        
-        for (NSInteger i = 0; i < transferListSize; i++) {
-            
-            MEGATransfer *transfer = [transferList transferAtIndex:i];
-            
-            if (([transfer type] == MEGATransferTypeUpload) && (self.uploadProgressViewTopLayoutConstraint != 0)) {
-                [self showProgressView];
-            }
-        }
-        
         [self.enableCameraUploadsButton setHidden:YES];
         [self.enableCameraUploadsButton setFrame:CGRectMake(0, 0, 0, 0)];
         
@@ -248,6 +227,12 @@
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (![MEGAReachabilityManager isReachable]) {
+            [self hideProgressView];
+        }
+    }
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -618,10 +603,14 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            return nil;
+            if ([self.photosByMonthYearArray count] == 0) {
+                text = AMLocalizedString(@"cameraUploadsEnabled", nil);
+            } else {
+                return nil;
+            }
+        } else {
+            text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled");
         }
-        
-        text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled");
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
@@ -659,7 +648,11 @@
     
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            return nil;
+            if ([self.photosByMonthYearArray count] == 0) {
+                return [UIImage imageNamed:@"emptyCameraUploads"];
+            } else {
+                return nil;
+            }
         }
         
         return [UIImage imageNamed:@"emptyCameraUploads"];
