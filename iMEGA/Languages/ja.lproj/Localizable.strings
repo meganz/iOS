@@ -26,16 +26,18 @@
 "emptyFolderMessage"="空のフォルダをダウンロードすることができません。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="あなたのアカウントはすでに作成されています。ログインしてください。";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="無効MEGAリンク";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="暗号化ファイル";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="解号鍵がないので、暗号化ファイルをインポートすることもダウンロードすることもできません。";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="暗号化フォルダ";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="解号鍵がないので、暗号化フォルダをインポートすることもダウンロードすることもできません。";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="復号化鍵を入力してください。";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Decryption key";
+/* Button title to try to decrypt the link */
+"decrypt"="復号化";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ログアウト済み";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="同意すれば、現在のアカウントはログアウトされ、全てのオフラインデータは消去されます。このまま続けますか？";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="デバイス上にスペースを作って下さい。";
-/* Title for the MEGA link view */
-"megaLink"="MEGAリンク";
+/* Title for the file link view */
+"fileLink"="ファイルリンク";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="クラウドドライブにインポート";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="ダウンロードしようとしているファイルは、空きメモリーの容量を超えています。";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="開けようとしているファイルは、メモリーの空き容量を超えています。";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="ファイルリンクがありません";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="これには次の理由が考えられます。- Tos/AUP 違反のためファイルが除外された。- URL が無効。アクセスしようとするリンクが存在しない。- ユーザーによりファイルが削除された。";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="ダウンロード開始";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="フォルダリンク";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ダウンロード";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="ダウンロードしようとしているフォルダは、空きメモリの容量を超えています。";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="フォルダ'%@' は作成できません。";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="利用できないリンク";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="これには次の理由が考えられます。- Tos/AUP 違反により、フォルダリンクが除去された。- URLが無効。アクセスしようとするリンクが存在しない。- ユーザーにより、フォルダリンクが削除された。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="復活中断";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="リクエストがキャンセルされたか、支払いが復活できませんでした。後で再度トライするか、ios@mega.nzまでご連絡下さい。";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

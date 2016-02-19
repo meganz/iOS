@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Bạn không thể tải về một thư mục không chứa dữ liệu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tài khoản của bạn vừa được kích hoạt. Vui lòng đăng nhập.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Cú pháp MEGA link không đúng";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Tệp tin được mã hóa";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Bạn không thể chuyển nhập hay tải về tệp tin bị mã hóa nếu bạn không có mã giải khóa cho nó.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Đây là một thư mục mã hóa";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Bạn không thể chuyển nhập hay tải về thư mục bị mã hóa nếu bạn không có mã giải khóa cho nó.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Nhập mã giải khóa";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Để có thể truy cập vào thư mục hay tệp tin này, bạn cần phải có mã key Giải Khóa. Nếu bạn không có key, xin liên hệ trực tiếp với người sử hữu mục này.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Mã giải khóa";
+/* Button title to try to decrypt the link */
+"decrypt"="Giải khóa mã";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Nếu bạn đồng ý, tài khoản này sẽ bị đăng xuất ra và tất cả tệp tin được lưu Ngoại Tuyến sẽ bị xóa. Bạn có muốn tiếp tục không?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bạn cần tạo thêm chỗ trống trong thiết bị của bạn";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="Đường dẫn tệp";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Chuyển nhập vào Ổ Mây";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Tệp tin bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Tệp tin bạn đang định mở lớn hơn không gian lưu trữ hiện có.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Đường liên kết này không còn tồn tại";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Điều này có thể xảy bởi các lý do sau:- Tệp tin vi phạm Điều Khoản Sử Dụng và Dịch Vụ, nên bị xóa.- Cú pháp URL không phù hợp – đường liên kết không tồn tại vì không viết đúng.- Người cung cấp đã xóa tệp tin này.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Đang tải xuống";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Liên kết Thư mục";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải về";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Không tạo được thư mục '%@'";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Liên kết thư mục bất khả dụng";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Điều này có thể xảy bởi các lý do sau:- Thư mục vi phạm Điều Khoản Sử Dụng và Dịch Vụ, nên bị xóa.- Cú pháp URL không phù hợp – đường liên kết không tồn tại vì không viết đúng.- Người cung cấp đã xóa thư mục này.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Việc khôi phục đã dừng lại";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây . Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Bật chế độ DEBUG";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Tắt chế độ DEBUG";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Tệp tin dữ liệu (MEGAiOS.log) sẽ bị xóa khỏi mục Ngoại Tuyến.";

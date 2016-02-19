@@ -226,8 +226,6 @@
 "folderAndFiles"="1 carpeta • %d archivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="En cola";
-/* Message shown when a transfer has been Cancelled */
-"transferCancelled"="Transferencia cancelada";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Hay descargas pendientes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -361,21 +359,21 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="¿Seguro que quieres mover [A] archivos y [B] carpetas a la papelera?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 archivo movido a la papelera";
+"fileMovedToRubbishBinMessage"="1 archivo movido a la Papelera";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d archivos movidos a la papelera";
+"filesMovedToRubbishBinMessage"="%d archivos movidos a la Papelera";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 carpeta movida a la papelera";
+"folderMovedToRubbishBinMessage"="1 carpeta movida a la Papelera";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d carpetas movidas a la papelera";
+"foldersMovedToRubbishBinMessage"="%d carpetas movidas a la Papelera";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 archivo y 1 carpeta movidos a la papelera";
+"fileFolderMovedToRubbishBinMessage"="1 archivo y 1 carpeta movidos a la Papelera";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 archivo y %d carpetas movidos a la papelera";
+"fileFoldersMovedToRubbishBinMessage"="1 archivo y %d carpetas movidos a la Papelera";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d archivos y 1 carpeta movidos a la papelera";
+"filesFolderMovedToRubbishBinMessage"="%d archivos y 1 carpeta movidos a la Papelera";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] archivos y [B] carpetas movidos a la papelera";
+"filesFoldersMovedToRubbishBinMessage"="[A] archivos y [B] carpetas movidos a la Papelera";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -551,11 +549,11 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
 "exportMasterKeyFooter"="Exportando la clave maestra y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Master Key exportada";
+"masterKeyExported"="Clave maestra exportada";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Tu clave maestra (MasterKey.txt) ha sido guardada en este dispositivo. Conéctate a tu ordenador y abre iTunes para poder acceder a ella en los documentos de MEGA. ¡Aconsejamos mantener este archivo seguro!";
 /* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Llave maestra borrada";
+"masterKeyRemoved"="Clave maestra borrada";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt fue borrado de la carpeta de documentos.";
 /* Title for the action that allows to remove a file or folder */
@@ -626,6 +624,8 @@
 "downloads"="Descargas";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="Subidas";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transferencia cancelada";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferencias canceladas";
 /* Title of the alert shown when you try to cancel transfers */
@@ -687,7 +687,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase" = "Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled" = "Compras en la App Store desactivadas, por favor actívalo en Ajustes";
+"appPurchaseDisabled" = "Compras en la App Store desactivadas, por favor actívalas en Ajustes";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound" = "Producto %@ no encontrado, por favor contacta con ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */

@@ -26,16 +26,18 @@
 "emptyFolderMessage"="U kunt geen lege map downloaden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in. ";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Ongeldige MEGA Link";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Bestand versleuteld";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="U kunt een versleuteld bestand niet importeren of downloaden als de sleutel ontbreekt.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Map versleuteld";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="U kunt een versleutelde map niet importeren of downloaden als de sleutel ontbreekt.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Ongeldige link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Vul decoderingssleutel in";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Decoderingssleutel";
+/* Button title to try to decrypt the link */
+"decrypt"="Decodeer";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Ongeldige decoderingssleutel";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Afgemeld";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Als u akkoord gaat, zal het huidige account worden uitgelogd en alle offline data zal worden verwijderd. Wilt u doorgaan?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="U moet ruimte vrij maken op uw device";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="Bestandslink";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importeren naar Cloud Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Het bestand dat u probeert te downloaden is groter dan het beschikbare geheugen.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Het bestand dat u probeert te openen is groter dan het beschikbare geheugen.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Bestandslink onbeschikbaar";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Link niet beschikbaar";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- Het bestand is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de link die u probeert te bezoeken bestaat niet.- Het bestand is verwijderd door de gebruiker.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Map Link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="De map die u probeert te downloaden is groter dan het beschikbare geheugen.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="De map '%@' kan niet gecreëerd worden";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Link naar map niet beschikbaar";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- De folder link is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de link die u probeert te bezoeken bestaat niet.- De folder link is verwijderd door de gebruiker.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -357,7 +357,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="Weet u zeker dat u %d bestanden en 1 map wilt verplaatsen naar de Vuilnisbak?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Weet u zeker dat u [A] bestanden en [B] mappen naar de Vuilnisbak wilt verplaatsen?";
+"moveFilesFoldersToRubbishBinMessage"="Weet u zeker dat u [A] bestanden en [B] mappen wil verplaatsen naar de prullenbak?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 bestand verplaatst naar de prullenbak";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -433,15 +433,15 @@
 /* Text shown to explain that you have shared a folder with one contact */
 "sharedWithOneContact"="Gedeeld met 1 contactpersoon";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Gedeeld met % d contacten";
+"sharedWithXContacts"="Gedeeld met %d contacten";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Machtigingen gewijzigd";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Gedeeld document verlaten";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Gedeelde documenten verlaten";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Verwijder gedeeld bestand";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -451,7 +451,7 @@
 /* Message shown when a share have been removed */
 "shareRemoved"="Gedeelde map correct verwijderd";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Gedeelde bestanden verwijderd";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Eigenaar";
 /* Title of the view where you see with who you have shared a folder */
@@ -575,7 +575,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="U staat op het punt om %d bestanden en 1 map definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="Je gaat [A] bestanden en [B] mappen permanent verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 bestand verwijderd van MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -687,7 +687,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="AANKOOP MISLUKT %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App aankoop is uitgeschakeld, schakelt u het alstublieft in bij instellingen";
+"appPurchaseDisabled"="In-App aankopen is uitgeschakeld, schakel het alstublieft in in de iOS-instellingen.";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Product %@ is niet gevonden, neem alstublieft contact op met ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Herstel gestopt";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Uw verzoek is geannuleerd of de voorafgaande aankoop kon niet worden hersteld. Probeer alstublieft later opnieuw of neem contact op met ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="DEBUG modus ingeschakeld";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="DEBUG modus uitgeschakeld";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Nem tölthet le üres mappát";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="A fiók már aktiválva van. Kérjük, jelentkezzél be.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Érvénytelen MEGA Link";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="A fájl titkosított";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Jelen pillanatban nem importálhat vagy tölthet le titkosított fájlt.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="A mappa titkosított";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Jelen pillanatban nem importálhat vagy tölthet le titkosított mappát.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Írd be a visszafejtési kulcsot";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Visszafejtési kulcs";
+/* Button title to try to decrypt the link */
+"decrypt"="Visszafejtés";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Kijelentkezve";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Ha beleegyezik, akkor a jelenlegi fiók ki lesz jelentkeztetve és minden Offline adat törlésre kerül. Szeretné folytatni?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Fel kell szabadítania némi helyet";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="Fájl link";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importálás a Felhőmeghajtóba";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="A fájl, amelyet próbál letölteni nagyobb, mint a rendelkezésre álló memória.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="A fájl, amelyet próbál megnyitni nagyobb, mint a rendelkezésre álló memória.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="A fájl link nem elérhető";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Ez a következő okok miatt lehetséges:- A fájl törlésre került az ÁSZF/EFI (Elfogadható Felhasználási Irányelv, angolul AUP) megsértése miatt.- Érvénytelen URL – a link, amelyhez próbál hozzáférni, nem létezik.- A fájl törlésre került a felhasználó által.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Letöltés megkezdve";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+"downloadStarted"="Letöltés megkezdve!";
+/* Title for the folder link view */
+"folderLink"="Mappa link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Letöltés";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="A mappa, amelyet próbál letölteni nagyobb, mint a rendelkezésre álló memória.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="A '%@' nevű mappa nem hozható létre";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="A mappa link nem elérhető";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Ez a következő okok miatt lehetséges:- A mappalink törlésre került az ÁSZF/EFI (Elfogadható Felhasználási Irányelv, angolul AUP) megsértése miatt.- Érvénytelen URL – a link, amelyhez próbál hozzáférni, nem létezik.- A mappalink törlésre került a felhasználó által.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="A visszaállítás leállt";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Vagy elvetették a kérést, vagy az előzetes vásárlást nem lehetett visszaállítani. Kérjük később próbálja újra, vagy írjon az ios@mega.nz címre.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="HIBAKERESŐ mód engedéylezése";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="HIBAKERESŐ mód letitlása";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

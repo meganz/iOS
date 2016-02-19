@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Ein leerer Ordner kann nicht heruntergeladen werden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ihr Account wurde bereits aktiviert. Bitte melden Sie sich an. ";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Ungültiger MEGA-Link";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Datei verschlüsselt";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Zum Import dieser Datei benötigen Sie ihren Schlüssel.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Ordner verschlüsselt";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Der Import oder Download eines verschlüsselten Ordners ist ohne den Schlüssel nicht möglich";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Entschlüsselungs-Code eingeben";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Kryptoschlüssel";
+/* Button title to try to decrypt the link */
+"decrypt"="Entschlüsseln";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Ausgeloggt";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Sie werden ausgeloggt und alle Offline-Daten gelöscht. Fortfahren?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bitte geben Sie Speicherplatz frei";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="Link zur Datei";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Ins Cloud Drive importieren";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Diese Datei ist größer als der verfügbare Speicherplatz.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Diese Datei ist größer als der verfügbare Speicherplatz.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Datei-Link nicht verfügbar";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Mögliche Gründe hierfür sind:- Entfernung der Datei wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien- Ungültiger URL - der Link existiert nicht- Löschung der Datei durch den Benutzer";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Ordnerlink";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Herunterladen";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Die Größe dieses Ordners überschreitet den verfügbaren Speicherplatz.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Der Ordner '%@' kann nicht erstellt werden";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Ordnerlink nicht verfügbar";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Dies könnte einen der folgenden Gründe haben:- Der Ordnerlink wurde wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien entfernt.- Ungültiger URL - der Link existiert nicht.- Der Benutzer hat den Ordnerlink gelöscht.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -249,7 +249,7 @@
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Auswählen";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Erfassen";
+"capturePhotoVideo"="Aufnehmen";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
 "newFolder"="Neuer Ordner";
 /* Hint text shown on the create folder alert. */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Wiederherstellung angehalten";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Der Vorgang wurde storniert, oder der vorhergehende Kauf konnte nicht wiederhergestellt werden. Bitte versuchen Sie es erneut, oder kontaktieren Sie ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="DEBUG-Modus aktivieren";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="DEBUG-Modus deaktivieren";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
