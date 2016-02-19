@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Вы не можете скачать пустую папку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ваша учётная запись активирована. Пожалуйста, авторизируйтесь.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Неправильная ссылка MEGA";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Файл зашифрован";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="На данный момент вы не можете импортировать или скачать зашифрованный файл.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Папка зашифрована";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Вы не можете импортировать или скачать зашифрованную папку, так как ключ дешифрования отсутствует.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Неправильная ссылка";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Введите ключ дешифрирования";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Для доступа к этой папке/файлу нужен ключ дешифрования. Если у вас его нет, свяжитесь с создателем ссылки.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Ключ дешифрования";
+/* Button title to try to decrypt the link */
+"decrypt"="Дешифрировать";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Неправильный ключ дешифрования";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Выйти из системы";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Если вы согласны, будет произведён выход из учётной записи, и все локальные данные будут удалены. Продолжить?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Нужно освободить больше места";
-/* Title for the MEGA link view */
-"megaLink"="Ссылка MEGA";
+/* Title for the file link view */
+"fileLink"="Ссылка на файл";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Импортировать на облачный диск";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Загружаемый файл занимает больше, чем доступно памяти";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Открываемый файл занимает больше, чем доступно памяти.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Ссылка на файл недоступна";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Недоступная ссылка";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Это могло произойти по следующим причинам:- Файл был удалён из-за нарушения условий предоставления услуг.- Неправильный URL — ссылка, по которой вы пытаетесь перейти, не существует.- Файл был удалён пользователем.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Загрузка запущена";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Ссылка папки";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Скачать";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Загружаемая папка занимает больше, чем доступно памяти.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Папка '%@' не может быть создана";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Ссылка на папку недоступна";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Это могло произойти по следующим причинам:- Файл был удалён из-за нарушения условий предоставления услуг.- Неправильный URL — ссылка, по которой вы пытаетесь перейти, не существует.- Файл был удалён пользователем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -473,7 +473,7 @@
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
 "removeUserMessage"="Вы действительно хотите удалить %d из списка контактов?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Вы действительно хотите удалить% d пользователей из списка контактов?";
+"removeMultipleUsersMessage"="Вы действительно хотите удалить %d пользователей из списка контактов?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="Контактов удалено: %d";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
@@ -485,7 +485,7 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Выйти";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Папка оставлена";
+"shareFolderLeaved"="Папка покинута!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Общая папка";
 /* Button that allows you to select a given folder */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Восстановление остановлено";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Запрос был отменён, либо предыдущую покупку нельзя восстановить. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Включить режим ОТЛАДКИ";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Журнал будет создан в локальном разделе (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Отключить режим ОТЛАДКИ";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Журнал (MEGAiOS.log) будет удалён виз локального раздела.";

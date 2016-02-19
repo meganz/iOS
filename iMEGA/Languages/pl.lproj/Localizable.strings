@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Nie można pobrać pustego katalogu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Twoje konto jest już aktywne. Zaloguj się.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="MEGA Link nie jest poprawny";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Plik jest zaszyfrowany";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Nie można importować lub pobierać zaszyfrowanych plików w przypadku braku klucza.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Katalog zaszyfrowany";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Nie można importować lub pobierać zaszyfrowanych katalogów w przypadku braku klucza.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Nieprawidłowy link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego katalogu/pliku, wymagany jest klucz deszyfrujący. Jeżeli go nie posiadasz, skontaktuj się z autorem linka.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Klucz deszyfrowania";
+/* Button title to try to decrypt the link */
+"decrypt"="Odszyfruj";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Nieprawidłowy klucz";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Wyloguj się";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Jeżeli wyrażasz zgodę, to zostaniesz wylogowany z obecnego konta i wszystkie dane offline zostaną usunięte. Czy chcesz kontynuować?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Zwiększ dostępną, wolną pamięć na urządzeniu";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="Link do pliku";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importuj do Cloud Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Plik który chcesz pobrać jest większy niż dostępna pamięć.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Plik, który chcesz otworzyć jest większy niż dostępna pamięć.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Link pliku jest niedostępny";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Niedostępny link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Prawdopodobne przyczyny:- Plik został usunięty przez naruszenie regulaminu.- Nie poprawny link - link nie istnieje.- Plik został usunięty przez użytkownika.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Pobieranie rozpoczęte";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Link do katalogu";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Ściągnij";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Katalog, który chcesz pobrać jest większy niż dostępna pamięć.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Katalog '%@' nie może zostać utworzony";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Link do katalogu jest niedostępny";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Prawdopodobne przyczyny:- Katalog został usunięty przez naruszenie regulaminu.- Nie poprawny link - link nie istnieje.- Katalog został usunięty przez użytkownika.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Wznów zatrzymane";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Jeżeli anulowałeś zgłoszenie lub zakup nie może być przywrócony, spróbuj ponownie lub skontaktuj się z ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Odblokuj tryb DEBUG";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Plik zostanie utworzony w trybie Offline (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Zablokuj tryb DEBUG";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Plik (MEGAiOS.log) zostanie usunięty z trybu Offline.";

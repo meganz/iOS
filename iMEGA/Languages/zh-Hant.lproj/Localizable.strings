@@ -26,16 +26,18 @@
 "emptyFolderMessage"="您不能下載空的資料夾。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="帳號已可使用。請登入。";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="無效的 MEGA 連接";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="該檔案已被加密";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="由於缺少解密秘鑰，您無法導入或下載這個加密檔案。";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="該資料夾已被加密";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="由於缺少解密秘鑰，您無法導入或下載這個加密資料夾。";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="無效的連結";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="請輸入解密金鑰";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="要進入此資料夾/檔案，您需要它的解密密鑰。如果沒有密鑰，請聯絡此連結的創建者。";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="解密密鑰";
+/* Button title to try to decrypt the link */
+"decrypt"="解密";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="無效的密鑰";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="如果您同意，當前的賬戶將被登出並且所有離線數據將被刪除。是否要繼續？";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的設備內存不足";
-/* Title for the MEGA link view */
-"megaLink"="MEGA連接";
+/* Title for the file link view */
+"fileLink"="檔案連結";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="導入雲端硬碟";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="您正在嘗試下載的檔案大於可用內存。";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="您正在嘗試打開的檔案大於可用內存。";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="這不是有效的檔案連接";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="不可用的連結";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="這可能是由於下列原因：﹣該檔案由於違反服務條款或產品使用政策已被刪除。﹣ 無效的網址: 您試圖訪問的連接不存在。﹣ 該檔案已被用戶刪除。";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="資料夾連結";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下載";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="您正在嘗試下載的資料夾大於可用內存。";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="資料夾 '%@' 創建失敗";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="資料夾連結無法使用";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="這可能是由於下列原因：﹣該資料夾由於違反服務條款或產品使用政策已被刪除。﹣ 無效的網址: 您試圖訪問的連接不存在。﹣ 該連接的資料夾已被用戶刪除。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -539,7 +539,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
 /* Title for the MEGA Master Key */
-"masterKey"="萬能秘鑰";
+"masterKey"="萬能密鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="變更密碼";
 /* Title shown when you try to export your MEGA master key */
@@ -718,3 +718,11 @@
 "failedRestore_title"="復原停止";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="亦是需求已取消或是先前的購買未能復原。請晚點再試一次或聯繫ios@mega.nz";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="開啟調試模式";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="離線部分將有一系統日誌檔被創建 (MEGAiOS.log)。";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="關閉調試模式";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="系統日誌檔 (MEGAiOS.log) 將從離線部分被刪除。";

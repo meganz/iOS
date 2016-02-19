@@ -1,197 +1,197 @@
 /* Button title to cancel something */
-"cancel"="Peruuta";
+"cancel"="إلغاء";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="موافق";
 /* */
-"upload"="lähetä";
+"upload"="رفع";
 /*  */
-"error"="Virhe";
+"error"="خطأ";
 /*  */
-"name"="Nimi";
+"name"="الاسم";
 /*  */
-"passcode"="Pääsykoodi";
+"passcode"="رمز المرور";
 /* "Size" of the file or folder you are sharing */
-"size"="Koko";
+"size"="الحجم";
 /*  */
-"folder"="Kansio";
+"folder"="المجلد";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="Ei kameraa";
+"noCamera"="لا يوجد كاميرا متاحة";
 /* Alert title to attract attention */
-"attention"="Huomio";
+"attention"="تنبيه";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Ole hyvä ja anna MEGA-sovellukselle pääsyoikeus kameraan asetuksissa!";
+"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Ole hyvä ja anna MEGA-sovellukselle pääsyoikeus valokuviin asetuksissa!";
+"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Et voi ladata tyhjää kansiota";
+"emptyFolderMessage"="لا يمكن تحميل مجلد فارغ";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Tilisi on jo aktivoitu. Ole hyvä ja kirjaudu.";
+"accountAlreadyConfirmed"="تم تفعيل حسابك بالفعل. يُرجى تسجيل الدخول.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="رابط غير موجود";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Syötä purkuavain";
+"decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Decryption key";
+"decryptionKey"="مفتاح التشفير ";
 /* Button title to try to decrypt the link */
-"decrypt"="Pura salaus";
+"decrypt"="فك التشفير";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="مفتاح فك التشفير غير موجود";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="Kirjauduttu ulos";
+"loggedOut_alertTitle"="تم تسجيل الخروج";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Olet kirjautunut ulos tästä laitteesta, koska kirjauduit sisään toisaalla";
+"loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Servers are too busy. Please wait...";
+"serversTooBusy"="الخوادم مشغولة جدا. الرجاء الانتظار...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA-TILA";
+"megaSpace"="مساحة MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA-NOPEUS";
+"megaSpeed"="سرعة MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA-YKSITYISYYS";
+"megaPrivacy"="خصوصية MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA-PÄÄSY";
+"megaAccess"="الوصول الي MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Rekisteröidy nyt ja saat 50 GB ilmaista tilaa.";
+"megaSpaceText"="سجل الان واحصل على 50 جيجابايت مجانا.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Lähetykset ovat nopeita.Jaa tiedostoja nopeasti kaikkien kanssa.";
+"megaSpeedText"="رفع الملفات سريع.مشاركة الملفات بسرعة مع الجميع.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Pidä kaikki tiedostosi turvassa MEGAn päästä päähän-salauksella.";
+"megaPrivacyText"="حافظ على جميع الملفات الخاصة بك آمنة مع MEGAالتشفير من الطرفين.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Täysin salattu pääsy mistä tahansa, milloin tahansa.";
+"megaAccessText"="احصل علي الوصول المشفر في أي مكان،في أي وقت.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Kirjaudu";
+"login"="تسجيل الدخول";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Don't have an account?";
+"doNotHaveAnAccount"="ليس لديك حسابا؟";
 /* Button that bring you to section where you can create an account */
-"createOne"="Create one";
+"createOne"="إنشاء حساب";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Luo tili";
+"createAccount"="إنشاء حساب";
 /* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Onko sinulla jo tili?";
+"alreadyHaveAnAccount"="هل لديك حساب؟";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Epäkelpo sähköposti ja/tai salasana. Ole hyvä ja yritä uudelleen.";
+"invalidMailOrPassword"="البريد الإلكتروني و/أو كلمة المرور غير صالح. حاول مرة اخرى";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Syötä kelpaava sähköpostiosoite";
+"emailInvalidFormat"="ادخل يريد إليكتروني صالح";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Syötä kelpaava salasana";
+"passwordInvalidFormat"="أدخل كلمة السر الصحيحة";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Sähköposti";
+"emailPlaceholder"="البريد الإلكتروني ";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Salasana";
+"passwordPlaceholder"="كلمة السر";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Hyväksyn MEGAn käyttöehdot";
+"termsOfServiceButton"="أنا أتفق مع شروط خدمة MEGA";
 /* Error text shown when you have not entered a correct name  */
-"nameInvalidFormat"="Syötä kelpaava nimi";
+"nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Salasanat eivät täsmää";
+"passwordsDoNotMatch"="كلمات السر غير متطابقة";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Sinun tulee hyväksyä käyttöehdot rekisteröidäksesi tunuksen MEGAan.";
+"termsCheckboxUnselected"="تحتاج إلى الموافقة علي شروط الخدمة لتسجيل حساب على MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Tällä sähköpostilla on jo rekisteröity tili MEGAan.";
+"emailAlreadyRegistered"="هذا البريد الإلكتروني لديه حساب مسجل بالفعل مع MEGA.";
 /* Message displayed when an action is completed successfully */
-"awesome"="Uskomaton";
+"awesome"="رائع";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Ole hyvä ja tarkista sähköpostisi vahvistaaksesi tilisi.";
+"accountCreated"="يُرجى التحقق من البريد الإلكتروني الخاص بك واضغط على الرابط لتأكيد حسابك.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Ole hyvä ja syötä salasanasi vahvistaaksesi käyttäjätilisi";
+"confirmText"="يرجى إدخال كلمة السر لتأكيد حسابك";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Vahvista tilisi";
+"confirmAccountButton"="تأكيد حسابك";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Virheellinen salasana";
+"passwordWrong"="كلمة مرور خاطئة";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Olet kirjautunut sisään toisella käyttäjätilillä";
+"alreadyLoggedInAlertTitle"="مسجل دخولك بحساب آخر";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Jos hyväksyt, käyttäjätililtä kirjaudutaan ulos ja kaikki paikallinen tieto poistetaan. Haluatko jatkaa?";
+"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Sinun täytyy vapauttaa tilaa";
+"nodeTooBig"="تحتاج إلى إفراغ المزيد من مساحة جهازك";
 /* Title for the file link view */
-"fileLink"="Tiedostolinkki";
+"fileLink"="رابط الملف";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Tuo Pilvilevyllesi";
+"importButton"="إستيراد لوحدة التخزين السحابي";
 /* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Lataa MEGA-ohjelmaasi";
+"downloadButton_fileLink"="تحميل لتطبيق MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Avaa tiedosto";
+"openButton"="إفتح ملف";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="Tiedosto, jota yrität ladata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
+"fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="Tiedosto, jota yrität avata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
+"fileTooBigMessage_open"="The file you are trying to open is bigger than the available memory.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="رابط غير متوفر";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Syynä voi olla:\n- Tiedosto on poistettu ToS/AUP-rikkomuksen takia.\n- Epäkelpo URL - linkkiä ei löydy.\n-Käyttäjä on poistanut tiedoston.";
+"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Lataus aloitettu";
+"downloadStarted"="بدء التحميل";
 /* Title for the folder link view */
-"folderLink"="Kansiolinkki";
+"folderLink"="رابط المجلد";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Lataa";
+"downloadButton"="التنزيل";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="Kansio, jota yrität ladata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
+"folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Kansiota '%@' ei voitu luoda";
+"folderCreationError"="المجلد '%@' لايمكن إنشاؤه";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Syynä voi olla:\n- Kansiolinkki on poistettu ToS/AUP-rikkomuksen takia.\n- Epäkelpo URL - linkkiä ei löydy.\n-Käyttäjä on poistanut kansion.";
+"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Ei internetyhteyttä";
+"noInternetConnection"="الاتصال غير متوفر";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Ei tiedostoja kansiossa";
+"emptyFolder"="لا توجد ملفات في المجلد";
 /* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Kansiolinkki tyhjä";
+"folderLinkEmptyState_title"="رابط المجلد فارغ";
 /* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Linkki ei sisällä tiedostoja tällä hetkellä.";
+"folderLinkEmptyState_text"="رابط هذا المجلد ليس لديه أية ملفات";
 /* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Tämä alikansio ei sisällä tiedostoja tällä hetkellä.";
+"folderLinkEmptyState_textFolder"="ليس في هذا المجلد الفرعي أية ملفات";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Ei tiedostoja pilvilevylläsi";
+"cloudDriveEmptyState_title"="لم توجد ملفات في محرك السحابة الخاص بك";
 /* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Tässä jaetussa kansiossa ei ole tiedostoja";
+"cloudDriveEmptyState_titleContact"="لا يوجد ملفات في مجلد المشاركة";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Tyhjennä roskakori";
+"cloudDriveEmptyState_titleRubbishBin"="مسح سلة المهملات";
 /* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Lisää tiedostoja yläpuolella olevan napin avulla.";
+"cloudDriveEmptyState_text"="أضف ملفاتك عبر الزر العلوي";
 /* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Jaa jotain! Lisää tiedostoja yläpuolisen napin avulla.";
+"cloudDriveEmptyState_textContact"="Share something. Add files using the above button.";
 /* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Kameralähetykset pois";
+"cameraUploadsEmptyState_title"="تم تعطيل تحميلات الكاميرا ";
 /* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Salli kameralähetykset kopioidaksesi laitteessasi olevat kuvat MEGAan.";
+"cameraUploadsEmptyState_text"="Enable Camera Uploads to have a copy of your device photos on MEGA.";
 /* Title shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_title"="Ei yhteydettömään tilaan tallennettuja tiedostoja";
+"offlineEmptyState_title"="لا ملفات محفوظة للتصفح دون اتصال ";
 /* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Lataa tiedostoja käyttääksesi niitä vailla internet-yhteyttä.";
+"offlineEmptyState_text"="Download files to use them when you don't have internet connection.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Sinulla ei vielä ole kontakteja lisättynä!";
+"contactsEmptyState_title"="لا يوجد لديك أي جهة اتصال";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Lisää kontakteja yläpuolisen napin avulla.";
+"contactsEmptyState_text"="أضف جهات اتصال باستخدام الزر العلوي";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Ei saapuvia jaettuja kansioita";
+"noIncomingSharedItemsEmptyState_text"="لا توجد مجلدات مشاركة واردة";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Ei lähteviä jaettuja kansioita";
+"noOutgoingSharedItemsEmptyState_text"="لا توجد مجلدات مشاركة صادرة";
 /* Title of My Contacts section */
-"myContacts"="Kontaktit";
+"myContacts"="جهات الاتصال";
 /* Title of Contacts requests section */
-"contactRequests"="Contact requests";
+"contactRequests"="طلبات جهة الاتصال";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Sent";
+"sent"="تم الارسال";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
+"requests"="الطلبات";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Request accepted";
+"requestAccepted"="تم قبول الطلب";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request cancelled";
+"requestCancelled"="تم إلغاء الطلب";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request deleted";
+"requestDeleted"="تم الحذف";
 /* Title shown when there's no pending request */
-"noRequestPending"="Ei avoimia pyyntöjä tällä hetkellä";
+"noRequestPending"="لا توجد طلبات معلقة  في هذا الوقت";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Siirrot keskeytetty";
+"transfersEmptyState_titlePaused"="التحويل توقف";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -199,249 +199,249 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Jatka siirtoja yläpuolisen napin avulla.";
+"transfersEmptyState_textPaused"="استأنف عمليات النقل باستخدام الزر العلوي";
 /* Text shown under the upper title when there's no transfers */
 "transfersEmptyState_textAll"="You don't have any pending transfers.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Sinulla ei ole avoimia latauksia.";
+"transfersEmptyState_textDownload"="ليس لديك أية تحميلات قيد الانتظار";
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Sinulla ei ole avoimia lähetyksiä.";
+"transfersEmptyState_textUpload"="ليس لديك عمليات رفع في الانتظار";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Pilvilevy";
+"cloudDrive"="سحابة التخزين";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d tiedosto";
+"oneFile"="%d ملف";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d tiedostoa";
+"files"="%d ملفات";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d kansio";
+"oneFolder"="%d مجلد";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d kansiota";
+"folders"="%d مجلدات";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 kansio • 1 tiedosto";
+"folderAndFile"="1 مجلد • 1 ملف";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] kansiota • [B] tiedostoa";
+"foldersAndFiles"="[A] مجلدات • [B] ملفات";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d kansiota • 1 tiedosto";
+"foldersAndFile"="%d مجلدات • 1 ملف";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 kansio • %d tiedostoa";
+"folderAndFiles"="1 مجلد • %d ملفات";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Jonossa";
+"queued"="قائمة الانتظار";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Avoimia tiedostolatauksia";
+"documentOpening_alertTitle"="هناك تحميلات قيد الانتظار";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Yritä myöhemmin uudelleen tai keskeytä";
+"documentOpening_alertMessage"="يرجي المحاولة مرة اخري لاحقا أو الإلغاء";
 /* Section title of the "Sort by" */
-"sortTitle"="LAJITTELE";
+"sortTitle"="ترتيب حسب";
 /* Button title to "Save" the selected option */
-"save"="Tallenna";
+"save"="حفظ";
 /* Sort by option (1/6). This one orders the files alphabethically*/
-"nameAscending"="nimi (nouseva)";
+"nameAscending"="الاسم (تصاعدي)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="nimi (laskeva)";
+"nameDescending"="الاسم (تنازلي)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="suurin";
+"largest"="الأكبر";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="pienin";
+"smallest"="الاصغر";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="uusin";
+"newest"="الأحدث";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="vanhin";
+"oldest"="الأقدم";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Valitse";
+"choosePhotoVideo"="اختر";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Kaappaa";
+"capturePhotoVideo"="التقاط";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
-"newFolder"="Uusi kansio";
+"newFolder"="مجلد جديد";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="Uuden kansion nimi";
+"newFolderMessage"="اسم للمجلد الجديد";
 /* Title button for the create folder alert.  */
-"createFolderButton"="Luo";
+"createFolderButton"="إنشاء";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Lataa käyttäen...";
+"uploadFrom"="الاستيراد من...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] تم رفعه بالفعل باسم [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+"fileAlreadyExistMessage"="هذا الملف تم بالفعل رفعه باسم %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Lähetys aloitettu!";
+"uploadStarted_Message"="بدأ التحميل";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="تم نقل هذا الملف إلى سلة المهملات";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="هذا المجلد تم نقله إلى سلة المحذوفات";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="This file has been moved";
+"fileMoved_alertTitle"="تم نقل هذا الملف";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="This folder has been moved";
+"folderMoved_alertTitle"="هذا المجلد تم نقله";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="لم يعد لديك الدخول لهذا الملف";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="لم يعد لديك القدرة على دخول هذا المجلد";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Tallenna yhteydetöntä käyttöä varten";
+"saveForOffline"="احفظ دون اتصال";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Tallennettu offlineen";
+"savedForOffline"="حفظ الملفات للعمل دون اتصال";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Inbox محصور باستخدام أبل فقط";
 /* List option shown on the details of a file or folder */
-"getLink"="Hanki linkki";
+"getLink"="الحصول على الرابط";
 /* Message shown when a link to the file is being generated */
-"generatingLink"="Luodaan linkkiä...";
+"generatingLink"="توليد الرابط...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="تم نسخ الرابط";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Open in...";
+"openIn"="فتح في...";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Poista linkki";
+"removeLink"="إزالة الرابط";
 /* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Linkki on poistettu!";
+"removeLinkSuccess"="تم حذف الرابط";
 /* Title show when a file is being downloaded */
-"downloading"="Ladataan: [X]%";
+"downloading"="التحميل: [X]٪";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Keskeytä lataus?";
+"cancelDownloadAlertViewText"="هل تريد إلغاء التحميل؟";
 /* Title for the action that allows you to move a file or folder */
-"move"="Siirrä";
+"move"="نقل";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 tiedosto siirretty!";
+"moveFileMessage"="تم نقل ملف واحد";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d tiedostoa siirretty!";
+"moveFilesMessage"="% الملفات المنقولة";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="1 kansio siirretty!";
+"moveFolderMessage"="تم نقل مجلد واحد";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d kansiota siirretty!";
+"moveFoldersMessage"="% مجلدات منقولة";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 tiedosto ja 1 kansio siirretty!";
+"moveFileFolderMessage"="1 ملفات و 1 مجلدات تم نقلها";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 tiedosto ja %d kansiota siirretty!";
+"moveFileFoldersMessage"="1 ملف و %d مجلدات منقولة ";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d tiedostoa ja 1 kansio siirretty!";
+"moveFilesFolderMessage"="%d ملفات و 1 مجلد تم نقلهم ";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] tiedostoa ja [B] kansiota siirretty!";
+"moveFilesFoldersMessage"="[A] ملفات و [B] مجلدات تم نقلها بنجاح";
 /* List option shown on the details of a file or folder */
-"copy"="Kopioi";
+"copy"="نسخ";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 tiedosto kopioitu";
+"copyFileMessage"="تم نسخ ملف واحد";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d tiedostoa kopioitu";
+"copyFilesMessage"="% الملفات المنسوخة";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="1 kansio kopioitu";
+"copyFolderMessage"="تم نسخ مجلد واحد";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d kansiota kopioitu";
+"copyFoldersMessage"="%d مجلدات منسوخة";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="1 tiedosto ja 1 kansio kopioitu";
+"copyFileFolderMessage"="1 ملف و 1 مجلد تم نسخه";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 tiedosto ja %d kansiota kopioitu";
+"copyFileFoldersMessage"="1 ملف و %d مجلدات تم نسخها";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d tiedostoa ja 1 kansio kopioitu";
+"copyFilesFolderMessage"="%d ملفات و 1 مجلد منسوخ";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] tiedostoa ja [B] kansiota kopioitu";
+"copyFilesFoldersMessage"="[A] ملفات [B] ومجلدات تم نسخها";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Nimeä uudelleen";
+"rename"="تغيير الاسم";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Syötä uusi nimi";
+"renameNodeMessage"="أدخل الاسم الجديد";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="Siirrä roskakoriin";
+"moveToTheRubbishBin"="نقل إلى سلة المحذوفات";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="Haluatko varmasti siirtää 1 tiedoston roskakoriin?";
+"moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="Haluatko varmasti siirtää %d tiedostoa roskakoriin?";
+"moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="Haluatko varmasti siirtää 1 kansion roskakoriin?";
+"moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Haluatko varmasti siirtää %d kansiota roskakoriin?";
+"moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Haluatko varmasti siirtää 1 tiedoston ja 1 kansion roskakoriin?";
+"moveFileFolderToRubbishBinMessage"="Are you sure you want to move 1 file and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Haluatko varmasti siirtää 1 tiedostoa ja %d kansiota roskakoriin?";
+"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Haluatko varmasti siirtää %d tiedostoa ja 1 kansiota roskakoriin?";
+"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Haluatko varmasti siirtää [A] tiedostoa ja [B] kansiota roskakoriin?";
+"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
+"fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+"filesMovedToRubbishBinMessage"="%d ملفات تم نقلها إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+"folderMovedToRubbishBinMessage"="1 مجلد تم نقله إلى سلة المحذوفات";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+"foldersMovedToRubbishBinMessage"="%d مجلدات تم نقلها إلى سلة المحذوفات";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+"fileFolderMovedToRubbishBinMessage"="1 ملف و1 مجلد تم نقلهما لسلة المحذوفات ";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+"fileFoldersMovedToRubbishBinMessage"="ملف واحد و %d مجلدات تم نقلهم لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+"filesFolderMovedToRubbishBinMessage"="%d ملفات و مجلد واحد تم نقلهم لسلة المحذوفات";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Käyttöoikeusvirhe";
+"permissionTitle"="غير مسموح ";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Tarkista käyttöoikeutesi tässä kansiossa";
+"permissionMessage"="راجع أذوناتك لهذا المجلد";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="Kansio jaettu!";
+"sharedFolder_success"="تم مشاركة المجلد";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Tuo kohteeseen";
+"importTitle"="استيراد الي";
 /* Button title that triggers the importing link action */
-"import"="Tuo";
+"import"="استيراد";
 /* Message shown when a file have been imported */
-"fileImported"="Tiedosto tuotu!";
+"fileImported"="تم استيراد الملف";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Kiintiö ylitetty";
+"quotaExceeded"="تم تجاوز حصة التخزين";
 /* Alert title shown when the user is overquota */
-"overquotaAlert_title"="Kiintiö ylitetty!";
+"overquotaAlert_title"="تنبية تجاوزحصة البيانات!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Toiminto evätty, käyttäjätilin tilavaraus tulee ylittymään. Haluatko päivittää käyttäjätilisi?";
+"overquotaAlert_message"="عملية غير مسموح، سوف يتجاوز الحد تخزين حسابك. هل ترغب في ترقية حسابك؟";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Valitse kohteet";
+"selectTitle"="اختر العناصر";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu kuvaa";
+"photosPerMonth"="%lu صور";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu valokuva(a)";
+"photoPerMonth"="%lu صورة";
 /* Button title that skips the current action */
-"skipButton"="Ohita";
+"skipButton"="تخطى";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Ota kameralähetykset käyttöön";
+"enableCameraUploadsButton"="تفعيل رفع البوم الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Kameralähetykset päällä!";
+"cameraUploadsEnabled"="تحميلات الكاميرا مفعلة";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu kohde valittu";
+"oneItemSelected"="%lu بند محدد";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu kohdetta valittu";
+"itemsSelected"="%lu عناصر مختارة";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Kameralähetykset estetään, sillä laitteellasi ei ole riittävästi tilaa";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
 /* Title of the Offline section */
-"offline"="Offline";
+"offline"="غير متاح";
 /* Title of the Contacts section */
-"contactsTitle"="Kontaktit";
+"contactsTitle"="جهات الاتصال";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Ei jaettuja kansioita";
+"noFoldersShared"="لم تشارك أية مجلدات";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1 kansio";
+"oneFolderShared"="مجلد واحد";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d kansiota";
+"foldersShared"="%d مجلدات";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Syötä sähköpostiosoite";
+"addFromEmail"="ادخل بريدك الإلكتروني ";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="العناصر المشاركة";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Shared";
+"shared"="العناصر المشاركة";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="الوارد";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="الصادر";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Shared with 1 contact";
+"sharedWithOneContact"="شوركت من قبل جهة اتصال واحدة";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="مشاركة مع %d جهات اتصال";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="Oikeudet muutettu";
+"permissionsChanged"="تم تغييرالصلاحيات";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="تم الغاء المشاركة";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="مشاركات متبقية";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="حذف المشاركة";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -449,280 +449,280 @@
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Jako poistettu";
+"shareRemoved"="تم حذف المشاركة بنجاح";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="تم مسح المشاركات";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="Omistaja";
+"owner"="المالك";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="Jaettu";
+"sharedWith"="مشاركة مع";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Lisää kontakteista";
+"addFromContacts"="إضافة من جهة الاتصالات";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Lisää kontakti";
+"addContact"="إضافة جهة اتصال";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Kontaktin sähköposti";
+"contactEmail"="عنوان البريد الإلكتروني";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="Lisää";
+"addContactButton"="إضافة";
 /* Success message shown when a contact has been invited */
-"requestSent"="Request sent";
+"requestSent"="تم إرسال الطلب";
 /* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="Kontaktin lisääminen epäonnistui";
+"addContactError"="خطأ إضافة جهة اتصال";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Poista kontakti";
+"removeUserTitle"="حذف جهة الاتصال";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Haluatko varmasti poistaa %@ kontakteistasi?";
+"removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Haluatko varmasti poistaa %d käyttäjää kontakteistasi?";
+"removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d kontaktia poistettu";
+"removedContacts"="%d جهات الاتصال المحذوفة";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Kontakti %@ poistettu!";
+"removedContact"="جهة اتصال %@ مزالة";
 /* Label shown when a contact request is pending */
-"pending"="Odottaa";
+"pending"="معلق";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="Kontaktilla ei ole sähköpostia";
+"contactWithoutEmail"="جهة اتصال ليس لديها بريد إلكتروني";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Poistu";
+"leaveFolder"="ترك";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Poistuttu kansiosta!";
+"shareFolderLeaved"="تم إلغاء مشاركة المجلد";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Jaa kansio";
+"shareFolder"="شارك مجلد";
 /* Button that allows you to select a given folder */
-"select"="Valitse";
+"select"="تحديد";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Vain luku";
+"readOnly"="قراءة فقط";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lue & Kirjoita";
+"readAndWrite"="القراءة والتحرير";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Täysi pääsy";
+"fullAccess"="الوصول الكامل";
 /* Title of the Settings section */
-"settingsTitle"="Asetukset";
+"settingsTitle"="الإعدادات";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Kameralähetykset";
+"cameraUploadsLabel"="رفع الألبوم";
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
-"rubbishBinLabel"="Roskakori";
+"rubbishBinLabel"="سلة المهملات";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Turvavaihtoehdot";
+"securityOptions"="خيارات الأمان";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="Tietoa";
+"about"="معلومات عن";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Kieli";
+"language"="اللغة";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Sovelluksen kieli";
+"applicationLanguage"="لغة التطبيق";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
-"sendFeedbackLabel"="Lähetä palautetta";
+"sendFeedbackLabel"="أرسل ملاحظات";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Please write your feedback here:";
+"pleaseWriteYourFeedback"="يرجي كتابة ملاحظاتك هنا:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Laitteellesi ei ole asetettu sähköpostiosoitetta";
+"noEmailAccountConfigured"="ليس لديك حساب بريد إلكتروني مربوط على جهازك ";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Tietosuojakäytäntö";
+"privacyPolicyLabel"="سياسة الخصوصية";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Käyttöehdot";
+"termsOfServicesLabel"="شروط الخدمة";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="Ei";
+"off"="ايقاف";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="Päällä";
+"on"="تشغيل";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
-"options"="Valikko";
+"options"="الخيارات";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Lähetä videoita";
+"uploadVideosLabel"="رفع مقاطع الفيديو";
 /* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Käytä mobiilidataa";
+"useCellularConnectionLabel"="أستخدم اتصالك الخلوي";
 /* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Vain latautuessa";
+"onlyWhenChargingLabel"="فقط عند الشحن";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Uudet kuvat ja videot lähetetään kun päällä.";
+"cameraUploads_footer"="When enabled new photos and videos will be uploaded.";
 /* Label for the "Version" number of the app */
-"version"="Versio";
+"version"="النسخة";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Kiitokset";
+"acknowledgements"="شكر وتقدير";
 /* Title for the MEGA Master Key */
-"masterKey"="IsäntäAvain";
+"masterKey"="المفتاح الرئيسي";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Vaihda salasana";
+"changePasswordLabel"="تغيير كلمة المرور";
 /* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Vie isäntäavain";
+"exportMasterKey"="تصدير المفتاح الرئيسي";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="Turvallisuusvaroitus! Tämä on korkean riskin toiminto. Haluatko jatkaa?";
+"exportMasterKey_alertMessage"="تحذير امني! هذا التشغيل عالي المخاطر. هل تريد المتابعة؟";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Isäntäavaimen vienti ja säilytys turvallisessa paikassa mahdollistaa käyttäjätilin palautuksen vailla tietojen menetystä, mikäli salasana on kadonnut.";
+"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Isäntäavain viety";
+"masterKeyExported"="تم تصدير المفتاح الرئيسي";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt tallennettu laitteelle. Yhdistä tietokoneeseesi ja avaa iTunes päästäksesi MEGA Asiakirjoihin. Suosittelemme vahvasti, että pidät kyseisen tiedoston turvallisesti tallessa! ";
+"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
 /* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Isäntäavain poistettu";
+"masterKeyRemoved"="حذف المفتاج الرئيسي";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt on poistettu Asiakirjat -hakemistosta.";
+"masterKeyRemoved_alertMessage"="MasterKey.txt was removed from the Documents folder.";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Poista";
+"remove"="حذف";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
-"removeNodeFromRubbishBinTitle"="Vahvista poisto";
+"removeNodeFromRubbishBinTitle"="تأكيد الإزالة";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="Olet poistamassa lopullisesti 1 tiedoston. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Olet poistamassa lopullisesti %d tiedostoa. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="Olet poistamassa lopullisesti 1 kansion. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Olet poistamassa lopullisesti %d kansiota. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Olet poistamassa lopullisesti 1 tiedoston ja 1 kansion. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFileFolderToRubbishBinMessage"="You are about to permanently remove 1 file and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Olet poistamassa lopullisesti 1 tiedoston ja %d kansiota. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFileFoldersToRubbishBinMessage"="You are about to permanently remove 1 file and %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Olet poistamassa lopullisesti %d tiedostoa ja 1 kansion. Haluatko jatkaa? (Toimintoa ei voi perua.)";
+"removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
+"fileRemovedToRubbishBinMessage"="1 ملفات مسحت من MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+"filesRemovedToRubbishBinMessage"="%d ملفات أزيلت من MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+"folderRemovedToRubbishBinMessage"="1 مجلد أزيل من MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+"foldersRemovedToRubbishBinMessage"="%d مجلدات تم إزالتها من MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+"fileFolderRemovedToRubbishBinMessage"="تم إزالة 1 ملف و1 مجلد من MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 ملف و%d مجلدات أزيلت من MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d ملفات و1 مجلد تم إزالته من MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="[A] ملفات و [B] مجلدات أزيلت من MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Nykyinen salasana";
+"currentPassword"="كلمة المرور الحالية";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Uusi salasana";
+"newPassword"="كلمة المرور الجديدة";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Vahvista salasana";
+"confirmPassword"="تأكيد كلمة المرور";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Salasanasi vaihdettu.";
+"passwordChanged"="لقد تم تغيير كلمة المرور.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
-"oldAndNewPasswordMatch"="Uusi ja vanha salasana eivät täsmää.";
+"oldAndNewPasswordMatch"="كلمة السر الجديدة يجب ألا تطابق القديمة.";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Vaihda pääsykoodi";
+"changePasscodeLabel"="تغيير رمز المرور";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Yksinkertainen pääsykoodi";
+"simplePasscodeLabel"="رمز بسيط";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Pyyhi paikallinen tieto";
+"eraseAllLocalDataLabel"="مسح البيانت";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Kirjaa ulos ja poista paikallisesti tallennettu tieto 10 epäonnistuneen pääsykoodiyrityksen jälkeen";
+"failedAttempstSectionTitle"="Log out and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Tukikeskus";
+"helpCentreLabel"="مركز المساعدة";
 /* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Hanki tukea tai lue suosittuja aiheita.";
+"helpCentreFooter"="احصل على الدعم أو اقرأ الموضوعات الشائعة.";
 /* Title to rate the app */
-"rateUsLabel"="Rate us";
+"rateUsLabel"="قيمنا";
 /* Title of the Transfers section */
-"transfers"="Siirrot";
+"transfers"="نقل";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Kaikki";
+"all"="الكل";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="lataukset";
+"downloads"="التحميلات";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="lähetykset";
+"uploads"="الملفات المرفوعه";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Transfer cancelled";
+"transferCancelled"="تم إلغاء النقل";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Siirrot keskeytetty!";
+"transfersCancelled"="تم إلغاء عمليات النقل";
 /* Title of the alert shown when you try to cancel transfers */
-"cancelTransfersTitle"="Keskeytä siirrot";
+"cancelTransfersTitle"="الغاء عمليات النقل";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Haluatko keskeyttää %@?";
+"cancelTransfersText"="هل تريد إلغاء %@؟";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="KAIKKI siirrot";
+"allInUppercaseTransfers"="كل عمليات النقل";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="LÄHETYSsiirrot";
+"uploadInUppercaseTransfers"="لم ينته الرفع";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="LATAUSsiirrot";
+"downloadInUppercaseTransfers"="تحميل عمليات النقل";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Tilini";
+"myAccount"="حسابي";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Kirjaudu ulos";
+"logoutLabel"="تسجيل الخروج";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Kirjaudutaan ulos";
+"loggingOut"="تسجيل الخروج";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="Käyttö";
+"usage"="الاستخدام";
 /* Title for "Local" used space. */
-"localLabel"="Paikallinen";
+"localLabel"="المحلي";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Käytetty";
+"usedSpaceLabel"="المستخدمة";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Vapaa";
+"availableLabel"="متواجد";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="ILMAINEN";
+"free"="مجانًا";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="vanhenee %@";
+"expiresOn"="تنتهي في %@";
 /* DO NOT TRANSLATE, it will change */
 "restorePurchases"="Restore purchases";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Saapuvat jaot";
+"incomingShares"="مشاركات واردة";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ sta";
+"of %@"="من %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="käytetty %@ sta";
+"used of %@"="مستخدم من %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="saatavilla %@ sta";
+"available of %@"="المساحة المتوفرة %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Päivitä tili";
+"upgradeAccount"="ترقية الحساب";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Levytilaa";
+"productSpace"="التخزين";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Liikenne";
+"productBandwidth"="نقل البيانات";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ kuukaudessa";
+"productPricePerMonth"="%.2f %@ شهريا";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choose one of the plans from below:";
+"choosePlan"="اختر احدي الخطط ادناة:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Select membership:";
+"selectMembership"="اختر العضوية";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Save 17%";
+"save17"="وفر 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="شراء خاطئ  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Product %@ is not found, please contact ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Allow purchases";
+"allowPurchase_title"="السماح بالشراء";
 /* Alert message to remenber the user that needs to enable purchases before continue */
 "allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
-"restore"="Palauta";
+"restore"="الاستعادة";
 /* "Monthly" subscriptions */
-"monthly"="Kuukausittain";
+"monthly"="شهريًا";
 /* "Yearly" subscriptions */
-"yearly"="Vuosittain";
+"yearly"="سنويًا";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Thank you";
+"thankYou_title"="شكرا";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Your purchase was restored";
+"purchaseRestore_message"="تم استرجاع مشترياتك";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Purchase stopped";
+"failedPurchase_title"="تم ايقاف عملية الشراء";
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="مشكلة إسترجاع";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restore stopped";
+"failedRestore_title"="الاستعادة توقفت";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Enable DEBUG mode";
+"enableDebugMode_title"="تمكين نظام التعديل";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Disable DEBUG mode";
+"disableDebugMode_title"="تعطيل نظام التعديل";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

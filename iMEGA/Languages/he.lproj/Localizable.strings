@@ -26,16 +26,18 @@
 "emptyFolderMessage"="אינך יכול להוריד תיקייה ריקה";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="חשבונך כבר אומת. אנא התחבר.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="קישור MEGA לא תקין";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="הקובץ הוצפן";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="אינך יכול לייבא או להוריד קובץ מוצפן מכיוון שמפתח הפיענוח לא נמצא.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="התיקייה הוצפנה";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="אינך יכול לייבא או להוריד תיקייה מוצפנת מכיוון שמפתח הפיענוח לא נמצא.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="קישור לא תקין";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="הכנס מפתח לפיענוח";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="על מנת לגשת לתיקייה/קובץ הזה, תצטרך את מפתח הפיענוח שלו. אם אין לך את המפתח, צור קשר עם יוצר הקישור.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="מפתח פיענוח";
+/* Button title to try to decrypt the link */
+"decrypt"="פענח";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="מפתח פיענוח לא תקין";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="נותק בהצלחה";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="אם הינך מסכים, החשבון הנוכחי ינותק וכל המידע שהורד יימחק. האם אתה רוצה להמשיך?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="הינך צריך יותר מקום אחסון במכשיר";
-/* Title for the MEGA link view */
-"megaLink"="קישור MEGA";
+/* Title for the file link view */
+"fileLink"="לינק לקובץ";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="ייבא לאחסון בענן";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="נפח הקובץ אותו אתה מנסה להוריד גדול מהנפח הפנוי.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="נפח הקובץ אותו הינך מנסה לפתוח, גדול מהנפח הקיים.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="לא נמצא קישור לקובץ";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="קישור לא זמין";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="זה יכול להיגרם מכמה סיבות:- הקובץ נמחק עקב פגיעה בתנאי השימור או זכויות יוצרים.- קישור לא תקין - הקישור אליו אתה מנסה להיכנס לא קיים.- הקובץ נמחק על ידי המשתמש.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="ההורדה החלה";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="קישור לתיקייה";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="הורד";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="נפח התיקייה אותה אתה מנסה להוריד, גדול מהנפח הפנוי.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="התיקייה '%@' לא נוצרה";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="קישור לתיקייה לא זמין";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="זה יכול להיגרם מכמה סיבות:- הקובץ נמחק עקב פגיעה בתנאי השימור או זכויות יוצרים.- קישור לא תקין - הקישור אליו אתה מנסה להיכנס לא קיים.- הקובץ נמחק על ידי המשתמש.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -539,7 +539,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="תודות";
 /* Title for the MEGA Master Key */
-"masterKey"="מפתח מסטר";
+"masterKey"="מפתח ראשי";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="שנה סיסמה";
 /* Title shown when you try to export your MEGA master key */
@@ -549,11 +549,11 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
 "exportMasterKeyFooter"="ייצוא מפתח המאסטר ושמירתו במקום מאובטח, מאפשר לך לשחזר את החשבון שלך במקרה ואתה מאבד את סיסמתך, ללא איבוד מידע.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="מפתח ראשי מיוצא";
+"masterKeyExported"="מפתח ראשי ייוצא";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="הקובץ Masterkey.txt נשמר במכשיר זה. התחבר למחשב שלך ופתח אייטונס על מנת לגשת למסמכי MEGA. אנו מייצעים בחום לשמור קובץ זה באופן מאובטח!";
 /* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="מפתח מאסטר נמחק";
+"masterKeyRemoved"="מפתח ראשי נמחק";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt נמחק מתיקיית המסמכים.";
 /* Title for the action that allows to remove a file or folder */
@@ -718,3 +718,11 @@
 "failedRestore_title"="שחזור נעצר";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="ייתכן כי הבקשה בוטלה או לא הצלחנו לשחזר את הרכישה הקודמת. אנא נסה שוב מאוחר יותר או צור קשר עם ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="אפשר מצב דיבאג";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="לוג יווצר בחלק הלא מקוון (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="בטל מצב דיבאג";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="קובץ הלוג (MEGAiOS.log) יימחק מהתיקייה הלא מקוונת.";
