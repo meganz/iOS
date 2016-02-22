@@ -24,6 +24,7 @@
 #import "Helper.h"
 #import "CameraUploads.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 
 @interface MEGAAssetOperation () <MEGATransferDelegate, MEGARequestDelegate> {
     BOOL executing;
@@ -77,6 +78,23 @@
 }
 
 - (void)start {
+    if (![CameraUploads syncManager].isCameraUploadsEnabled) {
+        [[CameraUploads syncManager] resetOperationQueue];
+        return;
+    }
+    
+    if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
+        if ([MEGAReachabilityManager isReachableViaWWAN]) {
+            [[CameraUploads syncManager] resetOperationQueue];
+            return;
+        }
+    }
+    
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
+        [[CameraUploads syncManager] resetOperationQueue];
+        return;
+    }
+    
     if ([self isCancelled]) {
         [self willChangeValueForKey:@"isFinished"];
         finished = YES;
