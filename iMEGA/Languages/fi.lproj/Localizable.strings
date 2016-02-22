@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Et voi ladata tyhjää kansiota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tilisi on jo aktivoitu. Ole hyvä ja kirjaudu.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Virheellinen MEGA-linkki";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Salattu tiedosto";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Et voi tuoda tai ladata salattua tiedostoa tällä hetkellä.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Salattu kansio";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Et voi tuoda tai ladata salattua kansiota tällä hetkellä.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Syötä purkuavain";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Decryption key";
+/* Button title to try to decrypt the link */
+"decrypt"="Pura salaus";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Kirjauduttu ulos";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Jos hyväksyt, käyttäjätililtä kirjaudutaan ulos ja kaikki paikallinen tieto poistetaan. Haluatko jatkaa?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Sinun täytyy vapauttaa tilaa";
-/* Title for the MEGA link view */
-"megaLink"="MEGA-linkki";
+/* Title for the file link view */
+"fileLink"="Tiedostolinkki";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Tuo Pilvilevyllesi";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Tiedosto, jota yrität ladata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Tiedosto, jota yrität avata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Tiedostolinkki ei saatavilla";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Syynä voi olla:\n- Tiedosto on poistettu ToS/AUP-rikkomuksen takia.\n- Epäkelpo URL - linkkiä ei löydy.\n-Käyttäjä on poistanut tiedoston.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Lataus aloitettu";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Kansiolinkki";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Lataa";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Kansio, jota yrität ladata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Kansiota '%@' ei voitu luoda";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Kansiolinkki ei saatavilla";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Syynä voi olla:\n- Kansiolinkki on poistettu ToS/AUP-rikkomuksen takia.\n- Epäkelpo URL - linkkiä ei löydy.\n-Käyttäjä on poistanut kansion.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -431,7 +431,7 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Outgoing";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="[$7886]";
+"sharedWithOneContact"="Shared with 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Shared with %d contacts";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -624,6 +624,8 @@
 "downloads"="lataukset";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="lähetykset";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Siirrot keskeytetty!";
 /* Title of the alert shown when you try to cancel transfers */
@@ -716,3 +718,11 @@
 "failedRestore_title"="Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

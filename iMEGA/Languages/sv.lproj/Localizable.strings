@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Uppladdat";
+"upload"="Uppladdningar";
 /*  */
 "error"="Error";
 /*  */
@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Du kan inte ladda ner en tom mapp";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ditt konto har redan aktiverats. Var god, logga in.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Ogiltig MEGA länk";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Fil krypterad";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Du kan inte importera eller hämta en krypterad fil som dekrypteringsnyckeln saknas.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Mapp krypterad";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Du kan inte importera eller ladda ner en krypterad mapp som dekrypteringsnyckeln saknas.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Ogiltig länk";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Ange dekrypteringsnyckel";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="För att komma åt den här mappen / filen, behöver du dess dekrypteringsnyckel. Om du inte har nyckeln, kontakta skaparen av länken.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Dekrypteringsnyckel";
+/* Button title to try to decrypt the link */
+"decrypt"="Dekryptera";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Ogiltig krypteringsnyckel";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Loggade ut";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Om du accepterar, kommer bytesbalansen loggas ut och alla Offline data kommer att raderas. Vill du fortsätta?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Du behöver frigöra utrymme på din enhet";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Länk";
+/* Title for the file link view */
+"fileLink"="Fil länk";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importera till Could Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Filen du försöker ladda ner är större än det tillgängliga minnet.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Filen du försöker öppna är större än det tillgängliga minnet.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Fil länk tillgänglig";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Otillgänglig länk";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Detta skulle kunna bero på följande orsaker:- Filen har tagits bort på grund av en ToS/AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Filen har tagits bort av användaren.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Nedladdning startades";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+"downloadStarted"="Nedladdning startades!";
+/* Title for the folder link view */
+"folderLink"="Länk till mapp";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Ladda ner";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Mappen du försöker ladda ner är större än avaliable minnet.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Mappen '%@' kan inte skapas";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Länk till mapp ej tillgänglig";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Detta kan bero på följande orsaker:- Länken mapp har tagits bort på grund av en ToS / AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Länken mappen har tagits bort av användaren.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Återställning stoppad";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Antingen blev förfrågan avbruten eller så blev inte föregående köp återställt. Försök igen senare, eller kontakta ios@mega.nz";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="DEBUG påslaget";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="En log skapas i offline sektionen,(MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="DEBUG avslaget";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Loggen (MEGAiOS.log) kommer raderas från offline sektionen";

@@ -26,16 +26,18 @@
 "emptyFolderMessage"="빈 폴더를 다운로드할 수 없습니다";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="당신의 계정은 이미 활성화되었습니다. 로그인 하십시오.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="잘못된 MEGA 링크";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="파일 암호화됨";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="해독 키가 없는 암호화된 파일을 다운로드하거나 들여올 수 없습니다.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="폴더 암호화됨";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="해독 키가 없는 암호화된 폴더를 다운로드하거나 들여올 수 없습니다.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="유효하지 않은 링크";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="해독 키를 입력하세요";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="해독 키";
+/* Button title to try to decrypt the link */
+"decrypt"="해독";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="잘못된 해독 키";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="동의하면, 현재 계정이 로그아웃되고 모든 오프라인 데이터가 삭제됩니다. 계속하시겠습니까?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
-/* Title for the MEGA link view */
-"megaLink"="MEGA 링크";
+/* Title for the file link view */
+"fileLink"="파일 링크";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="클라우드 드라이브로 들여오기";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="다운로드 하려는 파일이 사용가능한 메모리보다 큽니다.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="열려는 파일은 사용가능한 메모리보다 큽니다.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="파일 링크가 사용불가능합니다";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="사용할 수 없는 링크";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="이것은 다음과 같은 이유로 발생할 수 있습니다:- 파일이 ToS/AUP 위반으로 제거됨.- 잘못된 URL - 접속하려는 링크가 존재하지 않음.- 이용자에 의해 파일이 삭제됨.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드가 시작되었습니다";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="폴더 링크";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="다운로드";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="다운로드 하려는 폴더가 사용가능한 메모리보다 큽니다.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' 폴더를 생성할 수 없습니다";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="폴더 링크가 사용불가입니다";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="아래의 이유로 발생한 문제일 수 있습니다:- 폴더 링크가 ToS/AUP 위반으로 삭제됨.- 잘못된 URL - 접속하려는 링크가 존재하지 않음.- 폴더 링크가 이용자에 의해 삭제됨.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="복구 중지됨";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="요청이 취소되었거나 이전 결제가 복구되지 않았습니다. 다시 시도하거나 ios@mega.nz로 연락하세요.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="디버그 모드 활성화";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="오프라인 섹션에 로그가 생성됩니다 (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="디버그 모드 비활성화";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="로그 (MEGAiOS.log)가 오프라인 섹션에서 삭제됩니다.";

@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Nemůžete stahovat prázdnou složku";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Váš účet byl již aktivován. Přihlaste se.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Neplatný odkaz MEGA";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Soubor zašifrován";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Právě nyní nemůžete importovat nebo stahovat zašifrovaný soubor.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Složka zašifrována";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Právě nyní nemůžete importovat nebo stahovat zašifrovanou složku.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Neplatný odkaz";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Zadejte dešifrovací klíč";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Pro přístup k této složce nebo souboru budete potřebovat jejich dešifrovací klíč. Pokud tento klíč nemáte, obraťte se na autora odkazu.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Dešifrovací klíč";
+/* Button title to try to decrypt the link */
+"decrypt"="Dešifrovat";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Neplatný dešifrovací klíč";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Odhlášen";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Pokud souhlasíte, aktuální účet bude odhlášen a všechna data offline budou smazána. Chcete pokračovat?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Musíte uvolnit nějaké místo";
-/* Title for the MEGA link view */
-"megaLink"="Odkaz MEGA";
+/* Title for the file link view */
+"fileLink"="Odkaz na soubor";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importovat do vaší cloudové jednotky";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Soubor, který se pokoušíte stáhnout, je větší než dostupná paměť.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Soubor, který se pokoušíte otevřít, je větší než dostupná paměť.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Odkaz na soubor není dostupný";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Nedostupný odkaz";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Mohlo by to být kvůli následujícím důvodům:- Soubor byl odebrán, protože porušoval podmínky užívání nebo použití.- Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje.- Soubor byl odstraněn uživatelem.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Stahování spuštěno!";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Odkaz na složku";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Stáhnout";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Složka, kterou se pokoušíte stáhnout, je větší než dostupná paměť.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Složka '%@' nemůže být vytvořena";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Odkaz na složku není dostupný";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Mohlo by to být kvůli následujícím důvodům:- Odkaz na složku byl odebrán, protože porušoval podmínky užívání nebo použití.- Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje.- Odkaz na složku byl odstraněn uživatelem.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Obnovte zastavené";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Buď byl požadavek zrušen nebo nelze obnovit předchozí nákup. Zkuste to znovu později nebo se obraťte na ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Povolit režim LADĚNÍ";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="V oddílu Offline bude vytvořen protokol (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Zakázat režim LADĚNÍ";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Z oddílu Offline bude odstraněn protokol (MEGAiOS.log).";

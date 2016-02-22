@@ -66,34 +66,21 @@
         selectedLanguage = nil;
     }
     
-    languagesDictionary = @{//@"af":@"Afrikaans",
-                            //@"ar":@"العربية",
-                            //@"bg":@"български език",
-                            //@"bs":@"Bosanski Jezik",
-                            //@"ca":@"Català",
+    languagesDictionary = @{@"ar":@"العربية",
+                            @"bg":@"български език",
                             @"cs":@"Čeština",
-                            //@"da":@"Dansk",
                             @"de":@"Deutsch",
-                            @"ee":@"Eʋegbe",
                             @"en":@"English",
                             @"es":@"Español",
-                            //@"et":@"Estonian",
-                            //@"eu":@"Euskera",
                             @"fa":@"فارسی",
                             @"fi":@"Suomi",
                             @"fr":@"Français",
-                            //@"gl":@"Galego",
                             @"he":@"עברית",
-                            //@"hr":@"Hrvatski Jezik",
                             @"hu":@"magyar",
                             @"id":@"Bahasa Indonesia",
                             @"it":@"Italiano",
                             @"ja":@"日本語",
                             @"ko":@"한국어",
-                            //@"lt":@"lietuvių kalba",
-                            //@"lv":@"latviešu valoda",
-                            //@"ms":@"ملايو بهاس",
-                            //@"nb":@"Norsk bokmål",
                             @"nl":@"Nederlands",
                             @"pl":@"Język Polski",
                             @"pt-br":@"Português Brasileiro",
@@ -101,16 +88,16 @@
                             @"ro":@"Limba Română",
                             @"ru":@"Pусский язык",
                             @"sk":@"Slovenský",
-                            //@"sl":@"Slovenščina",
+                            @"sl":@"Slovenščina",
+                            @"sr":@"српски језик",
                             @"sv":@"Svenska",
                             //@"th":@"ไทย",
-                            //@"tl":@"Tagalog",
+                            @"tl":@"Tagalog",
                             @"tr":@"Türkçe",
-                            //@"uk":@"українська мова",
+                            @"uk":@"українська мова",
                             @"vi":@"Tiếng Việt",
                             @"zh-Hans":@"简体中文",
-                            @"zh-Hant":@"中文繁體"
-                            };
+                            @"zh-Hant":@"中文繁體"};
     
     isLanguagePickerViewShown = NO;
     _languagePickerCellRowHeight = 216.0;

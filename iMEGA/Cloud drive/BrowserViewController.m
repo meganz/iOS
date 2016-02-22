@@ -161,8 +161,8 @@
     }
     
     if (self.browserAction == BrowserActionImport) {
-        NSString *importTitle = AMLocalizedString(@"importTitle", @"Import to ");
-        importTitle = [importTitle stringByAppendingString:[self.navigationItem title]];
+        NSString *importTitle = AMLocalizedString(@"importTitle", nil);
+        importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
     }
     

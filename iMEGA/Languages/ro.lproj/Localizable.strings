@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="Ok";
 /* */
-"upload"="încărcare";
+"upload"="Încărcare";
 /*  */
 "error"="Eroare";
 /*  */
@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Nu poţi descărca un folder gol";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Contul tău a fost activat deja. Te rugăm să te autentifici.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Link MEGA invalid";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Fişier criptat";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Nu poţi importa sau descărca un fişier criptat întrucât cheia de decriptare lipseşte.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Folder criptat";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Nu poţi importa sau descărca un folder criptat întrucât cheia de decriptare lipseşte.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Introdu cheia de decriptare";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Cheie de decriptare";
+/* Button title to try to decrypt the link */
+"decrypt"="Decriptează";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -43,7 +45,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Poţi fi afectat de un atac tip man-in-the-middle.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Servers are too busy. Please wait...";
+"serversTooBusy"="Serverele sunt prea ocupate. Te rugăm să aştepţi...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="SPAŢIU MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -106,36 +108,34 @@
 "alreadyLoggedInAlertMessage"="Dacă eşti de acord, contul actual va fi deconectat şi toate datele offline vor fi şterse. Doreşti să continui?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Trebuie să eliberezi ceva spaţiu pe dispozitiv";
-/* Title for the MEGA link view */
-"megaLink"="Link MEGA";
+/* Title for the file link view */
+"fileLink"="Linkul fişierului";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importă în unitatea cloud";
 /* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Descarcă pe aplicaţia MEGA";
+"downloadButton_fileLink"="Descarcă în aplicaţia MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Deschide fişierul";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Fişierul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Fişierul pe care încerci să îl deschizi este mai mare decât memoria disponibilă.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Linkul fişierului indisponibil";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Acest lucru ar putea fi din cauza următoarelor motive:- Fişierul a fost eliminat datorită unei încălcări a ToS/AUP.- URL invalid - linkul pe care încerci să îl accesezi nu există.- Fişierul a fost șters de utilizator.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Descărcarea a început";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Linkul folderului";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descarcă";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Folderul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Folderul '%@' nu poate fi creat";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Linkul folderului indisponibil";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Acest lucru ar putea fi din cauza următoarelor motive:- Linkul folderului a fost eliminat din cauza unei încălcări a ToS/AUP.- URL invalid - linkul pe care încerci să îl accesezi nu există.- Linkul folderului a fost șters de utilizator.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -177,19 +177,19 @@
 /* Title of My Contacts section */
 "myContacts"="Contacte";
 /* Title of Contacts requests section */
-"contactRequests"="Contact requests";
+"contactRequests"="Cereri de contact";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Sent";
+"sent"="Trimise";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Requests";
+"requests"="Cereri";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Request accepted";
+"requestAccepted"="Cerere acceptată";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request cancelled";
+"requestCancelled"="Cerere anulată";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Request deleted";
+"requestDeleted"="Cerere ştearsă";
 /* Title shown when there's no pending request */
-"noRequestPending"="Nicio solicitare în aşteptare în  acest moment";
+"noRequestPending"="Nicio solicitare în aşteptare în acest moment";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferuri puse pe pauză";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -207,7 +207,7 @@
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
 "transfersEmptyState_textUpload"="Nu ai nicio încărcare în aşteptare";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Unitate Cloud";
+"cloudDrive"="Unitate cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fişier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -217,13 +217,13 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d foldere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder • 1 fişier";
+"folderAndFile"="1 folder + 1 fişier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
 "foldersAndFiles"="[A] foldere • [B] fişiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
 "foldersAndFile"="%d foldere • 1 fişier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d fişiere";
+"folderAndFiles"="1 folder • %d fişier";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de aşteptare";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -235,17 +235,17 @@
 /* Button title to "Save" the selected option */
 "save"="Salvează";
 /* Sort by option (1/6). This one orders the files alphabethically*/
-"nameAscending"="nume (ascendet)";
+"nameAscending"="Nume (ascendent)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="nume (descendent)";
+"nameDescending"="Nume (descendent)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="cele mai mari";
+"largest"="Cele mai mari";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="cele mai mici";
+"smallest"="Cele mai mici";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="cele mai noi";
+"newest"="Cele mai noi";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="cele mai vechi";
+"oldest"="Cele mai vechi";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Alege";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -259,39 +259,39 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importă din...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] încărcat deja cu numele [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+"fileAlreadyExistMessage"="Fişierul a fost încărcat deja cu numele %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
+"filesAlreadyExistMessage"="%d fişiere selectate au fost încărcate deja în acest folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Încărcarea a început";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="Acest fişier a fost mutat în coşul de gunoi";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="Acest folder a fost mutat în coşul de gunoi";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="This file has been moved";
+"fileMoved_alertTitle"="Acest fişier a fost mutat";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="This folder has been moved";
+"folderMoved_alertTitle"="Acest folder a fost mutat";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Nu mai ai acces la acest fişier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Nu mai ai acces la acest folder";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Salvează pentru offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Fişiere salvate pt. offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Inbox este rezervat pentru folosire de Apple.";
 /* List option shown on the details of a file or folder */
 "getLink"="Obţine linkul";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Se generează linkul...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link copied";
+"linkCopied"="Link copiat";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Open in...";
+"openIn"="Deschide în...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Elimină linkul";
 /* Message shown when the link to a file has been removed */
@@ -387,7 +387,7 @@
 /* Message shown when a file have been imported */
 "fileImported"="Fişier importat";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cota depăşită";
+"quotaExceeded"="Cota de stocare depăşită";
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="Alertă de depăşire cotă!";
 /* Alert message shown when the user is overquota */
@@ -423,35 +423,35 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Inserează un e-mail";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Elemente partajate";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Shared";
+"shared"="Partajate";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="Primite";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="Efectuate";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Shared with 1 contact";
+"sharedWithOneContact"="Partajat cu 1 contact";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Partajat cu %d contacte";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permisiuni schimbate";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Partajare părăsită";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Partajări părăsite";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Elimină partajarea";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Sigur doreşti să elimini această partajare? (Partajat cu 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Sigur doreşti să elimini aceste partajări? (Partajate cu %d contacte)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Partajare eliminată corect";
+"shareRemoved"="Partajare eliminată";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Partajări eliminate";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Proprietar";
 /* Title of the view where you see with who you have shared a folder */
@@ -465,7 +465,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Adaugă";
 /* Success message shown when a contact has been invited */
-"requestSent"="Request sent";
+"requestSent"="Cerere trimisă";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Eroare la adăugarea contactului";
 /* Alert title shown when you want to remove one or more contacts */
@@ -505,15 +505,15 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opţiuni de securitate";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="Despre noi";
+"about"="Despre";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
 "language"="Limbă";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Limba aplicaţiei";
+"applicationLanguage"="Română";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Please write your feedback here:";
+"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul tău aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -575,7 +575,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d fişiere şi 1 folder. Doreşti să continui? (Nu poţi anula această acţiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="Eşti pe cale să ştergi definitiv [A] fişiere şi [B] foldere. Doreşti să continui? (Nu poţi anula această acţiune.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fişier eliminat de pe MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -621,11 +621,11 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Toate";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="descărcări";
+"downloads"="Descărcări";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="încărcări";
+"uploads"="Încărcări";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Transfer cancelled";
+"transferCancelled"="Transfer anulat";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Transferuri anulate";
 /* Title of the alert shown when you try to cancel transfers */
@@ -681,13 +681,13 @@
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
 "twoMonthsFree"="Obţine două luni gratuit dacă te abonezi la un plan PRO pentru un an";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Selectează contul de membru";
+"selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Economiseşte 17%";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="ACHIZIŢIE GREŞITĂ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Achiziţiile în aplicaţie sunt dezactivate, te rugăm să le activezi din setări";
+"appPurchaseDisabled"="Achiziţiile în aplicaţie sunt dezactivate, te rugăm să le activezi din setările iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Produsul  %@ nu este găsit, te rugăm să contactezi ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Fie cererea a fost anulată, fie achiziţionarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Activează modul DEPANARE";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Un fişier log va fi creat în secţiunea Offline (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Dezactivează modul DEPANARE";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Fișierul log (MEGAiOS.log) va fi şters din secţiunea Offline.";

@@ -33,7 +33,9 @@
 #import "CameraUploadsPopUpViewController.h"
 #import "MEGANavigationController.h"
 #import "UpgradeTableViewController.h"
-
+#import "LoginViewController.h"
+#import "CreateAccountViewController.h"
+#import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
 
 #import "BrowserViewController.h"
@@ -59,7 +61,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeFileLink,
     URLTypeFolderLink,
     URLTypeConfirmationLink,
-    URLTypeOpenInLink
+    URLTypeOpenInLink,
+    URLTypeNewSignUpLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -77,8 +80,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 @property (nonatomic, strong) NSString *IpAddress;
+
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
+@property (nonatomic, strong) NSString *emailOfNewSignUpLink;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -245,6 +250,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 //        [application registerForRemoteNotificationTypes:myTypes];
 //    }
     
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+    }
+    
     return YES;
 }
 
@@ -271,7 +280,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [[CameraUploads syncManager] getAllAssetsForUpload];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
@@ -325,12 +334,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
-            self.link = nil;
         }
     } else {
         if (![LTHPasscodeViewController doesPasscodeExist]) {
             [self processLink:self.link];
-            self.link = nil;
         }
     }
     
@@ -460,11 +467,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
     if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
+        [self showLinkNotValid];
         return;
     }
         
-    [self dissmissPresentedViews];
+    [self dismissPresentedViews];
     
     if ([[url absoluteString] rangeOfString:@"file:///"].location != NSNotFound) {
         self.urlType = URLTypeOpenInLink;
@@ -487,10 +494,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"invalidLink", nil)];
+    if ([self isNewSignUpLink:afterSlashesString]) {
+        self.urlType = URLTypeNewSignUpLink;
+        return;
+    }
+    
+    [self showLinkNotValid];
 }
 
-- (void)dissmissPresentedViews {
+- (void)dismissPresentedViews {
     if (self.window.rootViewController.presentedViewController != nil) {
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     }
@@ -500,81 +512,60 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:2]; // mega://"#!"
     BOOL isFileLink = [megaURLTypeString isEqualToString:@"#!"];
     if (isFileLink) {
-        NSString *megaURLString = @"https://mega.nz/";
-        NSString *fileLinkCodeString = [afterSlashesString substringFromIndex:2]; // mega://#!"xxxxxxxx..."!
-        
-        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
-        BOOL isEncryptedFileLink = ([fileLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
-        if (isEncryptedFileLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"fileEncrypted", @"File encrypted")
-                                                                message:AMLocalizedString(@"fileEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted file.")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-        } else {
-            MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
-            FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-            NSString *megaFileLinkURLString = [megaURLString stringByAppendingString:afterSlashesString];
-            [fileLinkVC setFileLinkString:megaFileLinkURLString];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-                } else {
-                    [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-                }
-            } else {
-                [self.window.rootViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
-            }
-        }
+        NSString *fileLinkString = @"https://mega.nz/";
+        fileLinkString = [fileLinkString stringByAppendingString:afterSlashesString];
+        [self showFileLinkView:fileLinkString];
         return YES;
     }
     return NO;
+}
+
+- (void)showFileLinkView:(NSString *)fileLinkURLString {
+    MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
+    FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
+    [fileLinkVC setFileLinkString:fileLinkURLString];
+    
+    [self presentLinkViewController:fileLinkNavigationController];
+    
+    self.link = nil;
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
     BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
     if (isFolderLink) {
-        NSString *megaURLString = @"https://mega.nz/";
-        NSString *folderLinkCodeString = [afterSlashesString substringFromIndex:3]; // mega://#F!"xxxxxxxx..."!
-        
-        NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"!"];
-        BOOL isEncryptedFolderLink = ([folderLinkCodeString rangeOfCharacterFromSet:characterSet].location == NSNotFound);
-        if (isEncryptedFolderLink) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"folderEncrypted", @"Folder encrypted")
-                                                                message:AMLocalizedString(@"folderEncryptedMessage", @"This function is not available. For the moment you can't import or download an encrypted folder.")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-        } else {
-            MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
-            
-            FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
-            
-            NSString *megaFolderLinkString = [megaURLString stringByAppendingString:afterSlashesString];
-            [folderlinkVC setIsFolderRootNode:YES];
-            [folderlinkVC setFolderLinkString:megaFolderLinkString];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:folderNavigationController animated:YES completion:nil];
-                } else {
-                    [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
-                }
-            } else {
-                [self.window.rootViewController presentViewController:folderNavigationController animated:YES completion:nil];
-            }
-        }
+        NSString *folderLinkString = @"https://mega.nz/";
+        folderLinkString = [folderLinkString stringByAppendingString:afterSlashesString];
+        [self showFolderLinkView:folderLinkString];
         return YES;
     }
     return NO;
+}
+
+- (void)showFolderLinkView:(NSString *)folderLinkURLString {
+    MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+    
+    FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
+    
+    [folderlinkVC setIsFolderRootNode:YES];
+    [folderlinkVC setFolderLinkString:folderLinkURLString];
+    
+    [self presentLinkViewController:folderNavigationController];
+    
+    self.link = nil;
+}
+
+- (void)presentLinkViewController:(UINavigationController *)navigationController {
+    if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
+        MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
+        if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+            [cameraUploadsPopUpNavigationController.topViewController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+        }
+    } else {
+        [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    }
 }
 
 - (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
@@ -585,10 +576,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:@"#"];
         megaURLConfirmationString = [megaURLConfirmationString stringByAppendingString:afterSlashesString];
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
+        self.link = nil;
         return YES;
     } else if (isMEGANZConfirmationLink) {
         NSString *megaURLConfirmationString = [megaURLString stringByAppendingString:afterSlashesString];
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLConfirmationString];
+        self.link = nil;
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isNewSignUpLink:(NSString *)afterSlashesString {
+    BOOL isNewSignUpLink = [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]; // mega://"#newsignup"
+    if (isNewSignUpLink) {
+        NSString *megaURLString = @"https://mega.nz/";
+        megaURLString = [megaURLString stringByAppendingString:afterSlashesString];
+        [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLString];
         return YES;
     }
     return NO;
@@ -602,17 +606,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
-        if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-            if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                [cameraUploadsPopUpNavigationController.topViewController presentViewController:browserNavigationController animated:YES completion:nil];
-            } else {
-                [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
-            }
-        } else {
-            [self.window.rootViewController presentViewController:browserNavigationController animated:YES completion:nil];
-        }
+        [self presentLinkViewController:browserNavigationController];
     }
+    self.link = nil;
 }
 
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
@@ -678,8 +674,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)disableCameraUploads {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        [[CameraUploads syncManager] turnOffCameraUploads];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
+}
+
+- (void)showLinkNotValid {
+    [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
+    self.link = nil;
+}
+
+- (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
+    UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
+    [unavailableLinkView.imageView setImage:[UIImage imageNamed:imageName]];
+    [unavailableLinkView.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [unavailableLinkView.titleLabel setText:title];
+    [unavailableLinkView.textView setText:text];
+    [unavailableLinkView setFrame:self.window.frame];
+
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleBordered target:nil action:@selector(dismissPresentedViews)];
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    [viewController.view addSubview:unavailableLinkView];
+    [viewController.navigationItem setTitle:title];
+    [viewController.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+    
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
+    [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - Get IP Address
@@ -742,12 +766,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
             if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-                [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+                [[CameraUploads syncManager] resetOperationQueue];
             }
             
             if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
         }
     }
@@ -759,12 +782,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
         // Status battery unplugged
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-            [[[CameraUploads syncManager] assetUploadArray] removeAllObjects];
+            [[CameraUploads syncManager] resetOperationQueue];
         }
         // Status battery plugged
         else {
-            [[CameraUploads syncManager] getAllAssetsForUpload];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
 }
@@ -776,12 +798,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dissmissPresentedViews)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
         [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
         
-        [self dissmissPresentedViews];
+        [self dismissPresentedViews];
         
         [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+    } else if ([alertView tag] == 1) { //alreadyLoggedInAlertView
+        if (buttonIndex == 0) {
+            _emailOfNewSignUpLink = nil;
+        } else if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }
     }
 }
 
@@ -795,7 +823,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         if (self.link != nil) {
             [self processLink:self.link];
-            self.link = nil;
         }
     }
 }
@@ -1002,6 +1029,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
+                } else if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    [self showLinkNotValid];
                 }
                 break;
             }
@@ -1047,6 +1076,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 }
                 
+                break;
+            }
+                
+            case MEGAErrorTypeApiEIncomplete: {
+                if ([request type] == MEGARequestTypeQuerySignUpLink) {
+                    [self showLinkNotValid];
+                }
                 break;
             }
                 
@@ -1115,14 +1151,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     
                     if (self.link != nil) {
                         [self processLink:self.link];
-                        self.link = nil;
                     }
                 }
             }
             
             [[CameraUploads syncManager] setTabBarController:_mainTBC];
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] getAllAssetsForUpload];
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -1140,21 +1175,40 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeQuerySignUpLink: {
-            MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
-            
-            ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
-            [confirmAccountVC setConfirmationLinkString:[request link]];
-            [confirmAccountVC setEmailString:[request email]];
-            
-            if ([self.window.rootViewController.presentedViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *cameraUploadsPopUpNavigationController = (MEGANavigationController *)self.window.rootViewController.presentedViewController;
-                if ([cameraUploadsPopUpNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    [cameraUploadsPopUpNavigationController.topViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+            if (self.urlType == URLTypeConfirmationLink) {
+                MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
+                
+                ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
+                [confirmAccountVC setConfirmationLinkString:[request link]];
+                [confirmAccountVC setEmailString:[request email]];
+                
+                [self presentLinkViewController:confirmAccountNavigationController];
+            } else if (self.urlType == URLTypeNewSignUpLink) {
+
+                if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+                    _emailOfNewSignUpLink = [request email];
+                    UIAlertView *alreadyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", nil)
+                                                                        message:AMLocalizedString(@"alreadyLoggedInAlertMessage", nil)
+                                                                       delegate:self
+                                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    [alreadyLoggedInAlertView setTag:1];
+                    [alreadyLoggedInAlertView show];
                 } else {
-                    [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+                    if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                        MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                        
+                        if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                            LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                            [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:[request email]];
+                            _emailOfNewSignUpLink = nil;
+                        } else if ([navigationController.topViewController isKindOfClass:[CreateAccountViewController class]]) {
+                            CreateAccountViewController *createAccountVC = (CreateAccountViewController *)navigationController.topViewController;
+                            [createAccountVC setEmailString:[request email]];
+                            [createAccountVC viewDidLoad];
+                        }
+                    }
                 }
-            } else {
-                [self.window.rootViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
             }
             break;
         }
@@ -1162,6 +1216,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeLogout: {
             [Helper logout];
             [SVProgressHUD dismiss];
+            
+            if ((self.urlType == URLTypeNewSignUpLink) && (_emailOfNewSignUpLink != nil)) {
+                if ([self.window.rootViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)self.window.rootViewController;
+                    
+                    if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:_emailOfNewSignUpLink];
+                        _emailOfNewSignUpLink = nil;
+                    }
+                }
+            }
             break;
         }
             
@@ -1238,6 +1304,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             default:
                 break;
         }
+        return;
     }
     
     if (transfer.isStreamingTransfer) {
@@ -1337,6 +1404,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 #endif
 }
+
+#pragma mark - MEGAContactRequest
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
     [self setBadgeValueForIncomingContactRequests];

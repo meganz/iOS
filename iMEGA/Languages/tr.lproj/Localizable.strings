@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Boş bir klasörü indiremezsiniz";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Hesabınız aktive edildi. Lütfen giriş yapın.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Geçersiz MEGA Bağlantısı";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Dosya kriptolu";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Kripto çözme anahtarı olmadığından, kriptolu dosyayı indiremez veya içe aktaramazsınız.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Klasör şifrelendi";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Kripto çözme anahtarı olmadığından, kriptolu klasörü indiremez veya içe aktaramazsınız.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Geçersiz bağlantı";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Şifre çözme anahtarını girin";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Bu klasöre/dosyaya erişmek için Şifre Çözme anahtarı gerekir. Anahtar yoksa bağlantı oluşturan kişiyle irtibat kurun.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Şifre çözme anahtarı";
+/* Button title to try to decrypt the link */
+"decrypt"="Şifre çöz";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Geçersiz şifre çözme anahtarı";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Çıkış yapıldı";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Kabul ederseniz, mevcut hesaıbınızın oturumu kapatılacak ve tüm Çevrimdışı veriler silinecek. Devam etmek istiyor musunuz?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Cihazınızda biraz alan boşaltmanız gerekiyor";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Bağlantısı";
+/* Title for the file link view */
+"fileLink"="Dosya linki";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Bulut Sürücüye Aktar";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="İndirmeye çalıştığınız dosya kullanılabilir bellekten daha büyük.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Açmaya çalıştığınız dosya kullanılabilir bellekten daha büyük.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Dosya bağlantısı kullanılamıyor";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Mevcut olmayan bağlantı";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Dosya hizmet kullanım şartları/kabul edilebilir kullanım politikaları ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Dosya kullanıcı tarafından silindi.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="İndirme başladı";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Klasör linki";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="İndir";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="İndirmeye çalıştığınız klasör kullanılabilir bellekten daha büyük.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' klasörü oluşturulamadı";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Klasör linki mevcut değil";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Klasör bağlantısı ToS/AUP ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Klasör bağlantısı kullanıcı tarafından silindi.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -357,7 +357,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="%d dosya ve 1 klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusu\'na taşımak istediğinizden emin misiniz?";
+"moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz? ";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu\'na taşındı";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -631,7 +631,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Transferleri iptal et";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="İptal etmek istiyor musunuz: %@ ?";
+"cancelTransfersText"="İptal etmek istiyor musunuz: %@?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TÜM transferler";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Geri yükleme durduruldu";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="İstek iptal edildi ya da önceki alım geri yüklenemedi. Lütfen daha sonra tekrar deneyin veya ios@mega.nz ile irtibata geçiniz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="HATA AYIKLAMA modunu etkinleştir";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Çevrimdışı bölümünde bir günlük kaydı oluşturulacak(MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="HATA AYIKLAMA modunu devre dışı bırak";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Günlük kaydı (MEGAiOS.log) Çevrimdışı bölümünden silinecek.";

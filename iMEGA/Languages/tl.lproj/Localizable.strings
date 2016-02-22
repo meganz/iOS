@@ -1,0 +1,728 @@
+/* Button title to cancel something */
+"cancel"="Kanselahin";
+/* Button title to accept something */
+"ok"="OK";
+/* */
+"upload"="I-upload";
+/*  */
+"error"="Error";
+/*  */
+"name"="Pangalan";
+/*  */
+"passcode"="Passcode";
+/* "Size" of the file or folder you are sharing */
+"size"="Sukat";
+/*  */
+"folder"="Folder";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="Walang camera";
+/* Alert title to attract attention */
+"attention"="PAUNAWA";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="Bigyan ng permiso ang MEGA app na ma-access ang inyong Camera sa Settings";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="Bigyan ng permiso ang MEGA app na ma-access ang inyong photo library sa Settings";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="Hindi ka pupwedeng mag-download ng bakanteng folder";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="Ang inyong account ay aktibo na. Mag-log in na.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Maling link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Pakilagay ng decryption key";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Kailangan mo ng Decryption key upang ma-access ang folder/file na ito. Kung wala kang key, i-contact ang gumawa ng link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Key para sa decryption";
+/* Button title to try to decrypt the link */
+"decrypt"="I-decrypt";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Maling decryption key";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="Naglog-out na";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="Ikaw ay nag-log out sa device na ito sa ibang lokasyon";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle"="Ang SSL key ng Server ay hindi ma-verify. Ikaw ay maaaring apektado ng isang man-in-the-middle attack.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Masyadong abala ang servers. Hintayin lamang po...";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="MEGA SPACE";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="MEGA SPEED";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="MEGA PRIVACY";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="MEGA ACCESS";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="Magregister na at makakuha ng 50 GB na libreng space";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="Ang mga uploads ay mabilis.Madaling maibahagi ang mga files sa lahat.";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="Pakakaingatan ng end-to-end encryption ng MEGA ang mga itatabi ninyong file dito";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="Makakuha ng buong encrypted access kahit saan, kailan man.";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="Mag-login";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Wala ka pang account?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Gumawa ng account";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="Gumawa ng account";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="Meron ka na bang account sa MEGA?";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="Maling e-mail at/o password. Subukang muli";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="Maglagay ng valid email";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="Maglagay ng valid password";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="Email";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="Password";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="Pumapayag ako sa MEGA Terms of Service";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="Maglagay ng valid na pangalan";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="Di tugma ang password";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="Kelang mong pumayag sa terms of service para mag-register ng account sa MEGA.";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="Ang e-mail address na ito ay meron ng registered account sa MEGA.";
+/* Message displayed when an action is completed successfully */
+"awesome"="Grabe";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="I-check ang inyong e-mail address at i-click ang link para i-confirm ang inyong account.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="Ilagay ang inyong password para makumpirma ang inyong account";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="I-confirm inyong account";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="Maling password";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="Ikaw ay nakalogged in sa ibang account";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="Kung ikaw ay papayag, ang inyong kasalukuyang account ay ila-log out at lahat ng Offline data ay mapapahi. Gusto mo pa bang magpatuloy?";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="Kailangang magbawas upang mabakante ang inyong device.";
+/* Title for the file link view */
+"fileLink"="Link ng file";
+/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
+"importButton"="I-import sa Cloud Drive";
+/* Button title to trigger the action of downloading the file to your device. */
+"downloadButton_fileLink"="I-download sa inyong MEGA App";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="Buksan ang file";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="Ang inyong file na tinatangkang i0download ay mas malaki sa inyong available na memory.";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="Ang inyong file na tinatangkang buksan ay mas malaki sa inyong available na memory.";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Hindi available ang link";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="Ito marahil ay dahil sa mga sumusunod:- Ang file ay maaaring tinanggal na dahil sa ToS/AUP violation.- Maling URL - ang link na ina-access mo ay wala- Ang file ay pinahi na ng user.";
+/* DO NOT TRANSLATE, it will change (Process) */
+"fileAlreadyExist"="The file you want to download already exists Offline";
+/* Message shown when a download starts */
+"downloadStarted"="Nagsimula na ang Download";
+/* Title for the folder link view */
+"folderLink"="Folder Link";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="I-download";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="Ang folder na tinatangka mong i-download ay mas malaki sa available memory.";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="Ang folder na '%@' ay hindi mabuo";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="Ito marahil ay dahil sa mga sumusunod:- Ang folder ay maaaring tinanggal na dahil sa ToS/AUP violation.- Maling URL - ang link na ina-access mo ay wala- Ang folder ay pinahi na ng user.";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="Walang internet connection";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="Walang files sa folder";
+/* Title shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_title"="Bakanteng folder link";
+/* Message shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_text"="Sa ngayon, ang link na ito ay walang files.";
+/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
+"folderLinkEmptyState_textFolder"="Ang sub folder na ito ay walang files.";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="Wala kang files sa inyong Cloud Drive";
+/* Title shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_titleContact"="Walang files ang nasa binahaging folder";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="Linisin ang Basurahan";
+/* Message shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_text"="Magdagdag ng files gamit ang button sa itaas";
+/* Message shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_textContact"="Magbahagi ng kahit na ano! Magdagdag na files gamit ang itaas na button.";
+/* Title shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_title"="Hindi pinagana ang Camera Uploads";
+/* Message shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_text"="Pagganahin ang Camera Uploads upang magkaroon ng kopya ng inyong device photos sa MEGA.";
+/* Title shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_title"="Walang files ang sinave para sa offline";
+/* Message shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_text"="Mag-download ng files para magamit kung walang internet connection.";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="Wala ka pang contacts na naidaragdag!";
+/* Message shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_text"="Magdagdag ng contacts gamit ang button sa itaas.";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text"="Walang padating na shared folders";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text"="Walang papalabas na shared folders";
+/* Title of My Contacts section */
+"myContacts"="Contacts";
+/* Title of Contacts requests section */
+"contactRequests"="Mga kahilingan ng mga contacts";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent"="Naipadala";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests"="Kahilingan";
+/* Success message shown when you acepted a contact request */
+"requestAccepted"="Tinanggap ang kahilingan";
+/* Success message shown when you Cancelled a contact request */
+"requestCancelled"="Tinanggihan ang kahilingan";
+/* Success message shown when you remove a contact request */
+"requestDeleted"="Binura ang kahilingan";
+/* Title shown when there's no pending request */
+"noRequestPending"="Walang naantalang request ngayon";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="Itinigil muna ang paglilipat";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="No Transfers";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No Downloads";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No Uploads";
+/* Text shown under the upper title when the transfers are paused */
+"transfersEmptyState_textPaused"="Simulang ang paglilipat gamit ang taas na button.";
+/* Text shown under the upper title when there's no transfers */
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
+/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
+"transfersEmptyState_textDownload"="Wala kang pending downloads.";
+/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
+"transfersEmptyState_textUpload"="Wala kang pending uploads";
+/* Title of the Cloud Drive section */
+"cloudDrive"="Cloud Drive";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d file";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d files";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%d folder";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d folders";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="isang folder • isang file";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] na folders • [B] na files";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d na folders •  isang file";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="isang folder • %d na files";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="Na-queued";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="Mayroong pending downloads";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="Subukang muli o itigil na";
+/* Section title of the "Sort by" */
+"sortTitle"="I-sort batay sa";
+/* Button title to "Save" the selected option */
+"save"="I-save";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="pangalan (paitaas)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="pangalan (paibaba)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="pinakamalaki";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="pinakamaliit";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="pinakabago";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="pinakaluma";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="Pumili";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="Kunan";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="Bagong folder";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="Pangalan ng bagong folder";
+/* Title button for the create folder alert.  */
+"createFolderButton"="Gumawa";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="I-upload galing sa ...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="nai-upload na ang [A] na may pangalang [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Ang file ay naiupload na may pangalang %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d na files ang nai-upload na sa folder.";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="Nagsimula ang upload";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="Ang file ay itinapon na sa Basurahan";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="Ang folder ay itinapon sa Basurahan";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="Ang file ay nilipat";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="Ang folder ay nilipat";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="Wala ka ng access sa file na ito";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Wala ka access sa folder na ito";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="Isave sa offline";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="Itabi ng magamit Offline";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Ang Inbox label ay reserbado para sa Apple.";
+/* List option shown on the details of a file or folder */
+"getLink"="Kuhanin ang link";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="Gumagawa ng link...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Nakopya ang link";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Buksan sa...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="Alisin ang link";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="Ang link ay tinanggal";
+/* Title show when a file is being downloaded */
+"downloading"="Idinadownload: [X]%";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="Gusto mo bang kanselahin ang pagda-download?";
+/* Title for the action that allows you to move a file or folder */
+"move"="Ilipat";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="Isang file ang nailipat!";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%2 files ang nailipat";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="isang folder ang nailipat";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d folders ang nailipat";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 file at 1 folder ang nailipat";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 file at %d folders ang nilipat";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d files at isang folder ang nilipat";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] files at [B] folders ang inilipat";
+/* List option shown on the details of a file or folder */
+"copy"="Kopyahin";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="Isang file ang nakopya";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d files ang nakopya";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 folder ang nakopya";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d ang nakopya";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 file at 1 folder ang kinopya";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 file at %d folders ang kinopya";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%d files at 1 folder ang kinopya";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] files at [B] folders ang nakopya";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="Pangalanan ng iba";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="Ilagay ang pangalan";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="Ilipat sa Basurahan";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="Gusto mo bang ilipat ang isang file na ito sa Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="Gusto mo bang itapon ang mga %d files na ito sa Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="Gusto mo bang itapon ang isang folder na ito sa Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="Gusto mo bang ilagay ang %d na folders sa iyong Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="Gusto mo bang itapon sa Basurahan ang isang file at isang folder na ito?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="Gusto mo bang ilagay ang isang file at ang %d na folders sa Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="Gusto mo bang ilagay ang %d na files at isang folder sa Basurahan?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="Gusto mo bang ilipat ang [A] files sa [B] folders sa Basurahan?";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="isang file ang tinapon sa Basurahan";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d files tinapon sa Basurahan";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="isang folder ang tinapon sa Basurahan";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d folders ang nilagay sa Basurahan";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="tig-isang file at folder ang tinapon sa Basurahan";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="isang file at %d folders ang tinapon sa Basurahan";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d files at isang folder ang tinapon sa Basurahan";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] files at [B] folders ang tinapon sa Basurahan";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="Pagkakamali sa permiso";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="Tingnan ang inyong permiso sa folder na ito";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="Naibahagi na ang folder!";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="Iangkat sa";
+/* Button title that triggers the importing link action */
+"import"="Import";
+/* Message shown when a file have been imported */
+"fileImported"="Na-import na ang file!";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="Lumagpas ka na sa quota";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="Overquota Alert!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="Ang operasyong ito ay ititigil na sa kadahalinang lalagpas ka sa storage limit ng iyong account. Gusto mo bang i-upgrade ang inyong account?";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="Pumili ng items";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu mga imahe";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu imahe";
+/* Button title that skips the current action */
+"skipButton"="Mag-skip";
+/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="Gamitin ang Camera Uploads";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="Pinagana ang Camera Uploads!";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu ang item na pinili";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu items ang napili";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="Ang Camera Uploads ay hindi pagaganahin, dahil wala ka ng espasyo sa iyong device";
+/* Title of the Offline section */
+"offline"="Offline";
+/* Title of the Contacts section */
+"contactsTitle"="Mga Koneksyon";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="Walang folders na binahagi";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 folder";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d folders";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="Ilagay ang email";
+/* Title of Shared Items section */
+"sharedItems"="Mga binahaging item";
+/* Title of the tab bar item for the Shared Items section */
+"shared"="Binahagi";
+/* Title of the "Incoming" Shared Items. */
+"incoming"="Padating";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing"="Papaalis";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact"="Ibinahagi sa isang contact";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts"="Binahagi sa %d na mga contacts";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged"="Binago ang pahintulot";
+/* Message shown when a share has been left */
+"shareLeft"="Natirang binahagi";
+/* Message shown when some shares have been left */
+"sharesLeft"="Mga natirang binahagi";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="Tinanggal ang binahagi";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="Gusto mo bang tanggalin ang binahaging ito? (Binahagi sa isang contact)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="Gusto mo bang tanggalin ang binahaging ito? (Binahagi sa %d contacts)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="Gusto mo bang tanggalin ang mga binahaging ito sa iyo? (Binahagi sa %d contacts)";
+/* Message shown when a share have been removed */
+"shareRemoved"="Ang share ay natanggal na";
+/* Message shown when some shares have been removed */
+"sharesRemoved"="Tinanggal na binahagi";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner"="May-ari";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith"="Ibahagi kina";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="Idagdag pamula sa contacts";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="Magdagdag ng koneksyon";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="Email ng contact";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="Magdagdag";
+/* Success message shown when a contact has been invited */
+"requestSent"="Naipadala na ang kahilingan";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="Nabigo ang pagdagdag sa contact";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="Alisin ang contact";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="Gusto mo bang tanggalin si %@ sa inyong listahan ng contact?";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="Gusto mo bang tanggalin ang %d na users sa inyong listahan ng contact?";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d tinaggal ang contacts";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="Tinanggal si %@!";
+/* Label shown when a contact request is pending */
+"pending"="Pending";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="Ang contact ay walang email";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="Lumisan";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="Iniwan ang folder!";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="Ibahagi ang Folder";
+/* Button that allows you to select a given folder */
+"select"="Piliin";
+/* Permissions given to the user you share your folder with */
+"readOnly"="Read only";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="Read & Write";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="Ganap na access";
+/* Title of the Settings section */
+"settingsTitle"="Mga Settings";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="Camera Uploads";
+/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"rubbishBinLabel"="Basurahan";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="Security Options";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="Tungkol sa";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="Lingwahe";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="Application language";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="Magbigay ng Tugon";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Isulat ang feedback mo dito:";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="Walang email na naka set up sa inyong device";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="Pribadong Patakaran";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="Mga Termino ng Serbisyo";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="Off";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="On";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="Opsyon";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="Mag-upload ng videos";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="Gamitin ang cellular connection";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="Kapag pinagana, mga bagong photos ang mai-uupload.";
+/* Label for the "Version" number of the app */
+"version"="Version";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="Acknowledgements";
+/* Title for the MEGA Master Key */
+"masterKey"="MasterKey";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="Palitan ang password";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="Ilabas ang Master Key";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="Babala pangseguridad! Ito ay isang operasyon na may mataas na panganib. Gusto mo bang ipagpatuloy?";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="Ang pag-eexport sa Master Key at paglalagay nito sa isang secured na lokasyon ay makakapagbigay daan upang makuhang muli ang inyong account sa mga pagkakataon maiwala mo ang iyong password ng walang data loss.";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="Na-export na ang Master Key";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Ang Masterkey.txt ay nai-save sa device. Mag-connect sa iyong computer at buksan ang iTunes para ma-access ito sa iyong MEGA documents. Pinapayohan ka naming i-secure ang file na ito!";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="Tinanggal ang Master Key";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="Tinanggal ang MasterKey.txt sa inyong Documents folder.";
+/* Title for the action that allows to remove a file or folder */
+"remove"="Alisin";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="I-confirm ang pag-aalis";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang isang file. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang %d na files. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang isang folder. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="Tatanggalin mo na ng tuluyan ang %d na folders. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="Tuluyan mo ng buburahin ang isang file at isang folder. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="Tuluyan mo ng tatanggalin ang isang file at %d na folders. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="Tuluyan mo ng tatanggalin ang %d files at isang folder. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng bawiin pa ito.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="Tatangalin mo na ng tuluyan ang [A] files at [B] folders. Gusto mo bang magpatuloy? (Hindi mo na pupwedeng baguhan ang aksyon na ito.)";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 file tinanggal sa MEGA";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedToRubbishBinMessage"="%d files ang tinanggal sa MEGA";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="isang folder ang tinanggal sa MEGA";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d folders ang tinaggal sa MEGA";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] files at [B] folders ang tinanggal sa MEGA";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="Kasalukuyang password";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Bagong password";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="Kumpirmahin ang password";
+/* Success message shown when the password has been changed */
+"passwordChanged"="Nabago na ang iyong passsword.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="Ang bago at lumang password ay hindi tugma.";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="Baguhin ang Passcode";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="Madaling passcode";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="Pahiin ang local data";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="Magla-log out at papahiin ang local data pagkatapos ng 10 maling passcode";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="Tulong";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="Makakuha ng suporta o basahin ang mga popular na topics.";
+/* Title to rate the app */
+"rateUsLabel"="I-rate kami";
+/* Title of the Transfers section */
+"transfers"="Mga transfer";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="Lahat";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="Mga Downloads";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="Mga Uploads";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Itinigil ang pagbabahagi";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCancelled"="Ang mga paglilipat ay itinigil na!";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="Itigil ang transfer";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="Gusto mo bang itigil ang %@?";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="LAHAT ng transfer";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="UPLOAD tranfers";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="DOWNLOAD transfers";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="sariling  Account";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="Log out";
+/* String shown when you are logging out of your account. */
+"loggingOut"="Logging out";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="Nagamit na";
+/* Title for "Local" used space. */
+"localLabel"="Local";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="Gamit na";
+/* Title for MEGA "Available" space. */
+"availableLabel"="Available";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="Libre";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="magtatapos sa %@";
+/* DO NOT TRANSLATE, it will change */
+"restorePurchases"="Restore purchases";
+/* DO NOT TRANSLATE, it will change */
+"purchasesHistory"="Purchases history";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="Padating na mga Shares";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="ng %@";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="nakagamit ng %@";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="available na %@";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="Ina-upgrade ang account";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="Lagayan";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="Bandwidth";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="%.2f %@ kada buwan";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan"="Pumili ng plano sa ibaba:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree"="Makakuha ng 2 libreng buwan at mag-subscribe ng isang taon sa PRO plan";
+/* Header shown to help on the purchasin process */
+"selectMembership"="Pumili ng membership:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17"="Makaipon ng 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase"="MALING PAGBILI %@ (%ld) ";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled"="Ang In-App Purchases ay tinanggal, paganahin ito sa pagpunta sa iOS Settings";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound"="Hindi makita ang produktong %@ , i-contact ang ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title"="Payagan ang pagbili";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message"="Kailangan mong paganahin ang In-App na Pagbili sa iyong iOS Settings bago mag-restore ng pagbili.";
+/* Button title to restore failed purchases */
+"restore"="I-restore";
+/* "Monthly" subscriptions */
+"monthly"="Buwanan";
+/* "Yearly" subscriptions */
+"yearly"="Taunan";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable"="Ang In-App Purchase item ay wala pa sa App Store ngayon. Subukan muli mamaya.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title"="Maraming salamat";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message"="Ang inyong binibili ay naibalik";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title"="Itinigil ang pagbili";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message"="Maaaring itinigil mo ang request o nag-report ang Apple ng isang transaction error. Muling subukan o i-contact ang ios@mega.nz.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title"="Irestore ang issue";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message"="Ang nauna mong binili ay hindi makita. Piliin muli ang binili mo para maibalik. Wala itong charge.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title"="Itinigil ang pagrerestore";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message"="Maaaring ang inyong request ay itinigil o ang naunang pagbili ay hindi nairestore. Muling subukan mamaya o i-contact ang ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Pagganahin ang DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Isang log ang gagawin sa Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Patayin ang DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Ang log (MEGAiOS.log) ay mabubura sa Offline section.";

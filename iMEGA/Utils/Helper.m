@@ -44,35 +44,21 @@ static NSInteger linkNodeOption;
     static NSArray *languagesSupportedIDs = nil;
     
     if (languagesSupportedIDs == nil) {
-        languagesSupportedIDs = [NSArray arrayWithObjects:
-                                 //                      @"af",
-                                 //                      @"ar",
-                                 //                      @"bg",
-                                 //                      @"bs",
-                                 //                      @"ca",
+        languagesSupportedIDs = [NSArray arrayWithObjects:@"ar",
+                                 @"bg",
                                  @"cs",
-                                 //                      @"da",
                                  @"de",
-                                 @"ee",
                                  @"en",
                                  @"es",
-                                 //                      @"et",
-                                 //                      @"eu",
                                  @"fa",
                                  @"fi",
                                  @"fr",
-                                 //                      @"gl",
                                  @"he",
-                                 //                      @"hr",
                                  @"hu",
                                  @"id",
                                  @"it",
                                  @"ja",
                                  @"ko",
-                                 //                      @"lt",
-                                 //                      @"lv",
-                                 //                      @"ms",
-                                 //                      @"nb",
                                  @"nl",
                                  @"pl",
                                  @"pt-br",
@@ -80,12 +66,13 @@ static NSInteger linkNodeOption;
                                  @"ro",
                                  @"ru",
                                  @"sk",
-                                 //                      @"sl",
+                                 @"sl",
+                                 @"sr",
                                  @"sv",
-                                 //                      @"th",
-                                 //                      @"tl",
+                                 //@"th",
+                                 @"tl",
                                  @"tr",
-                                 //                      @"uk",
+                                 @"uk",
                                  @"vi",
                                  @"zh-Hans",
                                  @"zh-Hant",
@@ -839,10 +826,9 @@ static NSInteger linkNodeOption;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
     [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
+
+    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
-    
-    [[CameraUploads syncManager] turnOffCameraUploads];
 }
 
 + (void)deletePasscode {

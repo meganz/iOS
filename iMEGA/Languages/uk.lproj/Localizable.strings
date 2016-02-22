@@ -1,197 +1,197 @@
 /* Button title to cancel something */
-"cancel"="Loobu";
+"cancel"="Скасувати";
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Lae üles";
+"upload"="Відвантажити";
 /*  */
-"error"="Viga";
+"error"="Помилка";
 /*  */
-"name"="Nimetus";
+"name"="Ім’я";
 /*  */
-"passcode"="Parool";
+"passcode"="Код блокування";
 /* "Size" of the file or folder you are sharing */
-"size"="Suurus";
+"size"="Розмір";
 /*  */
-"folder"="Kaust";
+"folder"="Тека";
 /* Error message shown when there's no camera available on the device */
-"noCamera"="Kaamerat pole";
+"noCamera"="Немає доступної камери";
 /* Alert title to attract attention */
-"attention"="Tähelepanu";
+"attention"="Увага";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Palun lubage MEGA rakendusele ligipääs Teie kaamerale Seadetest";
+"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Palun andke Seadetest MEGA rakendusele ligipääs Teie piltidele";
+"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Tühja kausta ei saa alla laadida";
+"emptyFolderMessage"="Ви не можете завантажити порожню теку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Sinu konto on juba aktiveeritud. Palun logi sisse.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Vigane MEGA link";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Krüpteeritud fail";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Hetkel ei ole võimalik krüpteeritud faili importida ega alla laadida.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Krüpteeritud kaust";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Hetkel ei saa krüpteeritud kausta importida ega alla laadida.";
+"accountAlreadyConfirmed"="Ваш обліковий запис вже активовано. Будь ласка, увійдіть.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Введіть ключ розшифрування";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Ключ розшифровки";
+/* Button title to try to decrypt the link */
+"decrypt"="Розшифровувати";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="Välja logitud";
+"loggedOut_alertTitle"="Вихід";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Olete mujalt end välja loginud";
+"loggedOutFromAnotherLocation"="Ви закрили сесію на цьому пристрої з іншого місця";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Serveri SSL võtit ei suudeta tuvastada. Võite olla vahelepõike rünnaku ohver.";
+"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Serverid on hõivatud. Palun oodake...";
+"serversTooBusy"="Сервер зайнятий. Будь ласка, зачекайте…";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA KETTARUUM";
+"megaSpace"="MEGA ПРОСТІР";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA KIIRUS";
+"megaSpeed"="MEGA ШВИДКІСТЬ";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA PRIVAATSUS";
+"megaPrivacy"="MEGA КОНФІДЕНЦІЙНІСТЬ";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="LIGIPÄÄS MEGASSE";
+"megaAccess"="MEGA ДОСТУП";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Registreerumisel saate 50 GB tasuta pilveruumi.";
+"megaSpaceText"="Зареєструйтеся зараз і отримаєте 50 ГБ простору.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Üleslaadimine on kiire.Faile saab kõigiga jagada otsekohe.";
+"megaSpeedText"="Швидке відвантаження.Негайно обмінюйся файлами з усіма.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Varustage kõiki oma faile MEGA otspunktkrüpteerimisega";
+"megaPrivacyText"="Зберігайте усі свої файли у неперервному шифруванні MEGA.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Hankige täielikult krüptitud ligipääs kõikjal,igal ajal.";
+"megaAccessText"="Отримати повністю шифрований доступ у будь-якому місці, у будь-який час.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Logi sisse";
+"login"="Увійти";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Pole kontot?";
+"doNotHaveAnAccount"="Не маєте облікового запису?";
 /* Button that bring you to section where you can create an account */
-"createOne"="Looge";
+"createOne"="Створити обліковий запис";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Looge konto";
+"createAccount"="Створити обліковий запис";
 /* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Kasutaja on juba olemas?";
+"alreadyHaveAnAccount"="Вже маєте обліковий запис?";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Vigane e-posti aadress ja/või parool. Palun proovige uuesti";
+"invalidMailOrPassword"="Невірна адреса електронної пошти та/або пароль. Будь ласка, спробуйте ще раз";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Sisestage õige e-posti aadress";
+"emailInvalidFormat"="Введіть дійсну адресу електронної пошти";
 /* Message shown when the user enters a wrong password  */
-"passwordInvalidFormat"="Sisestage õige parool";
+"passwordInvalidFormat"="Введіть правильний пароль";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-post";
+"emailPlaceholder"="Електронна пошта";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="Parool";
+"passwordPlaceholder"="Пароль";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Nõustun MEGA teenuse tingimustega";
+"termsOfServiceButton"="Я згоден з Умовами надання послуг MEGA";
 /* Error text shown when you have not entered a correct name  */
-"nameInvalidFormat"="Sisestage õige nimi";
+"nameInvalidFormat"="Введіть дійсне ім'я";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Paroolid ei kattu";
+"passwordsDoNotMatch"="Паролі не співпадають";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="MEGA konto tegemiseks peate nõustuma lepingu tingimustega.";
+"termsCheckboxUnselected"="Ви повинні погодитися з умовами користування, щоб зареєструвати обліковий запис на MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="See e-kirja aadress on juba registreeritud Megaga.";
+"emailAlreadyRegistered"="Ця e-mail  адреса, вже зареєстрована в Mega.";
 /* Message displayed when an action is completed successfully */
-"awesome"="Äge";
+"awesome"="Неймовірно";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Palun kontrolli oma e-kirju ja vajuta lingile, et kinnitada oma konto.";
+"accountCreated"="Будь ласка, перевірте свій e-mail, та натисніть на посилання, для підтвердження свого облікового запису.";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="Konto kinnitamiseks, palun sisestage oma parool";
+"confirmText"="Будь ласка, введіть пароль, щоб підтвердити обліковий запис";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Konto kinnitamine";
+"confirmAccountButton"="Підтвердження облікового запису";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Vale parool";
+"passwordWrong"="Невірний пароль";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Olete teise kontoga sisse logitud";
+"alreadyLoggedInAlertTitle"="Ви увійшли в інший обліковий запис";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Nõustumisel logitakse Teid välja ja kõik internetita oleku andmed kustutatakse. Soovite jätkata?";
+"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Peate seadme mahtu vähendama";
-/* Title for the MEGA link view */
-"megaLink"="MEGA link";
+"nodeTooBig"="Вам потрібно звільнити деякий простір на вашому пристрої";
+/* Title for the file link view */
+"fileLink"="Посилання на файл";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Impordi oma Võrgukettale";
+"importButton"="Імпортувати в Хмарний диск";
 /* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Lae alla oma MEGA rakendusse";
+"downloadButton_fileLink"="Завантажити до додатку MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Ava fail";
+"openButton"="Відкрити файл";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="Allalaaditav fail on saadavalolevast mahust suurem.";
+"fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="Avatav fail on saadavalolevast mälumahust suurem.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Faili link pole saadaval";
+"fileTooBigMessage_open"="Файл, який ви намагаєтесь відкрити більший ніж розмір доступної пам'яті.";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Sellel võib olla mitu põhjust:- Fail on eemaldatud reeglite rikkumise tõttu.- Vigane URL - avatavat linki pole olemas.- Kasutaja on faili kustutanud.";
+"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Allalaadimine käivitati";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+"downloadStarted"="Завантаження розпочато";
+/* Title for the folder link view */
+"folderLink"="Ланка теки";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Lae alla";
+"downloadButton"="Скачати";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="Allalaaditav kaust on saadavalolevast mahust suurem.";
+"folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
-"folderCreationError"="Faili '%@' ei saa luua";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Kausta linki pole saadaval";
+"folderCreationError"="Теку '%@' неможливо створити";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Sellel võib olla mitu põhjust:- Kausta link on reeglite rikkumise tõttu eemaldatud.- Vigane URL - linki pole olemas.- Kasutaja on eemaldanud kausta lingi.";
+"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Internetiühendus puudub";
+"noInternetConnection"="Немає інтернет з'єднання";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Kaust on tühi";
+"emptyFolder"="Немає файлів у теці";
 /* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Kaust on tühi";
+"folderLinkEmptyState_title"="Посилання на порожню теку";
 /* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Hetkel pole sellel lingil ühtegi faili.";
+"folderLinkEmptyState_text"="Це ланка на теку, що не має жодного файлу";
 /* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Hetkel pole selles kaustas ühtegi faili.";
+"folderLinkEmptyState_textFolder"="Ця підтека не має жодного файлу";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Sinu Pilves pole ühtegi faili";
+"cloudDriveEmptyState_title"="Не має файлів на вашому Хмарному диску";
 /* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Jagatud kaust on tühi";
+"cloudDriveEmptyState_titleContact"="У спільній теці немає файлів";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Tühjenda Prügikast";
+"cloudDriveEmptyState_titleRubbishBin"="Очистити";
 /* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Failide lisamiseks kasutage ülalolevat nuppu.";
+"cloudDriveEmptyState_text"="Додати файли за допомогою кнопки нагорі";
 /* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Jagage midagi! Lisage faile ülaloleva nupu abil.";
+"cloudDriveEmptyState_textContact"="Поділіться чим-небудь. Додайте файлів натиснувши кнопку угорі.";
 /* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Üleslaadimine kaamerast on keelatud";
+"cameraUploadsEmptyState_title"="Завантаження з камери відключено";
 /* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Oma seadmel olevate piltide kopeerimiseks MEGA'sse lubage üleslaadimine kaamerast.";
+"cameraUploadsEmptyState_text"="Увімкніть завантаження з камери, щоб мати копію фотографій вашого пристрою на MEGA.";
 /* Title shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_title"="Internetita oleku jaoks pole ühtki faili salvestatud";
+"offlineEmptyState_title"="Немає файлів, збережених автономно";
 /* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Failide kasutamiseks ilma internetiühenduseta laadige need alla.";
+"offlineEmptyState_text"="Завантажте файли, щоб використовувати їх, коли не стане підключення до інтернету.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Te pole veel kontakte lisanud";
+"contactsEmptyState_title"="Ви не маєте ніяких контактів";
 /* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Lisage kontakte ülaloleva nupu abil.";
+"contactsEmptyState_text"="Додайте контакт, використовуючи кнопку угорі.";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Sissetulevaid jagatud kauste pole";
+"noIncomingSharedItemsEmptyState_text"="Немає вхідних тек спільного доступу";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Väljaminevaid jagatud kauste pole";
+"noOutgoingSharedItemsEmptyState_text"="Немає вихідних тек спільного доступу";
 /* Title of My Contacts section */
-"myContacts"="Kontaktid";
+"myContacts"="Контакти";
 /* Title of Contacts requests section */
-"contactRequests"="Kontaktide taotlused";
+"contactRequests"="Запит на контакт";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Saadetud";
+"sent"="Надіслано";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Kutsed";
+"requests"="Запити";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Kutse võeti vastu";
+"requestAccepted"="Запит прийнято";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Kutsest keelduti";
+"requestCancelled"="Запит відмінено";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Kutse kustutatud";
+"requestDeleted"="Запит видалений";
 /* Title shown when there's no pending request */
-"noRequestPending"="Ootelolevaid päringuid pole";
+"noRequestPending"="Немає очікуваних запитів на цей час";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Edastused on pausitud";
+"transfersEmptyState_titlePaused"="Передачі припинено";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -199,522 +199,530 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Edastusi taastage ülaloleva nupu abil.";
+"transfersEmptyState_textPaused"="Продовжіть передачу натиснувши кнопку угорі.";
 /* Text shown under the upper title when there's no transfers */
 "transfersEmptyState_textAll"="You don't have any pending transfers.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Ootelolevaid allalaadimisi pole.";
+"transfersEmptyState_textDownload"="Ви не маєте завантажень в очікуванні.";
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Ootelolevaid üleslaadimisi pole.";
+"transfersEmptyState_textUpload"="Ви не маєте відвантажень в очікуванні";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Pilve Majutus";
+"cloudDrive"="Хмарний Диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fail";
+"oneFile"="%d файл";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d faili";
+"files"="%d файли";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
-"oneFolder"="%d kaust";
+"oneFolder"="%d тека";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
-"folders"="%d kausta";
+"folders"="%d тек(и)";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 kaust • 1 fail";
+"folderAndFile"="1 тека • 1 файл";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] kausta • [B] faili";
+"foldersAndFiles"="[A] тек • [B] файлів";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d kausta • 1 fail";
+"foldersAndFile"="%d тек(и) • %d файл";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 kaust • %d faili";
+"folderAndFiles"="%d тека • %d файли(ів)";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="Järjekorras";
+"queued"="У черзі";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Osa faile laetakse alles alla";
+"documentOpening_alertTitle"="В очікуванні є завантаження";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Proovige hiljem või tühistage";
+"documentOpening_alertMessage"="Спробуйте пізніше або скасуйте";
 /* Section title of the "Sort by" */
-"sortTitle"="SORTEERIMINE";
+"sortTitle"="СОРТУВАТИ ЗА";
 /* Button title to "Save" the selected option */
-"save"="Salvesta";
+"save"="Зберегти";
 /* Sort by option (1/6). This one orders the files alphabethically*/
-"nameAscending"="nimi (tõusev)";
+"nameAscending"="им'я (висхідно)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
-"nameDescending"="nimi (kahanev)";
+"nameDescending"="им'я (низхідно)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="mahukaim";
+"largest"="найбільші";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
-"smallest"="väikseim";
+"smallest"="найменші";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="uusim";
+"newest"="найновіші";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="vanimad";
+"oldest"="найстаріші";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
-"choosePhotoVideo"="Vali";
+"choosePhotoVideo"="Вибрати";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
-"capturePhotoVideo"="Salvesta";
+"capturePhotoVideo"="Захоплення";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
-"newFolder"="Uus kaust";
+"newFolder"="Нова тека";
 /* Hint text shown on the create folder alert. */
-"newFolderMessage"="Uue kausta nimi";
+"newFolderMessage"="Назва нової теки";
 /* Title button for the create folder alert.  */
-"createFolderButton"="Koosta";
+"createFolderButton"="Створити";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="Lae üles asukohast...";
+"uploadFrom"="Імпортувати з…";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] on juba üles laetud nimega [B]";
+"fileExistAlertController_Message"="[A] вже завантажено з ім'ям [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Fail on juba nimega %@ üles laetud";
+"fileAlreadyExistMessage"="Цей файл вже було завантажено з ім'ям %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d valitud faili juba asuvad kaustas.";
+"filesAlreadyExistMessage"="%d вибрані файли вже було відвантажено у цю теку.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Algas üleslaadimine!";
+"uploadStarted_Message"="Відвантаження розпочато";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="Fail liigutati Prügikasti";
+"fileMovedToTheRubbishBin_alertTitle"="Цей файл було перенесено у Кошик для сміття";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="Kaust eemaldati Prügikasti";
+"folderMovedToTheRubbishBin_alertTitle"="Цю теку було перенесено у кошик для сміття";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="Fail on liigutatud";
+"fileMoved_alertTitle"="Цей файл було перенесено";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="Kaust on liigutatud";
+"folderMoved_alertTitle"="Цю теку було перенесено";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="Enam ei ole Teil ligipääsu sellele failile";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Ви більше не маєте доступу до цього файлу";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="Enam ei ole Teil ligipääsu sellele kaustale";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Ви більше не маєте доступу до цієї теки";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Salvestage internetita oleku jaoks";
+"saveForOffline"="Зберігати автономно";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Failid võrguta olekus kasutamiseks";
+"savedForOffline"="Зберігати автономно";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Ainult Apple võib kasutada nimetust Inbox.";
+"folderInboxError"="Вхідні зарезервовані для використання Apple.";
 /* List option shown on the details of a file or folder */
-"getLink"="Saa link";
+"getLink"="Отримати посилання";
 /* Message shown when a link to the file is being generated */
-"generatingLink"="Lingi loomine...";
+"generatingLink"="Створення посилання…";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link on kopeeritud";
+"linkCopied"="Ланку скопійовано";
 /* Title shown under the action that allows you to open a file in another app */
-"openIn"="Avage rakendusega...";
+"openIn"="Відкрити в…";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Eemaldage link";
+"removeLink"="Видалити ланку";
 /* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Link on eemaldatud";
+"removeLinkSuccess"="Ланка була видалена";
 /* Title show when a file is being downloaded */
-"downloading"="Allalaadimine: [X]%";
+"downloading"="Завантаження: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Soovite allalaadimist tühistada?";
+"cancelDownloadAlertViewText"="Ви хочете скасувати завантаження?";
 /* Title for the action that allows you to move a file or folder */
-"move"="Liiguta";
+"move"="Перемістити";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="Liigutati 1 fail";
+"moveFileMessage"="1 файл переміщено";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="Liigutati %d faili";
+"moveFilesMessage"="%d файли(ів) перенесено";
 /* Success message shown when you have moved 1 folder */
-"moveFolderMessage"="Liigutati üks kaust";
+"moveFolderMessage"="1 теку перенесено";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d kausta liigutati";
+"moveFoldersMessage"="%d тек перенесено";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="Fail ja kaust on liigutatud";
+"moveFileFolderMessage"="1 файл і 1 теку було перенесено";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="Liigutati ühte faili ja %d kausta";
+"moveFileFoldersMessage"="1 файл і %d тек(и) перенесено";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="Liigutati %d faili ja üks kaust";
+"moveFilesFolderMessage"="%d файли(ів) і 1 теку перенесено";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="Liigutati [A] faili ja [B] kausta";
+"moveFilesFoldersMessage"="[A] файли(ів) і [B] тек(и) перенесено";
 /* List option shown on the details of a file or folder */
-"copy"="Kopeeri";
+"copy"="Скопіювати";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="Kopeeriti üks fail";
+"copyFileMessage"="1 файл скопійовано";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d faili kopeeriti";
+"copyFilesMessage"="%d файли(ів) скопійовано";
 /* Success message shown when you have copied 1 folder */
-"copyFolderMessage"="Kopeeriti üks kaust";
+"copyFolderMessage"="1 теку скопійовано";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d kausta kopeeriti";
+"copyFoldersMessage"="%d тек(и) скопійовано";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="Fail ja kaust on kopeeritud";
+"copyFileFolderMessage"="1 файл і 1 теку скопійовано";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="Kopeeriti üks fail ja %d kausta";
+"copyFileFoldersMessage"="1 файл і %d тек(и) скопійовано";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="Kopeeriti %d faili ja üks kaust";
+"copyFilesFolderMessage"="%d файли(ів) і 1 теку скопійовано";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="Kopeeriti [A] faili ja [B] kausta";
+"copyFilesFoldersMessage"="[A] файли(ів) і [B] тек(и) скопійовано";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Nimeta ümber";
+"rename"="Перейменувати";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Sisesta uus nimi";
+"renameNodeMessage"="Введіть нове ім'я";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="Saada Prügikasti";
+"moveToTheRubbishBin"="Перемістити у кошик для сміття";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="Olete kindel faili liigutamises Prügikasti?";
+"moveFileToRubbishBinMessage"="Ви впевнені, що хочете перенести 1 файл у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="Olete kindel %d faili liigutamises Prügikasti?";
+"moveFilesToRubbishBinMessage"="Ви впевнені, що бажаєте перенести %d файли у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="Olete kindel ühe kausta liigutamises Prügikasti?";
+"moveFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перенести 1 теку у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Olete kindel %d kausta liigutamises Prügikasti?";
+"moveFoldersToRubbishBinMessage"="Ви впевнені, що бажаєте перенести %d тек у Кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Olete kindel ühe faili ja ühe kausta liigutamises Pügikasti?";
+"moveFileFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перемістити 1 файл і 1 теку у кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Olete kindel ühe faili ja %d kausta liigutamises Prügikasti?";
+"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Olete kindel %d faili ja ühe kausta liigutamises Pügikasti?";
+"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Olete kindel [A] faili ja [B] kausta liigutamises Prügikasti?";
+"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="Prügikasti viidi üks fail";
+"fileMovedToRubbishBinMessage"="1 файл перенесено у кошик для сміття";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="Prügikasti viidi %d faili";
+"filesMovedToRubbishBinMessage"="%d файли перенесено у кошик для сміття";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="Prügikasti liigutati üks kaust";
+"folderMovedToRubbishBinMessage"="1 теку перенесено у кошик для сміття";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="Prügikasti liigutati %d kausta";
+"foldersMovedToRubbishBinMessage"="%d тек перенесено у кошик для сміття";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="Prügikasti liigutati üks fail ja üks kaust";
+"fileFolderMovedToRubbishBinMessage"="1 файл і 1 тека перенесені у кошик для сміття";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="Prügikasti liigutati üks fail ja %d kausta";
+"fileFoldersMovedToRubbishBinMessage"="1 файл і %d тек перенесено у кошик для сміття";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="Prügikasti liigutati %d faili ja üks kaust";
+"filesFolderMovedToRubbishBinMessage"="%d файлів і 1 тека перенесено у кошик для сміття";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="Prügikasti liigutati [A] faili ja [A] kausta";
+"filesFoldersMovedToRubbishBinMessage"="[A] файлів і [B] тек перенесено у кошик для сміття";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Ligipääsu viga";
+"permissionTitle"="Помилка прав доступу";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionMessage"="Kontrolli oma ligipääsu sellesse kausta";
+"permissionMessage"="Перевірте дозволи цієї теки";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="Kaust jagatud";
+"sharedFolder_success"="Спільну теку створено";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Impordi asukohta";
+"importTitle"="Імпортувати до";
 /* Button title that triggers the importing link action */
-"import"="Impordi";
+"import"="Імпорт";
 /* Message shown when a file have been imported */
-"fileImported"="Fail imporditi";
+"fileImported"="Файл імпортовано";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Maht on ületatud";
+"quotaExceeded"="Обмеження перевищено";
 /* Alert title shown when the user is overquota */
-"overquotaAlert_title"="Limiidi hoiatus!";
+"overquotaAlert_title"="Квоту перевищено. Увага!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="See pole lubatud, kuna ületaksite oma konto mahulimiiti. Soovite kontot uuendada?";
+"overquotaAlert_message"="Операцію не буде виконано, інакше перевищиться ліміт збереження даних вашого облікового запису. Хочете покращити акаунт?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Vali pilte";
+"selectTitle"="Вибір елементів";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu pilti";
+"photosPerMonth"="%lu фото";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu pilt";
+"photoPerMonth"="%lu фото";
 /* Button title that skips the current action */
-"skipButton"="Jätke vahele";
+"skipButton"="Пропустити";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Luba kaamerast üleslaaditu";
+"enableCameraUploadsButton"="Увімкнути завантаження з камери";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Üleslaadimine kaamerast on lubatud!";
+"cameraUploadsEnabled"="Завантаження з камери увімкнено";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu pilt valitud";
+"oneItemSelected"="%lu елемент вибрано";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu pilti valitud";
+"itemsSelected"="%lu елементів обрано";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Üleslaadimine kaamerast keelatakse, kuna seadmel pole piisavalt ruumi";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
 /* Title of the Offline section */
-"offline"="Väljas";
+"offline"="Не в мережі";
 /* Title of the Contacts section */
-"contactsTitle"="Kontaktid";
+"contactsTitle"="Контакти";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
-"noFoldersShared"="Jagatud kaustu pole";
+"noFoldersShared"="Немає спільних тек";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1 kaust";
+"oneFolderShared"="1 тека";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d kausta";
+"foldersShared"="%d тек(и)";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Sisestage e-posti aadress";
+"addFromEmail"="Введіть адресу електронної пошти";
 /* Title of Shared Items section */
-"sharedItems"="Jagatud failid";
+"sharedItems"="Елементи спільного доступу";
 /* Title of the tab bar item for the Shared Items section */
-"shared"="Jagatud";
+"shared"="Спільне";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Saabunud";
+"incoming"="Вхідні";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Väljuv";
+"outgoing"="Вихідні";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Jagatud 1 kontaktiga";
+"sharedWithOneContact"="Спільно з 1 контактом";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Jagatud %d kontaktiga";
+"sharedWithXContacts"="Спільно з %d контактами";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="Lubasid muudetu edukalt";
+"permissionsChanged"="Дозволи змінено";
 /* Message shown when a share has been left */
-"shareLeft"="Jagamine edastati";
+"shareLeft"="Спільний доступ полишено";
 /* Message shown when some shares have been left */
-"sharesLeft"="Jagamised edastati";
+"sharesLeft"="Спільний доступ полишено";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Jagamise eemaldamine";
+"removeSharing"="Припинити спільний доступ";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Olete selle jagamise eemaldamises kindel? (Jagatud 1 kontaktiga)";
+"removeOneShareOneContactMessage"="Ви впевнені, що бажаєте видалити цей спільний доступ? (Спільний з 1 контактом)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Olete selle jagamise eemaldamises kindel? (Jagatud %d kontaktiga)";
+"removeOneShareMultipleContactsMessage"="Ви впевнені, що бажаєте видалити цей спільний доступ? (Спільний з %d контактами)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Olete nende jagamiste eemaldamises kindel? (Jagatud %d kontaktiga)";
+"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Jagamisvõimalus eemaldati edukalt";
+"shareRemoved"="Спільний доступ видалений вірно";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Jagamised eemaldati";
+"sharesRemoved"="Спільний доступ припинено";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="Omanik";
+"owner"="Власник";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="Jagatud";
+"sharedWith"="Спільно з";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="Lisa kontaktide seast";
+"addFromContacts"="Додати з контактів";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Lisa kontakt";
+"addContact"="Додати контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Kontakti e-post";
+"contactEmail"="Електронна пошта контакту";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="Lisa";
+"addContactButton"="Додати";
 /* Success message shown when a contact has been invited */
-"requestSent"="Kutse saadetud";
+"requestSent"="Запит надіслано";
 /* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="Kontakti ei suudetud lisada";
+"addContactError"="Контакт не додано";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Eemaldage kontakt";
+"removeUserTitle"="Видалити контакт";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Olete kindel %@ eemaldamises oma kontaktide hulgast?";
+"removeUserMessage"="Ви впевнені, що бажаєте видалити %@ зі списку контактів?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Olete kindel %d kasutaja eemaldamises oma kontaktide hulgast?";
+"removeMultipleUsersMessage"="Ви впевнені, що хочете видалити %d користувачів зі списку контактів?";
 /* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d kontakti eemaldati";
+"removedContacts"="%d контакти видалено";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Kontakt %@ eemaldati";
+"removedContact"="Контакт %@ видалено";
 /* Label shown when a contact request is pending */
-"pending"="Ootel";
+"pending"="Протягом";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="Kontaktil pole e-posti aadressi";
+"contactWithoutEmail"="Контакт не має електронної пошти";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Lahku";
+"leaveFolder"="Залишити";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Kaust on edastatud";
+"shareFolderLeaved"="Теку полишено";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="Jaga kausta";
+"shareFolder"="Тека спільного доступу";
 /* Button that allows you to select a given folder */
-"select"="Vali";
+"select"="Вибрати";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Ainult lugemiseks";
+"readOnly"="Лише читання";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lugeda ja kirjutada";
+"readAndWrite"="Читання & Запис";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Täis ligipääs";
+"fullAccess"="Повний доступ";
 /* Title of the Settings section */
-"settingsTitle"="Seaded";
+"settingsTitle"="Налаштування";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Üleslaadimised kaamerast";
+"cameraUploadsLabel"="Відвантаження з камери";
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
-"rubbishBinLabel"="Prügikast";
+"rubbishBinLabel"="Корзина";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Turvaseaded";
+"securityOptions"="Параметри безпеки";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="Teave";
+"about"="Про";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Keel";
+"language"="Мова";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Programmi keel";
+"applicationLanguage"="Мова додатку";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
-"sendFeedbackLabel"="Saada tagasiside";
+"sendFeedbackLabel"="Надіслати відгук";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Palun kirjutage tagasiside siia: ";
+"pleaseWriteYourFeedback"="Будь ласка, залиште відгук тут:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Selle seadme jaoks pole ühtegi e-posti aadressi seadistatud";
+"noEmailAccountConfigured"="Не встановлено електронної пошти облікового запису на цьому пристрої";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Privaatsus poliis";
+"privacyPolicyLabel"="Політика Конфіденційності";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Kasutustingimused";
+"termsOfServicesLabel"="Умови Надання Послуг";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="Väljas";
+"off"="Вимк.";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="Sees";
+"on"="Увім.";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
-"options"="Valikud";
+"options"="Опції";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Videote üleslaadimine";
+"uploadVideosLabel"="Відвантажити відео";
 /* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Kasuta mobiili andmesideühendust";
+"useCellularConnectionLabel"="Використовувати стільниковий зв'язок";
 /* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Ainult aku laadimise ajal";
+"onlyWhenChargingLabel"="Тільки під час зарядки";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Lubamise korral laetakse üles kõik uued pildid ja videod.";
+"cameraUploads_footer"="Коли увімкнено, нові фото і відео буде відвантажено.";
 /* Label for the "Version" number of the app */
-"version"="Versioon";
+"version"="Версія";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Tunnustused";
+"acknowledgements"="Подяки";
 /* Title for the MEGA Master Key */
-"masterKey"="Üldvõti";
+"masterKey"="Майстер-ключ";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Muutke parooli";
+"changePasswordLabel"="Змінити пароль";
 /* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Ekspordi üldvõti";
+"exportMasterKey"="Експорт майстер-ключа";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="Turvarisk! See on väga tähtis tegevus. Soovite jätkata?";
+"exportMasterKey_alertMessage"="Попередження системи безпеки! Це операція з високим ризиком. Ви хочете продовжити?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Üldvõtme eksportimine ja turvalises kohas säilitamine võimaldab Teil oma taastada ligipääsu parooli kaotamise korral.";
+"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Üldvõti on eksporditud";
+"masterKeyExported"="Майстер-ключ експортовано";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Seadmesse salvestati Masterkey.txt. Sellele ligipääsu saamiseks MEGA kaustast Dokumendid avage arvutis iTunes. Soovitame tungivalt sead faili turvaliselt hoida!";
+"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
 /* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Üldvõti eemaldati";
+"masterKeyRemoved"="Майстер-ключ видалено";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Kaustast Dokumendid eemaldati MasterKey.txt.";
+"masterKeyRemoved_alertMessage"="MasterKey.txt був видалений з теки документів.";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Eemalda";
+"remove"="Видалення";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
-"removeNodeFromRubbishBinTitle"="Eemalduse kinnitamine";
+"removeNodeFromRubbishBinTitle"="Підтвердження видалення";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="Ajutiselt eemaldatakse üks fail. Soovite jätkata? (Faili pole võimalik taastada.)";
+"removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Ajutiselt eemaldatakse %d faili. Soovite jätkata? (Faile  pole võimalik taastada.)";
+"removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="Ajutiselt eemaldatakse üks kaust. Soovite jätkata? (Kausta pole võimalik taastada.)";
+"removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Ajutiselt eemaldatakse %d kausta. Soovite jätkata? (Kauste pole võimalik taastada.)";
+"removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Ajutiselt eemaldatakse üks fail ja üks kaust. Soovite jätkata? (Faile ja kaustu  pole võimalik taastada.)";
+"removeFileFolderToRubbishBinMessage"="You are about to permanently remove 1 file and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Ajutiselt eemaldatakse üks fail ja %d kausta. Soovite jätkata? (Faili ja kauste pole võimalik taastada.)";
+"removeFileFoldersToRubbishBinMessage"="You are about to permanently remove 1 file and %d folders. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Ajutiselt eemaldatakse %d faili ja üks kaust. Soovite jätkata? (Faile ja kausta pole võimalik taastada.)";
+"removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Hakkate eemaldama [A] faili ja [B] kausta. Soovite jätkata? (Eemaldamist ei saa tagasi võtta.)";
+"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="MEGAst eemaldati üks fail";
+"fileRemovedToRubbishBinMessage"="1 файл видалений з MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="MEGAst eemaldati %d faili";
+"filesRemovedToRubbishBinMessage"="%d файли(ів) видалені з MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="MEGAst eemaldati üks kaust";
+"folderRemovedToRubbishBinMessage"="1 тека видалена з MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="MEGAst eemaldati %d kausta";
+"foldersRemovedToRubbishBinMessage"="%d тек видалено з MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="MEGAst eemaldati üks fail ja üks kaust";
+"fileFolderRemovedToRubbishBinMessage"="1 файл і 1 тека видалені з MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="MEGAst eemaldati üks fail ja %d kausta";
+"fileFoldersRemovedToRubbishBinMessage"="1 файл і %d тек видалені з MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="MEGAst eemaldati %d faili ja üks kaust";
+"filesFolderRemovedToRubbishBinMessage"="%d файли і 1 тека видалені з MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="MEGAst eemaldati [A] faili ja [B] kausta";
+"filesFoldersRemovedToRubbishBinMessage"="[A] файли і [B] теки видалені з MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Praegune parool";
+"currentPassword"="Поточний пароль";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Uus parool";
+"newPassword"="Новий пароль";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Kinnita parool";
+"confirmPassword"="Підтвердити пароль";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Teie parool on muudetud.";
+"passwordChanged"="Ваш пароль було змінено.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
-"oldAndNewPasswordMatch"="Uus ja vana parool ei tohi kattuda.";
+"oldAndNewPasswordMatch"="Новий і старий паролі не повинні збігатися.";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Muutke parooli";
+"changePasscodeLabel"="Змінити таємний код";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Lihtne parool";
+"simplePasscodeLabel"="Простий пароль";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Kustuta seadmes olevad andmed";
+"eraseAllLocalDataLabel"="Стерти локальні дані";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Siis, kui ollakse kümme korda parooli valesti sisestatud, logitakse välja ning seadmes olevad andmed kustutatakse";
+"failedAttempstSectionTitle"="Вийти та стерти локальні дані після 10 невдалих спроб вводу паролю";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Abikeskus";
+"helpCentreLabel"="Центр Допомоги";
 /* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Küsi abi või loe popimaid teemasid.";
+"helpCentreFooter"="Отримати підтримку або читати популярні теми.";
 /* Title to rate the app */
-"rateUsLabel"="Hinnake meid";
+"rateUsLabel"="Оцініть нас";
 /* Title of the Transfers section */
-"transfers"="Ülekanded";
+"transfers"="Передача";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Kõik";
+"all"="Все";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="Allalaadimised";
+"downloads"="Завантаження";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Üleslaadimised";
+"uploads"="Відвантаження";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Edastus tühistatud";
+"transferCancelled"="Передача скасована";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Edastused tühistatud";
+"transfersCancelled"="Передачі скасовано";
 /* Title of the alert shown when you try to cancel transfers */
-"cancelTransfersTitle"="Edastuste tühistamine";
+"cancelTransfersTitle"="Скасування передач";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Kas soovite tühistada %@?";
+"cancelTransfersText"="Ви бажаєте скасувати %@?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="KÕIK edastused";
+"allInUppercaseTransfers"="ВСІ передачі";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="LAE ÜLES edastusi";
+"uploadInUppercaseTransfers"="Передачі ВІДВАНТАЖЕННЯ";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="LAE ALLA edastused";
+"downloadInUppercaseTransfers"="Передача ЗАВАНТАЖЕННЯ";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Minu konto";
+"myAccount"="Мій кабінет";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Logi välja";
+"logoutLabel"="Вийти";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Logitakse välja";
+"loggingOut"="Вихід з облікового запису";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="Kasutatavus";
+"usage"="Використання";
 /* Title for "Local" used space. */
-"localLabel"="Teie seadme ruum";
+"localLabel"="Локально";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Kasutusel";
+"usedSpaceLabel"="Використовується";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Saadaval";
+"availableLabel"="Доступно";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="TASUTA";
+"free"="БЕЗКОШТОВНО";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="aegub %@";
+"expiresOn"="закінчується %@";
 /* DO NOT TRANSLATE, it will change */
 "restorePurchases"="Restore purchases";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Sissetulevad jagamised";
+"incomingShares"="Надходження спільного доступу";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@'st";
+"of %@"="з %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@ on kasutusel";
+"used of %@"="використано %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="Saadaval on %@";
+"available of %@"="доступно з %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Uuenda kontot";
+"upgradeAccount"="Оновити обліковий запис";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Hoiustamine";
+"productSpace"="Місце";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
-"productBandwidth"="Andmemaht";
+"productBandwidth"="Ширина каналу";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%.2f %@ kuus";
+"productPricePerMonth"="%.2f %@ на місяць";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Valige üks kõrvalolevatest pakettidest:";
+"choosePlan"="Виберіть нижче один з планів:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Üheaastase PRO paketi valimisel saate kaks kuud tasuta lisaks";
+"twoMonthsFree"="Отримайте два місяці безкоштовно, оформивши річну підписку на план PRO";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Valige liikmestaatus:";
+"selectMembership"="Виберіть членство:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Säästate 17%";
+"save17"="Заощадити 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="VALE OST %@ (%ld)";
+"wrongPurchase"="ПОМИЛКА ПОКУПКИ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Rakendusesisesed ostud on keelatud. Palun lubage need iOS'i seadetest.";
+"appPurchaseDisabled"="Покупка у додатку вимкнено, будь ласка, увімкніть це у налаштуваннях iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Toodet %@  ei leitud, palun võtke ühendust aadressil ios@mega.nz";
+"productNotFound"="Продукт %@ не знайдено, будь ласка, зв'яжіться з ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Lubage ostud";
+"allowPurchase_title"="Дозволити покупки";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="Enne ost taastamist peate lubama iOS'i seadetes rakendusesisese ostlemise.";
+"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
 /* Button title to restore failed purchases */
-"restore"="Taasta";
+"restore"="Відновити";
 /* "Monthly" subscriptions */
-"monthly"="Iga kuu";
+"monthly"="Щомісячне";
 /* "Yearly" subscriptions */
-"yearly"="Iga aasta";
+"yearly"="Щорічне";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="See rakendusesisene ost pole hetkel rakendustepoes saadaval. Palun proovige hiljem uuesti.";
+"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Täname";
+"thankYou_title"="Дякуємо";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Teie ost taastati";
+"purchaseRestore_message"="Вашу покупку було відновлено";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Ost peatus";
+"failedPurchase_title"="Покупки зупинено";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Kas tühistasite avalduse või Apple teatas makseveast. Palun proovige uuesti või võtke ühendust aadressil ios@mega.nz.";
+"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Taaste viga";
+"incompleteRestore_title"="Питання відновлення";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="Eelmist ostu ei leitud. Taastamiseks valige eelnevalt ostetud toode. Selle eest EI võeta uuesti raha.";
+"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Taaste peatus";
+"failedRestore_title"="Відновлення зупинено";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Kas avaldus tühistati või eelnevat ostu ei suudetud taastada. Palun proovige uuesti või võtke ühendust aadressil ios@mega.nz.";
+"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Увімкнути режим налагодження";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Журнал буде створено у розділі (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Вимкнути режим налагодження";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Журнал (MEGAiOS.log) буде видалено з автономної частини.";
