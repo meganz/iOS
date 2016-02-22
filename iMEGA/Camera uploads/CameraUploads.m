@@ -96,7 +96,13 @@ static CameraUploads *instance = nil;
     [self setBadgeValue];
     
     if (_isCameraUploadsEnabled) {
-        [self setIsCameraUploadsEnabled:YES];
+        if (_isUseCellularConnectionEnabled) {
+            [self setIsCameraUploadsEnabled:YES];
+        } else {
+            if ([MEGAReachabilityManager isReachableViaWiFi]) {
+                [self setIsCameraUploadsEnabled:YES];
+            }
+        }
     }
 }
 
