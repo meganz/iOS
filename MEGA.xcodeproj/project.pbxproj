@@ -12,6 +12,7 @@
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		411C4C5E1BBEAFB3006FE451 /* CTAssetsPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */; };
 		4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
+		412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
 		413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 413199661BD7BD5D002CD6EA /* DateTools.bundle */; };
 		413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		413199781BD7BD5D002CD6EA /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 4131996B1BD7BD5D002CD6EA /* DTError.m */; };
@@ -101,6 +102,7 @@
 		41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
 		41D9D8E81B7123F100D9B850 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D9D8E71B7123F100D9B850 /* StoreKit.framework */; };
 		41DB620C1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */; };
+		41E23C3D1C6BB992003E1DA9 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E23C3C1C6BB992003E1DA9 /* Photos.framework */; };
 		41E566851BBD6160007569A2 /* ALAsset+accessibilityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566631BBD6160007569A2 /* ALAsset+accessibilityLabel.m */; };
 		41E566861BBD6160007569A2 /* ALAsset+assetType.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566651BBD6160007569A2 /* ALAsset+assetType.m */; };
 		41E566871BBD6160007569A2 /* ALAsset+isEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E566671BBD6160007569A2 /* ALAsset+isEqual.m */; };
@@ -186,6 +188,8 @@
 		4122C0E41B274E8C001CE833 /* LocalizationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizationSystem.h; path = Vendor/AMLocalizedString/LocalizationSystem.h; sourceTree = "<group>"; };
 		4122C0E51B274E8C001CE833 /* LocalizationSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalizationSystem.m; path = Vendor/AMLocalizedString/LocalizationSystem.m; sourceTree = "<group>"; };
 		4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGA-PrefixHeader.pch"; sourceTree = "<group>"; };
+		412EB2641C6E52AA001EA6D6 /* MEGAAssetOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAssetOperation.h; sourceTree = "<group>"; };
+		412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAssetOperation.m; sourceTree = "<group>"; };
 		413199661BD7BD5D002CD6EA /* DateTools.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DateTools.bundle; sourceTree = "<group>"; };
 		413199671BD7BD5D002CD6EA /* DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTools.h; sourceTree = "<group>"; };
 		413199681BD7BD5D002CD6EA /* DTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTConstants.h; sourceTree = "<group>"; };
@@ -347,8 +351,8 @@
 		41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		41DFFB071B9A33A00003FB72 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		41DFFB081B9A34C50003FB72 /* ee */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ee; path = ee.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		41E23C3C1C6BB992003E1DA9 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		41E566621BBD6160007569A2 /* ALAsset+accessibilityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+accessibilityLabel.h"; sourceTree = "<group>"; };
 		41E566631BBD6160007569A2 /* ALAsset+accessibilityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+accessibilityLabel.m"; sourceTree = "<group>"; };
 		41E566641BBD6160007569A2 /* ALAsset+assetType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+assetType.h"; sourceTree = "<group>"; };
@@ -407,6 +411,12 @@
 		E85044C41A6D84620064B675 /* FileLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLinkViewController.h; sourceTree = "<group>"; };
 		E85044C51A6D84620064B675 /* FileLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLinkViewController.m; sourceTree = "<group>"; };
 		E85946861B5D16AC00527153 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E8860CCF1C7724A00026ABBC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8860CD11C77258D0026ABBC /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8860CD41C7727080026ABBC /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8860CD51C77270B0026ABBC /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8860CD71C7727400026ABBC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8860CD81C7738280026ABBC /* tl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tl; path = tl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E889C9E01B55657E00ECEFDF /* MyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountViewController.h; sourceTree = "<group>"; };
 		E889C9E11B55657E00ECEFDF /* MyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountViewController.m; sourceTree = "<group>"; };
 		E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyAccount.storyboard; sourceTree = "<group>"; };
@@ -463,6 +473,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41E23C3D1C6BB992003E1DA9 /* Photos.framework in Frameworks */,
 				41D9D8E81B7123F100D9B850 /* StoreKit.framework in Frameworks */,
 				414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */,
 				418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */,
@@ -761,6 +772,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41E23C3C1C6BB992003E1DA9 /* Photos.framework */,
 				E8E1BD431BA98F5B00AB689D /* libresolv.dylib */,
 				41D9D8E71B7123F100D9B850 /* StoreKit.framework */,
 				E85946861B5D16AC00527153 /* CoreText.framework */,
@@ -792,6 +804,8 @@
 				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */,
 				41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */,
+				412EB2641C6E52AA001EA6D6 /* MEGAAssetOperation.h */,
+				412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */,
 			);
 			path = "Camera uploads";
 			sourceTree = "<group>";
@@ -1335,6 +1349,7 @@
 				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
 				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
+				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
 				41E5668C1BBD6160007569A2 /* CTAssetsGroupViewController.m in Sources */,
 				41E566851BBD6160007569A2 /* ALAsset+accessibilityLabel.m in Sources */,
@@ -1433,7 +1448,6 @@
 				410333F31B99956D00380FF3 /* sv */,
 				410333FA1B9995DC00380FF3 /* zh-Hant */,
 				41DFFB071B9A33A00003FB72 /* fa */,
-				41DFFB081B9A34C50003FB72 /* ee */,
 				41DFFB091B9A3C9E0003FB72 /* pt-br */,
 				E84F86FD1BB99DE200436A0D /* fr */,
 				E84F86FE1BB99E1700436A0D /* ja */,
@@ -1447,6 +1461,12 @@
 				E84F87071BB9A0E200436A0D /* tr */,
 				E84F87091BB9A27600436A0D /* vi */,
 				E8B64EFB1BC6E48C005C726E /* zh-Hans */,
+				E8860CCF1C7724A00026ABBC /* ar */,
+				E8860CD11C77258D0026ABBC /* bg */,
+				E8860CD41C7727080026ABBC /* sl */,
+				E8860CD51C77270B0026ABBC /* sr */,
+				E8860CD71C7727400026ABBC /* uk */,
+				E8860CD81C7738280026ABBC /* tl */,
 			);
 			name = Localizable.strings;
 			path = Languages;

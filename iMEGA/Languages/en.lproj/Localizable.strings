@@ -26,16 +26,18 @@
 "emptyFolderMessage"="You can't download an empty folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Your account has already been activated. Please log in.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Invalid MEGA Link";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="File encrypted";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="You can't import or download an encrypted file as the decryption key is missing.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Folder encrypted";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="You can't import or download an encrypted folder as the decryption key is missing.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Enter decryption key";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Decryption key";
+/* Button title to try to decrypt the link */
+"decrypt"="Decrypt";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Logged out";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="You need to free some space on your device";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Link";
+/* Title for the file link view */
+"fileLink"="File Link";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Import to Cloud Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="The file you are trying to open is bigger than the available memory.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="File link unavailable";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Folder Link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Folder link unavailable";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -381,7 +381,7 @@
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder shared";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Import to ";
+"importTitle"="Import to";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file have been imported */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Restore stopped";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

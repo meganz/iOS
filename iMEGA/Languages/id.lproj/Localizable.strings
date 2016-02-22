@@ -26,16 +26,18 @@
 "emptyFolderMessage"="Anda tidak dapat mendownload folder kosong";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Akun anda telah aktif. Mohon masuk.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Link MEGA salah";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="File terenkripsi";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Anda tidak dapat meng-impor atau download file terenkripsi karena key untuk mendekripsi tidak tersedia.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Folder terenkripsi";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Anda tidak dapat mengimpor atau download folder terenkripsi karena key untuk mendekripsi hilang.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Link salah";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Masukkan decryption key";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="Untuk mengakses folder/file ini, anda membutuhkan Decryption key. Jika anda tidak memiliki key, hubungi pembuat link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Decryption key";
+/* Button title to try to decrypt the link */
+"decrypt"="Decrypt";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Decryption key salah";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Keluar";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Jika anda setuju, akun sekarang akan dikeluarkan dan seluruh data Offline akan dihapus. Anda ingin melanjutkan?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Anda harus mengosongkan tempat pada perangkat anda";
-/* Title for the MEGA link view */
-"megaLink"="link MEGA";
+/* Title for the file link view */
+"fileLink"="Pranala berkas";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Import ke Cloud Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="File yang anda coba untuk download lebih besar dari memori yang tersedia.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="File yang anda coba buka lebih besar dari memori yang tersedia.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Link file tidak tersedia";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Link tidak tersedia";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Ini mungkin terjadi karena beberapa alasan dibawah ini:- File telah terhapus karena pelanggaran ToS/AUP- URL Salah - link yang anda coba untuk akses tidak tersedia- File telah dihapus oleh pengguna.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download dimulai";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Link Folder";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Unduh";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Folder yang anda ingin download lebih besar daripada memori yang tersedia.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Folder '%@' tidak dapat dibuat";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Link / Tautan tidak tersedia";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Ini mungkin terjadi karena beberapa alasan dibawah:- Link folder telah dihapus karena pelanggaran ToS/AUP- URL Salah - link yang anda coba akses tidak tersedia- Link folder telah dihapus oleh pengguna.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -219,11 +219,11 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 folder • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] folders • [B] files";
+"foldersAndFiles"="[A] folder • [B] file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d folders • 1 file";
+"foldersAndFile"="%d folder • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d files";
+"folderAndFiles"="1 folder • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Dimasukan antrian";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Restore dihentikan";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Antara request telah dibatalkan atau pembelian sebelumnya tidak dapat dikembalikan. Harap coba kembali lagi nanti, atau kontak ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Nyalakan mode DEBUG";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Sebuah log akan dibuat di section Offline (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Matikan mode DEBUG";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Log (MEGAiOS.log) akan dihapus dari section Offline.";

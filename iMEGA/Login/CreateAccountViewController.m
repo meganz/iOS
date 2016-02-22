@@ -57,7 +57,13 @@
     [super viewDidLoad];
     
     [self.nameTextField setPlaceholder:AMLocalizedString(@"name", nil)];
-    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
+    
+    if (self.emailString == nil) {
+        [_emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", nil)];
+    } else {
+        [_emailTextField setText:self.emailString];
+    }
+    
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
@@ -151,6 +157,12 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
     
     return [emailTest evaluateWithObject:email];
+}
+
+#pragma mark - UIResponder
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 #pragma mark - IBActions

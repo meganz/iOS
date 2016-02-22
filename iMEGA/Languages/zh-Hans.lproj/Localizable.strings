@@ -26,16 +26,18 @@
 "emptyFolderMessage"="您不能下载一个空文件夹";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="您的帐户已经被激活。请登录。";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="无效MEGA连接";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="文件已加密";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="因缺少解密密钥，您不能导入或下载该加密文件.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="加密文件夹";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="因缺少解密密钥，您不能导入或下载该加密文件夹.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="输入解密密钥";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="解密密钥";
+/* Button title to try to decrypt the link */
+"decrypt"="解密";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您需要释放更多空间";
-/* Title for the MEGA link view */
-"megaLink"="MEGA 连接";
+/* Title for the file link view */
+"fileLink"="档案连结";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="导入云盘中";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="您要下载的文件大于可用内存.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="您正在尝试打开的文件大于可用内存.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="文件链接无效";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="下载已开始";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="文件夹链接";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下载";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="您要下载的文件夹大于可用内存.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="文件夹 '%@' 不能被创建";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="文件夹链接不可用";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -718,3 +718,11 @@
 "failedRestore_title"="恢复已停止";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";

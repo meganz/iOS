@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="Ok";
 /* */
-"upload"="Nahrať";
+"upload"="Uploadovať";
 /*  */
 "error"="Chyba";
 /*  */
@@ -26,20 +26,22 @@
 "emptyFolderMessage"="Nemôžete stiahnuť prázdny priečinok";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Váš účet už bol aktivovaný. Prosím, prihláste sa.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="Neplatný MEGA Odkaz";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="Súbor šifrovaný";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Šifrovaný súbor nemôžete importovať ani stiahnuť, lebo chýba dešifrovací kľúč.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Priečinok šifrovaný";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Nemôžete importovať ani stiahnuť šifrovaný priečinok, nakoľko chýba dešifrovací kľúč.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Neplatný odkaz";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Vložte dešifrovací kľúč";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Dešifrovací kľúč";
+/* Button title to try to decrypt the link */
+"decrypt"="Dešifrovať";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Neplatný dešifrovací odkaz";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Odhlásený";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Na tomto zariadení ste boli odhlásený z iného miesta";
+"loggedOutFromAnotherLocation"="Z tohoto zariadenia ste boli z iného miesta odhlásený";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
@@ -55,11 +57,11 @@
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="Zaregistrujte sa teraz a získajte 50GB priestoru zdarma.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Nahrávanie je rýchle.Zdieľajte súbory rýchlo a so všetkými.";
+"megaSpeedText"="Nahrávanie je rýchle. Zdieľajte súbory rýchlo a so všetkými.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="uchovajte si všetky súbory v bezpečí s MEGA koncovým šifrovaním.";
+"megaPrivacyText"="Uchovajte si všetky súbory v bezpečí s MEGA end-o-end šifrovaním.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Získajte plne šifrovaný prístup kedykoľvek a skadekoľvek.";
+"megaAccessText"="Získajte plne šifrovaný prístup kdekoľvek, kedykoľvek.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Ak súhlasíte, súčastný účet bude odhlásený a všetky offline data budú zmazané. Chcete pokračovať?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Na svojom zariadení musíte uvoľniť nejaké miesto";
-/* Title for the MEGA link view */
-"megaLink"="MEGA Odkaz";
+/* Title for the file link view */
+"fileLink"="Link na súbor";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importovať do Cloudového úložiska";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Súbor ktorý sa snažíte stiahnuť je väčší, ako dostupná pamať.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Súbor ktorý sa snažíte otvoriť je väčší ako dostupná pamäť.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="Odkaz na súbor nedostupný";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Odkaz nedostupný";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Toto mohlo nastať z nasledujúcich dôvodov:- Súbor mohol byť odstránený z dôvodu porušenia podmienok používania služby.- neplatný odkaz - odkaz ku ktorému sa snažíte získať prístup neexistuje.- Súbor bol odstránený používateľom.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Sťahovanie začalo";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+/* Title for the folder link view */
+"folderLink"="Odkaz na priečinok";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Stiahnuť";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Priečinok ktorý sa snažíte stiahnuť je väčší ako dostupná pamäť.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Priečinok '%@' nemôže byť vytvorený";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Odkaz na priečinok je nedostupný";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Toto môže byť z nasledujúcich dôvodov:- Odkaz na priečinok bol odstránený z dôvodu porušenia podmienok.- Neplatná URL - odkaz ktorý sa  snažíte otvoriť neexistuje.- Odkaz na priečinok bol odstránený používateľom.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -199,7 +199,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Obnovte prenosy pomocou tlačidla hore.";
+"transfersEmptyState_textPaused"="Obnovte prenosy pomocou tlačidla vyššie.";
 /* Text shown under the upper title when there's no transfers */
 "transfersEmptyState_textAll"="You don't have any pending transfers.";
 /* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
@@ -207,7 +207,7 @@
 /* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
 "transfersEmptyState_textUpload"="Nemáte žiadne čakajúce uploady";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Cloudový disk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d súbor";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -718,3 +718,11 @@
 "failedRestore_title"="Obnovenie zastavené";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Buď bola požiadavka zrušená alebo predchádzajúci nákup nebol obnovený. Prosím skúste to znovu, alebo kontaktujte ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Povoliť DEBUG mód";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="V Offline sekcii sa vytvorí log (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Zakázať DEBUG mód";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Log (MEGAiOS.log) bude zmazaný z vašej Offline sekicie.";

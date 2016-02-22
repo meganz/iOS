@@ -19,6 +19,7 @@
  * program.
  */
 
+#import <ifaddrs.h>
 #import "MEGAReachabilityManager.h"
 
 @implementation MEGAReachabilityManager
@@ -36,10 +37,6 @@
     return [[[MEGAReachabilityManager sharedManager] reachability] isReachable];
 }
 
-+ (BOOL)isUnreachable {
-    return ![[[MEGAReachabilityManager sharedManager] reachability] isReachable];
-}
-
 + (BOOL)isReachableViaWWAN {
     return [[[MEGAReachabilityManager sharedManager] reachability] isReachableViaWWAN];
 }
@@ -48,7 +45,27 @@
     return [[[MEGAReachabilityManager sharedManager] reachability] isReachableViaWiFi];
 }
 
++ (bool)hasCellularConnection {
+    struct ifaddrs * addrs;
+    const struct ifaddrs * cursor;
+    bool found = false;
+    if (getifaddrs(&addrs) == 0) {
+        cursor = addrs;
+        while (cursor != NULL) {
+            NSString *name = [NSString stringWithUTF8String:cursor->ifa_name];
+            if ([name isEqualToString:@"pdp_ip0"]) {
+                found = true;
+                break;
+            }
+            cursor = cursor->ifa_next;
+        }
+        freeifaddrs(addrs);
+    }
+    return found;
+}
+
 #pragma mark - Private Initialization
+
 - (id)init {
     self = [super init];
     

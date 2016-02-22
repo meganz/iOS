@@ -1,0 +1,728 @@
+/* Button title to cancel something */
+"cancel"="Откажи";
+/* Button title to accept something */
+"ok"="OK";
+/* */
+"upload"="Прикачи";
+/*  */
+"error"="Грешка";
+/*  */
+"name"="Назив";
+/*  */
+"passcode"="Код за лозинку";
+/* "Size" of the file or folder you are sharing */
+"size"="Величина";
+/*  */
+"folder"="Фолдер";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="Камера није омогућена";
+/* Alert title to attract attention */
+"attention"="Пажња";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="Молимо Вас дајте MEGA апликацији дозволу да приступ камери у Вашим подешавањима";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="Молимо Вас дајте MEGA апликацији дозволу да приступ Вашој фото библиотеци у Подешавањима";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="Не можете скинути празан директоријум";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="Ваш налог је већ активиран. Молимо пријавите се.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Укуцајте декрипциони кључ";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Кључ за дешифровање";
+/* Button title to try to decrypt the link */
+"decrypt"="Декрипт";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="Одјављен";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="Одјављени сте из овог уређаја са друге локације";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle"="SSL кључеви сервера не могу бити верификовани. Могућност man-in-the-middle напада.";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="Сервери су презаузети. Молимо Вас сачекајте...";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="MEGA простор";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="MEGA брзина";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="MEGA приватно";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="MEGA ПРИСТУП";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="Региструјте се сада и добијате 50GB слободног простора.";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="Отпремања су брза.Брзо шерујте фајлове са свима.";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="Сачувајте све Ваше фајлове сигурним са MEGAend-to-end енкрипцијом.";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="Остварите пун енкриптован приступ било где у било које време.";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="Пријавите се";
+/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
+"doNotHaveAnAccount"="Немате налог?";
+/* Button that bring you to section where you can create an account */
+"createOne"="Креирај";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="Креирајте налог";
+/* Question to focus the user to the zone of the app where he/she can go to login */
+"alreadyHaveAnAccount"="Већ имате налог?";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="Неисправна е-маил адреса или лозинка. Покушајте поново";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="Унесите исправан е-маил";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="Унесите исправну лозинку";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="E-Mail";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="Лозинка";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="Слажем се са MEGA условима о коришћењу";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="Унесите исправно име";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="Лозинка не одговара";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="Морате да будете сагласни са условима Уговора о сервису како би били у могућности да региструјете Ваш налог на MEGA.";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="Ова e-mail адреса већ има регистриран MEGA налог.";
+/* Message displayed when an action is completed successfully */
+"awesome"="Феноменално";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="Молимо проверите свој e-mail и кликните на линк који смо Вам послали да потврдите свој налог.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="Молимо Вас унесите своју лозинку да потврдите свој налог";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="Потврдите Ваш налог.";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="Погрешна лозинка";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="Пријављени сте другим налогом";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="Ако се сложите, бићете одјављени са тренутног налога и сви офлајн подаци ће бити обрисани. Да ли желите да наставите?";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="Морате ослободити простор на вашем уређају";
+/* Title for the file link view */
+"fileLink"="Линк датотеке";
+/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
+"importButton"="Увези у облак";
+/* Button title to trigger the action of downloading the file to your device. */
+"downloadButton_fileLink"="Скини у твоју MEGA апликацију";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="Отвори датотеку";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="Документ који покушавате да скинете је већи од расположиве меморије.";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="Документ који покушавате да отворите је већи од расположиве меморије.";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="Ово се може десити због једног од следећих разлога:- Документ је уклоњен због кршења ToS/AUP.- Неисправан URL - линк коме покушавате приступити не постоји.- Документ је обрисан од стране корисника.";
+/* DO NOT TRANSLATE, it will change (Process) */
+"fileAlreadyExist"="The file you want to download already exists Offline";
+/* Message shown when a download starts */
+"downloadStarted"="Скидање започето";
+/* Title for the folder link view */
+"folderLink"="Линк за фасциклу";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="Преузми";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="Директоријум који покушавате да скинете је већи од расположиве меморије.";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="Директоријум '%@' не може бити креиран";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="Ово се може десити због једног од следећих разлога:- Директоријум је уклоњен због кршења ToS/AUP.- Неисправан URL - линк коме покушавате приступити не постоји.- Директоријум је обрисан од стране корисника.";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="Нема интернет конекције";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="Нема фајлова у фолдеру";
+/* Title shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_title"="Линк празног директоријума";
+/* Message shown when you open a folder link and the given folder doesn't have any files */
+"folderLinkEmptyState_text"="Овај директоријум не садржи документе";
+/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
+"folderLinkEmptyState_textFolder"="Овај поддиректоријум нема докумената.";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="Нема  датотека у вашем Cloud Drive-у";
+/* Title shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_titleContact"="Нема докумената у овом дељеном директоријуму";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="Испразни канту за смеће";
+/* Message shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_text"="Додајте документе користећи дугме изнад";
+/* Message shown when the shared folder with a contact is empty. */
+"cloudDriveEmptyState_textContact"="Поделите нешто. Додајте документе користећи дугме изнад.";
+/* Title shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_title"="Качење камере је искључено";
+/* Message shown when Camera Uploads is disabled */
+"cameraUploadsEmptyState_text"="Укључите качења камере како би сте имали копије својих слика на MEGA.";
+/* Title shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_title"="Нема докумената сачуваних у Оffline";
+/* Message shown when the Offline section is empty, when you don't have download any files. */
+"offlineEmptyState_text"="Скините документе како би сте могли да их користите када немате интернет конекцију.";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="Немате ниједан контакт";
+/* Message shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_text"="Додајте контакте користећи дугме изнад.";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text"="Нема долазећих шерованих фајлова";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text"="Нема outgoing шерованих фолдера";
+/* Title of My Contacts section */
+"myContacts"="Контакти";
+/* Title of Contacts requests section */
+"contactRequests"="Контакт захтеви";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent"="Послато";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests"="Захтеви";
+/* Success message shown when you acepted a contact request */
+"requestAccepted"="Захтев прихваћен";
+/* Success message shown when you Cancelled a contact request */
+"requestCancelled"="Захтев отказан";
+/* Success message shown when you remove a contact request */
+"requestDeleted"="Захтев обрисан";
+/* Title shown when there's no pending request */
+"noRequestPending"="Нема захтева на чекању тренутно";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="Трансфери паузирани";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="No Transfers";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No Downloads";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No Uploads";
+/* Text shown under the upper title when the transfers are paused */
+"transfersEmptyState_textPaused"="Наставите трансфере користећи дугме изнад.";
+/* Text shown under the upper title when there's no transfers */
+"transfersEmptyState_textAll"="You don't have any pending transfers.";
+/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
+"transfersEmptyState_textDownload"="Немате никаквих скидања на чекању.";
+/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
+"transfersEmptyState_textUpload"="Немате никаквих аплоада на чекању";
+/* Title of the Cloud Drive section */
+"cloudDrive"="Cloud диск";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d документ";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d документа";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%1 директоријум";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d директоријуми";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="1 директоријум • 1 документ";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] директоријума • [B] документа";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d директоријума • 1 документ";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="1 директоријум • %d документа";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="На чекању";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="Постоје активна скидања";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="Покушај касније или откажи";
+/* Section title of the "Sort by" */
+"sortTitle"="СОРТИРАЈ ПО";
+/* Button title to "Save" the selected option */
+"save"="Сачувајте";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="име (растуће)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="име (опадајуће)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="највећи";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="најмањи";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="најновије";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="најстарије";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="Изаберите";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="Ухвати слику или видео";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="Нови директоријум";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="Име за нови фолдер";
+/* Title button for the create folder alert.  */
+"createFolderButton"="Креирај";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="Увези са...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] је већ окачен са именом [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="Овај документ је већ окачен са именом %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d селектованих докумената су већ окачени у овај директоријум.";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="Аплоад започет";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="Овај документ је померен у канту за отпатке";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="Овај директоријум је померен у канту за отпатке";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="Овај документ је померен";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="Овај директоријум је померен";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="Немате више приступ овом документу";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Немате више приступ овом директоријуму.";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="Сними за офлајн";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="Сачувано за offline";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="Инбокс је резервисан за коришћење од стране Apple.";
+/* List option shown on the details of a file or folder */
+"getLink"="Креирај линк";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="Генерисање линка...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="Линк ископиран";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="Отвори у...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="Уклони линк";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="Линк је уклоњен";
+/* Title show when a file is being downloaded */
+"downloading"="Преузимање у току: [X]%";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="Да ли желите да прекинете преузимање ";
+/* Title for the action that allows you to move a file or folder */
+"move"="Премести";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="1 документ померен";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%d докумената померено";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="1 документ померен";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d директоријума померено";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 документ и 1 директоријум померен";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 документ и %d директоријума померено";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d докумената и 1 директоријум померен";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] докумената и [B] директоријума померено";
+/* List option shown on the details of a file or folder */
+"copy"="Копирајте";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="1 документ ископиран";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d докумената ископирано";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 директоријум ископиран";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d директоријума ископирано";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 документ и 1 директоријум ископиран";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 документ и %d директоријума ископирано";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%d докумената и 1 директоријум ископиран";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] докумената и [B] директоријума померено";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="Преименуј";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="Омогућите ново име";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="Помери у канту за отпатке";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="Да ли сте сигурно да желите да померите 1 документ у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="Да ли сте сигурни да желите да померите %d докумената у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="Да ли сте сигурни да желите да померите 1 директоријум у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="Да ли сте сигурни да желите да померите %d директоријум у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="Да ли сте сигурни да желите да померите 1 документ и 1 директоријум у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="Да ли сте сигурно да желите да померите 1 документ и %d директоријума у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="Да ли сте сигурно да желите да померите %d документа и 1 директоријум у канту за отпатке?";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="Да ли сте сигурни да желите да померите  [A] докумената и [B] директоријума у канту за отпатке?";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 документ померен у канту за отпатке";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d докумената померено у канту за отпатке";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 директоријум померен у канту за отпатке";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d директоријума померено у канту за отпатке";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 документ и 1 директоријум су померени у канту за отпатке";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 документ и %d директоријума су померени у катну за отпатке";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d докумената и 1 директоријум су померени у канту за отпатке";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] докумената и [B] директоријума померени у канту за отпатке";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="Недозвољена акција";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="Проверите своје дозволе над овим директоријумом";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="Директоријум подељен";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="Унесите у";
+/* Button title that triggers the importing link action */
+"import"="Увоз";
+/* Message shown when a file have been imported */
+"fileImported"="Документ увезен";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="Квота прекорачена";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="Узбуна због прекорачења квоте!";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="Операција није дозвољена, прекорачили сте скадишни лимит свог налога. Да ли  желите да надоградите налог?";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="Селектуј ставке";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu фотографије";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu слика";
+/* Button title that skips the current action */
+"skipButton"="Прескочите";
+/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="Омогућите отпремање фотографија";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="Камера аплоади омогућени";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu ставка изабрана";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu фотографија селектовано";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="Аплоади камере ће бити искључени, јер немате довољно простора на Вашем уређају.";
+/* Title of the Offline section */
+"offline"="Офлајн";
+/* Title of the Contacts section */
+"contactsTitle"="Контакти";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="Нема дељених директоријума";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 директоријум";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d директоријуми";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="Убаци е-маил";
+/* Title of Shared Items section */
+"sharedItems"="Дељене ствари";
+/* Title of the tab bar item for the Shared Items section */
+"shared"="Дељено";
+/* Title of the "Incoming" Shared Items. */
+"incoming"="Пристизајуће";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing"="Одлазеће";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact"="Дељено са једним контактом";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts"="Дељено са %d контакта";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged"="Дозволе промењене";
+/* Message shown when a share has been left */
+"shareLeft"="Дељење остављено";
+/* Message shown when some shares have been left */
+"sharesLeft"="Дељења остављена";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="Обриши дељење";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="Да ли сте сигурни да желите да уклоните ово дељење? (Дељено са једним контактом)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="Да ли сте сигурни да желите да уклоните ово дељење? (Дељено са %d контакта)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="Да ли сте сигурни да желите да уклоните ова дељења? (Дељено за %d контакта)";
+/* Message shown when a share have been removed */
+"shareRemoved"="Шеровање је исправно уклољено";
+/* Message shown when some shares have been removed */
+"sharesRemoved"="Дељење обрисано";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner"="Власник";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith"="Поделите са";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="Додај из контакта";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="Додај контакт";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="Контакт email";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="Додај";
+/* Success message shown when a contact has been invited */
+"requestSent"="Захтев послат";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="Грешка приликом додавања контакта";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="Уклоните контакт";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="Да ли сте сигурни да желите да уклоните %@ из ваше контакт листе?";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="Да ли сте сигурно да желите да уклоните %d особа из ваше контакт листе?";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d контакта уклоњено";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="Контакт %@ уклоњен";
+/* Label shown when a contact request is pending */
+"pending"="На чекању";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="Овај контакт нема е-маил";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="Остави";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="Директоријум остављен";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="Подели фасциклу";
+/* Button that allows you to select a given folder */
+"select"="Изаберите";
+/* Permissions given to the user you share your folder with */
+"readOnly"="Само читање";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="Читање и писање";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="Пун приступ";
+/* Title of the Settings section */
+"settingsTitle"="Подешавања";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="Оптремање фотографија и видео садржаја";
+/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"rubbishBinLabel"="Канта за смеће";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="Сигурносне опције";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="О нама";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="Језик";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="Језик апликације";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="Пошаљите фидбек";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="Молимо Вас унесите ваш коментар овде:";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="Е-маил није присутан на вашем уређају";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="Правила приватности";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="Услови коришћења";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="Искључено";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="Укључено";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="Опције";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="Отпремање видео садржаја";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="Користите жичану конекцију";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="Само током пуњења";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="Када је уклључено, нове слике и видео записи ће бити окачени.";
+/* Label for the "Version" number of the app */
+"version"="Верзија";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="Признања";
+/* Title for the MEGA Master Key */
+"masterKey"="Мастер Кључ";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="Промените шифру";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="Експортујте мастер кључ";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="Сигурносно упозорење! Ово је операције високог ризика. Да ли желите да наставите?";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="Извоз главног кључа и чување истог на сигурној локацији Вам омогућује да повратите свој налог у случају изгубљене лозинке без губитка података.";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="Мастер кључ експортован";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Masterkey.txt је сачуван на Вашем уређају. Повежите се на Ваш рачунар и отворите iTunes како би сте му приступили у MEGA Документима. Саветујемо Вам да држите овај фајл сигурним!";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="Главни кључ уклоњен";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="MasterKey.txt је уклоњен из Documents директоријума.";
+/* Title for the action that allows to remove a file or folder */
+"remove"="Уклони";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="Потврдите уклањање";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="Овим ћете трајно уклонити један документ. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="Овим ћете трајно уклонити %d докумената. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="Овим ћете трајно уклонити 1 директоријум. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="Овим ћете трајно уклонити %d директоријума. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="Овим ћете трајно уклонити 1 документ и 1 директоријум. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="Овим ћете трајно уклонити 1 документ и %d директоријума. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="Овим ћете трајно уклонити %d докумената и 1 директоријум. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="Овим ћете трајно уклонити [A] докумената и [B] директоријума. Потврдите за наставак? (Не можете повратити ову акциу)";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 датотека уклоњена из MEGA";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedToRubbishBinMessage"="%d докумената је уклоњено из MEGA";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 директоријум је уклоњен из MEGA";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d директоријума обрисано из MEGA";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 документ и 1 директоријум уклоњен из MEGA";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 документ и %d директоријума уклоњени из MEGA";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d докумената и 1 директоријум уклоњен из MEGA";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] докумената и [B] директоријума уклоњени из MEGA";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="Тренутна шифра";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Нова шифра";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="Потврдите лозинку";
+/* Success message shown when the password has been changed */
+"passwordChanged"="Ваша шифра је промењена.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="Нова и стара лозинка не смеју да буду исте.";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="Промените лозинку";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="Проста шифра";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="Обриши локалне податке";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="Одјави се и обриши локалне податке после 10 неуспешних пријава";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="Центар за помоћ";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="Подршка или читање популарних садржаја.";
+/* Title to rate the app */
+"rateUsLabel"="Оцени нас";
+/* Title of the Transfers section */
+"transfers"="Преноси";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="Све";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="Скидања";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="Аплоади";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="Трансфер отказан";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCancelled"="Трансфери отказани";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="Прекини трансфере";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="Да ли желите да прекинете %@?";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="СВИ транфери";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="АПЛОАД трансфери";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="СКИНИ трансфере";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="Мој профил";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="Излогуј се";
+/* String shown when you are logging out of your account. */
+"loggingOut"="Одјављивљање";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="Промет";
+/* Title for "Local" used space. */
+"localLabel"="Локално";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="Искоришћено";
+/* Title for MEGA "Available" space. */
+"availableLabel"="Доступно";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="БЕСПЛАТНО";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="истиче %@";
+/* DO NOT TRANSLATE, it will change */
+"restorePurchases"="Restore purchases";
+/* DO NOT TRANSLATE, it will change */
+"purchasesHistory"="Purchases history";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="Надолезеће шеровање";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="од %@";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="искоришћено од %@";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="слободно од %@";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="Надоградња";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="Простора";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="Брзина мреже";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="%.2f %@ месечно";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan"="Изаберите један од планова испод:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree"="Добијте два месеца бесплатно, ако се претплатите на једногодишњи ПРО план.";
+/* Header shown to help on the purchasin process */
+"selectMembership"="Изаберите чланство:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17"="Уштеди 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase"="ПОГРЕШНА КУПОВИНА %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled"="In-App куповина је искључена, молимо Вас укључите је у iOS подешавањима";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound"="Производ %@ није нађен, молимо Вас контактирајте ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title"="Дозволи куповину";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message"="Морате омогућити  In-App Куповину у Вашим iOS подешавањима пре него што рестаурирате куповину. ";
+/* Button title to restore failed purchases */
+"restore"="Повратити";
+/* "Monthly" subscriptions */
+"monthly"="Месечно";
+/* "Yearly" subscriptions */
+"yearly"="Годишње";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable"="Ова In-App куповина није тренутно доступна у App Store. Покушајте касније.";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title"="Хвала Вам";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message"="Ваша куповина је обновљена";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title"="Куповина заустављена";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message"="Отказали сте захтев или је Apple пријавио грешку приликом трансакције. Покушајте поново или контактирајте ios@mega.nz.";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title"="Проблем приликом рестаурације";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message"="Претходна куповина није пронађена. Молимо Вас изаберите претходно купљени производ који желите да рестаурирате. Наплата НЕЋЕ бити поново извршена.";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title"="Рестаурација заустављена";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message"="Отказали сте захтев или претходна куповина није могла бити рестаурирана. Покушајте поново или контактирајте ios@mega.nz.";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="DEBUG мод укључен";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="Запис ће бити креиран у Офлајн секцији (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="DEBUG мод искључен";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="Лог (MEGAiOS.log) ће бити обрисан из Офлајн секције.";

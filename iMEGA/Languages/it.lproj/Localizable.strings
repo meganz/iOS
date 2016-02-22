@@ -26,22 +26,24 @@
 "emptyFolderMessage"="Non è possibile scaricare una cartella vuota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Il tuo account è già stato attivato. Effettua il Log in.";
-/* Message shown when the user clicks on an invalid link  */
-"invalidLink"="MEGA link invalido";
-/* Alert title shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncrypted"="File criptato";
-/* Alert message shown when you click on a encrypted file link that can't be opened because it doesn't include the rest of the key to see its contents */
-"fileEncryptedMessage"="Per il momento non è possibile importare o scaricare un file cifrato perché manca la chiave di decrittazione.";
-/* Alert title shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncrypted"="Cartella criptata";
-/* Alert message shown when you click on a encrypted folder link that can't be opened because it doesn't include the rest of the key to see its contents */
-"folderEncryptedMessage"="Per il momento non è possibile importare o scaricare una cartella cifrata perché manca la chiave di decrittazione.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="Invalid link";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="Chiave di decrittazione";
+/* Button title to try to decrypt the link */
+"decrypt"="Decritta";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="La chiave SSL del server non può essere verificata. Potresti essere affetto da un attacco di tipo man-in-the-middle.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Servers are too busy. Please wait...";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -106,8 +108,8 @@
 "alreadyLoggedInAlertMessage"="Se acconsenti, l'account corrente verrà disconnesso e tutti i dati non in linea saranno cancellati. Vuoi continuare?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Hai bisogno di liberare un pò di spazio";
-/* Title for the MEGA link view */
-"megaLink"="MEGA link";
+/* Title for the file link view */
+"fileLink"="Link file";
 /* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
 "importButton"="Importa nel tuo Cloud Drive";
 /* Button title to trigger the action of downloading the file to your device. */
@@ -118,24 +120,22 @@
 "fileTooBigMessage"="Il file che si sta tentando di scaricare è più grande della memoria disponibile.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Il file che si sta tentando di aprire è più grande della memoria disponibile.";
-/* Error title shown when you open a file link and it's no longer available */
-"fileLinkUnavailableTitle"="File link non disponibile";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Questo può accadere per diverse ragioni:- Il file è stato rimosso per una violazione delle ToS/AUP- URL non valido - il collegamento cui stai tentando di accedere non esiste.- Il file è stato eliminato dall'utente.";
 /* DO NOT TRANSLATE, it will change (Process) */
 "fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
-"downloadStarted"="Download avviato";
-/* DO NOT TRANSLATE, it will change (Design) */
-"megaFolder"="MEGA Folder Link";
+"downloadStarted"="Download avviato!";
+/* Title for the folder link view */
+"folderLink"="Link cartella";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Scarica";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="La cartella che si sta tentando di scaricare è più grande rispetto alla memoria disponibile.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="La cartella '%#' non può essere creata";
-/* Error title shown when a folder link doesn't exist. */
-"folderLinkUnavailableTitle"="Collegamento Cartella non disponibile";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
 "folderLinkUnavailableText"="Questo può accadere per diverse ragioni:- Il file è stato rimosso per una violazione delle ToS/AUP- URL non valido - il collegamento cui stai tentando di accedere non esiste.- Il file è stato eliminato dall'utente.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -177,7 +177,7 @@
 /* Title of My Contacts section */
 "myContacts"="Contatti";
 /* Title of Contacts requests section */
-"contactRequests"="Contact requests";
+"contactRequests"="Richieste di contatto";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Inviato";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -185,7 +185,7 @@
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Richesta accettata";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Request cancelled";
+"requestCancelled"="Richiesta cancellata";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Richiesta eliminata";
 /* Title shown when there's no pending request */
@@ -219,11 +219,11 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
 "folderAndFile"="1 cartella • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] cartelle • [A] files";
+"foldersAndFiles"="[A] cartelle • [B] file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
 "foldersAndFile"="%d cartelle • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 cartelle • %d files";
+"folderAndFiles"="1 cartella • %d file";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="In coda";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -259,31 +259,31 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Carica da...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A] già caricato con il nome [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="This file was already uploaded with the name %@";
+"fileAlreadyExistMessage"="Questo file è già stato caricato con il nome %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d files selected were already uploaded into this folder.";
+"filesAlreadyExistMessage"="%d file selezionati sono già stati caricati in questa cartella.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Upload partito";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="This file has been moved to the Rubbish Bin";
+"fileMovedToTheRubbishBin_alertTitle"="Questo file è stato spostato nel Cestino";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="This folder has been moved to the Rubbish Bin";
+"folderMovedToTheRubbishBin_alertTitle"="Questa cartella è stata spostata nel Cestino";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
 "fileMoved_alertTitle"="Il file è stato rimosso";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
 "folderMoved_alertTitle"="La cartella è stata rimossa";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="You no longer have access to this file";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Non hai più accesso a questo file";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Non hai più accesso a questa cartella";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Salva per l'Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Salvato in locale";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Inbox is reserved for use by Apple.";
+"folderInboxError"="Inbox è di uso riservato da Apple";
 /* List option shown on the details of a file or folder */
 "getLink"="Ottieni link";
 /* Message shown when a link to the file is being generated */
@@ -317,7 +317,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="%d files e 1 cartella spostati";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] files e [B] cartelle spostate";
+"moveFilesFoldersMessage"="[A] file e [B] cartelle spostate";
 /* List option shown on the details of a file or folder */
 "copy"="Copia";
 /* Success message shown when you have copied 1 file */
@@ -335,7 +335,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="%d files e 1 cartella copiati";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] files e [B] cartelle copiate";
+"copyFilesFoldersMessage"="[A] file e [B] cartelle copiate";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Rinomina";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -357,23 +357,23 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="Sei sicuro di voler spostare %d files e 1 cartella nel Cestino?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Sei sicuro di voler spostare [A] files e [B] cartelle nel Cestino?";
+"moveFilesFoldersToRubbishBinMessage"="Sei sicuro di voler spostare [A] file e [B] cartelle nel Cestino?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file spostato nel Cestino";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d files moved to the Rubbish Bin";
+"filesMovedToRubbishBinMessage"="%d file spostati nel Cestino";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder moved to the Rubbish Bin";
+"folderMovedToRubbishBinMessage"="1 file spostato nel Cestino";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d folders moved to the Rubbish Bin";
+"foldersMovedToRubbishBinMessage"="%d cartelle spostate nel Cestino";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 file and 1 folder moved to the Rubbish Bin";
+"fileFolderMovedToRubbishBinMessage"="1 file e 1 cartella spostati nel Cestino";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 file and %d folders moved to the Rubbish Bin";
+"fileFoldersMovedToRubbishBinMessage"="1 file e %d cartelle spostate nel Cestino";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d files and 1 folder moved to the Rubbish Bin";
+"filesFolderMovedToRubbishBinMessage"="%d file e 1 cartella spostati nel Cestino";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] files and [B] folders moved to the Rubbish Bin";
+"filesFoldersMovedToRubbishBinMessage"="[A] file e [B] cartelle spostate nel Cestino";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Errori di permessi";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -423,35 +423,35 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Inserisci una email";
 /* Title of Shared Items section */
-"sharedItems"="Shared Items";
+"sharedItems"="Elementi condivisi";
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Condiviso";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Incoming";
+"incoming"="In entrata";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Outgoing";
+"outgoing"="In uscita";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Shared with 1 contact";
+"sharedWithOneContact"="Condiviso con 1 contatto";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="Condiviso con %d contatti";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="Permessi cambiati";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="Condivisione abbandonata";
 /* Message shown when some shares have been left */
-"sharesLeft"="Shares left";
+"sharesLeft"="Condivisioni abbandonate";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="Remove sharing";
+"removeSharing"="Rimuovi condivisione";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="Sei sicuro di voler rimuovere questa condivisione? (condivisa con 1 contatto)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Sei sicuro di voler rimuovere questa condivisione? (condivisa con %d contatti)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Sei sicuro di voler rimuovere queste condivisioni? (condivise con %d contatti)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Condivisione rimossa";
 /* Message shown when some shares have been removed */
-"sharesRemoved"="Shares removed";
+"sharesRemoved"="Condivisioni rimosse";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Proprietario";
 /* Title of the view where you see with who you have shared a folder */
@@ -503,7 +503,7 @@
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
 "rubbishBinLabel"="Cestino";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Opzioni di Sicurezz";
+"securityOptions"="Opzioni di Sicurezza";
 /* Title of one of the Settings sections where you can see things "About" the app */
 "about"="Riguardo";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
@@ -513,7 +513,7 @@
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="Invia un commento";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Please write your feedback here:";
+"pleaseWriteYourFeedback"="Per favore, inserisci il tuo feedback qui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Non hai un account e-mail configurato sul dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -543,13 +543,13 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambia password";
 /* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Esport MasterKey";
+"exportMasterKey"="Esporta Chiave Master";
 /* Message shown when you try to export the Master Key to alert the user.*/
-"exportMasterKey_alertMessage"="Sei sicuro di voler continuare?";
+"exportMasterKey_alertMessage"="Avviso di sicurezza! Questa è un'operazione ad alto rischio. Vuoi continuare?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Esporta la chiave master e conservala in un luogo sicuro per recuperare il tuo conto, nel caso di una password persa.";
+"exportMasterKeyFooter"="Esportare la chiave master e mantenerla in un luogo sicuro ti permette di impostare una nuova password, senza perdita di dati.";
 /* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Master Key esportato";
+"masterKeyExported"="Chiave Master esportata";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Masterkey.txt è stata salvata su questo device. Connettiti al computer e apri iTunes per accedere ai Documenti MEGA. Ti consigliamo fortemente di tenere questo file al sicuro.";
 /* Alert title shown when you have removed your MEGA master key */
@@ -575,23 +575,23 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="Stai per rimuovere in modo permanente %d file e 1 cartella. Vuoi continuare? (Non è possibile annullare questa azione.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Stai per rimuovere definitivamente [A] file e [B] cartelle. Volete continuare? (Non è possibile annullare questa azione.)";
+"removeFilesFoldersToRubbishBinMessage"="Stai per cancellare definitivamente [A] file e [B] cartelle. Vuoi continuare? (non puoi annullare questa azione)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 file removed from MEGA";
+"fileRemovedToRubbishBinMessage"="1 file rimosso da MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d files removed from MEGA";
+"filesRemovedToRubbishBinMessage"="%d file rimossi da MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="1 folder removed from MEGA";
+"folderRemovedToRubbishBinMessage"="1 cartella rimossa da MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d folders removed from MEGA";
+"foldersRemovedToRubbishBinMessage"="%d cartelle rimosse da MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 file and 1 folder removed from MEGA";
+"fileFolderRemovedToRubbishBinMessage"="1 file e 1 cartella rimossi da MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 file and %d folders removed from MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 file e %d cartelle rimosse da MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d file e 1 cartella rimossi da MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="[A] file e [B] cartelle rimosse da MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Password corrente";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -621,11 +621,11 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tutti";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="downloads";
+"downloads"="Download";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Caricamenti";
+"uploads"="Upload";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Transfer cancelled";
+"transferCancelled"="Trasferimento cancellato";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="Trasferimenti annullati";
 /* Title of the alert shown when you try to cancel transfers */
@@ -671,29 +671,29 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Aggiorna l'account";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Spazio";
+"productSpace"="di spazio d'archiviazione";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Larghezza banda";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f %@ per mese";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choose one of the plans from below:";
+"choosePlan"="Scegli uno dei piani elencati sotto:";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Get two months free if you subscribe to a one-year PRO plan";
+"twoMonthsFree"="Ottieni due mesi gratis se sottoscrivi un abbonamento PRO da un anno";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Select membership:";
+"selectMembership"="Scegli il tipo di abbonamento:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Risparmierai il 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="WRONG PURCHASE %@ (%ld)";
+"wrongPurchase"="ACQUISTO ERRATO %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="Gli acquisti in-app sono disattivati, per favore attivali nelle Impostazioni iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Product %@ is not found, please contact ios@mega.nz";
+"productNotFound"="Il prodotto %@ non è stato trovato, per favore contatta ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Allow purchases";
+"allowPurchase_title"="Consenti acquisti";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="Devi attivare gli acquisti in-app nelle Impostazioni iOS prima di recuperare un acquisto.";
 /* Button title to restore failed purchases */
 "restore"="Ripristina";
 /* "Monthly" subscriptions */
@@ -701,20 +701,28 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuale";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="Questo elemento di acquisto in-app non è disponibile al momento nell'App Store. Per favore, riprova.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Grazie";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Your purchase was restored";
+"purchaseRestore_message"="Il tuo acquisto è stato ripristinato";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Purchase stopped";
+"failedPurchase_title"="Acquisto fermato";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
+"failedPurchase_message"="Hai cancellato la richiesta o Apple ha riportato un errore nella transazione. Per favore, riprova o contatta ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Restore issue";
+"incompleteRestore_title"="Problema con il ripristino";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="L'acquisto precedente non può essere trovato. Per favore, seleziona il precedente prodotto acquistato per recuperarlo. NON ti toccherà pagare di nuovo.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restore stopped";
+"failedRestore_title"="Ripristino interrotto";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+"failedRestore_message"="La richiesta è stata cancellata o l'acquisto non può essere recuperato. Per favore, riprova o contatta ios@mega.nz";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="Enable DEBUG mode";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="Disable DEBUG mode";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
