@@ -522,8 +522,8 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeFirstname delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeLastname delegate:self];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
@@ -981,7 +981,11 @@
                     case MEGAUserAttributeLastname:
                         name = [self.namesMutableDictionary objectForKey:[request email]];
                         name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                        [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        if (name != nil) {
+                            [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        } else {
+                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
+                        }
                         break;
                 }
                 
