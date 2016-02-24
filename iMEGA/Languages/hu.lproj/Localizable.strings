@@ -490,6 +490,8 @@
 "shareFolder"="Mappa megosztása";
 /* Button that allows you to select a given folder */
 "select"="Kiválasztás";
+/* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
+"permissions"="Engedélyek";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Írásvédett";
 /* Permissions given to the user you share your folder with */
