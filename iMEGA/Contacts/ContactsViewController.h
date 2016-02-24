@@ -24,7 +24,9 @@
 typedef NS_ENUM(NSUInteger, ContactsMode) {
     Contacts = 0,
     ContactsShareFolderWith,
+    ContactsShareFolderWithEmail,
     ContactsShareFoldersWith,
+    ContactsShareFoldersWithEmail,
     ContactsFolderSharedWith
 };
 
