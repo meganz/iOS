@@ -490,6 +490,8 @@
 "shareFolder"="Тека спільного доступу";
 /* Button that allows you to select a given folder */
 "select"="Вибрати";
+/* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
+"permissions"="Дозволи";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Лише читання";
 /* Permissions given to the user you share your folder with */

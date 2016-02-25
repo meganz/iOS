@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CSm-b8-KOc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pNm-oN-god" id="BKV-y9-Eh3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bSg-qg-OLn">
@@ -119,7 +119,7 @@
                                         <rect key="frame" x="0.0" y="66" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QVJ-Tw-apZ" id="gcm-Tm-g4F">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYu-5k-sgd">
@@ -217,7 +217,7 @@
                                         <rect key="frame" x="0.0" y="110" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0sL-S9-GVj" id="BqT-hj-YgS">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uim-YG-nh2">
@@ -310,28 +310,10 @@
                                     <outlet property="delegate" destination="4jb-uN-Eto" id="aTN-D5-5O9"/>
                                 </connections>
                             </tableView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpA-vl-nCd" userLabel="Share Folder with Button">
-                                <rect key="frame" x="0.0" y="487" width="600" height="49"/>
-                                <color key="backgroundColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="R9k-oL-VNc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Share folder with">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="shareFolderWithTouchUpInside:" destination="4jb-uN-Eto" eventType="touchUpInside" id="RjJ-WC-Zuh"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="FpA-vl-nCd" secondAttribute="bottom" id="7Y2-RS-k9C"/>
-                            <constraint firstItem="FpA-vl-nCd" firstAttribute="leading" secondItem="fkF-VR-LpX" secondAttribute="leading" id="D2e-Ms-gpl"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="leading" secondItem="fkF-VR-LpX" secondAttribute="leadingMargin" constant="-20" id="bp8-Ln-ilh"/>
-                            <constraint firstAttribute="trailing" secondItem="FpA-vl-nCd" secondAttribute="trailing" id="lTt-Bf-0ue"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nKV-wF-xCm" secondAttribute="trailing" constant="-20" id="rhE-9k-BSG"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="top" secondItem="N7V-7h-Ud3" secondAttribute="bottom" id="xxg-ZM-dpF"/>
                             <constraint firstItem="3V9-8i-mJJ" firstAttribute="top" secondItem="nKV-wF-xCm" secondAttribute="bottom" id="zxS-j1-oeF"/>
@@ -360,9 +342,10 @@
                         <outlet property="contactRequestsBarButtonItem" destination="GvZ-OT-HaA" id="wh8-yW-HiY"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
+                        <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
                         <outlet property="shareFolderBarButtonItem" destination="aEk-h4-ILY" id="EZp-aD-Rnp"/>
-                        <outlet property="shareFolderWithButton" destination="FpA-vl-nCd" id="UKx-VO-1yd"/>
+                        <outlet property="shareFolderWithBarButtonItem" destination="43b-TZ-Eh5" id="0tk-cU-sUm"/>
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
                     </connections>
@@ -379,8 +362,21 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Cancel" width="22" style="plain" id="Zqr-qV-bMs" userLabel="Cancel Bar Button Item">
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="cancelAction:" destination="4jb-uN-Eto" id="jAW-6L-saL"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Insert an email" style="plain" id="EYv-wx-auj" userLabel="Insert an email Bar Button Item">
+                    <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="insertAnEmailAction:" destination="4jb-uN-Eto" id="DPD-nL-XlN"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Share folder" style="plain" id="43b-TZ-Eh5" userLabel="Share folder with Bar Button Item">
+                    <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="shareFolderWithAction:" destination="4jb-uN-Eto" id="OXg-S3-u1w"/>
                     </connections>
                 </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="jvh-Sx-iEq">
@@ -389,12 +385,14 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <items>
                         <barButtonItem title="Share folder" id="aEk-h4-ILY">
+                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="shareFolderAction:" destination="4jb-uN-Eto" id="dzA-68-r1t"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ab4-Tz-z6U"/>
                         <barButtonItem enabled="NO" id="wgy-rg-Fjg" userLabel="Delete Bar Button Item">
+                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="deleteAction:" destination="4jb-uN-Eto" id="C8I-CZ-g0G"/>
                             </connections>
