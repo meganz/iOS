@@ -304,8 +304,8 @@
     BOOL isUserNameAlreadyRequested = [_userNamesRequestedMutableArray containsObject:userEmail];
     if (!isUserNameAlreadyRequested) {
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
-        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeFirstname delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeLastname delegate:self];
         [_userNamesRequestedMutableArray addObject:userEmail];
     }
 }

@@ -66,8 +66,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIButton *shareFolderWithButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
+@property (strong, nonatomic) NSString *email;
 
 @end
 
@@ -105,12 +108,18 @@
             
         case ContactsShareFolderWith:
         case ContactsShareFoldersWith: {
-            [_shareFolderWithButton setTitle:AMLocalizedString(@"shareFolder", nil) forState:UIControlStateNormal];
-            [_shareFolderWithButton setEnabled:YES];
-            [_shareFolderWithButton setHidden:NO];
-            
             [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+            [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
             [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
+            
+            [_insertAnEmailBarButtonItem setTitle:AMLocalizedString(@"addFromEmail", nil)];
+            [_shareFolderWithBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
+            [_insertAnEmailBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_insertAnEmailBarButtonItem.tag] forState:UIControlStateNormal];
+            [_shareFolderWithBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_shareFolderWithBarButtonItem.tag] forState:UIControlStateNormal];
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            [self.navigationController.topViewController setToolbarItems:@[_shareFolderWithBarButtonItem, flexibleItem, _insertAnEmailBarButtonItem ] animated:NO];
+            [self.navigationController setToolbarHidden:NO];
+            
             break;
         }
             
@@ -279,7 +288,7 @@
 }
 
 - (void)selectPermissions {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"permissions", nil)
                                                              delegate:self
                                                     cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                destructiveButtonTitle:nil
@@ -323,6 +332,54 @@
     }
     
     return image;
+}
+
+- (void)shareFolder {
+    if ([MEGAReachabilityManager isReachable]) {
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+            if (self.shareFolderActivity != nil) {
+                [self.shareFolderActivity activityDidFinish:YES];
+            }
+        }
+        
+        [self selectPermissions];
+        
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    }
+}
+
+- (BOOL)validateEmail:(NSString *)email {
+    NSString *emailRegex =
+    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
+    
+    return [emailTest evaluateWithObject:email];
+}
+
+- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
+    
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    
+    switch (buttonTag) {
+        case 0:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+            break;
+            
+        case 1:
+            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"SFUIText-Regular" size:17.0] forKey:NSFontAttributeName];
+            break;
+    }
+    
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    
+    return titleTextAttributesDictionary;
 }
 
 #pragma mark - IBActions
@@ -409,23 +466,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)shareFolderWithTouchUpInside:(UIButton *)sender {
+- (IBAction)shareFolderWithAction:(UIBarButtonItem *)sender {
     if (_selectedUsersArray.count == 0) {
         return;
     }
     
-    if ([MEGAReachabilityManager isReachable]) {
-        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-            if (self.shareFolderActivity != nil) {
-                [self.shareFolderActivity activityDidFinish:YES];
-            }
-        }
-        
-        [self selectPermissions];
-        
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-    }
+    [self shareFolder];
+}
+
+- (IBAction)insertAnEmailAction:(UIBarButtonItem *)sender {
+    UIAlertView *insertAnEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"shareFolder", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+    [insertAnEmailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[insertAnEmailAlertView textFieldAtIndex:0] setPlaceholder:AMLocalizedString(@"contactEmail", nil)];
+    [insertAnEmailAlertView setTag:3];
+    [insertAnEmailAlertView show];
 }
 
 #pragma mark - UITableViewDataSource
@@ -468,8 +522,8 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:1 delegate:self];
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:2 delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeFirstname delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeLastname delegate:self];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
@@ -651,13 +705,28 @@
                     return;
             }
             
-            remainingOperations = self.selectedUsersArray.count;
+            if ((self.contactsMode == ContactsShareFolderWith) || (self.contactsMode == ContactsShareFoldersWith)) {
+                remainingOperations = self.selectedUsersArray.count;
+            } else if (self.contactsMode == ContactsShareFoldersWithEmail) {
+                remainingOperations = [self.nodesArray count];
+            } else if ((self.contactsMode == ContactsFolderSharedWith) || (self.contactsMode == ContactsShareFolderWithEmail)) {
+                remainingOperations = 1;
+            }
+            
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
             
             switch (self.contactsMode) {
                 case ContactsShareFolderWith: {
                     for (MEGAUser *u in self.selectedUsersArray) {
                         [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
                     }
+                    break;
+                }
+                    
+                case ContactsShareFolderWithEmail: {
+                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:_email level:level delegate:self];
+                    _email = nil;
                     break;
                 }
                     
@@ -670,8 +739,15 @@
                     break;
                 }
                     
+                case ContactsShareFoldersWithEmail: {
+                    for (MEGANode *node in self.nodesArray) {
+                        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:_email level:level delegate:self];
+                    }
+                    _email = nil;
+                    break;
+                }
+                    
                 case ContactsFolderSharedWith: {
-                    remainingOperations = 1;
                     [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:userTapped level:level delegate:self];
                     break;
                 }
@@ -756,6 +832,33 @@
 }
 
 #pragma mark - UIAlertDelegate
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    BOOL shouldEnable = YES;
+    if ([alertView tag] == 3) {
+        NSString *email = [[alertView textFieldAtIndex:0] text];
+        shouldEnable = [self validateEmail:email];
+    }
+    
+    return shouldEnable;
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 3) { //insertAnEmailAlertView
+        [[alertView textFieldAtIndex:0] resignFirstResponder];
+        
+        if (buttonIndex == 1) {
+            if (self.contactsMode == ContactsShareFolderWith) {
+                [self setContactsMode:ContactsShareFolderWithEmail];
+            } else if (self.contactsMode == ContactsShareFoldersWith) {
+                [self setContactsMode:ContactsShareFoldersWithEmail];
+            }
+            
+            _email = [[alertView textFieldAtIndex:0] text];
+            [self shareFolder];
+        }
+    }
+}
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
@@ -878,7 +981,11 @@
                     case MEGAUserAttributeLastname:
                         name = [self.namesMutableDictionary objectForKey:[request email]];
                         name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                        [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        if (name != nil) {
+                            [self.namesMutableDictionary setObject:name forKey:[request email]];
+                        } else {
+                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
+                        }
                         break;
                 }
                 
@@ -905,6 +1012,8 @@
         case MEGARequestTypeShare: {
             remainingOperations--;
             if (remainingOperations == 0) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                
                 if (self.contactsMode == ContactsFolderSharedWith) {
                     if ([request access] == MEGAShareTypeAccessUnkown) {
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];

@@ -250,7 +250,7 @@
 
 - (IBAction)shareFolder:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachable]) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"permissions", nil)
                                                                  delegate:self
                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                    destructiveButtonTitle:nil
