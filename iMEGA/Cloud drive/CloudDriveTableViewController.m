@@ -1440,7 +1440,6 @@
         CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
         picker.delegate = self;
         picker.assetsFilter = [ALAssetsFilter allAssets];
-        picker.showsCancelButton    = (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad);
         [self presentViewController:picker animated:YES completion:nil];
     }
 }
