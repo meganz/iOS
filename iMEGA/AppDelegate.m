@@ -569,6 +569,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 8) {
+        return NO;
+    }
+    
     NSString *megaURLString = @"https://mega.nz/";
     BOOL isMEGACONZConfirmationLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]; // mega://"confirm"
     BOOL isMEGANZConfirmationLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]; // mega://"#confirm"
@@ -588,6 +592,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isNewSignUpLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 10) {
+        return NO;
+    }
+    
     BOOL isNewSignUpLink = [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]; // mega://"#newsignup"
     if (isNewSignUpLink) {
         NSString *megaURLString = @"https://mega.nz/";
