@@ -337,8 +337,13 @@
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
         } else if (buttonIndex == 1) {
-            NSString *linkString = [self.fileLinkString stringByAppendingString:@"!"];
+            NSString *linkString;
             NSString *key = [[alertView textFieldAtIndex:0] text];
+            if ([[key substringToIndex:1] isEqualToString:@"!"]) {
+                linkString = self.fileLinkString;
+            } else {
+                linkString = [self.fileLinkString stringByAppendingString:@"!"];
+            }
             linkString = [linkString stringByAppendingString:key];
             
             [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:self];

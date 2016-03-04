@@ -377,8 +377,13 @@
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
         } else if (buttonIndex == 1) {
-            NSString *linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            NSString *linkString;
             NSString *key = [[alertView textFieldAtIndex:0] text];
+            if ([[key substringToIndex:1] isEqualToString:@"!"]) {
+                linkString = self.folderLinkString;
+            } else {
+                linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            }
             linkString = [linkString stringByAppendingString:key];
             
             [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
