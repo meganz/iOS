@@ -19,7 +19,6 @@
  * program.
  */
 
-#import <MediaPlayer/MediaPlayer.h>
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -34,6 +33,7 @@
 #import "OfflineTableViewCell.h"
 
 #import "MEGAStore.h"
+#import "MEGAAVViewController.h"
 
 @interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
@@ -41,6 +41,7 @@
 
 @property (nonatomic, strong) NSMutableArray *offlineFilesAndFolders;
 @property (nonatomic, strong) NSMutableArray *offlineFiles;
+@property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 
 @property (nonatomic, strong) NSString *folderPathFromOffline;
 
@@ -102,8 +103,9 @@
 
 - (void)reloadUI {
     
-    self.offlineFilesAndFolders = [NSMutableArray new];
-    self.offlineFiles = [NSMutableArray new];
+    self.offlineFilesAndFolders = [[NSMutableArray alloc] init];
+    self.offlineFiles = [[NSMutableArray alloc] init];
+    self.offlineMultimediaFiles = [[NSMutableArray alloc] init];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
@@ -128,8 +130,12 @@
             BOOL isDirectory;
             [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
             if (!isDirectory) {
-                offsetIndex++;
-                [self.offlineFiles addObject:filePath];
+                if (isMultimedia(fileName.pathExtension)) {
+                    [self.offlineMultimediaFiles addObject:filePath];
+                } else {
+                    offsetIndex++;
+                    [self.offlineFiles addObject:filePath];
+                }
             }
         }
     }
@@ -426,6 +432,9 @@
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
+    } else if (isMultimedia(previewDocumentPath.pathExtension)) {
+        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+        [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {
         QLPreviewController *previewController = [[QLPreviewController alloc]init];
         previewController.delegate = self;
@@ -538,12 +547,6 @@
 
 #pragma mark - MEGATransferDelegate
 
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         return;
@@ -552,9 +555,6 @@
     if ([transfer type] == MEGATransferTypeDownload) {
         [self reloadUI];
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

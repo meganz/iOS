@@ -21,8 +21,6 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-#import <MediaPlayer/MPMoviePlayerViewController.h>
-#import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 #import <QuickLook/QuickLook.h>
@@ -37,7 +35,6 @@
 
 #import "CloudDriveTableViewController.h"
 #import "NodeTableViewCell.h"
-#import "LoginViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "MEGAPreview.h"
 #import "MEGANavigationController.h"
@@ -50,6 +47,7 @@
 
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAStore.h"
+#import "MEGAAVViewController.h"
 
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     UIAlertView *folderAlertView;
@@ -72,8 +70,6 @@
     NSString *previewDocumentPath;
     
     NSUInteger numFilesAction, numFoldersAction;
-    
-    MEGANode *selectedNode;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -512,52 +508,32 @@
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
-                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    
-                    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-                    [previewController setDelegate:self];
-                    [previewController setDataSource:self];
-                    [previewController setTransitioningDelegate:self];
-                    [previewController setTitle:name];
-                    [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-                    NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-                    if (link) {
-                        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                        // Remove the movie player view controller from the "playback did finish" notification observers
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                      object:moviePlayerViewController.moviePlayer];
+                    if (!isMultimedia(node.name.pathExtension)) {
+                        previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
                         
-                        // Register this class as an observer instead
-                        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                 selector:@selector(movieFinishedCallback:)
-                                                                     name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                   object:moviePlayerViewController.moviePlayer];
-                        
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                        
-                        selectedNode = node;
-                        
-                        if (![node hasThumbnail]) {
-                            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                     selector:@selector(handleThumbnailImageRequestFinishNotification:)
-                                                                         name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                                       object:moviePlayerViewController.moviePlayer];
-                            
-                            [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
-                        }
-                        
-                        [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                        
-                        [moviePlayerViewController.moviePlayer prepareToPlay];
-                        [moviePlayerViewController.moviePlayer play];
-                        
+                        QLPreviewController *previewController = [[QLPreviewController alloc] init];
+                        [previewController setDelegate:self];
+                        [previewController setDataSource:self];
+                        [previewController setTransitioningDelegate:self];
+                        [previewController setTitle:name];
+                        [self presentViewController:previewController animated:YES completion:nil];
+                    } else {
+                        NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
+                        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
+                        [self presentViewController:megaAVViewController animated:YES completion:nil];
                         if (fileUTI) {
                             CFRelease(fileUTI);
                         }
                         return;
                     }
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                    MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
+                    [self presentViewController:megaAVViewController animated:YES completion:nil];
+                    
+                    if (fileUTI) {
+                        CFRelease(fileUTI);
+                    }
+                    return;
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
@@ -1833,43 +1809,6 @@
     [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
     
     return YES;
-}
-
-#pragma mark - Movie player
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    
-    [moviePlayer cancelAllThumbnailImageRequests];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[MEGASdkManager sharedMEGASdk] httpServerStop];
-}
-
-- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                  object:moviePlayer];
-    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-    
-    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
-    
-    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
-    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
-    
-    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
-    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
-    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
-    selectedNode = nil;
 }
 
 
