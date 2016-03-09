@@ -282,6 +282,17 @@
     }
 }
 
+- (BOOL)isDirectorySelected {
+    BOOL isDirectory = NO;
+    for (NSURL *url in self.selectedItems) {
+        [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory];
+        if (isDirectory) {
+            return isDirectory;
+        }
+    }
+    return isDirectory;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -445,6 +456,7 @@
             [self reloadUI];
         }
     }
+    [self setEditing:NO animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -460,7 +472,11 @@
         [self.selectedItems addObject:filePathURL];
         
         if (self.selectedItems.count > 0) {
-            [self.activityBarButtonItem setEnabled:YES];
+            if ([self isDirectorySelected]) {
+                [self.activityBarButtonItem setEnabled:NO];
+            } else {
+                [self.activityBarButtonItem setEnabled:YES];
+            }
             [self.deleteBarButtonItem setEnabled:YES];
         }
         
@@ -518,6 +534,13 @@
         if (self.selectedItems.count == 0) {
             [self.activityBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
+        } else {
+            if ([self isDirectorySelected]) {
+                [self.activityBarButtonItem setEnabled:NO];
+            } else {
+                [self.activityBarButtonItem setEnabled:YES];
+            }
+            [self.deleteBarButtonItem setEnabled:YES];
         }
         
         allItemsSelected = NO;
@@ -597,10 +620,14 @@
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     } else if (self.selectedItems.count >= 1) {
-        [self.activityBarButtonItem setEnabled:YES];
+        if ([self isDirectorySelected]) {
+            [self.activityBarButtonItem setEnabled:NO];
+        } else {
+            [self.activityBarButtonItem setEnabled:YES];
+        }
         [self.deleteBarButtonItem setEnabled:YES];
     }
-    
+
     [self.tableView reloadData];
 }
 
