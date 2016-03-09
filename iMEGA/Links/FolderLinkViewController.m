@@ -21,8 +21,6 @@
 
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-#import <MediaPlayer/MPMoviePlayerViewController.h>
-#import <MediaPlayer/MediaPlayer.h>
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
@@ -45,6 +43,7 @@
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAAVViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -618,34 +617,14 @@
                     [previewController setTransitioningDelegate:self];
                     [previewController setTitle:name];
                     [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-                    NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-                    if (link) {
-                        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                        // Remove the movie player view controller from the "playback did finish" notification observers
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                      object:moviePlayerViewController.moviePlayer];
-                        
-                        // Register this class as an observer instead
-                        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                 selector:@selector(movieFinishedCallback:)
-                                                                     name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                   object:moviePlayerViewController.moviePlayer];
-                        
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                        
-                        [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                        
-                        [moviePlayerViewController.moviePlayer prepareToPlay];
-                        [moviePlayerViewController.moviePlayer play];
-                        
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        
-                        return;
-                    }
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdkFolder] httpServerStart:YES port:4443]) {
+                    MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:YES];
+                    [self presentViewController:megaAVViewController animated:YES completion:nil];
+
+                    if (fileUTI) {
+                        CFRelease(fileUTI);
+                    }                    
+                    return;
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
@@ -868,18 +847,6 @@
     }
     
     return nil;
-}
-
-
-#pragma mark - Movie player
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[MEGASdkManager sharedMEGASdk] httpServerStop];
 }
 
 #pragma mark - MEGAGlobalDelegate

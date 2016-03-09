@@ -171,7 +171,7 @@
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
-            [MEGASdk setLogLevel:MEGALogLevelDebug];
+            [MEGASdk setLogLevel:MEGALogLevelMax];
             
             freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
             
