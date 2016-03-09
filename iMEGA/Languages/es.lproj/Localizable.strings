@@ -728,3 +728,7 @@
 "disableDebugMode_title"="Desactivar el modo depuración";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Se borrará el log (MEGAiOS.log) de la sección de Offline";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="¿Seguro que quieres eliminar este elemento de Offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos de Offline?";

@@ -35,8 +35,10 @@
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
+    BOOL allItemsSelected;
+    BOOL isSwipeEditing;
 }
 
 @property (nonatomic, strong) NSMutableArray *offlineFilesAndFolders;
@@ -44,6 +46,14 @@
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 
 @property (nonatomic, strong) NSString *folderPathFromOffline;
+
+@property (nonatomic, strong) NSMutableArray *selectedItems;
+
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @end
 
@@ -63,6 +73,13 @@
         NSString *currentFolderName = [self.folderPathFromOffline lastPathComponent];
         [self.navigationItem setTitle:currentFolderName];
     }
+    
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];    
+    [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+    
+    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,6 +101,11 @@
     
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
+    
+    if (self.tableView.isEditing) {
+        self.selectedItems = nil;
+        [self setEditing:NO animated:NO];
+    }
 }
 
 - (void)dealloc {
@@ -125,6 +147,7 @@
             NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
             [tempDictionary setValue:fileName forKey:kMEGANode];
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
+            [tempDictionary setValue:[NSURL fileURLWithPath:filePath] forKey:kPath];
             [self.offlineFilesAndFolders addObject:tempDictionary];
             
             BOOL isDirectory;
@@ -370,6 +393,14 @@
     NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
     [cell.infoLabel setText:sizeAndDate];
     
+    if (self.isEditing) {
+        for (NSURL *url in self.selectedItems) {
+            if ([url.path isEqualToString:pathForItem]) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+    }
+    
     return cell;
 }
 
@@ -416,9 +447,31 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (tableView.isEditing) {
+        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        [self.selectedItems addObject:filePathURL];
+        
+        if (self.selectedItems.count > 0) {
+            [self.activityBarButtonItem setEnabled:YES];
+            [self.deleteBarButtonItem setEnabled:YES];
+        }
+        
+        if (self.selectedItems.count == self.offlineFilesAndFolders.count) {
+            allItemsSelected = YES;
+        } else {
+            allItemsSelected = NO;
+        }
+        
+        return;
+    }
     
     OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *itemNameString = [cell itemNameString];
@@ -449,8 +502,146 @@
     }
 }
 
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    if (tableView.isEditing) {
+        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        
+        NSMutableArray *tempArray = [self.selectedItems copy];
+        for (NSURL *url in tempArray) {
+            if ([[url filePathURL] isEqual:filePathURL]) {
+                [self.selectedItems removeObject:url];
+            }
+        }
+        
+        if (self.selectedItems.count == 0) {
+            [self.activityBarButtonItem setEnabled:NO];
+            [self.deleteBarButtonItem setEnabled:NO];
+        }
+        
+        allItemsSelected = NO;
+        
+        return;
+    }
+}
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSURL *fileULR = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kPath];
+    
+    self.selectedItems = [[NSMutableArray alloc] init];
+    [self.selectedItems addObject:fileULR];
+    [self.deleteBarButtonItem setEnabled:YES];
+    [self.activityBarButtonItem setEnabled:YES];
+    
+    isSwipeEditing = YES;
+    
     return UITableViewCellEditingStyleDelete;
+}
+
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+        if (!isSwipeEditing) {
+            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        }
+    } else {
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        allItemsSelected = NO;
+        self.selectedItems = nil;
+        self.navigationItem.leftBarButtonItems = @[];
+    }
+    
+    if (!self.selectedItems) {
+        self.selectedItems = [[NSMutableArray alloc] init];
+        
+        [self.activityBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+    [self.tabBarController.tabBar addSubview:self.toolbar];
+    
+    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+    }];
+    
+    isSwipeEditing = NO;
+}
+
+#pragma mark - IBActions
+
+- (IBAction)editTapped:(UIBarButtonItem *)sender {
+    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
+    [self setEditing:value animated:YES];
+}
+
+- (IBAction)selectAllAction:(UIBarButtonItem *)sender {
+    [self.selectedItems removeAllObjects];
+    
+    if (!allItemsSelected) {
+        NSURL *filePathURL = nil;
+        
+        for (NSInteger i = 0; i < self.offlineFilesAndFolders.count; i++) {
+            filePathURL = [[self.offlineFilesAndFolders objectAtIndex:i] objectForKey:kPath];
+            [self.selectedItems addObject:filePathURL];
+        }
+        
+        allItemsSelected = YES;
+    } else {
+        allItemsSelected = NO;
+    }
+
+    if (self.selectedItems.count == 0) {
+        [self.activityBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    } else if (self.selectedItems.count >= 1) {
+        [self.activityBarButtonItem setEnabled:YES];
+        [self.deleteBarButtonItem setEnabled:YES];
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)activityTapped:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:self.selectedItems applicationActivities:nil];
+    
+    if (self.selectedItems.count > 5) {
+        activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
+    }
+    
+    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
+        activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
+    }
+    
+    if ([activityViewController respondsToSelector:@selector(setCompletionWithItemsHandler:)]) {
+        [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
+            [self setEditing:NO animated:YES];
+        }];
+    } else {
+        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+            [self setEditing:NO animated:YES];
+        }];
+    }
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
+}
+
+- (IBAction)deleteTapped:(UIBarButtonItem *)sender {
+    NSString *message;
+    if (self.selectedItems.count == 1) {
+        message = AMLocalizedString(@"removeItemFromOffline", nil);
+    } else {
+        message = AMLocalizedString(@"removeItemsFromOffline", nil);
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil)
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                              otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+    [alertView show];
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
@@ -537,6 +728,53 @@
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
     previewDocumentPath = [self.offlineFiles objectAtIndex:index];
     return [NSURL fileURLWithPath:previewDocumentPath];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        for (NSURL *url in self.selectedItems) {
+            
+            NSArray *offlinePathsOnFolderArray;
+            MOOfflineNode *offlineNode;
+            
+            BOOL isDirectory;
+            [[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDirectory];
+            if (isDirectory) {
+                if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
+                    [self cancelPendingTransfersOnFolder:url.path folderLink:NO];
+                }
+                if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
+                    [self cancelPendingTransfersOnFolder:url.path folderLink:YES];
+                }
+                offlinePathsOnFolderArray = [self offlinePathOnFolder:url.path];
+            }
+            
+            NSError *error = nil;
+            BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:url.path error:&error];
+            offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:url.path]];
+            if (!success || error) {
+                [SVProgressHUD showErrorWithStatus:@""];
+                return;
+            } else {
+                if (isDirectory) {
+                    for (NSString *localPathAux in offlinePathsOnFolderArray) {
+                        offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
+                        if (offlineNode) {
+                            [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                        }
+                    }
+                } else {
+                    if (offlineNode) {
+                        [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                    }
+                }
+                [self reloadUI];
+            }
+        }
+        [self setEditing:NO animated:YES];
+    }
 }
 
 #pragma mark - QLPreviewControllerDelegate
