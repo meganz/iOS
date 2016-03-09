@@ -34,6 +34,7 @@
 
 #define kMEGANode @"kMEGANode"
 #define kIndex @"kIndex"
+#define kPath @"kPath"
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
