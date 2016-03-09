@@ -20,8 +20,6 @@
  */
 
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <MediaPlayer/MPMoviePlayerViewController.h>
-#import <MediaPlayer/MediaPlayer.h>
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -36,14 +34,14 @@
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
+#import "MEGAStore.h"
+#import "MEGAAVViewController.h"
 
 @interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
     NSMutableArray *exportLinks;
     NSUInteger remainingOperations;
     NSUInteger itemsPerRow;
-    
-    MEGANode *selectedNode;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -517,42 +515,19 @@
             [photoBrowser showNextPhotoAnimated:YES];
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
-        } else if (isMultimedia(node.name.pathExtension) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-            NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-            if (link) {
-                MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                // Remove the movie player view controller from the "playback did finish" notification observers
-                [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                name:MPMoviePlayerPlaybackDidFinishNotification
-                                                              object:moviePlayerViewController.moviePlayer];
-                
-                // Register this class as an observer instead
-                [[NSNotificationCenter defaultCenter] addObserver:self
-                                                         selector:@selector(movieFinishedCallback:)
-                                                             name:MPMoviePlayerPlaybackDidFinishNotification
-                                                           object:moviePlayerViewController.moviePlayer];
-                
-                [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                
-                selectedNode = node;
-                
-                if (![node hasThumbnail]) {
-                    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                             selector:@selector(handleThumbnailImageRequestFinishNotification:)
-                                                                 name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                               object:moviePlayerViewController.moviePlayer];
-                    
-                    [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
-                }
-                
-                [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                
-                [moviePlayerViewController.moviePlayer prepareToPlay];
-                [moviePlayerViewController.moviePlayer play];
-                
+        } else {
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+            
+            if (offlineNodeExist) {
+                NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
+                [self presentViewController:megaAVViewController animated:YES completion:nil];
+                return;
+            } else if ([[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
+                [self presentViewController:megaAVViewController animated:YES completion:nil];
                 return;
             }
-            
         }
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
@@ -682,45 +657,6 @@
     
     return nil;
 }
-
-#pragma mark - Moview player
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    
-    [moviePlayer cancelAllThumbnailImageRequests];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[MEGASdkManager sharedMEGASdk] httpServerStop];
-}
-
-- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                  object:moviePlayer];
-    UIImage *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-    
-    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
-    
-    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
-    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
-    
-    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
-    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
-    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
-    selectedNode = nil;
-}
-
-
 
 #pragma mark - UIAlertViewDelegate
 
