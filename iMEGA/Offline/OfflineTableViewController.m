@@ -797,9 +797,9 @@
                         [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
                     }
                 }
-                [self reloadUI];
             }
         }
+        [self reloadUI];
         [self setEditing:NO animated:YES];
     }
 }
