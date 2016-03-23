@@ -415,20 +415,41 @@
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
     [self deleteTempDocuments];
     
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self.parentNode isFolderLink:YES]) {
-        [self setEditing:NO animated:YES];
-        return;
+    if ([_tableView isEditing]) {
+        for (MEGANode *node in _selectedNodesArray) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
+                [self setEditing:NO animated:YES];
+                return;
+            }
+        }
+    } else {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:_parentNode isFolderLink:YES]) {
+            return;
+        }
     }
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
+                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+            } else {
+                //TODO: Check if this else code is really necessary
+                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+            }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+            
+            if ([_tableView isEditing]) {
+                for (MEGANode *node in _selectedNodesArray) {
+                    [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                }
+            } else {
+                [Helper downloadNode:_parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+            }
         }];
     } else {
+        //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         
         [Helper setLinkNode:self.parentNode];
@@ -594,7 +615,6 @@
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     if (tableView.isEditing) {
-        // Check if selectedNodesArray contains the current node in the tableView
         for (MEGANode *n in _selectedNodesArray) {
             if ([n handle] == [node handle]) {
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];

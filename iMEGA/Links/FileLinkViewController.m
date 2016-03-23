@@ -71,7 +71,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [_folderAndFilesLabel setText:@""];
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
@@ -314,19 +313,36 @@
     if ([MEGAReachabilityManager isReachable]) {
         [self deleteTempFile];
         
-        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
-            [self setEditing:NO animated:YES];
-            return;
+        if (self.fileLinkMode == FileLink) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:_node isFolderLink:NO]) {
+                return;
+            }
+        } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:self.nodeFromFolderLink isFolderLink:YES]) {
+                return;
+            }
         }
         
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
-                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+                if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
+                    [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+                } else {
+                    //TODO: Check if this else code is really necessary
+                    MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+                    [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+                }
+                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                
+                if (self.fileLinkMode == FileLink) {
+                    [Helper downloadNode:_node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper pathForOffline] isFolderLink:YES];
+                }
             }];
         } else {
+            //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
             
             [Helper setLinkNode:self.node];
@@ -369,8 +385,11 @@
                 
                 PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                 [previewDocumentVC setNode:self.node];
-                [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
-                
+                if (self.fileLinkMode == FileLink) {
+                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
+                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
+                }
                 [self.navigationController pushViewController:previewDocumentVC animated:YES];
             }
         }
