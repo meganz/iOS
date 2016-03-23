@@ -24,6 +24,7 @@
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
+#import "NSString+MNZCategory.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
@@ -70,18 +71,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     
     [_folderAndFilesLabel setText:@""];
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    
-    [self setUIItemsHidden:YES];
-    [SVProgressHUD show];
-    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+    if (self.fileLinkMode == FileLink) {
+        [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+        NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+        [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+        [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+        [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
+        
+        [self setUIItemsHidden:YES];
+        [SVProgressHUD show];
+        [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+    } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+        _node = self.nodeFromFolderLink;
+        
+        [self setNodeInfo];
+        if (_node.isFolder) {
+            NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:_node];
+            NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:_node];
+            NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+            [_folderAndFilesLabel setText:filesAndFolders];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,8 +125,13 @@
         [titleMutableAttributedString addAttribute:NSFontAttributeName
                                              value:[UIFont fontWithName:kFont size:18.0]
                                              range:[title rangeOfString:title]];
+        NSString *subtitle;
+        if (self.fileLinkMode == FileLink) {
+            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
+        } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
+        }
         
-        NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
         NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
         [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
                                                 value:megaRed
@@ -215,6 +234,37 @@
                                                                     otherButtonTitles:nil];
     [decryptionKeyNotValidAlertView setTag:2];
     [decryptionKeyNotValidAlertView show];
+}
+
+- (void)setNodeInfo {
+    NSString *name = [_node name];
+    [_nameLabel setText:name];
+    [self setNavigationBarTitleLabel];
+    
+    NSString *sizeString;
+    if (self.fileLinkMode == FileLink) {
+        sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+        sizeString = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdkFolder] sizeForNode:self.nodeFromFolderLink] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    }
+    [_sizeLabel setText:sizeString];
+    
+    if ([_node isFolder]) {
+        [_thumbnailImageView setImage:[Helper infoImageForNode:_node]];
+    } else {
+        NSString *extension = [name pathExtension];
+        [_thumbnailImageView setImage:[Helper infoImageForExtension:[extension lowercaseString]]];
+        
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
+            [_tableView reloadData];
+        }
+        if (fileUTI) {
+            CFRelease(fileUTI);
+        }
+    }
+    
+    [self setUIItemsHidden:NO];
 }
 
 #pragma mark - IBActions
@@ -393,16 +443,19 @@
     
     switch (indexPath.row) {
         case 0: {
-            cell.nameLabel.text = AMLocalizedString(@"importButton", nil);
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoImport"]];
+            cell.nameLabel.text = AMLocalizedString(@"import", nil);
             break;
         }
             
         case 1: {
-            [cell.nameLabel setText:AMLocalizedString(@"downloadButton_fileLink", nil)];
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoDownload"]];
+            [cell.nameLabel setText:AMLocalizedString(@"downloadButton", nil)];
             break;
         }
             
         case 2: {
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoOpen"]];
             [cell.nameLabel setText:AMLocalizedString(@"openButton", nil)];
             break;
         }
@@ -536,25 +589,8 @@
             
             self.node = [request publicNode];
             
-            NSString *name = [self.node name];
-            [self.nameLabel setText:name];
-            [self setNavigationBarTitleLabel];
+            [self setNodeInfo];
             
-            NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-            [self.sizeLabel setText:sizeString];
-            
-            NSString *extension = [name pathExtension];
-            [self.thumbnailImageView setImage:[Helper infoImageForExtension:[extension lowercaseString]]];
-            
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-                [self.tableView reloadData];
-            }
-            if (fileUTI) {
-                CFRelease(fileUTI);
-            }
-            
-            [self setUIItemsHidden:NO];
             [SVProgressHUD dismiss];
             break;
         }

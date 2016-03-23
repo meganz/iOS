@@ -21,8 +21,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, FileLinkMode) {
+    FileLink = 0,
+    FileLinkNodeFromFolderLink
+};
+
 @interface FileLinkViewController : UIViewController
 
+@property (nonatomic) FileLinkMode fileLinkMode;
+
 @property (nonatomic, strong) NSString *fileLinkString;
+
+@property (nonatomic, strong) MEGANode *nodeFromFolderLink;
 
 @end

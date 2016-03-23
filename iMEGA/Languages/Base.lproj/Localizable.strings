@@ -110,12 +110,9 @@
 "nodeTooBig"="You need to free some space on your device";
 /* Title for the file link view */
 "fileLink"="File Link";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Import to Cloud Drive";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Download to your MEGA App";
+
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Open file";
+"openButton"="Open";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -153,7 +150,7 @@
 /* Title shown when the shared folder with a contact is empty. */
 "cloudDriveEmptyState_titleContact"="No files in this shared folder";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Empty rubbish bin";
+"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Message shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_text"="Add files using the above button";
 /* Message shown when the shared folder with a contact is empty. */
@@ -384,8 +381,10 @@
 "importTitle"="Import to";
 /* Button title that triggers the importing link action */
 "import"="Import";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="File imported";
+/* Message shown when some files have been imported */
+"filesImported"="Files imported";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Storage quota exceeded";
 /* Alert title shown when the user is overquota */
@@ -658,8 +657,6 @@
 "free"="FREE";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expires on %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
 /* DO NOT TRANSLATE, it will change */
 "purchasesHistory"="Purchases history";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
