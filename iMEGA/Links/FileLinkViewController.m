@@ -286,17 +286,21 @@
         
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
-                if ([self.node type] == MEGANodeTypeFile) {
-                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-                    
-                    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                    browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                
+                if (self.fileLinkMode == FileLink) {
                     [browserVC setBrowserAction:BrowserActionImport];
+                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                    [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
                 }
             }];
         } else {
+            //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
             
             [Helper setLinkNode:self.node];

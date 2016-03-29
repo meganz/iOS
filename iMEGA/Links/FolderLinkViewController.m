@@ -45,6 +45,8 @@
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAAVViewController.h"
+#import "MEGANavigationController.h"
+#import "BrowserViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -462,7 +464,30 @@
 - (IBAction)importAction:(UIBarButtonItem *)sender {
     [self deleteTempDocuments];
     
-    //TODO: Import folder
+    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+            if ([_tableView isEditing]) {
+                browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
+            } else {
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
+            }
+            
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+        }];
+    } else {
+        //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+        
+        [Helper setLinkNode:self.parentNode];
+        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
+        
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+    
     return;
 }
 
