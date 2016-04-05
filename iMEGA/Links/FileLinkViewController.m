@@ -334,10 +334,6 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                     [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
-                } else {
-                    //TODO: Check if this else code is really necessary
-                    MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
                 }
                 
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];

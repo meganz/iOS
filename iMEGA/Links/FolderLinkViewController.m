@@ -122,6 +122,8 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
+    [self.navigationItem setRightBarButtonItem:_editBarButtonItem];
+    
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
     [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
     
@@ -130,7 +132,6 @@
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
         [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
-        [self.navigationItem setRightBarButtonItem:_editBarButtonItem];
         
         [_downloadBarButtonItem setEnabled:NO];
         [_importBarButtonItem setEnabled:NO];
@@ -244,6 +245,8 @@
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
     
+    [_editBarButtonItem setEnabled:NO];
+    
     [self.importBarButtonItem setEnabled:NO];
     [self.downloadBarButtonItem setEnabled:NO];
 }
@@ -291,6 +294,8 @@
 
 - (void)showLinkNotValid {
     isFolderLinkNotValid = YES;
+    
+    [self disableUIItems];
     
     [SVProgressHUD dismiss];
     [self.tableView reloadData];
@@ -434,10 +439,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
-            } else {
-                //TODO: Check if this else code is really necessary
-                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
             }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];

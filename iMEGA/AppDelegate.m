@@ -37,6 +37,7 @@
 #import "CreateAccountViewController.h"
 #import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
+#import "OfflineTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -422,7 +423,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
 }
 
-- (void)selectedOptionOnLink {
+- (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
         case 1: { //Import file from link
             MEGANode *node = [Helper linkNode];
@@ -441,6 +442,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
             break;
         }
@@ -461,7 +464,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     return;
                 }
             }
-            
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
             }
@@ -1164,7 +1168,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
                         
                         if ([Helper selectedOptionOnLink] != 0) {
-                            [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                            [self performSelector:@selector(processSelectedOptionOnLink) withObject:nil afterDelay:0.75f];
                         } else {
                             if (self.urlType == URLTypeOpenInLink) {
                                 [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
