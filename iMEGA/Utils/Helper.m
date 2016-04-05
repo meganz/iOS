@@ -654,7 +654,7 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSArray *viewControllersArray = tabBarController.viewControllers;
     NSUInteger index = 0;
     for (UINavigationController *navigationController in viewControllersArray) {
-        if ([navigationController.visibleViewController isKindOfClass:classOfViewController]) {
+        if ([navigationController.topViewController isKindOfClass:classOfViewController]) {
             [tabBarController setSelectedIndex:index];
             break;
         }
