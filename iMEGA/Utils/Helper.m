@@ -35,6 +35,7 @@ static NSString *renamePathForPreview;
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
+static NSMutableArray *nodesFromLinkMutableArray;
 
 @implementation Helper
 
@@ -530,6 +531,14 @@ static NSInteger linkNodeOption;
 
 + (void)setLinkNode:(MEGANode *)node {
     linkNode = node;
+}
+
++ (NSMutableArray *)nodesFromLinkMutableArray {
+    if (nodesFromLinkMutableArray == nil) {
+        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
+    }
+    
+    return nodesFromLinkMutableArray;
 }
 
 + (NSInteger)selectedOptionOnLink {

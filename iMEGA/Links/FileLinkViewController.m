@@ -300,12 +300,15 @@
                 }
             }];
         } else {
-            //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
+            if (self.fileLinkMode == FileLink) {
+                [Helper setLinkNode:_node];
+                [Helper setSelectedOptionOnLink:1]; //Import file from link
+            } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
+                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+            }
+            
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            
-            [Helper setLinkNode:self.node];
-            [Helper setSelectedOptionOnLink:1];
-            
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {
@@ -346,12 +349,15 @@
                 }
             }];
         } else {
-            //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
+            if (self.fileLinkMode == FileLink) {
+                [Helper setLinkNode:_node];
+                [Helper setSelectedOptionOnLink:2]; //Download file from link
+            } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
+                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+            }
+            
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            
-            [Helper setLinkNode:self.node];
-            [Helper setSelectedOptionOnLink:2];
-            
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {

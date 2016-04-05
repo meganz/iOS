@@ -451,14 +451,18 @@
             }
         }];
     } else {
-        //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
+        if ([_tableView isEditing]) {
+            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+        } else {
+            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+        }
+        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        
-        [Helper setLinkNode:self.parentNode];
-        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
-        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
+    
+    //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
@@ -479,12 +483,14 @@
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
-        //TODO: More posibilities for LoginViewController when you have selected an option (Download or import) on a link due new changes
+        if ([_tableView isEditing]) {
+            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+        } else {
+            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+        }
+        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        
-        [Helper setLinkNode:self.parentNode];
-        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
-        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
     

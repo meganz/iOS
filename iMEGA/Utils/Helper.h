@@ -112,6 +112,7 @@
 
 + (MEGANode *)linkNode;
 + (void)setLinkNode:(MEGANode *)node;
++ (NSMutableArray *)nodesFromLinkMutableArray;
 
 + (NSInteger)selectedOptionOnLink;
 + (void)setSelectedOptionOnLink:(NSInteger)option;
