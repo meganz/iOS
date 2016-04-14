@@ -156,7 +156,7 @@
 #pragma mark - Private
 
 - (void)setUserAvatar {
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.emailLabel.text];
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] myUser];
     NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
