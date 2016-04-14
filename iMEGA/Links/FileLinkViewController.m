@@ -74,7 +74,7 @@
     [_folderAndFilesLabel setText:@""];
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    if (self.fileLinkMode == FileLink) {
+    if (self.fileLinkMode == FileLinkModeDefault) {
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
         NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
         [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
@@ -84,7 +84,7 @@
         [self setUIItemsHidden:YES];
         [SVProgressHUD show];
         [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
-    } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
         _node = self.nodeFromFolderLink;
         
         [self setNodeInfo];
@@ -125,9 +125,9 @@
                                              value:[UIFont fontWithName:kFont size:18.0]
                                              range:[title rangeOfString:title]];
         NSString *subtitle;
-        if (self.fileLinkMode == FileLink) {
+        if (self.fileLinkMode == FileLinkModeDefault) {
             subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
-        } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
             subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
         }
         
@@ -241,9 +241,9 @@
     [self setNavigationBarTitleLabel];
     
     NSString *sizeString;
-    if (self.fileLinkMode == FileLink) {
+    if (self.fileLinkMode == FileLinkModeDefault) {
         sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
         sizeString = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdkFolder] sizeForNode:self.nodeFromFolderLink] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
     }
     [_sizeLabel setText:sizeString];
@@ -293,17 +293,17 @@
                 browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
                 
-                if (self.fileLinkMode == FileLink) {
+                if (self.fileLinkMode == FileLinkModeDefault) {
                     [browserVC setBrowserAction:BrowserActionImport];
-                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
                     [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
                 }
             }];
         } else {
-            if (self.fileLinkMode == FileLink) {
+            if (self.fileLinkMode == FileLinkModeDefault) {
                 [Helper setLinkNode:_node];
                 [Helper setSelectedOptionOnLink:1]; //Import file from link
-            } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
                 [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
                 [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
             }
@@ -320,11 +320,11 @@
     if ([MEGAReachabilityManager isReachable]) {
         [self deleteTempFile];
         
-        if (self.fileLinkMode == FileLink) {
+        if (self.fileLinkMode == FileLinkModeDefault) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:_node isFolderLink:NO]) {
                 return;
             }
-        } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:self.nodeFromFolderLink isFolderLink:YES]) {
                 return;
             }
@@ -338,17 +338,17 @@
                 
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
                 
-                if (self.fileLinkMode == FileLink) {
+                if (self.fileLinkMode == FileLinkModeDefault) {
                     [Helper downloadNode:_node folderPath:[Helper pathForOffline] isFolderLink:NO];
-                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
                     [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper pathForOffline] isFolderLink:YES];
                 }
             }];
         } else {
-            if (self.fileLinkMode == FileLink) {
+            if (self.fileLinkMode == FileLinkModeDefault) {
                 [Helper setLinkNode:_node];
                 [Helper setSelectedOptionOnLink:2]; //Download file from link
-            } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
                 [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
                 [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
             }
@@ -391,9 +391,9 @@
                 
                 PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                 [previewDocumentVC setNode:self.node];
-                if (self.fileLinkMode == FileLink) {
+                if (self.fileLinkMode == FileLinkModeDefault) {
                     [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
-                } else if (self.fileLinkMode == FileLinkNodeFromFolderLink) {
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
                     [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
                 }
                 [self.navigationController pushViewController:previewDocumentVC animated:YES];
