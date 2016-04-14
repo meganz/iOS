@@ -33,10 +33,10 @@
 
 @property (nonatomic, weak) UITabBarController *tabBarController;
 
-@property (nonatomic) BOOL isCameraUploadsEnabled;
-@property (nonatomic) BOOL isUploadVideosEnabled;
-@property (nonatomic) BOOL isUseCellularConnectionEnabled;
-@property (nonatomic) BOOL isOnlyWhenChargingEnabled;
+@property (nonatomic, assign) BOOL isCameraUploadsEnabled;
+@property (nonatomic, assign) BOOL isUploadVideosEnabled;
+@property (nonatomic, assign) BOOL isUseCellularConnectionEnabled;
+@property (nonatomic, assign) BOOL isOnlyWhenChargingEnabled;
 
 @property (nonatomic, strong) NSDate *lastUploadPhotoDate;
 @property (nonatomic, strong) NSDate *lastUploadVideoDate;
