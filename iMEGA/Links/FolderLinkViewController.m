@@ -186,6 +186,11 @@
     }
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
+    if ([[_nodeList size] unsignedIntegerValue] == 0) {
+        [self setActionButtonsEnabled:NO];
+    } else {
+        [self setActionButtonsEnabled:YES];
+    }
     
     [self.tableView reloadData];
 }
@@ -241,10 +246,14 @@
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
     
-    [_editBarButtonItem setEnabled:NO];
+    [self setActionButtonsEnabled:NO];
+}
+
+- (void)setActionButtonsEnabled:(BOOL)boolValue {
+    [_editBarButtonItem setEnabled:boolValue];
     
-    [self.importBarButtonItem setEnabled:NO];
-    [self.downloadBarButtonItem setEnabled:NO];
+    [_importBarButtonItem setEnabled:boolValue];
+    [_downloadBarButtonItem setEnabled:boolValue];
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText {
@@ -362,7 +371,11 @@
         [self setAllNodesSelected:NO];
         _selectedNodesArray = nil;
 
-        [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+        if (self.isFolderRootNode) {
+            [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+        } else {
+            [self.navigationItem setLeftBarButtonItem:nil];
+        }
     }
     
     if (!_selectedNodesArray) {
