@@ -35,6 +35,7 @@
 #import "Helper.h"
 
 #import "FolderLinkViewController.h"
+#import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "DetailsNodeInfoViewController.h"
@@ -44,6 +45,8 @@
 #import "PreviewDocumentViewController.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAAVViewController.h"
+#import "MEGANavigationController.h"
+#import "BrowserViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
@@ -61,6 +64,8 @@
 @property (weak, nonatomic) UILabel *navigationBarLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
@@ -70,8 +75,8 @@
 @property (nonatomic, strong) MEGANodeList *nodeList;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
-
-@property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
+@property (nonatomic, strong) NSMutableArray *selectedNodesArray;
+@property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
 
 @end
 
@@ -93,8 +98,6 @@
     isLoginDone = NO;
     isFetchNodesDone = NO;
     
-    _nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
-    
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
@@ -115,16 +118,19 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
-    [self.importBarButtonItem setEnabled:NO];
+    [self.navigationItem setRightBarButtonItem:_editBarButtonItem];
+    
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
-    [self.downloadBarButtonItem setEnabled:NO];
     [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
     
     if (self.isFolderRootNode) {
         [MEGASdkManager sharedMEGASdkFolder];
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
-        [self.navigationItem setRightBarButtonItem:self.cancelBarButtonItem];
+        [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+        
+        [_downloadBarButtonItem setEnabled:NO];
+        [_importBarButtonItem setEnabled:NO];
     } else {
         [self reloadUI];
     }
@@ -180,6 +186,11 @@
     }
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
+    if ([[_nodeList size] unsignedIntegerValue] == 0) {
+        [self setActionButtonsEnabled:NO];
+    } else {
+        [self setActionButtonsEnabled:YES];
+    }
     
     [self.tableView reloadData];
 }
@@ -235,8 +246,14 @@
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
     
-    [self.importBarButtonItem setEnabled:NO];
-    [self.downloadBarButtonItem setEnabled:NO];
+    [self setActionButtonsEnabled:NO];
+}
+
+- (void)setActionButtonsEnabled:(BOOL)boolValue {
+    [_editBarButtonItem setEnabled:boolValue];
+    
+    [_importBarButtonItem setEnabled:boolValue];
+    [_downloadBarButtonItem setEnabled:boolValue];
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText {
@@ -283,6 +300,8 @@
 - (void)showLinkNotValid {
     isFolderLinkNotValid = YES;
     
+    [self disableUIItems];
+    
     [SVProgressHUD dismiss];
     [self.tableView reloadData];
 }
@@ -315,7 +334,7 @@
 
 #pragma mark - IBActions
 
-- (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
+- (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [self deleteTempDocuments];
     
     [Helper setLinkNode:nil];
@@ -330,37 +349,161 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)downloadFolderTouchUpInside:(UIBarButtonItem *)sender {
+- (IBAction)editAction:(UIBarButtonItem *)sender {
+    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
+    [self setEditing:value animated:YES];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    [_tableView setEditing:editing animated:YES];
+    
+    [_downloadBarButtonItem setEnabled:!editing];
+    [_importBarButtonItem setEnabled:!editing];
+    
+    if (editing) {
+        [_editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+
+        [self.navigationItem setLeftBarButtonItem:_selectAllBarButtonItem];
+    } else {
+        [_editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        [self setAllNodesSelected:NO];
+        _selectedNodesArray = nil;
+
+        if (self.isFolderRootNode) {
+            [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
+        } else {
+            [self.navigationItem setLeftBarButtonItem:nil];
+        }
+    }
+    
+    if (!_selectedNodesArray) {
+        _selectedNodesArray = [NSMutableArray new];
+    }
+}
+
+- (IBAction)selectAllAction:(UIBarButtonItem *)sender {
+    [_selectedNodesArray removeAllObjects];
+    
+    if (![self areAllNodesSelected]) {
+        MEGANode *node = nil;
+        NSInteger nodeListSize = [[_nodeList size] integerValue];
+        for (NSInteger i = 0; i < nodeListSize; i++) {
+            node = [_nodeList nodeAtIndex:i];
+            [_selectedNodesArray addObject:node];
+        }
+        
+        [self setAllNodesSelected:YES];
+    } else {
+        [self setAllNodesSelected:NO];
+    }
+    
+    if (self.selectedNodesArray.count == 0) {
+        [_downloadBarButtonItem setEnabled:NO];
+        [_importBarButtonItem setEnabled:NO];
+    } else if (self.selectedNodesArray.count >= 1) {
+        [_downloadBarButtonItem setEnabled:YES];
+        [_importBarButtonItem setEnabled:YES];
+    }
+    
+    [_tableView reloadData];
+}
+
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    MEGANode *node = nil;
+    if ([self.searchDisplayController isActive]) {
+        node = [matchSearchNodes objectAtIndex:indexPath.row];
+    } else {
+        node = [_nodeList nodeAtIndex:indexPath.row];
+    }
+    
+    FileLinkViewController *fileLinkVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
+    [fileLinkVC setFileLinkMode:FileLinkModeNodeFromFolderLink];
+    [fileLinkVC setNodeFromFolderLink:node];
+    [self.navigationController pushViewController:fileLinkVC animated:YES];
+}
+
+- (IBAction)downloadAction:(UIBarButtonItem *)sender {
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
     [self deleteTempDocuments];
     
-    if (![Helper isFreeSpaceEnoughToDownloadNode:self.parentNode isFolderLink:YES]) {
-        [self setEditing:NO animated:YES];
-        return;
+    if ([_tableView isEditing]) {
+        for (MEGANode *node in _selectedNodesArray) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
+                [self setEditing:NO animated:YES];
+                return;
+            }
+        }
+    } else {
+        if (![Helper isFreeSpaceEnoughToDownloadNode:_parentNode isFolderLink:YES]) {
+            return;
+        }
     }
     
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
+                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+            }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:self.parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+            
+            if ([_tableView isEditing]) {
+                for (MEGANode *node in _selectedNodesArray) {
+                    [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                }
+            } else {
+                [Helper downloadNode:_parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+            }
         }];
     } else {
+        if ([_tableView isEditing]) {
+            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+        } else {
+            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+        }
+        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        
-        [Helper setLinkNode:self.parentNode];
-        [Helper setSelectedOptionOnLink:[(UIButton *)sender tag]];
-        
         [self.navigationController pushViewController:loginVC animated:YES];
     }
+    
+    //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
 }
 
-- (IBAction)importFolderTouchUpInside:(UIBarButtonItem *)sender {
+- (IBAction)importAction:(UIBarButtonItem *)sender {
     [self deleteTempDocuments];
     
-    //TODO: Import folder
+    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+            if ([_tableView isEditing]) {
+                browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
+            } else {
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
+            }
+            
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+        }];
+    } else {
+        if ([_tableView isEditing]) {
+            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+        } else {
+            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+        }
+        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        
+        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+    
     return;
 }
 
@@ -444,22 +587,9 @@
         node = [self.nodeList nodeAtIndex:indexPath.row];
     }
     
-    [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
-    
-    NodeTableViewCell *cell;
-    if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
-        }
-        
-        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
-    } else {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
-        if (cell == nil) {
-            cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
-        }
+    NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
     }
     
     if ([node type] == MEGANodeTypeFile) {
@@ -512,6 +642,14 @@
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
+    if (tableView.isEditing) {
+        for (MEGANode *n in _selectedNodesArray) {
+            if ([n handle] == [node handle]) {
+                [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+    }
+    
     return cell;
 }
 
@@ -524,6 +662,21 @@
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
         node = [self.nodeList nodeAtIndex:indexPath.row];
+    }
+    
+    if (tableView.isEditing) {
+        [_selectedNodesArray addObject:node];
+        
+        [_downloadBarButtonItem setEnabled:YES];
+        [_importBarButtonItem setEnabled:YES];
+        
+        if ([_selectedNodesArray count] == [_nodeList.size integerValue]) {
+            [self setAllNodesSelected:YES];
+        } else {
+            [self setAllNodesSelected:NO];
+        }
+        
+        return;
     }
 
     switch ([node type]) {
@@ -664,6 +817,31 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = [_nodeList nodeAtIndex:indexPath.row];
+    
+    if (tableView.isEditing) {
+        NSMutableArray *tempArray = [_selectedNodesArray copy];
+        for (MEGANode *n in tempArray) {
+            if (n.handle == node.handle) {
+                [_selectedNodesArray removeObject:n];
+            }
+        }
+        
+        if (_selectedNodesArray.count == 0) {
+            [_downloadBarButtonItem setEnabled:NO];
+            [_importBarButtonItem setEnabled:NO];
+        } else if (self.selectedNodesArray.count < 1) {
+            [_downloadBarButtonItem setEnabled:YES];
+            [_importBarButtonItem setEnabled:YES];
+        }
+        
+        [self setAllNodesSelected:NO];
+        
+        return;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -852,7 +1030,6 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
     [self reloadUI];
 }
 
@@ -945,8 +1122,8 @@
             [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
             [self.searchDisplayController.searchBar setHidden:NO];
             
-//            [self.importBarButtonItem setEnabled:YES];
-            [self.downloadBarButtonItem setEnabled:YES];
+            [_importBarButtonItem setEnabled:YES];
+            [_downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
             }
@@ -994,63 +1171,6 @@
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.isStreamingTransfer) {
-        return;
-    }
-    
-    if (transfer.type == MEGATransferTypeDownload) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-    
-    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
-        float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
-        
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
-        }
-    }
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
-        }
-        return;
-    }
-    
-    if ([transfer type] == MEGATransferTypeDownload) {
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }
-}
-
-- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

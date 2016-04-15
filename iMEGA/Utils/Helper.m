@@ -35,6 +35,7 @@ static NSString *renamePathForPreview;
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
+static NSMutableArray *nodesFromLinkMutableArray;
 
 @implementation Helper
 
@@ -532,6 +533,14 @@ static NSInteger linkNodeOption;
     linkNode = node;
 }
 
++ (NSMutableArray *)nodesFromLinkMutableArray {
+    if (nodesFromLinkMutableArray == nil) {
+        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
+    }
+    
+    return nodesFromLinkMutableArray;
+}
+
 + (NSInteger)selectedOptionOnLink {
     return linkNodeOption;
 }
@@ -645,7 +654,7 @@ static NSInteger linkNodeOption;
     NSArray *viewControllersArray = tabBarController.viewControllers;
     NSUInteger index = 0;
     for (UINavigationController *navigationController in viewControllersArray) {
-        if ([navigationController.visibleViewController isKindOfClass:classOfViewController]) {
+        if ([navigationController.topViewController isKindOfClass:classOfViewController]) {
             [tabBarController setSelectedIndex:index];
             break;
         }
