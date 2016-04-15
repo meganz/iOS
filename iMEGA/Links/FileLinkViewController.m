@@ -62,6 +62,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
+
 @end
 
 @implementation FileLinkViewController
@@ -93,6 +95,11 @@
             NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:_node];
             NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
             [_folderAndFilesLabel setText:filesAndFolders];
+            
+            if ([[MEGASdkManager sharedMEGASdkFolder] numberChildrenForParent:_node] == 0) {
+                [self setFolderEmpty:YES];
+                [_tableView setUserInteractionEnabled:NO];
+            }
         }
     }
 }
@@ -489,6 +496,11 @@
     [view setBackgroundColor:megaInfoGray];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
+    if ([self isFolderEmpty]) {
+        [cell.thumbnailImageView setAlpha:0.4];
+        [cell.nameLabel setAlpha:0.4];
+    }
     
     return cell;
 }

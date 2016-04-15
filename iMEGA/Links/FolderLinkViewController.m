@@ -422,7 +422,7 @@
     }
     
     FileLinkViewController *fileLinkVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
-    [fileLinkVC setFileLinkMode:FileLinkNodeFromFolderLink];
+    [fileLinkVC setFileLinkMode:FileLinkModeNodeFromFolderLink];
     [fileLinkVC setNodeFromFolderLink:node];
     [self.navigationController pushViewController:fileLinkVC animated:YES];
 }
