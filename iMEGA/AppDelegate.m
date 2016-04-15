@@ -37,6 +37,7 @@
 #import "CreateAccountViewController.h"
 #import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
+#import "OfflineTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -422,33 +423,50 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
 }
 
-- (void)selectedOptionOnLink {
+- (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
-        case 1: { //IMPORT
+        case 1: { //Import file from link
             MEGANode *node = [Helper linkNode];
-            if ([node type] == MEGANodeTypeFile) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
-                [browserVC setBrowserAction:BrowserActionImport];
-            }
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
+            
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
+            [browserVC setBrowserAction:BrowserActionImport];
             break;
         }
             
-        case 2: { //DOWNLOAD
+        case 2: { //Download file from link
             MEGANode *node = [Helper linkNode];
-            if ([node type] == MEGANodeTypeFile) {
-                if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                    return;
-                }
-                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
-            } else if ([node type] == MEGANodeTypeFolder) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                return;
+            }
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
+            break;
+        }
+            
+        case 3: { //Import folder or nodes from link
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+            browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
+            [self presentLinkViewController:navigationController];
+            break;
+        }
+            
+        case 4: { //Download folder or nodes from link
+            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                     return;
                 }
+            }
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
             }
             break;
@@ -459,6 +477,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     [Helper setLinkNode:nil];
+    [[Helper nodesFromLinkMutableArray] removeAllObjects];
     [Helper setSelectedOptionOnLink:0];
 }
 
@@ -1149,7 +1168,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
                         
                         if ([Helper selectedOptionOnLink] != 0) {
-                            [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                            [self performSelector:@selector(processSelectedOptionOnLink) withObject:nil afterDelay:0.75f];
                         } else {
                             if (self.urlType == URLTypeOpenInLink) {
                                 [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];

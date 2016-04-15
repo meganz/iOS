@@ -24,6 +24,7 @@
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
+#import "NSString+MNZCategory.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
@@ -61,6 +62,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
+
 @end
 
 @implementation FileLinkViewController
@@ -70,18 +73,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
-    
     [_folderAndFilesLabel setText:@""];
     
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    
-    [self setUIItemsHidden:YES];
-    [SVProgressHUD show];
-    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+    if (self.fileLinkMode == FileLinkModeDefault) {
+        [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
+        NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+        [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+        [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+        [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
+        
+        [self setUIItemsHidden:YES];
+        [SVProgressHUD show];
+        [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:self.fileLinkString delegate:self];
+    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+        _node = self.nodeFromFolderLink;
+        
+        [self setNodeInfo];
+        if (_node.isFolder) {
+            NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:_node];
+            NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:_node];
+            NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+            [_folderAndFilesLabel setText:filesAndFolders];
+            
+            if ([[MEGASdkManager sharedMEGASdkFolder] numberChildrenForParent:_node] == 0) {
+                [self setFolderEmpty:YES];
+                [_tableView setUserInteractionEnabled:NO];
+            }
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,8 +131,13 @@
         [titleMutableAttributedString addAttribute:NSFontAttributeName
                                              value:[UIFont fontWithName:kFont size:18.0]
                                              range:[title rangeOfString:title]];
+        NSString *subtitle;
+        if (self.fileLinkMode == FileLinkModeDefault) {
+            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
+        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
+        }
         
-        NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
         NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
         [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
                                                 value:megaRed
@@ -217,6 +242,37 @@
     [decryptionKeyNotValidAlertView show];
 }
 
+- (void)setNodeInfo {
+    NSString *name = [_node name];
+    [_nameLabel setText:name];
+    [self setNavigationBarTitleLabel];
+    
+    NSString *sizeString;
+    if (self.fileLinkMode == FileLinkModeDefault) {
+        sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+        sizeString = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdkFolder] sizeForNode:self.nodeFromFolderLink] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    }
+    [_sizeLabel setText:sizeString];
+    
+    if ([_node isFolder]) {
+        [_thumbnailImageView setImage:[Helper infoImageForNode:_node]];
+    } else {
+        NSString *extension = [name pathExtension];
+        [_thumbnailImageView setImage:[Helper infoImageForExtension:[extension lowercaseString]]];
+        
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
+        if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
+            [_tableView reloadData];
+        }
+        if (fileUTI) {
+            CFRelease(fileUTI);
+        }
+    }
+    
+    [self setUIItemsHidden:NO];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
@@ -237,22 +293,29 @@
         
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
-                if ([self.node type] == MEGANodeTypeFile) {
-                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
-                    
-                    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                    browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+                
+                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
+                
+                if (self.fileLinkMode == FileLinkModeDefault) {
                     [browserVC setBrowserAction:BrowserActionImport];
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+                    [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
                 }
             }];
         } else {
+            if (self.fileLinkMode == FileLinkModeDefault) {
+                [Helper setLinkNode:_node];
+                [Helper setSelectedOptionOnLink:1]; //Import file from link
+            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
+                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+            }
+            
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            
-            [Helper setLinkNode:self.node];
-            [Helper setSelectedOptionOnLink:1];
-            
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {
@@ -264,24 +327,40 @@
     if ([MEGAReachabilityManager isReachable]) {
         [self deleteTempFile];
         
-        if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
-            [self setEditing:NO animated:YES];
-            return;
+        if (self.fileLinkMode == FileLinkModeDefault) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:_node isFolderLink:NO]) {
+                return;
+            }
+        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:self.nodeFromFolderLink isFolderLink:YES]) {
+                return;
+            }
         }
         
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
-                MainTabBarController *mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:mainTBC];
+                if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
+                    [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+                }
+                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                
+                if (self.fileLinkMode == FileLinkModeDefault) {
+                    [Helper downloadNode:_node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper pathForOffline] isFolderLink:YES];
+                }
             }];
         } else {
+            if (self.fileLinkMode == FileLinkModeDefault) {
+                [Helper setLinkNode:_node];
+                [Helper setSelectedOptionOnLink:2]; //Download file from link
+            } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+                [[Helper nodesFromLinkMutableArray] addObject:self.nodeFromFolderLink];
+                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+            }
+            
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            
-            [Helper setLinkNode:self.node];
-            [Helper setSelectedOptionOnLink:2];
-            
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     } else {
@@ -319,8 +398,11 @@
                 
                 PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
                 [previewDocumentVC setNode:self.node];
-                [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
-                
+                if (self.fileLinkMode == FileLinkModeDefault) {
+                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
+                } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
+                    [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
+                }
                 [self.navigationController pushViewController:previewDocumentVC animated:YES];
             }
         }
@@ -393,16 +475,19 @@
     
     switch (indexPath.row) {
         case 0: {
-            cell.nameLabel.text = AMLocalizedString(@"importButton", nil);
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoImport"]];
+            cell.nameLabel.text = AMLocalizedString(@"import", nil);
             break;
         }
             
         case 1: {
-            [cell.nameLabel setText:AMLocalizedString(@"downloadButton_fileLink", nil)];
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoDownload"]];
+            [cell.nameLabel setText:AMLocalizedString(@"downloadButton", nil)];
             break;
         }
             
         case 2: {
+            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"infoOpen"]];
             [cell.nameLabel setText:AMLocalizedString(@"openButton", nil)];
             break;
         }
@@ -411,6 +496,11 @@
     [view setBackgroundColor:megaInfoGray];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
+    
+    if ([self isFolderEmpty]) {
+        [cell.thumbnailImageView setAlpha:0.4];
+        [cell.nameLabel setAlpha:0.4];
+    }
     
     return cell;
 }
@@ -536,25 +626,8 @@
             
             self.node = [request publicNode];
             
-            NSString *name = [self.node name];
-            [self.nameLabel setText:name];
-            [self setNavigationBarTitleLabel];
+            [self setNodeInfo];
             
-            NSString *sizeString = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-            [self.sizeLabel setText:sizeString];
-            
-            NSString *extension = [name pathExtension];
-            [self.thumbnailImageView setImage:[Helper infoImageForExtension:[extension lowercaseString]]];
-            
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(extension), NULL);
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage) || [QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-                [self.tableView reloadData];
-            }
-            if (fileUTI) {
-                CFRelease(fileUTI);
-            }
-            
-            [self setUIItemsHidden:NO];
             [SVProgressHUD dismiss];
             break;
         }
