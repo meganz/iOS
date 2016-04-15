@@ -38,6 +38,8 @@
 #import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
 #import "OfflineTableViewController.h"
+#import "SettingsTableViewController.h"
+#import "SecurityOptionsTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -63,7 +65,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeFolderLink,
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
-    URLTypeNewSignUpLink
+    URLTypeNewSignUpLink,
+    URLTypeBackupLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -518,6 +521,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isBackupLink:afterSlashesString]) {
+        self.urlType = URLTypeBackupLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -625,6 +633,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isBackupLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
+    if (isBackupLink) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
+            [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+            [self presentLinkViewController:navigationController];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)openIn {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -717,20 +751,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [unavailableLinkView.titleLabel setText:title];
     [unavailableLinkView.textView setText:text];
     [unavailableLinkView setFrame:self.window.frame];
-
-    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleBordered target:nil action:@selector(dismissPresentedViews)];
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
-    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
     [viewController.navigationItem setTitle:title];
-    [viewController.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+    [viewController.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (UIBarButtonItem *)cancelBarButtonItem {
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+    return cancelBarButtonItem;
 }
 
 #pragma mark - Get IP Address
@@ -825,8 +862,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-        [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+        [upgradeTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
         
         [self dismissPresentedViews];
         
