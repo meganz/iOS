@@ -22,12 +22,8 @@
     [super viewDidLoad];
     
     NSError * error = nil;
-    [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory()
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:&error];
-    if (error != nil) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:&error]) {
+        MEGALogError(@"Create directory at path");
     }
 
     NSString *localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_node.name];
@@ -92,9 +88,8 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentTransfer.path];
     if (fileExists) {
         NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewDocumentTransfer.path error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentTransfer.path error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     

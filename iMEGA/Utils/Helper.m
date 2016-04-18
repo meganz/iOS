@@ -689,7 +689,7 @@ static NSMutableArray *nodesFromLinkMutableArray;
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
         totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
     } else {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]]];
+        MEGALogError(@"Obtaining System Memory Info: %@", error);
     }
     
     return totalFreeSpace;
@@ -749,17 +749,15 @@ static NSMutableArray *nodesFromLinkMutableArray;
     
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     
@@ -767,33 +765,29 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
         error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     
     // Delete v2 thumbnails & previews directory
     NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
     
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
 }
@@ -808,9 +802,8 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
     
     if (existMasterKey) {
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
 }

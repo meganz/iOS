@@ -117,7 +117,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-    [MEGASdkManager sharedMEGASdk];
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
 #else
@@ -178,10 +178,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2ThumbsPath]) {
         NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
-        NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
+            NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+                MEGALogError(@"Create directory at path: %@", error);
             }
         }
         [self renameAttributesAtPath:v2ThumbsPath v3Path:v3ThumbsPath];
@@ -190,10 +190,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *v2previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2previewsPath]) {
         NSString *v3PreviewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-        NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
+            NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3PreviewsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+                MEGALogError(@"Create directory at path: %@", error);
             }
         }
         [self renameAttributesAtPath:v2previewsPath v3Path:v3PreviewsPath];
@@ -316,18 +316,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     // Clean up temporary directory
     NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
+    if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
+        MEGALogError(@"Remove item at path: %@", error);
     }
     
     // Clean up Documents/Inbox directory
     NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
         error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
         }
     }
 }
@@ -681,9 +679,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         } else {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error];
-                if (!success || error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
+                    MEGALogError(@"Remove item at path: %@", error)
                 }
             }
         }
@@ -1356,7 +1353,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
@@ -1377,9 +1373,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     //Delete local file even if we get an error
     if ([transfer type] == MEGATransferTypeUpload) {
         NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
         }
     }
     

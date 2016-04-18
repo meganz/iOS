@@ -221,7 +221,7 @@ static CameraUploads *instance = nil;
                                   }
                               }
                              failureBlock:^(NSError *error) {
-                                 [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                                 MEGALogError(@"Asset for url: %@", error);
                              } ];
                 
             }
@@ -244,7 +244,7 @@ static CameraUploads *instance = nil;
                                   failureBlock:^(NSError *error) {
                                       [self setIsCameraUploadsEnabled:NO];
                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
-                                      [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                                      MEGALogError(@"Enumerate groups with types: %@", error);
                                   }];
     }
 }
