@@ -139,7 +139,7 @@
              if (!imageData) {
                  NSError *error = [info objectForKey:@"PHImageErrorKey"];
                  if (error) {
-                     [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: request image data for asset %@", error]];
+                     MEGALogError(@"Request image data for asset: %@", error);
                  }
                  [self disableCameraUploadWithError:error];
                  return;
@@ -161,7 +161,7 @@
              if (!asset) {
                  NSError *error = [info objectForKey:@"PHImageErrorKey"];
                  if (error) {
-                     [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: request avasset for video %@", error]];
+                     MEGALogError(@"Request avasset for video: %@", error);
                  }
                  [self disableCameraUploadWithError:error];
                  return;
@@ -180,7 +180,7 @@
                  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
                  if (![[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error] && !fileExists) {
                      if (error) {
-                         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: copy item at path %@", error]];
+                         MEGALogError(@"Copy item at path: %@", error);
                          [self disableCameraUploadWithError:error];
                          return;
                      }
@@ -189,9 +189,7 @@
                  error = nil;
                  NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
                  if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                     if (error) {
-                         [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: set attributes: change modification date %@", error]];
-                     }
+                     MEGALogError(@"Set attributes: %@", error);
                  }
                  
                  NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
@@ -358,9 +356,7 @@
         }
         
         if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-            if (error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: Set attributes: change modification date %@", error]];
-            }
+            MEGALogError(@"Set attributes: %@", error);
         }
         
         NSString *newName = [self newNameForName:name];
@@ -370,9 +366,7 @@
             
             NSError *error = nil;
             if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
-                if (error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: Move item at path %@", error]];
-                }
+                MEGALogError(@"Move item at path: %@", error);
             }
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath parent:_cameraUploadNode delegate:self];
         } else {
@@ -458,9 +452,7 @@
     
     NSError *nserror = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&nserror]) {
-        if (nserror) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Camera Uploads: remove item at path %@", nserror]];
-        }
+        MEGALogError(@"Remove item at path: %@", nserror);
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {

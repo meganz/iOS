@@ -203,9 +203,8 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath];
     if (fileExists) {
         NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temp document error: %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error);
         }
     }
 }
