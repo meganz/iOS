@@ -505,6 +505,8 @@
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
 "rubbishBinLabel"="Rubbish Bin";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Advanced";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Security Options";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -559,6 +561,20 @@
 "masterKeyRemoved"="Master Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt was removed from the Documents folder.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="On your device";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles" = "Clear Offline files";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Clear Cache";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="On MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin" = "Empty Rubbish Bin";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="All the elements of the Rubbish Bin will be removed";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing" = "Currently using %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Remove";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
