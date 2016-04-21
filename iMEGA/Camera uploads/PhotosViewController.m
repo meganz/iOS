@@ -134,11 +134,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    self.photosCollectionView.emptyDataSetSource = nil;
-    self.photosCollectionView.emptyDataSetDelegate = nil;
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -191,7 +186,12 @@
         
         self.photosCollectionViewBottonLayoutConstraint.constant = -49;
     } else {
-        [self.enableCameraUploadsButton setHidden:NO];
+        if ([self.photosByMonthYearArray count] == 0) {
+            [self.enableCameraUploadsButton setHidden:YES];
+        } else {
+            [self.enableCameraUploadsButton setHidden:NO];
+        }
+        
         self.uploadProgressViewTopLayoutConstraint.constant = -60;
         self.photosCollectionViewTopLayoutConstraint.constant = 0;
         self.photosCollectionViewBottonLayoutConstraint.constant = 0;
@@ -237,10 +237,7 @@
     [self.editButtonItem setEnabled:boolValue];
 }
 
-#pragma mark - IBAction
-
-- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    
+- (void)enableCameraUploadsAndShowItsSettings {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     
@@ -254,6 +251,12 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [self reloadUI];
     }
+}
+
+#pragma mark - IBAction
+
+- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    [self enableCameraUploadsAndShowItsSettings];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -584,56 +587,59 @@
                 return nil;
             }
         } else {
-            text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled");
+            text = @"";
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            return nil;
-        }
-        
-        text = AMLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
+    UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
             if ([self.photosByMonthYearArray count] == 0) {
-                return [UIImage imageNamed:@"emptyCameraUploads"];
-            } else {
-                return nil;
+                image = [UIImage imageNamed:@"emptyCameraUploads"];
             }
+        } else {
+            image = [UIImage imageNamed:@"emptyCameraUploads"];
         }
-        
-        return [UIImage imageNamed:@"emptyCameraUploads"];
     } else {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
+    
+    return image;
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            text = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+        }
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:megaMediumGray};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets rectInsets;
+    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if (iPad) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if (iPadPro) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -642,6 +648,22 @@
     }
     
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    CGFloat spaceHeight;
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled] || iPhone4X) {
+        spaceHeight = 40.0f;
+    } else {
+        spaceHeight = 60.0f;
+    }
+    return spaceHeight;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self enableCameraUploadsAndShowItsSettings];
 }
 
 #pragma mark - MWPhotoBrowserDelegate
