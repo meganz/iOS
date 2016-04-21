@@ -68,11 +68,15 @@
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
     [_useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", @"Use cellular connection")];
     
-    [_skipButton.layer setCornerRadius:6];
+    [_skipButton.layer setBorderWidth:2.0f];
+    [_skipButton.layer setCornerRadius:4.0f];
+    [_skipButton.layer setBorderColor:[megaGray CGColor]];
     [_skipButton.layer setMasksToBounds:YES];
     [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
-    [_enableButton.layer setCornerRadius:6];
+    [_enableButton.layer setBorderWidth:2.0f];
+    [_enableButton.layer setCornerRadius:4.0f];
+    [_enableButton.layer setBorderColor:[megaRed CGColor]];
     [_enableButton.layer setMasksToBounds:YES];
     [_enableButton setTitle:AMLocalizedString(@"ok", nil) forState:UIControlStateNormal];
 }
