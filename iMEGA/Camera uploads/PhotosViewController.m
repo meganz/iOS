@@ -88,7 +88,13 @@
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.navigationItem setRightBarButtonItem:self.editButtonItem];
+    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+        [negativeSpaceBarButtonItem setWidth:-8.0];
+    } else {
+        [negativeSpaceBarButtonItem setWidth:-4.0];
+    }
+    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     if (iPad) {
@@ -372,6 +378,12 @@
 #pragma mark - UICollectioViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if ([self.photosByMonthYearArray count] == 0) {
+        [self setNavigationBarButtonItemsEnabled:NO];
+    } else {
+        [self setNavigationBarButtonItemsEnabled:YES];
+    }
+    
     return [self.photosByMonthYearArray count];
 }
 

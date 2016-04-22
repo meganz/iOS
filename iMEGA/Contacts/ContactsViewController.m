@@ -88,7 +88,7 @@
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -250,6 +250,12 @@
             if ([u access] == MEGAUserVisibilityVisible)
                 [self.visibleUsersArray addObject:u];
         }
+    }
+    
+    if ([self.visibleUsersArray count] == 0) {
+        [_editBarButtonItem setEnabled:NO];
+    } else {
+        [_editBarButtonItem setEnabled:YES];
     }
     
     [self.tableView reloadData];

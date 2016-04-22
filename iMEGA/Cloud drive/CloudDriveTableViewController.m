@@ -121,14 +121,12 @@
             
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
-            
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
             }
-
             
             switch (accessType) {
                 case MEGAShareTypeAccessRead: {
@@ -198,8 +196,6 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
     [self reloadUI];
-    
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1399,6 +1395,12 @@
             
         default:
             break;
+    }
+    
+    if ([[self.nodes size] unsignedIntegerValue] == 0) {
+        [_editBarButtonItem setEnabled:NO];
+    } else {
+        [_editBarButtonItem setEnabled:YES];
     }
     
     [self.tableView reloadData];
