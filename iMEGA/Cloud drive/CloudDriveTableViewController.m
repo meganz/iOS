@@ -2,7 +2,7 @@
  * @file CloudDriveTableViewController.m
  * @brief Cloud drive table view controller of the app.
  *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -106,6 +106,11 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    self.searchDisplayController.searchResultsTableView.emptyDataSetSource = self;
+    self.searchDisplayController.searchResultsTableView.emptyDataSetDelegate = self;
+    self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
+    [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
+    
     [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
     
@@ -180,8 +185,6 @@
         }
     }
     
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     matchSearchNodes = [[NSMutableArray alloc] init];
@@ -241,11 +244,15 @@
     
     if (numberOfRows == 0) {
         if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         } else {
             [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         }
     } else {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        }
+        
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
@@ -739,41 +746,40 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
-                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+        if ([self.searchDisplayController isActive]) {
+            text = AMLocalizedString(@"noResults", nil);
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
                 }
-                break;
+                    
+                case DisplayModeContact:
+                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    break;
+                    
+                case DisplayModeRubbishBin:
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
+                    
+                default:
+                    break;
             }
-                
-            case DisplayModeContact:
-                text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                break;
-                
-            case DisplayModeRubbishBin:
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                }
-                break;
-                
-            default:
-                text = @"";
-                break;
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -791,31 +797,35 @@
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    image = [UIImage imageNamed:@"emptyCloudDrive"];
-                } else {
-                    image = [UIImage imageNamed:@"emptyFolder"];
+        if ([self.searchDisplayController isActive]) {
+            image = [UIImage imageNamed:@"emptySearch"];
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case DisplayModeContact:
-                image = [UIImage imageNamed:@"emptyFolder"];
-                break;
-                
-            case DisplayModeRubbishBin: {
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    image = [UIImage imageNamed:@"emptyRubbishBin"];
-                } else {
+                    
+                case DisplayModeContact:
                     image = [UIImage imageNamed:@"emptyFolder"];
+                    break;
+                    
+                case DisplayModeRubbishBin: {
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
+                    
+                default:
+                    break;
             }
-                
-            default:
-                break;
         }
     } else {
          image = [UIImage imageNamed:@"noInternetConnection"];
@@ -833,7 +843,9 @@
         
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
-                text = AMLocalizedString(@"addFiles", nil);
+                if (![self.searchDisplayController isActive]) {
+                    text = AMLocalizedString(@"addFiles", nil);
+                }
                 break;
             }
                 
@@ -1810,7 +1822,6 @@
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
