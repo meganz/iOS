@@ -58,10 +58,14 @@
     
     NSArray *buttonsItems = @[self.addBarButtonItem];
     self.navigationItem.rightBarButtonItems = buttonsItems;
+    
+    [self internetConnectionChanged];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
@@ -76,6 +80,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -125,6 +131,10 @@
         MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
         [self.incomingContactRequestArray addObject:contactRequest];
     }
+}
+
+- (void)internetConnectionChanged {
+    [_addBarButtonItem setEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 #pragma mark - IBActions
