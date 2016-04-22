@@ -25,6 +25,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 
 #import "TransfersViewController.h"
 #import "TransferTableViewCell.h"
@@ -683,11 +684,11 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {
-            text = AMLocalizedString(@"transfersEmptyState_titlePaused",  @"Transfers Paused");
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titlePaused", nil) sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case 0: //All
-                    text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No Transfers");
+                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused") sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
                     break;
                     
                 case 1: //Downloads

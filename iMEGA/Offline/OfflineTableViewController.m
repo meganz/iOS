@@ -25,6 +25,7 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "NSMutableAttributedString+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -686,7 +687,7 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.folderPathFromOffline == nil) {
-            text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.") sectionTitle:AMLocalizedString(@"offline", @"Title of the Offline section")];
         } else {
             text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         }
