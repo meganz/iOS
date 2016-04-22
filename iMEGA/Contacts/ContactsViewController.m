@@ -30,6 +30,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "Helper.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 
 #import "ContactsViewController.h"
 #import "ContactTableViewCell.h"
@@ -888,7 +889,8 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"myContacts", @"Title of My Contacts section")];
+        
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }

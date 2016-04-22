@@ -27,6 +27,7 @@
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
@@ -755,6 +756,7 @@
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
                     text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
+                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
                 } else {
                     text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                 }
@@ -767,7 +769,7 @@
                 
             case DisplayModeRubbishBin:
                 if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
+                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
                 } else {
                     text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                 }

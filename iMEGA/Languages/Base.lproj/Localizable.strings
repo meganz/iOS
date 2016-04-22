@@ -255,7 +255,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Save for offline";
+"saveForOffline"="Save for Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Saved for Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -480,7 +480,7 @@
 "settingsTitle"="Settings";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Camera Uploads";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Rubbish Bin";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Advanced";

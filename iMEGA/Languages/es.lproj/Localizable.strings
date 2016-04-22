@@ -151,7 +151,7 @@
 /* Title shown when the Offline section is empty, when you don't have download any files. */
 "offlineEmptyState_title"="No hay archivos disponibles sin conexión";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="No tienes contactos";
+"contactsEmptyState_title"="No tienes Contactos";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas contigo";
 /* Title shown when there's no outgoing Shared Items */
@@ -177,7 +177,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferencias en pausa";
 /* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No hay transferencias";
+"transfersEmptyState_titleAll"="No hay Transferencias";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="No hay descargas";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
