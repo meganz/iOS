@@ -30,6 +30,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "Helper.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 
 #import "ContactsViewController.h"
 #import "ContactTableViewCell.h"
@@ -87,7 +88,7 @@
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -186,11 +187,6 @@
     }
 }
 
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -254,6 +250,12 @@
             if ([u access] == MEGAUserVisibilityVisible)
                 [self.visibleUsersArray addObject:u];
         }
+    }
+    
+    if ([self.visibleUsersArray count] == 0) {
+        [_editBarButtonItem setEnabled:NO];
+    } else {
+        [_editBarButtonItem setEnabled:YES];
     }
     
     [self.tableView reloadData];
@@ -893,32 +895,13 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_title", @"You don't have any contacts added yet!");
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"myContacts", @"Title of My Contacts section")];
+        
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-   NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"contactsEmptyState_text", @"Add new contacts using the above button.");
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+   NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -931,8 +914,43 @@
     }
 }
 
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        text = AMLocalizedString(@"addContacts", nil);
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:megaMediumGray};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets rectInsets;
+    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if (iPad) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if (iPadPro) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self addContact:_addBarButtonItem];
 }
 
 #pragma mark - MEGARequestDelegate

@@ -52,9 +52,9 @@
     [_confirmPasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.")];
     
     [_changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", nil) forState:UIControlStateNormal];
-    [self.changePasswordButton.layer setBorderWidth:2.5f];
+    [self.changePasswordButton.layer setBorderWidth:2.0f];
     [self.changePasswordButton.layer setBorderColor:[megaRed CGColor]];
-    [self.changePasswordButton.layer setCornerRadius:6];
+    [self.changePasswordButton.layer setCornerRadius:4];
     [self.changePasswordButton.layer setMasksToBounds:YES];
     
     [_currentPasswordTextField becomeFirstResponder];

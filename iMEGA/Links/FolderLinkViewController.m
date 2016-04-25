@@ -2,7 +2,7 @@
  * @file FolderLinkViewController.m
  * @brief View controller that allows to see and manage MEGA folder links.
  *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -90,10 +90,10 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
-    [self.searchDisplayController.searchBar setUserInteractionEnabled:NO];
-    [self.searchDisplayController.searchBar setHidden:YES];
+    self.searchDisplayController.searchResultsTableView.emptyDataSetSource = self;
+    self.searchDisplayController.searchResultsTableView.emptyDataSetDelegate = self;
+    self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
+    [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
     
     isLoginDone = NO;
     isFetchNodesDone = NO;
@@ -118,7 +118,13 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
-    [self.navigationItem setRightBarButtonItem:_editBarButtonItem];
+    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+        [negativeSpaceBarButtonItem setWidth:-8.0];
+    } else {
+        [negativeSpaceBarButtonItem setWidth:-4.0];
+    }
+    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem] animated:YES];
     
     [self.importBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
     [self.downloadBarButtonItem setTitle:AMLocalizedString(@"downloadButton", @"Download")];
@@ -154,11 +160,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -176,11 +177,6 @@
     
     if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
         [self setNavigationBarTitleLabel];
-        
-        if (!self.isFolderRootNode) { //Enable and show search bar when you're on a child folder
-            [self.searchDisplayController.searchBar setHidden:NO];
-            [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
-        }
     } else {
         [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     }
@@ -193,6 +189,14 @@
     }
     
     [self.tableView reloadData];
+    
+    if ([[self.nodeList size] unsignedIntegerValue] == 0) {
+        [_tableView setTableHeaderView:nil];
+        [_tableView setContentOffset:CGPointZero];
+    } else {
+        [_tableView setTableHeaderView:self.searchDisplayController.searchBar];
+        [_tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
+    }
 }
 
 - (void)setNavigationBarTitleLabel {
@@ -566,11 +570,15 @@
     
     if (numberOfRows == 0) {
         if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         } else {
             [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         }
     } else {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        }
+        
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
@@ -659,6 +667,7 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         node = [matchSearchNodes objectAtIndex:indexPath.row];
+        [self.searchDisplayController setActive:NO animated:YES];
     } else {
         node = [self.nodeList nodeAtIndex:indexPath.row];
     }
@@ -878,8 +887,7 @@
 #pragma mark - UISearchDisplayDelegate
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
-    [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [self.searchDisplayController setActive:NO animated:YES];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -931,9 +939,6 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (!isFetchNodesDone && self.isFolderRootNode) {
@@ -943,8 +948,8 @@
                 text = @"";
             }
         } else {
-            if (self.isFolderRootNode) {
-                text = AMLocalizedString(@"folderLinkEmptyState_title", @"Empty folder link");
+            if ([self.searchDisplayController isActive]) {
+                text = AMLocalizedString(@"noResults", nil);
             } else {
                 text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
             }
@@ -953,35 +958,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (!isFetchNodesDone && self.isFolderRootNode) {
-            text = @"";
-        } else {
-            if (self.isFolderRootNode) {
-                text = AMLocalizedString(@"folderLinkEmptyState_text", @"Empty folder link");
-            } else {
-                text = AMLocalizedString(@"folderLinkEmptyState_textFolder", @"Empty child folder link.");
-            }
-        }
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -995,6 +972,10 @@
             }
             return nil;
         }
+        
+         if ([self.searchDisplayController isActive]) {
+             return [UIImage imageNamed:@"emptySearch"];
+         }
         
         return [UIImage imageNamed:@"emptyFolder"];
     } else {
@@ -1010,6 +991,18 @@
     }
     
     return [UIColor whiteColor];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([self.searchDisplayController isActive]) {
+        return -66.0;
+    }
+    
+    return 0.0f;
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -1118,8 +1111,6 @@
             
             isFetchNodesDone = YES;
             [self reloadUI];
-            [self.searchDisplayController.searchBar setUserInteractionEnabled:YES];
-            [self.searchDisplayController.searchBar setHidden:NO];
             
             [_importBarButtonItem setEnabled:YES];
             [_downloadBarButtonItem setEnabled:YES];

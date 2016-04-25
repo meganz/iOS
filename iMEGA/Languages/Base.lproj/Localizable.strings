@@ -47,7 +47,7 @@
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Servers are too busy. Please wait...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Please log in to your account";
+"pleaseLogInToYourAccount"="Please log in to your account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -112,7 +112,6 @@
 "nodeTooBig"="You need to free some space on your device";
 /* Title for the file link view */
 "fileLink"="File Link";
-
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Open";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -141,42 +140,28 @@
 "noInternetConnection"="No internet connection";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Empty Folder";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Empty folder link";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="This folder link doesn't have any files";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="This sub folder doesn't have any files.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="No files in your Cloud Drive";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="No files in this shared folder";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Add files";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Add files using the above button";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Share something. Add files using the above button.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Camera Uploads is disabled";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Enable Camera Uploads to have a copy of your device photos on MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_title"="No files saved for offline";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Download files to use them when you don't have internet connection.";
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
+"offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="You don't have any contacts";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Add contacts using the above button.";
+"contactsEmptyState_title"="No Contacts";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No incoming shared folders";
+"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="No outgoing shared folders";
+"noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
 /* Title of My Contacts section */
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
 "contactRequests"="Contact requests";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Add contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Sent";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -188,23 +173,15 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Request deleted";
 /* Title shown when there's no pending request */
-"noRequestPending"="No requests pending at this time";
+"noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Transfers paused";
+"transfersEmptyState_titlePaused"="Paused Transfers";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Resume the transfers using the above button.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="You don't have any pending downloads.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="You don't have any pending uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -278,7 +255,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Save for offline";
+"saveForOffline"="Save for Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Saved for Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -401,7 +378,7 @@
 "photoPerMonth"="%lu photo";
 /* Button title that skips the current action */
 "skipButton"="Skip";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Enable Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Camera Uploads enabled";
@@ -503,7 +480,7 @@
 "settingsTitle"="Settings";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Camera Uploads";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Rubbish Bin";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Advanced";
@@ -564,7 +541,7 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles" = "Clear Offline files";
+"clearOfflineFiles" = "Clear Offline Files";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Clear Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -572,7 +549,7 @@
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin" = "Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the elements of the Rubbish Bin will be removed";
+"emptyRubbishBinAlertTitle"="All the elements of the Rubbish Bin will be removed.";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing" = "Currently using %s";
 /* Title for the action that allows to remove a file or folder */

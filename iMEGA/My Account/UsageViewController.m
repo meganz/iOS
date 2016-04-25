@@ -191,11 +191,11 @@
     }
     
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:@"SFUIDisplay-Light" size:60.0]
+                                             value:[UIFont fontWithName:kFont size:60.0]
                                              range:firstPartRange];
     
     [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont fontWithName:@"SFUIDisplay-Light" size:30.0]
+                                              value:[UIFont fontWithName:kFont size:30.0]
                                               range:secondPartRange];
 
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];

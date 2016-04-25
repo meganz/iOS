@@ -98,7 +98,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"sharedItems", nil)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -137,11 +137,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-}
-
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -935,20 +930,6 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        text = @" ";
-    } else {
-        text = AMLocalizedString(@"noInternetConnection",  nil);
-    }
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
         switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
             case 0: { //Incoming
                 text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", nil);
@@ -961,16 +942,10 @@
             }
         }
     } else {
-        text = @"";
+        text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -998,6 +973,10 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
 }
 
 #pragma mark - MEGAGlobalDelegate

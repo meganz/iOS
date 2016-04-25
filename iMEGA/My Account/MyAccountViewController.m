@@ -94,7 +94,7 @@
     
     self.upgradeToProButton.layer.borderWidth = 2.0f;
     self.upgradeToProButton.layer.borderColor =[megaRed CGColor];
-    self.upgradeToProButton.layer.cornerRadius = 6;
+    self.upgradeToProButton.layer.cornerRadius = 4;
     self.upgradeToProButton.layer.masksToBounds = YES;
     
     _fullname = @"";
