@@ -25,7 +25,7 @@
 
 #import "AdvancedTableViewController.h"
 
-@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGARequestDelegate> {
+@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
 
@@ -47,7 +47,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    
     [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - Private Methods
@@ -76,7 +84,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        [[MEGASdkManager sharedMEGASdk] cleanRubbishBinWithDelegate:self];
+        [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
     }
 }
 
@@ -120,8 +128,7 @@
         case 1: { //Cache
             long long thumbnailsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"]];
             long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-            long long temporarySize = [Helper sizeOfFolderAtPath:NSTemporaryDirectory()];
-            long long cacheSize = thumbnailsSize + previewsSize + temporarySize;
+            long long cacheSize = thumbnailsSize + previewsSize;
             NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:cacheSize];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
             const char *cString = [stringFromByteCount cStringUsingEncoding:NSUTF8StringEncoding];
@@ -179,6 +186,7 @@
                 MEGALogError(@"Remove item at path: %@", error);
             }
             [[MEGAStore shareInstance] removeAllOfflineNodes];
+            [self.tableView reloadData];
             break;
         }
             
@@ -189,7 +197,7 @@
              NSString *previewsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
             [self deleteFolderContentsInPath:previewsPathString];
             
-            [self deleteFolderContentsInPath:NSTemporaryDirectory()];
+            [self.tableView reloadData];
             break;
         }
             
@@ -206,18 +214,12 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self.tableView reloadData];
 }
 
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    if ([request type] == MEGARequestTypeCleanRubbishBin) {
-        [self.tableView reloadData];
-    }
-}
 @end
