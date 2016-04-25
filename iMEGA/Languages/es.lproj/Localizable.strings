@@ -112,10 +112,6 @@
 "nodeTooBig"="Tienes que liberar espacio";
 /* Title for the file link view */
 "fileLink"="Enlace a archivo";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Importar a tu disco en la nube";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Descargar a tu aplicación de MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Abrir archivo";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -144,34 +140,18 @@
 "noInternetConnection"="No hay conexión a internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Carpeta vacía";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Enlace a carpeta vacía";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Actualmente, este enlace no contiene ningún archivo.";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Actualmente, esta carpeta no contiene ningún archivo.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="No hay archivos en tu Cloud Drive";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="No hay archivos en esta carpeta compartida";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Añadir archivos";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="No hay resultados";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="No hay archivos en la papelera";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Añade archivos utilizando el botón superior.";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Comparte algo. Añade archivos utilizando el botón superior.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Camera Uploads esta desactivado";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Activa Camera Uploads para tener una copia de las fotos de tu dispositivo en MEGA.";
+"cloudDriveEmptyState_titleRubbishBin"="No hay archivos en la Papelera";
 /* Title shown when the Offline section is empty, when you don't have download any files. */
 "offlineEmptyState_title"="No hay archivos disponibles sin conexión";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Descarga archivos para utilizarlos cuando no tengas conexión a internet.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Todavía no tienes contactos";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Añade contactos utilizando el botón superior.";
+"contactsEmptyState_title"="No tienes Contactos";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas contigo";
 /* Title shown when there's no outgoing Shared Items */
@@ -180,6 +160,8 @@
 "myContacts"="Contactos";
 /* Title of Contacts requests section */
 "contactRequests"="Solicitudes de contacto";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Añadir contactos";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent" = "Enviadas";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -191,23 +173,15 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Solicitud eliminada";
 /* Title shown when there's no pending request */
-"noRequestPending"="No hay solicitudes pendientes por el momento";
+"noRequestPending"="No hay solicitudes pendientes";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferencias en pausa";
 /* Title shown when the there's no transfers and they aren't paused */
-"transfersEmptyState_titleAll"="No hay transferencias";
+"transfersEmptyState_titleAll"="No hay Transferencias";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="No hay descargas";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay subidas";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Reanuda las transferencias utilizando el botón superior.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="No tienes transferencias pendientes";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="No tienes ninguna descarga pendiente.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="No tienes ninguna subida pendiente.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */

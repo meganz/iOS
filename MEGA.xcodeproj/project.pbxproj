@@ -124,6 +124,7 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
@@ -399,6 +400,8 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E80620A91CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
+		E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
 		E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FolderLinkViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E84CDB001A7292C9003F4C77 /* Links.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Links.storyboard; sourceTree = "<group>"; };
@@ -968,6 +971,8 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				E80620A91CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.h */,
+				E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */,
 				41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */,
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
 				41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */,
@@ -1427,6 +1432,7 @@
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				41E5668D1BBD6160007569A2 /* CTAssetsPageViewController.m in Sources */,
+				E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,

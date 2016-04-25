@@ -2,7 +2,7 @@
  * @file CloudDriveTableViewController.m
  * @brief Cloud drive table view controller of the app.
  *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -27,6 +27,7 @@
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
@@ -105,6 +106,11 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    self.searchDisplayController.searchResultsTableView.emptyDataSetSource = self;
+    self.searchDisplayController.searchResultsTableView.emptyDataSetDelegate = self;
+    self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
+    [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
+    
     [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
     
@@ -120,14 +126,12 @@
             
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
-            
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
             }
-
             
             switch (accessType) {
                 case MEGAShareTypeAccessRead: {
@@ -181,8 +185,6 @@
         }
     }
     
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     matchSearchNodes = [[NSMutableArray alloc] init];
@@ -197,8 +199,6 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
     [self reloadUI];
-    
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -216,11 +216,6 @@
         self.selectedNodesArray = nil;
         [self setEditing:NO animated:NO];
     }
-}
-
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -249,11 +244,15 @@
     
     if (numberOfRows == 0) {
         if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         } else {
             [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         }
     } else {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        }
+        
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
@@ -747,82 +746,46 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+        if ([self.searchDisplayController isActive]) {
+            text = AMLocalizedString(@"noResults", nil);
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
                 }
-                break;
+                    
+                case DisplayModeContact:
+                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    break;
+                    
+                case DisplayModeRubbishBin:
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
+                    
+                default:
+                    break;
             }
-                
-            case DisplayModeContact:
-                text = AMLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
-                break;
-                
-            case DisplayModeRubbishBin:
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                }
-                break;
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.parentNode == nil) {
-            return nil;
-        }
-        
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive:
-                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the above button.");
-                break;
-                
-            case DisplayModeContact:
-                text = AMLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
-                break;
-                
-            case DisplayModeRubbishBin:
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"awesome",  nil);
-                } else {
-                    text = @"";
-                }
-                break;
-        }
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -834,27 +797,34 @@
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    image = [UIImage imageNamed:@"emptyCloudDrive"];
-                } else {
-                    image = [UIImage imageNamed:@"emptyFolder"];
+        if ([self.searchDisplayController isActive]) {
+            image = [UIImage imageNamed:@"emptySearch"];
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case DisplayModeContact:
-                image = [UIImage imageNamed:@"emptyFolder"];
-                break;
-                
-            case DisplayModeRubbishBin: {
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    image = [UIImage imageNamed:@"emptyRubbishBin"];
-                } else {
+                    
+                case DisplayModeContact:
                     image = [UIImage imageNamed:@"emptyFolder"];
+                    break;
+                    
+                case DisplayModeRubbishBin: {
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
+                    
+                default:
+                    break;
             }
         }
     } else {
@@ -864,8 +834,67 @@
     return image;
 }
 
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.parentNode == nil) {
+            return nil;
+        }
+        
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                if (![self.searchDisplayController isActive]) {
+                    text = AMLocalizedString(@"addFiles", nil);
+                }
+                break;
+            }
+                
+            default:
+                text = @"";
+                break;
+        }
+        
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:megaMediumGray};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets rectInsets;
+    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if (iPad) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if (iPadPro) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            [self optionAdd:_addBarButtonItem];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -1380,6 +1409,12 @@
             break;
     }
     
+    if ([[self.nodes size] unsignedIntegerValue] == 0) {
+        [_editBarButtonItem setEnabled:NO];
+    } else {
+        [_editBarButtonItem setEnabled:YES];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -1787,7 +1822,6 @@
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {

@@ -25,6 +25,7 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "NSMutableAttributedString+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -79,7 +80,13 @@
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];    
     [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
     
-    self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+        [negativeSpaceBarButtonItem setWidth:-8.0];
+    } else {
+        [negativeSpaceBarButtonItem setWidth:-4.0];
+    }
+    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, _editBarButtonItem]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -106,11 +113,6 @@
         self.selectedItems = nil;
         [self setEditing:NO animated:NO];
     }
-}
-
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -302,8 +304,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.offlineFilesAndFolders.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [self.editBarButtonItem setEnabled:NO];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        [self.editBarButtonItem setEnabled:YES];
     }
     return self.offlineFilesAndFolders.count;
 }
@@ -691,7 +695,7 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.folderPathFromOffline == nil) {
-            text = AMLocalizedString(@"offlineEmptyState_title", @"No files saved for Offline");
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.") sectionTitle:AMLocalizedString(@"offline", @"Title of the Offline section")];
         } else {
             text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         }
@@ -699,31 +703,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.folderPathFromOffline == nil) {
-            text = AMLocalizedString(@"offlineEmptyState_text",  @"You can download files to this section to be able to use them when you don't have internet connection.");
-        } else {
-            text = AMLocalizedString(@"emptyFolder", nil);
-        }
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -744,6 +724,10 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
 }
 
 #pragma mark - QLPreviewControllerDataSource

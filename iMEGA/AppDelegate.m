@@ -384,7 +384,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIDisplay-Light" size:20.0]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
     
