@@ -629,8 +629,6 @@ static NSMutableArray *nodesFromLinkMutableArray;
             } else {
                 [api startDownloadNode:node localPath:absoluteFilePath];
             }
-        } else {
-//            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileAlreadyExist", @"The file you want to download already exists on Offline")];
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {

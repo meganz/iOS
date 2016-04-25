@@ -46,12 +46,12 @@
     
     [self.confirmTextLabel setText:AMLocalizedString(@"confirmText", @"Please enter your password to confirm your account")];
     
-    self.confirmAccountButton.layer.cornerRadius = 6;
+    self.confirmAccountButton.layer.cornerRadius = 4.0f;
     self.confirmAccountButton.layer.masksToBounds = YES;
     [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
     [self.confirmAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     
-    self.cancelButton.layer.cornerRadius = 6;
+    self.cancelButton.layer.cornerRadius = 4.0f;
     self.cancelButton.layer.masksToBounds = YES;
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     

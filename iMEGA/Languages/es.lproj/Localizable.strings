@@ -66,14 +66,8 @@
 "megaAccessText"="Obtén acceso totalmente encriptado en cualquier lugar, en cualquier momento.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Iniciar sesión";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="¿No tienes una cuenta?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Crear una";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crear cuenta";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="¿Ya tienes una cuenta?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email o contraseña no válida.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -94,8 +88,8 @@
 "termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Genial";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Esperando email de confirmación.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Por favor, comprueba tu correo y haz clic en el enlace para confirmar tu cuenta.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -122,8 +116,6 @@
 "linkUnavailable"="Enlace no disponible";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. */
 "fileLinkUnavailableText"="Esto podría deberse a los siguientes motivos:\n- El archivo ha sido eliminado debido a una violación de los TdS/PUA.\n- URL no válida - el enlace al que intentas acceder no existe.\n- El archivo ha sido desactivado por el usuario.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="El archivo que estás intentando descargar ya existe en Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
 /* Title for the folder link view */
@@ -360,8 +352,10 @@
 "importTitle"="Importar a ";
 /* Button title that triggers the importing link action */
 "import"="Importar";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Archivo importado";
+/* Message shown when some files have been imported */
+"filesImported"="Archivos importados";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Cuota superada";
 /* Alert title shown when the user is overquota */
@@ -650,10 +644,8 @@
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="caduca el %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restaurar compras";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Historial de compras";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Historial de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Carpetas compartidas";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
