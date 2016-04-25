@@ -35,7 +35,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *createAccountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @end
@@ -47,7 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.loginButton.layer.cornerRadius = 6;
+    self.loginButton.layer.cornerRadius = 4.0f;
     self.loginButton.layer.masksToBounds = YES;
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
@@ -56,7 +55,6 @@
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
     [self.loginButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     
-    [self.createAccountLabel setText:AMLocalizedString(@"doNotHaveAnAccount", nil)];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
 }
 
