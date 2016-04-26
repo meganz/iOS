@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="Ang SSL key ng Server ay hindi ma-verify. Ikaw ay maaaring apektado ng isang man-in-the-middle attack.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Masyadong abala ang servers. Hintayin lamang po...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Mag-log-in sa inyong account.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Makakuha ng buong encrypted access kahit saan, kailan man.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Mag-login";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Wala ka pang account?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Gumawa ng account";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Gumawa ng account";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Meron ka na bang account sa MEGA?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Maling e-mail at/o password. Subukang muli";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Kelang mong pumayag sa terms of service para mag-register ng account sa MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ang e-mail address na ito ay meron ng registered account sa MEGA.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Grabe";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Inaantay pa ang pagkumpirma";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="I-check ang inyong e-mail address at i-click ang link para i-confirm ang inyong account.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Kailangang magbawas upang mabakante ang inyong device.";
 /* Title for the file link view */
 "fileLink"="Link ng file";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="I-import sa Cloud Drive";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="I-download sa inyong MEGA App";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Buksan ang file";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Hindi available ang link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Ito marahil ay dahil sa mga sumusunod:- Ang file ay maaaring tinanggal na dahil sa ToS/AUP violation.- Maling URL - ang link na ina-access mo ay wala- Ang file ay pinahi na ng user.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Nagsimula na ang Download";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Walang internet connection";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Walang files sa folder";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Bakanteng folder link";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Sa ngayon, ang link na ito ay walang files.";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Ang sub folder na ito ay walang files.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Wala kang files sa inyong Cloud Drive";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Walang files ang nasa binahaging folder";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Magdagdag ng files";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Walang resulta";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Linisin ang Basurahan";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Magdagdag ng files gamit ang button sa itaas";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Magbahagi ng kahit na ano! Magdagdag na files gamit ang itaas na button.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Hindi pinagana ang Camera Uploads";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Pagganahin ang Camera Uploads upang magkaroon ng kopya ng inyong device photos sa MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Walang files ang sinave para sa offline";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Mag-download ng files para magamit kung walang internet connection.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Wala ka pang contacts na naidaragdag!";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Magdagdag ng contacts gamit ang button sa itaas.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Walang padating na shared folders";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
 "contactRequests"="Mga kahilingan ng mga contacts";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Magdagdag ng contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Naipadala";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Simulang ang paglilipat gamit ang taas na button.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Wala kang pending downloads.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Wala kang pending uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Iangkat sa";
 /* Button title that triggers the importing link action */
 "import"="Import";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Na-import na ang file!";
+/* Message shown when some files have been imported */
+"filesImported"="Na-import na ang files";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Lumagpas ka na sa quota";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu imahe";
 /* Button title that skips the current action */
 "skipButton"="Mag-skip";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Gamitin ang Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Pinagana ang Camera Uploads!";
@@ -502,8 +474,10 @@
 "settingsTitle"="Mga Settings";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Camera Uploads";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Basurahan";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Advanced";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Security Options";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Tinanggal ang Master Key";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="Tinanggal ang MasterKey.txt sa inyong Documents folder.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Sa iyong device";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Burahin ang Offline Files";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Pagpahi ng Cahe";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="Sa MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Linisin ang Basurahan";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Lahat ng items sa basurahan ay papahiin";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Gumagamit ngayon ng %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Alisin";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -589,7 +577,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -658,10 +646,8 @@
 "free"="Libre";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="magtatapos sa %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="history ng pag-purchase";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Padating na mga Shares";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Patayin ang DEBUG mode";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Ang log (MEGAiOS.log) ay mabubura sa Offline section.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Gusto mo bang burahin ang bagay na ito sa iyong Offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";

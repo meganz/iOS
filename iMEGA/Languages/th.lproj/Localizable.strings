@@ -1,0 +1,720 @@
+/* Button title to cancel something */
+"cancel"="ยกเลิก";
+/* Button title to accept something */
+"ok"="ตกลง";
+/* */
+"upload"="อัปโหลด";
+/*  */
+"error"="ผิดพลาด";
+/*  */
+"name"="ชื่อ";
+/*  */
+"passcode"="รหัสผ่าน";
+/* "Size" of the file or folder you are sharing */
+"size"="ขนาด";
+/*  */
+"folder"="โฟลเดอร์";
+/* Error message shown when there's no camera available on the device */
+"noCamera"="กล้องถ่ายรูปยังไม่พร้อมใช้งาน";
+/* Alert title to attract attention */
+"attention"="ประกาศ";
+/* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
+"cameraPermissions"="กรุณาอนุญาตให้แอพ MEGA สามารถเข้าถึงการตั้งค่าของกล้องคุณได้";
+/* Alert message to explain that the MEGA app needs permission to access your device photos */
+"photoLibraryPermissions"="กรุณาอนุญาตให้แอพ MEGA สามารถเข้าถึงการตั้งค่าไลบรารีรูปถ่ายของคุณได้";
+/* Alert message shown when the user tries to download an empty folder  */
+"emptyFolderMessage"="คุณไม่สามารถดาวน์โหลดโฟลเดอร์เปล่าได้";
+/* Message shown when the user clicks on a confirm account link that has already been used  */
+"accountAlreadyConfirmed"="บัญชีของคุณได้ทำการเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ.";
+/* Message shown when the user clicks on an link that is not valid */
+"linkNotValid"="ลิงก์ไม่ถูกต้อง";
+/* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัส";
+/* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มี กรุณาติดต่อผู้ที่สร้างลิงก์นี้";
+/* Hint text to suggest that the user has to write the decryption key */
+"decryptionKey"="คีย์ถอดรหัสลับ";
+/* Button title to try to decrypt the link */
+"decrypt"="ถอดรหัส";
+/* Alert title shown when you have written a decryption key not valid */
+"decryptionKeyNotValid"="ถอดรหัสคีย์ไม่ถูกต้อง";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOut_alertTitle"="ออกจากระบบ";
+/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+"loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
+/* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
+"sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
+/* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
+"serversTooBusy"="เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
+/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
+"megaSpace"="พื้นที่ว่างบน MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
+"megaSpeed"="ความเร็วของ MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
+"megaPrivacy"="ความเป็นส่วนตัวของ MEGA";
+/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
+"megaAccess"="การเข้าถึง MEGA";
+/* Message shown on the app's start animation to explain what MEGA SPACE means */
+"megaSpaceText"="ลงทะเบียนตอนนี้ รับสิทธิ์ฟรีพื้นที่ 50 GB";
+/* Message shown on the app's start animation to explain what MEGA SPEED means */
+"megaSpeedText"="อัปโหลดรวดเร็ว แชร์ไฟล์ไปยังทุกคนได้อย่างง่ายดาย";
+/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
+"megaPrivacyText"="เก็บไฟล์ทั้งหมดของคุณให้ปลอดภัยด้วยการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของ MEGA";
+/* Message shown on the app's start animation to explain what MEGA ACCESS means */
+"megaAccessText"="รองรับการเข้ารหัส พร้อมเข้าถึงได้ทุกที่ทุกเวลา";
+/* Button title which triggers the action to login in your MEGA account */
+"login"="เข้าสู่ระบบ";
+/* Button title which triggers the action to create a MEGA account */
+"createAccount"="สร้างบัญชี";
+/* Message shown when the user writes a wrong email or password on login */
+"invalidMailOrPassword"="อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+/* Message shown when the user writes an invalid format in the email field  */
+"emailInvalidFormat"="กรอกอีเมลให้ถูกต้อง";
+/* Message shown when the user enters a wrong password  */
+"passwordInvalidFormat"="กรอกรหัสผ่านให้ถูกต้อง";
+/* Hint text to suggest that the user has to write his email */
+"emailPlaceholder"="อีเมล";
+/* Hint text to suggest that the user has to write his password */
+"passwordPlaceholder"="รหัสผ่าน";
+/* Text shown on a button that if clicked shows the MEGA Terms of Service */
+"termsOfServiceButton"="ฉันเห็นด้วยกับข้อกำหนดในการบริการของ MEGA";
+/* Error text shown when you have not entered a correct name  */
+"nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
+/* Error text shown when you have not written the same password */
+"passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
+/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
+"termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับข้อตกลงและเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
+/* Error text shown when the users tries to create an account with an email already in use */
+"emailAlreadyRegistered"="ที่อยู่อีเมล์นี้เคยลงทะเบียนกับ MEGA แล้ว.";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="รอการยืนยัน";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountCreated"="กรุณาตรวจสอบอีเมล์ของคุณและคลิกที่ลิงค์เพื่อยืนยันการเปิดบัญชีของคุณ.";
+/* Text shown on the confirm account view to remind the user what to do */
+"confirmText"="กรุณาใส่รหัสผ่านเพื่อยืนยันบัญชีของคุณ";
+/* Button title that triggers the confirm account action */
+"confirmAccountButton"="การยืนยันบัญชีของคุณ";
+/* Error text shown when you introduce a wrong password on the confirmation proccess */
+"passwordWrong"="รหัสผ่านไม่ถูกต้อง";
+/* Warning title shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertTitle"="คุณได้เข้าสู่ระบบด้วยบัญชีอื่น";
+/* Warning message shown when you try to confirm an account but you are logged in with another one */
+"alreadyLoggedInAlertMessage"="ถ้าคุณเห็นด้วย บัญชีปัจจุบันของคุณจะออกจากระบบและข้อมูลออฟไลน์ทั้งหมดจะถูกลบเช่นเดียวกัน คุณต้องการที่จะดำเนินการต่อหรือไม่";
+/* Title shown inside an alert if you don't have enough space on your device to download something */
+"nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
+/* Title for the file link view */
+"fileLink"="การเชื่อมโยงของไฟล์";
+/* Button title to trigger the action of opening the file without downloading or opening it. */
+"openButton"="เปิดไฟล์";
+/* Error message shown when you try to download something bigger than the space available in your device */
+"fileTooBigMessage"="ไฟล์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
+/* Error message shown when you try to open something bigger than the free space in your device */
+"fileTooBigMessage_open"="ไฟล์ที่คุณกำลังพยายามเปิด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
+/* Error title shown when you open a file or folder link and it's no longer available */
+"linkUnavailable"="ลิงก์ใช้งานไม่ได้";
+/* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
+"fileLinkUnavailableText"="อาจเกิดจากสาเหตุดังต่อไปนี้:- ไฟล์ถูกลบออกเพราะมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงค์ที่คุณพยายามจะเข้าถึงไม่มีอยู่- ไฟล์ถูกลบโดยผู้ใช้";
+/* Message shown when a download starts */
+"downloadStarted"="เริ่มต้นดาวน์โหลด";
+/* Title for the folder link view */
+"folderLink"="ลิงค์มายังโฟล์เดอร์";
+/* Button title which downloads a file/folder to your device */
+"downloadButton"="ดาวน์โหลด";
+/* Message shown when you try to downlonad a folder bigger than the available memory. */
+"folderTooBigMessage"="โฟลเดอร์ที่คุณกำลังพยายามดาวน์โหลด มีขนาดใหญ่กว่าหน่วยความจำที่มีอยู่";
+/* Error message shown when a folder can't be created. */
+"folderCreationError"="โฟลเดอร์ '%@' ไม่สามารถสร้างได้";
+/* Error message shown when a folder link doesn't exist. Keep "\n"*/
+"folderLinkUnavailableText"="อาจเกิดจากสาเหตุดังต่อไปนี้:- โฟลเดอร์ถูกลบออกเพราะมีการละเมิด ToS/AUP- URL ไม่ถูกต้อง - ลิงค์ที่คุณพยายามจะเข้าถึงไม่มีอยู่- โฟลเดอร์ถูกลบโดยผู้ใช้";
+/* Text shown on the app when you don't have connection to the internet or when you have lost it */
+"noInternetConnection"="ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
+/* Title shown when a folder doesn't have any files */
+"emptyFolder"="โฟลเดอร์ว่างเปล่า";
+/* Title shown when your Cloud Drive is empty, when you don't have any files. */
+"cloudDriveEmptyState_title"="ไม่มีไฟล์ใดๆ";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="เพิ่มไฟล์";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="ไม่พบรายการค้นหา";
+/* Title shown when your Rubbish Bin is empty. */
+"cloudDriveEmptyState_titleRubbishBin"="ล้างถังขยะ";
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
+"offlineEmptyState_title"="ไม่มีไฟล์ที่บันทึกไว้สำหรับออฟไลน์";
+/* Title shown when the Contacts section is empty, when you have not added any contact. */
+"contactsEmptyState_title"="คุณยังไม่มีรายการผู้ติดต่อใดๆ";
+/* Title shown when there's no incoming Shared Items */
+"noIncomingSharedItemsEmptyState_text"="ยังไม่มีโฟลเดอร์ที่แชร์ขาเข้า";
+/* Title shown when there's no outgoing Shared Items */
+"noOutgoingSharedItemsEmptyState_text"="ยังไม่มีโฟลเดอร์ที่แชร์ขาออกไป";
+/* Title of My Contacts section */
+"myContacts"="ผู้ติดต่อ";
+/* Title of Contacts requests section */
+"contactRequests"="คำขอผู้ติดต่อ";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="เพิ่มผู้ติดต่อ";
+/* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
+"sent"="ส่ง";
+/* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
+"requests"="คำขอ";
+/* Success message shown when you acepted a contact request */
+"requestAccepted"="ยอมรับคำขอแล้ว";
+/* Success message shown when you Cancelled a contact request */
+"requestCancelled"="ยกเลิกคำขอแล้ว";
+/* Success message shown when you remove a contact request */
+"requestDeleted"="ลบคำขอแล้ว";
+/* Title shown when there's no pending request */
+"noRequestPending"="ไม่มีคำขอที่ค้างอยู่ในขณะนี้";
+/* Title shown when the transfers are paused */
+"transfersEmptyState_titlePaused"="หยุดการโอนย้ายชั่วคราว";
+/* Title shown when the there's no transfers and they aren't paused */
+"transfersEmptyState_titleAll"="No Transfers";
+/* Title shown when the there's no transfers, and the filter "Download" option is selected */
+"transfersEmptyState_titleDownload"="No Downloads";
+/* Title shown when the there's no transfers, and the filter "Upload" option is selected */
+"transfersEmptyState_titleUpload"="No Uploads";
+/* Title of the Cloud Drive section */
+"cloudDrive"="คลาวด์ไดร์ฟ";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
+"oneFile"="%d ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
+"files"="%d ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
+"oneFolder"="%d โฟลเดอร์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
+"folders"="%d โฟลเดอร์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
+"folderAndFile"="1 โฟลเดอร์ • 1 ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
+"foldersAndFiles"="[A] โฟลเดอร์ • [B] ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
+"foldersAndFile"="%d โฟลเดอร์ • 1 ไฟล์";
+/* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
+"folderAndFiles"="1 โฟลเดอร์ • %d ไฟล์";
+/* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
+"queued"="อยู่ในคิว";
+/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertTitle"="ยังมีการดาวน์โหลดที่ค้างอยู่";
+/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
+"documentOpening_alertMessage"="ลองใหม่อีกครั้งในภายหลังหรือยกเลิก";
+/* Section title of the "Sort by" */
+"sortTitle"="เรียงตาม";
+/* Button title to "Save" the selected option */
+"save"="บันทึก";
+/* Sort by option (1/6). This one orders the files alphabethically*/
+"nameAscending"="ชื่อ (จากน้อยไปมาก)";
+/* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
+"nameDescending"="ชื่อ (จากมากไปน้อย)";
+/* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
+"largest"="ใหญ่สุด";
+/* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
+"smallest"="เล็กสุด";
+/* Sort by option (5/6). This one order the files by its modification date, newer first */
+"newest"="ใหม่สุด";
+/* Sort by option (6/6). This one order the files by its modification date, older first */
+"oldest"="เก่าสุด";
+/* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
+"choosePhotoVideo"="เลือก";
+/* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
+"capturePhotoVideo"="จับภาพ";
+/* Menu option from the `Add` section that allows you to create a "New Folder" */
+"newFolder"="โฟล์เดอร์ใหม่";
+/* Hint text shown on the create folder alert. */
+"newFolderMessage"="ชื่อสำหรับโฟลเดอร์ใหม่";
+/* Title button for the create folder alert.  */
+"createFolderButton"="สร้าง";
+/* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
+"uploadFrom"="นำเข้าจาก...";
+/* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
+"fileExistAlertController_Message"="[A] ถูกอัปโหลดไปแล้วด้วยชื่อ [B]";
+/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
+"fileAlreadyExistMessage"="ไฟล์นี้ถูกอัปโหลดไปแล้วด้วยชื่อ %@";
+/* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
+"filesAlreadyExistMessage"="%d ไฟล์ที่เลือกไว้ มีการอัปโหลดลงในโฟลเดอร์นี้แล้ว";
+/* Message shown when a upload starts */
+"uploadStarted_Message"="เริ่มการอัปโหลดแล้ว";
+/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
+"fileMovedToTheRubbishBin_alertTitle"="ไฟล์นี้ได้ถูกย้ายไปที่ถังขยะ";
+/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
+"folderMovedToTheRubbishBin_alertTitle"="โฟลเดอร์นี้ถูกย้ายไปที่ถังขยะ";
+/* Alert title shown when you are seeing the details of a file and you moved it from another location */
+"fileMoved_alertTitle"="ไฟล์นี้ถูกย้ายแล้ว";
+/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
+"folderMoved_alertTitle"="โฟลเดอร์นี้ถูกย้ายแล้ว";
+/* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFile_alertTitle"="คุณไม่สามารถเข้าถึงไฟล์นี้ได้";
+/* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
+"youNoLongerHaveAccessToThisFolder_alertTitle"="คุณไม่สามารถเข้าถึงโฟลเดอร์นี้ได้";
+/* List option shown on the details of a file or folder */
+"saveForOffline"="บันทึกไว้สำหรับออฟไลน์";
+/* List option shown on the details of a file or folder */
+"savedForOffline"="บันทึกสำหรับไฟล์ออฟไลน์";
+/* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
+"folderInboxError"="กล่องขาเข้าถูกสงวนไว้สำหรับการใช้งานโดย Apple";
+/* List option shown on the details of a file or folder */
+"getLink"="รับลิงค์";
+/* Message shown when a link to the file is being generated */
+"generatingLink"="กำลังสร้างลิงก์...";
+/* Message shown when the link has been copied to the pasteboard */
+"linkCopied"="คัดลอกลิงก์แล้ว";
+/* Title shown under the action that allows you to open a file in another app */
+"openIn"="เปิดด้วย...";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLink"="เอาลิงก์ออก";
+/* Message shown when the link to a file has been removed */
+"removeLinkSuccess"="ลิงก์ถูกลบออกแล้ว";
+/* Title show when a file is being downloaded */
+"downloading"="กำลังดาวน์โหลด: [X]%";
+/* Message shown when you tap on the cancel button of an active transfer */
+"cancelDownloadAlertViewText"="คุณต้องการที่จะยกเลิกการดาวน์โหลดหรือไม่";
+/* Title for the action that allows you to move a file or folder */
+"move"="ย้าย";
+/* Success message shown when you have moved 1 file */
+"moveFileMessage"="1 ไฟล์ที่ย้ายแล้ว";
+/* Success message shown when you have moved {1+} files */
+"moveFilesMessage"="%d ไฟล์ที่ย้ายแล้ว";
+/* Success message shown when you have moved 1 folder */
+"moveFolderMessage"="1 โฟลเดอร์ที่ย้ายแล้ว";
+/* Success message shown when you have moved {1+} folders */
+"moveFoldersMessage"="%d โฟลเดอร์ถูกย้ายแล้ว";
+/* Success message shown when you have moved 1 file and 1 folder */
+"moveFileFolderMessage"="1 ไฟล์และ 1 โฟลเดอร์ถูกย้ายแล้ว";
+/* Success message shown when you have moved 1 file and {1+} folders */
+"moveFileFoldersMessage"="1 ไฟล์และ %d โฟลเดอร์ถูกย้ายแล้ว";
+/* Success message shown when you have moved {1+} files and 1 folder */
+"moveFilesFolderMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกย้ายแล้ว";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
+"moveFilesFoldersMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกย้ายแล้ว";
+/* List option shown on the details of a file or folder */
+"copy"="คัดลอก";
+/* Success message shown when you have copied 1 file */
+"copyFileMessage"="1 ไฟล์ที่คัดลอกแล้ว";
+/* Success message shown when you have copied {1+} files */
+"copyFilesMessage"="%d ไฟล์ที่คัดลอกแล้ว";
+/* Success message shown when you have copied 1 folder */
+"copyFolderMessage"="1 โฟลเดอร์ที่คัดลอกแล้ว";
+/* Success message shown when you have copied {1+} folders */
+"copyFoldersMessage"="%d โฟลเดอร์ถูกคัดลอกแล้ว";
+/* Success message shown when you have copied 1 file and 1 folder */
+"copyFileFolderMessage"="1 ไฟล์และ 1 โฟลเดอร์ถูกคัดลอกแล้ว";
+/* Success message shown when you have copied 1 file and {1+} folders */
+"copyFileFoldersMessage"="1 ไฟล์และ %d โฟลเดอร์ถูกคัดลอกแล้ว";
+/* Success message shown when you have copied {1+} files and 1 folder */
+"copyFilesFolderMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกคัดลอกแล้ว";
+/* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
+"copyFilesFoldersMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกคัดลอกแล้ว";
+/* Title for the action that allows you to rename a file or folder  */
+"rename"="เปลี่ยนชื่อ";
+/* Hint text to suggest that the user have to write the new name for the file or folder */
+"renameNodeMessage"="กรอกชื่อใหม่";
+/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+"moveToTheRubbishBin"="ย้ายไปที่ถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+"moveFileToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย 1 ไฟล์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+"moveFilesToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย %d ไฟล์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
+"moveFolderToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย 1 โฟลเดอร์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
+"moveFoldersToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย %d โฟลเดอร์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
+"moveFileFolderToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย 1 ไฟล์และ 1 โฟลเดอร์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
+"moveFileFoldersToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย 1 ไฟล์และ %d โฟลเดอร์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
+"moveFilesFolderToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย %d ไฟล์และ 1 โฟลเดอร์ไปยังถังขยะ";
+/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
+"moveFilesFoldersToRubbishBinMessage"="คุณแน่ใจหรือไม่ว่าจะย้าย [A] ไฟล์และ [B] โฟลเดอร์ไปยังถังขยะ";
+/* Success message shown when you have moved 1 file to the rubbish bin */
+"fileMovedToRubbishBinMessage"="1 ไฟล์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved {1+} files to the rubbish bin */
+"filesMovedToRubbishBinMessage"="%d ไฟล์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved 1 folder to the rubbish bin */
+"folderMovedToRubbishBinMessage"="1 ไฟล์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved {1+} folders to the rubbish bin */
+"foldersMovedToRubbishBinMessage"="%d โฟลเดอร์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
+"fileFolderMovedToRubbishBinMessage"="1 ไฟล์และ 1 โฟลเดอร์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
+"fileFoldersMovedToRubbishBinMessage"="1 ไฟล์และ %d โฟลเดอร์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
+"filesFolderMovedToRubbishBinMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกย้ายไปที่ถังขยะ";
+/* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
+"filesFoldersMovedToRubbishBinMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกย้ายไปที่ถังขยะ";
+/* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionTitle"="ข้อผิดพลาดของสิทธิ์";
+/* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
+"permissionMessage"="ตรวจสอบสิทธิ์ของคุณบนโฟลเดอร์นี้";
+/* Message shown when a folder have been shared */
+"sharedFolder_success"="โฟลเดอร์ที่แชร์";
+/* Title shown on the main bar when you are importing a link to your Cloud Drive */
+"importTitle"="นำเข้าจาก";
+/* Button title that triggers the importing link action */
+"import"="นำเข้า";
+/* Message shown when a file has been imported */
+"fileImported"="ไฟล์ที่นำเข้า";
+/* Message shown when some files have been imported */
+"filesImported"="นำไฟล์เข้าแล้ว";
+/* Error message shown when you have used more MEGA storage than you can */
+"quotaExceeded"="เกินโควต้าพื้นที่จัดเก็บ";
+/* Alert title shown when the user is overquota */
+"overquotaAlert_title"="แจ้งเตือนโควต้าใกล้จะเต็ม";
+/* Alert message shown when the user is overquota */
+"overquotaAlert_message"="ไม่อนุญาตให้ดำเนินการ พื้นที่จัดเก็บในบัญชีของคุณเกินขีดจำกัดแล้ว คุณต้องการอัปเกรดบัญชีของคุณหรือไม่";
+/* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
+"selectTitle"="เลือกรายการ";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
+"photosPerMonth"="%lu รูปถ่าย";
+/* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
+"photoPerMonth"="%lu รูปถ่าย";
+/* Button title that skips the current action */
+"skipButton"="ข้าม";
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
+"enableCameraUploadsButton"="เปิดใช้งานอัปโหลดจากกล้องถ่ายรูป";
+/* Success message shown when Camera Uploads has been enabled */
+"cameraUploadsEnabled"="เปิดใช้งานอัปโหลดจากกล้องถ่ายรูป";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
+"oneItemSelected"="%lu รายการที่เลือกแล้ว";
+/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
+"itemsSelected"="%lu รายการที่เลือก";
+/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
+"cameraUploadsDisabled_alertView_message"="อัปโหลดจากกล้องถ่ายรูปจะถูกปิดใช้งาน เนื่องจากเนื้อที่ว่างบนอุปกรณ์ของคุณมีไม่เพียงพอ";
+/* Title of the Offline section */
+"offline"="ออฟไลน์";
+/* Title of the Contacts section */
+"contactsTitle"="ผู้ติดต่อ";
+/* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
+"noFoldersShared"="ไม่มีโฟลเดอร์ที่จะแชร์";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
+"oneFolderShared"="1 โฟล์เดอร์";
+/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
+"foldersShared"="%d โฟลเดอร์";
+/* Item menu option to add a contact writting his/her email */
+"addFromEmail"="แทรกอีเมล";
+/* Title of Shared Items section */
+"sharedItems"="รายการที่แชร์";
+/* Title of the tab bar item for the Shared Items section */
+"shared"="แชร์";
+/* Title of the "Incoming" Shared Items. */
+"incoming"="ขาเข้า";
+/* Title of the "Outgoing" Shared Items. */
+"outgoing"="ขาออก";
+/* Text shown to explain that you have shared a folder with one contact */
+"sharedWithOneContact"="แชร์ด้วย 1 ผู้ติดต่อ";
+/* Text shown to explain with how many contacts you have shared a folder */
+"sharedWithXContacts"="แชร์ด้วย %d ผู้ติดต่อ";
+/* Message shown when you have changed the permissions of a shared folder */
+"permissionsChanged"="สิทธิ์เปลี่ยนแปลงแล้ว";
+/* Message shown when a share has been left */
+"shareLeft"="แชร์ที่เหลือ";
+/* Message shown when some shares have been left */
+"sharesLeft"="แชร์ที่เหลือ";
+/* Alert title shown on the Shared Items section when you want to remove 1 share */
+"removeSharing"="ลบการแชร์";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareOneContactMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย 1 ผู้ติดต่อ)";
+/* Alert message shown on the Shared Items section when you want to remove 1 share */
+"removeOneShareMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย %d ผู้ติดต่อ)";
+/* Alert message shown on the Shared Items section when you want to remove %d shares */
+"removeMultipleSharesMultipleContactsMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย %d ผู้ติดต่อ)";
+/* Message shown when a share have been removed */
+"shareRemoved"="แชร์ได้ถูกลบออกอย่างถูกต้องแล้ว";
+/* Message shown when some shares have been removed */
+"sharesRemoved"="ลบการแชร์";
+/* Text shown next to name of the "Owner" of the folder that is being shared */
+"owner"="เจ้าของ";
+/* Title of the view where you see with who you have shared a folder */
+"sharedWith"="แชร์กับ";
+/* Item menu option to add a contact through your device app Contacts */
+"addFromContacts"="เพิ่มจากผู้ติดต่อ";
+/* Alert title shown when you select to add a contact inserting his/her email */
+"addContact"="เพิ่มผู้ติดต่อ";
+/* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
+"contactEmail"="อีเมลรายการติดต่อ";
+/* Button title to "Add" the contact to your contacts list */
+"addContactButton"="เพิ่ม";
+/* Success message shown when a contact has been invited */
+"requestSent"="ส่งคำขอ";
+/* Error message shown when it hasn't been posible to add a contact */
+"addContactError"="มีข้อผิดพลาดในการเพิ่มรายชื่อผู้ติดต่อ";
+/* Alert title shown when you want to remove one or more contacts */
+"removeUserTitle"="ลบรายการผู้ติดต่อ";
+/* Alert confirmation message shown when you want to remove one contact from your contacts list */
+"removeUserMessage"="คุณแน่ใจหรือไม่ว่าจะลบ %@ ออกจากรายการผู้ติดต่อ";
+/* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
+"removeMultipleUsersMessage"="คุณแน่ใจหรือไม่ว่าจะลบผู้ใช้ %d ออกจากรายการผู้ติดต่อ";
+/* Success message shown when the selected contacts have been removed */
+"removedContacts"="%d ผู้ติดต่อถูกลบออก";
+/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+"removedContact"="ผู้ติดต่อ %@ ถูกลบออกแล้ว";
+/* Label shown when a contact request is pending */
+"pending"="ที่ค้างอยู่";
+/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
+"contactWithoutEmail"="ผู้ติดต่อยังไม่มีอีเมล";
+/* Button title of the action that allows to leave a shared folder */
+"leaveFolder"="ออก";
+/* Success message shown when a shared folder have been left */
+"shareFolderLeaved"="โฟลเดอร์ที่เหลือ";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
+"shareFolder"="แชร์โฟลเดอร์";
+/* Button that allows you to select a given folder */
+"select"="เลือก";
+/* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
+"permissions"="สิทธิ์";
+/* Permissions given to the user you share your folder with */
+"readOnly"="อ่านอย่างเดียว";
+/* Permissions given to the user you share your folder with */
+"readAndWrite"="อ่านและเขียน";
+/* Permissions given to the user you share your folder with */
+"fullAccess"="เข้าถึงได้เต็มรูปแบบ";
+/* Title of the Settings section */
+"settingsTitle"="ตั้งค่า";
+/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+"cameraUploadsLabel"="อัปโหลดจากกล้องถ่ายรูป";
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
+"rubbishBinLabel"="ถังขยะ";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="ขั้นสูง";
+/* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
+"securityOptions"="ตัวเลือกความปลอดภัย";
+/* Title of one of the Settings sections where you can see things "About" the app */
+"about"="เกี่ยวกับ";
+/* Title of one of the Settings sections where you can set up the "Language" of the app */
+"language"="ภาษา";
+/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
+"applicationLanguage"="ไทย";
+/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"sendFeedbackLabel"="ส่งคำติชม";
+/* Message body of the email that appears when the users tap on "Send feedback" */
+"pleaseWriteYourFeedback"="กรุณาเขียนคำติชมของคุณที่นี่:";
+/* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
+"noEmailAccountConfigured"="บัญชีอีเมลยังไม่มีในการตั้งค่าบนอุปกรณ์ของคุณ";
+/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+"privacyPolicyLabel"="นโยบายความเป็นส่วนตัว";
+/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+"termsOfServicesLabel"="ข้อตกลงในการใช้งาน";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
+"off"="ปิด";
+/* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
+"on"="เปิด";
+/* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
+"options"="ตัวเลือก";
+/* Option title to enable upload videos with Camera Uploads */
+"uploadVideosLabel"="อัปโหลดวิดีโอ";
+/* Option title to enable using the device cellular connection with Camera Uploads */
+"useCellularConnectionLabel"="ใช้การเชื่อมต่อเครือข่ายโทรศัพท์";
+/* Option title to enable Camera Uploads only when the device is charging */
+"onlyWhenChargingLabel"="เมื่อชาร์จเท่านั้น";
+/* Footer text to explain the Camera Uploads functionality */
+"cameraUploads_footer"="เมื่อเปิดใช้งาน รูปถ่ายและวิดีโอใหม่จะถูกอัปโหลด";
+/* Label for the "Version" number of the app */
+"version"="เวอร์ชัน";
+/* Title for the section "Acknowledgements" of the app */
+"acknowledgements"="กิตติกรรมประกาศ";
+/* Title for the MEGA Master Key */
+"masterKey"="มาสเตอร์คีย์";
+/* Section title where you can change your MEGA's password */
+"changePasswordLabel"="เปลี่ยนรหัส";
+/* Title shown when you try to export your MEGA master key */
+"exportMasterKey"="ส่งออกมาสเตอร์คีย์";
+/* Message shown when you try to export the Master Key to alert the user.*/
+"exportMasterKey_alertMessage"="แจ้งเตือนความปลอดภัย! การดำเนินการนี้มีความเสี่ยงสูง คุณต้องการดำเนินการต่อหรือไม่";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+"exportMasterKeyFooter"="การส่งออกมาสเตอร์คีย์และเก็บรักษาไว้ในที่ที่ปลอดภัย จะช่วยให้คุณสามารถกู้คืนบัญชีของคุณได้ ในกรณีที่คุณลืมรหัสผ่าน ซึ่งจะช่วยไม่ให้ข้อมูลคุณสูญหาย";
+/* Alert title shown when you have exported your MEGA master key */
+"masterKeyExported"="ส่งออกคีย์หลักแล้ว";
+/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="ไฟล์ Masterkey.txt ถูกบันทึกไว้แล้วบนอุปกรณ์นี้ กรุณาเชื่อมต่อเข้ากับคอมพิวเตอร์ของคุณและเปิดโปรแกรม iTunes เพื่อเข้าถึงเอกสาร MEGA เราขอแนะนำให้คุณเก็บไฟล์นี้ในที่ปลอดภัย";
+/* Alert title shown when you have removed your MEGA master key */
+"masterKeyRemoved"="มาสเตอร์คีย์ถูกลบออก";
+/* Alert message shown to explain that the master was removed of your device. */
+"masterKeyRemoved_alertMessage"="MasterKey.txt ถูกลบออกจากโฟลเดอร์เอกสารแล้ว";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="บนอุปกรณ์ของคุณ";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="เคลียร์ไฟล์ออฟไลน์";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="เคลียร์แคช";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="บน MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="ล้างข้อมูลในถังขยะ";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="ทุกรายการในถังขยะจะถูกลบ";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="ใช้ไปแล้ว %s";
+/* Title for the action that allows to remove a file or folder */
+"remove"="ลบ";
+/* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
+"removeNodeFromRubbishBinTitle"="ยืนยันการลบ";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
+"removeFileToRubbishBinMessage"="คุณกำลังจะลบ 1 ไฟล์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
+"removeFilesToRubbishBinMessage"="คุณกำลังจะลบ %d ไฟล์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
+"removeFolderToRubbishBinMessage"="คุณกำลังจะลบ 1 โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
+"removeFoldersToRubbishBinMessage"="คุณกำลังจะลบ %d โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
+"removeFileFolderToRubbishBinMessage"="คุณกำลังจะลบ 1 ไฟล์และ 1 โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
+"removeFileFoldersToRubbishBinMessage"="คุณกำลังจะลบ 1 ไฟล์และ %d โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
+"removeFilesFolderToRubbishBinMessage"="คุณกำลังจะลบ %d ไฟล์และ 1 โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
+"removeFilesFoldersToRubbishBinMessage"="คุณกำลังจะลบ [A] ไฟล์และ [B] โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Success message shown when 1 file has been removed from MEGA */
+"fileRemovedToRubbishBinMessage"="1 ไฟล์ถูกลบออกจาก MEGA";
+/* Success message shown when {1+} files have been removed from MEGA */
+"filesRemovedToRubbishBinMessage"="%d ถูกลบออกจาก MEGA แล้ว";
+/* Success message shown when 1 folder has been removed from MEGA */
+"folderRemovedToRubbishBinMessage"="1 ถูกลบออกจาก MEGA แล้ว";
+/* Success message shown when {1+} folders have been removed from MEGA */
+"foldersRemovedToRubbishBinMessage"="%d โฟลเดอร์ถูกย้ายออกจาก MEGA แล้ว";
+/* Success message shown when 1 file and 1 folder have been removed from MEGA */
+"fileFolderRemovedToRubbishBinMessage"="1 ไฟล์และโฟลเดอร์ 1 ถูกลบออกจาก MEGA";
+/* Success message shown when 1 file and {1+} folders have been removed from MEGA */
+"fileFoldersRemovedToRubbishBinMessage"="1 ไฟล์และ %d โฟลเดอร์ถูกลบออกจาก MEGA";
+/* Success message shown when {1+} files and 1 folder have been removed from MEGA */
+"filesFolderRemovedToRubbishBinMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกลบออกจาก MEGA";
+/* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
+"filesFoldersRemovedToRubbishBinMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกลบออกจาก MEGA";
+/* Hint text to suggest that the user have to write his/her current password */
+"currentPassword"="รหัสผ่านปัจจุบัน";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="รหัสผ่านใหม่";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmPassword"="ยืนยันรหัสผ่าน";
+/* Success message shown when the password has been changed */
+"passwordChanged"="รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว.";
+/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+"oldAndNewPasswordMatch"="รหัสผ่านใหม่และเก่าจะต้องไม่เหมือนกัน";
+/* Section title where you can change the app's passcode */
+"changePasscodeLabel"="เปลี่ยนรหัสผ่าน";
+/* Title to describe a simple (four digit) passcode */
+"simplePasscodeLabel"="ตัวอย่างรหัสผ่าน";
+/* Title of one of the passcode options. If enabled will do what footer explains. */
+"eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
+/* Footer text that explain what will happen if "Erase local data" is enabled */
+"failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลบนเครื่องหลังจากพยายามใช้รหัสผ่านไม่ถูกต้องแล้ว 10 ครั้ง";
+/* Title of the section to access MEGA's help centre */
+"helpCentreLabel"="ศูนย์ช่วยเหลือ";
+/* Footer message that explain what you can do on the "Help centre" */
+"helpCentreFooter"="รับการสนับสนุนหรืออ่านหัวข้อยอดนิยม";
+/* Title to rate the app */
+"rateUsLabel"="ให้คะแนนเรา";
+/* Title of the Transfers section */
+"transfers"="โอนย้าย";
+/* Title of one of the filters in the Transfers section. In this case "All" transfers. */
+"all"="ทั้งหมด";
+/* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
+"downloads"="ดาวน์โหลด";
+/* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
+"uploads"="อัปโหลด";
+/* Success message shown when one transfer has been cancelled */
+"transferCancelled"="การโอนย้ายถูกยกเลิก";
+/* Success message shown when all the transfers have been cancelled */
+"transfersCancelled"="ยกเลิกการโอนย้ายแล้ว";
+/* Title of the alert shown when you try to cancel transfers */
+"cancelTransfersTitle"="ยกเลิกการโอนย้าย";
+/* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
+"cancelTransfersText"="คุณต้องการที่จะยกเลิก%@หรือไม่";
+/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
+"allInUppercaseTransfers"="โอนย้ายทั้งหมด";
+/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
+"uploadInUppercaseTransfers"="โอนย้ายการอัปโหลด";
+/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
+"downloadInUppercaseTransfers"="โอนย้ายการดาวน์โหลด";
+/* Title of My Account section. There you can see your account details */
+"myAccount"="บัญชีของฉัน";
+/* Title of the button which logs out from your account. */
+"logoutLabel"="ออกจากระบบ";
+/* String shown when you are logging out of your account. */
+"loggingOut"="ออกจากระบบ";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"usage"="การใช้งาน";
+/* Title for "Local" used space. */
+"localLabel"="ในเครื่อง";
+/* Title for "Used" MEGA space. */
+"usedSpaceLabel"="ใช้แล้ว";
+/* Title for MEGA "Available" space. */
+"availableLabel"="ใช้ได้";
+/* Text relative to the MEGA account level. UPPER CASE */
+"free"="ฟรี";
+/* Text that shows the expiry date of the account PRO level */
+"expiresOn"="หมดอายุใน %@";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="ประวัติการซื้อ";
+/* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
+"incomingShares"="แชร์ขาเข้า";
+/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
+"of %@"="จาก %@";
+/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
+"used of %@"="ใช้ไปแล้ว %@";
+/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
+"available of %@"="ใช้ได้อีก %@";
+/* Button title which triggers the action to upgrade your MEGA account level */
+"upgradeAccount"="อัปเกรดบัญชี";
+/* Storage related with the MEGA PRO account level you can subscribe */
+"productSpace"="พื้นที่จัดเก็บข้อมูล";
+/* Bandwich related with the MEGA PRO account level you can subscribe */
+"productBandwidth"="แบนด์วิดธ์";
+/* Price asociated with the MEGA PRO account level you can subscribe */
+"productPricePerMonth"="%.2f %@ ต่อเดือน";
+/* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
+"choosePlan"="เลือกแผนใดแผนหนึ่งด้านล่างนี้:";
+/* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
+"twoMonthsFree"="รับฟรีสองเดือนทันที เมื่อสมัครใช้งานโปร 1 ปี";
+/* Header shown to help on the purchasin process */
+"selectMembership"="เลือกประเภทสมาชิก:";
+/* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
+"save17"="ประหยัด 17%";
+/* Error message shown when the purchase has failed */
+"wrongPurchase"="สั่งซื้อผิดรายการ %@ (%ld)";
+/* Error message shown the In App Purchase is disabled in the device Settings */
+"appPurchaseDisabled"="การซื้อเพิ่มเติมในแอพถูกปิดใช้งาน กรุณาเปิดใช้งานได้ในการตั้งค่า iOS";
+/* Error message shown when the selected product doesn't exist */
+"productNotFound"="ไม่พบผลิตภัณฑ์ %@ กรุณาติดต่อ ios@mega.nz";
+/* Alert title to remenber the user that needs to enable purchases */
+"allowPurchase_title"="อนุญาตให้สั่งซื้อ";
+/* Alert message to remenber the user that needs to enable purchases before continue */
+"allowPurchase_message"="คุณต้องเปิดใช้งาน การซื้อเพิ่มเติมในแอพของคุณ ของการตั้งค่า iOS ก่อนที่จะคืนการซื้อ";
+/* Button title to restore failed purchases */
+"restore"="กู้คืน";
+/* "Monthly" subscriptions */
+"monthly"="รายเดือน";
+/* "Yearly" subscriptions */
+"yearly"="รายปี";
+/* Alert title shown when a selected plan is not available at that moment on the App store */
+"productNotAvailable"="รายการ การซื้อเพิ่มเติมในแอพไม่สามารถใช้งานได้บน App Store กรุณาลองใหม่อีกครั้งในภายหลัง";
+/* Alert title shown when the user has purchase correctly some plan */
+"thankYou_title"="ขอขอบคุณ";
+/* Alert message shown when a purchase was restored succesfully */
+"purchaseRestore_message"="การสั่งซื้อของคุณถูกกู้คืนแล้ว";
+/* Alert title shown when a purchase has stopped because some error between the process */
+"failedPurchase_title"="การสั่งซื้อหยุดทำงาน";
+/* Alert message shown when a purchase has stopped because some error between the process */
+"failedPurchase_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือรายงานข้อผิดพลาดของการทำธุรกรรมไปยัง Apple กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+/* Alert title shown when a restore hasn't been completed correctly */
+"incompleteRestore_title"="ปัญหาการกู้คืน";
+/* Alert message shown when a restore hasn't been completed correctly */
+"incompleteRestore_message"="ไม่พบการสั่งซื้อก่อนหน้านี้ กรุณาเลือกผลิตภัณฑ์ที่ซื้อก่อนหน้านี้สำหรับการเรียกคืนการสั่งซื้อ และคุณจะไม่ถูกเรียกเก็บเงินอีก";
+/* Alert title shown when the restoring process has stopped for some reason */
+"failedRestore_title"="การกู้คืนหยุดทำงาน";
+/* Alert message shown when the restoring process has stopped for some reason */
+"failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+/* Alert title shown when the DEBUG mode is enabled */
+"enableDebugMode_title"="เปิดใช้งานโหมดดีบัก";
+/* Alert message shown when the DEBUG mode is enabled */
+"enableDebugMode_message"="ไฟล์ log จะถูกสร้างขึ้นในส่วนของออฟไลน์ (MEGAiOS.log)";
+/* Alert title shown when the DEBUG mode is disabled */
+"disableDebugMode_title"="ปิดใช้งานโหมดดีบัก";
+/* Alert message shown when the DEBUG mode is disabled */
+"disableDebugMode_message"="ไฟล์ log (MEGAiOS.log) จะถูกลบจากส่วนออฟไลน์";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="คุณแน่ใจหรือไม่ว่าจะลบรายการนี้ออกจากออฟไลน์";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="คุณแน่ใจหรือไม่ว่าจะลบรายการเหล่านี้ออกจากออฟไลน์";

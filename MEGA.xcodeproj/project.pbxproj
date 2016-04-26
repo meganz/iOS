@@ -432,6 +432,7 @@
 		E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyAccount.storyboard; sourceTree = "<group>"; };
 		E889C9E71B566EC400ECEFDF /* UsageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageViewController.h; sourceTree = "<group>"; };
 		E889C9E81B566EC400ECEFDF /* UsageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsageViewController.m; sourceTree = "<group>"; };
+		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
@@ -1495,6 +1496,7 @@
 				E8860CD51C77270B0026ABBC /* sr */,
 				E8860CD71C7727400026ABBC /* uk */,
 				E8860CD81C7738280026ABBC /* tl */,
+				E894271F1CCF8411008D470D /* th */,
 			);
 			name = Localizable.strings;
 			path = Languages;

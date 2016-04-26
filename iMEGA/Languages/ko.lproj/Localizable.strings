@@ -31,7 +31,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="해독 키를 입력하세요";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="이 폴더/파일에 접근하려면, 해독 키가 필요합니다. 키가 없다면, 이 링크의 생성자에게 연락하세요.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="해독 키";
 /* Button title to try to decrypt the link */
@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="서버의 SSL 암호를 확인할 수 없습니다. 중간자 공격의 영향을 받았을 수 있습니다.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="서버가 너무 바쁩니다. 잠시 기다리세요...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 저장공간";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="언제, 어디서나 완벽하게 암호화된 접근을 하세요";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="로그인";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="계정이 없으신가요?";
-/* Button that bring you to section where you can create an account */
-"createOne"="하나 만들기";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="계정 만들기";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="이미 계정이 있으신가요?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="잘못된 이메일 또는 비밀번호입니다. 다시 시도하세요";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 등록되어있는 계정입니다.";
-/* Message displayed when an action is completed successfully */
-"awesome"="멋집니다";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="승인 대기중";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="당신의 이메일을 확인하고 계정 확인을 위한 링크를 클릭하세요.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
 /* Title for the file link view */
 "fileLink"="파일 링크";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="클라우드 드라이브로 들여오기";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="MEGA 앱을 다운로드하세요";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="파일 열기";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="사용할 수 없는 링크";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="이것은 다음과 같은 이유로 발생할 수 있습니다:- 파일이 ToS/AUP 위반으로 제거됨.- 잘못된 URL - 접속하려는 링크가 존재하지 않음.- 이용자에 의해 파일이 삭제됨.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드가 시작되었습니다";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="인터넷 연결 없음";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="폴더에 파일이 없음";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="빈 폴더 링크";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="이 폴더 링크는 파일이 없습니다";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="이 하위 폴더는 파일이 없습니다";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="당신의 클라우드 드라이브에 파일이 없습니다";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="이 공유된 폴더에 파일이 없습니다";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="파일 추가";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="결과 없음";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="휴지통 비우기";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="위의 버튼을 이용하여 파일을 추가하세요";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="무언가 공유하세요. 위의 버튼을 이용하여 파일을 추가하세요.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="카메라 업로드가 해제되었습니다";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="MEGA에 장치의 사진의 사본을 저장하려면 카메라 업로드를 활성화하세요.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="오프라인용으로 저장된 파일 없음";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="인터넷 연결이 없을 때 사용하기 위해 파일을 다운로드하세요.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="연락처가 없습니다";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="위의 버튼을 이용하여 연락처를 추가하세요.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="들어오는 공유 폴더 없음";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="연락처";
 /* Title of Contacts requests section */
 "contactRequests"="연락처 요청";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="연락처 추가";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="보냄";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="위 버튼을 이용하여 전송을 재개하세요.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="대기중인 다운로드가 없습니다.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="대기중인 업로드가 없습니다";
 /* Title of the Cloud Drive section */
 "cloudDrive"="클라우드 드라이브";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="들여올 곳";
 /* Button title that triggers the importing link action */
 "import"="들여오기";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="파일 들여옴";
+/* Message shown when some files have been imported */
+"filesImported"="들여온 파일";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="할당량 초과";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu개의 사진";
 /* Button title that skips the current action */
 "skipButton"="넘기기";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 설정";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="카메라 업로드 활성화됨";
@@ -502,8 +474,10 @@
 "settingsTitle"="설정";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="카메라 업로드";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="휴지통";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="고급";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="보안 옵션";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="마스터 키 제거됨";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt가 문서 폴더에서 삭제되었습니다";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="기기에서";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="오프라인 파일 삭제";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="캐시 지우기";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="MEGA에서";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="휴지통 비우기";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="휴지통의 모든 항목이 삭제됩니다";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="현재 %s 사용중";
 /* Title for the action that allows to remove a file or folder */
 "remove"="제거";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="결제 기록";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="들어오는 공유";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="디버그 모드 비활성화";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="로그 (MEGAiOS.log)가 오프라인 섹션에서 삭제됩니다.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="정말 이 항목을 오프라인에서 삭제하시겠습니까?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="정말 이 항목들을 오프라인에서 삭제하시겠습니까?";

@@ -70,7 +70,7 @@ static NSMutableArray *nodesFromLinkMutableArray;
                                  @"sl",
                                  @"sr",
                                  @"sv",
-                                 //@"th",
+                                 @"th",
                                  @"tl",
                                  @"tr",
                                  @"uk",
