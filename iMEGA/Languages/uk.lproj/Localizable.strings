@@ -19,33 +19,35 @@
 /* Alert title to attract attention */
 "attention"="Увага";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Please give MEGA app permission to access your Camera in your Settings";
+"cameraPermissions"="Будь ласка, надайте дозвіл додатку MEGA до камери в налаштуваннях";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Please give MEGA app permission to access your photo library in Settings";
+"photoLibraryPermissions"="Будь ласка, надайте додатку MEGA доступ до бібліотеки фотографій в налаштуваннях";
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Ви не можете завантажити порожню теку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ваш обліковий запис вже активовано. Будь ласка, увійдіть.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="Невірна ланка";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введіть ключ розшифрування";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="Для доступу до цієї теки/файлу, вам потрібен ключ розшифровки. Якщо у вас його немає, зверніться до творця посилання.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Ключ розшифровки";
 /* Button title to try to decrypt the link */
 "decrypt"="Розшифровувати";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="Невірний ключ розшифровки";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Вихід";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ви закрили сесію на цьому пристрої з іншого місця";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Server's SSL key can't be verified. You could be affected by a man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Ключі серверу SSL не можливо перевірити. Ви можете бути уражені атакою людина-по-середині.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Сервер зайнятий. Будь ласка, зачекайте…";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Будь ласка, увійдіть в свій обліковий запис.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA ПРОСТІР";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Отримати повністю шифрований доступ у будь-якому місці, у будь-який час.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Увійти";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Не маєте облікового запису?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Створити обліковий запис";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Створити обліковий запис";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Вже маєте обліковий запис?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Невірна адреса електронної пошти та/або пароль. Будь ласка, спробуйте ще раз";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Ви повинні погодитися з умовами користування, щоб зареєструвати обліковий запис на MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ця e-mail  адреса, вже зареєстрована в Mega.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Неймовірно";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Очікування підтвердження";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Будь ласка, перевірте свій e-mail, та натисніть на посилання, для підтвердження свого облікового запису.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -105,27 +103,21 @@
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Ви увійшли в інший обліковий запис";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
+"alreadyLoggedInAlertMessage"="Якщо ви згодні, відбудеться вихід з вашого поточного акаунту і всі локальні дані буде стерто. Бажаєте продовжити?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Вам потрібно звільнити деякий простір на вашому пристрої";
 /* Title for the file link view */
 "fileLink"="Посилання на файл";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Імпортувати в Хмарний диск";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Завантажити до додатку MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Відкрити файл";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="The file you are trying to download is bigger than the available memory.";
+"fileTooBigMessage"="Файл, який ви намагаєтесь завантажити більший ніж доступна пам'ять.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Файл, який ви намагаєтесь відкрити більший ніж розмір доступної пам'яті.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="Не дійсна ланка";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
+"fileLinkUnavailableText"="Це може бути пов'язане з наступними причинами:- Файл був видалений через порушення ToS/AUP.- Невірний URL — ланка, до якої ви намагаєтесь отримати доступ не існує.- Файл було вилучено користувачем.";
 /* Message shown when a download starts */
 "downloadStarted"="Завантаження розпочато";
 /* Title for the folder link view */
@@ -133,43 +125,27 @@
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Скачати";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
-"folderTooBigMessage"="The folder you are trying to download is bigger than the available memory.";
+"folderTooBigMessage"="Тека, яку ви намагаєтеся завантажити більше ніж доступна пам'ять.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="Теку '%@' неможливо створити";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
+"folderLinkUnavailableText"="Це може бути пов'язане з наступними причинами:- Ланку на теку було видалено через порушення ToS/AUP.- Невірний URL — ланка, до якої ви намагаєтесь отримати доступ не існує.- Ланку на теку було вилучено користувачем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Немає інтернет з'єднання";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Немає файлів у теці";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Посилання на порожню теку";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Це ланка на теку, що не має жодного файлу";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Ця підтека не має жодного файлу";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Не має файлів на вашому Хмарному диску";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="У спільній теці немає файлів";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Додати файли";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Немає результатів";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Очистити";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Додати файли за допомогою кнопки нагорі";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Поділіться чим-небудь. Додайте файлів натиснувши кнопку угорі.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Завантаження з камери відключено";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Увімкніть завантаження з камери, щоб мати копію фотографій вашого пристрою на MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Немає файлів, збережених автономно";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Завантажте файли, щоб використовувати їх, коли не стане підключення до інтернету.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Ви не маєте ніяких контактів";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Додайте контакт, використовуючи кнопку угорі.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Немає вхідних тек спільного доступу";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Контакти";
 /* Title of Contacts requests section */
 "contactRequests"="Запит на контакт";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Додати контакти";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Надіслано";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Продовжіть передачу натиснувши кнопку угорі.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Ви не маєте завантажень в очікуванні.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Ви не маєте відвантажень в очікуванні";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Хмарний Диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -353,11 +323,11 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
 "moveFileFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перемістити 1 файл і 1 теку у кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
+"moveFileFoldersToRubbishBinMessage"="Ви впевнені, що бажаєте перемістити 1 файл і %d тек(і) у кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
+"moveFilesFolderToRubbishBinMessage"="Ви впевнені, що бажаєте перемістити %d файли(ів) і 1 теку у кошик для сміття?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
+"moveFilesFoldersToRubbishBinMessage"="Ви впевнені, що хочете перемістити [A] файлів і [B] тек у кошик для сміття?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 файл перенесено у кошик для сміття";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -384,8 +354,10 @@
 "importTitle"="Імпортувати до";
 /* Button title that triggers the importing link action */
 "import"="Імпорт";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Файл імпортовано";
+/* Message shown when some files have been imported */
+"filesImported"="Файли імпортовано";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Обмеження перевищено";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu фото";
 /* Button title that skips the current action */
 "skipButton"="Пропустити";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Увімкнути завантаження з камери";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Завантаження з камери увімкнено";
@@ -409,7 +381,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu елементів обрано";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
+"cameraUploadsDisabled_alertView_message"="Завантаження з камери буде відключено, через нестачу місця на вашому пристрої";
 /* Title of the Offline section */
 "offline"="Не в мережі";
 /* Title of the Contacts section */
@@ -447,7 +419,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Ви впевнені, що бажаєте видалити цей спільний доступ? (Спільний з %d контактами)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Ви впевнені, що бажаєте видалити цей спільний доступ? (Спільний з %d контактами)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Спільний доступ видалений вірно";
 /* Message shown when some shares have been removed */
@@ -502,8 +474,10 @@
 "settingsTitle"="Налаштування";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Відвантаження з камери";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Корзина";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Додатково";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Параметри безпеки";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -549,35 +523,49 @@
 /* Message shown when you try to export the Master Key to alert the user.*/
 "exportMasterKey_alertMessage"="Попередження системи безпеки! Це операція з високим ризиком. Ви хочете продовжити?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Exporting the Master Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="Експорт майстер-ключа і збереження його у безпечному місці дозволить вам відновити акаунт у випадку втрати пароля без втрати даних.";
 /* Alert title shown when you have exported your MEGA master key */
 "masterKeyExported"="Майстер-ключ експортовано";
 /* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt was saved on this device. Connect to your computer and open iTunes to access it on MEGA Documents. We strongly advise you to keep this file secure!";
+"masterKeyExported_alertMessage"="Masterkey.txt було збережено на цьому пристрої. Підключіться до комп'ютеру і відкрийте iTunes щоб надати доступ до документів MEGA. Ми наполегливо рекомендуємо вам зберігати цей файл у безпечному місці.";
 /* Alert title shown when you have removed your MEGA master key */
 "masterKeyRemoved"="Майстер-ключ видалено";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt був видалений з теки документів.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="На вашому пристрої";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Очистити автономні файли";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Очистити кеш";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="На MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Очистити кошик для сміття";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Всі елементи у сміттєвому кошику були видалені";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Використовується %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Видалення";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Підтвердження видалення";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
-"removeFileToRubbishBinMessage"="You are about to permanently remove 1 file. Would you like to proceed? (You cannot undo this action.)";
+"removeFileToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 файл. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="You are about to permanently remove %d files. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesToRubbishBinMessage"="Ви збираєтесь назавжди видалити %d файли(ів). Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 folder" */
-"removeFolderToRubbishBinMessage"="You are about to permanently remove 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFolderToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 теку. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="You are about to permanently remove %d folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFoldersToRubbishBinMessage"="Ви збираєтесь назавжди видалити %d тек(и). Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="You are about to permanently remove 1 file and 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFileFolderToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 файли і 1 теку. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="You are about to permanently remove 1 file and %d folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFileFoldersToRubbishBinMessage"="Ви збираєтесь назавжди видалити 1 файл і %d тек(и). Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="You are about to permanently remove %d files and 1 folder. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFolderToRubbishBinMessage"="Ви збираєтесь назавжди видалити %d файли(ів) і 1 теку. Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="Ви збираєтесь назавжди видалити [A] файли(ів) і [B] тек(и). Бажаєте продовжити? (Ця дія не зворотня.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 файл видалений з MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -658,12 +646,10 @@
 "free"="БЕЗКОШТОВНО";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="закінчується %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Історія покупок";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Надходження спільного доступу";
+"incomingShares"="Спільний доступ";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="з %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -695,7 +681,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Дозволити покупки";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="You must enable In-App Purchases in your iOS Settings before restoring a purchase.";
+"allowPurchase_message"="Щоб продовжити покупку, вам необхідно увімкнути можливість покупок в додатках у налаштуваннях iOS.";
 /* Button title to restore failed purchases */
 "restore"="Відновити";
 /* "Monthly" subscriptions */
@@ -703,7 +689,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Щорічне";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="This In-App Purchase item is not available in the App Store at this time. Please try again later.";
+"productNotAvailable"="Наразі купівлю цього елементу в додатку не можлива у App Store. Будь ласка, спробуйте пізніше.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Дякуємо";
 /* Alert message shown when a purchase was restored succesfully */
@@ -711,15 +697,15 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Покупки зупинено";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Either you cancelled the request or Apple reported a transaction error. Please try again later, or contact ios@mega.nz.";
+"failedPurchase_message"="Або ви скасували запит, або Apple повідомила про помилку транзакції. Будь ласка, спробуйте ще раз пізніше, або зв'яжіться з ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Питання відновлення";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="The previous purchase could not be found. Please select the previously purchased product to restore. You will NOT be charged again.";
+"incompleteRestore_message"="Попередню покупку не знайдено. Будь ласка, виберіть придбаний раніше продукт для відновлення. Ви НЕ будете платити ще раз.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Відновлення зупинено";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Either the request was cancelled or the prior purchase could not be restored. Please try again later, or contact ios@mega.nz.";
+"failedRestore_message"="Або запит було скасовано, або попередню покупку не можливо відновити. Будь ласка, спробуйте ще раз пізніше, або зв'яжіться з ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Увімкнути режим налагодження";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Вимкнути режим налагодження";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Журнал (MEGAiOS.log) буде видалено з автономної частини.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Ви впевнені, що бажаєте видалити цей елемент збережений в оффлайні?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Ви впевнені, що бажаєте видалити цей елемент збережений в онлайні?";

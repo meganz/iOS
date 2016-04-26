@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="מפתח ה-SSL של השרת לא אומת. ייתכן ואתה קורבן של התקפת איש-באמצע.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="השרתים עמוסים. אנא המתן...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="אנא התחבר לחשבון שלך.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="חלל MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="קבל גישה מאובטחת באופן מלא, בכל זמן.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="התחברות";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="אין לך חשבון? ";
-/* Button that bring you to section where you can create an account */
-"createOne"="צור אחד";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="צור חשבון";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="כבר יש לך חשבון?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="כתובת מייל ו\או סיסמא לא תקינים. אנא נסה שוב";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="אתה צריך להסכים לתנאי השימוש על מנת להירשם לMEGA";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="לאימייל הזה יש כבר חשבון בMega.";
-/* Message displayed when an action is completed successfully */
-"awesome"="מדהים";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="ממתין לאישור";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="אנא בדוק את האימייל שלך ולחץ על לינק האישור לחשבונך.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="הינך צריך יותר מקום אחסון במכשיר";
 /* Title for the file link view */
 "fileLink"="לינק לקובץ";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="ייבא לאחסון בענן";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="הורד ליישום MEGA שלך";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="פתח קובץ";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="קישור לא זמין";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="זה יכול להיגרם מכמה סיבות:- הקובץ נמחק עקב פגיעה בתנאי השימור או זכויות יוצרים.- קישור לא תקין - הקישור אליו אתה מנסה להיכנס לא קיים.- הקובץ נמחק על ידי המשתמש.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="ההורדה החלה";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="אין חיבור לאינטרנט";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="אין קבצים בתיקייה";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="תיקייה ריקה";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="התיקייה של קישור זה איננה מכילה קבצים";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="תת תיקייה זו ריקה.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="אין קבצים בכונן הענן שלך";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="אין קבצים בתיקייה משותפת זו";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="הוסף קבצים";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="אין תוצאות";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="נקה את סל האשפה";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="הוסף קבצים בעזרת הכפתור למעלה";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="שתף משהו. הוסף קבצים בעזרת הכפתור למעלה.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="העלאת תמונות ממצלמה בוטלה";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="הפעל העלאות תמונות ממצלמה על מנת לגבות את התמונות מהמכשיר לך אל MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="אין קבצים שנשמרו לצפייה ללא חיבור";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="הורד קבצים על מנת להשתמש בהם כאשר אין לך חיבור לאינטרנט.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="אין לך אנשי קשר";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="הוסף אנשי קשר בעזרת הכפתור למעלה.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="אין תיקיות שיתוף נכנסות";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="אנשי קשר";
 /* Title of Contacts requests section */
 "contactRequests"="בקשות חברי קשר";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="הוסף אנשי קשר";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="נשלח";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="המשך את ההעברות בעזרת הכפתור למעלה.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="אין לך הורדות בהמתנה";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="אין לך העלאות בהמתנה";
 /* Title of the Cloud Drive section */
 "cloudDrive"="כונן ענן";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="ייבא אל";
 /* Button title that triggers the importing link action */
 "import"="ייבא";
-/* Message shown when a file have been imported */
-"fileImported"="הקובץ הובא";
+/* Message shown when a file has been imported */
+"fileImported"="הקובץ הובא!";
+/* Message shown when some files have been imported */
+"filesImported"="קבצים שיובאו";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="חריגה מהזכרון";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="תמונה %lu";
 /* Button title that skips the current action */
 "skipButton"="דלג";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="אפשר העלאת תמונות מצלמה";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="העלאות תמונות מהמצלמה אופשר!";
@@ -502,8 +474,10 @@
 "settingsTitle"="הגדרות";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="העלאות מצלמה";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="סל האשפה";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="מתקדם";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="אפשרויות אבטחה";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="מפתח ראשי נמחק";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt נמחק מתיקיית המסמכים.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="במכשיר שלך";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="נקה קבצים לשימוש לא מקוון";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="רוקן זיכרון מטמון";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="ב-MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="רוקן את פח האשפה";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="כל הקבצים בפח האשפה יימחקו";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="כרגע משתמש ב%s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="הסר";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="חינם";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="פג תוקף ב-%@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="היסטורית קנייה";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="שיתופים נכנסים";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="בטל מצב דיבאג";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="קובץ הלוג (MEGAiOS.log) יימחק מהתיקייה הלא מקוונת.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="האם אתה בטוח שברצונך למחוק את הפריט הזה מגישה לא מקוונת?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";

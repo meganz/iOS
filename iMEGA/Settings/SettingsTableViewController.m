@@ -36,6 +36,7 @@
 #import "AboutTableViewController.h"
 #import "FeedbackTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
+#import "AdvancedTableViewController.h"
 
 @interface SettingsTableViewController () <MFMailComposeViewControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     
@@ -91,7 +92,7 @@
                             @"sl":@"Slovenščina",
                             @"sr":@"српски језик",
                             @"sv":@"Svenska",
-                            //@"th":@"ไทย",
+                            @"th":@"ไทย",
                             @"tl":@"Tagalog",
                             @"tr":@"Türkçe",
                             @"uk":@"українська мова",
@@ -138,7 +139,7 @@
     }
     
     if (isLanguagePickerViewShown) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(_languagePickerViewIndexPath.row - 1) inSection:2];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(_languagePickerViewIndexPath.row - 1) inSection:3];
         [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
     
@@ -158,7 +159,7 @@
 - (void)toggleLanguagePickerForSelectedIndexPath:(NSIndexPath *)indexPath {
     [self.tableView beginUpdates];
     
-    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:2]];
+    NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:3]];
     
     if (isLanguagePickerViewShown) {
         [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
@@ -181,17 +182,17 @@
     BOOL sameCellClicked = (_languagePickerViewIndexPath.row - 1 == indexPath.row);
     
     if (isLanguagePickerViewShown) {
-        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_languagePickerViewIndexPath.row inSection:2]]
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_languagePickerViewIndexPath.row inSection:3]]
                               withRowAnimation:UITableViewRowAnimationFade];
         _languagePickerViewIndexPath = nil;
     }
     
     if (!sameCellClicked) {
         NSInteger rowToReveal = (before ? indexPath.row - 1 : indexPath.row);
-        NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:2];
+        NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:3];
         
         [self toggleLanguagePickerForSelectedIndexPath:indexPathToReveal];
-        _languagePickerViewIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:2];
+        _languagePickerViewIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:3];
     }
     
     [self.tableView endUpdates];
@@ -291,11 +292,15 @@
     switch (section) {
         case 0:
         case 1:
-        case 3:
+        case 4:
             numberOfRows = 2;
             break;
             
-        case 2: {
+        case 2: //Advanced
+            numberOfRows = 1;
+            break;
+            
+        case 3: {
             if (_languagePickerViewIndexPath != nil) {
                 numberOfRows = 4;
             } else {
@@ -312,7 +317,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CGFloat heightForRow = 44.0;
-    if (indexPath.section == 2 && indexPath.row == 2 && isLanguagePickerViewShown) {
+    if (indexPath.section == 3 && indexPath.row == 2 && isLanguagePickerViewShown) {
         heightForRow = _languagePickerCellRowHeight;
     }
     return heightForRow;
@@ -329,7 +334,7 @@
             cellID = ((indexPath.row == 0) ? @"settingsRightDetailCellID" : @"settingsBasicCellID");
             break;
             
-        case 2: {
+        case 3: {
             if (indexPath.row == 0 || indexPath.row == 3) {
                 cellID = @"settingsBasicCellID";
             } else if (indexPath.row == 1) {
@@ -339,8 +344,9 @@
             }
             break;
         }
-            
-        case 3:
+           
+        case 2: //Advanced
+        case 4:
             cellID = @"settingsBasicCellID";
             break;
     }
@@ -370,7 +376,12 @@
             break;
         }
             
-        case 2: {
+        case 2: { //Advanced
+            [cell.textLabel setText:AMLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options")];
+            break;
+        }
+            
+        case 3: {
             if (indexPath.row == 0) {
                 [cell.textLabel setText:AMLocalizedString(@"about", @"")];
             } else if (indexPath.row == 1) {
@@ -387,7 +398,7 @@
             break;
         }
             
-        case 3: {
+        case 4: {
             if (indexPath.row == 0) {
                 [cell.textLabel setText:AMLocalizedString(@"privacyPolicyLabel", nil)];
             } else if (indexPath.row == 1) {
@@ -432,8 +443,14 @@
                 break;
             }
         }
+            
+        case 2: { //Advanced
+            AdvancedTableViewController *advancedTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"AdvancedTableViewControllerID"];
+            [self.navigationController pushViewController:advancedTVC animated:YES];
+            break;
+        }
          
-        case 2: { //About, Language, Send Feedback, Rate Us
+        case 3: { //About, Language, Send Feedback, Rate Us
             if (indexPath.row == 0) {
                 AboutTableViewController *aboutTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutTableViewControllerID"];
                 [self.navigationController pushViewController:aboutTVC animated:YES];
@@ -456,7 +473,7 @@
             }
         }
          
-        case 3: { //Privacy Policy, Terms of Service
+        case 4: { //Privacy Policy, Terms of Service
             if ([MEGAReachabilityManager isReachable]) {
                 if (indexPath.row == 0) {
                     [self showURL:@"https://mega.nz/ios_privacy.html"];

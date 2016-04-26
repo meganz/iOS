@@ -41,10 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
 @property (weak, nonatomic) IBOutlet UILabel *accountCreatedTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLoginLabel;
-@property (weak, nonatomic) IBOutlet UIButton *accountCreatedLoginButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
@@ -73,18 +70,15 @@
         [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
     }
     
-    self.createAccountButton.layer.cornerRadius = 6;
+    self.createAccountButton.layer.cornerRadius = 4.0f;
     self.createAccountButton.layer.masksToBounds = YES;
     [self.createAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awesome", nil)];
+    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingConfirmation", nil)];
     [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
-    [self.accountCreatedLoginLabel setText:AMLocalizedString(@"alreadyHaveAnAccount", nil)];
-    [self.accountCreatedLoginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
     
-    [self.loginLabel setText:AMLocalizedString(@"alreadyHaveAnAccount", nil)];
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
@@ -190,7 +184,7 @@
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachable]) {
             [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] name:[self.nameTextField text] delegate:self];
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
             [self.createAccountButton setEnabled:NO];
         } else {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];

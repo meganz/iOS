@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="Serverns SSL kan inte verifieras, du kan vara utsatt för intrång. ";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Servrarna är upptagna. Var vänlig vänta ";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Vänligen logga in till ditt konto.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA UTRYMME";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Få fullt krypterad tillgång var som helst, när som helst.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Logga in";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Har du inget konto?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Skapa ett";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Skapa konto";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Har du redan ett konto?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ogiltig e-post och / eller lösenord. Var god försök igen";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Ni måste godkänna servicevillkoren för att registrera ett konto på MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Den här email adressen har redan kopplats till ett annat MEGA konto.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Häftigt";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Väntar på bekräftelse";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Kolla din e-post och tryck på länken för att aktivera ditt konto.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Du behöver frigöra utrymme på din enhet";
 /* Title for the file link view */
 "fileLink"="Fil länk";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Importera till Could Drive";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Ladda ned till din MEGA App";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Öppna fil";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Otillgänglig länk";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Detta skulle kunna bero på följande orsaker:- Filen har tagits bort på grund av en ToS/AUP kränkning.- Ogiltig webbadress - länken du försöker komma åt existerar inte.- Filen har tagits bort av användaren.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Nedladdning startades!";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Ingen internetuppkoppling";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Inga filer i mappen";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Tom mapp länk";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Den här mappen länk har inga filer";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Den här barn mappen har inga filer.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Inga filer i din Cloud Drive";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Inga filer i den delade mappen";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Lägg till filer";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Inga träffar";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Töm papperskorgen";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Lägg till filer genom att använd knappen ovanför";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Dela något. Lägg till filer genom att använda knappen ovanför.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Kamera uppladdningar är inaktiverade";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Aktivera kamera Uppladdade att ha en kopia av din enhet foton på MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Inga filer sparade för offline";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Ladda ner filer för att använda dem när du inte har Internet-anslutning.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Du har inga kontakter";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Lägg till kontakter med knappen ovan.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Inga inkommande delade mappar";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Kontakter";
 /* Title of Contacts requests section */
 "contactRequests"="Kontaktförfrågningar";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Lägg till kontakter";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Skickade";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Återuppta överföringar med knappen ovan.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Du behöver inte ha några väntande hämtningar.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Du behöver inte ha några väntande uppladdningar";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Importera till";
 /* Button title that triggers the importing link action */
 "import"="Importera";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Fil importerad";
+/* Message shown when some files have been imported */
+"filesImported"="Filer importerade";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Du har gått över minnesgränsen";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Hoppa över";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Aktivera kamerauppladdningar";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Kamera uppladdningar är aktiverat";
@@ -502,8 +474,10 @@
 "settingsTitle"="Inställningar";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Uppladdning av bilder";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papperskorg";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Avancerad";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Säkerhets alternativ";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Huvudnyckel borttagen";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt togs bort från mappen Dokument.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Din enhet";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Rensa offline filer";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Rensa temporära filer";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="På MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Töm papperskorgen";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Alla objekt i papperskorgen kommer att raderas permanent.";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="F.n används %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Ta bort";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="Utgår den %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Köphistorik";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Inkommande delningar";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="DEBUG avslaget";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Loggen (MEGAiOS.log) kommer raderas från offline sektionen";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Är du säker på att du vill ta bort objektet från offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Är du säker på att du vill ta bort dessa objekt från offline?";

@@ -37,6 +37,9 @@
 #import "CreateAccountViewController.h"
 #import "UnavailableLinkView.h"
 #import "LaunchViewController.h"
+#import "OfflineTableViewController.h"
+#import "SettingsTableViewController.h"
+#import "SecurityOptionsTableViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -62,7 +65,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeFolderLink,
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
-    URLTypeNewSignUpLink
+    URLTypeNewSignUpLink,
+    URLTypeBackupLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -113,7 +117,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-    [MEGASdkManager sharedMEGASdk];
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
 #else
@@ -174,10 +178,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2ThumbsPath]) {
         NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
-        NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
+            NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+                MEGALogError(@"Create directory at path: %@", error);
             }
         }
         [self renameAttributesAtPath:v2ThumbsPath v3Path:v3ThumbsPath];
@@ -186,10 +190,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSString *v2previewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2previewsPath]) {
         NSString *v3PreviewsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-        NSError *error;
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
+            NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3PreviewsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+                MEGALogError(@"Create directory at path: %@", error);
             }
         }
         [self renameAttributesAtPath:v2previewsPath v3Path:v3PreviewsPath];
@@ -312,18 +316,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     // Clean up temporary directory
     NSError *error = nil;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error];
-    if (!success || error) {
-        [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove temporary directory error: %@", error]];
+    if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
+        MEGALogError(@"Remove item at path: %@", error);
     }
     
     // Clean up Documents/Inbox directory
     NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
         error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
         }
     }
 }
@@ -382,7 +384,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIDisplay-Light" size:20.0]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
     [[UINavigationBar appearance] setTintColor:megaRed];
     [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
     
@@ -422,33 +424,50 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
 }
 
-- (void)selectedOptionOnLink {
+- (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
-        case 1: { //IMPORT
+        case 1: { //Import file from link
             MEGANode *node = [Helper linkNode];
-            if ([node type] == MEGANodeTypeFile) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
-                [browserVC setBrowserAction:BrowserActionImport];
-            }
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
+            
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
+            [browserVC setBrowserAction:BrowserActionImport];
             break;
         }
             
-        case 2: { //DOWNLOAD
+        case 2: { //Download file from link
             MEGANode *node = [Helper linkNode];
-            if ([node type] == MEGANodeTypeFile) {
-                if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                    return;
-                }
-                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
-            } else if ([node type] == MEGANodeTypeFolder) {
+            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                return;
+            }
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
+            break;
+        }
+            
+        case 3: { //Import folder or nodes from link
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
+            browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
+            [self presentLinkViewController:navigationController];
+            break;
+        }
+            
+        case 4: { //Download folder or nodes from link
+            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                     return;
                 }
+            }
+            [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
+            for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
             }
             break;
@@ -459,6 +478,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     [Helper setLinkNode:nil];
+    [[Helper nodesFromLinkMutableArray] removeAllObjects];
     [Helper setSelectedOptionOnLink:0];
 }
 
@@ -496,6 +516,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if ([self isNewSignUpLink:afterSlashesString]) {
         self.urlType = URLTypeNewSignUpLink;
+        return;
+    }
+    
+    if ([self isBackupLink:afterSlashesString]) {
+        self.urlType = URLTypeBackupLink;
         return;
     }
     
@@ -569,6 +594,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isConfirmationLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 8) {
+        return NO;
+    }
+    
     NSString *megaURLString = @"https://mega.nz/";
     BOOL isMEGACONZConfirmationLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]; // mega://"confirm"
     BOOL isMEGANZConfirmationLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]; // mega://"#confirm"
@@ -588,6 +617,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isNewSignUpLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 10) {
+        return NO;
+    }
+    
     BOOL isNewSignUpLink = [[afterSlashesString substringToIndex:10] isEqualToString:@"#newsignup"]; // mega://"#newsignup"
     if (isNewSignUpLink) {
         NSString *megaURLString = @"https://mega.nz/";
@@ -595,6 +628,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdk] querySignupLink:megaURLString];
         return YES;
     }
+    return NO;
+}
+
+- (BOOL)isBackupLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
+    if (isBackupLink) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
+            [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+            [self presentLinkViewController:navigationController];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        return YES;
+    }
+    
     return NO;
 }
 
@@ -620,9 +679,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         } else {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error];
-                if (!success || error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
+                    MEGALogError(@"Remove item at path: %@", error)
                 }
             }
         }
@@ -690,20 +748,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [unavailableLinkView.titleLabel setText:title];
     [unavailableLinkView.textView setText:text];
     [unavailableLinkView setFrame:self.window.frame];
-
-    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleBordered target:nil action:@selector(dismissPresentedViews)];
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
-    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
     [viewController.navigationItem setTitle:title];
-    [viewController.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+    [viewController.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [self.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (UIBarButtonItem *)cancelBarButtonItem {
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
+    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
+    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
+    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+    return cancelBarButtonItem;
 }
 
 #pragma mark - Get IP Address
@@ -798,8 +859,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-        [upgradeTVC.navigationItem setRightBarButtonItem:cancelBarButtonItem];
+        [upgradeTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
         
         [self dismissPresentedViews];
         
@@ -1141,7 +1201,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
                         
                         if ([Helper selectedOptionOnLink] != 0) {
-                            [self performSelector:@selector(selectedOptionOnLink) withObject:nil afterDelay:0.75f];
+                            [self performSelector:@selector(processSelectedOptionOnLink) withObject:nil afterDelay:0.75f];
                         } else {
                             if (self.urlType == URLTypeOpenInLink) {
                                 [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
@@ -1293,7 +1353,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
@@ -1314,9 +1373,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     //Delete local file even if we get an error
     if ([transfer type] == MEGATransferTypeUpload) {
         NSError *error = nil;
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error];
-        if (!success || error) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
         }
     }
     

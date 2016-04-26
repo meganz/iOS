@@ -2,7 +2,7 @@
  * @file CloudDriveTableViewController.m
  * @brief Cloud drive table view controller of the app.
  *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
+ * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -21,14 +21,13 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-#import <MediaPlayer/MPMoviePlayerViewController.h>
-#import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 #import <QuickLook/QuickLook.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
@@ -37,7 +36,6 @@
 
 #import "CloudDriveTableViewController.h"
 #import "NodeTableViewCell.h"
-#import "LoginViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "MEGAPreview.h"
 #import "MEGANavigationController.h"
@@ -50,6 +48,7 @@
 
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAStore.h"
+#import "MEGAAVViewController.h"
 
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     UIAlertView *folderAlertView;
@@ -72,8 +71,6 @@
     NSString *previewDocumentPath;
     
     NSUInteger numFilesAction, numFoldersAction;
-    
-    MEGANode *selectedNode;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -109,6 +106,11 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    self.searchDisplayController.searchResultsTableView.emptyDataSetSource = self;
+    self.searchDisplayController.searchResultsTableView.emptyDataSetDelegate = self;
+    self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
+    [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
+    
     [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
     
@@ -124,14 +126,12 @@
             
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
-            
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
             }
-
             
             switch (accessType) {
                 case MEGAShareTypeAccessRead: {
@@ -174,18 +174,16 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+            MEGALogError(@"Create directory at path: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Create directory error %@", error]];
+            MEGALogError(@"Create directory at path: %@", error);
         }
     }
-    
-    [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
@@ -201,8 +199,6 @@
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     
     [self reloadUI];
-    
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -220,11 +216,6 @@
         self.selectedNodesArray = nil;
         [self setEditing:NO animated:NO];
     }
-}
-
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -253,11 +244,15 @@
     
     if (numberOfRows == 0) {
         if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         } else {
             [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         }
     } else {
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        }
+        
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
@@ -512,52 +507,32 @@
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
                 if (offlineNodeExist) {
-                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    
-                    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-                    [previewController setDelegate:self];
-                    [previewController setDataSource:self];
-                    [previewController setTransitioningDelegate:self];
-                    [previewController setTitle:name];
-                    [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-                    NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-                    if (link) {
-                        MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                        // Remove the movie player view controller from the "playback did finish" notification observers
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                        name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                      object:moviePlayerViewController.moviePlayer];
+                    if (!isMultimedia(node.name.pathExtension)) {
+                        previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
                         
-                        // Register this class as an observer instead
-                        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                 selector:@selector(movieFinishedCallback:)
-                                                                     name:MPMoviePlayerPlaybackDidFinishNotification
-                                                                   object:moviePlayerViewController.moviePlayer];
-                        
-                        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                        
-                        selectedNode = node;
-                        
-                        if (![node hasThumbnail]) {
-                            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                                     selector:@selector(handleThumbnailImageRequestFinishNotification:)
-                                                                         name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                                       object:moviePlayerViewController.moviePlayer];
-                            
-                            [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
-                        }
-                        
-                        [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                        
-                        [moviePlayerViewController.moviePlayer prepareToPlay];
-                        [moviePlayerViewController.moviePlayer play];
-                        
+                        QLPreviewController *previewController = [[QLPreviewController alloc] init];
+                        [previewController setDelegate:self];
+                        [previewController setDataSource:self];
+                        [previewController setTransitioningDelegate:self];
+                        [previewController setTitle:name];
+                        [self presentViewController:previewController animated:YES completion:nil];
+                    } else {
+                        NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
+                        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
+                        [self presentViewController:megaAVViewController animated:YES completion:nil];
                         if (fileUTI) {
                             CFRelease(fileUTI);
                         }
                         return;
                     }
+                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                    MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
+                    [self presentViewController:megaAVViewController animated:YES completion:nil];
+                    
+                    if (fileUTI) {
+                        CFRelease(fileUTI);
+                    }
+                    return;
                 } else {
                     if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
@@ -771,82 +746,46 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_title", @"No files in your Cloud Drive");
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+        if ([self.searchDisplayController isActive]) {
+            text = AMLocalizedString(@"noResults", nil);
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_title", @"Title shown when your Cloud Drive is empty, when you don't have any files.") sectionTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
                 }
-                break;
+                    
+                case DisplayModeContact:
+                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    break;
+                    
+                case DisplayModeRubbishBin:
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.") sectionTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'")];
+                    } else {
+                        text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+                    }
+                    break;
+                    
+                default:
+                    break;
             }
-                
-            case DisplayModeContact:
-                text = AMLocalizedString(@"cloudDriveEmptyState_titleContact", @"No files in this shared folder");
-                break;
-                
-            case DisplayModeRubbishBin:
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Empty rubbish bin");
-                } else {
-                    text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-                }
-                break;
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.parentNode == nil) {
-            return nil;
-        }
-        
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive:
-                text = AMLocalizedString(@"cloudDriveEmptyState_text",  @"Add new files using the above button.");
-                break;
-                
-            case DisplayModeContact:
-                text = AMLocalizedString(@"cloudDriveEmptyState_textContact",  @"Share something!");
-                break;
-                
-            case DisplayModeRubbishBin:
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    text = AMLocalizedString(@"awesome",  nil);
-                } else {
-                    text = @"";
-                }
-                break;
-        }
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -858,27 +797,34 @@
             return nil;
         }
         
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    image = [UIImage imageNamed:@"emptyCloudDrive"];
-                } else {
-                    image = [UIImage imageNamed:@"emptyFolder"];
+        if ([self.searchDisplayController isActive]) {
+            image = [UIImage imageNamed:@"emptySearch"];
+        } else {
+            switch (self.displayMode) {
+                case DisplayModeCloudDrive: {
+                    if ([self.parentNode type] == MEGANodeTypeRoot) {
+                        image = [UIImage imageNamed:@"emptyCloudDrive"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
-            }
-                
-            case DisplayModeContact:
-                image = [UIImage imageNamed:@"emptyFolder"];
-                break;
-                
-            case DisplayModeRubbishBin: {
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    image = [UIImage imageNamed:@"emptyRubbishBin"];
-                } else {
+                    
+                case DisplayModeContact:
                     image = [UIImage imageNamed:@"emptyFolder"];
+                    break;
+                    
+                case DisplayModeRubbishBin: {
+                    if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                        image = [UIImage imageNamed:@"emptyRubbishBin"];
+                    } else {
+                        image = [UIImage imageNamed:@"emptyFolder"];
+                    }
+                    break;
                 }
-                break;
+                    
+                default:
+                    break;
             }
         }
     } else {
@@ -888,8 +834,67 @@
     return image;
 }
 
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.parentNode == nil) {
+            return nil;
+        }
+        
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                if (![self.searchDisplayController isActive]) {
+                    text = AMLocalizedString(@"addFiles", nil);
+                }
+                break;
+            }
+                
+            default:
+                text = @"";
+                break;
+        }
+        
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:megaMediumGray};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets rectInsets;
+    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if (iPad) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if (iPadPro) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            [self optionAdd:_addBarButtonItem];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -1185,9 +1190,8 @@
                 
                 NSError *error = nil;
                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:modificationTime forKey:NSFileModificationDate];
-                [[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error];
-                if (error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Error change modification date for file %@", error]];
+                if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:localFilePath error:&error]) {
+                    MEGALogError(@"Set attributes: %@", error);
                 }
                 
                 [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
@@ -1405,6 +1409,12 @@
             break;
     }
     
+    if ([[self.nodes size] unsignedIntegerValue] == 0) {
+        [_editBarButtonItem setEnabled:NO];
+    } else {
+        [_editBarButtonItem setEnabled:YES];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -1440,7 +1450,6 @@
         CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
         picker.delegate = self;
         picker.assetsFilter = [ALAssetsFilter allAssets];
-        picker.showsCancelButton    = (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad);
         [self presentViewController:picker animated:YES completion:nil];
     }
 }
@@ -1813,7 +1822,6 @@
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
@@ -1836,43 +1844,6 @@
     return YES;
 }
 
-#pragma mark - Movie player
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    
-    [moviePlayer cancelAllThumbnailImageRequests];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[MEGASdkManager sharedMEGASdk] httpServerStop];
-}
-
-- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                  object:moviePlayer];
-    UIImage  *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-    
-    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
-    
-    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
-    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
-    
-    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
-    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
-    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
-    selectedNode = nil;
-}
-
 
 #pragma mark - UIDocumentPickerDelegate
 
@@ -1891,9 +1862,8 @@
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;
-                BOOL success = [[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error];
-                if (!success || error) {
-                    [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+                if (![[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error]) {
+                    MEGALogError(@"Remove item at path: %@", error);
                 }
                 
                 NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);

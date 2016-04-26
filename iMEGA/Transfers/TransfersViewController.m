@@ -25,6 +25,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
+#import "NSMutableAttributedString+MNZCategory.h"
 
 #import "TransfersViewController.h"
 #import "TransferTableViewCell.h"
@@ -93,7 +94,7 @@
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
         [self.negativeSpaceBarButtonItem setWidth:-5.0];
     } else {
         [self.negativeSpaceBarButtonItem setWidth:-1.0];
@@ -127,11 +128,6 @@
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
     
     [self cleanTransfersList];
-}
-
-- (void)dealloc {
-    self.tableView.emptyDataSetSource = nil;
-    self.tableView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -688,11 +684,11 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (areTransfersPaused) {
-            text = AMLocalizedString(@"transfersEmptyState_titlePaused",  @"Transfers Paused");
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titlePaused", nil) sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case 0: //All
-                    text = AMLocalizedString(@"transfersEmptyState_titleAll", @"No Transfers");
+                    return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused") sectionTitle:AMLocalizedString(@"transfers", @"Title of the Transfers section")];
                     break;
                     
                 case 1: //Downloads
@@ -708,43 +704,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (areTransfersPaused) {
-            text = AMLocalizedString(@"transfersEmptyState_textPaused",  @"Resume the transfers using the above button.");
-        } else {
-            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-                case 0: //All
-                    text = AMLocalizedString(@"transfersEmptyState_textAll",  @"You don't have any pending transfers.");
-                    break;
-                    
-                case 1: //Downloads
-                    text = AMLocalizedString(@"transfersEmptyState_textDownload",  @"You don't have any pending downloads.");
-                    break;
-                    
-                case 2: //Uploads
-                    text = AMLocalizedString(@"transfersEmptyState_textUpload",  @"You don't have any pending uploads.");
-                    break;
-            }
-        }
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -777,6 +737,10 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return 40.0f;
 }
 
 #pragma mark - MEGARequestDelegate

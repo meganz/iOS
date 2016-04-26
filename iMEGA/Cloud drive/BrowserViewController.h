@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionCopy = 0,
     BrowserActionMove,
     BrowserActionImport,
+    BrowserActionImportFromFolderLink,
     BrowserActionSelectFolderToShare,
     BrowserActionOpenIn
 };
