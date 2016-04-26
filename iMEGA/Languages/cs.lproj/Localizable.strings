@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="SSL klíč serveru nemůže být ověřen. Mohli byste být ovlivněni útokem člověkem uprostřed.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Servery jsou zaneprázdněné. Čekejte...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Přihlaste se ke svému účtu.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MÍSTO V MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Získejte plně šifrovaný přístupodkudkoliv a kdykoliv.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Přihlásit se";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Nemáte účet?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Vytvořit";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Vytvořit účet";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Již máte účet?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Neplatný e-mail a/nebo heslo. Zkuste to znovu";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Musíte souhlasit s podmínkami užívání pro registraci účtu na MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Tento e-mail je již registrovaný s účtem na MEGA.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Úžasné";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Čeká na potvrzení";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Čekání na potvrzení e-mailu.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Zkontrolujte svůj e-mail a klikněte na odkaz pro potvrzení vašeho účtu.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Musíte uvolnit nějaké místo";
 /* Title for the file link view */
 "fileLink"="Odkaz na soubor";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Importovat do vaší cloudové jednotky";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Stáhnout do vaší aplikace MEGA";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Otevřít soubor";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Nedostupný odkaz";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Mohlo by to být kvůli následujícím důvodům:- Soubor byl odebrán, protože porušoval podmínky užívání nebo použití.- Neplatná URL – odkaz, ke kterému se pokoušíte získat přístup, neexistuje.- Soubor byl odstraněn uživatelem.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Stahování spuštěno!";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Žádné řipojení k Internetu";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Žádné soubory ve složce";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Odkaz na prázdnou složku";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Tento odkaz aktuálně nemá žádné soubory.";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Tato složka aktuálně nemá žádné soubory.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Žádné soubory ve vaší cloudové jednotce";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Žádné soubory v této sdílené složce";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Přidat soubory";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Žádné výsledky";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Vysypat koš";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Přidejte soubory pomocí horního tlačítka.";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Sdílejte něco! Přidejte soubory pomocí horního tlačítka.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Nahrávání z fotoaparátu je zakázáno";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Povolte nahrávání z fotoaparátu, abyste měli kopie fotek z vašeho zařízení v MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Žádné uložené soubory pro offline";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Stáhněte soubory, abyste je mohli používat, když nemáte připojení k Internetu.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Nemáte zatím přidány žádné kontakty!";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Přidejte kontakty pomocí horního tlačítka.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Žádné příchozí sdílené složky";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Kontakty";
 /* Title of Contacts requests section */
 "contactRequests"="Požadavky kontaktů";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Přidat kontakty";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Odeslané";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Obnovte přenosy pomocí horního tlačítka.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Nemáte žádná čekající stahování.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Nemáte žádná čekající nahrávání.";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Úložiště cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Importovat do";
 /* Button title that triggers the importing link action */
 "import"="Vložit";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Soubor importován!";
+/* Message shown when some files have been imported */
+"filesImported"="Soubory importovány";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Kvóta překročena";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu fotka";
 /* Button title that skips the current action */
 "skipButton"="Přeskočit";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Povolit Nahrávání z fotoaparátu";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Nahrávání z fotoaparátu povoleno!";
@@ -502,8 +474,10 @@
 "settingsTitle"="Nastavení";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Nahrávání z fotoaparátu";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Koš";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Rozšířené";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Možnosti zabezpečení";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Hlavní klíč odebrán";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt byl odebrán ze složky Dokumenty.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Na vašem zařízení";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Vymazat soubory offline";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Vymazat mezipaměť";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="Na MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Vysypat koš";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Všechny položky v koši budou odstraněny";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Aktuálně využívá %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Odebrat";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="ZDARMA";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="vyprší %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Historie nákupů";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Příchozí sdílení";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Zakázat režim LADĚNÍ";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Z oddílu Offline bude odstraněn protokol (MEGAiOS.log).";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Opravdu chcete odsranit tuto položku z offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Opravdu chcete odsranit tyto položky z offline?";

@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="Ne morem preveriti strežniškega SSL ključa. Lahko ste žrtev man-in-the-middle napada.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Strežniki so prezasedeni. Prosimo, počakajte...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Prosim, prijavite se v svoj račun.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA PROSTOR";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Pridobite polno kriptiran dostop od kjerkoli,kadarkoli.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Prijava";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Nimate računa?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Ustvari";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Naredi račun";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Ali že imate račun?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Napačna e-pošta in/ali geslo. Prosim, poskusite ponovno";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Če se želite registrirati na MEGA, se morate strinjati s pogoji uporabe.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ta e-poštni naslov je že registriran pri Mega.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Odlično";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="V pričakovanju potrditve";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Prosim, preverite svojo e-pošto in potrdite svoj račun s klikom na povezavo v njej.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Sprostiti morate nekaj prostora na vaši napravi";
 /* Title for the file link view */
 "fileLink"="Povezava datoteke";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Uvozi v oblak";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Prevzemite vaš MEGA app";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Odpri datoteko";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Povezava neveljavna";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="To se lahko zgodi iz sledečih razlogov:- Datoteka je bila odstranjena zaradi kršitve pravil uporabe- Napačen URL naslov - povezava, ki jo želite odpreti, ne obstaja- Datoteko je odstranil uporabnik.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Prevzemanje začeto";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Ni internetne povezave";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Ni datotek v mapi";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Povezava na prazno mapo";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Ta mapa ne vsebuje datotek";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Ta podmapa ne vsebuje datotek.";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Ni datotek v vašem oblaku";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Ni datotek v tej deljeni mapi";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Dodaj datoteke";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Ni zadetkov";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Izbriši koš";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Dodajte datoteke z zgornjim gumbom";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Delite nekaj. Dodajte datoteke z zgornjim gumbom.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Nalaganje s kamere onemogočeno";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Omogočite Nalaganje s kamere, da se bodo slike z vaše naprave kopirale na MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Ni datotek, shranjenih brez povezave";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Prevzemite datoteke, da jih lahko uporabljate tudi, ko nimate povezave v internet.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Nimate stikov";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Dodajte stike z zgornjim gumbom";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Ni dohodnih deljenih map";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Stiki";
 /* Title of Contacts requests section */
 "contactRequests"="Zahteve stikov";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Dodaj stike";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Poslani";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Ponovno sproži prenose z zgornjim gumbom.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Nimate prevzemanj v čakanju.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Nimate nalaganj v čakanju";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Oblak";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Uvozi v";
 /* Button title that triggers the importing link action */
 "import"="Uvoz";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Datoteka uvožena!";
+/* Message shown when some files have been imported */
+"filesImported"="Datoteke uvožene";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Diskovna kvota presežena";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu slika";
 /* Button title that skips the current action */
 "skipButton"="Preskoči";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Omogoči nalaganje s kamere";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Nalaganje s kamere omogočeno!";
@@ -502,8 +474,10 @@
 "settingsTitle"="Nastavitve";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Prenosi s kamere";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Koš";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Napredno";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Varnostne možnosti";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Glavni ključ odstranjen";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt je bil odstranjen iz mape Moji Dokumenti/Documents";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Na vaši napravi";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Izbriši datoteke brez povezave";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Izbriši cache";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="Na MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Izbriši koš";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Vsi predmeti v košu bodo izbrisani";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Trenutno v uporabi %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Odstrani";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="BREZPLAČEN";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="Preteče dne %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Zgodovina nakupov";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Prejete delitve";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Onemogoči DEBUG način";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Log datoteka (MEGAiOS.log) bo izbrisana iz mape z datotekami brez povezave.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Ali ste prepričani, da želite izbrisati ta predmet iz datotek brez povezave?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Ali ste prepričani, da želite izbrisati te predmete iz datotek brez povezave?";

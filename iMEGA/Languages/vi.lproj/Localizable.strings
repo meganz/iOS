@@ -27,7 +27,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tài khoản của bạn vừa được kích hoạt. Vui lòng đăng nhập.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="Đường dẫn liên kết không hợp lệ";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập mã giải khóa";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -37,7 +37,7 @@
 /* Button title to try to decrypt the link */
 "decrypt"="Giải khóa mã";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="Mã giải khóa không hợp lệ";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Các máy chủ hiện đang bận. Xin vui lòng chờ...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA LƯU TRỮ";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Truy cập dữ liệu an toàn mọi lúc, mọi nơi.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Chưa có tài khoản?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Tạo một tài khoản";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Tạo Tài khoản";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Bạn đã tạo một tài khoản rồi?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email hoặc mật khẩu nhập không đúng. Xin thử lại";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Bạn cần phải đồng ý với các điều khoản của dịch vụ để đăng ký tài khoản MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Email này đã được đăng ký.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Tuyệt vời";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Đang chờ việc xác minh";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Hãy kiểm tra hộp thư của bạn và xác nhận tài khoản của bạn.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -109,11 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Bạn cần tạo thêm chỗ trống trong thiết bị của bạn";
 /* Title for the file link view */
-"fileLink"="Đường dẫn tệp";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Chuyển nhập vào Ổ Mây";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Tải vào MEGA app";
+"fileLink"="Đường liên kết tới tệp tin";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Mở tập tin";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -121,15 +115,13 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Tệp tin bạn đang định mở lớn hơn không gian lưu trữ hiện có.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="Đường liên kết không còn tồn tại";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Điều này có thể xảy bởi các lý do sau:- Tệp tin vi phạm Điều Khoản Sử Dụng và Dịch Vụ, nên bị xóa.- Cú pháp URL không phù hợp – đường liên kết không tồn tại vì không viết đúng.- Người cung cấp đã xóa tệp tin này.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Đang tải xuống";
 /* Title for the folder link view */
-"folderLink"="Liên kết Thư mục";
+"folderLink"="Đường dẫn liên kết Thư mục";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải về";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Thư Mục Rỗng";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Đường liên kết tới thư mục rỗng";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Đường liên kết thư mục này không có chứa dữ liệu nào cả";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Thư mục con này không có chứa tệp tin nào cả";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Cloud Drive của bạn không có tập tin.";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Không có tệp tin nào trong thư mục chia sẻ này";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Thêm tệp tin";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Không có Kết quả";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Làm sạch Thùng rác";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Thêm tệp tin bằng nút bấm phía trên";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Muốn chia sẻ gì đó. Thêm tệp tin bằng nút bấm phía trên.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Camera Uploads đã tắt";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Bật Camera Uploads để lưu dự phòng các hình ảnh của bạn lên Ổ Mây MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Chưa có tệp vào được lưu về ngoại tuyến";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Tải về các tệp tin bạn muốn để sử dụng những lúc bạn không có internet.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Bạn không có tên liên lạc nào trong danh bạ";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Thêm tên danh bạ bằng nút bấm ở bên trên.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Chưa có lời chia sẻ tới nào cho bạn";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Danh bạ";
 /* Title of Contacts requests section */
 "contactRequests"="Các yêu cầu thêm danh bạ";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Thêm tên danh bạ";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Yêu cầu gửi đi";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,16 +176,8 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Khôi phục lại các truyền tải bằng nút bấm phía trên.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Bạn không có phiên tải xuống nào đang chờ.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Bạn không có tiến trình tải lên nào đang chờ";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Ổ đám-mây";
+"cloudDrive"="Ổ Mây";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d tệp";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -285,7 +255,7 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Mục này được bảo lưu cho Apple, bạn không có quyền hạn.";
 /* List option shown on the details of a file or folder */
-"getLink"="Lấy đường dẫn";
+"getLink"="Lấy đường dẫn liên kết";
 /* Message shown when a link to the file is being generated */
 "generatingLink"="Đang tạo đường liên kết...";
 /* Message shown when the link has been copied to the pasteboard */
@@ -293,7 +263,7 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Mở với...";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Xóa đường dẫn link";
+"removeLink"="Xóa đường dẫn liên kết";
 /* Message shown when the link to a file has been removed */
 "removeLinkSuccess"="Đường liên kết này đã bị xóa";
 /* Title show when a file is being downloaded */
@@ -384,8 +354,10 @@
 "importTitle"="Chuyển nhập vào";
 /* Button title that triggers the importing link action */
 "import"="Lấy nội dung";
-/* Message shown when a file have been imported */
-"fileImported"="Đã nhập tệp tin";
+/* Message shown when a file has been imported */
+"fileImported"="Đã nhập tệp tin!";
+/* Message shown when some files have been imported */
+"filesImported"="Đã chuyển nhập tệp tin";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Cảnh báo vượt mức";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu hình";
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Bật Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Camera Uploads đang được bật";
@@ -465,7 +437,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Thêm";
 /* Success message shown when a contact has been invited */
-"requestSent"="Đã gửi yêu cầu";
+"requestSent"="Đã gửi thư mời";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Lỗi thêm tên danh bạ";
 /* Alert title shown when you want to remove one or more contacts */
@@ -501,9 +473,11 @@
 /* Title of the Settings section */
 "settingsTitle"="Thiết đặt";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Camera Upload";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+"cameraUploadsLabel"="Camera Uploads";
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Thùng rác";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Nâng cao";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Tùy chọn Bảo mật";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Mã masterkey đã bị xóa";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt đã bị xóa khỏi thư mục Tệp Tài Liệu";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Trong điện thoại";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Dọn Các Tệp Ngoại Tuyến";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Dọn bộ nhớ tạm";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="Trên mạng MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Dọn Thùng Rác";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Tất cả các mục trong thùng rác sẽ bị xóa";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Hiện đang dùng %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Xóa";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -637,7 +625,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TẤT CẢ mục truyền tải";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="phiên TẢI LÊN";
+"uploadInUppercaseTransfers"="Phiên TẢI LÊN";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="phiên TẢI XUỐNG";
 /* Title of My Account section. There you can see your account details */
@@ -658,10 +646,8 @@
 "free"="MIẾN PHÍ";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Lịch sử thanh toán";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Mục Chia Sẻ Bạn Nhận Được";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Tắt chế độ DEBUG";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Tệp tin dữ liệu (MEGAiOS.log) sẽ bị xóa khỏi mục Ngoại Tuyến.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";

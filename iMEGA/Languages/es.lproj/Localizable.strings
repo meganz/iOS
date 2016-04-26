@@ -103,7 +103,7 @@
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Hay iniciada una sesión con otra cuenta";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Offline serán borrados. ¿Quieres continuar?";
+"alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos disponibles sin conexión serán borrados. ¿Quieres continuar?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Title for the file link view */
@@ -155,7 +155,7 @@
 /* Title of Contacts requests section */
 "contactRequests"="Solicitudes de contacto";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Añadir contactos";
+"addContacts"="Añadir contacto";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent" = "Enviadas";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -249,15 +249,15 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Ya no tienes acceso a esta carpeta";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Guardar en Offline";
+"saveForOffline"="Disponible sin conexión";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Guardado en Offline";
+"savedForOffline"="Disponible sin conexión";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox es un nombre reservado para uso por Apple.";
 /* List option shown on the details of a file or folder */
-"getLink"="Obtener link";
+"getLink"="Obtener enlace";
 /* Message shown when a link to the file is being generated */
-"generatingLink"="Generando link...";
+"generatingLink"="Generando enlace...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Enlace copiado";
 /* Title shown under the action that allows you to open a file in another app */
@@ -381,7 +381,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tienes suficiente espacio en tu dispositivo";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tienes suficiente espacio en el dispositivo";
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
@@ -533,9 +533,9 @@
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt fue borrado de la carpeta de documentos.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="En tu dispositivo";
+"onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles" = "Limpiar archivos de Offline";
+"clearOfflineFiles" = "Limpiar archivos disponibles sin conexión";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Limpiar caché";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -709,12 +709,12 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activar el modo depuración";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Se creará un log en la sección de Offline (MEGAiOS.log)";
+"enableDebugMode_message"="Se creará un log en la sección disponible sin conexión (MEGAiOS.log)";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Desactivar el modo depuración";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Se borrará el log (MEGAiOS.log) de la sección de Offline";
+"disableDebugMode_message"="Se borrará el log (MEGAiOS.log) de la sección disponible sin conexión";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="¿Seguro que quieres eliminar este elemento de Offline?";
+"removeItemFromOffline"="¿Seguro que quieres eliminar este elemento disponible sin conexión?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos de Offline?";
+"removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos disponibles sin conexión?";

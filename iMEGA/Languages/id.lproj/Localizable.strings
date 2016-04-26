@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="SSL key server tidak bisa diverifikasi. Anda mungkin mengalami serangan man-in-the-middle.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Server sedang sibuk. Harap tunggu...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Harap masuk ke akun anda";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Dapatkan akses ter-enkripsi penuh dimanapun, kapanpun.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Tidak punya akun?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Buat satu";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Buat Akun";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Sudah punya akun?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail atau password tidak sah. Harap coba kembali";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Anda harus setuju dengan persyaratan layanan untuk mendaftarkan akun MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Surel ini telah memiliki akun di Mega.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Luar biasa";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Menunggu konfirmasi";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Mohon cek kotak surel anda dan klik pranalanya untuk mengonfirmasi akun anda.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Anda harus mengosongkan tempat pada perangkat anda";
 /* Title for the file link view */
 "fileLink"="Pranala berkas";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Import ke Cloud Drive";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="Download ke MEGA App anda";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Buka Berkas";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Link tidak tersedia";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Ini mungkin terjadi karena beberapa alasan dibawah ini:- File telah terhapus karena pelanggaran ToS/AUP- URL Salah - link yang anda coba untuk akses tidak tersedia- File telah dihapus oleh pengguna.";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download dimulai";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Koneksi internet tidak tersedia";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Tidak ada file di folder";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Kosongkan link folder";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Link folder ini tidak memiliki file";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Sub folder ini tidak memiliki file";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Tidak ada berkas di Cloud Drive anda";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Tidak ada file dalam folder berbagi ini";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Tambah files";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="Tidak ada hasil";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Bersihkan Tempat Sampah";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Tambahkan file dengan tombol diatas";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Bagikan sesuatu. Tambahkan file dengan tombol diatas.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Upload kamera dinonaktifkan";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Aktifkan Upload Kamera untuk memiliki kopi foto pada perangkat anda di MEGA.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Tidak ada file tersimpan untuk offline";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Download file untuk menggunakannya saat anda tidak memiliki koneksi internet.";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Anda tidak memliki kontak";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Tambahkan kontak dengan tombol diatas.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Tidak ada folder berbagi masuk";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Kontak";
 /* Title of Contacts requests section */
 "contactRequests"="Request kontak";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Tambah kontak";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Sent";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Lanjutkan transfer dengan tombol diatas.";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Anda tidak memiliki pending download.";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Anda tidak memiliki pending upload";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cakram Penyimpanan Awan";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Impor ke";
 /* Button title that triggers the importing link action */
 "import"="Impor";
-/* Message shown when a file have been imported */
-"fileImported"="File terimpor";
+/* Message shown when a file has been imported */
+"fileImported"="File terimpor!";
+/* Message shown when some files have been imported */
+"filesImported"="Files terimport";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Quota terlewati";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Lewati";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Aktifkan Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Kamera upload teraktifkan";
@@ -502,8 +474,10 @@
 "settingsTitle"="Pengaturan";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Camera Uploads";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Tempat Sampah";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Lanjutan";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Pilihan keamanan";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Master Key telah dihapus";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt telah dihapus dari folder Documents.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="Pada perangkat anda";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Hapus File Offilne";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Hapus Cache";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="Pada MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Kosongkan Sampah";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="Seluruh item pada Sampah akan dihapus";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="Sekarang memakai %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Hapus";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expire pada %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Riwayat belanja";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Incoming Shares";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="Matikan mode DEBUG";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Log (MEGAiOS.log) akan dihapus dari section Offline.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
