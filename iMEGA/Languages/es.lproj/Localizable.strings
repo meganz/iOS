@@ -69,7 +69,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crear cuenta";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Email o contraseña no válida.";
+"invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Introduce un email válido";
 /* Message shown when the user enters a wrong password  */
@@ -88,6 +88,8 @@
 "termsCheckboxUnselected"="Necesitas aceptar los Términos del Servicio para poder crear una cuenta en MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Esperando email de confirmación.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Esperando email de confirmación.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */

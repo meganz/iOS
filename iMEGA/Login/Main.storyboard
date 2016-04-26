@@ -413,17 +413,11 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0h-b9-ygd" userLabel="Please check your email View">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="MQS-YI-mUh">
-                                        <rect key="frame" x="238" y="92" width="124" height="96"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="124" id="BVH-cU-lAf"/>
-                                            <constraint firstAttribute="height" constant="96" id="R3c-jp-DsS"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting email confirmation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hZ-hv-g3O">
-                                        <rect key="frame" x="30" y="224" width="540" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting email confirmation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hZ-hv-g3O">
+                                        <rect key="frame" x="30" y="318" width="540" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="2gl-wK-DTb"/>
+                                            <constraint firstAttribute="height" constant="48" id="LMq-N0-frV"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -435,7 +429,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your e-mail and click the link to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDd-uX-Kxx">
-                                        <rect key="frame" x="30" y="272" width="540" height="88"/>
+                                        <rect key="frame" x="30" y="390" width="540" height="88"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="88" id="FqO-eb-LWI"/>
                                             <constraint firstAttribute="height" constant="42" id="QdW-mQ-tF4"/>
@@ -451,9 +445,17 @@
                                             </mask>
                                         </variation>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="MQS-YI-mUh">
+                                        <rect key="frame" x="238" y="186" width="124" height="96"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="124" id="BVH-cU-lAf"/>
+                                            <constraint firstAttribute="height" constant="96" id="R3c-jp-DsS"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="MQS-YI-mUh" firstAttribute="centerY" secondItem="l0h-b9-ygd" secondAttribute="centerY" constant="-66" id="0qz-V7-lpo"/>
                                     <constraint firstItem="3hZ-hv-g3O" firstAttribute="centerX" secondItem="MQS-YI-mUh" secondAttribute="centerX" id="3FU-DR-9L9"/>
                                     <constraint firstItem="3hZ-hv-g3O" firstAttribute="leading" secondItem="l0h-b9-ygd" secondAttribute="leading" constant="30" id="4Hn-jW-DqH"/>
                                     <constraint firstItem="MQS-YI-mUh" firstAttribute="top" secondItem="l0h-b9-ygd" secondAttribute="top" constant="92" id="7M6-Yn-uXZ"/>
@@ -464,6 +466,11 @@
                                     <constraint firstAttribute="centerX" secondItem="MQS-YI-mUh" secondAttribute="centerX" id="oAy-i5-xpd"/>
                                     <constraint firstItem="yDd-uX-Kxx" firstAttribute="leading" secondItem="l0h-b9-ygd" secondAttribute="leading" constant="30" id="oLL-yD-get"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7M6-Yn-uXZ"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
