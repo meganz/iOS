@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="Der Server-SSL-Schlüssel kann nicht verifiziert werden. Es könnte ein Man-in-the-middle-Angriff vorliegen.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Unser Server sind überlastet. Bitte warten Sie...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="Bitte melden Sie sich an. ";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPEICHER";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="Voll verschlüsselter Zugang zu Ihren Daten - überall und zu jeder Zeit.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="Sie haben keinen Account?";
-/* Button that bring you to section where you can create an account */
-"createOne"="Einrichten";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Konto erstellen";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="Haben Sie bereits einen Account?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Konto zu erstellen.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Unter dieser E-Mail-Adresse ist bereits ein MEGA-Account registriert.";
-/* Message displayed when an action is completed successfully */
-"awesome"="Großartig";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="Warte auf Bestätigung";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Bitte öffnen Sie Ihre E-Mail und bestätigen Sie Ihren Account, indem Sie den entsprechenden Link anklicken.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="Bitte geben Sie Speicherplatz frei";
 /* Title for the file link view */
 "fileLink"="Link zur Datei";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="Ins Cloud Drive importieren";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="In Ihre MEGA-App herunterladen";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Datei öffnen";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Mögliche Gründe hierfür sind:- Entfernung der Datei wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien- Ungültiger URL - der Link existiert nicht- Löschung der Datei durch den Benutzer";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="Keine Internetverbindung";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Keine Dateien im Ordner";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="Leerer Ordnerlink";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="Dieser Link enthält keine Dateien";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="Dieser Unterordner enthält keine Dateien";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Keine Dateien vorhanden";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="Keine Dateien in der Ordnerfreigabe";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="Add files";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Der Papierkorb ist leer";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="Dateien mit dem obigen Knopf hinzufügen";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="Bitte fügen Sie der Ordnerfreigabe Dateien hinzu.";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="Kamera-Uploads wurden deaktiviert";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="Mit Kamerauploads können Sie eine automatische Kopie Ihrer Fotos auf MEGA anlegen.";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Keine Dateien für Offline-Zugriff gespeichert";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="Dateien für Offline-Nutzung herunterladen";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Sie haben keine Kontakte";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="Zum Hinzufügen von Kontakten bitte klicken.";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Keine freigegebenen Dateien eingehend";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="Kontakte";
 /* Title of Contacts requests section */
 "contactRequests"="Kontaktersuchen";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="Add contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Gesendet";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="Transfers fortsetzen";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="Sie haben keine wartenden Downloads";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="Keine wartenden Uploads vorhanden";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="Importieren nach";
 /* Button title that triggers the importing link action */
 "import"="Importieren";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="Datei importiert";
+/* Message shown when some files have been imported */
+"filesImported"="Files imported";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Speicherlimit überschritten";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu Foto";
 /* Button title that skips the current action */
 "skipButton"="Überspringen";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Kamera Uploads aktivieren";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Kamera-Uploads aktiviert";
@@ -502,8 +474,10 @@
 "settingsTitle"="Einstellungen";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Kamera Uploads";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papierkorb";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="Erweitert";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Sicherheitsoptionen";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="Master Key gelöscht";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt wurde aus Ihrem Dokumentenordner gelöscht.";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="On your device";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="Löschung der Offline-Daten";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="Zwischenspeicher leeren";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="On MEGA";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="Papierkorb leeren";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="%s belegt";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Entfernen";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="Gratis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="Einkaufsverlauf";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Freigegebene Ordner eingehend";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="DEBUG-Modus deaktivieren";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";

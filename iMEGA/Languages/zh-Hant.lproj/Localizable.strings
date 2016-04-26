@@ -46,6 +46,8 @@
 "sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="伺服器忙碌中。請稍候...";
+/* Alert title shown when you need to log in to continue with the action you want to do */
+"pleaseLogInToYourAccount"="請登入您的帳號。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA 存儲空間";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -64,14 +66,8 @@
 "megaAccessText"="隨時隨地獲得完全加密訪問";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
-/* Question to focus the user to the zone of the app where he/she can go to the section to create an account */
-"doNotHaveAnAccount"="沒有帳號嗎?";
-/* Button that bring you to section where you can create an account */
-"createOne"="建立一個";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="建立帳號";
-/* Question to focus the user to the zone of the app where he/she can go to login */
-"alreadyHaveAnAccount"="已有帳號嗎?";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -92,8 +88,10 @@
 "termsCheckboxUnselected"="您需要同意MEGA服務條款才可註冊帳號。";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="這個電子郵件信箱在Mega已被註冊。";
-/* Message displayed when an action is completed successfully */
-"awesome"="太棒了";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingConfirmation"="等待系統確認中";
+/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="請檢查你的電子郵件，並點擊信中的連結以確認帳號。";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -110,10 +108,6 @@
 "nodeTooBig"="您的設備內存不足";
 /* Title for the file link view */
 "fileLink"="檔案連結";
-/* Button title to trigger the action of importing the file to your MEGA account. This way you will add the file to your cloud files */
-"importButton"="導入雲端硬碟";
-/* Button title to trigger the action of downloading the file to your device. */
-"downloadButton_fileLink"="下載至您的 MEGA App";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="打開檔案";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -124,8 +118,6 @@
 "linkUnavailable"="不可用的連結";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="這可能是由於下列原因：﹣該檔案由於違反服務條款或產品使用政策已被刪除。﹣ 無效的網址: 您試圖訪問的連接不存在。﹣ 該檔案已被用戶刪除。";
-/* DO NOT TRANSLATE, it will change (Process) */
-"fileAlreadyExist"="The file you want to download already exists Offline";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
 /* Title for the folder link view */
@@ -142,34 +134,18 @@
 "noInternetConnection"="無網絡連接";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="文件夾中沒有文件";
-/* Title shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_title"="該連接的資料夾為空";
-/* Message shown when you open a folder link and the given folder doesn't have any files */
-"folderLinkEmptyState_text"="這個資料夾連接中沒有檔案";
-/* Message shown when you open a folder link and one of the given folders inside of it doesn't have any files */
-"folderLinkEmptyState_textFolder"="這個子資料夾內沒有檔案。";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="您的雲端硬碟中沒有檔案";
-/* Title shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_titleContact"="該共享資料夾里沒有檔案";
+/* Button title shown in empty views when you can 'Add files' */
+"addFiles"="新增檔案";
+/* Title shown when you make a search and there is 'No Results' */
+"noResults"="沒有符合搜尋的項目";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="清除垃圾夾";
-/* Message shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_text"="使用右上角的按鈕來添加檔案";
-/* Message shown when the shared folder with a contact is empty. */
-"cloudDriveEmptyState_textContact"="使用右上角的按鈕來添加分享吧。";
-/* Title shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_title"="相機上傳已禁用";
-/* Message shown when Camera Uploads is disabled */
-"cameraUploadsEmptyState_text"="開啟相機上傳來複製您設備中的照片到 MEGA。";
-/* Title shown when the Offline section is empty, when you don't have download any files. */
+/* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="無保存的離線檔案";
-/* Message shown when the Offline section is empty, when you don't have download any files. */
-"offlineEmptyState_text"="下載檔案至本地以便無網絡連接時使用。";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="您還沒有聯繫人";
-/* Message shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_text"="使用右上角的按鈕添加聯絡人";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
@@ -178,6 +154,8 @@
 "myContacts"="聯絡人";
 /* Title of Contacts requests section */
 "contactRequests"="聯絡人邀請";
+/* Button title shown in empty views when you can 'Add contacts' */
+"addContacts"="新增聯絡人";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="已寄出";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -198,14 +176,6 @@
 "transfersEmptyState_titleDownload"="No Downloads";
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
-/* Text shown under the upper title when the transfers are paused */
-"transfersEmptyState_textPaused"="使用右上面的按鈕來恢復傳輸";
-/* Text shown under the upper title when there's no transfers */
-"transfersEmptyState_textAll"="You don't have any pending transfers.";
-/* Text shown under the upper title when the transfers, and the filter "Download" option is selected  */
-"transfersEmptyState_textDownload"="你沒有等待下載的傳輸。";
-/* Text shown under the upper title when the transfers, and the filter "Upload" option is selected  */
-"transfersEmptyState_textUpload"="沒有等待上傳的傳輸。";
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
@@ -384,8 +354,10 @@
 "importTitle"="匯入至";
 /* Button title that triggers the importing link action */
 "import"="匯入";
-/* Message shown when a file have been imported */
+/* Message shown when a file has been imported */
 "fileImported"="檔案已導入";
+/* Message shown when some files have been imported */
+"filesImported"="已匯入檔案";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="超出配額";
 /* Alert title shown when the user is overquota */
@@ -400,7 +372,7 @@
 "photoPerMonth"="%lu 張照片";
 /* Button title that skips the current action */
 "skipButton"="跳過";
-/* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
+/* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="已開啟相機上傳";
@@ -502,8 +474,10 @@
 "settingsTitle"="設定";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="相機上傳";
-/* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
+/* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="垃圾夾";
+/* Title of one of the Settings sections where you can configure 'Advanced' options */
+"advanced"="進階";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="安全選項";
 /* Title of one of the Settings sections where you can see things "About" the app */
@@ -558,6 +532,20 @@
 "masterKeyRemoved"="已移除萬能秘鑰";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="萬能秘鑰已從文件資料夾移除。";
+/* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
+"onYourDevice"="於您的裝置上";
+/* Section title where you can 'Clear Offline files' of your MEGA app */
+"clearOfflineFiles"="清除離線檔案";
+/* Section title where you can 'Clear Cache' of your MEGA app */
+"clearCache"="清除快取";
+/* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
+"onMEGA"="於MEGA上";
+/* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
+"emptyRubbishBin"="清空垃圾箱";
+/* Alert title shown when you tap 'Empty Rubbish Bin' */
+"emptyRubbishBinAlertTitle"="所有垃圾桶中的項目將均被刪除";
+/* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
+"currentlyUsing"="目前已使用 %s";
 /* Title for the action that allows to remove a file or folder */
 "remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -658,10 +646,8 @@
 "free"="免費";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到 %@ 過期";
-/* DO NOT TRANSLATE, it will change */
-"restorePurchases"="Restore purchases";
-/* DO NOT TRANSLATE, it will change */
-"purchasesHistory"="Purchases history";
+/* Button title for the section where you can see the 'Purchase history' related to your account */
+"purchaseHistory"="購買記錄";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -728,3 +714,7 @@
 "disableDebugMode_title"="關閉調試模式";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="系統日誌檔 (MEGAiOS.log) 將從離線部分被刪除。";
+/* Alert message shown when the user remove one item from the Offline section */
+"removeItemFromOffline"="您確定要從離線部份中刪除這個項目？";
+/* Alert message shown when the user remove various items from the Offline section */
+"removeItemsFromOffline"="您確定要從離線部份中刪除這些項目？";

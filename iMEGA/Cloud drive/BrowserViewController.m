@@ -48,6 +48,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarShareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 
+@property (nonatomic, strong) NSMutableDictionary *foldersToImportMutableDictionary;
+@property (nonatomic, strong) NSMutableDictionary *folderPathsMutableDictionary;
+
 @end
 
 @implementation BrowserViewController
@@ -117,13 +120,19 @@
             break;
         }
             
-        case BrowserActionImport: {
+        case BrowserActionImport:
+        case BrowserActionImportFromFolderLink: {
             [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
             [_toolBarCopyBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_toolBarCopyBarButtonItem.tag] forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarCopyBarButtonItem];
             [self.toolbar setItems:toolbarButtons];
+            
+            if (self.browserAction == BrowserActionImportFromFolderLink) {
+                _foldersToImportMutableDictionary = [[NSMutableDictionary alloc] init];
+                _folderPathsMutableDictionary = [[NSMutableDictionary alloc] init];
+            }
             break;
         }
             
@@ -160,7 +169,7 @@
         self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
     }
     
-    if (self.browserAction == BrowserActionImport) {
+    if ((self.browserAction == BrowserActionImport) || (self.browserAction == BrowserActionImportFromFolderLink)) {
         NSString *importTitle = AMLocalizedString(@"importTitle", nil);
         importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
@@ -196,6 +205,126 @@
     return titleTextAttributesDictionary;
 }
 
+- (void)importFolderFromLink:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
+    [self setFolderToImport:nodeToImport inParent:parentNode];
+    [[MEGASdkManager sharedMEGASdk] createFolderWithName:nodeToImport.name parent:parentNode];
+}
+
+- (void)setFolderToImport:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
+    id folderNodeToImport = [_foldersToImportMutableDictionary objectForKey:parentNode.base64Handle];
+    if (folderNodeToImport == nil) {
+        [_foldersToImportMutableDictionary setObject:nodeToImport forKey:parentNode.base64Handle];
+    } else {
+        NSMutableArray *folderNodesToImportMutableArray;
+        if ([folderNodeToImport isKindOfClass:[MEGANode class]]) {
+            MEGANode *previousNodeToImport = folderNodeToImport;
+            folderNodesToImportMutableArray = [[NSMutableArray alloc] initWithObjects:previousNodeToImport, nodeToImport, nil];
+        } else if ([folderNodeToImport isKindOfClass:[NSMutableArray class]]) {
+            folderNodesToImportMutableArray = folderNodeToImport;
+            [folderNodesToImportMutableArray addObject:nodeToImport];
+        }
+        [_foldersToImportMutableDictionary setObject:folderNodesToImportMutableArray forKey:parentNode.base64Handle];
+    }
+    
+    NSString *nodePathOnFolderLink = [[MEGASdkManager sharedMEGASdkFolder] nodePathForNode:nodeToImport];
+    [_folderPathsMutableDictionary setObject:nodePathOnFolderLink forKey:nodeToImport.base64Handle];
+}
+
+- (void)importRelatedNodeToNewFolder:(MEGANode *)newFolderNode inParent:(MEGANode *)parentNode {
+    id folderNodeToImport = [_foldersToImportMutableDictionary objectForKey:parentNode.base64Handle];
+    if (folderNodeToImport != nil) {
+        if ([folderNodeToImport isKindOfClass:[MEGANode class]]) {
+            MEGANode *nodeToImport = folderNodeToImport;
+            [self importNodeContents:nodeToImport inParent:newFolderNode];
+            
+            [_foldersToImportMutableDictionary removeObjectForKey:parentNode.base64Handle];
+            [_folderPathsMutableDictionary removeObjectForKey:nodeToImport.base64Handle];
+        } else if ([folderNodeToImport isKindOfClass:[NSMutableArray class]]) {
+            NSMutableArray *folderNodesToImportMutableArray = folderNodeToImport;
+            MEGANode *nodeToImport;
+            for (MEGANode *node in folderNodesToImportMutableArray) {
+                NSString *pathOfNode = [_folderPathsMutableDictionary objectForKey:node.base64Handle];
+                if (pathOfNode != nil) {
+                    if ([newFolderNode.name isEqualToString:[pathOfNode lastPathComponent]]) {
+                        nodeToImport = node;
+                        [self importNodeContents:node inParent:newFolderNode];
+                        
+                        NSMutableArray *tempArray = [folderNodesToImportMutableArray copy];
+                        for (MEGANode *tempNode in tempArray) {
+                            if (nodeToImport.handle == tempNode.handle) {
+                                [folderNodesToImportMutableArray removeObject:tempNode];
+                                break;
+                            }
+                        }
+                        if (folderNodesToImportMutableArray.count == 0) {
+                            [_foldersToImportMutableDictionary removeObjectForKey:parentNode.base64Handle];
+                        }
+                        [_folderPathsMutableDictionary removeObjectForKey:nodeToImport.base64Handle];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void)importNodeContents:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:nodeToImport];
+    NSUInteger count = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < count; i++) {
+        MEGANode *node = [nodeList nodeAtIndex:i];
+        if ([node isFolder]) {
+            [self importFolderFromLink:node inParent:parentNode];
+        } else {
+            remainingOperations++;
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
+        }
+    }
+}
+
+- (NSString *)successMessageForCopyAction {
+    NSInteger files = 0;
+    NSInteger folders = 0;
+    for (MEGANode *n in self.selectedNodesArray) {
+        if ([n type] == MEGANodeTypeFolder) {
+            folders++;
+        } else {
+            files++;
+        }
+    }
+    
+    NSString *message;
+    if (files == 0) {
+        if (folders == 1) {
+            message = AMLocalizedString(@"copyFolderMessage", nil);
+        } else { //folders > 1
+            message = [NSString stringWithFormat:AMLocalizedString(@"copyFoldersMessage", nil), folders];
+        }
+    } else if (files == 1) {
+        if (folders == 0) {
+            message = AMLocalizedString(@"copyFileMessage", nil);
+        } else if (folders == 1) {
+            message = AMLocalizedString(@"copyFileFolderMessage", nil);
+        } else {
+            message = [NSString stringWithFormat:AMLocalizedString(@"copyFileFoldersMessage", nil), folders];
+        }
+    } else {
+        if (folders == 0) {
+            message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesMessage", nil), files];
+        } else if (folders == 1) {
+            message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFolderMessage", nil), files];
+        } else {
+            message = AMLocalizedString(@"copyFilesFoldersMessage", nil);
+            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
+            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
+            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+        }
+    }
+    
+    return message;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
@@ -212,10 +341,15 @@
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachable]) {
-        remainingOperations = self.selectedNodesArray.count;
-        
-        for (MEGANode *n in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] copyNode:n newParent:self.parentNode];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        for (MEGANode *node in self.selectedNodesArray) {
+            if ([node isFolder] && (self.browserAction == BrowserActionImportFromFolderLink)) {
+                [self importFolderFromLink:node inParent:self.parentNode];
+            } else {
+                remainingOperations++;
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
+            }
         }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
@@ -238,9 +372,8 @@
         NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
         for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
             error = nil;
-            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error];
-            if (!success || error) {
-                [MEGASdk logWithLevel:MEGALogLevelError message:[NSString stringWithFormat:@"Remove file error %@", error]];
+            if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
+                MEGALogError(@"Remove item at path: %@", error)
             }
         }
     }
@@ -450,55 +583,31 @@
         }
         
         case MEGARequestTypeCopy: {
-            if (self.browserAction == BrowserActionImport) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"File imported!")];
-                break;
-            }
-            
             remainingOperations--;
             
             if (remainingOperations == 0) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 
-                NSInteger files = 0;
-                NSInteger folders = 0;
-                for (MEGANode *n in self.selectedNodesArray) {
-                    if ([n type] == MEGANodeTypeFolder) {
-                        folders++;
+                if (self.browserAction == BrowserActionCopy) {
+                    NSString *message = [self successMessageForCopyAction];
+                    [SVProgressHUD showSuccessWithStatus:message];
+                } else if (self.browserAction == BrowserActionImport) {
+                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
+                } else if (self.browserAction == BrowserActionImportFromFolderLink) {
+                    if ((_selectedNodesArray.count == 1) && ([[_selectedNodesArray objectAtIndex:0] isFile])) {
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
                     } else {
-                        files++;
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"filesImported", @"Message shown when some files have been imported")];
+                    }
+                    
+                    [_foldersToImportMutableDictionary removeAllObjects];
+                    [_folderPathsMutableDictionary removeAllObjects];
+                    
+                    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
+                        [[MEGASdkManager sharedMEGASdkFolder] logout];
                     }
                 }
                 
-                NSString *message;
-                if (files == 0) {
-                    if (folders == 1) {
-                        message = AMLocalizedString(@"copyFolderMessage", nil);
-                    } else { //folders > 1
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFoldersMessage", nil), folders];
-                    }
-                } else if (files == 1) {
-                    if (folders == 0) {
-                        message = AMLocalizedString(@"copyFileMessage", nil);
-                    } else if (folders == 1) {
-                        message = AMLocalizedString(@"copyFileFolderMessage", nil);
-                    } else {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFileFoldersMessage", nil), folders];
-                    }
-                } else {
-                    if (folders == 0) {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesMessage", nil), files];
-                    } else if (folders == 1) {
-                        message = [NSString stringWithFormat:AMLocalizedString(@"copyFilesFolderMessage", nil), files];
-                    } else {
-                        message = AMLocalizedString(@"copyFilesFoldersMessage", nil);
-                        NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
-                        NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
-                        message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                        message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-                    }
-                }
-                [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;
@@ -511,6 +620,15 @@
 //                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                 [self dismissViewControllerAnimated:YES completion:nil];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeCreateFolder: {
+            if (self.browserAction == BrowserActionImportFromFolderLink) {
+                MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.parentHandle];
+                [self importRelatedNodeToNewFolder:newFolderNode inParent:parentNode];
             }
             break;
         }

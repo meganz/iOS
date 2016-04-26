@@ -157,14 +157,14 @@ static CameraUploads *instance = nil;
         [self resetOperationQueue];
         
         _isCameraUploadsEnabled = NO;
-        [CameraUploads syncManager].isUploadVideosEnabled = NO;
-        [CameraUploads syncManager].isUseCellularConnectionEnabled = NO;
-        [CameraUploads syncManager].isOnlyWhenChargingEnabled = NO;
+        self.isUploadVideosEnabled = NO;
+        self.isUseCellularConnectionEnabled = NO;
+        self.isOnlyWhenChargingEnabled = NO;
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:_isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -177,24 +177,27 @@ static CameraUploads *instance = nil;
         return;
     }
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         PHFetchResult *assetsFetchResult = nil;
         
+        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+        fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+        
         if (self.isUploadVideosEnabled) {
-            assetsFetchResult = [PHAsset fetchAssetsWithOptions:nil];
+            assetsFetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         } else {
-            assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:nil];
+            assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
         }
         
         [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
             
             NSDate *assetCreationTime = asset.creationDate;
             
-            if (asset.mediaType == PHAssetMediaTypeVideo && [CameraUploads syncManager].isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode cameraUploadsHandle:cameraUploadHandle];
+            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             } else if (asset.mediaType == PHAssetMediaTypeImage && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode cameraUploadsHandle:cameraUploadHandle];
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }
             
@@ -209,16 +212,16 @@ static CameraUploads *instance = nil;
                               resultBlock:^(ALAsset *asset) {
                                   NSDate *assetCreationTime = [asset valueForProperty:ALAssetPropertyDate];
                                   
-                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && [CameraUploads syncManager].isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode cameraUploadsHandle:cameraUploadHandle];
+                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
                                   } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode cameraUploadsHandle:cameraUploadHandle];
+                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
                                   }
                               }
                              failureBlock:^(NSError *error) {
-                                 [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                                 MEGALogError(@"Asset for url: %@", error);
                              } ];
                 
             }
@@ -239,9 +242,9 @@ static CameraUploads *instance = nil;
         [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                     usingBlock:assetGroupEnumerator
                                   failureBlock:^(NSError *error) {
-                                      [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+                                      [self setIsCameraUploadsEnabled:NO];
                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
-                                      [MEGASdk logWithLevel:MEGALogLevelError message:@"enumerateGroupsWithTypes failureBlock"];
+                                      MEGALogError(@"Enumerate groups with types: %@", error);
                                   }];
     }
 }
@@ -258,7 +261,7 @@ static CameraUploads *instance = nil;
     
     NSString *badgeValue = nil;
     if ([self.assetsOperationQueue operationCount] > 0) {
-        badgeValue = [NSString stringWithFormat:@"%lu", [self.assetsOperationQueue operationCount]];
+        badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[self.assetsOperationQueue operationCount]];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{

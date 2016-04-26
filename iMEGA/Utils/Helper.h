@@ -26,7 +26,7 @@
 
 #define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
 #define videoSet        [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", /*@"mkv", @"avi", @"mpg", @"mpeg",@"aaf",*/ nil]
-#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"mp3", @"3gp", @"wav", @"m4v", nil]
+#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil]
 
 #define isImage(n)        [imagesSet containsObject:n.lowercaseString]
 #define isVideo(n)        [videoSet containsObject:n.lowercaseString]
@@ -34,6 +34,7 @@
 
 #define kMEGANode @"kMEGANode"
 #define kIndex @"kIndex"
+#define kPath @"kPath"
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
@@ -63,7 +64,8 @@
 #define iPhone5X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
 #define iPhone6     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)
 #define iPhone6Plus ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 736)
-#define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+#define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1024)
+#define iPadPro     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)
 
 @interface Helper : NSObject
 
@@ -111,6 +113,7 @@
 
 + (MEGANode *)linkNode;
 + (void)setLinkNode:(MEGANode *)node;
++ (NSMutableArray *)nodesFromLinkMutableArray;
 
 + (NSInteger)selectedOptionOnLink;
 + (void)setSelectedOptionOnLink:(NSInteger)option;

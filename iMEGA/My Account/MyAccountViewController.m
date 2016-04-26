@@ -94,7 +94,7 @@
     
     self.upgradeToProButton.layer.borderWidth = 2.0f;
     self.upgradeToProButton.layer.borderColor =[megaRed CGColor];
-    self.upgradeToProButton.layer.cornerRadius = 6;
+    self.upgradeToProButton.layer.cornerRadius = 4;
     self.upgradeToProButton.layer.masksToBounds = YES;
     
     _fullname = @"";
@@ -156,7 +156,7 @@
 #pragma mark - Private
 
 - (void)setUserAvatar {
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.emailLabel.text];
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] myUser];
     NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     

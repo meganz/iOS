@@ -20,8 +20,6 @@
  */
 
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <MediaPlayer/MPMoviePlayerViewController.h>
-#import <MediaPlayer/MediaPlayer.h>
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -36,14 +34,14 @@
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
+#import "MEGAStore.h"
+#import "MEGAAVViewController.h"
 
 @interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
     NSMutableArray *exportLinks;
     NSUInteger remainingOperations;
     NSUInteger itemsPerRow;
-    
-    MEGANode *selectedNode;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -90,7 +88,13 @@
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.navigationItem setRightBarButtonItem:self.editButtonItem];
+    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+        [negativeSpaceBarButtonItem setWidth:-8.0];
+    } else {
+        [negativeSpaceBarButtonItem setWidth:-4.0];
+    }
+    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
     if (iPad) {
@@ -134,11 +138,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-    self.photosCollectionView.emptyDataSetSource = nil;
-    self.photosCollectionView.emptyDataSetDelegate = nil;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -193,7 +192,12 @@
         
         self.photosCollectionViewBottonLayoutConstraint.constant = -49;
     } else {
-        [self.enableCameraUploadsButton setHidden:NO];
+        if ([self.photosByMonthYearArray count] == 0) {
+            [self.enableCameraUploadsButton setHidden:YES];
+        } else {
+            [self.enableCameraUploadsButton setHidden:NO];
+        }
+        
         self.uploadProgressViewTopLayoutConstraint.constant = -60;
         self.photosCollectionViewTopLayoutConstraint.constant = 0;
         self.photosCollectionViewBottonLayoutConstraint.constant = 0;
@@ -239,10 +243,7 @@
     [self.editButtonItem setEnabled:boolValue];
 }
 
-#pragma mark - IBAction
-
-- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    
+- (void)enableCameraUploadsAndShowItsSettings {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     
@@ -256,6 +257,12 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [self reloadUI];
     }
+}
+
+#pragma mark - IBAction
+
+- (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    [self enableCameraUploadsAndShowItsSettings];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -371,6 +378,12 @@
 #pragma mark - UICollectioViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if ([self.photosByMonthYearArray count] == 0) {
+        [self setNavigationBarButtonItemsEnabled:NO];
+    } else {
+        [self setNavigationBarButtonItemsEnabled:YES];
+    }
+    
     return [self.photosByMonthYearArray count];
 }
 
@@ -517,42 +530,19 @@
             [photoBrowser showNextPhotoAnimated:YES];
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
-        } else if (isMultimedia(node.name.pathExtension) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-            NSURL *link = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-            if (link) {
-                MPMoviePlayerViewController *moviePlayerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:link];
-                // Remove the movie player view controller from the "playback did finish" notification observers
-                [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController
-                                                                name:MPMoviePlayerPlaybackDidFinishNotification
-                                                              object:moviePlayerViewController.moviePlayer];
-                
-                // Register this class as an observer instead
-                [[NSNotificationCenter defaultCenter] addObserver:self
-                                                         selector:@selector(movieFinishedCallback:)
-                                                             name:MPMoviePlayerPlaybackDidFinishNotification
-                                                           object:moviePlayerViewController.moviePlayer];
-                
-                [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
-                
-                selectedNode = node;
-                
-                if (![node hasThumbnail]) {
-                    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                             selector:@selector(handleThumbnailImageRequestFinishNotification:)
-                                                                 name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                               object:moviePlayerViewController.moviePlayer];
-                    
-                    [[moviePlayerViewController moviePlayer] requestThumbnailImagesAtTimes:@[[NSNumber numberWithFloat:0.0]] timeOption:MPMovieTimeOptionExact];
-                }
-                
-                [self presentMoviePlayerViewControllerAnimated:moviePlayerViewController];
-                
-                [moviePlayerViewController.moviePlayer prepareToPlay];
-                [moviePlayerViewController.moviePlayer play];
-                
+        } else {
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+            
+            if (offlineNodeExist) {
+                NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
+                [self presentViewController:megaAVViewController animated:YES completion:nil];
+                return;
+            } else if ([[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
+                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
+                [self presentViewController:megaAVViewController animated:YES completion:nil];
                 return;
             }
-            
         }
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
@@ -609,56 +599,59 @@
                 return nil;
             }
         } else {
-            text = AMLocalizedString(@"cameraUploadsEmptyState_title", @"Camera Uploads is disabled");
+            text = @"";
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaBlack};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            return nil;
-        }
-        
-        text = AMLocalizedString(@"cameraUploadsEmptyState_text", @"Enable Camera Uploads to have a copy of your photos on MEGA");
-    } else {
-        text = @"";
-    }
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:14.0],
-                                 NSForegroundColorAttributeName:megaGray,
-                                 NSParagraphStyleAttributeName:paragraph};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
+    UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
             if ([self.photosByMonthYearArray count] == 0) {
-                return [UIImage imageNamed:@"emptyCameraUploads"];
-            } else {
-                return nil;
+                image = [UIImage imageNamed:@"emptyCameraUploads"];
             }
+        } else {
+            image = [UIImage imageNamed:@"emptyCameraUploads"];
         }
-        
-        return [UIImage imageNamed:@"emptyCameraUploads"];
     } else {
-        return [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
+    
+    return image;
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            text = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+        }
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:megaMediumGray};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets rectInsets;
+    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if (iPad) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if (iPadPro) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -667,6 +660,22 @@
     }
     
     return [UIColor whiteColor];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    CGFloat spaceHeight;
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled] || iPhone4X) {
+        spaceHeight = 40.0f;
+    } else {
+        spaceHeight = 60.0f;
+    }
+    return spaceHeight;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self enableCameraUploadsAndShowItsSettings];
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -682,45 +691,6 @@
     
     return nil;
 }
-
-#pragma mark - Moview player
-
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:moviePlayer];
-    
-    [moviePlayer cancelAllThumbnailImageRequests];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [[MEGASdkManager sharedMEGASdk] httpServerStop];
-}
-
-- (void)handleThumbnailImageRequestFinishNotification:(NSNotification *)aNotification {
-    MPMoviePlayerController *moviePlayer = [aNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMoviePlayerThumbnailImageRequestDidFinishNotification
-                                                  object:moviePlayer];
-    UIImage *image = [moviePlayer thumbnailImageAtTime:0.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-    
-    NSString *tmpImagePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:selectedNode.base64Handle] stringByAppendingPathExtension:@"jpg"];
-    
-    [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
-    
-    NSString *thumbnailFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
-    [[MEGASdkManager sharedMEGASdk] setThumbnailNode:selectedNode sourceFilePath:thumbnailFilePath];
-    
-    NSString *previewFilePath = [Helper pathForNode:selectedNode searchPath:NSCachesDirectory directory:@"previewsV3"];
-    [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
-    [[MEGASdkManager sharedMEGASdk] setPreviewNode:selectedNode sourceFilePath:previewFilePath];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
-    selectedNode = nil;
-}
-
-
 
 #pragma mark - UIAlertViewDelegate
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -15,7 +16,7 @@
         <scene sceneID="MZy-Qo-rqg">
             <objects>
                 <tableViewController storyboardIdentifier="OfflineTableViewControllerID" id="0p4-DV-Tt4" customClass="OfflineTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6pL-lw-K6C">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="OxW-nm-qxP" id="Ipo-hV-DSj">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDx-eK-6De">
@@ -40,7 +41,7 @@
                                             <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9" userLabel="Subtitle">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5P-pC-mA9" userLabel="Subtitle">
                                             <rect key="frame" x="64" y="23" width="528" height="15"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                             <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,7 +68,7 @@
                                         <constraint firstItem="Ine-fm-vKt" firstAttribute="trailing" secondItem="Ipo-hV-DSj" secondAttribute="trailingMargin" id="vEI-O6-Ifs"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.80392156862745101" green="0.0" blue="0.043137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="infoLabel" destination="e5P-pC-mA9" id="n8w-VC-TpJ"/>
                                     <outlet property="nameLabel" destination="Ine-fm-vKt" id="EtN-bs-ob5"/>
@@ -82,10 +83,48 @@
                             <outlet property="delegate" destination="0p4-DV-Tt4" id="Ofc-YU-baa"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="Bs9-lb-vdC">
                         <barButtonItem key="backBarButtonItem" title=" " id="nlG-uw-nII"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityBarButtonItem" destination="zNw-uj-NF1" id="11A-Xf-bLO"/>
+                        <outlet property="deleteBarButtonItem" destination="RRm-wv-TBJ" id="Sox-nG-Goa"/>
+                        <outlet property="editBarButtonItem" destination="GcW-Rx-abW" id="YVD-Ah-2CX"/>
+                        <outlet property="selectAllBarButtonItem" destination="YUq-JU-8qb" id="aiX-y7-yZJ"/>
+                        <outlet property="toolbar" destination="rHC-vj-tgX" id="hv7-ey-8mh"/>
+                    </connections>
                 </tableViewController>
+                <barButtonItem enabled="NO" image="shareGray" width="32" id="zNw-uj-NF1" userLabel="Activity Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="activityTapped:" destination="0p4-DV-Tt4" id="liQ-pn-ekj"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem enabled="NO" image="remove" width="32" id="RRm-wv-TBJ" userLabel="Delete Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="deleteTapped:" destination="0p4-DV-Tt4" id="WIh-k2-zZh"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="check_mark" width="22" id="YUq-JU-8qb" userLabel="Check Mark Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="0p4-DV-Tt4" id="mFz-d6-Yx2"/>
+                    </connections>
+                </barButtonItem>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="rHC-vj-tgX">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <items/>
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                </toolbar>
+                <barButtonItem image="edit" width="22" style="plain" id="GcW-Rx-abW" userLabel="Edit Bar Button Item">
+                    <connections>
+                        <action selector="editTapped:" destination="0p4-DV-Tt4" id="Ypp-rf-2ph"/>
+                    </connections>
+                </barButtonItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l69-UK-FjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2369" y="-2039"/>
@@ -112,7 +151,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="check_mark" width="29" height="29"/>
+        <image name="edit" width="22" height="22"/>
         <image name="offlineIcon" width="26" height="24"/>
+        <image name="remove" width="32" height="32"/>
+        <image name="shareGray" width="32" height="32"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
