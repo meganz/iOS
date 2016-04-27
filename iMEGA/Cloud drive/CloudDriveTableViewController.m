@@ -64,7 +64,6 @@
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
-    BOOL isSearchTableViewDisplay; //YES if the search table view is displayed, NO otherwise
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
     
@@ -1072,7 +1071,7 @@
                     MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
                     [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
                     
-                    if (isSearchTableViewDisplay) {
+                    if ([self.searchDisplayController isActive]) {
                         [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
                         [self.searchDisplayController.searchResultsTableView reloadData];
                     }
@@ -1634,7 +1633,7 @@
     
     [self setEditing:NO animated:YES];
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
     
@@ -1649,7 +1648,7 @@
         [[MEGASdkManager sharedMEGASdk] exportNode:n];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
@@ -1666,7 +1665,7 @@
         [browserVC setBrowserAction:BrowserActionMove];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
@@ -1755,7 +1754,7 @@
         [removeAlertView show];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
@@ -1785,21 +1784,22 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    CGPoint buttonPosition;
+    NSIndexPath *indexPath;
     MEGANode *node = nil;
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.searchDisplayController.searchResultsTableView];
+        indexPath = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:buttonPosition];
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
     
     DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setNode:node];
     [detailsNodeInfoVC setDisplayMode:self.displayMode];
-    
     [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
@@ -1822,14 +1822,6 @@
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
-    isSearchTableViewDisplay = YES;
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-    isSearchTableViewDisplay = NO;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -2079,7 +2071,7 @@
         }
             
         case MEGARequestTypeRename:
-            if (isSearchTableViewDisplay) {
+            if ([self.searchDisplayController isActive]) {
                 [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
                 [self.searchDisplayController.searchResultsTableView reloadData];
             }

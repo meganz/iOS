@@ -414,13 +414,16 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
+    CGPoint buttonPosition;
+    NSIndexPath *indexPath;
     MEGANode *node = nil;
     if ([self.searchDisplayController isActive]) {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.searchDisplayController.searchResultsTableView];
+        indexPath = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:buttonPosition];
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
         node = [_nodeList nodeAtIndex:indexPath.row];
     }
     
