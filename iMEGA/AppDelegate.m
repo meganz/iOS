@@ -40,6 +40,7 @@
 #import "OfflineTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
+#import "ContactRequestsViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
@@ -66,7 +67,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
-    URLTypeBackupLink
+    URLTypeBackupLink,
+    URLTypeIncomingPendingContactsLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -524,6 +526,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isIncomingPendingContactsLink:afterSlashesString]) {
+        self.urlType = URLTypeIncomingPendingContactsLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -642,6 +649,33 @@ typedef NS_ENUM(NSUInteger, URLType) {
             SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
             [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
+            [self presentLinkViewController:navigationController];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isIncomingPendingContactsLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isIncomingPendingContactsLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]; //mega://"#fm/ipc"
+    if (isIncomingPendingContactsLink) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+            UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
+            [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
             [self presentLinkViewController:navigationController];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
