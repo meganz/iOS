@@ -37,6 +37,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="P2C-N3-EeA">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X4x-UV-bs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
