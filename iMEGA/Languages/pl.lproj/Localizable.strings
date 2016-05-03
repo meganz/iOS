@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Oczekiwanie na potwierdzenie";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Prosze sprawdź swój email i kliknij na link potwierdzający rejestrację.";
 /* Text shown on the confirm account view to remind the user what to do */

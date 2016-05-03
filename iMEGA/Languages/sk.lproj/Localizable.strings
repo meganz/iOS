@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Čaká na potvrdenie";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Čaká sa na potvrdenie emailu.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Prosím, skontrolujte si e-mailovú schránku a kliknite na odkaz pre overenie vášho účtu.";
 /* Text shown on the confirm account view to remind the user what to do */

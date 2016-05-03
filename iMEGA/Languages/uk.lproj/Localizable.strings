@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Очікування підтвердження";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Очікуємо підтвердження електронної пошти.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Будь ласка, перевірте свій e-mail, та натисніть на посилання, для підтвердження свого облікового запису.";
 /* Text shown on the confirm account view to remind the user what to do */
