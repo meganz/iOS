@@ -29,15 +29,15 @@
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัส";
+"decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มี กรุณาติดต่อผู้ที่สร้างลิงก์นี้";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
-"decrypt"="ถอดรหัส";
+"decrypt"="ถอดรหัสลับ";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="ถอดรหัสคีย์ไม่ถูกต้อง";
+"decryptionKeyNotValid"="คีย์ถอดรหัสลับไม่ถูกต้อง";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ออกจากระบบ";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="รอการยืนยัน";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="รอการยืนยันทางอีเมล";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="กรุณาตรวจสอบอีเมล์ของคุณและคลิกที่ลิงค์เพื่อยืนยันการเปิดบัญชีของคุณ.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -413,7 +413,7 @@
 /* Message shown when some shares have been left */
 "sharesLeft"="แชร์ที่เหลือ";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
-"removeSharing"="ลบการแชร์";
+"removeSharing"="เอาการแชร์ออก";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="คุณแน่ใจหรือไม่ว่าจะลบการแชร์นี้ (แชร์ด้วย 1 ผู้ติดต่อ)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
@@ -441,7 +441,7 @@
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="มีข้อผิดพลาดในการเพิ่มรายชื่อผู้ติดต่อ";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="ลบรายการผู้ติดต่อ";
+"removeUserTitle"="เอาผู้ติดต่อออก";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
 "removeUserMessage"="คุณแน่ใจหรือไม่ว่าจะลบ %@ ออกจากรายการผู้ติดต่อ";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
@@ -547,7 +547,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="ใช้ไปแล้ว %s";
 /* Title for the action that allows to remove a file or folder */
-"remove"="ลบ";
+"remove"="ลบออก";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="ยืนยันการลบ";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */

@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Onay bekleniyor";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Eposta onayı bekleniyor.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Lütfen e-posta kutunuzu kontrol edin, ve hesabınızı doğrulamak için gönderilen linke tıklayın.";
 /* Text shown on the confirm account view to remind the user what to do */

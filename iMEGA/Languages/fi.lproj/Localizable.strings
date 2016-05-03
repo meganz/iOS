@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="lähetä";
+"upload"="Lähetä";
 /*  */
 "error"="Virhe";
 /*  */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Odottaa vahvistusta";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Odottaa sähköpostivahvistusta";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Ole hyvä ja tarkista sähköpostisi vahvistaaksesi tilisi.";
 /* Text shown on the confirm account view to remind the user what to do */

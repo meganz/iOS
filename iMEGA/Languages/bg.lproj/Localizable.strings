@@ -31,7 +31,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Въведете ключ за разшифроване";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="За достъп до тази папка/файл, ще ви е необходим Декриптиращ ключ. Ако не разполагате с ключа, се свържете със създателя на връзката.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Декриптиращ ключ";
 /* Button title to try to decrypt the link */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Изчаква потвърждение";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Изчакване на имейл потвърждение.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Моля проверете си e-mail-а и цъкнете на линка, за да потвърдите Вашия акаунт.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -137,9 +137,9 @@
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Няма файлове във вашият Cloud Drive";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Add files";
+"addFiles"="Добави файлове";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="No Results";
+"noResults"="Няма Резултати";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Изчистете Кошчето";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
@@ -155,7 +155,7 @@
 /* Title of Contacts requests section */
 "contactRequests"="Заявки за контакти";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Add contacts";
+"addContacts"="Добави контакти";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Изпратени";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -357,7 +357,7 @@
 /* Message shown when a file has been imported */
 "fileImported"="Файлът беше импортиран";
 /* Message shown when some files have been imported */
-"filesImported"="Files imported";
+"filesImported"="Файловете бяха импортирани";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Надвишена квота";
 /* Alert title shown when the user is overquota */
@@ -533,13 +533,13 @@
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt беше премахнат от папката Документи.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="На вашето устройство";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Изчисти Офлайн Файлове";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Изчисти кеш паметта";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="On MEGA";
+"onMEGA"="В MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Изчистете кошчето";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
@@ -709,12 +709,12 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включи DEBUG режим";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="Log файл ще бъде създаден в раздела Offline (MEGAiOS.log).";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Изключи DEBUG режим";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
+"disableDebugMode_message"="Лог файлът (MEGAiOS.log) ще бъде изтрит от секция Офлайн.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="Сигурни ли сте, че искате да изтриете този елемент от Офлайн?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Сигурни ли сте, че искате да изтриете тези елементи от Офлайн?";
