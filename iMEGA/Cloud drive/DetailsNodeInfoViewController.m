@@ -164,7 +164,7 @@
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:_node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:_node];
         
-        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+        NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
         [_foldersFilesLabel setText:filesAndFolders];
     }
     
@@ -730,7 +730,7 @@
                 sharedWithXContacts = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), [outSharesMutableArray count]];
             } else {
                 NSString *tempString = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
-                sharedWithXContacts = [tempString stringBetweenString:@"(" andString:@")"];
+                sharedWithXContacts = [tempString mnz_stringBetweenString:@"(" andString:@")"];
             }
             NSArray *sharedWithXContactsArray = [sharedWithXContacts componentsSeparatedByString:@" "];
             NSString *sharedWith = [[sharedWithXContactsArray objectAtIndex:0] stringByAppendingString:[NSString stringWithFormat:@" %@ ", [sharedWithXContactsArray objectAtIndex:1]]];
