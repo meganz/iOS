@@ -492,7 +492,7 @@
     NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
     NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
     
-    NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+    NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
     
     cell.infoLabel.text = filesAndFolders;
     

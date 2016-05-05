@@ -364,7 +364,7 @@
         NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
         NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
         
-        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+        NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
         cell.infoLabel.text = filesAndFolders;
     }
     
@@ -1143,7 +1143,7 @@
         for (ALAsset *asset in assets) {
             NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-            NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
+            NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
             NSString *name = [[formatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
             NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
             

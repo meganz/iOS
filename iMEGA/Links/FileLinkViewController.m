@@ -93,7 +93,7 @@
         if (_node.isFolder) {
             NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:_node];
             NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:_node];
-            NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
+            NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
             [_folderAndFilesLabel setText:filesAndFolders];
             
             if ([[MEGASdkManager sharedMEGASdkFolder] numberChildrenForParent:_node] == 0) {

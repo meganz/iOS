@@ -204,7 +204,7 @@
 
 - (void)checkiOS7ALAsset {
     NSDate *creationDate = [_alasset valueForProperty:ALAssetPropertyDate];
-    NSString *extension = [[[[[_alasset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
+    NSString *extension = [[[[[_alasset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
     NSString *name = [[_dateFormatter stringFromDate:creationDate] stringByAppendingPathExtension:extension];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     
