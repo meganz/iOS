@@ -46,8 +46,6 @@
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
 
-#import <ifaddrs.h>
-#import <arpa/inet.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>
 #import <QuickLook/QuickLook.h>
@@ -85,8 +83,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSTimer *timerAPI_EAGAIN;
 }
 
-@property (nonatomic, strong) NSString *IpAddress;
-
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
@@ -110,10 +106,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
-    self.IpAddress = [self getIpAddress];
     [MEGAReachabilityManager sharedManager];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:nil];
     
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
@@ -801,76 +794,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
     [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     return cancelBarButtonItem;
-}
-
-#pragma mark - Get IP Address
-
-- (NSString *)getIpAddress {
-    NSString *address = nil;
-    
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    
-    int success = 0;
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    char straddr[INET_ADDRSTRLEN];
-                    inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
-                    
-                    if(strncasecmp(straddr, "127.", 4) && strncasecmp(straddr, "169.254.", 8)) {
-                        address = [NSString stringWithUTF8String:straddr];
-                    }
-                }
-            }
-            
-            if(temp_addr->ifa_addr->sa_family == AF_INET6) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    char straddr[INET6_ADDRSTRLEN];
-                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
-                    
-                    if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
-                        address = [NSString stringWithUTF8String:straddr];
-                    }
-                }
-            }
-            
-            temp_addr = temp_addr->ifa_next;
-        }
-    }
-    
-    freeifaddrs(interfaces);
-    
-    return address;
-}
-
-#pragma mark - Reachability Changes
-
-- (void)reachabilityDidChange:(NSNotification *)notification {
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        NSString *currentIP = [self getIpAddress];
-        if (![self.IpAddress isEqualToString:currentIP]) {
-            [[MEGASdkManager sharedMEGASdk] reconnect];
-            self.IpAddress = currentIP;
-        }
-    }
-    
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-            if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[CameraUploads syncManager] resetOperationQueue];
-            }
-            
-            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        }
-    }
 }
 
 #pragma mark - Battery changed
