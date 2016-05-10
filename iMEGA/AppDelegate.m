@@ -1319,29 +1319,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([error type]) {
-        switch ([error type]) {
-            case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
-                break;
-            }
-                
-            default:
-                break;
-        }
-        return;
-    }
-    
     if (transfer.isStreamingTransfer) {
         return;
-    }
-    
-    //Delete local file even if we get an error
-    if ([transfer type] == MEGATransferTypeUpload) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
-        }
     }
     
     //Delete transfer from dictionary file even if we get an error
@@ -1354,9 +1333,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (node) {
             [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
         }
+    } else if ([transfer type] == MEGATransferTypeUpload) {
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
+        }
     }
     
     if ([error type]) {
+        switch ([error type]) {
+            case MEGAErrorTypeApiEOverQuota: {
+                [self showOverquotaAlert];
+                break;
+            }
+                
+            default:
+                break;
+        }
         return;
     }
     
@@ -1412,9 +1405,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
-    }
-    
-    if ([transfer type] == MEGATransferTypeUpload) {
+    } else if ([transfer type] == MEGATransferTypeUpload) {
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
             [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];

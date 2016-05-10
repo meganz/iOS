@@ -118,6 +118,7 @@
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads") forState:UIControlStateNormal];
     
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -131,6 +132,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -410,18 +412,7 @@
     
     [cell.thumbnailPlayImageView setHidden:YES];
     if ([node hasThumbnail]) {
-        NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-        BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-        if (!thumbnailExists) {
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-        } else {
-            [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-            if (isVideo(node.name.pathExtension)) {
-                [cell.thumbnailPlayImageView setHidden:NO];
-            }
-
-        }
+        [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
     }
@@ -732,15 +723,8 @@
         case MEGARequestTypeGetAttrFile: {
             for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
                 if ([request nodeHandle] == [pcvc nodeHandle]) {
-                    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [pcvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                        if (isVideo(node.name.pathExtension)) {
-                            [pcvc.thumbnailPlayImageView setHidden:NO];
-                        }
-                    }
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    [Helper setThumbnailForNode:node api:api cell:pcvc];
                 }
             }
             break;

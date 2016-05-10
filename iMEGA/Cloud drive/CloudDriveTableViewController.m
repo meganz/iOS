@@ -294,19 +294,7 @@
             isDownloaded = YES;
         }
         
-        struct tm *timeinfo;
-        char buffer[80];
-        
-        time_t rawtime = [[node modificationTime] timeIntervalSince1970];
-        timeinfo = localtime(&rawtime);
-        
-        strftime(buffer, 80, "%d %B %Y %I:%M %p", timeinfo);
-        
-        NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-        NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
-        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
-        
-        cell.infoLabel.text = sizeAndDate;
+        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
     if ([node isExported]) {
@@ -344,28 +332,14 @@
     
     if ([node type] == MEGANodeTypeFile) {
         if ([node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-            if (!thumbnailExists) {
-                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-            } else {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                if (isVideo(node.name.pathExtension)) {
-                    [cell.thumbnailPlayImageView setHidden:NO];
-                }
-            }
+            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
-        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
-        
-        NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
-        cell.infoLabel.text = filesAndFolders;
+        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
     cell.nodeHandle = [node handle];
@@ -876,6 +850,14 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([self.searchDisplayController isActive]) {
+        return -66.0;
+    }
+    
+    return 0.0f;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1548,6 +1530,14 @@
     }
 }
 
+- (void)reloadRowsAtIndexPaths:(NSArray *)indexPathsArray {
+    if ([self.searchDisplayController isActive]) {
+        [self.searchDisplayController.searchResultsTableView reloadRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationNone];
+    } else {
+        [self.tableView reloadRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1941,31 +1931,13 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                        if (isVideo(node.name.pathExtension)) {
-                            [ntvc.thumbnailPlayImageView setHidden:NO];
-                        }
-                    }
+            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+            for (NodeTableViewCell *nodeTableViewCell in [tableView visibleCells]) {
+                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
                 }
             }
-            
-            for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                    }
-                }
-            }
-            
             break;
         }
             
@@ -2110,7 +2082,7 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self reloadRowsAtIndexPaths:@[indexPath]];
         }
     }
 }
@@ -2151,7 +2123,7 @@
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [self reloadRowsAtIndexPaths:@[indexPath]];
             }
         }
         return;
@@ -2161,7 +2133,7 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self reloadRowsAtIndexPaths:@[indexPath]];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
         if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {

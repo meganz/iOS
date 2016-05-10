@@ -21,6 +21,8 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "SSKeychain.h"
@@ -29,6 +31,9 @@
 #import "CameraUploads.h"
 #import "LTHPasscodeViewController.h"
 #import "MEGAStore.h"
+
+#import "NodeTableViewCell.h"
+#import "PhotoCollectionViewCell.h"
 
 static NSString *pathForPreview;
 static NSString *renamePathForPreview;
@@ -691,6 +696,67 @@ static NSMutableArray *nodesFromLinkMutableArray;
     }
     
     return totalFreeSpace;
+}
+
+#pragma mark - Utils for nodes
+
++ (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
+    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+        [Helper setThumbnailForNode:node api:api cell:cell];
+    } else {
+        [api getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+        if ([cell isKindOfClass:[NodeTableViewCell class]]) {
+            NodeTableViewCell *nodeTableViewCell = cell;
+            [nodeTableViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
+            PhotoCollectionViewCell *photoCollectionViewCell = cell;
+            [photoCollectionViewCell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        }
+    }
+}
+
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
+    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    if ([cell isKindOfClass:[NodeTableViewCell class]]) {
+        NodeTableViewCell *nodeTableViewCell = cell;
+        [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+        if (isVideo(node.name.pathExtension)) {
+            [nodeTableViewCell.thumbnailPlayImageView setHidden:NO];
+        }
+    } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
+        PhotoCollectionViewCell *photoCollectionViewCell = cell;
+        [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
+        if (isVideo(node.name.pathExtension)) {
+            [photoCollectionViewCell.thumbnailPlayImageView setHidden:NO];
+        }
+    }
+}
+
++ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    NSString *size;
+    time_t rawtime;
+    if ([node isFile]) {
+        size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        rawtime = [[node modificationTime] timeIntervalSince1970];
+    } else  if ([node isFolder]) {
+        size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+        rawtime = [[node creationTime] timeIntervalSince1970];
+    }
+    struct tm *timeinfo = localtime(&rawtime);
+    char buffer[80];
+    strftime(buffer, 80, "%d %B %Y %I:%M %p", timeinfo);
+    
+    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    
+    return [NSString stringWithFormat:@"%@ • %@", size, date];
+}
+
++ (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {
+    NSInteger files = [api numberChildFilesForParent:node];
+    NSInteger folders = [api numberChildFoldersForParent:node];
+    
+    return [@"" mnz_stringByFiles:files andFolders:folders];
 }
 
 #pragma mark - Logout
