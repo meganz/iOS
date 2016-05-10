@@ -607,10 +607,14 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
-    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-    
     if (self.displayMode != DisplayModeContact) {
+        MEGANode *node;
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            node = [matchSearchNodes objectAtIndex:indexPath.row];
+        } else {
+            node = [self.nodes nodeAtIndex:indexPath.row];
+        }
+        MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         if (accessType >= MEGAShareTypeAccessFull) {
             return AMLocalizedString(@"remove", nil);
         }
@@ -618,7 +622,6 @@
         return AMLocalizedString(@"leaveFolder", @"Leave folder");
     }
     
-    //editingStyleForRowAtIndexPath return -> UITableViewCellEditingStyleNone
     return @"";
 }
 
@@ -1810,8 +1813,13 @@
 
 #pragma mark - UISearchDisplayDelegate
 
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    [self setEditing:NO animated:YES];
+}
+
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
+    [self setEditing:NO animated:NO];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -2101,7 +2109,8 @@
         
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+            NodeTableViewCell *cell = (NodeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
     }

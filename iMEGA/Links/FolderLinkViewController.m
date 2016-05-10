@@ -147,6 +147,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
 }
@@ -155,6 +156,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -342,9 +344,7 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
-    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-        [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
-    }
+    [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
     
     [SVProgressHUD dismiss];
     
@@ -517,9 +517,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) { //Decryption key
         if (buttonIndex == 0) {
-            if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-                [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
-            }
+            [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
             
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
