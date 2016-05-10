@@ -161,24 +161,8 @@
             [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
         }
         
-        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:_node];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:_node];
-        
-        NSString *filesAndFolders = [@"" mnz_stringByFiles:files andFolders:folders];
-        [_foldersFilesLabel setText:filesAndFolders];
+        self.foldersFilesLabel.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
-    
-    struct tm *timeinfo;
-    char buffer[80];
-    time_t rawtime;
-    if ([self.node isFile]) {
-        rawtime = [[self.node modificationTime] timeIntervalSince1970];
-    } else {
-        rawtime = [[self.node creationTime] timeIntervalSince1970];
-    }
-    timeinfo = localtime(&rawtime);
-    
-    strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
     
     if (self.displayMode == DisplayModeSharedItem && accessType != MEGAShareTypeAccessOwner) {
         [self.navigationItem setTitleView:navigationBarLabel];
@@ -186,13 +170,7 @@
         [self setTitle:[self.node name]];
     }
     
-    [self.nameLabel setText:[self.node name]];
-    
-    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-    NSString *size = [NSByteCountFormatter stringFromByteCount:[[[MEGASdkManager sharedMEGASdk] sizeForNode:self.node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
-    NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
-    
-    [_infoLabel setText:sizeAndDate];
+    self.infoLabel.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     
     [self.tableView reloadData];
 }

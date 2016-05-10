@@ -131,6 +131,14 @@
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
 
+#pragma mark - Utils for nodes
+
++ (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
++ (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
+
++ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
+
 #pragma mark - Logout
 
 + (void)logout;
