@@ -164,6 +164,8 @@
         self.foldersFilesLabel.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     }
     
+    [self.nameLabel setText:[self.node name]];
+    
     if (self.displayMode == DisplayModeSharedItem && accessType != MEGAShareTypeAccessOwner) {
         [self.navigationItem setTitleView:navigationBarLabel];
     } else {
