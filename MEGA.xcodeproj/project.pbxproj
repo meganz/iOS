@@ -50,6 +50,7 @@
 		415227501A6986E000EC7BB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4152274F1A6986E000EC7BB6 /* MapKit.framework */; };
 		4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
+		415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
 		415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */; };
 		416625281B66552800AEB579 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625231B66552800AEB579 /* SSKeychain.m */; };
 		416625291B66552800AEB579 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625251B66552800AEB579 /* SSKeychainQuery.m */; };
@@ -257,6 +258,8 @@
 		4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
 		4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
 		4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LTHPasscodeViewController.m; sourceTree = "<group>"; };
+		415C6B901CE39D6100B13070 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
 		415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestsViewController.h; sourceTree = "<group>"; };
 		415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactRequestsViewController.m; sourceTree = "<group>"; };
 		416625221B66552800AEB579 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
@@ -746,6 +749,8 @@
 		415227351A692EEF00EC7BB6 /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
+				415C6B901CE39D6100B13070 /* SVProgressAnimatedView.h */,
+				415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */,
 				41D8ECDA1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.h */,
 				41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */,
 				41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */,
@@ -1403,6 +1408,7 @@
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
+				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,

@@ -6,25 +6,25 @@
 	url = https://github.com/meganz/MWPhotoBrowser.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
-	url = https://github.com/meganz/SVProgressHUD.git
+	url = https://github.com/SVProgressHUD/SVProgressHUD.git
 [submodule "iMEGA/Vendor/sskeychain"]
 	path = iMEGA/Vendor/sskeychain
 	url = https://github.com/meganz/sskeychain.git
 [submodule "iMEGA/Vendor/GKContactImage"]
 	path = iMEGA/Vendor/GKContactImage
-	url = https://github.com/meganz/GKContactImage.git
+	url = https://github.com/gekitz/GKContactImage.git
 [submodule "iMEGA/Vendor/Reachability"]
 	path = iMEGA/Vendor/Reachability
-	url = https://github.com/meganz/Reachability.git
+	url = https://github.com/tonymillion/Reachability.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
-	url = https://github.com/jnavarrom/LTHPasscodeViewController.git
+	url = https://github.com/rolandleth/LTHPasscodeViewController.git
 [submodule "iMEGA/Vendor/SVWebViewController"]
 	path = iMEGA/Vendor/SVWebViewController
-	url = https://github.com/meganz/SVWebViewController.git
+	url = https://github.com/TransitApp/SVWebViewController.git
 [submodule "iMEGA/Vendor/DZNEmptyDataSet"]
 	path = iMEGA/Vendor/DZNEmptyDataSet
-	url = https://github.com/meganz/DZNEmptyDataSet.git
+	url = https://github.com/dzenbot/DZNEmptyDataSet.git
 [submodule "iMEGA/Vendor/AMLocalizedString"]
 	path = iMEGA/Vendor/AMLocalizedString
 	url = https://github.com/tagyro/AMLocalizedString.git
@@ -33,4 +33,4 @@
 	url = https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/DateTools"]
 	path = iMEGA/Vendor/DateTools
-	url = https://github.com/meganz/DateTools.git
+	url = https://github.com/MatthewYork/DateTools.git
