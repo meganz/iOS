@@ -56,7 +56,10 @@
             // Yes, In-App Purchase is enabled on this device.
             // Proceed to purchase In-App Purchase item.
             // Assign a Product ID to a new payment request.
-            SKPayment *paymentRequest = [SKPayment paymentWithProduct:requestedProduct];
+            SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:requestedProduct];
+            NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
+            paymentRequest.applicationUsername = base64UserHandle;
+
             
             // Request a purchase of the product.
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
@@ -181,22 +184,11 @@
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
-//    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-//    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
     if ([queue.transactions count] == 0) {
         // Queue does not include any transactions, so either user has not yet made a purchase
         // or the user's prior purchase is unavailable, so notify app (and user) accordingly.
         
         [_delegate incompleteRestore];
-        
-    } else {
-        // Queue does contain one or more transactions, so return transaction data.
-        // App should provide user with purchased product.
-        
-        for(SKPaymentTransaction *transaction in queue.transactions) {
-            [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedStringWithOptions:0]];
-            [_delegate successfulPurchase:self restored:YES];
-        }
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
