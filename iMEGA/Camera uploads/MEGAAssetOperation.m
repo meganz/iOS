@@ -444,7 +444,7 @@
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [self start];
-        } else {
+        } else if ([error type] != MEGAErrorTypeApiEExist) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
