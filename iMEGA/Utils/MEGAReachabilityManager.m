@@ -1,26 +1,16 @@
-/**
- * @file MEGAReachabilityManager.m
- * @brief Reachability manager.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
 
 #import <ifaddrs.h>
+#import <arpa/inet.h>
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "CameraUploads.h"
+
+@interface MEGAReachabilityManager ()
+
+@property (nonatomic, strong) Reachability *reachability;
+@property (nonatomic, copy) NSString *IpAddress;
+
+@end
 
 @implementation MEGAReachabilityManager
 
@@ -72,9 +62,83 @@
     if (self) {
         self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
         [self.reachability startNotifier];
+        _IpAddress = [self getIpAddress];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityDidChange:)
+                                                     name:kReachabilityChangedNotification object:nil];
     }
     
     return self;
+}
+
+#pragma mark - Get IP Address
+
+- (NSString *)getIpAddress {
+    NSString *address = nil;
+    
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    
+    int success = 0;
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        
+        temp_addr = interfaces;
+        while(temp_addr != NULL) {
+            if(temp_addr->ifa_addr->sa_family == AF_INET) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
+                    char straddr[INET_ADDRSTRLEN];
+                    inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "127.", 4) && strncasecmp(straddr, "169.254.", 8)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
+                }
+            }
+            
+            if(temp_addr->ifa_addr->sa_family == AF_INET6) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
+                    char straddr[INET6_ADDRSTRLEN];
+                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    
+                    if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
+                        address = [NSString stringWithUTF8String:straddr];
+                    }
+                }
+            }
+            
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    
+    freeifaddrs(interfaces);
+    
+    return address;
+}
+
+
+#pragma mark - Reachability Changes
+
+- (void)reachabilityDidChange:(NSNotification *)notification {
+    if ([MEGAReachabilityManager isReachable]) {
+        NSString *currentIP = [self getIpAddress];
+        if (![self.IpAddress isEqualToString:currentIP]) {
+            [[MEGASdkManager sharedMEGASdk] reconnect];
+            self.IpAddress = currentIP;
+        }
+    }
+    
+    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
+            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+                [[CameraUploads syncManager] resetOperationQueue];
+            }
+            
+            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            }
+        }
+    }
 }
 
 @end

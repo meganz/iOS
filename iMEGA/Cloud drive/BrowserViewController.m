@@ -25,7 +25,6 @@
 #import "NodeTableViewCell.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "NSString+MNZCategory.h"
 
 @interface BrowserViewController () <UIAlertViewDelegate> {
     UIAlertView *folderAlertView;
@@ -489,12 +488,7 @@
     
     cell.nameLabel.text = [node name];
     
-    NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
-    NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
-    
-    NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
-    
-    cell.infoLabel.text = filesAndFolders;
+    cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:megaInfoGray];

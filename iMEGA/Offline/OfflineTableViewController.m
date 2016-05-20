@@ -32,11 +32,12 @@
 #import "MEGAReachabilityManager.h"
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
+#import "OpenInActivity.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -55,6 +56,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
+@property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
 @end
 
@@ -205,23 +208,6 @@
     }
     
     return pathFromOffline;
-}
-
-- (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
-    unsigned long long folderSize = 0;
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            folderSize += [self sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
-        } else {
-            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
-        }
-    }
-    
-    return folderSize;
 }
 
 - (NSArray *)offlinePathOnFolder:(NSString *)path {
@@ -636,8 +622,12 @@
 }
 
 - (IBAction)activityTapped:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:self.selectedItems applicationActivities:nil];
-    
+    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+    if (self.selectedItems.count == 1) {
+        OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
+        [activitiesMutableArray addObject:openInActivity];
+    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:self.selectedItems applicationActivities:activitiesMutableArray];
     if (self.selectedItems.count > 5) {
         activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
     }
@@ -657,6 +647,22 @@
     }
     
     [self presentViewController:activityViewController animated:YES completion:nil];
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed){
+            
+            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
+                _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[self.selectedItems objectAtIndex:0]];
+                [_documentInteractionController setDelegate:self];
+            }
+            
+            BOOL canOpenIn = [_documentInteractionController presentOpenInMenuFromBarButtonItem:sender animated:YES];
+            
+            if (canOpenIn) {
+                [_documentInteractionController presentPreviewAnimated:YES];
+            }
+        }];
+    }
 }
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {
@@ -673,6 +679,12 @@
                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                               otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     [alertView show];
+}
+
+#pragma mark - UIDocumentInteractionController
+
+- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
+    return self;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate

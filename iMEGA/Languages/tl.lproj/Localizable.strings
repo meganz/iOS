@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Inaantay pa ang pagkumpirma";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Hinihintay ang kumpirmasyon sa email";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="I-check ang inyong e-mail address at i-click ang link para i-confirm ang inyong account.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -717,4 +717,4 @@
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="Gusto mo bang burahin ang bagay na ito sa iyong Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Gusto mo bang pahiin ang items sa iyong Offline?";

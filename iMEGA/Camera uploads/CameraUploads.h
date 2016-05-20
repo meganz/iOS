@@ -20,6 +20,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "MEGASdkManager.h"
 
 #define kIsCameraUploadsEnabled @"IsCameraUploadsEnabled"

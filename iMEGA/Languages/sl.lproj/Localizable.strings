@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="V pričakovanju potrditve";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="V pričakovanju e-poštne potrditve";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Prosim, preverite svojo e-pošto in potrdite svoj račun s klikom na povezavo v njej.";
 /* Text shown on the confirm account view to remind the user what to do */

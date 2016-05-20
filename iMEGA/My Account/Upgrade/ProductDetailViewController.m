@@ -32,6 +32,7 @@
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
             [_headerView setBackgroundColor:megaOrange];
             [self setTitle:@"LITE"];
+            self.selectMembershiptLabel.textColor = megaOrange;
             break;
             
         case MEGAAccountTypeProI:
@@ -60,6 +61,7 @@
     [_bandwidthSizeLabel setText:_bandwidthString];
     
     UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(restore)];
+    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateNormal];
     [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
     
     [[MEGAPurchase sharedInstance] setDelegate:self];
