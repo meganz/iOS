@@ -64,7 +64,6 @@
     
     BOOL allNodesSelected;
     BOOL isSwipeEditing;
-    BOOL isSearchTableViewDisplay; //YES if the search table view is displayed, NO otherwise
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
     
@@ -295,19 +294,7 @@
             isDownloaded = YES;
         }
         
-        struct tm *timeinfo;
-        char buffer[80];
-        
-        time_t rawtime = [[node modificationTime] timeIntervalSince1970];
-        timeinfo = localtime(&rawtime);
-        
-        strftime(buffer, 80, "%d %B %Y %I:%M %p", timeinfo);
-        
-        NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-        NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
-        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
-        
-        cell.infoLabel.text = sizeAndDate;
+        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
     if ([node isExported]) {
@@ -345,28 +332,14 @@
     
     if ([node type] == MEGANodeTypeFile) {
         if ([node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-            if (!thumbnailExists) {
-                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
-                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-            } else {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                if (isVideo(node.name.pathExtension)) {
-                    [cell.thumbnailPlayImageView setHidden:NO];
-                }
-            }
+            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
-        NSInteger files = [[MEGASdkManager sharedMEGASdk] numberChildFilesForParent:node];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdk] numberChildFoldersForParent:node];
-        
-        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
-        cell.infoLabel.text = filesAndFolders;
+        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
     cell.nodeHandle = [node handle];
@@ -634,10 +607,14 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
-    MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-    
     if (self.displayMode != DisplayModeContact) {
+        MEGANode *node;
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            node = [matchSearchNodes objectAtIndex:indexPath.row];
+        } else {
+            node = [self.nodes nodeAtIndex:indexPath.row];
+        }
+        MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         if (accessType >= MEGAShareTypeAccessFull) {
             return AMLocalizedString(@"remove", nil);
         }
@@ -645,7 +622,6 @@
         return AMLocalizedString(@"leaveFolder", @"Leave folder");
     }
     
-    //editingStyleForRowAtIndexPath return -> UITableViewCellEditingStyleNone
     return @"";
 }
 
@@ -879,6 +855,14 @@
     return [UIColor whiteColor];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([self.searchDisplayController isActive]) {
+        return -66.0;
+    }
+    
+    return 0.0f;
+}
+
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return 40.0f;
 }
@@ -1072,7 +1056,7 @@
                     MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
                     [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
                     
-                    if (isSearchTableViewDisplay) {
+                    if ([self.searchDisplayController isActive]) {
                         [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
                         [self.searchDisplayController.searchResultsTableView reloadData];
                     }
@@ -1144,7 +1128,7 @@
         for (ALAsset *asset in assets) {
             NSDate *modificationTime = [asset valueForProperty:ALAssetPropertyDate];
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-            NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
+            NSString *extension = [[[[[asset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
             NSString *name = [[formatter stringFromDate:modificationTime] stringByAppendingPathExtension:extension];
             NSString *localFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
             
@@ -1549,6 +1533,14 @@
     }
 }
 
+- (void)reloadRowsAtIndexPaths:(NSArray *)indexPathsArray {
+    if ([self.searchDisplayController isActive]) {
+        [self.searchDisplayController.searchResultsTableView reloadRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationNone];
+    } else {
+        [self.tableView reloadRowsAtIndexPaths:indexPathsArray withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1634,7 +1626,7 @@
     
     [self setEditing:NO animated:YES];
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
     
@@ -1649,7 +1641,7 @@
         [[MEGASdkManager sharedMEGASdk] exportNode:n];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
@@ -1666,7 +1658,7 @@
         [browserVC setBrowserAction:BrowserActionMove];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
@@ -1755,7 +1747,7 @@
         [removeAlertView show];
     }
     
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
         [self.searchDisplayController.searchResultsTableView reloadData];
     }
 }
@@ -1785,21 +1777,22 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    CGPoint buttonPosition;
+    NSIndexPath *indexPath;
     MEGANode *node = nil;
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    if (isSearchTableViewDisplay) {
+    if ([self.searchDisplayController isActive]) {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.searchDisplayController.searchResultsTableView];
+        indexPath = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:buttonPosition];
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
     
     DetailsNodeInfoViewController *detailsNodeInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setNode:node];
     [detailsNodeInfoVC setDisplayMode:self.displayMode];
-    
     [self.navigationController pushViewController:detailsNodeInfoVC animated:YES];
 }
 
@@ -1820,16 +1813,13 @@
 
 #pragma mark - UISearchDisplayDelegate
 
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    [self setEditing:NO animated:YES];
+}
+
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView insertSubview:self.searchDisplayController.searchBar aboveSubview:self.tableView];
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
-    isSearchTableViewDisplay = YES;
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-    isSearchTableViewDisplay = NO;
+    [self setEditing:NO animated:NO];
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -1949,31 +1939,13 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                        if (isVideo(node.name.pathExtension)) {
-                            [ntvc.thumbnailPlayImageView setHidden:NO];
-                        }
-                    }
+            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+            for (NodeTableViewCell *nodeTableViewCell in [tableView visibleCells]) {
+                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
                 }
             }
-            
-            for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                    }
-                }
-            }
-            
             break;
         }
             
@@ -2079,7 +2051,7 @@
         }
             
         case MEGARequestTypeRename:
-            if (isSearchTableViewDisplay) {
+            if ([self.searchDisplayController isActive]) {
                 [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
                 [self.searchDisplayController.searchResultsTableView reloadData];
             }
@@ -2118,7 +2090,7 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self reloadRowsAtIndexPaths:@[indexPath]];
         }
     }
 }
@@ -2137,7 +2109,8 @@
         
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            NodeTableViewCell *cell = (NodeTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+            NodeTableViewCell *cell = (NodeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             [cell.infoLabel setText:[NSString stringWithFormat:@"%@ • %@", percentageCompleted, speed]];
         }
     }
@@ -2159,7 +2132,7 @@
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [self reloadRowsAtIndexPaths:@[indexPath]];
             }
         }
         return;
@@ -2169,7 +2142,7 @@
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [self reloadRowsAtIndexPaths:@[indexPath]];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
         if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {

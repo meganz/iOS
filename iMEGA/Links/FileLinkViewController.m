@@ -24,7 +24,6 @@
 
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
-#import "NSString+MNZCategory.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
@@ -91,10 +90,7 @@
         
         [self setNodeInfo];
         if (_node.isFolder) {
-            NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:_node];
-            NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:_node];
-            NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
-            [_folderAndFilesLabel setText:filesAndFolders];
+            self.folderAndFilesLabel.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdkFolder]];
             
             if ([[MEGASdkManager sharedMEGASdkFolder] numberChildrenForParent:_node] == 0) {
                 [self setFolderEmpty:YES];

@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="En attente de confirmation";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="En attente de la confirmation de l'e-mail.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Veuillez vérifier vos e-mails et cliquer sur le lien pour confirmer votre compte.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -137,9 +137,9 @@
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Pas de fichiers sur votre Cloud";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Add files";
+"addFiles"="Ajouter des fichiers";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="No Results";
+"noResults"="Aucun Résultat";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Vider la Corbeille";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
@@ -155,7 +155,7 @@
 /* Title of Contacts requests section */
 "contactRequests"="Demandes de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Add contacts";
+"addContacts"="Ajouter des contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Envoyée(s)";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -349,15 +349,15 @@
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Vérifiez vos permissions sur ce dossier";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="Dossier partagé ";
+"sharedFolder_success"="Dossier partagé";
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Importer vers";
 /* Button title that triggers the importing link action */
 "import"="Importer";
 /* Message shown when a file has been imported */
-"fileImported"="Fichier importé !";
+"fileImported"="Fichier importé";
 /* Message shown when some files have been imported */
-"filesImported"="Files imported";
+"filesImported"="Fichiers importés";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Quota dépassé";
 /* Alert title shown when the user is overquota */
@@ -375,7 +375,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activer l'Envoi des Photos de la Caméra";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Les Uploads de la Caméra ont été activés ";
+"cameraUploadsEnabled"="Les Uploads de la Caméra ont été activés";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu élément sélectionné";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -457,7 +457,7 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Partir";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Dossier quitté ";
+"shareFolderLeaved"="Dossier quitté";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partager le dossier";
 /* Button that allows you to select a given folder */
@@ -533,13 +533,13 @@
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="MasterKey.txt a été supprimé du dossier Documents";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="Sur votre appareil";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Nettoyer les Fichiers Hors-Ligne";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Vider le cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="On MEGA";
+"onMEGA"="Dans MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Vider la Corbeille";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
@@ -617,7 +617,7 @@
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Transfert annulé";
 /* Success message shown when all the transfers have been cancelled */
-"transfersCancelled"="Transferts annulés ";
+"transfersCancelled"="Transferts annulés";
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
@@ -715,6 +715,6 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le fichier de journalisation (MEGAiOS.log) sera supprimé de la section Hors-Ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="Êtes-vous certain(e) de bien vouloir supprimer cet élément du mode Hors-Ligne?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Êtes-vous certain(e) de bien vouloir supprimer ces éléments du mode Hors-Ligne?";

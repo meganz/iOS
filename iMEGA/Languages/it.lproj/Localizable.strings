@@ -27,17 +27,17 @@
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Il tuo account è già stato attivato. Effettua il Log in.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="Link non valido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="Per accedere a questo/a file/cartella, devi essere in possesso della sua chiave di decriptazione. Se non la hai, contatta il creatore del link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chiave di decrittazione";
 /* Button title to try to decrypt the link */
 "decrypt"="Decritta";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="Chiave di decriptazione non valida";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="In attesa della conferma";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="In attesa della conferma dell'email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="SI prega di controllare l'e-mail e cliccare sul link di conferma.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -115,7 +115,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Il file che si sta tentando di aprire è più grande della memoria disponibile.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="Link non raggiungibile";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Questo può accadere per diverse ragioni:- Il file è stato rimosso per una violazione delle ToS/AUP- URL non valido - il collegamento cui stai tentando di accedere non esiste.- Il file è stato eliminato dall'utente.";
 /* Message shown when a download starts */
@@ -499,7 +499,7 @@
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="On";
+"on"="Attivo";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
 "options"="Opzioni";
 /* Option title to enable upload videos with Camera Uploads */
@@ -707,13 +707,13 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="La richiesta è stata cancellata o l'acquisto non può essere recuperato. Per favore, riprova o contatta ios@mega.nz";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Enable DEBUG mode";
+"enableDebugMode_title"="Attiva modalità DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="Un log verrà creato nella sezione Offline (MEGAiOS.log).";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Disable DEBUG mode";
+"disableDebugMode_title"="Disattiva modalità DEBUG";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
+"disableDebugMode_message"="Il log (MEGAiOS.log) verrà cancellato dalla sezione Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="Sei sicuro di volere eliminare l'item dall' Offline?";
 /* Alert message shown when the user remove various items from the Offline section */

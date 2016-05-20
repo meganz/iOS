@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="بانتظار التأكيد";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="بانتظار تأكيد بريدك الالكتروني.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="يُرجى التحقق من البريد الإلكتروني الخاص بك واضغط على الرابط لتأكيد حسابك.";
 /* Text shown on the confirm account view to remind the user what to do */

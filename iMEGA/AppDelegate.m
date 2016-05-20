@@ -40,13 +40,12 @@
 #import "OfflineTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
+#import "ContactRequestsViewController.h"
 
 #import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAPurchase.h"
 
-#import <ifaddrs.h>
-#import <arpa/inet.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Fabric/Fabric.h>
 #import <QuickLook/QuickLook.h>
@@ -66,7 +65,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
-    URLTypeBackupLink
+    URLTypeBackupLink,
+    URLTypeIncomingPendingContactsLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -83,11 +83,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSTimer *timerAPI_EAGAIN;
 }
 
-@property (nonatomic, strong) NSString *IpAddress;
-
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
 @property (nonatomic, strong) NSString *emailOfNewSignUpLink;
+
+@property (nonatomic, strong) UIAlertView *API_ESIDAlertView;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
@@ -106,10 +106,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
-    self.IpAddress = [self getIpAddress];
     [MEGAReachabilityManager sharedManager];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:kReachabilityChangedNotification object:nil];
     
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
@@ -524,6 +521,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isIncomingPendingContactsLink:afterSlashesString]) {
+        self.urlType = URLTypeIncomingPendingContactsLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -657,6 +659,33 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isIncomingPendingContactsLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isIncomingPendingContactsLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]; //mega://"#fm/ipc"
+    if (isIncomingPendingContactsLink) {
+        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+            UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
+            [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
+            [self presentLinkViewController:navigationController];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)openIn {
     if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -765,76 +794,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
     [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     return cancelBarButtonItem;
-}
-
-#pragma mark - Get IP Address
-
-- (NSString *)getIpAddress {
-    NSString *address = nil;
-    
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    
-    int success = 0;
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    char straddr[INET_ADDRSTRLEN];
-                    inet_ntop(AF_INET, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
-                    
-                    if(strncasecmp(straddr, "127.", 4) && strncasecmp(straddr, "169.254.", 8)) {
-                        address = [NSString stringWithUTF8String:straddr];
-                    }
-                }
-            }
-            
-            if(temp_addr->ifa_addr->sa_family == AF_INET6) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
-                    char straddr[INET6_ADDRSTRLEN];
-                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
-                    
-                    if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
-                        address = [NSString stringWithUTF8String:straddr];
-                    }
-                }
-            }
-            
-            temp_addr = temp_addr->ifa_next;
-        }
-    }
-    
-    freeifaddrs(interfaces);
-    
-    return address;
-}
-
-#pragma mark - Reachability Changes
-
-- (void)reachabilityDidChange:(NSNotification *)notification {
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        NSString *currentIP = [self getIpAddress];
-        if (![self.IpAddress isEqualToString:currentIP]) {
-            [[MEGASdkManager sharedMEGASdk] reconnect];
-            self.IpAddress = currentIP;
-        }
-    }
-    
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-            if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[CameraUploads syncManager] resetOperationQueue];
-            }
-            
-            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        }
-    }
 }
 
 #pragma mark - Battery changed
@@ -1108,9 +1067,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                [alertView show];
-                [Helper logout];
+                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
+                    if (![_API_ESIDAlertView isVisible]) {
+                        _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                        [_API_ESIDAlertView show];
+                        [Helper logout];
+                    }
+                }
                 break;
             }
                 
@@ -1120,9 +1083,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESSL: {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                [alertView show];
-                [Helper logout];
+                if ([request type] == MEGARequestTypeLogout) {
+                    NSString *issuer = [NSString stringWithFormat:@"(Issuer: %@)", [request text] ? [request text] : @"Unknown"];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"sslUnverified_alertTitle", nil) message:issuer delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                    [alertView show];
+                    [Helper logout];
+                }
                 break;
             }
                 
@@ -1353,29 +1319,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([error type]) {
-        switch ([error type]) {
-            case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
-                break;
-            }
-                
-            default:
-                break;
-        }
-        return;
-    }
-    
     if (transfer.isStreamingTransfer) {
         return;
-    }
-    
-    //Delete local file even if we get an error
-    if ([transfer type] == MEGATransferTypeUpload) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
-        }
     }
     
     //Delete transfer from dictionary file even if we get an error
@@ -1388,9 +1333,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (node) {
             [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
         }
+    } else if ([transfer type] == MEGATransferTypeUpload) {
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
+            MEGALogError(@"Remove item at path: %@", error)
+        }
     }
     
     if ([error type]) {
+        switch ([error type]) {
+            case MEGAErrorTypeApiEOverQuota: {
+                [self showOverquotaAlert];
+                break;
+            }
+                
+            default:
+                break;
+        }
         return;
     }
     
@@ -1446,9 +1405,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
-    }
-    
-    if ([transfer type] == MEGATransferTypeUpload) {
+    } else if ([transfer type] == MEGATransferTypeUpload) {
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
             [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];

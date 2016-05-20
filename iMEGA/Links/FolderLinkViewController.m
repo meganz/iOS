@@ -43,7 +43,6 @@
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
 #import "PreviewDocumentViewController.h"
-#import "NSString+MNZCategory.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
@@ -148,6 +147,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdkFolder] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
 }
@@ -156,6 +156,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -343,9 +344,7 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
-    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-        [[MEGASdkManager sharedMEGASdkFolder] logout];
-    }
+    [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
     
     [SVProgressHUD dismiss];
     
@@ -414,13 +413,16 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
+    CGPoint buttonPosition;
+    NSIndexPath *indexPath;
     MEGANode *node = nil;
     if ([self.searchDisplayController isActive]) {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.searchDisplayController.searchResultsTableView];
+        indexPath = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:buttonPosition];
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
         node = [_nodeList nodeAtIndex:indexPath.row];
     }
     
@@ -515,9 +517,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) { //Decryption key
         if (buttonIndex == 0) {
-            if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-                [[MEGASdkManager sharedMEGASdkFolder] logout];
-            }
+            [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
             
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -601,40 +601,17 @@
     
     if ([node type] == MEGANodeTypeFile) {
         if ([node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-            if (!thumbnailExists) {
-                [[MEGASdkManager sharedMEGASdkFolder] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
-                [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
-            } else {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-            }
+            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdkFolder] cell:cell];
         } else {
             [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         }
         
-        struct tm *timeinfo;
-        char buffer[80];
-        
-        time_t rawtime = [[node modificationTime] timeIntervalSince1970];
-        timeinfo = localtime(&rawtime);
-        
-        strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
-        
-        NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-        NSString *size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
-        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", size, date];
-        
-        cell.infoLabel.text = sizeAndDate;
+        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
         
     } else if ([node type] == MEGANodeTypeFolder) {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
         
-        NSInteger files = [[MEGASdkManager sharedMEGASdkFolder] numberChildFilesForParent:node];
-        NSInteger folders = [[MEGASdkManager sharedMEGASdkFolder] numberChildFoldersForParent:node];
-        
-        NSString *filesAndFolders = [@"" stringByFiles:files andFolders:folders];
-        cell.infoLabel.text = filesAndFolders;
+        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
     
     [cell.thumbnailImageView.layer setCornerRadius:4];
@@ -1076,7 +1053,7 @@
                 if ([request type] == MEGARequestTypeLogin) {
                     [self showUnavailableLinkView];
                 } else if ([request type] == MEGARequestTypeFetchNodes) {
-                    [[MEGASdkManager sharedMEGASdkFolder] logout];
+                    [api logout];
                     [self showUnavailableLinkView];
                 }
                 break;
@@ -1090,14 +1067,14 @@
         case MEGARequestTypeLogin: {
             isLoginDone = YES;
             isFetchNodesDone = NO;
-            [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:self];
+            [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
             
             if ([request flag]) { //Invalid key
-                [[MEGASdkManager sharedMEGASdkFolder] logout];
+                [api logout];
                 
                 [SVProgressHUD dismiss];
                 
@@ -1115,7 +1092,7 @@
             [_importBarButtonItem setEnabled:YES];
             [_downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+                [api pauseTransfers:YES];
             }
             [SVProgressHUD dismiss];
             break;
@@ -1128,25 +1105,11 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *ntvc in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                    }
-                }
-            }
-            
-            for (NodeTableViewCell *ntvc in [self.searchDisplayController.searchResultsTableView visibleCells]) {
-                if ([request nodeHandle] == [ntvc nodeHandle]) {
-                    MEGANode *node = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[request nodeHandle]];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (fileExists) {
-                        [ntvc.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-                    }
+            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+            for (NodeTableViewCell *nodeTableViewCell in [tableView visibleCells]) {
+                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
                 }
             }
             break;

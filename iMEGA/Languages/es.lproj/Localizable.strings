@@ -587,7 +587,7 @@
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nueva contraseña";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Confirma la contraseña";
+"confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Tu contraseña ha sido cambiada.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */

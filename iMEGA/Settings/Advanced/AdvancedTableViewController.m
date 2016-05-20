@@ -19,15 +19,22 @@
  * program.
  */
 
+#import "AdvancedTableViewController.h"
+
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "Helper.h"
 
-#import "AdvancedTableViewController.h"
+#import "SVProgressHUD.h"
+
 
 @interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
+
+
+@property (nonatomic, copy) NSString *offlineSizeString;
+@property (nonatomic, copy) NSString *cacheSizeString;
 
 @end
 
@@ -42,6 +49,9 @@
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"AdvancedCell"];
+    
+    self.offlineSizeString = [[NSString alloc] init];
+    self.cacheSizeString = [[NSString alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,13 +59,33 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [self.tableView reloadData];
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+}
+
+- (void)reloadUI {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+        self.offlineSizeString = [byteCountFormatter stringFromByteCount:offlineSize];
+        self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
+        
+        long long thumbnailsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"]];
+        long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
+        long long cacheSize = thumbnailsSize + previewsSize;
+        
+        self.cacheSizeString = [byteCountFormatter stringFromByteCount:cacheSize];
+        self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [self.tableView reloadData];
+        });
+    });
+    
 }
 
 #pragma mark - Private Methods
@@ -117,22 +147,12 @@
     NSString *titleFooter;
     switch (section) {
         case 0: { //Offline
-            long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
-            NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:offlineSize];
-            stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
-            const char *cString = [stringFromByteCount cStringUsingEncoding:NSUTF8StringEncoding];
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), cString];
+            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), [self.offlineSizeString UTF8String]];
             break;
         }
             
         case 1: { //Cache
-            long long thumbnailsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"]];
-            long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-            long long cacheSize = thumbnailsSize + previewsSize;
-            NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:cacheSize];
-            stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
-            const char *cString = [stringFromByteCount cStringUsingEncoding:NSUTF8StringEncoding];
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), cString];
+            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), [self.cacheSizeString UTF8String]];
             break;
         }
             
@@ -181,23 +201,37 @@
     switch (indexPath.section) {
         case 0: { //Offline
             NSString *offlinePathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSError *error = nil;
-            if (![[NSFileManager defaultManager] removeItemAtPath:offlinePathString error:&error]) {
-                MEGALogError(@"Remove item at path: %@", error);
-            }
-            [[MEGAStore shareInstance] removeAllOfflineNodes];
-            [self.tableView reloadData];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self deleteFolderContentsInPath:offlinePathString];
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [SVProgressHUD dismiss];
+                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                    [[MEGAStore shareInstance] removeAllOfflineNodes];
+                    [self reloadUI];
+                });
+            });
             break;
         }
             
         case 1: { //Cache
             NSString *thumbnailsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
-            [self deleteFolderContentsInPath:thumbnailsPathString];
+            NSString *previewsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
             
-             NSString *previewsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-            [self deleteFolderContentsInPath:previewsPathString];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                [self deleteFolderContentsInPath:thumbnailsPathString];
+                [self deleteFolderContentsInPath:previewsPathString];
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [SVProgressHUD dismiss];
+                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                    [[MEGAStore shareInstance] removeAllOfflineNodes];
+                    [self reloadUI];
+                });
+            });
             
-            [self.tableView reloadData];
             break;
         }
             
@@ -207,7 +241,6 @@
                                                                          delegate:self
                                                                 cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                                 otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-            [emptyRubbishBinAlertView setDelegate:self];
             [emptyRubbishBinAlertView show];
             break;
         }
