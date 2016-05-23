@@ -22,6 +22,8 @@
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
@@ -174,18 +176,20 @@
     }
     
     if (currentPage == 1 || currentPage == 2) {
-        NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
+        NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+        
+        NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
         NSNumber *number = [numberFormatter numberFromString:firstPartString];
         firstPartString = [numberFormatter stringFromNumber:number];
-        
+
         if ([firstPartString length] == 0) {
-            firstPartString = [self stringWithoutUnit:stringFromByteCount];
+            firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
         }
         
         firstPartRange = [firstPartString rangeOfString:firstPartString];
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         
-        NSString *secondPartString = [self stringWithoutCount:stringFromByteCount];
+        NSString *secondPartString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
         secondPartRange = [secondPartString rangeOfString:secondPartString];
         secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     }
@@ -209,7 +213,8 @@
     NSMutableAttributedString *firstFractionalPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     
-    NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
     NSRange firstPartRange;
     
     NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
@@ -228,11 +233,11 @@
                                                            range:firstFractionalPartRange];
         [firstPartMutableAttributedString appendAttributedString:firstFractionalPartMutableAttributedString];
         
-        secondPartString = [self stringWithoutCount:stringFromByteCount];
+        secondPartString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
     } else {
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         firstPartRange = [firstPartString rangeOfString:firstPartString];
-        secondPartString = [NSString stringWithFormat:@" %@", [self stringWithoutCount:stringFromByteCount]];
+        secondPartString = [NSString stringWithFormat:@" %@", [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
     }
     NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
@@ -251,33 +256,6 @@
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
     
     return firstPartMutableAttributedString;
-}
-
-- (NSString *)stringWithoutUnit:(NSString *)stringFromByteCount {
-    
-    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:0];
-    if ([string isEqualToString:@"Zero"] || ([string length] == 0)) {
-        string = @"0";
-    }
-    return string;
-}
-
-- (NSString *)stringWithoutCount:(NSString *)stringFromByteCount {
-    
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *string;
-    
-    if (componentsSeparatedByStringArray.count == 1) {
-        string = @"KB";
-    } else {
-        string = [componentsSeparatedByStringArray objectAtIndex:1];
-        
-        if ([string isEqualToString:@"bytes"] || ([string length] == 0)) {
-            string = @"KB";
-        }
-    }
-    
-    return string;
 }
 
 #pragma mark - IBActions

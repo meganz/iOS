@@ -21,6 +21,8 @@
 
 #import "AdvancedTableViewController.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "Helper.h"
@@ -102,12 +104,11 @@
 }
 
 - (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
-    NSArray *componentsArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *countString = [componentsArray objectAtIndex:0];
-    if ([countString isEqualToString:@"Zero"] || ([countString length] == 0)) {
-        countString = @"0";
-    }
-    return [NSString stringWithFormat:@"%@ %@", countString, [componentsArray objectAtIndex:1]];
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
+    NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
+    
+    return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
 #pragma mark - UIAlertViewDelegate
