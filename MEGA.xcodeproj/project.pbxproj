@@ -133,6 +133,7 @@
 		E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E11B55657E00ECEFDF /* MyAccountViewController.m */; };
 		E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */; };
 		E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E81B566EC400ECEFDF /* UsageViewController.m */; };
+		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */; };
@@ -435,6 +436,8 @@
 		E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyAccount.storyboard; sourceTree = "<group>"; };
 		E889C9E71B566EC400ECEFDF /* UsageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageViewController.h; sourceTree = "<group>"; };
 		E889C9E81B566EC400ECEFDF /* UsageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsageViewController.m; sourceTree = "<group>"; };
+		E88E6D7E1CF355FA00C9AD9E /* UIColor+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MNZCategory.h"; sourceTree = "<group>"; };
+		E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MNZCategory.m"; sourceTree = "<group>"; };
 		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
@@ -983,6 +986,8 @@
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
 				41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */,
 				41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */,
+				E88E6D7E1CF355FA00C9AD9E /* UIColor+MNZCategory.h */,
+				E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1373,6 +1378,7 @@
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				41E566891BBD6160007569A2 /* CTAssetItemViewController.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
+				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,

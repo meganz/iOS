@@ -25,7 +25,6 @@
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
-#import "Helper.h"
 
 #import "CameraUploadsPopUpViewController.h"
 #import "CameraUploads.h"
@@ -70,13 +69,13 @@
     
     [_skipButton.layer setBorderWidth:2.0f];
     [_skipButton.layer setCornerRadius:4.0f];
-    [_skipButton.layer setBorderColor:[megaGray CGColor]];
+    [_skipButton.layer setBorderColor:[[UIColor mnz_gray999999] CGColor]];
     [_skipButton.layer setMasksToBounds:YES];
     [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
     [_enableButton.layer setBorderWidth:2.0f];
     [_enableButton.layer setCornerRadius:4.0f];
-    [_enableButton.layer setBorderColor:[megaRed CGColor]];
+    [_enableButton.layer setBorderColor:[[UIColor mnz_redD90007] CGColor]];
     [_enableButton.layer setMasksToBounds:YES];
     [_enableButton setTitle:AMLocalizedString(@"ok", nil) forState:UIControlStateNormal];
 }

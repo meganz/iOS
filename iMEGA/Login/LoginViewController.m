@@ -22,7 +22,6 @@
 #import "LoginViewController.h"
 #import "SVProgressHUD.h"
 #import "SSKeychain.h"
-#import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
@@ -53,7 +52,7 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
+    [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
 }

@@ -43,21 +43,6 @@
 
 #define kFont @"SFUIText-Light"
 
-#define megaOrange      [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0.0 alpha:1.0]
-#define megaPink        [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0]
-#define megaRed         [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0]
-#define megaGreen       [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0]
-#define megaBlue        [UIColor colorWithRed:43.0/255.0 green:166.0/255.0 blue:222.0/255.0 alpha:1.0]
-
-#define megaInfoGray    [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0]
-#define megaGray        [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]
-#define megaMediumGray  [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0]
-#define megaDarkGray    [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0]
-
-#define megaBlack       [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0]
-
-#define megaLightGray   [UIColor colorWithWhite:0.933 alpha:1.000]
-
 #pragma mark - Device
 
 #define iPhone4X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 480)

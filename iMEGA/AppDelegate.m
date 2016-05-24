@@ -382,26 +382,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)setupAppearance {    
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
-    [[UINavigationBar appearance] setTintColor:megaRed];
-    [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance] setTintColor:megaRed];
+    [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaMediumGray} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
     
-    [[UITextField appearance] setTintColor:megaRed];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
+    [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
-    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
+    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:[UIColor mnz_redD90007]];
     
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
     [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setBackgroundColor:megaInfoGray];
-    [SVProgressHUD setForegroundColor:megaDarkGray];
+    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
@@ -791,7 +791,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
     NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
     [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
     [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     return cancelBarButtonItem;
 }

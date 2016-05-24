@@ -240,7 +240,7 @@
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -280,7 +280,7 @@
     for (UIView *subview in actionSheet.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
         }
     }
 }
@@ -368,7 +368,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -387,7 +387,7 @@
         text = AMLocalizedString(@"addContacts", nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:megaMediumGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

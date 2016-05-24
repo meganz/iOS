@@ -84,7 +84,7 @@
             break;
     }
     
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
     
     return titleTextAttributesDictionary;
 }
@@ -187,7 +187,7 @@
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
 
     return cell;

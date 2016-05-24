@@ -136,7 +136,7 @@
         
         NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
         [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                value:megaRed
+                                                value:[UIColor mnz_redD90007]
                                                 range:[subtitle rangeOfString:subtitle]];
         [subtitleMutableAttributedString addAttribute:NSFontAttributeName
                                                 value:[UIFont fontWithName:kFont size:12.0]
@@ -173,7 +173,7 @@
     [unavailableLinkView.titleLabel setText:title];
     [unavailableLinkView.textView setText:text];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
-    [unavailableLinkView.textView setTextColor:megaDarkGray];
+    [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
     if (iPhone4X && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
@@ -488,7 +488,7 @@
         }
     }
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
