@@ -228,7 +228,6 @@
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [[MEGAStore shareInstance] removeAllOfflineNodes];
                     [self reloadUI];
                 });
             });

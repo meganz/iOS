@@ -141,6 +141,7 @@
                  if (error) {
                      MEGALogError(@"Request image data for asset: %@", error);
                  }
+                 MEGALogDebug(@"There are not image data - Info: %@", info);
                  [self disableCameraUploadWithError:error];
                  return;
              }
@@ -163,6 +164,7 @@
                  if (error) {
                      MEGALogError(@"Request avasset for video: %@", error);
                  }
+                 MEGALogDebug(@"There are not avasset - Info: %@", info);
                  [self disableCameraUploadWithError:error];
                  return;
              }
@@ -266,6 +268,7 @@
 }
 
 - (NSString *)filePathWithInfo:(NSDictionary *)info {
+    MEGALogDebug(@"Photo asset info: %@", info);
     NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
     if (!url) {
         url = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
