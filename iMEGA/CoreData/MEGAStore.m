@@ -23,15 +23,15 @@
 
 @interface MEGAStore ()
 
+@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
 - (void)initMEGAStore;
 
 @end
 
-@implementation MEGAStore {
-    NSManagedObjectModel *managedObjectModel;
-    NSManagedObjectContext *managedObjectContext;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator;
-}
+@implementation MEGAStore
 
 static MEGAStore *_megaStore = nil;
 
@@ -55,53 +55,23 @@ static MEGAStore *_megaStore = nil;
 }
 
 - (void)initMEGAStore {
-    //Init all core data model
-    [self managedObjectContext];
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext {
-    if (managedObjectContext != nil) {
-        return managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return managedObjectContext;
-}
-
-- (NSManagedObjectModel *)managedObjectModel {
-    if (managedObjectModel != nil) {
-        return managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"MEGACD" withExtension:@"momd"];
-    managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return managedObjectModel;
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (persistentStoreCoordinator != nil) {
-        return persistentStoreCoordinator;
-    }
-    
+    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
     
     NSError *error = nil;
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSDictionary *options = @{
-                              NSMigratePersistentStoresAutomaticallyOption : @YES,
-                              NSInferMappingModelAutomaticallyOption : @YES
-                              };
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+    NSDictionary *options = @{ NSMigratePersistentStoresAutomaticallyOption : @YES,
+                              NSInferMappingModelAutomaticallyOption : @YES };
+    
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+        MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
-    return persistentStoreCoordinator;
+    if (_persistentStoreCoordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    }
 }
 
 - (NSURL *)applicationSupportDirectory {
@@ -110,100 +80,90 @@ static MEGAStore *_megaStore = nil;
 
 - (void)saveContext {
     NSError *error = nil;
-    NSManagedObjectContext *moc = managedObjectContext;
-    if (moc != nil) {
-        if ([moc hasChanges] && ![moc save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+    if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
+        MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
     }
 }
 
 #pragma mark - MOOfflineNode entity
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path {
-    MOOfflineNode *offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+    MOOfflineNode *offlineNode = [NSEntityDescription insertNewObjectForEntityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
 
     [offlineNode setBase64Handle:node.base64Handle];
     [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
     [offlineNode setLocalPath:path];
     [offlineNode setFingerprint:[api fingerprintForNode:node]];
+
+    MEGALogDebug(@"Save context: base64 handle: %@ - local path: %@", node.base64Handle, path);
     
      [self saveContext];
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path {
-    NSEntityDescription *entityDescription = [NSEntityDescription
-                                              entityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
     [request setEntity:entityDescription];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"localPath == %@", path];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localPath == %@", path];
     [request setPredicate:predicate];
     
     NSError *error;
-    NSArray *array = [managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
 
     return [array firstObject];
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithBase64Handle:(NSString *)base64Handle {
-    NSEntityDescription *entityDescription = [NSEntityDescription
-                                              entityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
     [request setEntity:entityDescription];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"base64Handle == %@", base64Handle];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64Handle == %@", base64Handle];
     [request setPredicate:predicate];
     
     NSError *error;
-    NSArray *array = [managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
 }
 
 - (MOOfflineNode *)fetchOfflineNodeWithFingerprint:(NSString *)fingerprint {
-    NSEntityDescription *entityDescription = [NSEntityDescription
-                                              entityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
     [request setEntity:entityDescription];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"fingerprint == %@", fingerprint];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
     [request setPredicate:predicate];
     
     NSError *error;
-    NSArray *array = [managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
 }
 
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
-    [managedObjectContext deleteObject:offlineNode];
+    [self.managedObjectContext deleteObject:offlineNode];
     [self saveContext];
 }
 
 - (void)removeAllOfflineNodes {
     NSFetchRequest *allOfflineNodes = [[NSFetchRequest alloc] init];
-    [allOfflineNodes setEntity:[NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:managedObjectContext]];
+    [allOfflineNodes setEntity:[NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext]];
     [allOfflineNodes setIncludesPropertyValues:NO]; //only fetch the managedObjectID
     
     NSError *error = nil;
-    NSArray *offlineNodes = [managedObjectContext executeFetchRequest:allOfflineNodes error:&error];
+    NSArray *offlineNodes = [self.managedObjectContext executeFetchRequest:allOfflineNodes error:&error];
 
     for (NSManagedObject *offNode in offlineNodes) {
-        [managedObjectContext deleteObject:offNode];
+        [self.managedObjectContext deleteObject:offNode];
     }
-    NSError *saveError = nil;
-    [managedObjectContext save:&saveError];
+    
+    [self saveContext];
 }
 
 @end
