@@ -37,7 +37,6 @@
 #import "CloudDriveTableViewController.h"
 #import "NodeTableViewCell.h"
 #import "DetailsNodeInfoViewController.h"
-#import "MEGAPreview.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "BrowserViewController.h"
@@ -429,8 +428,7 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
+                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
                             [self.cloudImages addObject:photo];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -448,8 +446,7 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
+                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
                             [self.cloudImages addObject:photo];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -889,7 +886,7 @@
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     if (index < self.cloudImages.count) {
-        MEGAPreview *preview = [self.cloudImages objectAtIndex:index];
+        MWPhoto *preview = [self.cloudImages objectAtIndex:index];
         preview.isGridMode = NO;
         return preview;
     }
@@ -898,7 +895,7 @@
 }
 
 - (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
-    MEGAPreview *thumbnail = [self.cloudImages objectAtIndex:index];
+    MWPhoto *thumbnail = [self.cloudImages objectAtIndex:index];
     thumbnail.isGridMode = YES;
     return thumbnail;
 }

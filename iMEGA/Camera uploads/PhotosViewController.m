@@ -28,7 +28,6 @@
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
 #import "Helper.h"
-#import "MEGAPreview.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "CameraUploads.h"
@@ -473,8 +472,7 @@
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
         if (isImage([n name].pathExtension)) {
-            MEGAPreview *preview = [MEGAPreview photoWithNode:n];
-            preview.caption = [n name];
+            MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
             [self.previewsArray addObject:preview];
         }
     }
