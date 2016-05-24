@@ -29,7 +29,6 @@
 
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "MEGAPreview.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -693,9 +692,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -714,9 +712,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
