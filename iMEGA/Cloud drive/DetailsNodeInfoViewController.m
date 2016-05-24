@@ -376,7 +376,7 @@
     NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", accessTypeString];
     NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
     [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:megaRed
+                                            value:[UIColor mnz_redD90007]
                                             range:[subtitle rangeOfString:subtitle]];
     [subtitleMutableAttributedString addAttribute:NSFontAttributeName
                                             value:[UIFont fontWithName:kFont size:12.0]
@@ -694,7 +694,7 @@
             NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", nil)];
             NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];
             [ownerMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                 value:megaRed
+                                                 value:[UIColor mnz_redD90007]
                                                  range:[owner rangeOfString:owner]];
             
             NSMutableAttributedString *userNameMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.userName];
@@ -718,7 +718,7 @@
             
             NSMutableAttributedString *xContactsMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:xContacts];
             [xContactsMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                     value:megaRed
+                                                     value:[UIColor mnz_redD90007]
                                                      range:[xContacts rangeOfString:xContacts]];
             
             NSMutableAttributedString *sharedWithMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:sharedWith];
@@ -871,7 +871,7 @@
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     
     return cell;

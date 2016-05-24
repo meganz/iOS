@@ -207,10 +207,10 @@
         }
         if ([transfer type] == MEGATransferTypeDownload) {
             [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
-            [cell.percentageLabel setTextColor:megaGreen];
+            [cell.percentageLabel setTextColor:[UIColor mnz_green31B500]];
         } else {
             [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
-            [cell.percentageLabel setTextColor:megaBlue];
+            [cell.percentageLabel setTextColor:[UIColor mnz_blue2BA6DE]];
         }
         
     } else { //QUEUED TRANSFERS
@@ -285,7 +285,7 @@
     [cell.iconImageView setImage:[Helper imageForExtension:fileName.pathExtension]];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
@@ -704,7 +704,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -808,10 +808,10 @@
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if ([transfer type] == MEGATransferTypeDownload) {
             [cell.arrowImageView setImage:[Helper downloadingTransferImage]];
-            [cell.percentageLabel setTextColor:megaGreen];
+            [cell.percentageLabel setTextColor:[UIColor mnz_green31B500]];
         } else {
             [cell.arrowImageView setImage:[Helper uploadingTransferImage]];
-            [cell.percentageLabel setTextColor:megaBlue];
+            [cell.percentageLabel setTextColor:[UIColor mnz_blue2BA6DE]];
         }
         [cell.percentageLabel setText:percentageCompleted];
         [cell.speedLabel setText:speed];

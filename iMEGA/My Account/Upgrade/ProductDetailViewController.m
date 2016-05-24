@@ -1,7 +1,6 @@
 
 #import "ProductDetailViewController.h"
 #import "ProductDetailTableViewCell.h"
-#import "Helper.h"
 #import "MEGAPurchase.h"
 #import "AppDelegate.h"
 
@@ -30,26 +29,26 @@
     switch (_megaAccountType) {
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
-            [_headerView setBackgroundColor:megaOrange];
+            [_headerView setBackgroundColor:[UIColor mnz_orangeFFA500]];
             [self setTitle:@"LITE"];
-            self.selectMembershiptLabel.textColor = megaOrange;
+            self.selectMembershiptLabel.textColor = [UIColor mnz_orangeFFA500];
             break;
             
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
-            [_headerView setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0]];
+            [_headerView setBackgroundColor:[UIColor mnz_redE13339]];
             [self setTitle:@"PRO I"];
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
-            [_headerView setBackgroundColor:[UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0]];
+            [_headerView setBackgroundColor:[UIColor mnz_redDC191F]];
             [self setTitle:@"PRO II"];
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
-            [_headerView setBackgroundColor:megaRed];
+            [_headerView setBackgroundColor:[UIColor mnz_redD90007]];
             [self setTitle:@"PRO III"];
             break;
             
@@ -61,7 +60,7 @@
     [_bandwidthSizeLabel setText:_bandwidthString];
     
     UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(restore)];
-    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateNormal];
+    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
     
     [[MEGAPurchase sharedInstance] setDelegate:self];

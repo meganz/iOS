@@ -64,7 +64,7 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
-    [self.termsOfServiceButton setTitleColor:megaRed forState:UIControlStateNormal];
+    [self.termsOfServiceButton setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     if (iPhone4X || iPhone5X) {
         [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
@@ -72,7 +72,7 @@
     
     self.createAccountButton.layer.cornerRadius = 4.0f;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
+    [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
@@ -174,7 +174,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:URL];
-        [webViewController setBarsTintColor:megaRed];
+        [webViewController setBarsTintColor:[UIColor mnz_redD90007]];
         [self presentViewController:webViewController animated:YES completion:nil];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];    }

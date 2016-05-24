@@ -420,7 +420,7 @@
     cell.nodeHandle = [node handle];
     
     if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
-        cell.thumbnailImageView.layer.borderColor = [megaRed CGColor];
+        cell.thumbnailImageView.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
         cell.thumbnailImageView.layer.borderWidth = 3.0;
         [cell.thumbnailImageView.layer setOpacity:0.6];
     } else {
@@ -596,7 +596,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -626,7 +626,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:megaMediumGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

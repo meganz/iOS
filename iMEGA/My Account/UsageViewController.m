@@ -250,7 +250,7 @@
                                               value:[UIFont fontWithName:kFont size:12.0]
                                               range:secondPartRange];
     [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                              value:megaMediumGray
+                                              value:[UIColor mnz_gray777777]
                                               range:secondPartRange];
     
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
@@ -316,7 +316,7 @@
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
     switch (index) {
         case 0: //Cloud Drive
-            return megaBlue;
+            return [UIColor mnz_blue2BA6DE];
             break;
             
         case 1:
@@ -326,15 +326,15 @@
             break;
             
         case 2: //Rubbish Bin
-            return megaGreen;
+            return [UIColor mnz_green31B500];
             break;
             
         case 4: //Incoming Shares
-            return megaOrange;
+            return [UIColor mnz_orangeFFA500];
             break;
             
         default: //Available space
-            return megaInfoGray;
+            return [UIColor mnz_grayF7F7F7];
             break;
     }
 }
