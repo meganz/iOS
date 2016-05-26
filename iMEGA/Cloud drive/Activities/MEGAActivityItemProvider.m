@@ -37,7 +37,7 @@
 
 @implementation MEGAActivityItemProvider
 
-- (id)initWithPlaceholderString:(NSString*)placeholder node:(MEGANode *)node {
+- (instancetype)initWithPlaceholderString:(NSString*)placeholder node:(MEGANode *)node {
     self = [super initWithPlaceholderItem:placeholder];
     if (self) {
         _node = node;
@@ -49,7 +49,8 @@
 - (id)item {
     
     NSString *activityType = [self activityType];
-    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]);
+    
+    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]);
     if (activityValue) {
         semaphore = dispatch_semaphore_create(0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -73,7 +74,7 @@
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     
-    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]) {
+    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]) {
         return nil;
     }
     
