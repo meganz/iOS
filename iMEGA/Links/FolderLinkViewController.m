@@ -46,7 +46,7 @@
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -722,7 +722,7 @@
                     }
                 }
                 
-                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];
                 
                 photoBrowser.displayActionButton = YES;
                 photoBrowser.displayNavArrows = YES;
@@ -977,20 +977,6 @@
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return 40.0f;
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.cloudImages.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.cloudImages.count) {
-        return [self.cloudImages objectAtIndex:index];
-    }
-    
-    return nil;
 }
 
 #pragma mark - MEGAGlobalDelegate

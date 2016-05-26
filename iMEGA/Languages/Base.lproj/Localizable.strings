@@ -254,6 +254,10 @@
 "savedForOffline"="Saved for Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox is reserved for use by Apple.";
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Save Image";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Save Images";
 /* List option shown on the details of a file or folder */
 "getLink"="Get link";
 /* Message shown when a link to the file is being generated */
@@ -718,3 +722,5 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

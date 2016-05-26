@@ -24,7 +24,7 @@
 }
 
 - (NSString *)activityTitle {
-    return AMLocalizedString(@"saveToCameraRollActivity", nil);
+    return AMLocalizedString(@"saveImage", nil);
 }
 
 - (UIImage *)activityImage {
@@ -55,11 +55,15 @@
     if (!error) {
         NSString *imagePath = CFBridgingRelease(contextInfo);
         [[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudSuccess"] status:AMLocalizedString(@"savedInCameraRoll", nil)];
     }
 }
 
-
 #pragma mark - MEGATransferDelegate
+
+- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    [SVProgressHUD show];
+}
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     UIImage *image = [UIImage imageWithContentsOfFile:transfer.path];
