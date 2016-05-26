@@ -91,6 +91,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
+@property (nonatomic) NSUInteger remainingOperations;
+
+@property (strong, nonatomic) NSString *exportedLinks;
+
 @end
 
 @implementation AppDelegate
@@ -400,6 +404,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
     [SVProgressHUD setRingThickness:2.0];
+    [SVProgressHUD setRingNoTextRadius:18.0];
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
@@ -1014,6 +1019,33 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
             
+        case MEGARequestTypeExport: {
+            if (self.remainingOperations == 0) {
+                self.exportedLinks = @"";
+                
+                if ([_mainTBC.selectedViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = _mainTBC.selectedViewController;
+                    if ([navigationController.topViewController respondsToSelector:@selector(setEditing:animated:)]) {
+                        [navigationController.topViewController performSelector:@selector(setEditing:animated:) withObject:@(NO) withObject:@(YES)];
+                    }
+                }
+            }
+            
+            self.remainingOperations += 1;
+            
+            if (![SVProgressHUD isVisible]) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+                
+                if ([request access]) {
+                    NSString *status = ([Helper totalOperations] > 1) ? AMLocalizedString(@"generatingLinks", nil) : AMLocalizedString(@"generatingLink", nil);
+                    [SVProgressHUD showWithStatus:status];
+                } else {
+                    [SVProgressHUD show];
+                }
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1275,6 +1307,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isOverquota = NO;
             }
             
+            break;
+        }
+            
+        case MEGARequestTypeExport: {
+            self.remainingOperations -= 1;
+            
+            if ([request access] && [Helper copyToPasteboard]) {
+                NSString *link = [NSString stringWithFormat:@"%@\n\n", [request link]];
+                self.exportedLinks = [self.exportedLinks stringByAppendingString:link];
+            }
+            
+            if (self.remainingOperations == 0) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                
+                NSString *status;
+                BOOL areSeveralOperations = ([Helper totalOperations] > 1);
+                if ([request access]) { //Export link
+                    if ([Helper copyToPasteboard]) {
+                        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                        [pasteboard setString:self.exportedLinks];
+                        
+                        status = areSeveralOperations ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+                        [SVProgressHUD showSuccessWithStatus:status];
+                    } else {
+                        [SVProgressHUD dismiss];
+                    }
+                } else { //Disable link
+                    status = areSeveralOperations ? AMLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                    [SVProgressHUD showSuccessWithStatus:status];
+                }
+            }
             break;
         }
             

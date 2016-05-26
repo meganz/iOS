@@ -24,23 +24,25 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "PhotosViewController.h"
-#import "PhotoCollectionViewCell.h"
-#import "HeaderCollectionReusableView.h"
 #import "Helper.h"
 #import "MEGAPreview.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
-#import "CameraUploads.h"
-#import "CameraUploadsTableViewController.h"
-#import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
 
+#import "PhotosViewController.h"
+#import "PhotoCollectionViewCell.h"
+#import "HeaderCollectionReusableView.h"
+#import "CameraUploads.h"
+#import "CameraUploadsTableViewController.h"
+#import "BrowserViewController.h"
+
 @interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
-    NSMutableArray *exportLinks;
+
     NSUInteger remainingOperations;
+    
     NSUInteger itemsPerRow;
 }
 
@@ -294,7 +296,7 @@
         
     } else {
         [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:((self.selectedItemsDictionary.count < 100) ? YES : NO)];
         [self.moveBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
     }
@@ -349,13 +351,9 @@
     [self setEditing:NO animated:YES];
 }
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    exportLinks = [NSMutableArray new];
-    remainingOperations = self.selectedItemsDictionary.count;
-    
-    for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:n delegate:self];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues button:self.shareBarButtonItem];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
@@ -549,7 +547,7 @@
             [self.navigationItem setTitle:message];
             
             [self.downloadBarButtonItem setEnabled:YES];
-            [self.shareBarButtonItem setEnabled:YES];
+            [self.shareBarButtonItem setEnabled:((self.selectedItemsDictionary.count < 100) ? YES : NO)];
             [self.moveBarButtonItem setEnabled:YES];
             [self.deleteBarButtonItem setEnabled:YES];
         } else {
@@ -704,14 +702,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            break;
-            
-        default:
-            break;
-    }
+    
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -737,22 +728,6 @@
                 NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
 //                [self setEditing:NO animated:NO];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeExport: {
-            remainingOperations--;
-            
-            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
-            [exportLinks addObject:link];
-            
-            if (remainingOperations == 0) {
-                [SVProgressHUD dismiss];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-                [self presentViewController:activityVC animated:YES completion:nil];
-                [self setEditing:NO animated:NO];
             }
             break;
         }

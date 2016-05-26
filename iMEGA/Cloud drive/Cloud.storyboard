@@ -362,16 +362,16 @@
                         <action selector="downloadAction:" destination="KWY-Kr-BLD" id="V22-wQ-dVZ"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="getLink" width="32" id="Rdk-Wp-1bg" userLabel="Share Bar Button Item">
+                <barButtonItem enabled="NO" image="shareGray" width="32" id="Rdk-Wp-1bg" userLabel="Share Bar Button Item">
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="shareLinkAction:" destination="KWY-Kr-BLD" id="i2Y-ev-jUX"/>
+                        <action selector="shareAction:" destination="KWY-Kr-BLD" id="o8Q-OC-GAY"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="move" width="32" id="paI-37-wBm" userLabel="Move Copy Bar Button Item">
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="moveCopyAction:" destination="KWY-Kr-BLD" id="mlv-kz-aJ5"/>
+                        <action selector="moveAction:" destination="KWY-Kr-BLD" id="NPC-WU-1W3"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="rename" width="32" id="Bnc-QN-zeY" userLabel="Rename Bar Button Item">
@@ -1006,11 +1006,11 @@
         <image name="cloudDriveIcon" width="34" height="25"/>
         <image name="download" width="32" height="32"/>
         <image name="edit" width="22" height="22"/>
-        <image name="getLink" width="32" height="32"/>
         <image name="move" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="rename" width="32" height="32"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="shareGray" width="32" height="32"/>
         <image name="shareRed" width="16" height="22"/>
         <image name="sortBy" width="22" height="22"/>
         <image name="video_list" width="22" height="22"/>
