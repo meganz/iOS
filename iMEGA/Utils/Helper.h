@@ -52,6 +52,12 @@
 #define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1024)
 #define iPadPro     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)
 
+typedef NS_OPTIONS(NSUInteger, NodesAre) {
+    NodesAreFiles    = 1 << 0,
+    NodesAreFolders  = 1 << 1,
+    NodesAreExported = 1 << 2
+};
+
 @interface Helper : NSObject
 
 #pragma mark - Languages
@@ -123,6 +129,11 @@
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
+
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem;
++ (NSUInteger)totalOperations;
++ (void)setCopyToPasteboard:(BOOL)boolValue;
++ (BOOL)copyToPasteboard;
 
 #pragma mark - Logout
 

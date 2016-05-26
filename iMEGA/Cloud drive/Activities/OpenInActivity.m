@@ -22,17 +22,17 @@
 #import "OpenInActivity.h"
 #import "Helper.h"
 
-@interface OpenInActivity () <UIDocumentInteractionControllerDelegate> {
-    UIDocumentInteractionController *documentInteractionController;
-    UIBarButtonItem *openInBarButtonItem;
-}
+@interface OpenInActivity () <UIDocumentInteractionControllerDelegate>
+
+@property (strong, nonatomic) UIBarButtonItem *shareBarButtonItem;
+@property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
 @end
 
 @implementation OpenInActivity
 
-- (id)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    openInBarButtonItem = barButtonItem;
+- (instancetype)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem {
+    _shareBarButtonItem = barButtonItem;
     
     return self;
 }
@@ -56,18 +56,17 @@
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
 
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
-        [documentInteractionController setDelegate:self];
+        self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
+        [self.documentInteractionController setDelegate:self];
     }
 }
 
 - (void)performActivity {
     
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:openInBarButtonItem animated:YES];
-        
+        BOOL canOpenIn = [self.documentInteractionController presentOpenInMenuFromBarButtonItem:self.shareBarButtonItem animated:YES];
         if (canOpenIn) {
-            [documentInteractionController presentPreviewAnimated:YES];
+            [self.documentInteractionController presentPreviewAnimated:YES];
         }
     } else {
         [self activityDidFinish:YES];

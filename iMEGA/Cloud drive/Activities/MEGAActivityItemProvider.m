@@ -84,17 +84,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport: {
-            if ([request access]) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -105,8 +94,6 @@
     switch ([request type]) {
         case MEGARequestTypeExport: {
             if ([request access]) {
-                [SVProgressHUD dismiss];
-                
                 _link = [request link];
                 
                 dispatch_semaphore_signal(semaphore);

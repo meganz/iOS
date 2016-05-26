@@ -234,10 +234,10 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="getLink" width="32" id="84D-T8-1ui" userLabel="Get Link Bar Button Item">
+                        <barButtonItem enabled="NO" image="shareGray" width="32" id="84D-T8-1ui" userLabel="Share Bar Button Item">
                             <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="shareLinkAction:" destination="3GS-cK-Hw6" id="9LL-5Z-Qod"/>
+                                <action selector="shareAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujf-9f-8Qy"/>
@@ -432,9 +432,9 @@
         <image name="check_mark" width="29" height="29"/>
         <image name="download" width="32" height="32"/>
         <image name="emptyCameraUploads" width="237" height="260"/>
-        <image name="getLink" width="32" height="32"/>
         <image name="move" width="32" height="32"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="shareGray" width="32" height="32"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
