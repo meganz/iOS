@@ -809,6 +809,10 @@ static BOOL copyToPasteboard;
             MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
             [activityItemsMutableArray addObject:activityItemProvider];
         }
+        
+        if (nodesArray.count == 1) {
+            [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
+        }
     }
     
     if (NodesAreExported == (nodesAre & NodesAreExported)) {
