@@ -74,11 +74,19 @@
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
     
+    if ([activityType isEqualToString:UIActivityTypeAirDrop]) {
+        return [NSURL URLWithString:self.link];
+    }
+    
     if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]) {
         return nil;
     }
     
     return _link;
+}
+
+- (UIImage *)activityViewController:(UIActivityViewController *)activityViewController thumbnailImageForActivityType:(NSString *)activityType suggestedSize:(CGSize)size {
+    return [UIImage imageNamed:@"AppIcon"];
 }
 
 #pragma mark - MEGARequestDelegate
