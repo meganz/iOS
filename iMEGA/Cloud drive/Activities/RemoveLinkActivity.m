@@ -27,8 +27,8 @@
 
 @interface RemoveLinkActivity ()
 
-@property (weak, nonatomic) MEGANode *node;
-@property (weak, nonatomic) NSArray *nodes;
+@property (strong, nonatomic) MEGANode *node;
+@property (strong, nonatomic) NSArray *nodes;
 
 @end
 

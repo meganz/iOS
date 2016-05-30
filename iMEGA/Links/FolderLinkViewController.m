@@ -344,7 +344,7 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
-    [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] logout];
     
     [SVProgressHUD dismiss];
     
@@ -492,6 +492,9 @@
             if ([_tableView isEditing]) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
+                if (self.parentNode == nil) {
+                    self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+                }
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
             }
             
@@ -517,7 +520,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) { //Decryption key
         if (buttonIndex == 0) {
-            [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
+            [[MEGASdkManager sharedMEGASdkFolder] logout];
             
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -1067,7 +1070,7 @@
         case MEGARequestTypeLogin: {
             isLoginDone = YES;
             isFetchNodesDone = NO;
-            [api fetchNodesWithDelegate:self];
+            [api fetchNodes];
             break;
         }
             
