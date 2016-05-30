@@ -121,7 +121,7 @@
 #pragma mark - Private
 
 - (void)setNavigationBarTitleLabel {
-    if (_navigationBarLabel == nil) {
+    if (_navigationBarLabel == nil && ([self.node name] != nil)) {
         NSString *title = [self.node name];
         NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
         [titleMutableAttributedString addAttribute:NSFontAttributeName
