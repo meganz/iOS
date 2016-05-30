@@ -51,7 +51,6 @@
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
-    UIAlertView *renameAlertView;
     
     NSUInteger remainingOperations;
     
@@ -76,7 +75,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *renameBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
@@ -145,14 +144,14 @@
         case DisplayModeContact:
             self.navigationItem.rightBarButtonItems = nil;
             [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
         
             
         case DisplayModeRubbishBin:
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem, self.sortByBarButtonItem];
             [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"remove"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             break;
         
         default:
@@ -371,16 +370,7 @@
         
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
         
-        [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? YES : NO)];
-        [self.moveBarButtonItem setEnabled:YES];
-        [self.deleteBarButtonItem setEnabled:YES];
-        
-        if (self.selectedNodesArray.count == 1) {
-            [self.renameBarButtonItem setEnabled:YES];
-        } else {
-            [self.renameBarButtonItem setEnabled:NO];
-        }
+        [self setToolbarActionsEnabled:YES];
         
         if (self.selectedNodesArray.count == self.nodes.size.integerValue) {
             allNodesSelected = YES;
@@ -556,13 +546,7 @@
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
         
         if (self.selectedNodesArray.count == 0) {
-            [self.downloadBarButtonItem setEnabled:NO];
-            [self.shareBarButtonItem setEnabled:NO];
-            [self.moveBarButtonItem setEnabled:NO];
-            [self.renameBarButtonItem setEnabled:NO];
-            [self.deleteBarButtonItem setEnabled:NO];
-        } else if (self.selectedNodesArray.count == 1) {
-            [self.renameBarButtonItem setEnabled:YES];
+            [self setToolbarActionsEnabled:NO];
         }
         
         allNodesSelected = NO;
@@ -586,11 +570,8 @@
     } else {
         self.selectedNodesArray = [NSMutableArray new];
         [self.selectedNodesArray addObject:node];
-        [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:YES];
-        [self.moveBarButtonItem setEnabled:YES];
-        [self.renameBarButtonItem setEnabled:YES];
-        [self.deleteBarButtonItem setEnabled:YES];
+        
+        [self setToolbarActionsEnabled:YES];
         
         isSwipeEditing = YES;
         
@@ -698,11 +679,7 @@
     if (!self.selectedNodesArray) {
         self.selectedNodesArray = [NSMutableArray new];
         
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.renameBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
+        [self setToolbarActionsEnabled:NO];
     }
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -987,81 +964,9 @@
 
 #pragma mark - UIAlertViewDelegate
 
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    BOOL shouldEnable;
-    if ([alertView tag] == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        NSString *newName = [textField text];
-        NSString *newNameExtension = [newName pathExtension];
-        NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
-        
-        MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-        NSString *nodeNameString = [node name];
-        NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
-        
-        switch ([node type]) {
-            case MEGANodeTypeFile: {
-                if ([newName isEqualToString:@""] ||
-                    [newName isEqualToString:nodeNameString] ||
-                    [newName isEqualToString:nodeNameExtension] ||
-                    ![[NSString stringWithFormat:@".%@", newNameExtension] isEqualToString:nodeNameExtension] || //Particular case, for example: (.jp == .jpg)
-                    [newNameWithoutExtension isEqualToString:nodeNameExtension]) {
-                    shouldEnable = NO;
-                } else {
-                    shouldEnable = YES;
-                }
-                break;
-            }
-                
-            case MEGANodeTypeFolder: {
-                if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString]) {
-                    shouldEnable = NO;
-                } else {
-                    shouldEnable = YES;
-                }
-                break;
-            }
-                
-            default:
-                shouldEnable = NO;
-                break;
-        }
-    } else {
-        shouldEnable = YES;
-    }
-    
-    return shouldEnable;
-}
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ([alertView tag] == 0) {
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        [textField setSelectedTextRange:nil];
-    }
-}
-
-
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
     switch ([alertView tag]) {
-        case 0: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
-                    UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-                    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-                    [[MEGASdkManager sharedMEGASdk] renameNode:node newName:[alertViewTextField text]];
-                    
-                    if ([self.searchDisplayController isActive]) {
-                        [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-                        [self.searchDisplayController.searchResultsTableView reloadData];
-                    }
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-                }
-            }
-            break;
-        }
-            
         case 1: {
             if (buttonIndex == 1) {
                 if ([MEGAReachabilityManager isReachable]) {
@@ -1290,49 +1195,6 @@
     }
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    BOOL shouldChangeCharacters = YES;
-    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-    switch ([node type]) {
-        case MEGANodeTypeFile: {
-            NSString *textFieldString = [textField text];
-            NSString *newName = [textFieldString stringByReplacingCharactersInRange:range withString:string];
-            NSString *newNameExtension = [newName pathExtension];
-            NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
-            
-            NSString *nodeNameString = [node name];
-            NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
-            
-            NSRange nodeWithoutExtensionRange = [[textFieldString stringByDeletingPathExtension] rangeOfString:[textFieldString stringByDeletingPathExtension]];
-            NSRange nodeExtensionStartRange = [textFieldString rangeOfString:@"." options:NSBackwardsSearch];
-            
-            if ((range.location > nodeExtensionStartRange.location) ||
-                (range.length > nodeWithoutExtensionRange.length) ||
-                ([newName isEqualToString:newNameExtension] && [newNameWithoutExtension isEqualToString:nodeNameExtension]) ||
-                ((range.location == nodeExtensionStartRange.location) && [string isEqualToString:@""])) {
-                
-                UITextPosition *beginning = textField.beginningOfDocument;
-                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:nodeExtensionStartRange.location];
-                [textField setSelectedTextRange:[textField textRangeFromPosition:beginning toPosition:beforeExtension]];
-                shouldChangeCharacters = NO;
-            } else if (range.location < nodeExtensionStartRange.location) {
-                shouldChangeCharacters = YES;
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFolder:
-            shouldChangeCharacters = YES;
-            break;
-            
-        default:
-            shouldChangeCharacters = NO;
-            break;
-    }
-    
-    return shouldChangeCharacters;
-}
-
 #pragma mark - Private methods
 
 - (void)reloadUI {
@@ -1454,18 +1316,18 @@
             [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
             if (self.displayMode == DisplayModeContact) {
                 [self.deleteBarButtonItem setImage:[UIImage imageNamed:@"leaveShare"]];
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             } else {
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
             break;
         }
             
         case MEGAShareTypeAccessOwner: {
             if (self.displayMode == DisplayModeCloudDrive) {
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.shareBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             } else { //Rubbish Bin
-                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.renameBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+                [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
             }
             
             break;
@@ -1474,6 +1336,14 @@
         default:
             break;
     }
+}
+
+- (void)setToolbarActionsEnabled:(BOOL)boolValue {
+    self.downloadBarButtonItem.enabled = boolValue;
+    [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? boolValue : NO)];
+    self.moveBarButtonItem.enabled = boolValue;
+    self.carbonCopyBarButtonItem.enabled = boolValue;
+    self.deleteBarButtonItem.enabled = boolValue;
 }
 
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
@@ -1558,23 +1428,9 @@
     }
     
     if (self.selectedNodesArray.count == 0) {
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
-        [self.renameBarButtonItem setEnabled:NO];
-        
-    } else if (self.selectedNodesArray.count >= 1 ) {
-        [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? YES : NO)];
-        [self.moveBarButtonItem setEnabled:YES];
-        [self.deleteBarButtonItem setEnabled:YES];
-        
-        if (self.selectedNodesArray.count == 1) {
-            [self.renameBarButtonItem setEnabled:YES];
-        } else {
-            [self.renameBarButtonItem setEnabled:NO];
-        }
+        [self setToolbarActionsEnabled:NO];
+    } else if (self.selectedNodesArray.count >= 1) {
+        [self setToolbarActionsEnabled:YES];
     }
     
     [self.tableView reloadData];
@@ -1738,20 +1594,18 @@
     }
 }
 
-- (IBAction)renameAction:(UIBarButtonItem *)sender {
-    if (!renameAlertView) {
-        renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"rename", nil) message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"rename", nil), nil];
+- (IBAction)copyAction:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachable]) {
+        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.selectedNodesArray = self.selectedNodesArray;
+        [browserVC setBrowserAction:BrowserActionCopy];
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
-    
-    [renameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [renameAlertView setTag:0];
-    
-    UITextField *textField = [renameAlertView textFieldAtIndex:0];
-    [textField setDelegate:self];
-    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-    [textField setText:[node name]];
-    
-    [renameAlertView show];
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -2007,13 +1861,6 @@
             }
             break;
         }
-        
-        case MEGARequestTypeRename:
-            if ([self.searchDisplayController isActive]) {
-                [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-                [self.searchDisplayController.searchResultsTableView reloadData];
-            }
-            break;
             
         case MEGARequestTypeCancelTransfer:
             break;
