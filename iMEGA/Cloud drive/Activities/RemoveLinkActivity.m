@@ -25,16 +25,23 @@
 
 #import "SVProgressHUD.h"
 
-@interface RemoveLinkActivity () {
-    MEGANode *node;
-}
+@interface RemoveLinkActivity ()
+
+@property (weak, nonatomic) MEGANode *node;
+@property (weak, nonatomic) NSArray *nodes;
 
 @end
 
 @implementation RemoveLinkActivity
 
-- (id)initWithNode:(MEGANode *)nodeCopy {
-    node = nodeCopy;
+- (instancetype)initWithNode:(MEGANode *)nodeCopy {
+    _node = nodeCopy;
+    
+    return self;
+}
+
+- (instancetype)initWithNodes:(NSArray *)nodesArray {
+    _nodes = nodesArray;
     
     return self;
 }
@@ -44,6 +51,10 @@
 }
 
 - (NSString *)activityTitle {
+    if ([self.nodes count] > 1) {
+        return AMLocalizedString(@"removeLinks", nil);
+    }
+    
     return AMLocalizedString(@"removeLink", nil);
 }
 
@@ -60,9 +71,18 @@
 }
 
 - (void)performActivity {
-    
     if ([MEGAReachabilityManager isReachable]) {
-        [[MEGASdkManager sharedMEGASdk] disableExportNode:node];
+        if (self.nodes != nil) {
+            for (MEGANode *n in self.nodes) {
+                [[MEGASdkManager sharedMEGASdk] disableExportNode:n];
+            }
+        } else {
+            [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
+        }
+        
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+            [self activityDidFinish:YES];
+        }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }

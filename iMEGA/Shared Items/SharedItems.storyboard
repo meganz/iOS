@@ -207,10 +207,10 @@
                         <outlet property="carbonCopyBarButtonItem" destination="CT0-ge-Xob" id="Coz-u9-sGC"/>
                         <outlet property="downloadBarButtonItem" destination="eTZ-Oi-bPQ" id="7Px-DG-2eW"/>
                         <outlet property="editBarButtonItem" destination="5z2-p0-4RD" id="x3Z-W6-efG"/>
-                        <outlet property="getLinkBarButtonItem" destination="BO7-Au-PHR" id="3qH-m3-665"/>
                         <outlet property="leaveShareBarButtonItem" destination="F0i-bv-gDg" id="RUs-TL-o7P"/>
                         <outlet property="removeShareBarButtonItem" destination="YAg-iE-4eX" id="xCW-eS-M5D"/>
                         <outlet property="selectAllBarButtonItem" destination="CK5-xo-5rw" id="6hz-Sh-JEa"/>
+                        <outlet property="shareBarButtonItem" destination="BO7-Au-PHR" id="Mk0-ZH-HQo"/>
                         <outlet property="shareFolderBarButtonItem" destination="5Mi-qb-CMK" id="iRx-tQ-3A0"/>
                         <outlet property="sharedItemsSegmentedControl" destination="ZP5-yh-meM" id="JFR-Mx-Y3i"/>
                         <outlet property="tableView" destination="bc0-wE-0j5" id="hW1-dE-Ti0"/>
@@ -254,10 +254,10 @@
                         <action selector="leaveShareAction:" destination="2AR-na-hSZ" id="ZTA-Cz-x2Y"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="getLink" width="32" id="BO7-Au-PHR" userLabel="Get Link Bar Button Item">
+                <barButtonItem enabled="NO" image="shareGray" width="32" id="BO7-Au-PHR" userLabel="Share Bar Button Item">
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="shareLinkAction:" destination="2AR-na-hSZ" id="72R-N2-Icl"/>
+                        <action selector="shareAction:" destination="2AR-na-hSZ" id="KXZ-td-sf7"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="shareWith" width="32" id="5Mi-qb-CMK" userLabel="Share Folder Bar Button Item">
@@ -281,11 +281,11 @@
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="edit" width="22" height="22"/>
-        <image name="getLink" width="32" height="32"/>
         <image name="leaveShare" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
         <image name="removeShare" width="32" height="32"/>
+        <image name="shareGray" width="32" height="32"/>
         <image name="shareWith" width="38" height="32"/>
         <image name="sharedItemsIcon" width="29" height="26"/>
     </resources>

@@ -27,38 +27,33 @@
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
-#import "NSMutableAttributedString+MNZCategory.h"
-#import "NSString+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
 
+#import "NSMutableAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
-
-#import "CloudDriveTableViewController.h"
-#import "NodeTableViewCell.h"
-#import "DetailsNodeInfoViewController.h"
-#import "MEGAPreview.h"
-#import "MEGANavigationController.h"
-#import "MEGAReachabilityManager.h"
-#import "BrowserViewController.h"
-#import "CameraUploads.h"
-#import "PhotosViewController.h"
-#import "SortByTableViewController.h"
-#import "PreviewDocumentViewController.h"
-
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
-#import "MEGAStore.h"
 #import "MEGAAVViewController.h"
+#import "MEGANavigationController.h"
+#import "MEGAPreview.h"
+#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGAStore.h"
+
+#import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "DetailsNodeInfoViewController.h"
+#import "NodeTableViewCell.h"
+#import "PhotosViewController.h"
+#import "PreviewDocumentViewController.h"
 
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     UIAlertView *renameAlertView;
     
-    NSInteger indexNodeSelected;
     NSUInteger remainingOperations;
-    
-    NSMutableArray *exportLinks;
     
     NSMutableArray *matchSearchNodes;
     
@@ -377,7 +372,7 @@
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
         
         [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? YES : NO)];
         [self.moveBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
         
@@ -1571,7 +1566,7 @@
         
     } else if (self.selectedNodesArray.count >= 1 ) {
         [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:YES];
+        [self.shareBarButtonItem setEnabled:((self.selectedNodesArray.count < 100) ? YES : NO)];
         [self.moveBarButtonItem setEnabled:YES];
         [self.deleteBarButtonItem setEnabled:YES];
         
@@ -1633,21 +1628,12 @@
     [self.tableView reloadData];
 }
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    exportLinks = [NSMutableArray new];
-    remainingOperations = self.selectedNodesArray.count;
-    
-    for (MEGANode *n in self.selectedNodesArray) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:n];
-    }
-    
-    if ([self.searchDisplayController isActive]) {
-        [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-        [self.searchDisplayController.searchResultsTableView reloadData];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray button:self.shareBarButtonItem];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
-- (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
+- (IBAction)moveAction:(UIBarButtonItem *)sender {
     MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:navigationController animated:YES completion:nil];
     
@@ -1915,14 +1901,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            break;
-            
-        default:
-            break;
-    }
+    
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -2028,28 +2007,7 @@
             }
             break;
         }
-            
-        case MEGARequestTypeExport: {
-            remainingOperations--;
-            
-            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
-            [exportLinks addObject:link];
-            
-            if (remainingOperations == 0) {
-                [SVProgressHUD dismiss];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-                
-                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                    activityVC.popoverPresentationController.barButtonItem = self.moveBarButtonItem;
-                }
-                
-                [self presentViewController:activityVC animated:YES completion:nil];
-                [self setEditing:NO animated:YES];
-            }
-            break;
-        }
-            
+        
         case MEGARequestTypeRename:
             if ([self.searchDisplayController isActive]) {
                 [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
