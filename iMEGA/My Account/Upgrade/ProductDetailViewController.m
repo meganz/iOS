@@ -2,7 +2,6 @@
 #import "ProductDetailViewController.h"
 #import "ProductDetailTableViewCell.h"
 #import "MEGAPurchase.h"
-#import "AppDelegate.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;

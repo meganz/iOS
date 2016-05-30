@@ -50,9 +50,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
-@property (nonatomic, strong) NSMutableArray *exportLinksMutableArray;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *getLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
@@ -184,7 +183,7 @@
     [_carbonCopyBarButtonItem setEnabled:boolValue];
     [_leaveShareBarButtonItem setEnabled:boolValue];
     
-    [_getLinkBarButtonItem setEnabled:boolValue];
+    [self.shareBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
 }
@@ -256,7 +255,7 @@
         }
             
         case 1: { //Outgoing
-            [toolbarItemsMutableArray addObjectsFromArray:@[_getLinkBarButtonItem, flexibleItem, _shareFolderBarButtonItem, flexibleItem, _removeShareBarButtonItem]];
+            [toolbarItemsMutableArray addObjectsFromArray:@[self.shareBarButtonItem, flexibleItem, _shareFolderBarButtonItem, flexibleItem, _removeShareBarButtonItem]];
             break;
         }
     }
@@ -558,17 +557,9 @@
     }
 }
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
-        _exportLinksMutableArray = [[NSMutableArray alloc] init];
-        _remainingOperations = _selectedNodesMutableArray.count;
-        
-        for (MEGANode *n in _selectedNodesMutableArray) {
-            [[MEGASdkManager sharedMEGASdk] exportNode:n delegate:self];
-        }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray button:self.shareBarButtonItem];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
@@ -996,14 +987,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            break;
-            
-        default:
-            break;
-    }
+    
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -1013,26 +997,6 @@
     }
     
     switch ([request type]) {
-            
-        case MEGARequestTypeExport: {
-            _remainingOperations--;
-            
-            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
-            [_exportLinksMutableArray addObject:link];
-            
-            if (_remainingOperations == 0) {
-                [SVProgressHUD dismiss];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:_exportLinksMutableArray applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-                
-                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                    activityVC.popoverPresentationController.barButtonItem = _getLinkBarButtonItem;
-                }
-                
-                [self presentViewController:activityVC animated:YES completion:nil];
-            }
-            break;
-        }
             
         case MEGARequestTypeGetAttrUser: {
             NSString *name;

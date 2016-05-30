@@ -416,73 +416,8 @@
 #pragma mark - IBActions
 
 - (IBAction)shareTouchUpInside:(UIBarButtonItem *)sender {
-    
-    UIActivityViewController *activityVC;
-    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
-    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] init];
-    [excludedActivityTypesMutableArray addObjectsFromArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-    
-    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNode:self.node];
-    [activitiesMutableArray addObject:getLinkActivity];
-    
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
-    
-    if (offlineNodeExist) {
-        if ([self.node type] == MEGANodeTypeFolder) {
-            ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
-            [activitiesMutableArray addObject:shareFolderActivity];
-            
-        } else {
-            NSURL *fileURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]];
-            [activityItemsMutableArray addObject:fileURL];
-            [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
-            
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:_shareBarButtonItem];
-            [activitiesMutableArray addObject:openInActivity];
-        }
-        
-    } else {
-        if ([self.node type] == MEGANodeTypeFolder) {
-            ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNode:self.node];
-            [activitiesMutableArray addObject:shareFolderActivity];
-        }
-        
-        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:self.node.name node:self.node];
-        [activityItemsMutableArray addObject:activityItemProvider];
-    }
-    
-    
-    if ([self.node isExported]) {
-        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNode:self.node];
-        [activitiesMutableArray addObject:removeLinkActivity];
-    }
-    
-    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
-    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    
-    if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-        [activityVC.popoverPresentationController setBarButtonItem:_shareBarButtonItem];
-    }
-    
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] button:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [activityVC setCompletionHandler:^(NSString *activityType, BOOL completed){
-            
-            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
-                _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
-                [_documentInteractionController setDelegate:self];
-            }
-            
-            BOOL canOpenIn = [_documentInteractionController presentOpenInMenuFromBarButtonItem:_shareBarButtonItem animated:YES];
-            
-            if (canOpenIn) {
-                [_documentInteractionController presentPreviewAnimated:YES];
-            }
-        }];
-    }
 }
 
 #pragma mark - UIAlertDelegate
@@ -544,29 +479,41 @@
     switch ([alertView tag]) {
         case 0: {
             if (buttonIndex == 1) {
-                UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
-                [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
+                if ([MEGAReachabilityManager isReachable]) {
+                    UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
+                    [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
+                } else {
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+                }
             }
             break;
         }
             
         case 1: {
             if (buttonIndex == 1) {
-                if (self.displayMode == DisplayModeRubbishBin) {
-                    [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+                if ([MEGAReachabilityManager isReachable]) {
+                    if (self.displayMode == DisplayModeRubbishBin) {
+                        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
+                    } else {
+                        [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                    }
+                    [self.navigationController popViewControllerAnimated:YES];
                 } else {
-                    [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
-                [self.navigationController popViewControllerAnimated:YES];
             }
             break;
         }
             
         case 2: {
             if (buttonIndex == 1) {
-                NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
-                if (transferTag != nil) {
-                    [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+                if ([MEGAReachabilityManager isReachable]) {
+                    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
+                    if (transferTag != nil) {
+                        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
+                    }
+                } else {
+                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -1106,21 +1053,6 @@
                     [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
                 }
             }
-            break;
-        }
-        case MEGARequestTypeExport: {
-            //If export link
-            if ([request access]) {
-                [SVProgressHUD dismiss];
-                
-                UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                [pasteboard setString:[request link]];
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
-                
-            } else { //Disable link
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"removeLinkSuccess", @"Message shown inside an alert if the user remove a link")];
-            }
-            
             break;
         }
             

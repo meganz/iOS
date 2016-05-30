@@ -25,6 +25,7 @@
 
 @interface ShareFolderActivity : UIActivity
 
-- (id)initWithNode:(MEGANode *)nodeCopy;
+- (instancetype)initWithNode:(MEGANode *)nodeCopy;
+- (instancetype)initWithNodes:(NSArray *)nodesArray;
 
 @end
