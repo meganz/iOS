@@ -72,6 +72,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -263,6 +264,14 @@
     }
 }
 
+- (void)setToolbarActionsEnabled:(BOOL)boolValue {
+    self.downloadBarButtonItem.enabled = boolValue;
+    self.shareBarButtonItem.enabled = ((self.selectedItemsDictionary.count < 100) ? boolValue : NO);
+    self.moveBarButtonItem.enabled = boolValue;
+    self.carbonCopyBarButtonItem.enabled = boolValue;
+    self.deleteBarButtonItem.enabled = boolValue;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
@@ -289,16 +298,9 @@
     }
     
     if (self.selectedItemsDictionary.count == 0) {
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
-        
+        [self setToolbarActionsEnabled:NO];
     } else {
-        [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:((self.selectedItemsDictionary.count < 100) ? YES : NO)];
-        [self.moveBarButtonItem setEnabled:YES];
-        [self.deleteBarButtonItem setEnabled:YES];
+        [self setToolbarActionsEnabled:YES];
     }
     
     [self.photosCollectionView reloadData];
@@ -324,10 +326,7 @@
         self.navigationItem.leftBarButtonItems = @[];
     }
     if (![self.selectedItemsDictionary count]) {
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
+        [self setToolbarActionsEnabled:NO];
     }
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -356,7 +355,7 @@
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
-- (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
+- (IBAction)moveAction:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
     MEGANavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:mcnc animated:YES completion:nil];
@@ -365,6 +364,19 @@
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     mcnvc.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
     [mcnvc setBrowserAction:BrowserActionMove];
+}
+
+- (IBAction)copyAction:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachable]) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
+        [browserVC setBrowserAction:BrowserActionCopy];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    }
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
@@ -546,17 +558,11 @@
             
             [self.navigationItem setTitle:message];
             
-            [self.downloadBarButtonItem setEnabled:YES];
-            [self.shareBarButtonItem setEnabled:((self.selectedItemsDictionary.count < 100) ? YES : NO)];
-            [self.moveBarButtonItem setEnabled:YES];
-            [self.deleteBarButtonItem setEnabled:YES];
+            [self setToolbarActionsEnabled:YES];
         } else {
             [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
             
-            [self.downloadBarButtonItem setEnabled:NO];
-            [self.shareBarButtonItem setEnabled:NO];
-            [self.moveBarButtonItem setEnabled:NO];
-            [self.deleteBarButtonItem setEnabled:NO];
+            [self setToolbarActionsEnabled:NO];
         }
         
         if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
