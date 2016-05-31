@@ -23,7 +23,6 @@
 		4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199731BD7BD5D002CD6EA /* DTTimePeriodGroup.m */; };
 		4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199751BD7BD5D002CD6EA /* NSDate+DateTools.m */; };
 		41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41319F541B14968600696BA8 /* SortByTableViewController.m */; };
-		414236F41B298800004276AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414236F31B298800004276AA /* Fabric.framework */; };
 		414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 414296101B133EFA00639A20 /* libMEGASDK.a */; };
 		4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
@@ -88,7 +87,6 @@
 		41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA0D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m */; };
 		41ADAA1E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADAA0E1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari@2x.png */; };
 		41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 41ADAA101ADE8B8800641BB4 /* SVWebViewControllerActivity.m */; };
-		41B1F7D81B0496330059A984 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B1F7D71B0496330059A984 /* Crashlytics.framework */; };
 		41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
 		41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */; };
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
@@ -215,7 +213,6 @@
 		413199751BD7BD5D002CD6EA /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
 		41319F531B14968600696BA8 /* SortByTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortByTableViewController.h; sourceTree = "<group>"; };
 		41319F541B14968600696BA8 /* SortByTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortByTableViewController.m; sourceTree = "<group>"; };
-		414236F31B298800004276AA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		414296101B133EFA00639A20 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MEGACD.xcdatamodel; sourceTree = "<group>"; };
 		4147C2D21B4EE9BA00A37044 /* MEGAStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAStore.h; sourceTree = "<group>"; };
@@ -331,7 +328,6 @@
 		41ADAA101ADE8B8800641BB4 /* SVWebViewControllerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewControllerActivity.m; sourceTree = "<group>"; };
 		41ADAA111ADE8B8800641BB4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		41ADAA121ADE8B8800641BB4 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
-		41B1F7D71B0496330059A984 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		41B2D41A1A6D06780002E29E /* UIImage+GKContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GKContact.h"; sourceTree = "<group>"; };
 		41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GKContact.m"; sourceTree = "<group>"; };
 		41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeTableViewController.h; sourceTree = "<group>"; };
@@ -500,10 +496,8 @@
 				418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */,
 				418852031A668E4B00FDBA15 /* libz.dylib in Frameworks */,
 				418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */,
-				41B1F7D81B0496330059A984 /* Crashlytics.framework in Frameworks */,
 				418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */,
 				418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */,
-				414236F41B298800004276AA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,9 +793,7 @@
 				E8E1BD431BA98F5B00AB689D /* libresolv.dylib */,
 				41D9D8E71B7123F100D9B850 /* StoreKit.framework */,
 				E85946861B5D16AC00527153 /* CoreText.framework */,
-				414236F31B298800004276AA /* Fabric.framework */,
 				414296101B133EFA00639A20 /* libMEGASDK.a */,
-				41B1F7D71B0496330059A984 /* Crashlytics.framework */,
 				418072751AA5B9F30078D950 /* SystemConfiguration.framework */,
 				4152274F1A6986E000EC7BB6 /* MapKit.framework */,
 				418852041A668E5200FDBA15 /* libsqlite3.dylib */,
@@ -1181,7 +1173,6 @@
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
-				41B1F7D51B0496000059A984 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1337,22 +1328,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		41B1F7D51B0496000059A984 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run c944139841def49387948c278782db2e7dbe8933 6249e1317f8242a6cd997277c86b691109e13b2aa93b2c515027ad8c158e9d11";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		137361861A6664C300B740E8 /* Sources */ = {
@@ -1569,7 +1544,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1606,7 +1581,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
