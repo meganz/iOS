@@ -522,6 +522,19 @@
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeCopy: {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         return;
@@ -597,9 +610,7 @@
                     [_foldersToImportMutableDictionary removeAllObjects];
                     [_folderPathsMutableDictionary removeAllObjects];
                     
-                    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-                        [[MEGASdkManager sharedMEGASdkFolder] logout];
-                    }
+                    [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
