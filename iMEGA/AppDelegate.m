@@ -19,40 +19,37 @@
  * program.
  */
 
-#import "AppDelegate.h"
-#import "SSKeychain.h"
-#import "SVProgressHUD.h"
-#import "Helper.h"
-#import "MainTabBarController.h"
-#import "ConfirmAccountViewController.h"
-#import "FileLinkViewController.h"
-#import "FolderLinkViewController.h"
-#import "CameraUploads.h"
-#import "MEGAReachabilityManager.h"
-#import "LTHPasscodeViewController.h"
-#import "CameraUploadsPopUpViewController.h"
-#import "MEGANavigationController.h"
-#import "UpgradeTableViewController.h"
-#import "LoginViewController.h"
-#import "CreateAccountViewController.h"
-#import "UnavailableLinkView.h"
-#import "LaunchViewController.h"
-#import "OfflineTableViewController.h"
-#import "SettingsTableViewController.h"
-#import "SecurityOptionsTableViewController.h"
-#import "ContactRequestsViewController.h"
-
-#import "BrowserViewController.h"
-#import "MEGAStore.h"
-#import "MEGAPurchase.h"
-
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
-#import <QuickLook/QuickLook.h>
-
-#import <StoreKit/StoreKit.h>
 
 #import <AVFoundation/AVFoundation.h>
+
+#import "LTHPasscodeViewController.h"
+#import "SSKeychain.h"
+#import "SVProgressHUD.h"
+
+#import "CameraUploads.h"
+#import "Helper.h"
+#import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGAStore.h"
+
+#import "AppDelegate.h"
+#import "BrowserViewController.h"
+#import "CameraUploadsPopUpViewController.h"
+#import "ConfirmAccountViewController.h"
+#import "ContactRequestsViewController.h"
+#import "CreateAccountViewController.h"
+#import "MainTabBarController.h"
+#import "FileLinkViewController.h"
+#import "FolderLinkViewController.h"
+#import "LaunchViewController.h"
+#import "LoginViewController.h"
+#import "OfflineTableViewController.h"
+#import "SecurityOptionsTableViewController.h"
+#import "SettingsTableViewController.h"
+#import "UnavailableLinkView.h"
+#import "UpgradeTableViewController.h"
+
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -131,8 +128,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
-
-    [Fabric with:@[CrashlyticsKit]];
     
     [self languageCompatibility];
     
