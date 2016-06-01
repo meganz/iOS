@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aAh-l2-z5Q">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -95,7 +95,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
                                 <rect key="frame" x="215" y="95" width="170" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="8H0-L2-rCb"/>
@@ -231,6 +231,7 @@
                         <outlet property="createAccountButton" destination="ety-kE-DRx" id="Hlx-Wp-mN3"/>
                         <outlet property="emailTextField" destination="sOe-JK-Yli" id="2J4-Mi-HZw"/>
                         <outlet property="loginButton" destination="EcF-LZ-UjW" id="K0I-E4-okS"/>
+                        <outlet property="logoImageView" destination="aOs-mq-CX2" id="hkL-Ws-BWG"/>
                         <outlet property="passwordTextField" destination="ZiB-Wx-xJc" id="9dP-za-xLW"/>
                     </connections>
                 </viewController>
