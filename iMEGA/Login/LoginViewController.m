@@ -19,15 +19,19 @@
  * program.
  */
 
-#import "LoginViewController.h"
-#import "SVProgressHUD.h"
 #import "SSKeychain.h"
+#import "SVProgressHUD.h"
+
+#import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
 #import "LaunchViewController.h"
+#import "LoginViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
+
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -44,6 +48,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
+    tapGestureRecognizer.numberOfTapsRequired = 5;
+    self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
     
     self.loginButton.layer.cornerRadius = 4.0f;
     self.loginButton.layer.masksToBounds = YES;
@@ -91,7 +99,16 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
+
+- (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
+        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
+        logAlertView.delegate = self;
+        [logAlertView show];
+    }
+}
 
 - (void)generateKeys {
     NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.passwordTextField.text];
@@ -148,6 +165,14 @@
     if ([segue.identifier isEqualToString:@"CreateAccountStoryboardSegueID"] && [sender isKindOfClass:[NSString class]]) {
         CreateAccountViewController *createAccountVC = (CreateAccountViewController *)segue.destinationViewController;
         [createAccountVC setEmailString:sender];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
     }
 }
 

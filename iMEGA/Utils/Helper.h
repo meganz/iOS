@@ -142,4 +142,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)clearSession;
 + (void)deletePasscode;
 
+#pragma mark - Log
+
++ (UIAlertView *)logAlertView:(BOOL)enableLog;
++ (void)enableLog:(BOOL)enableLog;
+
 @end

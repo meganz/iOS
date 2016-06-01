@@ -1049,4 +1049,38 @@ static BOOL copyToPasteboard;
     }
 }
 
+#pragma mark - Log
+
++ (UIAlertView *)logAlertView:(BOOL)enableLog {
+    UIAlertView *logAlertView;
+    NSString *title = enableLog ? AMLocalizedString(@"enableDebugMode_title", nil) :AMLocalizedString(@"disableDebugMode_title", nil);
+    NSString *message = enableLog ? AMLocalizedString(@"enableDebugMode_message", nil) :AMLocalizedString(@"disableDebugMode_message", nil);
+    logAlertView = [[UIAlertView alloc] initWithTitle:title
+                                              message:message
+                                             delegate:nil
+                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                    otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+    logAlertView.tag = enableLog ? 1 : 0;
+    
+    return logAlertView;
+}
+
++ (void)enableLog:(BOOL)enableLog {
+    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    if (enableLog) {
+        [MEGASdk setLogLevel:MEGALogLevelMax];
+        
+        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    } else {
+        [MEGASdk setLogLevel:MEGALogLevelFatal];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
+            [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:enableLog forKey:@"logging"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

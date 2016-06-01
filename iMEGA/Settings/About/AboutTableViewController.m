@@ -19,16 +19,16 @@
  * program.
  */
 
-#import "AboutTableViewController.h"
-#import "MEGASdkManager.h"
-#import "MEGAReachabilityManager.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
 
-@interface AboutTableViewController () <UIGestureRecognizerDelegate> {
-    int megaSdkVersionCounter;
-    int versionCounter;
-}
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+
+#import "AboutTableViewController.h"
+
+@interface AboutTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
@@ -50,6 +50,10 @@
     
     [self.versionLabel setText:AMLocalizedString(@"version", nil)];
     [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
+    tapGestureRecognizer.numberOfTapsRequired = 5;
+    self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
+    
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -59,8 +63,6 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"about", nil)];
     
-    megaSdkVersionCounter = 0;
-    versionCounter = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,6 +80,15 @@
 
 #pragma mark - Private
 
+- (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        BOOL enableLogging = ![[NSUserDefaults standardUserDefaults] boolForKey:@"logging"];
+        UIAlertView *logAlertView = [Helper logAlertView:enableLogging];
+        logAlertView.delegate = self;
+        [logAlertView show];
+    }
+}
+
 - (void)acknowledgements {
     if ([MEGAReachabilityManager isReachable]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
@@ -85,6 +96,14 @@
         [self.navigationController pushViewController:webViewController animated:YES];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
     }
 }
 
@@ -114,36 +133,6 @@
 
     switch (indexPath.section) {
         case 0: {
-            if ([indexPath row] == 0) {
-                megaSdkVersionCounter = 0;
-                versionCounter++;
-                if (versionCounter == 5) {
-                    versionCounter = 0;
-                    UIAlertView *disableLogsAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"disableDebugMode_title", nil)
-                                                                                   message:AMLocalizedString(@"disableDebugMode_message", nil)
-                                                                                  delegate:self
-                                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                                         otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    disableLogsAlertView.tag = 0;
-                    [disableLogsAlertView show];
-                }
-                return;
-            } else if ([indexPath row] == 1) {
-                versionCounter = 0;
-                megaSdkVersionCounter++;
-                if (megaSdkVersionCounter == 5) {
-                    megaSdkVersionCounter = 0;
-                    
-                    UIAlertView *enableLogsAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"enableDebugMode_title", nil)
-                                                                                  message:AMLocalizedString(@"enableDebugMode_message", nil)
-                                                                                 delegate:self
-                                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                                        otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                    enableLogsAlertView.tag = 1;
-                    [enableLogsAlertView show];
-                }
-                return;
-            }
             break;
         }
             
@@ -154,34 +143,6 @@
             break;
         }
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-        if (alertView.tag == 0) {
-            [MEGASdk setLogLevel:MEGALogLevelFatal];
-            
-            if ([[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
-                [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        } else {
-            [MEGASdk setLogLevel:MEGALogLevelMax];
-            
-            freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-            
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }
-    
-    versionCounter = 0;
-    megaSdkVersionCounter = 0;
 }
 
 @end
