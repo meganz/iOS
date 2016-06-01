@@ -22,6 +22,7 @@
 #import "ConfirmAccountViewController.h"
 #import "MainTabBarController.h"
 
+#import "SSKeychain.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -187,6 +188,11 @@
             [Helper logoutFromConfirmAccount];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
             break;
+        }
+            
+        case MEGARequestTypeLogin: {
+            NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         }
             
         default:
