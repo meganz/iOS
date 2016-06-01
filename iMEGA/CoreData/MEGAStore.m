@@ -75,7 +75,7 @@ static MEGAStore *_megaStore = nil;
 }
 
 - (NSURL *)applicationSupportDirectory {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+    return [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
 }
 
 - (void)saveContext {
