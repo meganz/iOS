@@ -29,11 +29,6 @@
 
 @interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableCameraUploadsCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableUploadVideosCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableUseCellularConnectionCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableOnlyWhenChargingCell;
-
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;

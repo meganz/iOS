@@ -22,7 +22,6 @@
 #import "AdvancedTableViewController.h"
 
 #import "NSString+MNZCategory.h"
-
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "Helper.h"
@@ -34,6 +33,14 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *clearOfflineFilesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *clearCacheLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emptyRubbishBinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
+@property (weak, nonatomic) IBOutlet UILabel *saveVideosLabel;
+
+@property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -58,6 +65,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.clearOfflineFilesLabel setText:AMLocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app")];
+    [self.clearCacheLabel setText:AMLocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app")];
+    [self.emptyRubbishBinLabel setText:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account")];
+    [self.savePhotosLabel setText:AMLocalizedString(@"saveImagesInGallery", @"Section title where you can enable the option 'Save images in gallery'")];
+    [self.saveVideosLabel setText:AMLocalizedString(@"saveVideosInGallery", @"Section title where you can enable the option 'Save videos in gallery'")];
+    
+    BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"];
+    [self.photosSwitch setOn:isSavePhotoToGalleryEnabled];
+    
+    BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
+    [self.videosSwitch setOn:isSaveVideoToGalleryEnabled];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -111,6 +130,18 @@
     return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)photosSwitchValueChanged:(UISwitch *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"IsSavePhotoToGalleryEnabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (IBAction)videosSwitchValueChanged:(UISwitch *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"IsSaveVideoToGalleryEnabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -122,11 +153,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 1;
+    if (section == 3) {
+        numberOfRows = 2;
+    }
     return numberOfRows;
 }
 
@@ -139,6 +173,10 @@
             
         case 2: //On MEGA
             titleHeader = AMLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
+            break;
+            
+        case 3: //Downloads
+            titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -165,35 +203,13 @@
             titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), cString];
             break;
         }
+            
+        case 3: { //Image and videos downloads
+            titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            break;
+        }
     }
     return titleFooter;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AdvancedCell" forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AdvancedCell"];
-    }
-    
-    switch (indexPath.section) {
-        case 0: { //Offline
-            [cell.textLabel setText:AMLocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app")];
-            break;
-        }
-            
-        case 1: { //Cache
-            [cell.textLabel setText:AMLocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app")];
-            break;
-        }
-            
-        case 2: { //Rubbish Bin
-            [cell.textLabel setText:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account")];
-            break;
-        }
-    }
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
