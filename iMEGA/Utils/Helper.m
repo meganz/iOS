@@ -635,6 +635,9 @@ static BOOL copyToPasteboard;
                 [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
             } else {
+                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    absoluteFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:offlineNameString];
+                }
                 [api startDownloadNode:node localPath:absoluteFilePath];
             }
         }

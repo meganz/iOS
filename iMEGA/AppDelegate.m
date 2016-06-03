@@ -796,6 +796,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return cancelBarButtonItem;
 }
 
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (!error) {
+        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+    } else {
+        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    }
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (!error) {
+        NSString *imagePath = CFBridgingRelease(contextInfo);
+        [[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
+    } else {
+        MEGALogError(@"Save image to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1414,6 +1431,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database downloads to the tmp folder
         if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+
+            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"]) {
+                UISaveVideoAtPathToSavedPhotosAlbum(transfer.path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+            }
+            
+            if (isImage([transfer fileName].pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
+                UIImage *image = [UIImage imageWithContentsOfFile:transfer.path];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
+                    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (void*)CFBridgingRetain(transfer.path));
+                });
+            }
             return;
         }
         
