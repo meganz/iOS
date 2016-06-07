@@ -27,7 +27,7 @@
 
 @interface MEGAAssetOperation : NSOperation
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)cameraUploadNode;
+- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode atomatically:(BOOL)automatically;
 - (instancetype)initWithALAsset:(ALAsset *)asset cameraUploadNode:(MEGANode *)cameraUploadNode;
 
 @end

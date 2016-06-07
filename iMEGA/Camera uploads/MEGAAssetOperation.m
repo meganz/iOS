@@ -35,18 +35,20 @@
 @property (nonatomic, strong) ALAsset *alasset;
 @property (nonatomic, strong) MEGANode *cameraUploadNode;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, assign) BOOL automatically;
 
 @end
 
 @implementation MEGAAssetOperation
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)cameraUploadNode {
+- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)cameraUploadNode atomatically:(BOOL)automatically {
     if (self = [super init]) {
         _phasset = asset;
         _alasset = nil;
         _cameraUploadNode = cameraUploadNode;
         executing = NO;
         finished = NO;
+        _automatically = automatically;
     }
     return self;
 }
@@ -75,21 +77,23 @@
 }
 
 - (void)start {
-    if (![CameraUploads syncManager].isCameraUploadsEnabled) {
-        [[CameraUploads syncManager] resetOperationQueue];
-        return;
-    }
-    
-    if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
-        if ([MEGAReachabilityManager isReachableViaWWAN]) {
+    if (_automatically) {
+        if (![CameraUploads syncManager].isCameraUploadsEnabled) {
             [[CameraUploads syncManager] resetOperationQueue];
             return;
         }
-    }
-    
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
-        [[CameraUploads syncManager] resetOperationQueue];
-        return;
+        
+        if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
+            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+                [[CameraUploads syncManager] resetOperationQueue];
+                return;
+            }
+        }
+        
+        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
+            [[CameraUploads syncManager] resetOperationQueue];
+            return;
+        }
     }
     
     if ([self isCancelled]) {
@@ -140,9 +144,11 @@
                  NSError *error = [info objectForKey:@"PHImageErrorKey"];
                  if (error) {
                      MEGALogError(@"Request image data for asset: %@", error);
+                     [self disableCameraUploadWithError:error];
+                 } else {
+                     [self start];
+                     MEGALogDebug(@"There are no image data - Info: %@", info);
                  }
-                 MEGALogDebug(@"There are not image data - Info: %@", info);
-                 [self disableCameraUploadWithError:error];
                  return;
              }
              NSString *filePath = [self filePathWithInfo:info];
@@ -163,9 +169,12 @@
                  NSError *error = [info objectForKey:@"PHImageErrorKey"];
                  if (error) {
                      MEGALogError(@"Request avasset for video: %@", error);
+                     [self disableCameraUploadWithError:error];
+                 } else {
+                     [self start];
+                     MEGALogDebug(@"There are no avasset - Info: %@", info);
                  }
-                 MEGALogDebug(@"There are not avasset - Info: %@", info);
-                 [self disableCameraUploadWithError:error];
+                 
                  return;
              }
              if ([asset isKindOfClass:[AVURLAsset class]]) {
@@ -300,6 +309,7 @@
 
 - (void)disableCameraUploadWithError:(NSError *)error {
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
+    MEGALogDebug(@"Disable Camera Uploads: %@", message);
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsEmptyState_title", nil)
                                                             message:message
@@ -446,7 +456,13 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [self start];
+            if (_automatically) {
+                [self start];
+            } else {                
+                [self willChangeValueForKey:@"isFinished"];
+                finished = YES;
+                [self didChangeValueForKey:@"isFinished"];
+            }
         } else if ([error type] != MEGAErrorTypeApiEExist) {
             [[CameraUploads syncManager] resetOperationQueue];
         }

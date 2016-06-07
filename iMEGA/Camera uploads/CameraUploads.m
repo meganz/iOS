@@ -194,10 +194,10 @@ static CameraUploads *instance = nil;
             NSDate *assetCreationTime = asset.creationDate;
             
             if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode atomatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             } else if (asset.mediaType == PHAssetMediaTypeImage && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode atomatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }
             
