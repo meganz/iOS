@@ -200,7 +200,7 @@
     if (fileExists) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }

@@ -177,7 +177,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path: %@", error);
+                MEGALogError(@"Create directory at path failed with error: %@", error);
             }
         }
         [self renameAttributesAtPath:v2ThumbsPath v3Path:v3ThumbsPath];
@@ -189,7 +189,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3PreviewsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path: %@", error);
+                MEGALogError(@"Create directory at path failed with error: %@", error);
             }
         }
         [self renameAttributesAtPath:v2previewsPath v3Path:v3PreviewsPath];
@@ -313,7 +313,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Clean up temporary directory
     NSError *error = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path: %@", error);
+        MEGALogError(@"Remove item at path failed with error: %@", error);
     }
     
     // Clean up Documents/Inbox directory
@@ -321,7 +321,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
         error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error)
         }
     }
 }
@@ -709,7 +709,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error)
                 }
             }
         }
@@ -1411,7 +1411,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else if ([transfer type] == MEGATransferTypeUpload) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error)
         }
     }
     

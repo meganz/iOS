@@ -175,7 +175,7 @@
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
     NSError *error = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path: %@", error);
+        MEGALogError(@"Remove item at path failed with error: %@", error);
     }
     
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;

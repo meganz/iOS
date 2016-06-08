@@ -698,7 +698,7 @@ static BOOL copyToPasteboard;
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
         totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
     } else {
-        MEGALogError(@"Obtaining System Memory Info: %@", error);
+        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
     }
     
     return totalFreeSpace;
@@ -963,14 +963,14 @@ static BOOL copyToPasteboard;
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
@@ -979,13 +979,13 @@ static BOOL copyToPasteboard;
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
         error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
@@ -993,14 +993,14 @@ static BOOL copyToPasteboard;
     NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -1016,7 +1016,7 @@ static BOOL copyToPasteboard;
     
     if (existMasterKey) {
         if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
