@@ -117,7 +117,7 @@
     NSError *error = nil;
     for (NSString *filename in fileArray)  {
         if (![fileManager removeItemAtPath:[folderPath stringByAppendingPathComponent:filename] error:&error] ) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }

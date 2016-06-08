@@ -84,8 +84,6 @@
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
 
-//@property (nonatomic) UIImagePickerController *imagePickerController;
-
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @end
@@ -168,14 +166,14 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
@@ -1030,7 +1028,7 @@
         operationQueue.maxConcurrentOperationCount = 1;
         
         for (PHAsset *asset in assets) {
-            MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode atomatically:NO];
+            MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
             [operationQueue addOperation:assetOperation];
         }
     }];
@@ -1616,7 +1614,7 @@
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error]) {
-                    MEGALogError(@"Remove item at path: %@", error);
+                    MEGALogError(@"Remove item at path failed with error: %@", error);
                 }
                 
                 NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);

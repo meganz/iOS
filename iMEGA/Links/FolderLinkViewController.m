@@ -101,14 +101,14 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
@@ -292,7 +292,7 @@
         if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error]) {
-                MEGALogError(@"Remove item at path: %@", error);
+                MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
         if (fileUTI) {
