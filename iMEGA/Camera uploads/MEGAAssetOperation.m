@@ -133,7 +133,7 @@
     
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionOriginal;
+        options.version = PHImageRequestOptionsVersionCurrent;
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
@@ -159,7 +159,7 @@
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHVideoRequestOptionsVersionOriginal;
+        options.version = PHVideoRequestOptionsVersionCurrent;
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
