@@ -1006,13 +1006,13 @@ static BOOL copyToPasteboard;
 }
 
 + (void)deleteMasterKey {
-    // Remove Master Key exported file if exist
+    // Remove Recovery Key exported file if exist
     NSError *error = nil;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"]];
+    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]];
     
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
     if (existMasterKey) {
         if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {

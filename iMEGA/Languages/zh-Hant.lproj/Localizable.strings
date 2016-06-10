@@ -514,21 +514,21 @@
 "version"="版本";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="萬能密鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="變更密碼";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="導出萬能密鑰";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="安全提示！這是高風險的操作，妳確定要繼續？";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="導出萬能秘鑰并保存在安全的地方確保您以後不會因為忘記密碼重置賬戶而丟失數據。";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="萬能密鑰已導出";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="萬能秘鑰Masterkey.txt 已保存至設備。連接設備到您的電腦上，打開 iTunes 里進入MEGA 文件夾來訪問這個文檔。我們強烈建議您將它妥善保管。";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="萬能秘鑰RecoveryKey.txt 已保存至設備。連接設備到您的電腦上，打開 iTunes 里進入MEGA 文件夾來訪問這個文檔。我們強烈建議您將它妥善保管。";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="已移除萬能秘鑰";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="萬能秘鑰已從文件資料夾移除。";

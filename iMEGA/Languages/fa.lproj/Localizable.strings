@@ -514,24 +514,24 @@
 "version"="نسخه";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="قدردانی";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغییر کلمه عبور";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="استخراج کلید اصلی";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="اخطار امنیتی! این یک عملیات پر خطر است. ایا مطمئنید می خواهید ادامه بدهید؟";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="صادر کردن مستر کلید و نگه داشتن ان در جایی امن به شما امکان بازیابی حساب کاربریتان در صورت گم کردن پسوردتان بدون از دست دادن اطلاعات را می دهد.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="کلید اصلی استخراج شد";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt روی این دستگاه ذخیره گردید. به کامپیوتر خود متصل شوید و  iTunes راباز کنید تا روی اسناد MEGA به ان دسترسی پیدا کنید.ما قویا به شما توصیه می کنیم که این فایل را در جایی امن نگه داری کنید.";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt روی این دستگاه ذخیره گردید. به کامپیوتر خود متصل شوید و  iTunes راباز کنید تا روی اسناد MEGA به ان دسترسی پیدا کنید.ما قویا به شما توصیه می کنیم که این فایل را در جایی امن نگه داری کنید.";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="مستر کلید حذف شد...";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt از پوشه ی اسناد حذف گردید.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt از پوشه ی اسناد حذف گردید.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

@@ -514,24 +514,24 @@
 "version"="Version";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Acknowledgements";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Palitan ang password";
-/* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Ilabas ang Master Key";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Title shown when you try to export your MEGA Recovery Key */
+"exportMasterKey"="Ilabas ang Recovery Key";
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Babala pangseguridad! Ito ay isang operasyon na may mataas na panganib. Gusto mo bang ipagpatuloy?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Ang pag-eexport sa Master Key at paglalagay nito sa isang secured na lokasyon ay makakapagbigay daan upang makuhang muli ang inyong account sa mga pagkakataon maiwala mo ang iyong password ng walang data loss.";
-/* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Na-export na ang Master Key";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Ang Masterkey.txt ay nai-save sa device. Mag-connect sa iyong computer at buksan ang iTunes para ma-access ito sa iyong MEGA documents. Pinapayohan ka naming i-secure ang file na ito!";
-/* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Tinanggal ang Master Key";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
+"exportMasterKeyFooter"="Ang pag-eexport sa Recovery Key at paglalagay nito sa isang secured na lokasyon ay makakapagbigay daan upang makuhang muli ang inyong account sa mga pagkakataon maiwala mo ang iyong password ng walang data loss.";
+/* Alert title shown when you have exported your MEGA Recovery Key */
+"masterKeyExported"="Na-export na ang Recovery Key";
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Ang RecoveryKey.txt ay nai-save sa device. Mag-connect sa iyong computer at buksan ang iTunes para ma-access ito sa iyong MEGA documents. Pinapayohan ka naming i-secure ang file na ito!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
+"masterKeyRemoved"="Tinanggal ang Recovery Key";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Tinanggal ang MasterKey.txt sa inyong Documents folder.";
+"masterKeyRemoved_alertMessage"="Tinanggal ang RecoveryKey.txt sa inyong Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sa iyong device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

@@ -72,7 +72,7 @@
 
 - (void)isMasterKeyExported {
     NSString *fileExist = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    isMasterKeyExported = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"MasterKey.txt"]];
+    isMasterKeyExported = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"RecoveryKey.txt"]];
 }
 
 #pragma mark - IBActions
@@ -81,16 +81,16 @@
 
     if (isMasterKeyExported) {
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
+        NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
         BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:nil];
         
         if (success) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyRemoved", nil) message:AMLocalizedString(@"masterKeyRemoved_alertMessage", @"MasterKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyRemoved", nil) message:AMLocalizedString(@"masterKeyRemoved_alertMessage", @"RecoveryKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
             [alertView show];
         }
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"exportMasterKey", @"Export Master Key") message:AMLocalizedString(@"exportMasterKey_alertMessage", @"Message shown when you try to export the Master Key to alert the user.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"exportMasterKey", @"Export Recovery Key") message:AMLocalizedString(@"exportMasterKey_alertMessage", @"Message shown when you try to export the Recovery Key to alert the user.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         [alertView setTag:1];
         [alertView show];
     }
@@ -106,7 +106,7 @@
             [_masterKeySwitch setOn:NO animated:YES];
         } else if (buttonIndex == 1) {
             NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
+            NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
             
             BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
             
@@ -136,7 +136,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return AMLocalizedString(@"exportMasterKeyFooter", @"The footer label for the export Master Key section in advanced view");
+            return AMLocalizedString(@"exportMasterKeyFooter", @"The footer label for the export Recovery Key section in advanced view");
             break;
             
         default:

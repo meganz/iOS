@@ -514,24 +514,24 @@
 "version"="Versi";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Pengakuan";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
-/* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Ekspor Master Key";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Title shown when you try to export your MEGA Recovery Key */
+"exportMasterKey"="Ekspor Recovery Key";
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Peringatan keamanan! Ini adalah operasi berisiko tinggi. Apakah Anda ingin melanjutkan?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Mengekspor Master Key dan menyimpannya pada lokasi yang aman membolehkan anda recover akun anda jika password atau data hilang.";
-/* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Master Key telah di-ekspor";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt telah disimpan pada perangkat ini. Hubungkan ke komputer anda dan buka iTunes untuk mengaksesnya pada MEGA Documents. Kami sangat menyarankan anda untuk menyimpan semua file ini dengan aman!";
-/* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Master Key telah dihapus";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
+"exportMasterKeyFooter"="Mengekspor Recovery Key dan menyimpannya pada lokasi yang aman membolehkan anda recover akun anda jika password atau data hilang.";
+/* Alert title shown when you have exported your MEGA Recovery Key */
+"masterKeyExported"="Recovery Key telah di-ekspor";
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt telah disimpan pada perangkat ini. Hubungkan ke komputer anda dan buka iTunes untuk mengaksesnya pada MEGA Documents. Kami sangat menyarankan anda untuk menyimpan semua file ini dengan aman!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
+"masterKeyRemoved"="Recovery Key telah dihapus";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt telah dihapus dari folder Documents.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt telah dihapus dari folder Documents.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Pada perangkat anda";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
