@@ -707,10 +707,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         return;
@@ -733,7 +729,7 @@
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-//                [self setEditing:NO animated:NO];
+                [self setEditing:NO animated:NO];
             }
             break;
         }
@@ -750,9 +746,6 @@
 }
 
 #pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if ([transfer type] == MEGATransferTypeUpload) {
