@@ -514,24 +514,24 @@
 "version"="Versie";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Dankwoord";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig wachtwoord";
-/* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Exporteer Master Key";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Title shown when you try to export your MEGA Recovery Key */
+"exportMasterKey"="Exporteer Recovery Key";
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Beveiligingswaarschuwing! Dit is een handeling met een hoge risicofactor. Wil je doorgaan?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Exporteer de Master Key en bewaar het op een veilige plek, wat u de mogelijkheid geeft om uw account te herstellen zonder data verlies als u uw wachtwoord verliest.";
-/* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Master Key geëxporteerd";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt is opgeslagen op uw apparaat. Verbind met uw computer en open iTunes om toegang te krijgen tot dit bestand. We raden u aan om dit bestand veilig te bewaren!";
-/* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Master Key verwijderd";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
+"exportMasterKeyFooter"="Exporteer de Recovery Key en bewaar het op een veilige plek, wat u de mogelijkheid geeft om uw account te herstellen zonder data verlies als u uw wachtwoord verliest.";
+/* Alert title shown when you have exported your MEGA Recovery Key */
+"masterKeyExported"="Recovery Key geëxporteerd";
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt is opgeslagen op uw apparaat. Verbind met uw computer en open iTunes om toegang te krijgen tot dit bestand. We raden u aan om dit bestand veilig te bewaren!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
+"masterKeyRemoved"="Recovery Key verwijderd";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt was verwijderd uit de documenten map.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt was verwijderd uit de documenten map.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Op uw apparaat";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

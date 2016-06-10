@@ -514,24 +514,24 @@
 "version"="Phiên bản";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Ghi nhận";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="Mã-khóa masterkey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
-/* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Xuất Master Key";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Title shown when you try to export your MEGA Recovery Key */
+"exportMasterKey"="Xuất Recovery Key";
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Cảnh báo! Thao tác này có rủi ro cao. Bạn có muốn tiếp tục không?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Việc xuất ra mã masterkey và giữ nó ở một nơi an toàn sẽ giúp bạn khôi phục lại toàn khoản mà không mất dữ liệu trong trường hợp bạn quên mật khẩu.";
-/* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Mã-khóa Master Key đã được xuất ra";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt đã được lưu vào trong máy này. Kết nối điện thoại của bạn và mở iTunes và tìm trong MEGA Documents, rồi lưu nó ở một chỗ nào đó an toàn và dễ nhớ để tìm lại.";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
+"masterKeyExported"="Mã-khóa Recovery Key đã được xuất ra";
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt đã được lưu vào trong máy này. Kết nối điện thoại của bạn và mở iTunes và tìm trong MEGA Documents, rồi lưu nó ở một chỗ nào đó an toàn và dễ nhớ để tìm lại.";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Mã masterkey đã bị xóa";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt đã bị xóa khỏi thư mục Tệp Tài Liệu";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt đã bị xóa khỏi thư mục Tệp Tài Liệu";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Trong điện thoại";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

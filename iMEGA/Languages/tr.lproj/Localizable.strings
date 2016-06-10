@@ -514,24 +514,24 @@
 "version"="Versiyon";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Teşekkür";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="AnaAnahtar";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Şifre değiştir";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Ana Anahtarı Dışa Aktar";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Güvenlik uyarısı! Bu yüksek riskli bir işlemdir. Devam etmek istiyor musunuz?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Ana anahtarı dışa aktarmanız ve güvenli bir yerde tutmanız, şifrenizi unutmanız durumunda veri kaybı olmadan hesabınızı kurtamak için olanak sağlar.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Ana Anahtar dışa aktarıldı";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt bu cihaza kaydedildi. Bilgisayarınıza bağlanın ve MEGA Belgeler üzerinden erişmek için iTunes'u açın. Bu dosyayı güvenli bir şekilde tutmanızı öneriyoruz!";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt bu cihaza kaydedildi. Bilgisayarınıza bağlanın ve MEGA Belgeler üzerinden erişmek için iTunes'u açın. Bu dosyayı güvenli bir şekilde tutmanızı öneriyoruz!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Ana Anahtar kaldırıldı";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt Belgelerim klasöründen çıkarıldı.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt Belgelerim klasöründen çıkarıldı.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Cihazınızda";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

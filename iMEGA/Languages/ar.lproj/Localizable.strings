@@ -514,24 +514,24 @@
 "version"="النسخة";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="شكر وتقدير";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="المفتاح الرئيسي";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="تغيير كلمة المرور";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="تصدير المفتاح الرئيسي";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="تحذير امني! هذا التشغيل عالي المخاطر. هل تريد المتابعة؟";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="تصدير المفتاح الرئيسي والحفاظ عليه في مكان آمن يمكنك من استرداد حسابك في حالة فقدان كلمة السر دون تعرضك لفقدان البيانات.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="تم تصدير المفتاح الرئيسي";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="تم حفظ Masterkey.txt على هذا الجهاز. اتصل بجهاز الكمبيوتر الخاص بك وافتح الآي تيونز للوصول إليه في مستندات MEGA. وننصحك بشدة للحفاظ على هذا الملف أمنا!";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="تم حفظ RecoveryKey.txt على هذا الجهاز. اتصل بجهاز الكمبيوتر الخاص بك وافتح الآي تيونز للوصول إليه في مستندات MEGA. وننصحك بشدة للحفاظ على هذا الملف أمنا!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="حذف المفتاج الرئيسي";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="تم حذف MasterKey.txt من مجلد المستندات.";
+"masterKeyRemoved_alertMessage"="تم حذف RecoveryKey.txt من مجلد المستندات.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="على جهازك";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

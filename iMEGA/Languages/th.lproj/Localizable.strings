@@ -514,24 +514,24 @@
 "version"="เวอร์ชัน";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="กิตติกรรมประกาศ";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="มาสเตอร์คีย์";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัส";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="ส่งออกมาสเตอร์คีย์";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="แจ้งเตือนความปลอดภัย! การดำเนินการนี้มีความเสี่ยงสูง คุณต้องการดำเนินการต่อหรือไม่";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="การส่งออกมาสเตอร์คีย์และเก็บรักษาไว้ในที่ที่ปลอดภัย จะช่วยให้คุณสามารถกู้คืนบัญชีของคุณได้ ในกรณีที่คุณลืมรหัสผ่าน ซึ่งจะช่วยไม่ให้ข้อมูลคุณสูญหาย";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="ส่งออกคีย์หลักแล้ว";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="ไฟล์ Masterkey.txt ถูกบันทึกไว้แล้วบนอุปกรณ์นี้ กรุณาเชื่อมต่อเข้ากับคอมพิวเตอร์ของคุณและเปิดโปรแกรม iTunes เพื่อเข้าถึงเอกสาร MEGA เราขอแนะนำให้คุณเก็บไฟล์นี้ในที่ปลอดภัย";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="ไฟล์ RecoveryKey.txt ถูกบันทึกไว้แล้วบนอุปกรณ์นี้ กรุณาเชื่อมต่อเข้ากับคอมพิวเตอร์ของคุณและเปิดโปรแกรม iTunes เพื่อเข้าถึงเอกสาร MEGA เราขอแนะนำให้คุณเก็บไฟล์นี้ในที่ปลอดภัย";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="มาสเตอร์คีย์ถูกลบออก";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt ถูกลบออกจากโฟลเดอร์เอกสารแล้ว";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt ถูกลบออกจากโฟลเดอร์เอกสารแล้ว";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="บนอุปกรณ์ของคุณ";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

@@ -514,24 +514,24 @@
 "version"="Wersja";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Podziękowania";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKey";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmień hasło";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Eksportuj główny klucz";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Ostrzeżenie! Ta operacja niesie za sobą duże ryzyko. Czy chcesz kontynuować?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Zapisanie klucza głównego w bezpiecznym miejscu, umożliwia w przyszłości odzyskanie dostępu do konta bez utraty danych w przypadku zapomnienia hasła.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Klucz główny został wyeksportowany";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt został zapisany na urządzeniu. Podłącz komputer i otwórz iTunes aby uzyskać do niego dostęp w katalogu Dokumenty MEGA. Zalecamy przechowywanie pliku w bezpiecznym miejscu.";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt został zapisany na urządzeniu. Podłącz komputer i otwórz iTunes aby uzyskać do niego dostęp w katalogu Dokumenty MEGA. Zalecamy przechowywanie pliku w bezpiecznym miejscu.";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Klucz główny usunięty";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt został usunięty z katalogu Dokumenty.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt został usunięty z katalogu Dokumenty.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Na Twoim urządzeniu";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

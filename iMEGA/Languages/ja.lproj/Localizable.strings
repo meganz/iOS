@@ -514,24 +514,24 @@
 "version"="版";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="謝意";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="親鍵";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="パスワードを変更する";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="親鍵をエキスポート";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="警告！この操作は高リスクです。続けますか？";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="親鍵をエキスポートして安全な所に保存していれば、パスワードをなくしても、データを失わずにアカウントを取り戻すことができます。";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="親鍵はエキスポートされました。";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt がこのデバイスで保存されました。あなたのコンピュータに接続し、iTunes を開ければ、MEGA 書類上でアクセスできます。このファイルは安全な所に保管することをお勧めします。";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt がこのデバイスで保存されました。あなたのコンピュータに接続し、iTunes を開ければ、MEGA 書類上でアクセスできます。このファイルは安全な所に保管することをお勧めします。";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="親鍵除去";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt は書類フォルダから取り除かれました。";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt は書類フォルダから取り除かれました。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

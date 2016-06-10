@@ -514,21 +514,21 @@
 "version"="Verzió";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Köszönetnyilvánítás";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="MasterKulcs";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Jelszócsere";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Mesterkulcs kimentése";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Biztonsági figyelmeztetés! Ez egy veszélyes művelet. Folytatni akarod?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="A Főkulcs exportálása és biztonságos helyen történő tárolása lehetővé teszi fiókja helyreállítását elfelejtett jelszó esetében, az adatok elvesztése nélkül.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Mesterkulcs kimentve";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="A Főkulcs.txt elmentve ezen a készüléken. Csatlakoztassa számítógépéhez, majd nyissa meg az iTunes-t a MEGA Dokumentumokban való hozzáféréshez. Erősen javasoljuk e fájl biztonságos helyen történő tárolását!";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Főkulcs törölve";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="A Főkulcs.txt törölve lett  a Dokumentumok mappából.";

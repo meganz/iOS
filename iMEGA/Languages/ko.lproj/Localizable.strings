@@ -514,24 +514,24 @@
 "version"="버전";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="통지";
-/* Title for the MEGA Master Key */
+/* Title for the MEGA Recovery Key */
 "masterKey"="마스터키";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="비밀번호 바꾸기";
-/* Title shown when you try to export your MEGA master key */
+/* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="마스터 키 내보내기";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="보안 경고! 매우 위험이 높은 동작입니다. 계속하시겠습니까?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="마스터 키를 내보내고 안전한 곳에 보관하는 것은 비밀번호를 잃어버렸을 때 데이터 손실 없이 계정을 복구하는 것을 가능하게 합니다.";
-/* Alert title shown when you have exported your MEGA master key */
+/* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="마스터 키가 내보내졌습니다";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Masterkey.txt가 장치에 저장되었습니다. MEGA Documents에서 이 파일에 접근하려면 컴퓨터에 연결하여 iTunes를 여세요. 우리는 이 파일을 안전하게 보관할 것을 강력히 권고합니다!";
-/* Alert title shown when you have removed your MEGA master key */
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="RecoveryKey.txt가 장치에 저장되었습니다. MEGA Documents에서 이 파일에 접근하려면 컴퓨터에 연결하여 iTunes를 여세요. 우리는 이 파일을 안전하게 보관할 것을 강력히 권고합니다!";
+/* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="마스터 키 제거됨";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt가 문서 폴더에서 삭제되었습니다";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt가 문서 폴더에서 삭제되었습니다";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="기기에서";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
