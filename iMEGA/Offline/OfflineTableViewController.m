@@ -119,14 +119,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)reloadUI {
     

@@ -123,12 +123,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
+#pragma mark - Private
 
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
@@ -176,8 +174,6 @@
     
     [self.tableView reloadData];
 }
-
-#pragma mark - Private
 
 - (void)download {
     if ([MEGAReachabilityManager isReachable]) {

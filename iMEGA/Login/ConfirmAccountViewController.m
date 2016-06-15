@@ -63,7 +63,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
@@ -89,7 +89,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (BOOL)validateForm {
     if (![self validatePassword:self.passwordTextField.text]) {
