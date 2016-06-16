@@ -20,6 +20,7 @@
  */
 
 #import <AddressBookUI/AddressBookUI.h>
+#import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
@@ -40,7 +41,7 @@
 #import "ShareFolderActivity.h"
 
 
-@interface ContactsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, ABPeoplePickerNavigationControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
+@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
     UIAlertView *removeAlertView;
     
     NSUInteger remainingOperations;
@@ -138,7 +139,6 @@
             break;
         }
     }
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -680,10 +680,21 @@
                 emailAlertView.tag = 0;
                 [emailAlertView show];
             } else if (buttonIndex == 1) {
-                ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-                contactsPickerNC.peoplePickerDelegate = self;
-                
-                [self presentViewController:contactsPickerNC animated:YES completion:nil];
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+                    ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+                    if ([contactsPickerNC respondsToSelector:@selector(predicateForSelectionOfProperty)]) {
+                        contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+                        contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+                    }
+                    contactsPickerNC.peoplePickerDelegate = self;
+                    [self presentViewController:contactsPickerNC animated:YES completion:nil];
+                } else {
+                    CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+                    contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+                    contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+                    contactsPickerViewController.delegate = self;
+                    [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+                }
             }
             break;
         }
@@ -778,9 +789,10 @@
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];    // iOS 7
 }
 
+// iOS 7
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
@@ -793,6 +805,7 @@
     }
     
     if (email) {
+        remainingOperations = 1;
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -821,6 +834,7 @@
     }
 
     if (email) {
+        remainingOperations = 1;
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -830,6 +844,15 @@
     
     if (emails) {
         CFRelease(emails);
+    }
+}
+
+#pragma mark - CNContactPickerDelegate
+
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
+    remainingOperations = contactProperties.count;
+    for (CNContactProperty *contactProperty in contactProperties) {
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
     }
 }
 
@@ -955,9 +978,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeInviteContact) {
@@ -1013,7 +1033,10 @@
         }
             
         case MEGARequestTypeInviteContact:
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
+            remainingOperations--;
+            if (remainingOperations == 0) {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
+            }
             break;
             
         case MEGARequestTypeRemoveContact: {
@@ -1058,12 +1081,6 @@
     }
 }
 
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
@@ -1071,10 +1088,6 @@
         NSString *userEmail = [[userList userAtIndex:i] email];
         [self.namesMutableDictionary removeObjectForKey:userEmail];
     }
-    [self reloadUI];
-}
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self reloadUI];
 }
 
