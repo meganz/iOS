@@ -631,7 +631,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="sariling  Account";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Log out";
+"logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
