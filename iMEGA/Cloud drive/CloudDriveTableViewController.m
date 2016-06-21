@@ -37,7 +37,6 @@
 #import "MEGAAssetOperation.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MEGAPreview.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
@@ -49,7 +48,8 @@
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
     
@@ -413,8 +413,7 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
+                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
                             [self.cloudImages addObject:photo];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -432,8 +431,7 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MEGAPreview *photo = [MEGAPreview photoWithNode:n];
-                            photo.caption = [n name];
+                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
                             [self.cloudImages addObject:photo];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -442,8 +440,8 @@
                     }
                 }
                 
-                MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-                
+                MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];
+                browser.delegate = self;
                 browser.displayActionButton = YES;
                 browser.displayNavArrows = YES;
                 browser.displaySelectionButtons = NO;
@@ -451,6 +449,7 @@
                 browser.alwaysShowControls = NO;
                 browser.enableGrid = YES;
                 browser.startOnGrid = NO;
+                browser.displayMode = self.displayMode;
                 
                 // Optionally set the current visible photo before displaying
                 //    [browser setCurrentPhotoIndex:1];
@@ -850,28 +849,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.cloudImages.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.cloudImages.count) {
-        MEGAPreview *preview = [self.cloudImages objectAtIndex:index];
-        preview.isGridMode = NO;
-        return preview;
-    }
-    
-    return nil;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
-    MEGAPreview *thumbnail = [self.cloudImages objectAtIndex:index];
-    thumbnail.isGridMode = YES;
-    return thumbnail;
 }
 
 #pragma mark - UIActionSheetDelegate

@@ -25,7 +25,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
-#import "MEGAPreview.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
@@ -483,8 +482,7 @@
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
         if (isImage([n name].pathExtension)) {
-            MEGAPreview *preview = [MEGAPreview photoWithNode:n];
-            preview.caption = [n name];
+            MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
             [self.previewsArray addObject:preview];
         }
     }
@@ -513,7 +511,7 @@
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (isImage([node name].pathExtension)) {
-            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];
             
             photoBrowser.displayActionButton = YES;
             photoBrowser.displayNavArrows = YES;
@@ -671,20 +669,6 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     [self enableCameraUploadsAndShowItsSettings];
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.previewsArray.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.previewsArray.count) {
-        return [self.previewsArray objectAtIndex:index];
-    }
-    
-    return nil;
 }
 
 #pragma mark - UIAlertViewDelegate

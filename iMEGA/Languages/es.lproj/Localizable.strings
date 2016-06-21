@@ -744,3 +744,5 @@
 "removeItemFromOffline"="¿Seguro que quieres eliminar este elemento disponible sin conexión?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos disponibles sin conexión?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Guardado en Fotos";
