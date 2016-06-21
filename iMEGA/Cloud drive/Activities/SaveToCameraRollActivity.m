@@ -28,7 +28,7 @@
 }
 
 - (UIImage *)activityImage {
-    return [UIImage imageNamed:@"offlineIcon"];
+    return [UIImage imageNamed:@"activity_saveImage"];
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
