@@ -118,7 +118,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -234,7 +234,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X) {
+    if ([[UIDevice currentDevice] iPhone4X]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     

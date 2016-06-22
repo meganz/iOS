@@ -119,7 +119,7 @@
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+            if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -807,11 +807,11 @@
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
     UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
         rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
+    } else  if ([[UIDevice currentDevice] iPad]) {
         rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
+    } else if ([[UIDevice currentDevice] iPadPro]) {
         rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
     }
     
@@ -1184,7 +1184,7 @@
         imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         imagePickerController.delegate = self;
         
-        if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        if ([[UIDevice currentDevice] iPadDevice] && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
             UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -1371,7 +1371,7 @@
                                          otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     }
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
     } else {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];

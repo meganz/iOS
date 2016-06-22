@@ -48,7 +48,7 @@
     NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
     NSString *versionNumber = @"";
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         versionNumber = [modelName substringFromIndex:5]; //"iPadX,X"
         if ([versionNumber isEqualToString:@"1,1"]) {
             [_progressViewHeightLayoutConstraint setConstant:2.0f];
@@ -66,19 +66,19 @@
     } else {
         [_progressViewHeightLayoutConstraint setConstant:4.0f];
         
-        if (iPhone4X) {
+        if ([[UIDevice currentDevice] iPhone4X]) {
             [_progressViewLeadingLayoutConstraint setConstant:40.0f];
             [_progressViewTrailingMarginLayoutConstraint setConstant:40.0f];
             [_progressViewBottomLayoutConstraint setConstant:85.0f];
-        } else if (iPhone5X) {
+        } else if ([[UIDevice currentDevice] iPhone5X]) {
             [_progressViewLeadingLayoutConstraint setConstant:40.0f];
             [_progressViewTrailingMarginLayoutConstraint setConstant:40.0f];
             [_progressViewBottomLayoutConstraint setConstant:107.0f];
-        } else if (iPhone6) {
+        } else if ([[UIDevice currentDevice] iPhone6X]) {
             [_progressViewLeadingLayoutConstraint setConstant:67.5f];
             [_progressViewTrailingMarginLayoutConstraint setConstant:67.5f];
             [_progressViewBottomLayoutConstraint setConstant:125.0f];
-        } else if (iPhone6Plus) {
+        } else if ([[UIDevice currentDevice] iPhone6XPlus]) {
             [_progressViewLeadingLayoutConstraint setConstant:52.0f];
             [_progressViewTrailingMarginLayoutConstraint setConstant:52.0f];
             [_progressViewBottomLayoutConstraint setConstant:138.0f];

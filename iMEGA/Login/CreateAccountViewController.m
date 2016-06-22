@@ -66,7 +66,7 @@
     
     [self.termsOfServiceButton setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
-    if (iPhone4X || iPhone5X) {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
     }
     

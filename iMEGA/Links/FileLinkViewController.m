@@ -171,7 +171,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X && ![text isEqualToString:@""]) {
+    if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     
