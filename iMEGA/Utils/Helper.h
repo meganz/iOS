@@ -32,9 +32,6 @@
 #define isVideo(n)        [videoSet containsObject:n.lowercaseString]
 #define isMultimedia(n)   [multimediaSet containsObject:n.lowercaseString]
 
-#define kMEGANode @"kMEGANode"
-#define kIndex @"kIndex"
-#define kPath @"kPath"
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"

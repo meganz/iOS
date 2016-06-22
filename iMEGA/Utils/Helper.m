@@ -762,7 +762,7 @@ static BOOL copyToPasteboard;
     NSInteger files = [api numberChildFilesForParent:node];
     NSInteger folders = [api numberChildFoldersForParent:node];
     
-    return [@"" mnz_stringByFiles:files andFolders:folders];
+    return [NSString mnz_stringByFiles:files andFolders:folders];
 }
 
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
@@ -1031,6 +1031,7 @@ static BOOL copyToPasteboard;
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
+    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

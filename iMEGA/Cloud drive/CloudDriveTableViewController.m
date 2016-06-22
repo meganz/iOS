@@ -47,6 +47,7 @@
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
+#import "SortByTableViewController.h"
 
 @interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
 
@@ -1507,10 +1508,12 @@
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    MEGANavigationController *sortByNavigationControllerID = [storyboard instantiateViewControllerWithIdentifier:@"sortByNavigationControllerID"];
+    SortByTableViewController *sortByTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
+    sortByTableViewController.offline = NO;
     
-    [self presentViewController:sortByNavigationControllerID animated:YES completion:nil];
+    MEGANavigationController *megaNavigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
     
+    [self presentViewController:megaNavigationController animated:YES completion:nil];
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
