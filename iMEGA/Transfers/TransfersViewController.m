@@ -94,7 +94,7 @@
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [self.negativeSpaceBarButtonItem setWidth:-5.0];
     } else {
         [self.negativeSpaceBarButtonItem setWidth:-1.0];

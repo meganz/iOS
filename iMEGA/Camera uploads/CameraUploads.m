@@ -265,7 +265,7 @@ static CameraUploads *instance = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ((cameraUploadsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
+        if ((cameraUploadsTabPosition >= 4) && [[UIDevice currentDevice] iPhoneDevice]) {
             [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
         }
         [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = badgeValue;

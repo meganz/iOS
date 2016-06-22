@@ -68,7 +68,7 @@
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
-    if (!iPhone4X) {
+    if (![[UIDevice currentDevice] iPhone4X]) {
         [_usageScrollView setScrollEnabled:NO];
     }
     
