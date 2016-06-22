@@ -805,17 +805,7 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if ([[UIDevice currentDevice] iPad]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if ([[UIDevice currentDevice] iPadPro]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
-    
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:[Helper capInsetsForEmptyStateButton] resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:[Helper rectInsetsForEmptyStateButton]];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
