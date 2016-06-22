@@ -908,6 +908,27 @@ static BOOL copyToPasteboard;
     return [filesURLMutableArray copy];
 }
 
+#pragma mark - Utils for empty states
+
++ (UIEdgeInsets)capInsetsForEmptyStateButton {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    
+    return capInsets;
+}
+
++ (UIEdgeInsets)rectInsetsForEmptyStateButton {
+    UIEdgeInsets rectInsets;
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+    } else  if ([[UIDevice currentDevice] iPad]) {
+        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
+    } else if ([[UIDevice currentDevice] iPadPro]) {
+        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    }
+    
+    return rectInsets;
+}
+
 #pragma mark - Logout
 
 + (void)logout {    

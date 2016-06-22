@@ -126,6 +126,11 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)setCopyToPasteboard:(BOOL)boolValue;
 + (BOOL)copyToPasteboard;
 
+#pragma mark - Utils for empty states
+
++ (UIEdgeInsets)capInsetsForEmptyStateButton;
++ (UIEdgeInsets)rectInsetsForEmptyStateButton;
+
 #pragma mark - Logout
 
 + (void)logout;
