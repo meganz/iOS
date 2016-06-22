@@ -725,8 +725,7 @@
                     }
                 }
                 
-                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];
-                
+                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];                
                 photoBrowser.displayActionButton = YES;
                 photoBrowser.displayNavArrows = YES;
                 photoBrowser.displaySelectionButtons = NO;

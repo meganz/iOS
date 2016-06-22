@@ -441,7 +441,6 @@
                 }
                 
                 MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];
-                browser.delegate = self;
                 browser.displayActionButton = YES;
                 browser.displayNavArrows = YES;
                 browser.displaySelectionButtons = NO;

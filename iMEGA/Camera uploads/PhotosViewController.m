@@ -511,8 +511,7 @@
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (isImage([node name].pathExtension)) {
-            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];
-            
+            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];            
             photoBrowser.displayActionButton = YES;
             photoBrowser.displayNavArrows = YES;
             photoBrowser.displaySelectionButtons = NO;
