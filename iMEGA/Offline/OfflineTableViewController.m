@@ -53,9 +53,10 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isSwipeEditing;
 }
 
-@property (nonatomic, strong) NSMutableArray *offlineFilesAndFolders;
+@property (nonatomic, strong) NSMutableArray *offlineSortedItems;
 @property (nonatomic, strong) NSMutableArray *offlineFiles;
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
+@property (nonatomic, strong) NSMutableArray *offlineItems;
 
 @property (nonatomic, strong) NSString *folderPathFromOffline;
 
@@ -140,13 +141,14 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - Private methods
 
 - (void)reloadUI {
-    self.offlineFilesAndFolders = [[NSMutableArray alloc] init];
+    self.offlineSortedItems = [[NSMutableArray alloc] init];
     self.offlineFiles = [[NSMutableArray alloc] init];
     self.offlineMultimediaFiles = [[NSMutableArray alloc] init];
+    self.offlineItems = [[NSMutableArray alloc] init];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-        
+    
     int offsetIndex = 0;
     for (int i = 0; i < (int)[directoryContents count]; i++) {
         NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
@@ -173,14 +175,11 @@ static NSString *kisDirectory = @"kisDirectory";
             [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
             [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
             
-            [self.offlineFilesAndFolders addObject:tempDictionary];
+            [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (isMultimedia(fileName.pathExtension)) {
-                    [self.offlineMultimediaFiles addObject:filePath];
-                } else {
+                if (!isMultimedia(fileName.pathExtension)) {
                     offsetIndex++;
-                    [self.offlineFiles addObject:filePath];
                 }
             }
         }
@@ -194,6 +193,45 @@ static NSString *kisDirectory = @"kisDirectory";
     
     MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
     [self sortBySortType:sortOrderType];
+    
+    offsetIndex = 0;
+    for (NSDictionary *p in self.offlineItems) {
+        NSURL *fileURL = [p objectForKey:kPath];
+        NSString *fileName = [p objectForKey:kFileName];
+        
+        // Inbox folder in documents folder is created by the system. Don't show it
+        if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:[fileURL path]]) {
+            continue;
+        }
+        
+        if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+            
+            NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
+            [tempDictionary setValue:fileName forKey:kFileName];
+            [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
+            [tempDictionary setValue:fileURL forKey:kPath];
+            
+            NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
+            BOOL isDirectory;
+            [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&isDirectory];
+            
+            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory ? YES : NO] forKey:kisDirectory];
+            
+            [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
+            [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
+            
+            [self.offlineSortedItems addObject:tempDictionary];
+            
+            if (!isDirectory) {
+                if (isMultimedia(fileName.pathExtension)) {
+                    [self.offlineMultimediaFiles addObject:[fileURL path]];
+                } else {
+                    offsetIndex++;
+                    [self.offlineFiles addObject:[fileURL path]];
+                }
+            }
+        }
+    }
     
     [self.tableView reloadData];
 }
@@ -343,8 +381,8 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDirectoryDescriptor, sortDescriptor, nil];
-    NSArray *sortedArray = [self.offlineFilesAndFolders sortedArrayUsingDescriptors:sortDescriptors];
-    self.offlineFilesAndFolders = [NSMutableArray arrayWithArray:sortedArray];
+    NSArray *sortedArray = [self.offlineItems sortedArrayUsingDescriptors:sortDescriptors];
+    self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
 }
 
 #pragma mark - UITableViewDataSource
@@ -354,14 +392,14 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.offlineFilesAndFolders.count == 0) {
+    if (self.offlineSortedItems.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self.editBarButtonItem setEnabled:NO];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [self.editBarButtonItem setEnabled:YES];
     }
-    return self.offlineFilesAndFolders.count;
+    return self.offlineSortedItems.count;
 }
 
 
@@ -374,7 +412,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
-    NSString *nameString = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kFileName];
+    NSString *nameString = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kFileName];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
     [cell setItemNameString:nameString];
@@ -535,7 +573,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
         [self.selectedItems addObject:filePathURL];
         
         if (self.selectedItems.count > 0) {
@@ -547,7 +585,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.deleteBarButtonItem setEnabled:YES];
         }
         
-        if (self.selectedItems.count == self.offlineFilesAndFolders.count) {
+        if (self.selectedItems.count == self.offlineSortedItems.count) {
             allItemsSelected = YES;
         } else {
             allItemsSelected = NO;
@@ -576,7 +614,7 @@ static NSString *kisDirectory = @"kisDirectory";
         previewController.delegate = self;
         previewController.dataSource = self;
         
-        NSInteger selectedIndexFile = [[[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
         
         [previewController setCurrentPreviewItemIndex:selectedIndexFile];
         [previewController setTransitioningDelegate:self];
@@ -589,7 +627,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
         
         NSMutableArray *tempArray = [self.selectedItems copy];
         for (NSURL *url in tempArray) {
@@ -617,10 +655,10 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSURL *fileULR = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kPath];
+    NSURL *fileURL = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
     
     self.selectedItems = [[NSMutableArray alloc] init];
-    [self.selectedItems addObject:fileULR];
+    [self.selectedItems addObject:fileURL];
     [self.deleteBarButtonItem setEnabled:YES];
     [self.activityBarButtonItem setEnabled:YES];
     
@@ -673,8 +711,8 @@ static NSString *kisDirectory = @"kisDirectory";
     if (!allItemsSelected) {
         NSURL *filePathURL = nil;
         
-        for (NSInteger i = 0; i < self.offlineFilesAndFolders.count; i++) {
-            filePathURL = [[self.offlineFilesAndFolders objectAtIndex:i] objectForKey:kPath];
+        for (NSInteger i = 0; i < self.offlineSortedItems.count; i++) {
+            filePathURL = [[self.offlineSortedItems objectAtIndex:i] objectForKey:kPath];
             [self.selectedItems addObject:filePathURL];
         }
         
