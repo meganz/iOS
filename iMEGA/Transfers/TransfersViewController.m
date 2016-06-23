@@ -301,6 +301,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
+    NSInteger numberOfRowsInSections = 0;
     
     if ([MEGAReachabilityManager isReachable]) {
         if (!areTransfersPaused) {
@@ -311,6 +312,7 @@
                     } else {
                         numberOfRows = [self.allQueuedTransfersMutableDictionary count];
                     }
+                    numberOfRowsInSections = [self.allActiveTransfersMutableDictionary count] + [self.allQueuedTransfersMutableDictionary count];
                     break;
                 }
                     
@@ -320,6 +322,7 @@
                     } else {
                         numberOfRows = [self.downloadQueuedTransfersMutableDictionary count];
                     }
+                    numberOfRowsInSections = [self.downloadActiveTransfersMutableDictionary count] + [self.downloadQueuedTransfersMutableDictionary count];
                     break;
                 }
                     
@@ -329,13 +332,14 @@
                     } else {
                         numberOfRows = [self.uploadQueuedTransfersMutableDictionary count];
                     }
+                    numberOfRowsInSections = [self.uploadActiveTransfersMutableDictionary count] + [self.uploadQueuedTransfersMutableDictionary count];
                     break;
                 }
             }
         }
     }
     
-    if (numberOfRows == 0) {
+    if (numberOfRowsInSections == 0) {
         [self.cancelBarButtonItem setEnabled:NO];
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
