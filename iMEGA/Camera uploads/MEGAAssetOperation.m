@@ -36,6 +36,7 @@
 @property (nonatomic, strong) MEGANode *cameraUploadNode;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, assign) BOOL automatically;
+@property (nonatomic, assign) NSInteger retries;
 
 @end
 
@@ -49,6 +50,7 @@
         executing = NO;
         finished = NO;
         _automatically = automatically;
+        _retries = 0;
     }
     return self;
 }
@@ -133,7 +135,11 @@
     
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionCurrent;
+        if (_retries < 10) {
+            options.version = PHImageRequestOptionsVersionCurrent;
+        } else {
+            options.version = PHImageRequestOptionsVersionOriginal;
+        }
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
@@ -146,8 +152,14 @@
                      MEGALogError(@"Request image data for asset failed with error: %@", error);
                      [self disableCameraUploadWithError:error];
                  } else {
-                     [self start];
-                     MEGALogDebug(@"There are no image data - Info: %@", info);
+                     if (_retries < 20) {
+                         _retries++;
+                         MEGALogDebug(@"There are no image data - Info: %@", info);
+                         [self start];
+                     } else {
+                         MEGALogDebug(@"Max attemps reached");
+                         [self completeOperation];
+                     }
                  }
                  return;
              }
@@ -159,7 +171,11 @@
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHVideoRequestOptionsVersionCurrent;
+        if (_retries < 10) {
+            options.version = PHImageRequestOptionsVersionCurrent;
+        } else {
+            options.version = PHImageRequestOptionsVersionOriginal;
+        }
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
@@ -171,8 +187,14 @@
                      MEGALogError(@"Request avasset for video failed with error: %@", error);
                      [self disableCameraUploadWithError:error];
                  } else {
-                     [self start];
-                     MEGALogDebug(@"There are no avasset - Info: %@", info);
+                     if (_retries < 20) {
+                         _retries++;
+                         MEGALogDebug(@"There are no avasset - Info: %@", info);
+                         [self start];
+                     } else {
+                         MEGALogDebug(@"Max attemps reached");
+                         [self completeOperation];
+                     }
                  }
                  
                  return;
@@ -286,6 +308,14 @@
     }
     
     NSString *extension = [[url pathExtension] lowercaseString];
+    if (!extension) {
+        if (_phasset.mediaType == PHAssetMediaTypeImage) {
+            extension = @"jpg";
+        }
+        if (_phasset.mediaType == PHAssetMediaTypeVideo) {
+            extension = @"mov";
+        }
+    }
     NSString *name = [[_dateFormatter stringFromDate:_phasset.creationDate] stringByAppendingPathExtension:extension];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     return filePath;
