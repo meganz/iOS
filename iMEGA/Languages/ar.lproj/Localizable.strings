@@ -254,18 +254,32 @@
 "savedForOffline"="حفظ الملفات للعمل دون اتصال";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox محصور باستخدام أبل فقط";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"=" ‏احفظ الصورة ";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"=" ‏احفظ الصور";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="الحصول على الرابط";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="احصل على رابط";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="توليد الرابط...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="جاري إنشاء روابط ...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="تم نسخ الرابط";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="‏تم نسخ الروابط";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="فتح في...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="إزالة الرابط";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="تم حذف الرابط";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="إزالة الروابط";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"=" ‏الرابط محذوف ";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="الروابط محذوفة";
 /* Title show when a file is being downloaded */
 "downloading"="التحميل: [X]٪";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu بند محدد";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu عناصر مختارة";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="سيتم تعطيل تحميل الكاميرا";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="تحميلات الكاميرا ستعطل وذلك بسبب عدم وجود مساحة كافة في جهازك.";
 /* Title of the Offline section */
@@ -460,6 +476,8 @@
 "shareFolderLeaved"="تم إلغاء مشاركة المجلد";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="شارك مجلد";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="الملفات المشاركة";
 /* Button that allows you to select a given folder */
 "select"="تحديد";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -544,6 +562,14 @@
 "emptyRubbishBin"="إفراغ سلة المهملات";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="كل العناصر في سلة المحذوفات ستحذف نهائيا";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="تحميلات الصور والفيديو";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="احفظ الصور في الاستوديو.";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="حفظ الفيديوهات بالاستوديو ";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="حفظ الصور والفيديوهات المتوافقة مع نظام iOS بمعرض الصور (ملاحظة: لايمكن حفظ الصور والفيديوهات بوضع دون اتصال)";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="المستخدمة حاليا %s";
 /* Title for the action that allows to remove a file or folder */

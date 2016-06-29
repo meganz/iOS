@@ -27,17 +27,17 @@
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Contul tău a fost activat deja. Te rugăm să te autentifici.";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="Link invalid";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fişier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
 "decrypt"="Decriptează";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="Cheie de decriptate invalidă";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -55,7 +55,7 @@
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
 "megaPrivacy"="CONFIDENŢIALITATE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA ACCES";
+"megaAccess"="ACCES MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="Înregistrează-te acum şi obţine 50 GB spaţiu gratuit.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Se aşteaptă confirmarea";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Se aşteaptă confirmarea e-mailului.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Te rugăm să verifici e-mailul şi să dai clic pe link pentru a confirma contul.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -115,7 +115,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Fişierul pe care încerci să îl deschizi este mai mare decât memoria disponibilă.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="Link indisponibil";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Acest lucru ar putea fi din cauza următoarelor motive:- Fişierul a fost eliminat datorită unei încălcări a ToS/AUP.- URL invalid - linkul pe care încerci să îl accesezi nu există.- Fişierul a fost șters de utilizator.";
 /* Message shown when a download starts */
@@ -137,9 +137,9 @@
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Niciun fişier în unitatea cloud";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Add files";
+"addFiles"="Adaugă fişiere";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="No Results";
+"noResults"="Niciun rezultat";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Goleşte coşul de gunoi";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
@@ -155,7 +155,7 @@
 /* Title of Contacts requests section */
 "contactRequests"="Cereri de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Add contacts";
+"addContacts"="Adaugă contacte";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Trimise";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -254,18 +254,32 @@
 "savedForOffline"="Fişiere salvate pt. offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox este rezervat pentru folosire de Apple.";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Salvează imaginea";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Salvează imaginile";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Obţine linkul";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Obţine linkuri";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Se generează linkul...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Se generează linkurile";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link copiat";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Linkuri copiate";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Deschide în...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Elimină linkul";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Linkul a fost eliminat";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Elimină linkurile";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Link eliminat";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Linkuri eliminate";
 /* Title show when a file is being downloaded */
 "downloading"="Se descarcă: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -357,7 +371,7 @@
 /* Message shown when a file has been imported */
 "fileImported"="Fişier importat";
 /* Message shown when some files have been imported */
-"filesImported"="Files imported";
+"filesImported"="Fişiere importate";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Cota de stocare depăşită";
 /* Alert title shown when the user is overquota */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu element selectat";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elemente selectate";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Încărcări cameră va fi dezactivat";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Încărcări cameră va fi dezactivat, deoarece nu ai spaţiu suficient pe dispozitiv";
 /* Title of the Offline section */
@@ -417,7 +433,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="Sigur doreşti să elimini această partajare? (Partajat cu 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="Sigur doreşti să elimini această partajare? (Partajată cu %d contacte)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="Sigur doreşti să elimini aceste partajări? (Partajate cu %d contacte)";
 /* Message shown when a share have been removed */
@@ -460,12 +476,14 @@
 "shareFolderLeaved"="Folder părăsit";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partajează folderul";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Foldere partajate";
 /* Button that allows you to select a given folder */
 "select"="Selectează";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permisiuni";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Doar citire";
+"readOnly"="Numai citire";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Citire şi scriere";
 /* Permissions given to the user you share your folder with */
@@ -513,7 +531,7 @@
 /* Label for the "Version" number of the app */
 "version"="Versiune";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Mulţumiri";
+"acknowledgements"="Confirmări";
 /* Title for the MEGA Recovery Key */
 "masterKey"="Cheie principală";
 /* Section title where you can change your MEGA's password */
@@ -533,17 +551,25 @@
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt a fost eliminat din folderul Documente.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="Pe dispozitiv";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Curăţă fişierele offline";
+"clearOfflineFiles"="Şterge fişierele offline";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="Curăţă cache-ul";
+"clearCache"="Şterge cache-ul";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="On MEGA";
+"onMEGA"="Pe MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Goleşte coşul de gunoi";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="Toate elementele din coşul de gunoi vor fi şterse";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Descărcări de imagini şi videoclipuri";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Salvează imaginile în galerie";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Salvează videoclipurile în galerie";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="În prezent folosind %s";
 /* Title for the action that allows to remove a file or folder */
@@ -603,7 +629,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
 /* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Obţine asistenţă sau citeşte subiecte populare.";
+"helpCentreFooter"="Obţine suport sau citeşte subiecte populare.";
 /* Title to rate the app */
 "rateUsLabel"="Evaluează-ne";
 /* Title of the Transfers section */
@@ -715,6 +741,6 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Fișierul log (MEGAiOS.log) va fi şters din secţiunea Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="Sigur doreşti să ştergi acest element din offline?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Sigur doreşti să ştergi aceste elemente din offline?";
