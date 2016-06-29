@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Menunggu konfirmasi";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Mohon cek kotak surel anda dan klik pranalanya untuk mengonfirmasi akun anda.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -254,18 +254,32 @@
 "savedForOffline"="Simpan untuk Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Label inbox telah disediakan khusus untuk Apple.";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Simpan gambar";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Simpan gambar";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Dapatkan pranala";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Dapatkan links";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Membuat link...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Membuat links...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link terkopi";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Link terkopi";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buka dengan...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Hapus link";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Link telah berhasil dihapus";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Hapus links";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Link terhapus";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Links terhapus";
 /* Title show when a file is being downloaded */
 "downloading"="Men-download: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu item terpilih";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu item terpilih";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Camera Uploads akan di non-aktifkan";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Kamera Upload akan dinonaktifkan, karena anda tidak memiliki space yang cukup pada perangkat anda";
 /* Title of the Offline section */
@@ -460,6 +476,8 @@
 "shareFolderLeaved"="Folder ditinggalkan";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Folder Berbagi";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Bagikan folder";
 /* Button that allows you to select a given folder */
 "select"="Pilih";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -544,6 +562,14 @@
 "emptyRubbishBin"="Kosongkan Sampah";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Seluruh item pada Sampah akan dihapus";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Image and video downloads";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Save images in gallery";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Save videos in gallery";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %s";
 /* Title for the action that allows to remove a file or folder */

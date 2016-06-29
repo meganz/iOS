@@ -139,7 +139,7 @@
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Aggiungi file";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="Nessun Risultato";
+"noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Svuota Cestino";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
@@ -254,18 +254,32 @@
 "savedForOffline"="Salvato in locale";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox è di uso riservato da Apple";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Salva immagine";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Salva immagini";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Ottieni link";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Ottieni i link";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generando link...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Generando i link...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link copiato";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Link copiati";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Aprire";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Rimuovi link";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Il collegamento è stato rimosso";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Rimuovi i link";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Link rimosso";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Link rimossi";
 /* Title show when a file is being downloaded */
 "downloading"="Scaricando: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu item selezionato";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items selezionati";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="I caricamenti dalla Fotocamera verranno disabilitati";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Gli Uploads della Camera saranno disabilitati, perché non si dispone di sufficiente spazio sul dispositivo";
 /* Title of the Offline section */
@@ -460,6 +476,8 @@
 "shareFolderLeaved"="Uscito dalla cartella";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Condividi cartella";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Condividi cartelle";
 /* Button that allows you to select a given folder */
 "select"="Seleziona";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -543,7 +561,15 @@
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Svuota il cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Tutti gli elementi del cestino verranno eliminati";
+"emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Download di immagini e video";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Salva immagini nella galleria";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Salva video nella galleria";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Salva immagini e video compatibili con iOS nella galleria del tuo dispositivo (nota: immagini e video non saranno salvati in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Attualmente %s usati";
 /* Title for the action that allows to remove a file or folder */
