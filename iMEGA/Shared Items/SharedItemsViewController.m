@@ -354,6 +354,8 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
@@ -780,6 +782,24 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: { //Incoming
+                [self removeSelectedIncomingShares];
+                break;
+            }
+                
+            case 1: { //Outgoing
+                [self removeSelectedOutgoingShares];
+                break;
+            }
+        }
+    }
+    
+    [self setEditing:NO animated:YES];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -877,6 +897,15 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self toolbarItemsForSharedItems];
+    [self setEditing:YES animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setEditing:NO animated:YES];
+}
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = nil;
     switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
@@ -902,6 +931,21 @@
     isSwipeEditing = YES;
     
     return UITableViewCellEditingStyleDelete;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *titleForDeleteConfirmationButton;
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: //Incoming
+            titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", nil);
+            break;
+            
+        case 1: //Outgoing
+            titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", nil);
+            break;
+    }
+    
+    return titleForDeleteConfirmationButton;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
