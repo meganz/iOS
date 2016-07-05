@@ -472,6 +472,10 @@
 "contactWithoutEmail"="El contacto no tiene email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Abandonar";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="¿Seguro que quieres abandonar esta compartición?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="¿Seguro que quieres abandonar estas comparticiones?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Carpeta abandonada";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */

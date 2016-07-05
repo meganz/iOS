@@ -623,11 +623,12 @@
         if (accessType == MEGAShareTypeAccessOwner) {
             if (self.displayMode == DisplayModeCloudDrive) {
                 [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-            } else {
+            } else { //DisplayModeRubbishBin (Remove)
                 [[MEGASdkManager sharedMEGASdk] removeNode:node];
             }
-        } else {
-            //Leave share folder
+        } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
+            [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+        } else { //DisplayModeContact (Leave share)
             [[MEGASdkManager sharedMEGASdk] removeNode:node];
         }
     }
@@ -959,9 +960,9 @@
                 if ([MEGAReachabilityManager isReachable]) {
                     remainingOperations = self.selectedNodesArray.count;
                     for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
-                        if (self.displayMode == DisplayModeCloudDrive) {
+                        if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeSharedItem) {
                             [[MEGASdkManager sharedMEGASdk] moveNode:[self.selectedNodesArray objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                        } else {
+                        } else { //DisplayModeRubbishBin (Remove), DisplayModeContact (Not possible here)
                             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
                         }
                     }                } else {
@@ -1404,8 +1405,7 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    if (lowShareType == MEGAShareTypeAccessFull) {
-        //Leave folder or remove folder in a incoming shares
+    if (lowShareType == MEGAShareTypeAccessFull && self.displayMode == DisplayModeContact) { //DisplayModeContact (Leave folder) (Swipe left and tap on the leave button on the toolbar)
         for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
         }

@@ -286,11 +286,23 @@
     return image;
 }
 
-- (void)removeSelectedShares {
+- (void)removeSelectedIncomingShares {
+    self.remainingOperations = [self.selectedNodesMutableArray count];
+    self.numberOfShares = self.remainingOperations;
+    for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
+        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:self];
+    }
+    
+    [self setEditing:NO animated:YES];
+}
+
+- (void)removeSelectedOutgoingShares {
     for (MEGAShare *share in _selectedSharesMutableArray) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:[share user] level:MEGAShareTypeAccessUnkown delegate:self];
     }
+    
+    [self setEditing:NO animated:YES];
 }
 
 - (void)requestUserName:(NSString *)userEmail {
@@ -545,13 +557,10 @@
 
 - (IBAction)leaveShareAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachable]) {
-        _remainingOperations = [_selectedNodesMutableArray count];
-        _numberOfShares = _remainingOperations;
-        for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
-            [[MEGASdkManager sharedMEGASdk] removeNode:[_selectedNodesMutableArray objectAtIndex:i] delegate:self];
-        }
-        
-        [self setEditing:NO animated:YES];
+        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        alertView.tag = 0;
+        [alertView show];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
@@ -604,8 +613,7 @@
         }
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alertView setTag:0];
-        [alertView setDelegate:self];
+        alertView.tag = 1;
         [alertView show];
         
     } else {
@@ -616,23 +624,24 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
-    switch ([alertView tag]) {
-        case 0: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
-                    [self removeSelectedShares];
-                    
-                    [self setEditing:NO animated:YES];
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    if ([MEGAReachabilityManager isReachable]) {
+        switch ([alertView tag]) {
+            case 0: {
+                if (buttonIndex == 1) {
+                    [self removeSelectedIncomingShares];
                 }
+                break;
             }
-            break;
+                
+            case 1: {
+                if (buttonIndex == 1) {
+                    [self removeSelectedOutgoingShares];
+                }
+                break;
+            }
         }
-            
-        default:
-            break;
+    } else {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
