@@ -394,8 +394,6 @@
 "oneItemSelected"="%lu item selected";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items selected";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Camera Uploads will be disabled";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Camera Uploads will be disabled, because you don't have enough space on your device";
 /* Title of the Offline section */
