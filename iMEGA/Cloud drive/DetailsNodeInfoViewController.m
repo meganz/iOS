@@ -82,7 +82,7 @@
     switch (accessType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite:
-            if ((self.displayMode == DisplayModeContact) || (self.displayMode == DisplayModeSharedItem)) {
+            if (self.displayMode == DisplayModeSharedItem) {
                 actions = 3; //Download, copy and leave
             } else {
                 actions = 2; //Download and copy
@@ -258,8 +258,7 @@
                 removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 break;
             }
-                
-            case DisplayModeContact:
+            
             case DisplayModeSharedItem: {
                 removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:AMLocalizedString(@"leaveShareAlertMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 break;
@@ -494,7 +493,7 @@
                 if ([MEGAReachabilityManager isReachable]) {
                     if (self.displayMode == DisplayModeCloudDrive) {
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                    } else { //DisplayModeRubbishBin (Remove), DisplayModeContact (Remove share), DisplayModeSharedItem (Remove share)
+                    } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
                         [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                     }
                     [self.navigationController popViewControllerAnimated:YES];
@@ -547,8 +546,7 @@
     NSInteger numberOfSections;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             numberOfSections = 1;
             break;
         }
@@ -566,8 +564,7 @@
     NSInteger numberOfRows;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             numberOfRows = actions;
             break;
         }
@@ -590,8 +587,7 @@
     NodeTableViewCell *cell;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
             if (cell == nil) {
                 cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
