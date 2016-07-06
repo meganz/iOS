@@ -1208,6 +1208,10 @@
 }
 
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray {
+    if (nodeArray.count == 0) {
+        return;
+    }
+    
     MEGAShareType shareType;
     lowShareType = MEGAShareTypeAccessOwner;
     
