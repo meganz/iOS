@@ -63,4 +63,23 @@
     return [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    
+    if([[hexString substringToIndex:1] isEqualToString:@"#"]) {
+        hexString = [hexString substringFromIndex:1];
+    }
+    
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    if (![scanner scanHexInt:&rgbValue]) {
+        return nil;
+    }
+    
+    CGFloat r = (rgbValue & 0xFF0000) >> 16;
+    CGFloat g = (rgbValue & 0xFF00) >> 8;
+    CGFloat b = (rgbValue & 0xFF);
+    
+    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+}
+
 @end

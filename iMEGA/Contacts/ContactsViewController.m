@@ -245,10 +245,11 @@
         }
     } else {
         self.users = [[MEGASdkManager sharedMEGASdk] contacts];
-        for (NSInteger i = 0; i < [[self.users size] integerValue] ; i++) {
-            MEGAUser *u = [self.users userAtIndex:i];
-            if ([u access] == MEGAUserVisibilityVisible)
-                [self.visibleUsersArray addObject:u];
+        NSInteger count = [[self.users size] integerValue];
+        for (NSInteger i = 0; i < count; i++) {
+            MEGAUser *user = [self.users userAtIndex:i];
+            if ([user visibility] == MEGAUserVisibilityVisible)
+                [self.visibleUsersArray addObject:user];
         }
     }
     
@@ -524,8 +525,8 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeFirstname delegate:self];
-            [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeLastname delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname delegate:self];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname delegate:self];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
@@ -552,7 +553,11 @@
         cell.avatarImageView.layer.masksToBounds = YES;
     } else {
         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-        [cell.avatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
+        
+        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
+        CGSize imageSize = cell.avatarImageView.frame.size;
+        UIImage *image = [UIImage imageForName:[user email].uppercaseString size:imageSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(imageSize.width/2)]];
+        [cell.avatarImageView setImage:image];
     }
     
     BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
