@@ -213,7 +213,9 @@
                         <outlet property="shareBarButtonItem" destination="BO7-Au-PHR" id="Mk0-ZH-HQo"/>
                         <outlet property="shareFolderBarButtonItem" destination="5Mi-qb-CMK" id="iRx-tQ-3A0"/>
                         <outlet property="sharedItemsSegmentedControl" destination="ZP5-yh-meM" id="JFR-Mx-Y3i"/>
+                        <outlet property="sharedItemsSegmentedControlView" destination="irZ-5P-oP0" id="RVV-XP-umc"/>
                         <outlet property="tableView" destination="bc0-wE-0j5" id="hW1-dE-Ti0"/>
+                        <outlet property="tableViewTopConstraint" destination="fy5-x5-HVa" id="2xZ-4Q-Mz4"/>
                         <outlet property="toolbar" destination="D1l-ec-jJZ" id="fHc-Cf-lSi"/>
                     </connections>
                 </viewController>

@@ -237,9 +237,9 @@
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Subida iniciada";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="El archivo ha sido movido a la papelera";
+"fileMovedToTheRubbishBin_alertTitle"="El archivo ha sido movido a la Papelera";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="La carpeta ha sido movida a la papelera";
+"folderMovedToTheRubbishBin_alertTitle"="La carpeta ha sido movida a la Papelera";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
 "fileMoved_alertTitle"="El archivo ha sido movido";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
@@ -325,23 +325,23 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introduce otro nombre";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="Mover a la papelera";
+"moveToTheRubbishBin"="Mover a la Papelera";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo a la papelera?";
+"moveFileToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="¿Seguro que quieres mover %d archivos a la papelera?";
+"moveFilesToRubbishBinMessage"="¿Seguro que quieres mover %d archivos a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="¿Seguro que quieres mover 1 carpeta a la papelera?";
+"moveFolderToRubbishBinMessage"="¿Seguro que quieres mover 1 carpeta a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="¿Seguro que quieres mover %d carpetas a la papelera?";
+"moveFoldersToRubbishBinMessage"="¿Seguro que quieres mover %d carpetas a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo y 1 carpeta a la papelera?";
+"moveFileFolderToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo y 1 carpeta a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo y %d carpetas a la papelera?";
+"moveFileFoldersToRubbishBinMessage"="¿Seguro que quieres mover 1 archivo y %d carpetas a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="¿Seguro que quieres mover %d archivos y 1 carpeta a la papelera?";
+"moveFilesFolderToRubbishBinMessage"="¿Seguro que quieres mover %d archivos y 1 carpeta a la Papelera?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="¿Seguro que quieres mover [A] archivos y [B] carpetas a la papelera?";
+"moveFilesFoldersToRubbishBinMessage"="¿Seguro que quieres mover [A] archivos y [B] carpetas a la Papelera?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 archivo movido a la Papelera";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -394,10 +394,8 @@
 "oneItemSelected"="%lu elemento seleccionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
-/*  Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Las subidas de la Cámara serán desactivadas";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tienes suficiente espacio en el dispositivo";
+"cameraUploadsDisabled_alertView_message"="Subidas de la cámara será desactivado, porque no tienes suficiente espacio en el dispositivo";
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
@@ -433,11 +431,11 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareOneContactMessage"="¿Seguro que quieres eliminar esta compartición? (Compartido con un contacto)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="¿Seguro que quieres eliminar este compartición? (Compartido con %d contactos)";
+"removeOneShareMultipleContactsMessage"="¿Seguro que quieres eliminar esta compartición? (Compartido con %d contactos)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="¿Seguro que quieres eliminar estas comparticiones? (Compartido con %d contactos)";
 /* Message shown when a share have been removed */
-"shareRemoved"="Compartición eliminada con éxito";
+"shareRemoved"="Compartición eliminada";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="Comparticiones eliminadas";
 /* Text shown next to name of the "Owner" of the folder that is being shared */
@@ -472,6 +470,10 @@
 "contactWithoutEmail"="El contacto no tiene email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Abandonar";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="¿Seguro que quieres abandonar esta compartición?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="¿Seguro que quieres abandonar estas comparticiones?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Carpeta abandonada";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
