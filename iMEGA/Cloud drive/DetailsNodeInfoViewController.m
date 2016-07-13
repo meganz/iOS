@@ -82,7 +82,7 @@
     switch (accessType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite:
-            if ((self.displayMode == DisplayModeContact) || (self.displayMode == DisplayModeSharedItem)) {
+            if (self.displayMode == DisplayModeSharedItem) {
                 actions = 3; //Download, copy and leave
             } else {
                 actions = 2; //Download and copy
@@ -247,29 +247,29 @@
 
 - (void)delete {
     if ([MEGAReachabilityManager isReachable]) {
-        //Leave folder or remove folder in a incoming shares
-        if (self.displayMode == DisplayModeContact || (self.displayMode == DisplayModeCloudDrive && accessType == MEGAShareTypeAccessFull) || (self.displayMode == DisplayModeSharedItem)) {
-            [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            
-            //Delete permanently
-            if (self.displayMode == DisplayModeRubbishBin) {
-                if ([self.node type] == MEGANodeTypeFolder) {
-                    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeFolderToRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                } else {
-                    removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:AMLocalizedString(@"removeFileToRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                }
-            }
-            
-            //Move to rubbish bin
-            if (self.displayMode == DisplayModeCloudDrive) {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
                 removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:AMLocalizedString(@"moveFileToRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                break;
+            }
+                
+            case DisplayModeRubbishBin: {
+                NSString *alertMessage = ([self.node type] == MEGANodeTypeFolder) ? AMLocalizedString(@"removeFolderToRubbishBinMessage", nil) : AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"remove", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                break;
             }
             
-            [removeAlertView setTag:1];
-            [removeAlertView show];
+            case DisplayModeSharedItem: {
+                removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:AMLocalizedString(@"leaveShareAlertMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                break;
+            }
+                
+            default:
+                break;
         }
+        
+        [removeAlertView setTag:1];
+        [removeAlertView show];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
@@ -292,7 +292,6 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         [alertView setTag:4];
-        [alertView setDelegate:self];
         [alertView show];
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
@@ -492,10 +491,10 @@
         case 1: {
             if (buttonIndex == 1) {
                 if ([MEGAReachabilityManager isReachable]) {
-                    if (self.displayMode == DisplayModeRubbishBin) {
-                        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
-                    } else {
+                    if (self.displayMode == DisplayModeCloudDrive) {
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+                    } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
+                        [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                     }
                     [self.navigationController popViewControllerAnimated:YES];
                 } else {
@@ -547,8 +546,7 @@
     NSInteger numberOfSections;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             numberOfSections = 1;
             break;
         }
@@ -566,8 +564,7 @@
     NSInteger numberOfRows;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             numberOfRows = actions;
             break;
         }
@@ -590,8 +587,7 @@
     NodeTableViewCell *cell;
     switch (self.displayMode) {
         case DisplayModeCloudDrive:
-        case DisplayModeRubbishBin:
-        case DisplayModeContact: {
+        case DisplayModeRubbishBin: {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"NodeDetailsTableViewCellID" forIndexPath:indexPath];
             if (cell == nil) {
                 cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NodeDetailsTableViewCellID"];
@@ -745,8 +741,8 @@
                         
                     case 3:
                         if (self.displayMode == DisplayModeCloudDrive) {
-                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"remove"]];
-                            [cell.nameLabel setText:AMLocalizedString(@"remove", nil)];
+                            [cell.thumbnailImageView setImage:[UIImage imageNamed:@"rubbishBin"]];
+                            [cell.nameLabel setText:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to \"Move to the Rubbish Bin\" files or folders")];
                         } else {
                             [cell.thumbnailImageView setImage:[UIImage imageNamed:@"leaveShare"]];
                             [cell.nameLabel setText:AMLocalizedString(@"leaveFolder", @"Leave")];

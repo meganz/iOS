@@ -35,8 +35,8 @@
 
 #import "ContactsViewController.h"
 #import "ContactTableViewCell.h"
-#import "CloudDriveTableViewController.h"
 #import "BrowserViewController.h"
+#import "SharedItemsViewController.h"
 
 #import "ShareFolderActivity.h"
 
@@ -574,10 +574,6 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -607,14 +603,10 @@
         [self selectPermissions];
     } else {
         if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-            CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            
-            [self.navigationController pushViewController:cloud animated:YES];
-            cloud.navigationItem.title = [user email];
-            
-            [cloud setUser:user];
-            [cloud setDisplayMode:DisplayModeContact];
+            SharedItemsViewController *sharedItemsVC = [[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
+            sharedItemsVC.user = user;
+            sharedItemsVC.sharedItemsMode = SharedItemsModeInSharesForUser;
+            [self.navigationController pushViewController:sharedItemsVC animated:YES];
         }
     }
     
@@ -644,6 +636,14 @@
         
         return;
     }
+}
+
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:YES animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setTableViewEditing:NO animated:YES];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
