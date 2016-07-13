@@ -319,6 +319,18 @@
     [self setEditing:NO animated:YES];
 }
 
+- (void)selectedSharesOfSelectedNodes {
+    self.numberOfShares = 0;
+    self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
+    for (MEGANode *node in self.selectedNodesMutableArray) {
+        NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
+        self.numberOfShares += [outSharesOfNodeMutableArray count];
+        [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
+    }
+    
+    self.remainingOperations = self.numberOfShares;
+}
+
 - (void)removeSelectedOutgoingShares {
     for (MEGAShare *share in _selectedSharesMutableArray) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
@@ -612,26 +624,12 @@
 
 - (IBAction)removeShareAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachable]) {
-        _numberOfShares = 0;
-        NSUInteger outSharesCount = 0;
-        for (MEGANode *node in _selectedNodesMutableArray) {
-            NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
-            outSharesCount = [outSharesOfNodeMutableArray count];
-            if (outSharesCount > 1) {
-                _numberOfShares += outSharesCount;
-            } else {
-                _numberOfShares = outSharesCount;
-            }
-            
-            [_selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
-        }
-        
-        _remainingOperations = _numberOfShares;
+        [self selectedSharesOfSelectedNodes];
         
         NSString *alertMessage;
-        if ((outSharesCount == 1) && ([_selectedNodesMutableArray count] == 1)) {
+        if ((self.numberOfShares == 1) && ([_selectedNodesMutableArray count] == 1)) {
             alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
-        } else if ((outSharesCount > 1) && ([_selectedNodesMutableArray count] == 1)) {
+        } else if ((self.numberOfShares > 1) && ([_selectedNodesMutableArray count] == 1)) {
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), _numberOfShares];
         } else {
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), _numberOfShares];
@@ -822,6 +820,7 @@
                 }
                     
                 case 1: { //Outgoing
+                    [self selectedSharesOfSelectedNodes];
                     [self removeSelectedOutgoingShares];
                     break;
                 }
