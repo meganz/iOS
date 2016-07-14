@@ -739,6 +739,10 @@
                 emailAlertView.tag = 0;
                 [emailAlertView show];
             } else if (buttonIndex == 1) {
+                if (self.presentedViewController != nil) {
+                    [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+                }
+            
                 if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
                     ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
                     if ([contactsPickerNC respondsToSelector:@selector(predicateForSelectionOfProperty)]) {
