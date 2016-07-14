@@ -414,7 +414,7 @@
     return  userHasChanged;
 }
 
-- (void)requestUserName:(NSString *)userEmail {
+- (void)requestUserNameAndLastNameWithEmail:(NSString *)userEmail {
     
     BOOL isUserNameAlreadyRequested = [self.userNamesRequestedMutableArray containsObject:userEmail];
     if (!isUserNameAlreadyRequested) {
@@ -591,7 +591,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [self requestUserName:userName];
+            [self requestUserNameAndLastNameWithEmail:userEmail];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
