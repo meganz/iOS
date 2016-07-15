@@ -40,10 +40,8 @@
 }
 
 - (void)performActivity {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:NSTemporaryDirectory() delegate:self];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

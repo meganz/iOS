@@ -1,8 +1,12 @@
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+
+#import "SVProgressHUD.h"
+
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+
 #import "CameraUploads.h"
 
 @interface MEGAReachabilityManager ()
@@ -52,6 +56,15 @@
         freeifaddrs(addrs);
     }
     return found;
+}
+
++ (BOOL)isReachableHUDIfNot {
+    BOOL isReachable = [self isReachable];
+    if (!isReachable) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
+    }
+    
+    return isReachable;
 }
 
 #pragma mark - Private Initialization

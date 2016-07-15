@@ -925,10 +925,8 @@
     switch ([alertView tag]) {
         case 1: {
             if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -936,7 +934,7 @@
             
         case 2: {
             if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     remainingOperations = self.selectedNodesArray.count;
                     for (NSInteger i = 0; i < self.selectedNodesArray.count; i++) {
                         if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeSharedItem) {
@@ -944,8 +942,7 @@
                         } else { //DisplayModeRubbishBin (Remove)
                             [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesArray objectAtIndex:i]];
                         }
-                    }                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+                    }
                 }
             }
             break;
@@ -1450,7 +1447,7 @@
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
@@ -1458,8 +1455,6 @@
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = self.selectedNodesArray;
         [browserVC setBrowserAction:BrowserActionCopy];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

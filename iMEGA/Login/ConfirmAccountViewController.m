@@ -74,12 +74,10 @@
 
 - (IBAction)confirmTouchUpInside:(id)sender {
     if ([self validateForm]) {
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [SVProgressHUD show];
             [self lockUI:YES];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
-        } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }

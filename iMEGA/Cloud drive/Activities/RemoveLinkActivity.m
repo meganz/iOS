@@ -71,7 +71,7 @@
 }
 
 - (void)performActivity {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.nodes != nil) {
             for (MEGANode *n in self.nodes) {
                 [[MEGASdkManager sharedMEGASdk] disableExportNode:n];
@@ -83,8 +83,6 @@
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
             [self activityDidFinish:YES];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
