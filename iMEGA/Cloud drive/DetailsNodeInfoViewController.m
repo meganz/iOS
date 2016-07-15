@@ -180,7 +180,7 @@
 #pragma mark - Private
 
 - (void)download {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
             return;
         }
@@ -191,43 +191,35 @@
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)getLink {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)disableLink {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)browserWithAction:(NSInteger)browserAction {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = [NSArray arrayWithObject:self.node];
-        [browserVC setBrowserAction:browserAction]; //
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+        [browserVC setBrowserAction:browserAction];
     }
 }
 
 - (void)rename {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (!renameAlertView) {
             renameAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"rename", nil) message:AMLocalizedString(@"renameNodeMessage", @"Enter the new name") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"rename", nil), nil];
         }
@@ -240,13 +232,11 @@
         [textField setText:[self.node name]];
         
         [renameAlertView show];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)delete {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:AMLocalizedString(@"moveFileToRubbishBinMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
@@ -270,13 +260,11 @@
         
         [removeAlertView setTag:1];
         [removeAlertView show];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)confirmRemoveSharing {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
 
         NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
         NSUInteger outSharesCount = [outSharesOfNodeMutableArray count];
@@ -293,8 +281,6 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         [alertView setTag:4];
         [alertView show];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -478,11 +464,9 @@
     switch ([alertView tag]) {
         case 0: {
             if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     UITextField *alertViewTextField = [alertView textFieldAtIndex:0];
                     [[MEGASdkManager sharedMEGASdk] renameNode:self.node newName:[alertViewTextField text]];
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -490,15 +474,13 @@
             
         case 1: {
             if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     if (self.displayMode == DisplayModeCloudDrive) {
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
                     } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
                         [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                     }
                     [self.navigationController popViewControllerAnimated:YES];
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;
@@ -506,13 +488,11 @@
             
         case 2: {
             if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:self.node.base64Handle];
                     if (transferTag != nil) {
                         [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
                     }
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
                 }
             }
             break;

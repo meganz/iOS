@@ -346,7 +346,7 @@
 }
 
 - (void)shareFolder {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
             if (self.shareFolderActivity != nil) {
                 [self.shareFolderActivity activityDidFinish:YES];
@@ -355,8 +355,6 @@
         
         [self selectPermissions];
         
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -951,21 +949,17 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[[alertView textFieldAtIndex:0] text] message:@"" action:MEGAInviteActionAdd delegate:self];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
         }
     } else if (alertView.tag == 1) {
         if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 remainingOperations = self.selectedUsersArray.count;
                 for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
                     [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
                 }
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
         }
     } else if (alertView.tag == 2) {

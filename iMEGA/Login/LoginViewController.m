@@ -86,15 +86,13 @@
     [self.passwordTextField resignFirstResponder];
     
     if ([self validateForm]) {
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             NSOperationQueue *operationQueue = [NSOperationQueue new];
             
             NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
                                                                                     selector:@selector(generateKeys)
                                                                                       object:nil];
             [operationQueue addOperation:operation];
-        } else if ([self validateForm]) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }

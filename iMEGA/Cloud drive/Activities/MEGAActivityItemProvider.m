@@ -53,10 +53,8 @@
     if (activityValue) {
         semaphore = dispatch_semaphore_create(0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] exportNode:_node delegate:self];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
             
         });

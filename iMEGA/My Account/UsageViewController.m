@@ -261,10 +261,8 @@
 #pragma mark - IBActions
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] logout];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
