@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Посилання на файл";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Відкрити файл";
+"openButton"="Відкрити";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Файл, який ви намагаєтесь завантажити більший ніж доступна пам'ять.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,9 +143,9 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Очистити";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Немає файлів, збережених автономно";
+"offlineEmptyState_title"="Немає автономно збережених файлів";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Ви не маєте ніяких контактів";
+"contactsEmptyState_title"="Не має контактів";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Немає вхідних тек спільного доступу";
 /* Title shown when there's no outgoing Shared Items */
@@ -166,10 +166,10 @@
 "requestCancelled"="Запит відмінено";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Запит видалений";
-/* Title shown when there's no pending request */
-"noRequestPending"="Немає очікуваних запитів на цей час";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Відкладених запитів немає";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Передачі припинено";
+"transfersEmptyState_titlePaused"="Передачі призупинено";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Контакт не має електронної пошти";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Залишити";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Теку полишено";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Подяки";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Майстер-ключ";
+"masterKey"="Ключ Відновлення";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Змінити пароль";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Експорт майстер-ключа";
+"exportMasterKey"="Експорт ключа відновлення";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Попередження системи безпеки! Це операція з високим ризиком. Ви хочете продовжити?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Експорт майстер-ключа і збереження його у безпечному місці дозволить вам відновити акаунт у випадку втрати пароля без втрати даних.";
+"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Майстер-ключ експортовано";
+"masterKeyExported"="Ключ відновлення експортовано";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt було збережено на цьому пристрої. Підключіться до комп'ютеру і відкрийте iTunes щоб надати доступ до документів MEGA. Ми наполегливо рекомендуємо вам зберігати цей файл у безпечному місці.";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Майстер-ключ видалено";
+"masterKeyRemoved"="Ключ відновлення видалений";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt був видалений з теки документів.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="На вашому пристрої";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -563,11 +567,11 @@
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Всі елементи у сміттєвому кошику були видалені";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Image and video downloads";
+"imageAndVideoDownloadsHeader"="Завантаження зображень та відео";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Save images in gallery";
+"saveImagesInGallery"="Зберегти зображення в галереї";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Save videos in gallery";
+"saveVideosInGallery"="Зберегти відео в галереї";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Ви впевнені, що бажаєте видалити цей елемент збережений в оффлайні?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ви впевнені, що бажаєте видалити цей елемент збережений в онлайні?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

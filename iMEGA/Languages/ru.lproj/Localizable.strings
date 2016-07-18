@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Ссылка на файл";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Открыть файл";
+"openButton"="Открыть";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Загружаемый файл занимает больше, чем доступно памяти";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,9 +143,9 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Очистить Корзину";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Файлы не были сохранены локально";
+"offlineEmptyState_title"="Нет локальных файлов";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Нет контактов";
+"contactsEmptyState_title"="Контактов не найдено";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Нет входящих общих папок";
 /* Title shown when there's no outgoing Shared Items */
@@ -166,10 +166,10 @@
 "requestCancelled"="Запрос отменён";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Запрос удалён";
-/* Title shown when there's no pending request */
-"noRequestPending"="Нет рассматриваемых запросов";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Нет ожидающих запросов";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Передачи приостановлены";
+"transfersEmptyState_titlePaused"="Остановленные передачи";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="У контакта не указан email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Выйти";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Папка покинута!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Благодарности";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Мастер-ключ";
+"masterKey"="Ключ Восстановления";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Изменить пароль";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Экспорт мастер-ключа";
+"exportMasterKey"="Экспорт ключа восстановления";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Внимание! Эта операция очень рискованна. Хотите продолжить?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Экспорт мастер-ключа и сохранение его в безопасном месте позволяет восстановить учётную запись в случае утери пароля без потери данных.";
+"exportMasterKeyFooter"="Экспортировав ключ восстановления и спрятав его в надёжном месте, вы сможете восстановить учётную запись без потери данных, если забудете пароль.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Экспорт мастер-ключа";
+"masterKeyExported"="Ключ восстановления импортирован";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt был сохранен на этом устройстве. Чтобы получить к нему доступ, подключите устройство к компьютеру, откройте iTunes и откройте документы MEGA. Мы настоятельно рекомендуем сохранить этот файл в безопасном месте!";
+"masterKeyExported_alertMessage"="Ключ восстановления был экспортирован на локальный диск в RecoveryKey.txt. Примечание: Он будет удалён, если вы выйдете из системы, пожалуйста, сохраните его в безопасном месте.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Мастер-ключ удалён";
+"masterKeyRemoved"="Ключ восстановления удалён";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt был удален из папки «Документы».";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt был удалён из папки «Документы».";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="На устройстве";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Выход и удаление локальных данные после 10 неудачных попыток ввода кода безопасности";
+"failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля.";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центр помощи";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -657,7 +661,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Моя учётная запись";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Выйти";
+"logoutLabel"="Выход";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Выход";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

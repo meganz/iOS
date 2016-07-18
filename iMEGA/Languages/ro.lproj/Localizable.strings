@@ -1,5 +1,5 @@
 /* Button title to cancel something */
-"cancel"="Renunţă";
+"cancel"="Anulează";
 /* Button title to accept something */
 "ok"="Ok";
 /* */
@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Linkul fişierului";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Deschide fişierul";
+"openButton"="Deschide";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Fişierul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,9 +143,9 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Goleşte coşul de gunoi";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Niciun fişier salvat pentru offline";
+"offlineEmptyState_title"="Niciun fişier salvat pentru Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Nu ai niciun contact";
+"contactsEmptyState_title"="Niciun contact";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Niciun folder partajat primit";
 /* Title shown when there's no outgoing Shared Items */
@@ -166,8 +166,8 @@
 "requestCancelled"="Cerere anulată";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Cerere ştearsă";
-/* Title shown when there's no pending request */
-"noRequestPending"="Nicio solicitare în aşteptare în acest moment";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Nicio cerere în aşteptare";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferuri puse pe pauză";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Contactul nu are un e-mail";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Părăseşte";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder părăsit";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,21 +537,21 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Confirmări";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Cheie principală";
+"masterKey"="Cheie de recuperare";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Schimbă parola";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exportă cheia principală";
+"exportMasterKey"="Exportă cheia de recuperare";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Avertisment de securitate! Aceasta este o operaţiune cu risc ridicat. Doreşti să continui?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să recuperezi contul în cazul unei parole pierdute fără a pierde datele.";
+"exportMasterKeyFooter"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Cheia principală exportată";
+"masterKeyExported"="Cheie de recuperare exportată";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt a fost salvat pe acest dispozitiv. Conectează-te la calculator şi deschide iTunes pentru a-l accesa în documentele MEGA. Îţi recomandăm cu tărie să păstrezi acest fişier securizat!";
+"masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secţiunea Offline ca RecoveryKey.txt. Notă: Aceasta va fi ştearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Cheia principală eliminată";
+"masterKeyRemoved"="Cheie de recuperare eliminată";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt a fost eliminat din folderul Documente.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -569,7 +573,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Salvează videoclipurile în galerie";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Salvează imagini şi videoclipurile compatibile iOS în galeria dispozitivului (Notă: imaginile şi videoclipurile nu vor fi salvate în Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="În prezent folosind %s";
 /* Title for the action that allows to remove a file or folder */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Sigur doreşti să ştergi acest element din offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur doreşti să ştergi aceste elemente din offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

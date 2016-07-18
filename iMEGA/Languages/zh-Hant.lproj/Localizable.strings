@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="檔案連結";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="打開檔案";
+"openButton"="開啟";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="您正在嘗試下載的檔案大於可用內存。";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,9 +143,9 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="清除垃圾夾";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="無保存的離線檔案";
+"offlineEmptyState_title"="離線模式中沒有儲存檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="您還沒有聯繫人";
+"contactsEmptyState_title"="無連絡人";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
@@ -166,10 +166,10 @@
 "requestCancelled"="已取消聯絡人邀請";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="已刪除聯絡人邀請";
-/* Title shown when there's no pending request */
-"noRequestPending"="目前無待處理之邀請";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="已無尚待處理的聯絡人邀請";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="傳輸已暫停";
+"transfersEmptyState_titlePaused"="傳輸暫停";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="該聯繫人缺少郵箱地址";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="離開";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="已離開該資料夾";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感謝";
 /* Title for the MEGA Recovery Key */
-"masterKey"="萬能密鑰";
+"masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="變更密碼";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="導出萬能密鑰";
+"exportMasterKey"="匯出還原金鑰";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="安全提示！這是高風險的操作，妳確定要繼續？";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="導出萬能秘鑰并保存在安全的地方確保您以後不會因為忘記密碼重置賬戶而丟失數據。";
+"exportMasterKeyFooter"="匯出還原金鑰並將其保存於安全的位置。使您因遺失密碼而需還原您的帳戶時，不會有資料遺失。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="萬能密鑰已導出";
+"masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="萬能秘鑰RecoveryKey.txt 已保存至設備。連接設備到您的電腦上，打開 iTunes 里進入MEGA 文件夾來訪問這個文檔。我們強烈建議您將它妥善保管。";
+"masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt(還原金鑰文字檔)匯出至離線模式中。注意：您登出後它將會被刪除，請將其存放於安全之處。";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="已移除萬能秘鑰";
+"masterKeyRemoved"="已移除還原金鑰";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="萬能秘鑰已從文件資料夾移除。";
+"masterKeyRemoved_alertMessage"="已從文件資料夾中移除 RecoveryKey.txt (還原金鑰文字檔)";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="於您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="刪除本地數據";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="10次密碼輸入錯誤后將登出并刪除所有本地數據";
+"failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="協助中心";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -743,4 +747,6 @@
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="您確定要從離線部份中刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="您確定要從離線部份中刪除這些項目？";
+"removeItemsFromOffline"="您確定要從離線模式中刪除這些項目？";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

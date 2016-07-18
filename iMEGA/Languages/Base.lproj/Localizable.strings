@@ -166,7 +166,7 @@
 "requestCancelled"="Request cancelled";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Request deleted";
-/* Title shown when there's no pending request */
+/* Title shown when there's no pending contact requests */
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Paused Transfers";

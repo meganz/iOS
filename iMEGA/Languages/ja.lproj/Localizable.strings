@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="アップロード";
+"upload"="Upload";
 /*  */
 "error"="エラー";
 /*  */
@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="ファイルリンク";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="ファイルを開く";
+"openButton"="開く";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="ダウンロードしようとしているファイルは、空きメモリーの容量を超えています。";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="ごみ箱を空にします";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="オフライン保存ファイルなし";
+"offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="知り合いはありません。";
+"contactsEmptyState_title"="知り合いなし";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="現在共有フォルダの受信なし";
+"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="現在共有フォルダの送信なし";
+"noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
 /* Title of My Contacts section */
 "myContacts"="知り合い";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="Request cancelled";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Request deleted";
-/* Title shown when there's no pending request */
-"noRequestPending"="今回、待機中リクエストなし";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="転送一時停止中";
+"transfersEmptyState_titlePaused"="Paused Transfers";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -187,13 +187,13 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="フォルダ%dこ";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1フォルダ・1ファイル";
+"folderAndFile"="1 folder • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="フォルダ[A] - ファイル[B] ";
+"foldersAndFiles"="[A] folders • [B] files";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="フォルダ%d - ファイル1";
+"foldersAndFile"="%d folders • 1 file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="フォルダ1 - ファイル%d";
+"folderAndFiles"="1 folder • %d files";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="待機中";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -301,7 +301,7 @@
 /* Success message shown when you have moved {1+} files and 1 folder */
 "moveFilesFolderMessage"="ファイル%dこ、フォルダ１こ移動";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="ファイル[A]こ、フォルダ[B]こ移動完了。";
+"moveFilesFoldersMessage"="[A] files and [B] folders moved";
 /* List option shown on the details of a file or folder */
 "copy"="コピー";
 /* Success message shown when you have copied 1 file */
@@ -319,7 +319,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="ファイル%dこ、フォルダ１こコピー完了";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="ファイル[A]こ、フォルダ[B]こコピー完了";
+"copyFilesFoldersMessage"="[A] files and [B] folders copied";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="名前を変更";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="その知り合いにはアドレスがありません。";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="出る";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="フォルダは残っています。";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="謝意";
 /* Title for the MEGA Recovery Key */
-"masterKey"="親鍵";
+"masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="パスワードを変更する";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="親鍵をエキスポート";
+"exportMasterKey"="Export Recovery Key";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="警告！この操作は高リスクです。続けますか？";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="親鍵をエキスポートして安全な所に保存していれば、パスワードをなくしても、データを失わずにアカウントを取り戻すことができます。";
+"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="親鍵はエキスポートされました。";
+"masterKeyExported"="Recovery Key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt がこのデバイスで保存されました。あなたのコンピュータに接続し、iTunes を開ければ、MEGA 書類上でアクセスできます。このファイルは安全な所に保管することをお勧めします。";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="親鍵除去";
+"masterKeyRemoved"="Recovery Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt は書類フォルダから取り除かれました。";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -625,21 +629,21 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="間違ったパスコードが１０回入力されると、ログアウトし、ローカルデータは消去されます。";
+"failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="質問するか、自分で読む";
 /* Title to rate the app */
-"rateUsLabel"="評価して下さい。";
+"rateUsLabel"="Rate us";
 /* Title of the Transfers section */
 "transfers"="転送";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="ダウンロード";
+"downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="アップロード";
+"uploads"="Uploads";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Transfer cancelled";
 /* Success message shown when all the transfers have been cancelled */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

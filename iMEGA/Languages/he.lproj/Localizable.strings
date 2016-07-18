@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="לינק לקובץ";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="פתח קובץ";
+"openButton"="פתח";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="נפח הקובץ אותו אתה מנסה להוריד גדול מהנפח הפנוי.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="נקה את סל האשפה";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="אין קבצים שנשמרו לצפייה ללא חיבור";
+"offlineEmptyState_title"="אין קבצים שנשמרו למצב לא מקוון";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="אין לך אנשי קשר";
+"contactsEmptyState_title"="אין קשר";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="אין תיקיות שיתוף נכנסות";
+"noIncomingSharedItemsEmptyState_text"="אין תיקיות משותפות נכנסות";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="אין תיקיות שיתוף יוצאות";
+"noOutgoingSharedItemsEmptyState_text"="אין תיקיות משותפות יוצאות";
 /* Title of My Contacts section */
 "myContacts"="אנשי קשר";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="בקשה בוטלה";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="בקשה נמחקה";
-/* Title shown when there's no pending request */
-"noRequestPending"="אין בקשות ממתינות";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="אין בקשות שממתינות";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="ההעברה נעצרה";
+"transfersEmptyState_titlePaused"="העברות שנעצרו";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="אין לאיש קשר זה אימייל";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="עזוב";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="עזבת את התיקייה";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,21 +537,21 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="תודות";
 /* Title for the MEGA Recovery Key */
-"masterKey"="מפתח ראשי";
+"masterKey"="מפתח שחזור";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="שנה סיסמה";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="ייצא מפתח ראשי";
+"exportMasterKey"="ייצא מפתח שחזור";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="התראת אבטחה! זוהי פעולה בעלת סיכון גבוה. האם ברצונך להמשיך?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="ייצוא מפתח המאסטר ושמירתו במקום מאובטח, מאפשר לך לשחזר את החשבון שלך במקרה ואתה מאבד את סיסמתך, ללא איבוד מידע.";
+"exportMasterKeyFooter"="ייצוא מפתח השחזור ושמירתו במקום מוגן מאפשר לך לשחזר את החשבון שלך במקרה ושכחת את הסיסמא ללא איבוד מידע.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="מפתח ראשי ייוצא";
+"masterKeyExported"="מפתח לשחזור יוצא";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="הקובץ RecoveryKey.txt נשמר במכשיר זה. התחבר למחשב שלך ופתח אייטונס על מנת לגשת למסמכי MEGA. אנו מייצעים בחום לשמור קובץ זה באופן מאובטח!";
+"masterKeyExported_alertMessage"="מפתח השחזור ייוצא למקום לא מקוון כ-RecoveryKey.txt. שים לב: קובץ זה יימחק אם אתה מתנתק, אנא שמור אותו במקום מוגן.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="מפתח ראשי נמחק";
+"masterKeyRemoved"="מפתח לשחזור נמחק";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt נמחק מתיקיית המסמכים.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="מחק מידע מקומי";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="התנתק ומחק מידע פנימי לאחר 10 ניסיונות כושלים של הקוד";
+"failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="מרכז עזרה";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="האם אתה בטוח שברצונך למחוק את הפריט הזה מגישה לא מקוונת?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";
