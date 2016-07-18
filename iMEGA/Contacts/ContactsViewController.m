@@ -572,7 +572,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-    NSString *base64Handle = [MEGASdk base64HandleForHandle:user.handle];
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
     
     ContactTableViewCell *cell;
@@ -720,8 +720,25 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         remainingOperations = 1;
-        MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-        [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:self];
+        
+        switch (self.contactsMode) {
+            case Contacts: {
+                MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
+                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:self];
+                break;
+            }
+                
+            case ContactsShareFolderWith:
+            case ContactsShareFolderWithEmail:
+            case ContactsShareFoldersWith:
+            case ContactsShareFoldersWithEmail:
+                break;
+                
+            case ContactsFolderSharedWith: {
+                [self deleteAction:self.deleteBarButtonItem];
+                break;
+            }
+        }
     }
 }
 
@@ -1047,7 +1064,7 @@
             
         case MEGARequestTypeGetAttrUser: {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[request email]];
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:user.handle];
+            NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
             NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
             
             BOOL shouldUpdateCell = NO;
@@ -1130,6 +1147,13 @@
                         
                     } else {
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
+                        
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[request email]];
+                        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+                        if (indexPath != nil) {
+                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                        }
                     }
                 } else {
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
@@ -1155,7 +1179,7 @@
     NSInteger count = userList.size.integerValue;
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        NSString *base64Handle = [MEGASdk base64HandleForHandle:user.handle];
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange != 0)) {
             continue;
@@ -1209,7 +1233,7 @@
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
                 MEGAUser *userToDelete = [deleteContactsIndexPathMutableDictionary objectForKey:indexPath];
-                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForHandle:userToDelete.handle];
+                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForUserHandle:userToDelete.handle];
                 [self.indexPathsMutableDictionary removeObjectForKey:userToDeleteBase64Handle];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];

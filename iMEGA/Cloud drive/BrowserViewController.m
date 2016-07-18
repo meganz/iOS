@@ -514,7 +514,8 @@
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
-        case MEGARequestTypeCopy: {
+        case MEGARequestTypeCopy:
+        case MEGARequestTypeMove: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             break;
@@ -573,6 +574,7 @@
                         message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
