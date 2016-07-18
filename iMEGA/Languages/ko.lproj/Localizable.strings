@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="파일 링크";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="파일 열기";
+"openButton"="열기";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="다운로드 하려는 파일이 사용가능한 메모리보다 큽니다.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -147,9 +147,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="연락처가 없습니다";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="들어오는 공유 폴더 없음";
+"noIncomingSharedItemsEmptyState_text"="들어오는 공유된 폴더 없음";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="나가는 공유 폴더 없음";
+"noOutgoingSharedItemsEmptyState_text"="나가는 공유된 폴더 없음";
 /* Title of My Contacts section */
 "myContacts"="연락처";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="요청 취소됨";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="요청 삭제됨";
-/* Title shown when there's no pending request */
-"noRequestPending"="현재 대기중인 요청이 없습니다";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="보류중인 요청 없음";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="전송 일시정지";
+"transfersEmptyState_titlePaused"="일시정지된 전송";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="연락처가 이메일이 없습니다";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="떠나기";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="폴더 떠남";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="통지";
 /* Title for the MEGA Recovery Key */
-"masterKey"="마스터키";
+"masterKey"="복구 키";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="비밀번호 바꾸기";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="마스터 키 내보내기";
+"exportMasterKey"="복구 키 내보내기";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="보안 경고! 매우 위험이 높은 동작입니다. 계속하시겠습니까?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="마스터 키를 내보내고 안전한 곳에 보관하는 것은 비밀번호를 잃어버렸을 때 데이터 손실 없이 계정을 복구하는 것을 가능하게 합니다.";
+"exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하면 비밀번호를 잊어버렸을 때 데이터 손실 없이 계정을 복구할 수 있습니다.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="마스터 키가 내보내졌습니다";
+"masterKeyExported"="복구 키 내보내짐";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt가 장치에 저장되었습니다. MEGA Documents에서 이 파일에 접근하려면 컴퓨터에 연결하여 iTunes를 여세요. 우리는 이 파일을 안전하게 보관할 것을 강력히 권고합니다!";
+"masterKeyExported_alertMessage"="복구 키가 오프라인 섹션에 RecoveryKey.txt로 내보내졌습니다. 참고: 로그아웃하면 삭제됩니다, 안전한 장소에 보관하세요.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="마스터 키 제거됨";
+"masterKeyRemoved"="복구 키 제거됨";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt가 문서 폴더에서 삭제되었습니다";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt가 Documents 폴더에서 제거됨.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="기기에서";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="로그아웃하고 비밀번호 입력 10회 실패 후 로컬 데이터를 삭제합니다";
+"failedAttempstSectionTitle"="10번의 실패한 비밀번호 시도 후 로그아웃하고 로컬 데이터를 지움";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="도움 센터";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="정말 이 항목을 오프라인에서 삭제하시겠습니까?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="정말 이 항목들을 오프라인에서 삭제하시겠습니까?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Pranala berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Buka Berkas";
+"openButton"="Buka";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="File yang anda coba untuk download lebih besar dari memori yang tersedia.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Bersihkan Tempat Sampah";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Tidak ada file tersimpan untuk offline";
+"offlineEmptyState_title"="Tidak ada file tersimpan untuk Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Anda tidak memliki kontak";
+"contactsEmptyState_title"="Tidak ada Kontak";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Tidak ada folder berbagi masuk";
+"noIncomingSharedItemsEmptyState_text"="Tidak ada Folder Berbagi masuk";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Tidak ada folder berbagi keluar";
+"noOutgoingSharedItemsEmptyState_text"="Tidak ada Folder Berbagi keluar";
 /* Title of My Contacts section */
 "myContacts"="Kontak";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="Request telah dibatalkan";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Request telah dihapus";
-/* Title shown when there's no pending request */
-"noRequestPending"="Tidak ada pending request pada saat ini";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Tidak ada request pending";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Transfer dihentikan";
+"transfersEmptyState_titlePaused"="Transfer Terhentikan";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Kontak tidak memiliki email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Tinggalkan";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder ditinggalkan";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,7 +537,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Pengakuan";
 /* Title for the MEGA Recovery Key */
-"masterKey"="MasterKey";
+"masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ubah kata sandi";
 /* Title shown when you try to export your MEGA Recovery Key */
@@ -541,15 +545,15 @@
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Peringatan keamanan! Ini adalah operasi berisiko tinggi. Apakah Anda ingin melanjutkan?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Mengekspor Recovery Key dan menyimpannya pada lokasi yang aman membolehkan anda recover akun anda jika password atau data hilang.";
+"exportMasterKeyFooter"="Mengekspor Recovery Key dan menyimpannya dalam lokasi yang aman membolehkan anda untuk mengembalikan akun anda jika kehilangan password tanpa harus kehilangan data.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key telah di-ekspor";
+"masterKeyExported"="Recovery Key terekspor";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt telah disimpan pada perangkat ini. Hubungkan ke komputer anda dan buka iTunes untuk mengaksesnya pada MEGA Documents. Kami sangat menyarankan anda untuk menyimpan semua file ini dengan aman!";
+"masterKeyExported_alertMessage"="Recovery Key telah berhasil diekspor ke Offline section sebagai RecoveryKey.txt. Catatan: itu akan terhapus ketika anda keluar, harap simpan di tempat yang aman.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key telah dihapus";
+"masterKeyRemoved"="Recovery Key terhapus";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt telah dihapus dari folder Documents.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt dihapus dari Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Pada perangkat anda";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -563,13 +567,13 @@
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Seluruh item pada Sampah akan dihapus";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Image and video downloads";
+"imageAndVideoDownloadsHeader"="Download gambar dan video";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Save images in gallery";
+"saveImagesInGallery"="Simpan gambar di gallery";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Save videos in gallery";
+"saveVideosInGallery"="Simpan video di gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Simpan gambar dan video yang kompatible dengan iOS dalam gallery perangkat anda (Catatan: Gambar dan video tidak akan disimpan saat Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %s";
 /* Title for the action that allows to remove a file or folder */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus data lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 gagal memasukan passcode";
+"failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

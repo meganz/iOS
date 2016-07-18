@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Линк към файла";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Отвори файл";
+"openButton"="Отвори";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Файлът, който се опитвате да свалите е по-голям от размера на свободната памет.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Изчистете Кошчето";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Няма запазени офлайн файлове";
+"offlineEmptyState_title"="Няма Запазени файлове в Офлайн ";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Вие нямате контакти";
+"contactsEmptyState_title"="Нямяте Контакти";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Няма входящи споделени папки";
+"noIncomingSharedItemsEmptyState_text"="Няма входящи Споделени Папки";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Няма изходящи споделени папки";
+"noOutgoingSharedItemsEmptyState_text"="Няма изходящи Споделени Папки";
 /* Title of My Contacts section */
 "myContacts"="Контакти";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="Заявката беше отменена";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Заявката беше изтрита";
-/* Title shown when there's no pending request */
-"noRequestPending"="Няма чакащи заявки  момента";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Няма чакащи заявки";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Трансферите са паузирани";
+"transfersEmptyState_titlePaused"="Трансфери на Пауза";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Контактът няма имейл";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Остави";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Сигурни ли сте, че искате да напуснете това споделяне?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Сигурни ли сте, че искате да напуснете тези споделяния?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Папката е напусната";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Благодарности";
 /* Title for the MEGA Recovery Key */
-"masterKey"="MasterKey";
+"masterKey"="Възстановяващ Ключ";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Смени парола";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Експортирай Главния Ключ";
+"exportMasterKey"="Експортирай Възстановяващ Ключ";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Предупреждение за сигурност! Това е операция с висок риск. Искате ли да продължите?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Експортирането на Главния Ключ и съхраняването му на сигурно място ви позволява да възстановите профила си в случай на загубена парола, без загуба на данни.";
+"exportMasterKeyFooter"="Експортирането на Възстановяващия Ключ и съхранението му на сигурно място ви дава възможност да възстановите профила си в случай на загубена парола, без загуба на данни.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Главният Ключ беше експортиран";
+"masterKeyExported"="Възстановяващият Ключ беше експортиран";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt беше запазен на това устройство. Свържете се към компютъра си и отворете iTunes за да го достъпите в MEGA Документи. Ние силно ви съветваме да запазите този файл на сигурно място!";
+"masterKeyExported_alertMessage"="Възстановяващият Ключ беше експортиран в секция Офлайн като RecoveryKey.txt. Внимание: Ключът ще бъде изтрит ако излезете от профила си, моля съхранявайте го на сигурно място.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Главният Ключ беше премахнат";
+"masterKeyRemoved"="Възстановяващият ключ беше премахнат";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt беше премахнат от папката Документи.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt беше премахнат от папка Документи.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="На вашето устройство";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -563,13 +567,13 @@
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Всички елементи в кошчето ще бъдат изтрити";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Image and video downloads";
+"imageAndVideoDownloadsHeader"="Сваляния на изображения и видео";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Save images in gallery";
+"saveImagesInGallery"="Запази изображенията в галерията";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Save videos in gallery";
+"saveVideosInGallery"="Запази видеотата в галерията";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Запази iOS съвместими изображения и видео в Галерията на вашето устройство (Забележка: снимките и клиповете няма да бъдат запазени в Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="В момента използвате %s";
 /* Title for the action that allows to remove a file or folder */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Изтрий локални данни";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Изход и изтриване на локални данни след 10 грешни въвеждания на паролата";
+"failedAttempstSectionTitle"="Излез от системата и изтрий локалните данни след 10 неуспешни въвеждания на код.";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Помощен Център";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Сигурни ли сте, че искате да изтриете този елемент от Офлайн?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Сигурни ли сте, че искате да изтриете тези елементи от Офлайн?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Съхранена в Снимки";

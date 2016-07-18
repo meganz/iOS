@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Link ng file";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Buksan ang file";
+"openButton"="Buksan";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Ang inyong file na tinatangkang i0download ay mas malaki sa inyong available na memory.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Linisin ang Basurahan";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Walang files ang sinave para sa offline";
+"offlineEmptyState_title"="Walang files sa Itinabi para sa Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Wala ka pang contacts na naidaragdag!";
+"contactsEmptyState_title"="Wala ka pang Contacts";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Walang padating na shared folders";
+"noIncomingSharedItemsEmptyState_text"="Walang padating na Binahaging Folder";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Walang papalabas na shared folders";
+"noOutgoingSharedItemsEmptyState_text"="Walang paalis na Binahaging Folder";
 /* Title of My Contacts section */
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="Tinanggihan ang kahilingan";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Binura ang kahilingan";
-/* Title shown when there's no pending request */
-"noRequestPending"="Walang naantalang request ngayon";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Walang pending na kahilingan";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Itinigil muna ang paglilipat";
+"transfersEmptyState_titlePaused"="Itigil muna ang Paglilipat";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Ang contact ay walang email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Lumisan";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Gusto mo bang iwan ng binahagi sa'yo?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Gusto mo bang iwan ang mga binahaging ito sa'yo?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Iniwan ang folder!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Acknowledgements";
 /* Title for the MEGA Recovery Key */
-"masterKey"="MasterKey";
+"masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Palitan ang password";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Ilabas ang Recovery Key";
+"exportMasterKey"="I-export ang Recovery Key";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Babala pangseguridad! Ito ay isang operasyon na may mataas na panganib. Gusto mo bang ipagpatuloy?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Ang pag-eexport sa Recovery Key at paglalagay nito sa isang secured na lokasyon ay makakapagbigay daan upang makuhang muli ang inyong account sa mga pagkakataon maiwala mo ang iyong password ng walang data loss.";
+"exportMasterKeyFooter"="Ang pag-eexport sa Recovery Key at ang pagtatabi nito sa isang maingat na lokasyon ay magbibigay daan upang mabawi mo ang iyong account sakaling mawala mo ang iyong password ng walang data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Na-export na ang Recovery Key";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Ang RecoveryKey.txt ay nai-save sa device. Mag-connect sa iyong computer at buksan ang iTunes para ma-access ito sa iyong MEGA documents. Pinapayohan ka naming i-secure ang file na ito!";
+"masterKeyExported_alertMessage"="Ang Recovery Key ay na-export na sa Offline section bilang RecoveryKey.txt. Paalala: Ito ay buburahin kung hindi ka magla-log out, paalalang ingatan ito.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Tinanggal ang Recovery Key";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Tinanggal ang RecoveryKey.txt sa inyong Documents folder.";
+"masterKeyRemoved_alertMessage"="Tinanggal sa Documents folder ang Recovery.txt";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sa iyong device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -569,7 +573,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Itabi ang videos sa gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Itabi ang iOS compatible na mga imahe at videos sa inyong sa gallery ng inyong device (Paalala: ang mga imahe at videos ay hindi maitatabi Offline)";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Gumagamit ngayon ng %s";
 /* Title for the action that allows to remove a file or folder */
@@ -625,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Pahiin ang local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Magla-log out at papahiin ang local data pagkatapos ng 10 maling passcode";
+"failedAttempstSectionTitle"="Mag-logout at burahin ang local data matapos ang 10 maling pagsubok sa passcode";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tulong";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -657,7 +661,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="sariling  Account";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Logout";
+"logoutLabel"="Mag-logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Gusto mo bang burahin ang bagay na ito sa iyong Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Gusto mo bang pahiin ang items sa iyong Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Naka-save sa Photos";

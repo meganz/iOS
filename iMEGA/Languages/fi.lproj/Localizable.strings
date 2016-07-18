@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Tiedostolinkki";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Avaa tiedosto";
+"openButton"="Avaa";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Tiedosto, jota yrität ladata, ylittää kooltaan käytettävissä olevan muistin määrän. ";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -166,10 +166,10 @@
 "requestCancelled"="Pyyntö peruutettu";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Pyyntö poistettu";
-/* Title shown when there's no pending request */
-"noRequestPending"="Ei avoimia pyyntöjä tällä hetkellä";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Siirrot tauotettu";
+"transfersEmptyState_titlePaused"="Tauotetut siirrot";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="Kontaktilla ei ole sähköpostia";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Poistu";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Poistuttu kansiosta";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -533,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Kiitokset";
 /* Title for the MEGA Recovery Key */
-"masterKey"="IsäntäAvain";
+"masterKey"="Palautusavain";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Vaihda salasana";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Vie isäntäavain";
+"exportMasterKey"="Vie palautusavain";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Turvallisuusvaroitus! Tämä on korkean riskin toiminto. Haluatko jatkaa?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Isäntäavaimen vienti ja säilytys turvallisessa paikassa mahdollistaa käyttäjätilin palautuksen vailla tietojen menetystä, mikäli salasana on kadonnut.";
+"exportMasterKeyFooter"="Palautusavaimen vienti ja säilytys turvallisessa paikassa mahdollistaa käyttäjätilin palautuksen vailla tietojen menetystä, mikäli salasana on kadonnut.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Isäntäavain viety";
+"masterKeyExported"="Palautusavain viety";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt tallennettu laitteelle. Yhdistä tietokoneeseesi ja avaa iTunes päästäksesi MEGA Asiakirjoihin. Suosittelemme vahvasti, että pidät kyseisen tiedoston turvallisesti tallessa! ";
+"masterKeyExported_alertMessage"="Palautusavain on viety Offline-osioon tiedostoon RecoveryKey.txt. Huom. Tiedosto poistetaan mikäli kirjaudut ulos, ole hyvä ja säilytä se turvallisessa paikassa.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Isäntäavain poistettu";
+"masterKeyRemoved"="Palautusavain poistettu";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt on poistettu Asiakirjat -hakemistosta.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt poistettiin Dokumentit-kansiosta.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Laitteellasi";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Haluatko varmasti poistaa kohteen offline-tilasta?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Haluatko varmasti poistaa kohteet offline-tilasta?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";
