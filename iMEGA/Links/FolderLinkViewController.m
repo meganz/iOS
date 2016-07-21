@@ -29,7 +29,6 @@
 
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "MEGAPreview.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -47,7 +46,7 @@
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -101,18 +100,18 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path: %@", error);
+            MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
     
-    [self.navigationController.view setBackgroundColor:megaLightGray];
+    [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
@@ -210,7 +209,7 @@
     NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
     NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
     [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:megaRed
+                                            value:[UIColor mnz_redD90007]
                                             range:[subtitle rangeOfString:subtitle]];
     [subtitleMutableAttributedString addAttribute:NSFontAttributeName
                                             value:[UIFont fontWithName:kFont size:12.0]
@@ -236,7 +235,7 @@
     [unavailableLinkView.titleLabel setText:AMLocalizedString(@"linkUnavailable", nil)];
     [unavailableLinkView.textView setText:AMLocalizedString(@"folderLinkUnavailableText", nil)];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
-    [unavailableLinkView.textView setTextColor:megaDarkGray];
+    [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
     if (iPhone4X) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
@@ -292,7 +291,7 @@
         if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error]) {
-                MEGALogError(@"Remove item at path: %@", error);
+                MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
         if (fileUTI) {
@@ -344,7 +343,7 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
-    [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] logout];
     
     [SVProgressHUD dismiss];
     
@@ -492,6 +491,9 @@
             if ([_tableView isEditing]) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
+                if (self.parentNode == nil) {
+                    self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+                }
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
             }
             
@@ -517,7 +519,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) { //Decryption key
         if (buttonIndex == 0) {
-            [[MEGASdkManager sharedMEGASdkFolder] logoutWithDelegate:self];
+            [[MEGASdkManager sharedMEGASdkFolder] logout];
             
             [[decryptionAlertView textFieldAtIndex:0] resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -622,7 +624,7 @@
     cell.nodeHandle = [node handle];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -693,9 +695,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -714,9 +715,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -725,8 +725,7 @@
                     }
                 }
                 
-                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-                
+                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];                
                 photoBrowser.displayActionButton = YES;
                 photoBrowser.displayNavArrows = YES;
                 photoBrowser.displaySelectionButtons = NO;
@@ -935,7 +934,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -980,20 +979,6 @@
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return 40.0f;
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.cloudImages.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.cloudImages.count) {
-        return [self.cloudImages objectAtIndex:index];
-    }
-    
-    return nil;
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -1067,7 +1052,7 @@
         case MEGARequestTypeLogin: {
             isLoginDone = YES;
             isFetchNodesDone = NO;
-            [api fetchNodesWithDelegate:self];
+            [api fetchNodes];
             break;
         }
             

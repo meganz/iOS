@@ -6,6 +6,29 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
++ (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
+    NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];
+    if ([countString isEqualToString:@"Zero"] || ([countString length] == 0)) {
+        countString = @"0";
+    }
+    
+    return countString;
+}
+
++ (NSString *)mnz_stringWithoutCountOfComponents:(NSArray *)componentsSeparatedByStringArray {
+    NSString *unitString;
+    if (componentsSeparatedByStringArray.count == 1) {
+        unitString = @"KB";
+    } else {
+        unitString = [componentsSeparatedByStringArray objectAtIndex:1];
+        if ([unitString isEqualToString:@"bytes"] || ([unitString length] == 0)) {
+            unitString = @"KB";
+        }
+    }
+    
+    return unitString;
+}
+
 - (NSString*)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
     NSScanner* scanner = [NSScanner scannerWithString:self];
     [scanner setCharactersToBeSkipped:nil];
@@ -19,7 +42,7 @@ static NSString* const B = @"[B]";
     return nil;
 }
 
-- (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
++ (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
     NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
     NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
     

@@ -22,6 +22,7 @@
 #import "ConfirmAccountViewController.h"
 #import "MainTabBarController.h"
 
+#import "SSKeychain.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -49,7 +50,7 @@
     self.confirmAccountButton.layer.cornerRadius = 4.0f;
     self.confirmAccountButton.layer.masksToBounds = YES;
     [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
-    [self.confirmAccountButton setBackgroundColor:[UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0]];
+    [self.confirmAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     
     self.cancelButton.layer.cornerRadius = 4.0f;
     self.cancelButton.layer.masksToBounds = YES;
@@ -73,12 +74,10 @@
 
 - (IBAction)confirmTouchUpInside:(id)sender {
     if ([self validateForm]) {
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [SVProgressHUD show];
             [self lockUI:YES];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
-        } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }
@@ -187,6 +186,11 @@
             [Helper logoutFromConfirmAccount];
             [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
             break;
+        }
+            
+        case MEGARequestTypeLogin: {
+            NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         }
             
         default:

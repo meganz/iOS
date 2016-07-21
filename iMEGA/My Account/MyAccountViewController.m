@@ -22,6 +22,8 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
@@ -93,7 +95,7 @@
     self.userAvatarImageView.layer.masksToBounds = YES;
     
     self.upgradeToProButton.layer.borderWidth = 2.0f;
-    self.upgradeToProButton.layer.borderColor =[megaRed CGColor];
+    self.upgradeToProButton.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
     self.upgradeToProButton.layer.cornerRadius = 4;
     self.upgradeToProButton.layer.masksToBounds = YES;
     
@@ -136,8 +138,8 @@
     
     _fullname = @"";
     
-    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeFirstname delegate:self];
-    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeLastname delegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname delegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname delegate:self];
     
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
@@ -173,7 +175,8 @@
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     
-    NSString *firstPartString = [self stringWithoutUnit:stringFromByteCount];
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
     NSRange firstPartRange;
     
     NSArray *stringComponentsArray = [firstPartString componentsSeparatedByString:@","];
@@ -183,11 +186,11 @@
         NSString *fractionalPartString = [stringComponentsArray objectAtIndex:1];
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:integerPartString];
         firstPartRange = [integerPartString rangeOfString:integerPartString];
-        secondPartString = [NSString stringWithFormat:@".%@ %@", fractionalPartString, [self stringWithoutCount:stringFromByteCount]];
+        secondPartString = [NSString stringWithFormat:@".%@ %@", fractionalPartString, [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
     } else {
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         firstPartRange = [firstPartString rangeOfString:firstPartString];
-        secondPartString = [NSString stringWithFormat:@" %@", [self stringWithoutCount:stringFromByteCount]];
+        secondPartString = [NSString stringWithFormat:@" %@", [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
     }
     NSRange secondPartRange = [secondPartString rangeOfString:secondPartString];
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
@@ -205,40 +208,11 @@
     return firstPartMutableAttributedString;
 }
 
-- (NSString *)stringWithoutUnit:(NSString *)stringFromByteCount {
-    
-    NSString *string = [[stringFromByteCount componentsSeparatedByString:@" "] objectAtIndex:0];
-    if ([string isEqualToString:@"Zero"] || ([string length] == 0)) {
-        string = @"0";
-    }
-    return string;
-}
-
-- (NSString *)stringWithoutCount:(NSString *)stringFromByteCount {
-    
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *string;
-    
-    if (componentsSeparatedByStringArray.count == 1) {
-        string = @"KB";
-    } else {
-        string = [componentsSeparatedByStringArray objectAtIndex:1];
-        
-        if ([string isEqualToString:@"bytes"] || ([string length] == 0)) {
-            string = @"KB";
-        }
-    }
-    
-    return string;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] logout];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

@@ -214,7 +214,7 @@
 }
 
 - (void)sendFeedback {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
             [mailComposeVC setMailComposeDelegate:self];
@@ -229,18 +229,14 @@
         } else {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"noEmailAccountConfigured", nil)];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)showURL:(NSString *)urlString {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:urlString];
         SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
         [self.navigationController pushViewController:webViewController animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -284,7 +280,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -474,7 +470,7 @@
         }
          
         case 4: { //Privacy Policy, Terms of Service
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 if (indexPath.row == 0) {
                     [self showURL:@"https://mega.nz/ios_privacy.html"];
                     break;
@@ -482,9 +478,6 @@
                     [self showURL:@"https://mega.nz/ios_terms.html"];
                     break;
                 }
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-                break;
             }
         }
     }

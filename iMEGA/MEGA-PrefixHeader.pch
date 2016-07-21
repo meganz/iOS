@@ -2,4 +2,6 @@
 #ifdef __OBJC__
     #import "LocalizationSystem.h"
     #import "MEGALogMacros.h"
+
+    #import "UIColor+MNZCategory.h"
 #endif

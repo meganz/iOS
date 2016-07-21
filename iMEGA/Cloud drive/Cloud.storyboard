@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -305,11 +305,11 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addBarButtonItem" destination="ygf-3J-YTT" id="7Zl-24-bBR"/>
+                        <outlet property="carbonCopyBarButtonItem" destination="r3I-l7-OFS" id="rtT-kF-4ld"/>
                         <outlet property="deleteBarButtonItem" destination="yUd-0E-SLT" id="vo9-6g-XHd"/>
                         <outlet property="downloadBarButtonItem" destination="zRS-Iw-IxB" id="0Oz-5g-uLM"/>
                         <outlet property="editBarButtonItem" destination="mLN-ad-YAf" id="cvn-77-Glh"/>
                         <outlet property="moveBarButtonItem" destination="paI-37-wBm" id="Sj3-a8-hXZ"/>
-                        <outlet property="renameBarButtonItem" destination="Bnc-QN-zeY" id="YzG-89-EhS"/>
                         <outlet property="searchDisplayController" destination="qPQ-ZD-KvF" id="5tF-An-RrW"/>
                         <outlet property="selectAllBarButtonItem" destination="Tlb-j4-XPE" id="ymf-3D-A1G"/>
                         <outlet property="shareBarButtonItem" destination="Rdk-Wp-1bg" id="FF2-5U-Aie"/>
@@ -351,7 +351,7 @@
                 </searchDisplayController>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOx-vz-vej">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="calibratedRGB"/>
                     <items/>
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
@@ -362,22 +362,22 @@
                         <action selector="downloadAction:" destination="KWY-Kr-BLD" id="V22-wQ-dVZ"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="getLink" width="32" id="Rdk-Wp-1bg" userLabel="Share Bar Button Item">
+                <barButtonItem enabled="NO" image="shareGray" width="32" id="Rdk-Wp-1bg" userLabel="Share Bar Button Item">
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="shareLinkAction:" destination="KWY-Kr-BLD" id="i2Y-ev-jUX"/>
+                        <action selector="shareAction:" destination="KWY-Kr-BLD" id="o8Q-OC-GAY"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="move" width="32" id="paI-37-wBm" userLabel="Move Copy Bar Button Item">
                     <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="moveCopyAction:" destination="KWY-Kr-BLD" id="mlv-kz-aJ5"/>
+                        <action selector="moveAction:" destination="KWY-Kr-BLD" id="NPC-WU-1W3"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="rename" width="32" id="Bnc-QN-zeY" userLabel="Rename Bar Button Item">
-                    <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                <barButtonItem enabled="NO" image="copy" width="32" id="r3I-l7-OFS" userLabel="Copy Bar Button Item">
+                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="renameAction:" destination="KWY-Kr-BLD" id="bpc-UA-pE0"/>
+                        <action selector="copyAction:" destination="KWY-Kr-BLD" id="glm-zY-ldc"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem enabled="NO" image="rubbishBin" width="32" id="yUd-0E-SLT" userLabel="Rubbish Bin Delete Bar Button Item">
@@ -1004,13 +1004,13 @@
         <image name="cancel" width="46" height="44"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="cloudDriveIcon" width="34" height="25"/>
+        <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="edit" width="22" height="22"/>
-        <image name="getLink" width="32" height="32"/>
         <image name="move" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
-        <image name="rename" width="32" height="32"/>
         <image name="rubbishBin" width="32" height="32"/>
+        <image name="shareGray" width="32" height="32"/>
         <image name="shareRed" width="16" height="22"/>
         <image name="sortBy" width="22" height="22"/>
         <image name="video_list" width="22" height="22"/>

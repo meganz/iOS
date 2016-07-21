@@ -19,22 +19,30 @@
  * program.
  */
 
-#import "GetLinkActivity.h"
-
-#import "MEGAReachabilityManager.h"
-
 #import "SVProgressHUD.h"
 
-@interface GetLinkActivity () {
-    MEGANode *node;
-}
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+
+#import "GetLinkActivity.h"
+
+@interface GetLinkActivity ()
+
+@property (strong, nonatomic) MEGANode *node;
+@property (strong, nonatomic) NSArray *nodes;
 
 @end
 
 @implementation GetLinkActivity
 
-- (id)initWithNode:(MEGANode *)nodeCopy {
-    node = nodeCopy;
+- (instancetype)initWithNode:(MEGANode *)nodeCopy {
+    _node = nodeCopy;
+    
+    return self;
+}
+
+- (instancetype)initWithNodes:(NSArray *)nodesArray {
+    _nodes = nodesArray;
     
     return self;
 }
@@ -44,6 +52,10 @@
 }
 
 - (NSString *)activityTitle {
+    if ([self.nodes count] > 1) {
+        return AMLocalizedString(@"getLinks", nil);
+    }
+    
     return AMLocalizedString(@"getLink", nil);
 }
 
@@ -60,10 +72,20 @@
 }
 
 - (void)performActivity {
-    if ([MEGAReachabilityManager isReachable]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [Helper setCopyToPasteboard:YES];
+        
+        if (self.nodes != nil) {
+            for (MEGANode *n in self.nodes) {
+                [[MEGASdkManager sharedMEGASdk] exportNode:n];
+            }
+        } else {
+            [[MEGASdkManager sharedMEGASdk] exportNode:self.node];
+        }
+        
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+            [self activityDidFinish:YES];
+        }
     }
 }
 

@@ -23,7 +23,7 @@
     
     NSError * error = nil;
     if (![[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:&error]) {
-        MEGALogError(@"Create directory at path");
+        MEGALogError(@"Create directory at path failed with error: %@", error);
     }
 
     NSString *localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_node.name];
@@ -89,7 +89,7 @@
     if (fileExists) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentTransfer.path error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     

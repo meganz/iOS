@@ -24,23 +24,24 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "PhotosViewController.h"
-#import "PhotoCollectionViewCell.h"
-#import "HeaderCollectionReusableView.h"
 #import "Helper.h"
-#import "MEGAPreview.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
-#import "CameraUploads.h"
-#import "CameraUploadsTableViewController.h"
-#import "BrowserViewController.h"
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
 
+#import "PhotosViewController.h"
+#import "PhotoCollectionViewCell.h"
+#import "HeaderCollectionReusableView.h"
+#import "CameraUploads.h"
+#import "CameraUploadsTableViewController.h"
+#import "BrowserViewController.h"
+
 @interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
-    NSMutableArray *exportLinks;
+
     NSUInteger remainingOperations;
+    
     NSUInteger itemsPerRow;
 }
 
@@ -70,6 +71,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -261,6 +263,14 @@
     }
 }
 
+- (void)setToolbarActionsEnabled:(BOOL)boolValue {
+    self.downloadBarButtonItem.enabled = boolValue;
+    self.shareBarButtonItem.enabled = ((self.selectedItemsDictionary.count < 100) ? boolValue : NO);
+    self.moveBarButtonItem.enabled = boolValue;
+    self.carbonCopyBarButtonItem.enabled = boolValue;
+    self.deleteBarButtonItem.enabled = boolValue;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
@@ -287,16 +297,9 @@
     }
     
     if (self.selectedItemsDictionary.count == 0) {
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
-        
+        [self setToolbarActionsEnabled:NO];
     } else {
-        [self.downloadBarButtonItem setEnabled:YES];
-        [self.shareBarButtonItem setEnabled:YES];
-        [self.moveBarButtonItem setEnabled:YES];
-        [self.deleteBarButtonItem setEnabled:YES];
+        [self setToolbarActionsEnabled:YES];
     }
     
     [self.photosCollectionView reloadData];
@@ -322,10 +325,7 @@
         self.navigationItem.leftBarButtonItems = @[];
     }
     if (![self.selectedItemsDictionary count]) {
-        [self.downloadBarButtonItem setEnabled:NO];
-        [self.shareBarButtonItem setEnabled:NO];
-        [self.moveBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
+        [self setToolbarActionsEnabled:NO];
     }
     
     [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -349,16 +349,12 @@
     [self setEditing:NO animated:YES];
 }
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    exportLinks = [NSMutableArray new];
-    remainingOperations = self.selectedItemsDictionary.count;
-    
-    for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:n delegate:self];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues button:self.shareBarButtonItem];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
-- (IBAction)moveCopyAction:(UIBarButtonItem *)sender {
+- (IBAction)moveAction:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
     MEGANavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:mcnc animated:YES completion:nil];
@@ -367,6 +363,17 @@
     mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     mcnvc.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
     [mcnvc setBrowserAction:BrowserActionMove];
+}
+
+- (IBAction)copyAction:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
+        [browserVC setBrowserAction:BrowserActionCopy];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
@@ -420,7 +427,7 @@
     cell.nodeHandle = [node handle];
     
     if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
-        cell.thumbnailImageView.layer.borderColor = [megaRed CGColor];
+        cell.thumbnailImageView.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
         cell.thumbnailImageView.layer.borderWidth = 3.0;
         [cell.thumbnailImageView.layer setOpacity:0.6];
     } else {
@@ -473,8 +480,7 @@
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
         if (isImage([n name].pathExtension)) {
-            MEGAPreview *preview = [MEGAPreview photoWithNode:n];
-            preview.caption = [n name];
+            MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
             [self.previewsArray addObject:preview];
         }
     }
@@ -503,8 +509,7 @@
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
         if (isImage([node name].pathExtension)) {
-            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-            
+            MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];            
             photoBrowser.displayActionButton = YES;
             photoBrowser.displayNavArrows = YES;
             photoBrowser.displaySelectionButtons = NO;
@@ -548,17 +553,11 @@
             
             [self.navigationItem setTitle:message];
             
-            [self.downloadBarButtonItem setEnabled:YES];
-            [self.shareBarButtonItem setEnabled:YES];
-            [self.moveBarButtonItem setEnabled:YES];
-            [self.deleteBarButtonItem setEnabled:YES];
+            [self setToolbarActionsEnabled:YES];
         } else {
             [self.navigationItem setTitle:AMLocalizedString(@"selectTitle", @"Select items")];
             
-            [self.downloadBarButtonItem setEnabled:NO];
-            [self.shareBarButtonItem setEnabled:NO];
-            [self.moveBarButtonItem setEnabled:NO];
-            [self.deleteBarButtonItem setEnabled:NO];
+            [self setToolbarActionsEnabled:NO];
         }
         
         if ([self.selectedItemsDictionary count] == self.nodeList.size.integerValue) {
@@ -596,7 +595,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -626,7 +625,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:megaMediumGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -669,20 +668,6 @@
     [self enableCameraUploadsAndShowItsSettings];
 }
 
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.previewsArray.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.previewsArray.count) {
-        return [self.previewsArray objectAtIndex:index];
-    }
-    
-    return nil;
-}
-
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -702,17 +687,6 @@
 }
 
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            break;
-            
-        default:
-            break;
-    }
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -736,22 +710,6 @@
             if (remainingOperations == 0) {
                 NSString *message = (self.selectedItemsDictionary.count <= 1 ) ? AMLocalizedString(@"fileMovedToRubbishBinMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"filesMovedToRubbishBinMessage", nil), self.selectedItemsDictionary.count];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-//                [self setEditing:NO animated:NO];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeExport: {
-            remainingOperations--;
-            
-            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
-            [exportLinks addObject:link];
-            
-            if (remainingOperations == 0) {
-                [SVProgressHUD dismiss];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:exportLinks applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-                [self presentViewController:activityVC animated:YES completion:nil];
                 [self setEditing:NO animated:NO];
             }
             break;
@@ -769,9 +727,6 @@
 }
 
 #pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if ([transfer type] == MEGATransferTypeUpload) {

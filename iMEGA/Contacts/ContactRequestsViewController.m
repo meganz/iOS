@@ -19,10 +19,10 @@
  * program.
  */
 
-#import "ContactRequestsViewController.h"
-
 #import <AddressBookUI/AddressBookUI.h>
+#import <ContactsUI/ContactsUI.h>
 
+#import "ContactRequestsViewController.h"
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
@@ -34,7 +34,7 @@
 
 #import "ContactRequestsTableViewCell.h"
 
-@interface ContactRequestsViewController () <UIActionSheetDelegate, ABPeoplePickerNavigationControllerDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
+@interface ContactRequestsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) NSMutableArray *outgoingContactRequestArray;
 @property (nonatomic, strong) NSMutableArray *incomingContactRequestArray;
@@ -45,6 +45,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *contactRequestsSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic) NSUInteger remainingOperations;
 
 @end
 
@@ -240,7 +242,7 @@
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -268,10 +270,21 @@
         emailAlertView.tag = 0;
         [emailAlertView show];
     } else if (buttonIndex == 1) {
-        ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-        contactsPickerNC.peoplePickerDelegate = self;
-        
-        [self presentViewController:contactsPickerNC animated:YES completion:nil];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+            if ([contactsPickerNC respondsToSelector:@selector(predicateForSelectionOfProperty)]) {
+                contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+                contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            }
+            contactsPickerNC.peoplePickerDelegate = self;
+            [self presentViewController:contactsPickerNC animated:YES completion:nil];
+        } else {
+            CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+            contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+            contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            contactsPickerViewController.delegate = self;
+            [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+        }
     }
 }
 
@@ -280,7 +293,7 @@
     for (UIView *subview in actionSheet.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
         }
     }
 }
@@ -288,9 +301,10 @@
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
 
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];    // iOS 7
 }
 
+// iOS 7
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
@@ -303,6 +317,7 @@
     }
     
     if (email) {
+        self.remainingOperations = 1;
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -331,6 +346,7 @@
     }
     
     if (email) {
+        self.remainingOperations = 1;
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
     } else {
         UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -343,15 +359,22 @@
     }
 }
 
+#pragma mark - CNContactPickerDelegate
+
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
+    self.remainingOperations = contactProperties.count;
+    for (CNContactProperty *contactProperty in contactProperties) {
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
+    }
+}
+
 #pragma mark - UIAlertDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[[alertView textFieldAtIndex:0] text] message:@"" action:MEGAInviteActionAdd delegate:self];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
         }
     }
@@ -368,7 +391,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -387,7 +410,7 @@
         text = AMLocalizedString(@"addContacts", nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:megaMediumGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -422,9 +445,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeInviteContact) {
@@ -456,7 +476,10 @@
         case MEGARequestTypeInviteContact:
             switch (request.number.integerValue) {
                 case 0:
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
+                    self.remainingOperations--;
+                    if (self.remainingOperations == 0) {
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
+                    }
                     break;
                     
                 case 1:
@@ -487,12 +510,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
 #pragma mark - MEGAGlobalDelegate

@@ -35,18 +35,22 @@
 @property (nonatomic, strong) ALAsset *alasset;
 @property (nonatomic, strong) MEGANode *cameraUploadNode;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, assign) BOOL automatically;
+@property (nonatomic, assign) NSInteger retries;
 
 @end
 
 @implementation MEGAAssetOperation
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)cameraUploadNode {
+- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)cameraUploadNode automatically:(BOOL)automatically {
     if (self = [super init]) {
         _phasset = asset;
         _alasset = nil;
         _cameraUploadNode = cameraUploadNode;
         executing = NO;
         finished = NO;
+        _automatically = automatically;
+        _retries = 0;
     }
     return self;
 }
@@ -75,21 +79,23 @@
 }
 
 - (void)start {
-    if (![CameraUploads syncManager].isCameraUploadsEnabled) {
-        [[CameraUploads syncManager] resetOperationQueue];
-        return;
-    }
-    
-    if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
-        if ([MEGAReachabilityManager isReachableViaWWAN]) {
+    if (_automatically) {
+        if (![CameraUploads syncManager].isCameraUploadsEnabled) {
             [[CameraUploads syncManager] resetOperationQueue];
             return;
         }
-    }
-    
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
-        [[CameraUploads syncManager] resetOperationQueue];
-        return;
+        
+        if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
+            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+                [[CameraUploads syncManager] resetOperationQueue];
+                return;
+            }
+        }
+        
+        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
+            [[CameraUploads syncManager] resetOperationQueue];
+            return;
+        }
     }
     
     if ([self isCancelled]) {
@@ -129,7 +135,11 @@
     
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionOriginal;
+        if (_retries < 10) {
+            options.version = PHImageRequestOptionsVersionCurrent;
+        } else {
+            options.version = PHImageRequestOptionsVersionOriginal;
+        }
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
@@ -137,11 +147,7 @@
          options:options
          resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
              if (!imageData) {
-                 NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                 if (error) {
-                     MEGALogError(@"Request image data for asset: %@", error);
-                 }
-                 [self disableCameraUploadWithError:error];
+                 [self manageErrorWithPHAssetInfo:info];
                  return;
              }
              NSString *filePath = [self filePathWithInfo:info];
@@ -152,18 +158,14 @@
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHVideoRequestOptionsVersionOriginal;
+        options.version = PHImageRequestOptionsVersionOriginal;
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
          requestAVAssetForVideo:_phasset
          options:options resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
              if (!asset) {
-                 NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                 if (error) {
-                     MEGALogError(@"Request avasset for video: %@", error);
-                 }
-                 [self disableCameraUploadWithError:error];
+                 [self manageErrorWithPHAssetInfo:info];
                  return;
              }
              if ([asset isKindOfClass:[AVURLAsset class]]) {
@@ -180,7 +182,7 @@
                  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
                  if (![[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error] && !fileExists) {
                      if (error) {
-                         MEGALogError(@"Copy item at path: %@", error);
+                         MEGALogError(@"Copy item at path failed with error: %@", error);
                          [self disableCameraUploadWithError:error];
                          return;
                      }
@@ -189,7 +191,7 @@
                  error = nil;
                  NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
                  if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                     MEGALogError(@"Set attributes: %@", error);
+                     MEGALogError(@"Set attributes failed with error: %@", error);
                  }
                  
                  NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
@@ -241,23 +243,26 @@
     executing = NO;
     finished = YES;
     
-    if (_phasset) {
-        if (_phasset.mediaType == PHAssetMediaTypeImage) {
-            [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadPhotoDate];
+    if (_automatically) {
+        [[CameraUploads syncManager] setBadgeValue];
+        if (_phasset) {
+            if (_phasset.mediaType == PHAssetMediaTypeImage) {
+                [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadPhotoDate];
+            }
+            
+            if (_phasset.mediaType == PHAssetMediaTypeVideo) {
+                [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadVideoDate];
+            }
         }
         
-        if (_phasset.mediaType == PHAssetMediaTypeVideo) {
-            [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadVideoDate];
-        }
-    }
-    
-    if (_alasset) {
-        if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadPhotoDate];
-        }
-        
-        if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadVideoDate];
+        if (_alasset) {
+            if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+                [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadPhotoDate];
+            }
+            
+            if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+                [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadVideoDate];
+            }
         }
     }
     
@@ -266,12 +271,21 @@
 }
 
 - (NSString *)filePathWithInfo:(NSDictionary *)info {
+    MEGALogDebug(@"Asset %@\n%@", _phasset, info);
     NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
     if (!url) {
         url = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
     }
     
     NSString *extension = [[url pathExtension] lowercaseString];
+    if (!extension) {
+        if (_phasset.mediaType == PHAssetMediaTypeImage) {
+            extension = @"jpg";
+        }
+        if (_phasset.mediaType == PHAssetMediaTypeVideo) {
+            extension = @"mov";
+        }
+    }
     NSString *name = [[_dateFormatter stringFromDate:_phasset.creationDate] stringByAppendingPathExtension:extension];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     return filePath;
@@ -279,15 +293,22 @@
 
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
     long long freeSpace = (long long)[Helper freeDiskSpace];
+    MEGALogDebug(@"File size: %lld - Free size: %lld", fileSize, freeSpace);
     if (fileSize > freeSpace) {
+        NSString *message = nil;
+        if (_automatically) {
+            message = AMLocalizedString(@"cameraUploadsDisabled_alertView_message", @"Camera Uploads will be disabled, because you don't have enought space on your device");
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something")
-                                                                message:AMLocalizedString(@"cameraUploadsDisabled_alertView_message", @"Camera Uploads will be disabled, because you don't have enought space on your device")
+                                                                message:message
                                                                delegate:self
                                                       cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            if (_automatically) {
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            }
         });
         
         return NO;
@@ -297,15 +318,61 @@
 
 - (void)disableCameraUploadWithError:(NSError *)error {
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsEmptyState_title", nil)
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    });
+    MEGALogDebug(@"Disable Camera Uploads: %@", message);
+    if (_automatically) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+        });
+    }
+}
+
+- (void)manageErrorWithPHAssetInfo:(NSDictionary *)info {
+    NSError *error = [info objectForKey:@"PHImageErrorKey"];
+    switch (error.code) {
+        case 0:
+        case 28:
+        case 81: {
+            if (_retries < 20) {
+                _retries++;
+                if (error.code == 0) {
+                    MEGALogDebug(@"There are no image data - Info: %@", info);
+                } else {
+                    MEGALogError(@"Request image data for asset failed with error: %@", error);
+                }
+                [self start];
+            } else {
+                MEGALogDebug(@"Max attempts reached");
+                [self completeOperation];
+            }
+            break;
+        }
+            
+        case 25:
+            [self completeOperation];
+            break;
+            
+        case 640:
+            [self disableCameraUploadWithError:error];
+            break;
+            
+        default: {
+            if (_retries < 20) {
+                _retries++;
+                MEGALogError(@"Request image data for asset failed with error: %@", error);
+                [self start];
+            } else {
+                MEGALogDebug(@"Max attempts reached");
+                [self disableCameraUploadWithError:error];
+            }
+            break;
+        }
+    }
 }
 
 - (void)actionForNode:(MEGANode *)node fingerPrint:(NSString *)fingerprint filePath:(NSString *)filePath imageData:(NSData *)imageData alassetRepresentation:(ALAssetRepresentation *)assetRepresentation {
@@ -356,7 +423,7 @@
         }
         
         if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-            MEGALogError(@"Set attributes: %@", error);
+            MEGALogError(@"Set attributes failed with error: %@", error);
         }
         
         NSString *newName = [self newNameForName:name];
@@ -366,7 +433,7 @@
             
             NSError *error = nil;
             if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
-                MEGALogError(@"Move item at path: %@", error);
+                MEGALogError(@"Move item at path failed with error: %@", error);
             }
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath parent:_cameraUploadNode delegate:self];
         } else {
@@ -394,8 +461,9 @@
                     [[MEGASdkManager sharedMEGASdk] renameNode:node newName:name delegate:self];
                 }
             } else {
+                MEGALogDebug(@"The asset exists in MEGA in the correct folder");
                 [self completeOperation];
-                if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1) {
+                if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && _automatically) {
                     [[CameraUploads syncManager] resetOperationQueue];
                 }
             }
@@ -421,7 +489,7 @@
             break;
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && _automatically) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }
@@ -429,7 +497,7 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeUpload) {
+    if ([transfer type] == MEGATransferTypeUpload && _automatically) {
         [[CameraUploads syncManager] setBadgeValue];
     }
 }
@@ -443,24 +511,25 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            [self start];
-        } else if ([error type] != MEGAErrorTypeApiEExist) {
+            if (_automatically) {
+                [self start];
+            } else {
+                [self completeOperation];
+            }
+        } else if ([error type] != MEGAErrorTypeApiEExist && _automatically) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
     }
     
-    NSError *nserror = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&nserror]) {
-        MEGALogError(@"Remove item at path: %@", nserror);
-    }
-    
     if ([transfer type] == MEGATransferTypeUpload) {
-        [self completeOperation];        
-        [[CameraUploads syncManager] setBadgeValue];
+        [self completeOperation];
+        if (_automatically) {
+            [[CameraUploads syncManager] setBadgeValue];
+        }
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && _automatically) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }
