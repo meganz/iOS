@@ -50,7 +50,11 @@
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
     [_saveBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_saveBarButtonItem.tag] forState:UIControlStateNormal];
     
-    self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+    if (!self.isOffline) {
+        self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+    } else {
+        self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
+    }
     
     sortByArray = @[AMLocalizedString(@"nameAscending", nil), AMLocalizedString(@"nameDescending", nil), AMLocalizedString(@"largest", nil), AMLocalizedString(@"smallest", nil), AMLocalizedString(@"newest", nil), AMLocalizedString(@"oldest", nil)];
 }
@@ -84,7 +88,7 @@
             break;
     }
     
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
     
     return titleTextAttributesDictionary;
 }
@@ -156,7 +160,11 @@
 }
 
 - (IBAction)saveAction:(UIBarButtonItem *)sender {
-    [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
+    if (!self.isOffline) {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -187,7 +195,7 @@
     }
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
 
     return cell;

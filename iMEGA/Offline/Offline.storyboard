@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="faa-Ut-As6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="OxW-nm-qxP" id="Ipo-hV-DSj">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDx-eK-6De">
@@ -93,6 +93,7 @@
                         <outlet property="deleteBarButtonItem" destination="RRm-wv-TBJ" id="Sox-nG-Goa"/>
                         <outlet property="editBarButtonItem" destination="GcW-Rx-abW" id="YVD-Ah-2CX"/>
                         <outlet property="selectAllBarButtonItem" destination="YUq-JU-8qb" id="aiX-y7-yZJ"/>
+                        <outlet property="sortByBarButtonItem" destination="3dR-tr-pXM" id="tyd-rf-xCX"/>
                         <outlet property="toolbar" destination="rHC-vj-tgX" id="hv7-ey-8mh"/>
                     </connections>
                 </tableViewController>
@@ -116,10 +117,15 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="rHC-vj-tgX">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="calibratedRGB"/>
                     <items/>
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
+                <barButtonItem image="sortBy" width="22" id="3dR-tr-pXM" userLabel="Sort by Bar Button Item">
+                    <connections>
+                        <action selector="sortByTapped:" destination="0p4-DV-Tt4" id="eKH-pu-gCX"/>
+                    </connections>
+                </barButtonItem>
                 <barButtonItem image="edit" width="22" style="plain" id="GcW-Rx-abW" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="0p4-DV-Tt4" id="Ypp-rf-2ph"/>
@@ -157,6 +163,7 @@
         <image name="offlineIcon" width="26" height="24"/>
         <image name="remove" width="32" height="32"/>
         <image name="shareGray" width="32" height="32"/>
+        <image name="sortBy" width="22" height="22"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

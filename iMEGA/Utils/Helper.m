@@ -19,28 +19,31 @@
  * program.
  */
 
-#import <MobileCoreServices/MobileCoreServices.h>
+#import "LTHPasscodeViewController.h"
+#import "SSKeychain.h"
+#import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
 
-#import "Helper.h"
+#import "MEGAActivityItemProvider.h"
 #import "MEGASdkManager.h"
-#import "SSKeychain.h"
-#import "AppDelegate.h"
-#import "SVProgressHUD.h"
-#import "CameraUploads.h"
-#import "LTHPasscodeViewController.h"
 #import "MEGAStore.h"
 
+#import "Helper.h"
+#import "CameraUploads.h"
 #import "NodeTableViewCell.h"
 #import "PhotoCollectionViewCell.h"
-
-static NSString *pathForPreview;
-static NSString *renamePathForPreview;
+#import "GetLinkActivity.h"
+#import "OpenInActivity.h"
+#import "RemoveLinkActivity.h"
+#import "ShareFolderActivity.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
+
+static NSUInteger totalOperations;
+static BOOL copyToPasteboard;
 
 @implementation Helper
 
@@ -632,6 +635,9 @@ static NSMutableArray *nodesFromLinkMutableArray;
                 [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
             } else {
+                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    absoluteFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:offlineNameString];
+                }
                 [api startDownloadNode:node localPath:absoluteFilePath];
             }
         }
@@ -692,7 +698,7 @@ static NSMutableArray *nodesFromLinkMutableArray;
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
         totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
     } else {
-        MEGALogError(@"Obtaining System Memory Info: %@", error);
+        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
     }
     
     return totalFreeSpace;
@@ -756,7 +762,150 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSInteger files = [api numberChildFilesForParent:node];
     NSInteger folders = [api numberChildFoldersForParent:node];
     
-    return [@"" mnz_stringByFiles:files andFolders:folders];
+    return [NSString mnz_stringByFiles:files andFolders:folders];
+}
+
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem {
+    totalOperations = nodesArray.count;
+    
+    UIActivityViewController *activityVC;
+    NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
+    NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    
+    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
+    [activitiesMutableArray addObject:getLinkActivity];
+    [Helper setCopyToPasteboard:NO];
+    
+    NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
+    
+    BOOL allNodesExistInOffline = NO;
+    NSMutableArray *filesURLMutableArray;
+    if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
+        ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:shareFolderActivity];
+    } else if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
+        filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
+        if ([filesURLMutableArray count]) {
+            allNodesExistInOffline = YES;
+        }
+    }
+    
+    if (allNodesExistInOffline) {
+        for (NSURL *fileURL in filesURLMutableArray) {
+            [activityItemsMutableArray addObject:fileURL];
+        }
+        
+        [excludedActivityTypesMutableArray removeObjectsInArray:@[UIActivityTypePrint, UIActivityTypeAirDrop]];
+        
+        if (nodesArray.count < 5) {
+            [excludedActivityTypesMutableArray removeObject:UIActivityTypeSaveToCameraRoll];
+        }
+        
+        if (nodesArray.count == 1) {
+            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:shareBarButtonItem];
+            [activitiesMutableArray addObject:openInActivity];
+        }
+    } else {
+        for (MEGANode *node in nodesArray) {
+            MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+            [activityItemsMutableArray addObject:activityItemProvider];
+        }
+        
+        if (nodesArray.count == 1) {
+            [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
+        }
+    }
+    
+    if (NodesAreExported == (nodesAre & NodesAreExported)) {
+        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:removeLinkActivity];
+    }
+    
+    activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
+    [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
+    
+    if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
+        [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
+    }
+    
+    //'Open in...' for iOS 7
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
+        [activityVC setCompletionHandler:^(NSString *activityType, BOOL completed){
+            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:[nodesArray objectAtIndex:0]]];
+                UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
+                BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:shareBarButtonItem animated:YES];
+                if (canOpenIn) {
+                    [documentInteractionController presentPreviewAnimated:YES];
+                }
+            }
+        }];
+    }
+    
+    return activityVC;
+}
+
++ (void)setTotalOperations:(NSUInteger)total {
+    totalOperations = total;
+}
+
++ (NSUInteger)totalOperations {
+    return totalOperations;
+}
+
++ (void)setCopyToPasteboard:(BOOL)boolValue {
+    copyToPasteboard = boolValue;
+}
+
++ (BOOL)copyToPasteboard {
+    return copyToPasteboard;
+}
+
++ (NodesAre)checkPropertiesForSharingNodes:(NSArray *)nodesArray {
+    NSInteger numberOfFolders = 0;
+    NSInteger numberOfFiles = 0;
+    NSInteger numberOfNodesExported = 0;
+    for (MEGANode *node in nodesArray) {
+        if ([node type] == MEGANodeTypeFolder) {
+            numberOfFolders += 1;
+        } else if ([node type] == MEGANodeTypeFile) {
+            numberOfFiles += 1;
+        }
+        
+        if ([node isExported]) {
+            numberOfNodesExported += 1;
+        }
+    }
+    
+    NodesAre nodesAre = 0;
+    if (numberOfFolders  == nodesArray.count) {
+        nodesAre = NodesAreFolders;
+    } else if (numberOfFiles  == nodesArray.count) {
+        nodesAre = NodesAreFiles;
+    }
+    
+    if (numberOfNodesExported == nodesArray.count) {
+        nodesAre = nodesAre | NodesAreExported;
+    }
+    
+    return nodesAre;
+}
+
++ (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
+    NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
+    for (MEGANode *node in nodesArray) {
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+        if (offlineNodeExist) {
+            [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
+        } else {
+            [filesURLMutableArray removeAllObjects];
+            break;
+        }
+    }
+    
+    return [filesURLMutableArray copy];
 }
 
 #pragma mark - Logout
@@ -814,14 +963,14 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
@@ -830,13 +979,13 @@ static NSMutableArray *nodesFromLinkMutableArray;
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
         error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
@@ -844,30 +993,30 @@ static NSMutableArray *nodesFromLinkMutableArray;
     NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
 
 + (void)deleteMasterKey {
-    // Remove Master Key exported file if exist
+    // Remove Recovery Key exported file if exist
     NSError *error = nil;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"]];
+    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]];
     
-    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"MasterKey.txt"];
+    NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
     if (existMasterKey) {
         if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -882,6 +1031,7 @@ static NSMutableArray *nodesFromLinkMutableArray;
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
+    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -901,6 +1051,40 @@ static NSMutableArray *nodesFromLinkMutableArray;
     if ([LTHPasscodeViewController doesPasscodeExist]) {
         [LTHPasscodeViewController deletePasscode];
     }
+}
+
+#pragma mark - Log
+
++ (UIAlertView *)logAlertView:(BOOL)enableLog {
+    UIAlertView *logAlertView;
+    NSString *title = enableLog ? AMLocalizedString(@"enableDebugMode_title", nil) :AMLocalizedString(@"disableDebugMode_title", nil);
+    NSString *message = enableLog ? AMLocalizedString(@"enableDebugMode_message", nil) :AMLocalizedString(@"disableDebugMode_message", nil);
+    logAlertView = [[UIAlertView alloc] initWithTitle:title
+                                              message:message
+                                             delegate:nil
+                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                    otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+    logAlertView.tag = enableLog ? 1 : 0;
+    
+    return logAlertView;
+}
+
++ (void)enableLog:(BOOL)enableLog {
+    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    if (enableLog) {
+        [MEGASdk setLogLevel:MEGALogLevelMax];
+        
+        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    } else {
+        [MEGASdk setLogLevel:MEGALogLevelFatal];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
+            [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:enableLog forKey:@"logging"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

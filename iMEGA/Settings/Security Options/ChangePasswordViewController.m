@@ -22,7 +22,6 @@
 #import "ChangePasswordViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "Helper.h"
 #import "SVProgressHUD.h"
 
 @interface ChangePasswordViewController () <MEGARequestDelegate>
@@ -53,7 +52,7 @@
     
     [_changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", nil) forState:UIControlStateNormal];
     [self.changePasswordButton.layer setBorderWidth:2.0f];
-    [self.changePasswordButton.layer setBorderColor:[megaRed CGColor]];
+    [self.changePasswordButton.layer setBorderColor:[[UIColor mnz_redD90007] CGColor]];
     [self.changePasswordButton.layer setCornerRadius:4];
     [self.changePasswordButton.layer setMasksToBounds:YES];
     
@@ -108,10 +107,9 @@
 - (IBAction)changePasswordTouchUpIndise:(UIButton *)sender {
     if ([self validateForm]) {
         [_changePasswordButton setEnabled:NO];
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [[MEGASdkManager sharedMEGASdk] changePassword:[_currentPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
         } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             [_changePasswordButton setEnabled:YES];
         }
     }

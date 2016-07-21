@@ -23,6 +23,6 @@
 
 @interface OpenInActivity : UIActivity
 
-- (id)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem;
+- (instancetype)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem;
 
 @end

@@ -19,40 +19,37 @@
  * program.
  */
 
-#import "AppDelegate.h"
-#import "SSKeychain.h"
-#import "SVProgressHUD.h"
-#import "Helper.h"
-#import "MainTabBarController.h"
-#import "ConfirmAccountViewController.h"
-#import "FileLinkViewController.h"
-#import "FolderLinkViewController.h"
-#import "CameraUploads.h"
-#import "MEGAReachabilityManager.h"
-#import "LTHPasscodeViewController.h"
-#import "CameraUploadsPopUpViewController.h"
-#import "MEGANavigationController.h"
-#import "UpgradeTableViewController.h"
-#import "LoginViewController.h"
-#import "CreateAccountViewController.h"
-#import "UnavailableLinkView.h"
-#import "LaunchViewController.h"
-#import "OfflineTableViewController.h"
-#import "SettingsTableViewController.h"
-#import "SecurityOptionsTableViewController.h"
-#import "ContactRequestsViewController.h"
-
-#import "BrowserViewController.h"
-#import "MEGAStore.h"
-#import "MEGAPurchase.h"
-
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
-#import <QuickLook/QuickLook.h>
-
-#import <StoreKit/StoreKit.h>
 
 #import <AVFoundation/AVFoundation.h>
+
+#import "LTHPasscodeViewController.h"
+#import "SSKeychain.h"
+#import "SVProgressHUD.h"
+
+#import "CameraUploads.h"
+#import "Helper.h"
+#import "MEGANavigationController.h"
+#import "MEGAPurchase.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGAStore.h"
+
+#import "AppDelegate.h"
+#import "BrowserViewController.h"
+#import "CameraUploadsPopUpViewController.h"
+#import "ConfirmAccountViewController.h"
+#import "ContactRequestsViewController.h"
+#import "CreateAccountViewController.h"
+#import "MainTabBarController.h"
+#import "FileLinkViewController.h"
+#import "FolderLinkViewController.h"
+#import "LaunchViewController.h"
+#import "LoginViewController.h"
+#import "OfflineTableViewController.h"
+#import "SecurityOptionsTableViewController.h"
+#import "SettingsTableViewController.h"
+#import "UnavailableLinkView.h"
+#import "UpgradeTableViewController.h"
+
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -91,6 +88,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
+@property (nonatomic) NSUInteger remainingOperations;
+
+@property (strong, nonatomic) NSString *exportedLinks;
+
 @end
 
 @implementation AppDelegate
@@ -127,8 +128,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
-
-    [Fabric with:@[CrashlyticsKit]];
     
     [self languageCompatibility];
     
@@ -178,7 +177,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path: %@", error);
+                MEGALogError(@"Create directory at path failed with error: %@", error);
             }
         }
         [self renameAttributesAtPath:v2ThumbsPath v3Path:v3ThumbsPath];
@@ -190,7 +189,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3PreviewsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3PreviewsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
-                MEGALogError(@"Create directory at path: %@", error);
+                MEGALogError(@"Create directory at path failed with error: %@", error);
             }
         }
         [self renameAttributesAtPath:v2previewsPath v3Path:v3PreviewsPath];
@@ -314,7 +313,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Clean up temporary directory
     NSError *error = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path: %@", error);
+        MEGALogError(@"Remove item at path failed with error: %@", error);
     }
     
     // Clean up Documents/Inbox directory
@@ -322,7 +321,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
         error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error)
         }
     }
 }
@@ -341,6 +340,24 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return YES;
+}
+
+- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
+    if ([[MEGASdkManager sharedMEGASdk] areTransferPausedForDirection:0]) {
+        [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO forDirection:0];
+    }
+    if ([[MEGASdkManager sharedMEGASdkFolder] areTransferPausedForDirection:0]) {
+        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO forDirection:0];
+    }
+}
+
+- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
+    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 1) {
+        [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES forDirection:0];
+    }
+    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 1) {
+        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
+    }
 }
 
 //#pragma mark - Push Notifications
@@ -382,26 +399,27 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)setupAppearance {    
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
-    [[UINavigationBar appearance] setTintColor:megaRed];
-    [[UINavigationBar appearance] setBackgroundColor:megaInfoGray];
+    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearance] setTintColor:megaRed];
+    [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaMediumGray} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:megaRed} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
     
-    [[UITextField appearance] setTintColor:megaRed];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:megaLightGray];
+    [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
-    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:megaRed];
+    [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:[UIColor mnz_redD90007]];
     
     [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
     [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setBackgroundColor:megaInfoGray];
-    [SVProgressHUD setForegroundColor:megaDarkGray];
+    [SVProgressHUD setRingNoTextRadius:18.0];
+    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
@@ -709,7 +727,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
                 NSError *error = nil;
                 if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path: %@", error)
+                    MEGALogError(@"Remove item at path failed with error: %@", error)
                 }
             }
         }
@@ -791,9 +809,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
     NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
     [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
     [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
     return cancelBarButtonItem;
+}
+
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (!error) {
+        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+    } else {
+        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    }
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (!error) {
+        NSString *imagePath = CFBridgingRelease(contextInfo);
+        [[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
+    } else {
+        MEGALogError(@"Save image to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+    }
 }
 
 #pragma mark - Battery changed
@@ -1013,6 +1048,33 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeLogout:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
+            
+        case MEGARequestTypeExport: {
+            if (self.remainingOperations == 0) {
+                self.exportedLinks = @"";
+                
+                if ([_mainTBC.selectedViewController isKindOfClass:[MEGANavigationController class]]) {
+                    MEGANavigationController *navigationController = _mainTBC.selectedViewController;
+                    if ([navigationController.topViewController respondsToSelector:@selector(setEditing:animated:)]) {
+                        [navigationController.topViewController performSelector:@selector(setEditing:animated:) withObject:@(NO) withObject:@(YES)];
+                    }
+                }
+            }
+            
+            self.remainingOperations += 1;
+            
+            if (![SVProgressHUD isVisible]) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+                
+                if ([request access]) {
+                    NSString *status = ([Helper totalOperations] > 1) ? AMLocalizedString(@"generatingLinks", nil) : AMLocalizedString(@"generatingLink", nil);
+                    [SVProgressHUD showWithStatus:status];
+                } else {
+                    [SVProgressHUD show];
+                }
+            }
+            break;
+        }
             
         default:
             break;
@@ -1278,6 +1340,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeExport: {
+            self.remainingOperations -= 1;
+            
+            if ([request access] && [Helper copyToPasteboard]) {
+                NSString *link = [NSString stringWithFormat:@"%@\n\n", [request link]];
+                self.exportedLinks = [self.exportedLinks stringByAppendingString:link];
+            }
+            
+            if (self.remainingOperations == 0) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                
+                NSString *status;
+                BOOL areSeveralOperations = ([Helper totalOperations] > 1);
+                if ([request access]) { //Export link
+                    if ([Helper copyToPasteboard]) {
+                        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                        [pasteboard setString:self.exportedLinks];
+                        
+                        status = areSeveralOperations ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+                        [SVProgressHUD showSuccessWithStatus:status];
+                    } else {
+                        [SVProgressHUD dismiss];
+                    }
+                } else { //Disable link
+                    status = areSeveralOperations ? AMLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
+                    [SVProgressHUD showSuccessWithStatus:status];
+                }
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1336,7 +1429,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else if ([transfer type] == MEGATransferTypeUpload) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error)
+            MEGALogError(@"Remove item at path failed with error: %@", error)
         }
     }
     
@@ -1356,11 +1449,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([transfer type] == MEGATransferTypeDownload) {
         // Don't add to the database downloads to the tmp folder
         if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+
+            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"]) {
+                UISaveVideoAtPathToSavedPhotosAlbum(transfer.path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+            }
+            
+            if (isImage([transfer fileName].pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
+                UIImage *image = [UIImage imageWithContentsOfFile:transfer.path];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
+                    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (void*)CFBridgingRetain(transfer.path));
+                });
+            }
             return;
         }
         
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
+            MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
             [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
         }
         

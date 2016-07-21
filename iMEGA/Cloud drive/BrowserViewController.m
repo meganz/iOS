@@ -199,7 +199,7 @@
             break;
     }
     
-    [titleTextAttributesDictionary setObject:megaRed forKey:NSForegroundColorAttributeName];
+    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
     
     return titleTextAttributesDictionary;
 }
@@ -327,19 +327,17 @@
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         remainingOperations = self.selectedNodesArray.count;
         
         for (MEGANode *n in self.selectedNodesArray) {
             [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (IBAction)copyNode:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
         for (MEGANode *node in self.selectedNodesArray) {
@@ -350,8 +348,6 @@
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
             }
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -372,7 +368,7 @@
         for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
             error = nil;
             if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path: %@", error)
+                MEGALogError(@"Remove item at path failed with error: %@", error)
             }
         }
     }
@@ -381,7 +377,7 @@
 }
 
 - (IBAction)shareFolder:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"permissions", nil)
                                                                  delegate:self
                                                         cancelButtonTitle:AMLocalizedString(@"cancel", nil)
@@ -401,18 +397,14 @@
                 [actionSheet showFromTabBar:self.tabBarController.tabBar];
             }
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode];
         [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -449,7 +441,7 @@
     for (UIView *subview in actionSheet.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)subview;
-            [button setTitleColor:megaRed forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
         }
     }
 }
@@ -458,10 +450,8 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
-        } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }
@@ -491,7 +481,7 @@
     cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -521,6 +511,20 @@
 }
 
 #pragma mark - MEGARequestDelegate
+
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeCopy:
+        case MEGARequestTypeMove: {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -570,6 +574,7 @@
                         message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }
                 }
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD showSuccessWithStatus:message];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
@@ -597,9 +602,7 @@
                     [_foldersToImportMutableDictionary removeAllObjects];
                     [_folderPathsMutableDictionary removeAllObjects];
                     
-                    if ([[MEGASdkManager sharedMEGASdkFolder] isLoggedIn]) {
-                        [[MEGASdkManager sharedMEGASdkFolder] logout];
-                    }
+                    [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
                 [self dismissViewControllerAnimated:YES completion:nil];

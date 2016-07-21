@@ -95,37 +95,33 @@
         case MEGAAccountTypeLite:
             [cell.productImageView setImage:[UIImage imageNamed:@"list_crest_LITE"]];
             [cell.productNameLabel setText:@"LITE"];
-            [cell.productNameLabel setBackgroundColor:megaOrange];
+            [cell.productNameLabel setBackgroundColor:[UIColor mnz_orangeFFA500]];
             
-            [cell.productPriceLabel setTextColor:megaOrange];
-            
+            [cell.productPriceLabel setTextColor:[UIColor mnz_orangeFFA500]];
             break;
 
         case MEGAAccountTypeProI:
             [cell.productImageView setImage:[UIImage imageNamed:@"list_crest_PROI"]];
             [cell.productNameLabel setText:@"PRO I"];
-            [cell.productNameLabel setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0]];
+            [cell.productNameLabel setBackgroundColor:[UIColor mnz_redE13339]];
             
-            [cell.productPriceLabel setTextColor:[UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0]];
-            
+            [cell.productPriceLabel setTextColor:[UIColor mnz_redE13339]];
             break;
             
         case MEGAAccountTypeProII:
             [cell.productImageView setImage:[UIImage imageNamed:@"list_crest_PROII"]];
             [cell.productNameLabel setText:@"PRO II"];
-            [cell.productNameLabel setBackgroundColor:[UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0]];
+            [cell.productNameLabel setBackgroundColor:[UIColor mnz_redDC191F]];
             
-            [cell.productPriceLabel setTextColor:[UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0]];
-            
+            [cell.productPriceLabel setTextColor:[UIColor mnz_redDC191F]];
             break;
             
         case MEGAAccountTypeProIII:
             [cell.productImageView setImage:[UIImage imageNamed:@"list_crest_PROIII"]];
             [cell.productNameLabel setText:@"PRO III"];
-            [cell.productNameLabel setBackgroundColor:megaRed];
+            [cell.productNameLabel setBackgroundColor:[UIColor mnz_redD90007]];
             
-            [cell.productPriceLabel setTextColor:megaRed];
-            
+            [cell.productPriceLabel setTextColor:[UIColor mnz_redD90007]];
             break;
             
         default:
@@ -133,17 +129,17 @@
             break;
     }
     
-    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaBlack}];
+    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
-    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Space")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaDarkGray}];
+    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Space")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [storageSizeString appendAttributedString:storageString];
     
     [cell.productStorageLabel setAttributedText:storageSizeString];
     
-    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaBlack}];
+    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
-    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwidth")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:megaDarkGray}];
+    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwidth")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [bandwidthSizeString appendAttributedString:bandwidthString];
     

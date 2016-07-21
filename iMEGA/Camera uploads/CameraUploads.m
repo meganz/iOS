@@ -194,10 +194,10 @@ static CameraUploads *instance = nil;
             NSDate *assetCreationTime = asset.creationDate;
             
             if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             } else if (asset.mediaType == PHAssetMediaTypeImage && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset cameraUploadNode:cameraUploadsNode];
+                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }
             
@@ -221,7 +221,7 @@ static CameraUploads *instance = nil;
                                   }
                               }
                              failureBlock:^(NSError *error) {
-                                 MEGALogError(@"Asset for url: %@", error);
+                                 MEGALogError(@"Asset for url failed with error: %@", error);
                              } ];
                 
             }
@@ -244,7 +244,7 @@ static CameraUploads *instance = nil;
                                   failureBlock:^(NSError *error) {
                                       [self setIsCameraUploadsEnabled:NO];
                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
-                                      MEGALogError(@"Enumerate groups with types: %@", error);
+                                      MEGALogError(@"Enumerate groups with types failed with error: %@", error);
                                   }];
     }
 }

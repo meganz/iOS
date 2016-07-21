@@ -109,7 +109,7 @@
 /* Title for the file link view */
 "fileLink"="Odkaz na soubor";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Otevřít soubor";
+"openButton"="Otevřít";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Soubor, který se pokoušíte stáhnout, je větší než dostupná paměť.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -143,9 +143,9 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Vysypat koš";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Žádné uložené soubory pro offline";
+"offlineEmptyState_title"="Žádné soubory uložené pro offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Nemáte zatím přidány žádné kontakty!";
+"contactsEmptyState_title"="Žádné kontakty";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Žádné příchozí sdílené složky";
 /* Title shown when there's no outgoing Shared Items */
@@ -166,10 +166,10 @@
 "requestCancelled"="Požadavek zrušen";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Požadavek odstraněn";
-/* Title shown when there's no pending request */
-"noRequestPending"="Žádné čekající požadavky v tuto chvíli";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Žádné žádosti čekající na vyřízení";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Přenosy pozastaveny";
+"transfersEmptyState_titlePaused"="Pozastavené přenosy";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -254,18 +254,32 @@
 "savedForOffline"="Uloženo offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Štítek Příchozí má vyhrazeno pro použití Apple.";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Uložit obrázek";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Uložit obrázky";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Získat odkaz";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Získat odkazy";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Generování odkazu...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Generování odkazů...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Odkaz zkopírován";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Odkazy zkopírovány";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Otevřít v...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Odebrat odkaz";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Odkaz byl odebrán!";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Odebrat odkazy";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Odkaz odebrán";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Odkazy odebrány";
 /* Title show when a file is being downloaded */
 "downloading"="Stahování...";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu položka vybrána";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu položek vybráno";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Nahrávání z fotoaparátu bude zakázáno";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Nahrávání z fotoaparátu budou zakázána, protože nemáte dostatek místa v zařízení";
 /* Title of the Offline section */
@@ -456,10 +472,16 @@
 "contactWithoutEmail"="Kontakt nemá e-mail";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Opustit";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Opravdu chcete opustit toto sdílení?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Opravdu chcete opustit tato sdílení?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Složka opuštěna";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Sdílet složku";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Sdílet složky";
 /* Button that allows you to select a given folder */
 "select"="Vybrat";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -514,24 +536,24 @@
 "version"="Verze";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Poděkování";
-/* Title for the MEGA Master Key */
-"masterKey"="Hlavní klíč";
+/* Title for the MEGA Recovery Key */
+"masterKey"="Obnovovací klíč";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Změnit heslo";
-/* Title shown when you try to export your MEGA master key */
-"exportMasterKey"="Exportovat Hlavní klíč";
-/* Message shown when you try to export the Master Key to alert the user.*/
+/* Title shown when you try to export your MEGA Recovery Key */
+"exportMasterKey"="Exportovat obnovovací klíč";
+/* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Bezpečnostní upozornění! Toto je vysoce riziková operace. Chcete pokračovat?";
-/* Footer shown on the Settings / Security Options section that explains what means to export the Master Key */
-"exportMasterKeyFooter"="Exportování hlavního klíče a jeho uložení na bezpečném místě vám umožňuje obnovit váš účet v případě ztráty hesla bez ztráty dat.";
-/* Alert title shown when you have exported your MEGA master key */
-"masterKeyExported"="Hlavní klíč exportován";
-/* Alert message shown to explain that the master key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="MasterKey.txt byl uložen do tohoto zařízení. Připojte ho ke svému počítači a otevřete iTunes, aby k němu mělo přístup v Dokumentech MEGA. Důrazně doporučujeme, abyste uložili tento soubor na bezpečném místě!";
-/* Alert title shown when you have removed your MEGA master key */
-"masterKeyRemoved"="Hlavní klíč odebrán";
+/* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
+"exportMasterKeyFooter"="Export obnovovacího klíče a jeho ponechání na bezpečném místě vám umožní obnovení vašeho účtu v případě ztraceného hesla bez ztráty dat.";
+/* Alert title shown when you have exported your MEGA Recovery Key */
+"masterKeyExported"="Obnovovací klíč exportován";
+/* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
+"masterKeyExported_alertMessage"="Obnovovací klíč byl exportován do oddílu Offline jako RecoveryKey.txt. Poznámka: Bude odstraněn, když se odhlásíte, uložte ho na bezpečném místě.";
+/* Alert title shown when you have removed your MEGA Recovery Key */
+"masterKeyRemoved"="Obnovovací klíč odebrán";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="MasterKey.txt byl odebrán ze složky Dokumenty.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt byl odebrán ze složky Dokumenty.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Na vašem zařízení";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -544,6 +566,14 @@
 "emptyRubbishBin"="Vysypat koš";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Všechny položky v koši budou odstraněny";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Stahování obrázků a videí";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Uložit obrázky do galerie";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Uložit videa do galerie";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Uložit obrázky a videa kompatibilní s iOS do galerie ve vašem zařízení (Poznámka: obrázky a videa nebudou uloženy v režimu offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Aktuálně využívá %s";
 /* Title for the action that allows to remove a file or folder */
@@ -599,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Smazat místní data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Odhlásit se a smazat místní data po 10 neplatných pokusech o zadání hesla";
+"failedAttempstSectionTitle"="Odhlásit a vymazat místní data po 10 neúspěšných pokusech o zadání hesla";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomoci";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -718,3 +748,5 @@
 "removeItemFromOffline"="Opravdu chcete odsranit tuto položku z offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Opravdu chcete odsranit tyto položky z offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Uloženo do Fotek";

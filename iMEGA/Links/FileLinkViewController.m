@@ -121,7 +121,7 @@
 #pragma mark - Private
 
 - (void)setNavigationBarTitleLabel {
-    if (_navigationBarLabel == nil) {
+    if (_navigationBarLabel == nil && ([self.node name] != nil)) {
         NSString *title = [self.node name];
         NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
         [titleMutableAttributedString addAttribute:NSFontAttributeName
@@ -136,7 +136,7 @@
         
         NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
         [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                value:megaRed
+                                                value:[UIColor mnz_redD90007]
                                                 range:[subtitle rangeOfString:subtitle]];
         [subtitleMutableAttributedString addAttribute:NSFontAttributeName
                                                 value:[UIFont fontWithName:kFont size:12.0]
@@ -173,7 +173,7 @@
     [unavailableLinkView.titleLabel setText:title];
     [unavailableLinkView.textView setText:text];
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
-    [unavailableLinkView.textView setTextColor:megaDarkGray];
+    [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
     if (iPhone4X && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
@@ -200,7 +200,7 @@
     if (fileExists) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error]) {
-            MEGALogError(@"Remove item at path: %@", error);
+            MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
 }
@@ -283,7 +283,7 @@
 }
 
 - (void)import {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self deleteTempFile];
         
         if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
@@ -313,13 +313,11 @@
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)download {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self deleteTempFile];
         
         if (self.fileLinkMode == FileLinkModeDefault) {
@@ -358,13 +356,11 @@
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (void)open {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:_node]];
         
@@ -401,8 +397,6 @@
                 [self.navigationController pushViewController:previewDocumentVC animated:YES];
             }
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -488,7 +482,7 @@
         }
     }
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     

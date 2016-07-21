@@ -29,11 +29,6 @@
 
 @interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableCameraUploadsCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableUploadVideosCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableUseCellularConnectionCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *enableOnlyWhenChargingCell;
-
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
@@ -180,7 +175,7 @@
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
     NSError *error = nil;
     if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path: %@", error);
+        MEGALogError(@"Remove item at path failed with error: %@", error);
     }
     
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;

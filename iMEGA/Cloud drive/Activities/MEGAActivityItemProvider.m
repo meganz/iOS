@@ -37,7 +37,7 @@
 
 @implementation MEGAActivityItemProvider
 
-- (id)initWithPlaceholderString:(NSString*)placeholder node:(MEGANode *)node {
+- (instancetype)initWithPlaceholderString:(NSString*)placeholder node:(MEGANode *)node {
     self = [super initWithPlaceholderItem:placeholder];
     if (self) {
         _node = node;
@@ -49,14 +49,12 @@
 - (id)item {
     
     NSString *activityType = [self activityType];
-    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]);
+    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]);
     if (activityValue) {
         semaphore = dispatch_semaphore_create(0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] exportNode:_node delegate:self];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
             
         });
@@ -72,29 +70,23 @@
 #pragma mark - UIActivityItemSource
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
+    if ([activityType isEqualToString:UIActivityTypeAirDrop]) {
+        return [NSURL URLWithString:self.link];
+    }
     
-    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]) {
+    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]) {
+
         return nil;
     }
     
     return _link;
 }
 
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport: {
-            if ([request access]) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
+- (UIImage *)activityViewController:(UIActivityViewController *)activityViewController thumbnailImageForActivityType:(NSString *)activityType suggestedSize:(CGSize)size {
+    return [UIImage imageNamed:@"AppIcon"];
 }
+
+#pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -104,8 +96,6 @@
     switch ([request type]) {
         case MEGARequestTypeExport: {
             if ([request access]) {
-                [SVProgressHUD dismiss];
-                
                 _link = [request link];
                 
                 dispatch_semaphore_signal(semaphore);
@@ -116,14 +106,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
 }
 
 @end

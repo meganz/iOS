@@ -24,17 +24,27 @@
 #import "MEGANavigationController.h"
 #import "ContactsViewController.h"
 
-@interface ShareFolderActivity () {
-    MEGANode *node;
-}
+@interface ShareFolderActivity ()
+
+@property (strong, nonatomic) MEGANode *node;
+@property (strong, nonatomic) NSArray *nodes;
+
+@property (nonatomic) ContactsMode contactsMode;
 
 @end
 
 @implementation ShareFolderActivity
 
-- (id)initWithNode:(MEGANode *)nodeCopy {
+- (instancetype)initWithNode:(MEGANode *)nodeCopy {
+    _node = nodeCopy;
+    _contactsMode = ContactsShareFolderWith;
     
-    node = nodeCopy;
+    return self;
+}
+
+- (instancetype)initWithNodes:(NSArray *)nodesArray {
+    _nodes = nodesArray;
+    _contactsMode = ContactsShareFoldersWith;
     
     return self;
 }
@@ -44,6 +54,10 @@
 }
 
 - (NSString *)activityTitle {
+    if ([self.nodes count] > 1) {
+        return AMLocalizedString(@"shareFolders", nil);
+    }
+    
     return AMLocalizedString(@"shareFolder", nil);
 }
 
@@ -55,12 +69,16 @@
     return YES;
 }
 
-- (UIViewController *) activityViewController {
+- (UIViewController *)activityViewController {
     
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    [contactsVC setNode:node];
-    [contactsVC setContactsMode:ContactsShareFolderWith];
+    if (self.contactsMode == ContactsShareFolderWith) {
+        [contactsVC setNode:self.node];
+    } else if (self.contactsMode == ContactsShareFoldersWith) {
+        [contactsVC setNodesArray:self.nodes];
+    }
+    [contactsVC setContactsMode:self.contactsMode];
     [contactsVC setShareFolderActivity:self];
     
     return navigationController;

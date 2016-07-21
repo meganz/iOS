@@ -20,6 +20,7 @@
  */
 
 #import <Foundation/Foundation.h>
+
 #import "MOOfflineNode.h"
 #import "MEGASdkManager.h"
 
@@ -37,7 +38,5 @@
 - (MOOfflineNode *)fetchOfflineNodeWithFingerprint:(NSString *)fingerprint;
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode;
 - (void)removeAllOfflineNodes;
-
-- (void)saveContext;
 
 @end

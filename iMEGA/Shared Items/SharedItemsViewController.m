@@ -42,17 +42,19 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UIView *sharedItemsSegmentedControlView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sharedItemsSegmentedControl;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
-@property (nonatomic, strong) NSMutableArray *exportLinksMutableArray;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *getLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
@@ -92,10 +94,17 @@
     
     _namesMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.navigationController.view setBackgroundColor:megaLightGray];
+    [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"sharedItems", nil)];
+    if (self.sharedItemsMode == SharedItemsModeDefault) {
+        self.navigationItem.title = AMLocalizedString(@"sharedItems", nil);
+    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+        self.navigationItem.title = [self.user email];
+        
+        self.sharedItemsSegmentedControlView.hidden = YES;
+        self.tableViewTopConstraint.constant = -self.sharedItemsSegmentedControlView.frame.size.height;
+    }
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
@@ -150,17 +159,20 @@
 #pragma mark - Private
 
 - (void)reloadUI {
-    
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: {
-            [self incomingNodes];
-            break;
+    if (self.sharedItemsMode == SharedItemsModeDefault) {
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: {
+                [self incomingNodes];
+                break;
+            }
+                
+            case 1: {
+                [self outgoingNodes];
+                break;
+            }
         }
-            
-        case 1: {
-            [self outgoingNodes];
-            break;
-        }
+    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+        [self incomingNodes];
     }
     
     [self.tableView reloadData];
@@ -184,7 +196,7 @@
     [_carbonCopyBarButtonItem setEnabled:boolValue];
     [_leaveShareBarButtonItem setEnabled:boolValue];
     
-    [_getLinkBarButtonItem setEnabled:boolValue];
+    [self.shareBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
 }
@@ -193,13 +205,23 @@
     [_incomingNodesForEmailMutableDictionary removeAllObjects];
     [_incomingIndexPathsMutableDictionary removeAllObjects];
     
-    _incomingShareList = [[MEGASdkManager sharedMEGASdk] inSharesList];
-    _incomingNodesMutableArray = [[NSMutableArray alloc] init];
-    NSUInteger count = [[_incomingShareList size] unsignedIntegerValue];
-    for (NSUInteger i = 0; i < count; i++) {
-        MEGAShare *share = [_incomingShareList shareAtIndex:i];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
-        [_incomingNodesMutableArray addObject:node];
+    self.incomingNodesMutableArray = [[NSMutableArray alloc] init];
+    
+    if (self.sharedItemsMode == SharedItemsModeDefault) {
+        self.incomingShareList = [[MEGASdkManager sharedMEGASdk] inSharesList];
+        NSUInteger count = [[self.incomingShareList size] unsignedIntegerValue];
+        for (NSUInteger i = 0; i < count; i++) {
+            MEGAShare *share = [self.incomingShareList shareAtIndex:i];
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
+            [self.incomingNodesMutableArray addObject:node];
+        }
+    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+        MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+        NSUInteger count = nodeList.size.unsignedIntegerValue;
+        for (NSUInteger i = 0; i < count; i++) {
+            MEGANode *node = [nodeList nodeAtIndex:i];
+            [self.incomingNodesMutableArray addObject:node];
+        }
     }
 }
 
@@ -256,7 +278,7 @@
         }
             
         case 1: { //Outgoing
-            [toolbarItemsMutableArray addObjectsFromArray:@[_getLinkBarButtonItem, flexibleItem, _shareFolderBarButtonItem, flexibleItem, _removeShareBarButtonItem]];
+            [toolbarItemsMutableArray addObjectsFromArray:@[self.shareBarButtonItem, flexibleItem, _shareFolderBarButtonItem, flexibleItem, _carbonCopyBarButtonItem, flexibleItem, _removeShareBarButtonItem]];
             break;
         }
     }
@@ -287,11 +309,35 @@
     return image;
 }
 
-- (void)removeSelectedShares {
+- (void)removeSelectedIncomingShares {
+    self.remainingOperations = [self.selectedNodesMutableArray count];
+    self.numberOfShares = self.remainingOperations;
+    for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
+        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:self];
+    }
+    
+    [self setEditing:NO animated:YES];
+}
+
+- (void)selectedSharesOfSelectedNodes {
+    self.numberOfShares = 0;
+    self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
+    for (MEGANode *node in self.selectedNodesMutableArray) {
+        NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
+        self.numberOfShares += [outSharesOfNodeMutableArray count];
+        [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
+    }
+    
+    self.remainingOperations = self.numberOfShares;
+}
+
+- (void)removeSelectedOutgoingShares {
     for (MEGAShare *share in _selectedSharesMutableArray) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:[share user] level:MEGAShareTypeAccessUnkown delegate:self];
     }
+    
+    [self setEditing:NO animated:YES];
 }
 
 - (void)requestUserName:(NSString *)userEmail {
@@ -299,8 +345,8 @@
     BOOL isUserNameAlreadyRequested = [_userNamesRequestedMutableArray containsObject:userEmail];
     if (!isUserNameAlreadyRequested) {
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeFirstname delegate:self];
-        [[MEGASdkManager sharedMEGASdk] getUserAttibuteForUser:user type:MEGAUserAttributeLastname delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname delegate:self];
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname delegate:self];
         [_userNamesRequestedMutableArray addObject:userEmail];
     }
 }
@@ -343,6 +389,8 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
@@ -446,7 +494,7 @@
 }
 
 - (IBAction)permissionsTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
             case 0: { //Incoming
                 break;
@@ -465,8 +513,6 @@
                 break;
             }
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
@@ -494,7 +540,7 @@
     DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
     
-    NSString *email = [share user];
+    NSString *email = (self.sharedItemsMode == SharedItemsModeDefault) ? [share user] : [self.user email];
     NSString *userName = [_namesMutableDictionary objectForKey:email];
     if (userName == nil) {
         [detailsNodeInfoVC setUserName:email];
@@ -508,7 +554,7 @@
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         for (MEGANode *n in _selectedNodesMutableArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:n isFolderLink:NO]) {
                 [self setEditing:NO animated:YES];
@@ -523,13 +569,11 @@
         }
         
         [self setEditing:NO animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
@@ -539,40 +583,25 @@
         [browserVC setBrowserAction:BrowserActionCopy];
         
         [self setEditing:NO animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (IBAction)leaveShareAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
-        _remainingOperations = [_selectedNodesMutableArray count];
-        _numberOfShares = _remainingOperations;
-        for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
-            [[MEGASdkManager sharedMEGASdk] removeNode:[_selectedNodesMutableArray objectAtIndex:i] delegate:self];
-        }
-        
-        [self setEditing:NO animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? AMLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : AMLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"leaveFolder", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+        alertView.tag = 0;
+        [alertView show];
     }
 }
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
-        _exportLinksMutableArray = [[NSMutableArray alloc] init];
-        _remainingOperations = _selectedNodesMutableArray.count;
-        
-        for (MEGANode *n in _selectedNodesMutableArray) {
-            [[MEGASdkManager sharedMEGASdk] exportNode:n delegate:self];
-        }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray button:self.shareBarButtonItem];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
         [contactsVC setContactsMode:ContactsShareFoldersWith];
@@ -580,68 +609,47 @@
         [self presentViewController:navigationController animated:YES completion:nil];
         
         [self setEditing:NO animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 - (IBAction)removeShareAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
-        _numberOfShares = 0;
-        NSUInteger outSharesCount = 0;
-        for (MEGANode *node in _selectedNodesMutableArray) {
-            NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
-            outSharesCount = [outSharesOfNodeMutableArray count];
-            if (outSharesCount > 1) {
-                _numberOfShares += outSharesCount;
-            } else {
-                _numberOfShares = outSharesCount;
-            }
-            
-            [_selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
-        }
-        
-        _remainingOperations = _numberOfShares;
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [self selectedSharesOfSelectedNodes];
         
         NSString *alertMessage;
-        if ((outSharesCount == 1) && ([_selectedNodesMutableArray count] == 1)) {
+        if ((self.numberOfShares == 1) && ([_selectedNodesMutableArray count] == 1)) {
             alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
-        } else if ((outSharesCount > 1) && ([_selectedNodesMutableArray count] == 1)) {
+        } else if ((self.numberOfShares > 1) && ([_selectedNodesMutableArray count] == 1)) {
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), _numberOfShares];
         } else {
             alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), _numberOfShares];
         }
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alertView setTag:0];
-        [alertView setDelegate:self];
+        alertView.tag = 1;
         [alertView show];
-        
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
-    switch ([alertView tag]) {
-        case 0: {
-            if (buttonIndex == 1) {
-                if ([MEGAReachabilityManager isReachable]) {
-                    [self removeSelectedShares];
-                    
-                    [self setEditing:NO animated:YES];
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        switch ([alertView tag]) {
+            case 0: {
+                if (buttonIndex == 1) {
+                    [self removeSelectedIncomingShares];
                 }
+                break;
             }
-            break;
+                
+            case 1: {
+                if (buttonIndex == 1) {
+                    [self removeSelectedOutgoingShares];
+                }
+                break;
+            }
         }
-            
-        default:
-            break;
     }
 }
 
@@ -654,16 +662,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: { //Incoming
-                numberOfRows = [_incomingNodesMutableArray count];
-                break;
+        if (self.sharedItemsMode == SharedItemsModeDefault) {
+            switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+                case 0: { //Incoming
+                    numberOfRows = [self.incomingNodesMutableArray count];
+                    break;
+                }
+                    
+                case 1:  { //Outgoing
+                    numberOfRows = [self.outgoingNodesMutableArray count];
+                    break;
+                }
             }
-                
-            case 1:  { //Outgoing
-                numberOfRows = [_outgoingNodesMutableArray count];
-                break;
-            }
+        } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+            numberOfRows = [self.incomingNodesMutableArray count];
         }
     }
     
@@ -702,22 +714,25 @@
             share = [_incomingShareList shareAtIndex:indexPath.row];
             node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
             
-            [_incomingNodesForEmailMutableDictionary setObject:[share user] forKey:node.base64Handle];
+            NSString *userEmail = (self.sharedItemsMode == SharedItemsModeDefault) ? [share user] : [self.user email];
+            [self.incomingNodesForEmailMutableDictionary setObject:userEmail forKey:node.base64Handle];
             [_incomingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
             
             [cell.thumbnailImageView setImage:[Helper incomingFolderImage]];
             
             [cell.nameLabel setText:[node name]];
             
-            NSString *userName = [_namesMutableDictionary objectForKey:[share user]];
+            NSString *userName = [self.namesMutableDictionary objectForKey:userEmail];
             if (userName ==  nil) {
-                userName = [share user];
+                userName = userEmail;
                 [self requestUserName:userName];
             }
             
-            [cell.infoLabel setText:userName];
+            NSString *infoLabelText = (self.sharedItemsMode == SharedItemsModeDefault) ? userName : [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+            [cell.infoLabel setText:infoLabelText];
             
-            [cell.permissionsButton setImage:[self permissionsButtonImageFor:[share access]] forState:UIControlStateNormal];
+            MEGAShareType shareType = (self.sharedItemsMode == SharedItemsModeDefault) ? [share access] : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+            [cell.permissionsButton setImage:[self permissionsButtonImageFor:shareType] forState:UIControlStateNormal];
             
             cell.nodeHandle = [node handle];
             
@@ -765,7 +780,7 @@
     [cell.thumbnailImageView.layer setMasksToBounds:YES];
     
     UIView *view = [[UIView alloc] init];
-    [view setBackgroundColor:megaInfoGray];
+    [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
@@ -778,6 +793,27 @@
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (self.sharedItemsMode == SharedItemsModeDefault) {
+            switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+                case 0: { //Incoming
+                    [self removeSelectedIncomingShares];
+                    break;
+                }
+                    
+                case 1: { //Outgoing
+                    [self selectedSharesOfSelectedNodes];
+                    [self removeSelectedOutgoingShares];
+                    break;
+                }
+            }
+        } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+            [self removeSelectedIncomingShares];
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -877,24 +913,34 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self toolbarItemsForSharedItems];
+    [self setEditing:YES animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setEditing:NO animated:YES];
+}
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = nil;
-    switch (_sharedItemsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Incoming
-            node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
+    if (self.sharedItemsMode == SharedItemsModeDefault) {
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: //Incoming
+                node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
+                break;
+                
+            case 1: //Outgoing
+                node = [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+                break;
         }
-            
-        case 1: { //Outgoing
-            node = [_outgoingNodesMutableArray objectAtIndex:indexPath.row];
-            break;
-        }
+    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+        node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
     }
     
-    _selectedNodesMutableArray = [[NSMutableArray alloc] init];
-    
+    self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     if (node != nil) {
-        [_selectedNodesMutableArray addObject:node];
+        [self.selectedNodesMutableArray addObject:node];
     }
     
     [self toolbarItemsSetEnabled:YES];
@@ -902,6 +948,25 @@
     isSwipeEditing = YES;
     
     return UITableViewCellEditingStyleDelete;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *titleForDeleteConfirmationButton;
+    if (self.sharedItemsMode == SharedItemsModeDefault) {
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: //Incoming
+                titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", nil);
+                break;
+                
+            case 1: //Outgoing
+                titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", nil);
+                break;
+        }
+    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
+        titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", nil);
+    }
+    
+    return titleForDeleteConfirmationButton;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -945,7 +1010,7 @@
         text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:megaGray};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -996,14 +1061,7 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeExport:
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudLink"] status:AMLocalizedString(@"generatingLink", nil)];
-            break;
-            
-        default:
-            break;
-    }
+    
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -1013,26 +1071,6 @@
     }
     
     switch ([request type]) {
-            
-        case MEGARequestTypeExport: {
-            _remainingOperations--;
-            
-            NSString *link = [NSString stringWithFormat:@"%@\n", [request link]];
-            [_exportLinksMutableArray addObject:link];
-            
-            if (_remainingOperations == 0) {
-                [SVProgressHUD dismiss];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:_exportLinksMutableArray applicationActivities:nil];
-                activityVC.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-                
-                if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-                    activityVC.popoverPresentationController.barButtonItem = _getLinkBarButtonItem;
-                }
-                
-                [self presentViewController:activityVC animated:YES completion:nil];
-            }
-            break;
-        }
             
         case MEGARequestTypeGetAttrUser: {
             NSString *name;

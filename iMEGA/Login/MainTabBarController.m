@@ -20,7 +20,6 @@
  */
 
 #import "MainTabBarController.h"
-#import "Helper.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate>
 
@@ -95,8 +94,8 @@
         }
     }
     
-    [self.view setTintColor:megaRed];
-    [self.moreNavigationController.view setTintColor:megaRed];
+    [self.view setTintColor:[UIColor mnz_redD90007]];
+    [self.moreNavigationController.view setTintColor:[UIColor mnz_redD90007]];
     
     NSArray *tabsOrderArray = [[NSUserDefaults standardUserDefaults] arrayForKey:@"TabsOrderInTabBar"];
     if (tabsOrderArray && ([tabsOrderArray count] == [defaultViewControllersMutableArray count])) {
@@ -152,14 +151,14 @@
         for (UITableViewCell *cell in [moreTableView visibleCells]) {
             
             UIView *view = [[UIView alloc] init];
-            [view setBackgroundColor:megaInfoGray];
+            [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
             [cell setSelectedBackgroundView:view];
             
             [cell.textLabel setFont:[UIFont fontWithName:@"SFUIText-Regular" size:18.0]];
         }
     }
     
-    [self.moreNavigationController.navigationBar setBarTintColor:[UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0]];
+    [self.moreNavigationController.navigationBar setBarTintColor:[UIColor mnz_grayF9F9F9]];
 }
 
 #pragma mark - UITabBarControllerDelegate
