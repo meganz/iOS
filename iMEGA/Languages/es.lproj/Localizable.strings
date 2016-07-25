@@ -381,9 +381,9 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Seleccionar elementos";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu fotos";
+"photosPerMonth"="%lu elementos";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu foto";
+"photoPerMonth"="%lu elemento";
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
