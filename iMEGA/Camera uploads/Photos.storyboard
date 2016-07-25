@@ -6,6 +6,9 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="SF-UI-Display-Light.otf">
+            <string>SFUIDisplay-Light</string>
+        </mutableArray>
         <mutableArray key="SF-UI-Text-Light.otf">
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
@@ -35,10 +38,10 @@
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="541"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                     <size key="itemSize" width="120" height="120"/>
                                     <size key="headerReferenceSize" width="320" height="30"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="20"/>
                                     <inset key="sectionInset" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -80,22 +83,54 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
-                                            <rect key="frame" x="20" y="4" width="572" height="20"/>
-                                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="16"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
+                                            <rect key="frame" x="8" y="6" width="314" height="17"/>
+                                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                                            <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ep5-ck-3Dn">
+                                            <rect key="frame" x="457" y="4" width="135" height="22"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bX5-5I-Q1n">
+                                                    <rect key="frame" x="6" y="3" width="123" height="17"/>
+                                                    <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                                                    <color key="textColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="bX5-5I-Q1n" secondAttribute="trailing" constant="6" id="6Y2-yH-QLp"/>
+                                                <constraint firstItem="bX5-5I-Q1n" firstAttribute="top" secondItem="ep5-ck-3Dn" secondAttribute="top" constant="3" id="adE-Tw-HpV"/>
+                                                <constraint firstAttribute="bottom" secondItem="bX5-5I-Q1n" secondAttribute="bottom" constant="2" id="iWJ-fe-S0d"/>
+                                                <constraint firstItem="bX5-5I-Q1n" firstAttribute="leading" secondItem="ep5-ck-3Dn" secondAttribute="leading" constant="6" id="pUQ-TE-FPM"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="P5z-Zy-8op" firstAttribute="leading" secondItem="rT5-lt-gbb" secondAttribute="leadingMargin" constant="12" id="2lq-ir-ioY"/>
-                                        <constraint firstItem="P5z-Zy-8op" firstAttribute="top" secondItem="rT5-lt-gbb" secondAttribute="topMargin" constant="-4" id="CDL-eV-nx8"/>
-                                        <constraint firstItem="P5z-Zy-8op" firstAttribute="trailing" secondItem="rT5-lt-gbb" secondAttribute="trailingMargin" id="bpT-GS-fgl"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ep5-ck-3Dn" secondAttribute="bottom" constant="-4" id="1Xu-fc-tpl"/>
+                                        <constraint firstItem="ep5-ck-3Dn" firstAttribute="top" secondItem="rT5-lt-gbb" secondAttribute="topMargin" constant="-4" id="Ofm-JZ-0LB"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="P5z-Zy-8op" secondAttribute="leading" id="XWI-rQ-GMw"/>
+                                        <constraint firstItem="P5z-Zy-8op" firstAttribute="top" secondItem="rT5-lt-gbb" secondAttribute="topMargin" constant="-2" id="aRF-GL-GZW"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ep5-ck-3Dn" secondAttribute="trailing" id="bxD-DT-gWj"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="P5z-Zy-8op" secondAttribute="bottom" constant="-1" id="dnq-Ix-A5b"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="dateLabel" destination="P5z-Zy-8op" id="Edl-5l-BP0"/>
+                                        <outlet property="itemsLabel" destination="bX5-5I-Q1n" id="cpx-6S-yhr"/>
                                     </connections>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoFooterId" id="dPX-DK-2Ol">
+                                    <rect key="frame" x="0.0" y="152" width="600" height="20"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="3GS-cK-Hw6" id="5il-7z-ByA"/>
@@ -158,15 +193,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deI-iy-ayk">
-                                <rect key="frame" x="0.0" y="448" width="600" height="44"/>
-                                <color key="backgroundColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="443" width="600" height="49"/>
+                                <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="VOl-dR-0Qb"/>
+                                    <constraint firstAttribute="height" constant="49" id="VOl-dR-0Qb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="18"/>
                                 <state key="normal" title="Enable Camera Uploads">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.19215686619281769" green="0.70980393886566162" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="ykG-qf-2aM"/>

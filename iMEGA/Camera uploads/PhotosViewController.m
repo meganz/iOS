@@ -25,10 +25,11 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
+#import "MEGAAVViewController.h"
+#import "MEGACollectionViewFlowLayout.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
-#import "MEGAAVViewController.h"
 
 #import "PhotosViewController.h"
 #import "PhotoCollectionViewCell.h"
@@ -213,6 +214,7 @@
         
         [self.navigationItem setTitle:@"Camera Uploads"]; //TODO: Translate or not?
     }
+    
 }
 
 - (void)showProgressView {
@@ -441,36 +443,48 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
-        static NSString *headerIdentifier = @"photoHeaderId";
+        static NSString *headerIdentifier = @"photoHeaderId";        
+        HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
         
-        HeaderCollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
-        
-        if (!header) {
-            header = [[HeaderCollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
+        if (!headerView) {
+            headerView = [[HeaderCollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 30)];
         }
         
         
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
         NSString *month = [[dict allKeys] objectAtIndex:0];
         
-        NSString *photosPerMonth = nil;
+        NSString *itemsPerMonth = nil;
         NSInteger numberPhotosPerMonth = [[dict objectForKey:month] count];
         if ( numberPhotosPerMonth > 1) {
-            photosPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photosPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
+            itemsPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photosPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
         } else {
-            photosPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photoPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
+            itemsPerMonth = [NSString stringWithFormat:AMLocalizedString(@"photoPerMonth", @"Number of photos by section"), numberPhotosPerMonth];
         }
         
-        NSString *sectionText = [NSString stringWithFormat:@"%@ (%@)", month, photosPerMonth];
+        NSString *dateString = [NSString stringWithFormat:@"%@", month];
+        [headerView.dateLabel setText:dateString];
+        [headerView.itemsLabel setText:itemsPerMonth];
         
-        [header.dateLabel setText:sectionText];
-        
-        return header;
+        return headerView;
     } else {
-        return nil;
+        static NSString *footerIdentifier = @"photoFooterId";
+        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerIdentifier forIndexPath:indexPath];
+        
+        if (!footerView) {
+            footerView = [[UICollectionReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 20)];
+        }
+        return  footerView;
     }
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (section == self.photosByMonthYearArray.count - 1) {
+        return CGSizeMake(0, 0);
+    } else {
+        return CGSizeMake(collectionView.frame.size.width, 20);
+    }
+}
 
 #pragma mark - UICollectioViewDelegate
 
