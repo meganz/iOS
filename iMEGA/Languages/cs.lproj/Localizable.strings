@@ -1,13 +1,13 @@
 /* Button title to cancel something */
 "cancel"="Zrušit";
 /* Button title to accept something */
-"ok"="Ok";
+"ok"="OK";
 /* */
 "upload"="Nahrát";
 /*  */
 "error"="Chyba";
 /*  */
-"name"="Jméno";
+"name"="Název";
 /*  */
 "passcode"="Heslo";
 /* "Size" of the file or folder you are sharing */
@@ -87,7 +87,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Musíte souhlasit s podmínkami užívání pro registraci účtu na MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Tento e-mail je již registrovaný s účtem na MEGA.";
+"emailAlreadyRegistered"="Tato e-mailová adresa má již u MEGA registrovaný účet.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Čeká na potvrzení";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Úložiště cloud";
+"cloudDrive"="Cloudová jednotka";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d soubor";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Importovat do";
 /* Button title that triggers the importing link action */
-"import"="Vložit";
+"import"="Importovat";
 /* Message shown when a file has been imported */
 "fileImported"="Soubor importován!";
 /* Message shown when some files have been imported */
@@ -489,7 +489,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Pouze pro čtení";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Číst a zapisovat";
+"readAndWrite"="Čtení a zápis";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Plný přístup";
 /* Title of the Settings section */
@@ -517,7 +517,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
 "privacyPolicyLabel"="Zásady ochrany osobních údajů";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Podmínky služeb";
+"termsOfServicesLabel"="Podmínky užívání";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Vypnuto";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásit a vymazat místní data po 10 neúspěšných pokusech o zadání hesla";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centrum pomoci";
+"helpCentreLabel"="Centrum nápovědy";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Získejte podporu nebo čtěte oblíbená témata.";
 /* Title to rate the app */
