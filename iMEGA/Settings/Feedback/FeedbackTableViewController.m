@@ -87,7 +87,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (indexPath.section) {
                 
             case 1:
@@ -101,8 +101,6 @@
             default:
                 break;
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

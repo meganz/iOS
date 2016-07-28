@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Nem tölthet le üres mappát";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="A fiók már aktiválva van. Kérjük, jelentkezzél be.";
+"accountAlreadyConfirmed"="Fiókod már aktiválva van. Kérlek jelentkezz be.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Érvénytelen link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="El kell fogadnia az általános szolgáltatási feltételeket a MEGA-n fiók regisztrálásához.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Ez az e-mail cím már regisztrálva lett egy MEGA fiókhoz.";
+"emailAlreadyRegistered"="Ez az email cím már regisztrált egy fiókot a MEGÁ-n";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Várakozás megerősítésre";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Kérjük, ellenőrizze az e-mailjeit és kattintson a linkre a fiókja aktiválásához.";
+"accountCreated"="Kérjük ellenőrizze e-mailjeit, majd kattintson a linkre fiókja visszaigazolásához.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Kérjük írja be jelszavát fiókja megerősítéséhez";
 /* Button title that triggers the confirm account action */
@@ -107,9 +107,9 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Fel kell szabadítania némi helyet";
 /* Title for the file link view */
-"fileLink"="Fájl link";
+"fileLink"="Fájllink";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Fájl megnyitása";
+"openButton"="Megnyitás";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="A fájl, amelyet próbál letölteni nagyobb, mint a rendelkezésre álló memória.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -137,19 +137,19 @@
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Nincs fájl a Felhőmeghajtón";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Add files";
+"addFiles"="Fájlok hozzáadása";
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Szemetes kiürítése";
+"cloudDriveEmptyState_titleRubbishBin"="Szemetesláda kiürítése";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Nincs Offline-ba mentett fájl";
+"offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Még nincs hozzáadva egy kapcsolat sem!";
+"contactsEmptyState_title"="Nincs kapcsolat";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Nincs bejövő megosztott mappa";
+"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Nincs kimenő megosztott mappa";
+"noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
 /* Title of My Contacts section */
 "myContacts"="Kapcsolatok";
 /* Title of Contacts requests section */
@@ -166,10 +166,10 @@
 "requestCancelled"="Kérés törölve";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Kérés törölve";
-/* Title shown when there's no pending request */
-"noRequestPending"="Nincsenek felkérések jelen pillanatban";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Átvitelek szüneteltetve";
+"transfersEmptyState_titlePaused"="Paused Transfers";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -254,18 +254,32 @@
 "savedForOffline"="Offline mentve";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="A Postaláda felirat az Apple általi használatra van fenntartva.";
-/* List option shown on the details of a file or folder */
-"getLink"="Link megszerzése";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Save Image";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Save Images";
+/* Title shown under the action that allows you to get a link to file or folder */
+"getLink"="Link beszerzése";
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Get links";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link előállítása...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Generating links...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link lemásolva";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Links copied";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Megnyitás máshol...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Link eltávolítása";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="A link törlésre került";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Remove links";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Link removed";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Links removed";
 /* Title show when a file is being downloaded */
 "downloading"="Letöltés: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu elem kijelölve";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elem kijelölve";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Camera Uploads will be disabled";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="A kamera feltöltések le lesz tiltva, mivel nincs elég terület a készülékén";
 /* Title of the Offline section */
@@ -435,7 +451,7 @@
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kapcsolat e-mailje";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="Hozzáad";
+"addContactButton"="Hozzáadás";
 /* Success message shown when a contact has been invited */
 "requestSent"="Kérés elküldve";
 /* Error message shown when it hasn't been posible to add a contact */
@@ -456,10 +472,16 @@
 "contactWithoutEmail"="A kapcsolat nem rendelkezik emaillel";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Elhagyás";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Mappa meghagyva";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Mappa megosztása";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Mappák megosztása";
 /* Button that allows you to select a given folder */
 "select"="Kiválasztás";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -467,7 +489,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Írásvédett";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Olvasási és Írási jog";
+"readAndWrite"="Írás és olvasás";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Teljes hozzáférés";
 /* Title of the Settings section */
@@ -475,7 +497,7 @@
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Kamerafeltöltések";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Szemetes";
+"rubbishBinLabel"="Szemetesláda";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Haladó";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -493,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Nincs beállítva email fiók a készüléken";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Adatvédelmi Irányelvek";
+"privacyPolicyLabel"="Adatvédelmi nyilatkozat";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Szolgáltatási Feltételek";
+"termsOfServicesLabel"="Általános szolgáltatási feltételek";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Ki";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -515,23 +537,23 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Köszönetnyilvánítás";
 /* Title for the MEGA Recovery Key */
-"masterKey"="MasterKulcs";
+"masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Jelszócsere";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Mesterkulcs kimentése";
+"exportMasterKey"="Export Recovery Key";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Biztonsági figyelmeztetés! Ez egy veszélyes művelet. Folytatni akarod?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="A Főkulcs exportálása és biztonságos helyen történő tárolása lehetővé teszi fiókja helyreállítását elfelejtett jelszó esetében, az adatok elvesztése nélkül.";
+"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Mesterkulcs kimentve";
+"masterKeyExported"="Recovery Key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="A Főkulcs.txt elmentve ezen a készüléken. Csatlakoztassa számítógépéhez, majd nyissa meg az iTunes-t a MEGA Dokumentumokban való hozzáféréshez. Erősen javasoljuk e fájl biztonságos helyen történő tárolását!";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Főkulcs törölve";
+"masterKeyRemoved"="Recovery Key removed";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="A Főkulcs.txt törölve lett  a Dokumentumok mappából.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -544,6 +566,14 @@
 "emptyRubbishBin"="Lomtár kiürítése";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Image and video downloads";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Save images in gallery";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Save videos in gallery";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Jelenleg használatban %s";
 /* Title for the action that allows to remove a file or folder */
@@ -599,9 +629,9 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Helyi adatok törlése";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Kijelentkezés és a helyi adatok törlése 10 sikertelen próbálkozás után";
+"failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Segítségnyújtás";
+"helpCentreLabel"="Súgóközpont";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Kérhetsz támogatást vagy olvasd el a populáris témákat.";
 /* Title to rate the app */
@@ -718,3 +748,5 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

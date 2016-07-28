@@ -27,7 +27,7 @@
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ihr Account wurde bereits aktiviert. Bitte melden Sie sich an. ";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Invalid link";
+"linkNotValid"="Ungültiger Link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Entschlüsselungs-Code eingeben";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -37,7 +37,7 @@
 /* Button title to try to decrypt the link */
 "decrypt"="Entschlüsseln";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Invalid decryption key";
+"decryptionKeyNotValid"="Ungültiger Schlüssel";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Ausgeloggt";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
@@ -61,7 +61,7 @@
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
 "megaSpeedText"="Schnelle Uploads.Effiziente Dateifreigabe.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGAs durchgehende Verschlüsselung garantiert die Vertraulichkeit Ihrer Dateien";
+"megaPrivacyText"="MEGAs lückenlose Verschlüsselung garantiert die Vertraulichkeit Ihrer Dateien";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Voll verschlüsselter Zugang zu Ihren Daten - überall und zu jeder Zeit.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -91,7 +91,7 @@
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Warte auf Bestätigung";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="Ein Bestätigungslink ist Ihnen per E-Mail zugegangen.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountCreated"="Bitte öffnen Sie Ihre E-Mail und bestätigen Sie Ihren Account, indem Sie den entsprechenden Link anklicken.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -109,13 +109,13 @@
 /* Title for the file link view */
 "fileLink"="Link zur Datei";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Datei öffnen";
+"openButton"="Öffnen";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Diese Datei ist größer als der verfügbare Speicherplatz.";
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Diese Datei ist größer als der verfügbare Speicherplatz.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="Link nicht verfügbar";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Mögliche Gründe hierfür sind:- Entfernung der Datei wegen einer Verletzung unserer AGBs oder Nutzungsrichtlinien- Ungültiger URL - der Link existiert nicht- Löschung der Datei durch den Benutzer";
 /* Message shown when a download starts */
@@ -137,25 +137,25 @@
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
 "cloudDriveEmptyState_title"="Keine Dateien vorhanden";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Add files";
+"addFiles"="Dateien hinzufügen";
 /* Title shown when you make a search and there is 'No Results' */
-"noResults"="No Results";
+"noResults"="Keine Treffer";
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Der Papierkorb ist leer";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Keine Dateien für Offline-Zugriff gespeichert";
+"offlineEmptyState_title"="Keine Dateien für Offlinezugriff gespeichert";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Sie haben keine Kontakte";
+"contactsEmptyState_title"="Keine Kontakte";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Keine freigegebenen Dateien eingehend";
+"noIncomingSharedItemsEmptyState_text"="Keine Ordnerfreigaben an Sie vorhanden";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Keine freigegebenen Dateien ausgehend";
+"noOutgoingSharedItemsEmptyState_text"="Sie haben noch keine Ordner freigegeben";
 /* Title of My Contacts section */
 "myContacts"="Kontakte";
 /* Title of Contacts requests section */
 "contactRequests"="Kontaktersuchen";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Add contacts";
+"addContacts"="Kontakte hinzufügen";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Gesendet";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -163,13 +163,13 @@
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Ersuchen angenommen";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Ersuchen zurückgezogen";
+"requestCancelled"="Einladung storniert";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Ersuchen gelöscht";
-/* Title shown when there's no pending request */
-"noRequestPending"="Keine ausstehenden Kontaktersuchen";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Keine Anfragen vorhanden";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Transfers angehalten";
+"transfersEmptyState_titlePaused"="Angehaltene Transfers";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -254,18 +254,32 @@
 "savedForOffline"="Für Offline-Zugriff gespeichert";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Dieser Ordnername ist durch Apple reserviert";
-/* List option shown on the details of a file or folder */
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Bild abspeichern";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Bilder abspeichern";
+/* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Link exportieren";
-/* Message shown when a link to the file is being generated */
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Linkexport";
+/* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Link generieren...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Links werden erstellt...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Links kopiert";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Die Links wurden kopiert";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Öffnen in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Link entfernen";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Der Link wurde entfernt";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Links löschen";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Der Link wurde gelöscht";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Links wurden entfernt";
 /* Title show when a file is being downloaded */
 "downloading"="Downloading: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -357,7 +371,7 @@
 /* Message shown when a file has been imported */
 "fileImported"="Datei importiert";
 /* Message shown when some files have been imported */
-"filesImported"="Files imported";
+"filesImported"="Dateien wurden importiert";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Speicherlimit überschritten";
 /* Alert title shown when the user is overquota */
@@ -380,6 +394,8 @@
 "oneItemSelected"="%lu ausgewählt";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu ausgewählt";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Kamera-Uploads werden deaktiviert";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Kamerauploads werden aus Speicherplatzgründen deaktiviert";
 /* Title of the Offline section */
@@ -456,10 +472,16 @@
 "contactWithoutEmail"="Der Kontakt hat keine E-Mail-Adresse";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Verlassen";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Wollen Sie diese Ordnerfreigabe wirklich verlassen?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Wollen Sie diese Ordnerfreigaben wirklich verlassen?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Ordnerfreigabe erfolgreich verlassen";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Ordner freigeben";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Ordner freigeben";
 /* Button that allows you to select a given folder */
 "select"="Auswählen";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -515,35 +537,43 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Danksagungen";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Recovery Key";
+"masterKey"="Rettungsschlüssel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Passwort ändern";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Recovery Key exportieren";
+"exportMasterKey"="Rettungsschlüssel exportieren";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Sicherheitswarnung: Diese Operation ist potentiell gefährlich. Fortfahren?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Ihr exportierter und an sicherer Stelle aufbewahrte Recovery Key ermöglicht es Ihnen, Ihren Account ohne Datenverlust wiederherzustellen, sollten Sie einmal Ihr Passwort verlieren.";
+"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key exportiert";
+"masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt wurde auf diesem Gerät gespeichert. Bitte verbinden Sie es mit Ihrem Computer und öffnen Sie iTunes, um es aus MEGA Documents zu kopieren. Wir möchten Sie an dieser Stelle erneut ermahnen, diese Datei vertraulich zu behandeln!";
+"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key gelöscht";
+"masterKeyRemoved"="Rettungsschlüssel entfernt";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt wurde aus Ihrem Dokumentenordner gelöscht.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt wurde aus dem Dokumentenordner entfernt.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Löschung der Offline-Daten";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Zwischenspeicher leeren";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="On MEGA";
+"onMEGA"="Auf MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Papierkorb leeren";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="Ihr Papierkorb wird unwiederbringlich geleert";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Foto- und Videodownloads";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Bilder in Galerie speichern";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Videos in Galerie speichern";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="%s belegt";
 /* Title for the action that allows to remove a file or folder */
@@ -599,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Nach zehn Fehlversuchen Sitzung beenden und lokale Daten löschen";
+"failedAttempstSectionTitle"="Ausloggen und lokale Daten nach zehn fehlerhaften PIN-Eingaben löschen";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Onlinehilfe";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -715,6 +745,8 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="In Photos gespeichert";

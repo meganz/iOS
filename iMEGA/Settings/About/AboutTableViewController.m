@@ -86,12 +86,10 @@
 }
 
 - (void)acknowledgements {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_acknowledgements.html"];
         SVWebViewController *webViewController = [[SVWebViewController alloc] initWithURL:URL];
         [self.navigationController pushViewController:webViewController animated:YES];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

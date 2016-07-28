@@ -49,15 +49,12 @@
 - (id)item {
     
     NSString *activityType = [self activityType];
-    
-    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]);
+    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]);
     if (activityValue) {
         semaphore = dispatch_semaphore_create(0);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([MEGAReachabilityManager isReachable]) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 [[MEGASdkManager sharedMEGASdk] exportNode:_node delegate:self];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             }
             
         });
@@ -73,12 +70,12 @@
 #pragma mark - UIActivityItemSource
 
 - (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(NSString *)activityType {
-    
     if ([activityType isEqualToString:UIActivityTypeAirDrop]) {
         return [NSURL URLWithString:self.link];
     }
     
-    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"]) {
+    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"]) {
+
         return nil;
     }
     
@@ -90,9 +87,6 @@
 }
 
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -112,14 +106,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
 }
 
 @end

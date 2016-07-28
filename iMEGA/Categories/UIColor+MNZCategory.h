@@ -23,4 +23,6 @@
 
 + (UIColor *)mnz_pinkFF1A53;
 
++ (UIColor *)colorFromHexString:(NSString *)hexString;
+
 @end

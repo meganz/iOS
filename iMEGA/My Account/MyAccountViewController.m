@@ -138,8 +138,8 @@
     
     _fullname = @"";
     
-    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeFirstname delegate:self];
-    [[MEGASdkManager sharedMEGASdk] getUserAttibuteType:MEGAUserAttributeLastname delegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname delegate:self];
+    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname delegate:self];
     
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
@@ -207,10 +207,8 @@
 #pragma mark - IBActions
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] logout];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 
