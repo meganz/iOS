@@ -1,7 +1,7 @@
 /* Button title to cancel something */
-"cancel"="لغو";
+"cancel"="انصراف";
 /* Button title to accept something */
-"ok"="باشه";
+"ok"="تأیید";
 /* */
 "upload"="آپلود";
 /*  */
@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="شما نمی توانید یک پوشه ی خالی را دانلود کنید";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="حساب شما قبلا فعال شده استو لطفا وارد شوید.";
+"accountAlreadyConfirmed"="شناسه کاربری شما فعال شد. لطفاٌ وارد سیستم شوید.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Invalid link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -77,7 +77,7 @@
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="ایمیل";
 /* Hint text to suggest that the user has to write his password */
-"passwordPlaceholder"="رمز عبور";
+"passwordPlaceholder"="کلمه عبور";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
 "termsOfServiceButton"="من با شرایط استفاده ی MEGA موافقم.";
 /* Error text shown when you have not entered a correct name  */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="برای ثبت شناسه کاربری در MEGA، لازم است که با مفاد شرایط استفاده از خدمات موافق باشید.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="حسابی با این آدرس ایمیل از قبل در مگا ثبت شده است";
+"emailAlreadyRegistered"="پیش‌تر با این رایانامه شناسه‌ای در MEGA ساخته شده است.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Awaiting confirmation";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="لطفا ایمیل خود رو چک کنید و روی لینک ارسال شده کلیک کنید تا حساب شما تایید شود";
+"accountCreated"="لطفاً رایانامه خود را بررسی کرده و پیوند فعال‌سازی شناسهٔ خود را بفشارید.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="برای تایید کردن اکونت خودتان لطفا پسورد خود را وارد کنید";
 /* Button title that triggers the confirm account action */
@@ -107,7 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="شما باید چندی فضا روی دستگاه خود ازاد کنید.";
 /* Title for the file link view */
-"fileLink"="لینک فایل";
+"fileLink"="پیوند پرونده";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="باز کردن";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -121,9 +121,9 @@
 /* Message shown when a download starts */
 "downloadStarted"="دانلود اغاز شد";
 /* Title for the folder link view */
-"folderLink"="لینک پوشه";
+"folderLink"="پیوند پوشه";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="دانلود";
+"downloadButton"="بارگیری";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="پوشه ای که سعی می کنید دانلود کنید بزرگتر از حافظه ی موجود است";
 /* Error message shown when a folder can't be created. */
@@ -135,23 +135,23 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="هیچ فایلی در پوشه نیست";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="هیچ فایلی در پوشه ابری شما وجود ندارد";
+"cloudDriveEmptyState_title"="پرونده‌ای در درایو ابری شما وجود ندارد";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Add files";
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="پاکسازی سطل زباله";
+"cloudDriveEmptyState_titleRubbishBin"="تخلیه سطل زباله";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="بدون ارتباط";
+"contactsEmptyState_title"="شما مشترکی ندارید";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
 /* Title of My Contacts section */
-"myContacts"="مخاطبین";
+"myContacts"="اعضائ در تماس";
 /* Title of Contacts requests section */
 "contactRequests"="درخواستهای تماس";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="فضای ابری";
+"cloudDrive"="درایو ابری";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="فایل %d";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -225,7 +225,7 @@
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="نام برای پوشه ی جدید";
 /* Title button for the create folder alert.  */
-"createFolderButton"="ساختن";
+"createFolderButton"="ایجاد";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="داخل کن از ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Save Images";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="دریافت لینک";
+"getLink"="پیوند بارگیری";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
 /* Message shown when a link to a file or folder is being generated */
@@ -285,7 +285,7 @@
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="آیا میخواهید دانلود را لغو کنید؟";
 /* Title for the action that allows you to move a file or folder */
-"move"="جا به جایی";
+"move"="انتقال";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 فایل جابجا شد";
 /* Success message shown when you have moved {1+} files */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="وارد کن به";
 /* Button title that triggers the importing link action */
-"import"="وارد کردن";
+"import"="درون‌ریزی";
 /* Message shown when a file has been imported */
 "fileImported"="فایل وارد شد!";
 /* Message shown when some files have been imported */
@@ -401,11 +401,11 @@
 /* Title of the Offline section */
 "offline"="افلاین";
 /* Title of the Contacts section */
-"contactsTitle"="تماس ها";
+"contactsTitle"="مشترکان";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="هیچ پوشه ای اشتراک گذاری نشد";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1 پوشه";
+"oneFolderShared"="یک پوشه";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="پوشه های %d";
 /* Item menu option to add a contact writting his/her email */
@@ -447,11 +447,11 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="از کانتکت ها اضافه کن";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="اضافه کردن تماس";
+"addContact"="افزودن مشترک";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="ایمیل ارتباط";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="اضافه";
+"addContactButton"="افزودن";
 /* Success message shown when a contact has been invited */
 "requestSent"="درخواست ارسال شد";
 /* Error message shown when it hasn't been posible to add a contact */
@@ -479,17 +479,17 @@
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="فولدر ترک شد!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="به اشتراک گذاری پوشه";
+"shareFolder"="اشتراک‌گذاری پوشه";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="پوشه ها را به اشتراک بگذار";
 /* Button that allows you to select a given folder */
 "select"="انتخاب";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="دسترسی ها";
+"permissions"="دسترسی‌ها";
 /* Permissions given to the user you share your folder with */
 "readOnly"="read only";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="خواندن و نوشتن";
+"readAndWrite"="دارای اجازه نمایش و تغییر";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="دسترسی کامل";
 /* Title of the Settings section */
@@ -515,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="هیچ اکونت ایمیل ادرسی روی دستگاه شما تنظیم نشده است";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="حریم خصوصی";
+"privacyPolicyLabel"="سیاست حفظ حریم خصوصی کاربران";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="قوانین استفاده";
+"termsOfServicesLabel"="شرایط استفاده از خدمات";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="خاموش";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -613,13 +613,13 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A]فايل و [B] فولدر از مگا حذف شدند";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="بسورد فعلی";
+"currentPassword"="پسورد فعلی";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="بسورد جدید";
+"newPassword"="پسورد جدید";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="پسورد را تایید کنید";
 /* Success message shown when the password has been changed */
-"passwordChanged"="کلمه عبور شما تغییر کرد.";
+"passwordChanged"="پسورد شما تغییر یافت.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
 "oldAndNewPasswordMatch"="پسورد جدید و قدیم با هم تطابق ندارند.";
 /* Section title where you can change the app's passcode */
@@ -629,9 +629,9 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="داده های محلی را پاک کن";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="خارج شوید و داده های محلی را پاک کنید پس از 10 تلاش پسورد غلط.";
+"failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="مرکز آموزش";
+"helpCentreLabel"="راهنما";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="کمک بگیر و موضوعات معروف رو بخون";
 /* Title to rate the app */
@@ -659,7 +659,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="انتقال های دانلود";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="حساب من";
+"myAccount"="شناسهٔ من";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="خروج از سامانه";
 /* String shown when you are logging out of your account. */
@@ -677,7 +677,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="روز  %@ انقضا می یابد";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="تاریخچه خرید";
+"purchaseHistory"="تاریخچه خریدها";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="اشتراک ها وارد شونده";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -689,7 +689,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="اکونت خود را ارتقا دهید";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ذخیره سازی";
+"productSpace"="فضای ذخیره سازی";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="پهنای باند";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -715,9 +715,9 @@
 /* Button title to restore failed purchases */
 "restore"="یازگردان";
 /* "Monthly" subscriptions */
-"monthly"="ماهیانه";
+"monthly"="ماهانه";
 /* "Yearly" subscriptions */
-"yearly"="سالیانه";
+"yearly"="سالانه";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="در حال حاضر خرید درون برنامه ای در App Store قابل دسترس نیست. لطفا\" بعدا\" تلاش کنید.";
 /* Alert title shown when the user has purchase correctly some plan */

@@ -61,7 +61,7 @@
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
 "megaSpeedText"="Schnelle Uploads.Effiziente Dateifreigabe.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGAs durchgehende Verschlüsselung garantiert die Vertraulichkeit Ihrer Dateien";
+"megaPrivacyText"="MEGAs lückenlose Verschlüsselung garantiert die Vertraulichkeit Ihrer Dateien";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Voll verschlüsselter Zugang zu Ihren Daten - überall und zu jeder Zeit.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -163,7 +163,7 @@
 /* Success message shown when you acepted a contact request */
 "requestAccepted"="Ersuchen angenommen";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Ersuchen zurückgezogen";
+"requestCancelled"="Einladung storniert";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Ersuchen gelöscht";
 /* Title shown when there's no pending contact requests */
@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Verlassen";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Wollen Sie diese Ordnerfreigabe wirklich verlassen?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Wollen Sie diese Ordnerfreigaben wirklich verlassen?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Ordnerfreigabe erfolgreich verlassen";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -553,7 +553,7 @@
 /* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Rettungsschlüssel entfernt";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt wurde aus dem Dokumentenordner entfernt.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -565,7 +565,7 @@
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="Papierkorb leeren";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="Ihr Papierkorb wird unwiederbringlich geleert";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="Foto- und Videodownloads";
 /* Section title where you can enable the option 'Save images in gallery' */
@@ -629,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Nach zehn Fehlversuchen Sitzung beenden und lokale Daten löschen";
+"failedAttempstSectionTitle"="Ausloggen und lokale Daten nach zehn fehlerhaften PIN-Eingaben löschen";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Onlinehilfe";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -745,8 +745,8 @@
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
 /* Success message shown when you save a photo in Photos app */
 "savedInCameraRoll"="In Photos gespeichert";

@@ -1,7 +1,7 @@
 /* Button title to cancel something */
-"cancel"="Odwołaj";
+"cancel"="Anuluj";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="Ok";
 /* */
 "upload"="Wgrywane";
 /*  */
@@ -65,7 +65,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Uzyskaj bezpieczny dostęp do plików z każdego miejsca,i czasu";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Zaloguj się";
+"login"="Logowanie";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Utwórz konto";
 /* Message shown when the user writes a wrong email or password on login */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Musisz wyrazić akceptację regulamiu serwisu w celu rejestracji konta na MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Ten adres emailowy jest już zarejestrowany w Mega.";
+"emailAlreadyRegistered"="Podany adres e-mail został już użyty podczas rejestracji.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Oczekiwanie na potwierdzenie";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Prosze sprawdź swój email i kliknij na link potwierdzający rejestrację.";
+"accountCreated"="Sprawdź pocztę i kliknij w link w celu weryfikacji.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Wprowadź hasło, w celu potwierdzenia konta";
 /* Button title that triggers the confirm account action */
@@ -107,7 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Zwiększ dostępną, wolną pamięć na urządzeniu";
 /* Title for the file link view */
-"fileLink"="Link do pliku";
+"fileLink"="Link";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Otwórz";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -123,7 +123,7 @@
 /* Title for the folder link view */
 "folderLink"="Link do katalogu";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Ściągnij";
+"downloadButton"="Pobierz";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Katalog, który chcesz pobrać jest większy niż dostępna pamięć.";
 /* Error message shown when a folder can't be created. */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Brak wyników";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Wyczyść Kosz";
+"cloudDriveEmptyState_titleRubbishBin"="Wyczyść kosz";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nie masz plików w Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Dysk";
+"cloudDrive"="Dysk";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d  plik";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -221,7 +221,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Zrób zdjęcie";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
-"newFolder"="Nowy folder";
+"newFolder"="Nowy katalog";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nazwa nowego katalogu";
 /* Title button for the create folder alert.  */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Zapisz zdjęcia";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Utwórz link";
+"getLink"="Pobierz link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Pobierz linki";
 /* Message shown when a link to a file or folder is being generated */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Importuj do";
 /* Button title that triggers the importing link action */
-"import"="Zaimportuj";
+"import"="Importuj";
 /* Message shown when a file has been imported */
 "fileImported"="Plik został zaimportowany";
 /* Message shown when some files have been imported */
@@ -405,7 +405,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="Brak udostępnionych katalogów";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1 folder";
+"oneFolderShared"="1 katalog";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d katalogów";
 /* Item menu option to add a contact writting his/her email */
@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Anuluj";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Czy na pewno chcesz anulować to udostępnienie?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Czy na pewno chcesz anulować to udostępnienia?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder został opuszczony";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -485,13 +485,13 @@
 /* Button that allows you to select a given folder */
 "select"="Wybierz";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Prawa dostępu";
+"permissions"="Uprawnienia";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Tylko odczyt";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Do odczytu i zapisu";
+"readAndWrite"="Odczyt & Zapis";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Pełen dostęp";
+"fullAccess"="Pełny dostęp";
 /* Title of the Settings section */
 "settingsTitle"="Ustawienia";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
@@ -515,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Nie ustawiono adresu email na Twoim urządzeniu";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Polityka Prywatności";
+"privacyPolicyLabel"="Polityka prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Warunki korzystania z Serwisu";
+"termsOfServicesLabel"="Regulamin";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Wył";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -673,11 +673,11 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Dostępne";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="ZA DARMO";
+"free"="FREE";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="wygasa w %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Historia zakupów";
+"purchaseHistory"="Historia zamówień";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Udostępnienia";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -689,7 +689,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Zmień konto";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Pojemności";
+"productSpace"="Pojemność";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Przepustowość";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Czy na pewno chcesz usunąć te pliki z trybu Offline?";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="Zapisz w Zdjęcia";

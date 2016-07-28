@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="ترك";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركة؟";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركات؟";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="تم إلغاء مشاركة المجلد";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="هل أنت متأكد من حذف العناصر من دون اتصال؟";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="تم حفظه في الصور";

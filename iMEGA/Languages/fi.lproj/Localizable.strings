@@ -167,7 +167,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Pyyntö poistettu";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="No pending requests";
+"noRequestPending"="Ei avoimia pyyntöjä";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Tauotetut siirrot";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Poistu";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Haluatko varmasti jättää tämän jaon?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Haluatko varmasti jättää nämä jaot?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Poistuttu kansiosta";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Haluatko varmasti poistaa kohteet offline-tilasta?";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="Tallennettu valokuviin";

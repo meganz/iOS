@@ -1,7 +1,7 @@
 /* Button title to cancel something */
-"cancel"="ביטול";
+"cancel"="בטל";
 /* Button title to accept something */
-"ok"="אוקיי";
+"ok"="אוקי";
 /* */
 "upload"="העלאה";
 /*  */
@@ -65,7 +65,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="קבל גישה מאובטחת באופן מלא, בכל זמן.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="התחברות";
+"login"="התחבר";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="צור חשבון";
 /* Message shown when the user writes a wrong email or password on login */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="אתה צריך להסכים לתנאי השימוש על מנת להירשם לMEGA";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="לאימייל הזה יש כבר חשבון בMega.";
+"emailAlreadyRegistered"="כבר קיים חשבון בעל אותו דואר אלקטרני בMEGA";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="ממתין לאישור";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="ממתין לאישור מהמייל.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="אנא בדוק את האימייל שלך ולחץ על לינק האישור לחשבונך.";
+"accountCreated"="אנא בדוק את תיבת הדואר שלך ולחץ על הקישור על מנת לאשר את חשבונך.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="אנא הכנס את סיסמתך לאישור החשבון";
 /* Button title that triggers the confirm account action */
@@ -107,7 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="הינך צריך יותר מקום אחסון במכשיר";
 /* Title for the file link view */
-"fileLink"="לינק לקובץ";
+"fileLink"="קישר לקובץ";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="פתח";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="אין תוצאות";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="נקה את סל האשפה";
+"cloudDriveEmptyState_titleRubbishBin"="רוקן את האשפתון";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="אין קבצים שנשמרו למצב לא מקוון";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="כונן ענן";
+"cloudDrive"="כונן בענן";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="קובץ %d";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="שמור תמונות";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="השג לינק";
+"getLink"="קבל קישור";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="קבל קישור";
 /* Message shown when a link to a file or folder is being generated */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="ייבא אל";
 /* Button title that triggers the importing link action */
-"import"="ייבא";
+"import"="ייבוא";
 /* Message shown when a file has been imported */
 "fileImported"="הקובץ הובא!";
 /* Message shown when some files have been imported */
@@ -405,7 +405,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="לא שותפו תיקיות";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="תיקייה 1";
+"oneFolderShared"="תיקייה אחת";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d תיקיות";
 /* Item menu option to add a contact writting his/her email */
@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="עזוב";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="האם אתה בטוח שברצונך לעזוב את שיתוף זה?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="האם אתה בטוח שברצונך לעזוב שיתופים אלו?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="עזבת את התיקייה";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -489,15 +489,15 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="לקרוא בלבד";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="קרא & כתוב";
+"readAndWrite"="לקריאה ולכתיבה";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="גישה מלאה";
+"fullAccess"="הרשאות מלאות";
 /* Title of the Settings section */
 "settingsTitle"="הגדרות";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="העלאות מצלמה";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="סל האשפה";
+"rubbishBinLabel"="אשפתון";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="מתקדם";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -515,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="לא הוגדרה כתובת מייל במכשיר זה";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="מדיניות פרטיות";
+"privacyPolicyLabel"="מדיניות הפרטיות";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="תנאי שימוש";
+"termsOfServicesLabel"="תנאי השימוש";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="כבוי";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -577,7 +577,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="כרגע משתמש ב%s";
 /* Title for the action that allows to remove a file or folder */
-"remove"="הסר";
+"remove"="מחק";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="אשר מחיקה";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file" */
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="מרכז עזרה";
+"helpCentreLabel"="מרכז שירות";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="קבל תמיכה או קרא מאמרים פופולריים.";
 /* Title to rate the app */
@@ -677,7 +677,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="פג תוקף ב-%@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="היסטורית קנייה";
+"purchaseHistory"="היסתוריית הקניות";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="שיתופים נכנסים";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="שמור ב-\"תמונות\"";

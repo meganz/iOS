@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Отказ";
 /* Button title to accept something */
-"ok"="Добре";
+"ok"="ОК";
 /* */
 "upload"="Качване";
 /*  */
@@ -11,7 +11,7 @@
 /*  */
 "passcode"="Код за достъп";
 /* "Size" of the file or folder you are sharing */
-"size"="Големина";
+"size"="Размер";
 /*  */
 "folder"="Папка";
 /* Error message shown when there's no camera available on the device */
@@ -65,7 +65,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Получи изцяло криптиран достъп навсякъде,по всяко време.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Влез";
+"login"="Вход";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Създаване на профил";
 /* Message shown when the user writes a wrong email or password on login */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Необходимо е да се съгласите с условията за ползване за да се регистрирате в MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Този e-mail адрес вече е регистрирал акаунт с MEGA.";
+"emailAlreadyRegistered"="Този имейл адрес е вече регистриран в Mega.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Изчаква потвърждение";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Изчакване на имейл потвърждение.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Моля проверете си e-mail-а и цъкнете на линка, за да потвърдите Вашия акаунт.";
+"accountCreated"="Моля, проверете имейла си и кликнете върху линка за да потвърдите профила си.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Моля, въведете паролата си, за да потвърдите профила си";
 /* Button title that triggers the confirm account action */
@@ -123,7 +123,7 @@
 /* Title for the folder link view */
 "folderLink"="Линк към папката";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Изтеглете";
+"downloadButton"="Изтегли";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Папката, която се опитвате да изтеглите е по-голяма от размера на свободната памет.";
 /* Error message shown when a folder can't be created. */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Няма Резултати";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Изчистете Кошчето";
+"cloudDriveEmptyState_titleRubbishBin"="Изчисти Кошчето";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Няма Запазени файлове в Офлайн ";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Запази Изображения";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Вземете линк";
+"getLink"="Вземи линк";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Вземи линкове";
 /* Message shown when a link to a file or folder is being generated */
@@ -285,7 +285,7 @@
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Искате ли да отмените изтеглянето?";
 /* Title for the action that allows you to move a file or folder */
-"move"="Измести";
+"move"="Премести";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 файл преместен";
 /* Success message shown when you have moved {1+} files */
@@ -321,7 +321,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] файла и [B] папки бяха копирани";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Преименуване";
+"rename"="Преименувай";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Въведете новото име";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Импортирай в";
 /* Button title that triggers the importing link action */
-"import"="Внеси";
+"import"="Импортирай";
 /* Message shown when a file has been imported */
 "fileImported"="Файлът беше импортиран";
 /* Message shown when some files have been imported */
@@ -401,7 +401,7 @@
 /* Title of the Offline section */
 "offline"="Извън линия";
 /* Title of the Contacts section */
-"contactsTitle"="Абонати";
+"contactsTitle"="Контакти";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
 "noFoldersShared"="Няма споделени папки";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
@@ -447,7 +447,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Добави от контакти";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Добавете абонат";
+"addContact"="Добави контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Имейл на контакта";
 /* Button title to "Add" the contact to your contacts list */
@@ -485,7 +485,7 @@
 /* Button that allows you to select a given folder */
 "select"="Избери";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Права";
+"permissions"="Разрешения";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Само четене";
 /* Permissions given to the user you share your folder with */
@@ -539,7 +539,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Възстановяващ Ключ";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Смени парола";
+"changePasswordLabel"="Промени парола";
 /* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Експортирай Възстановяващ Ключ";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
@@ -619,7 +619,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Потвърди парола";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Паролата Ви е сменена.";
+"passwordChanged"="Вашата парола беше променена.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
 "oldAndNewPasswordMatch"="Новата и старата парола не трябва да съвпадат.";
 /* Section title where you can change the app's passcode */
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Излез от системата и изтрий локалните данни след 10 неуспешни въвеждания на код.";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Помощен Център";
+"helpCentreLabel"="Помощен център";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Получи помощ или прочети често обсъждани въпроси.";
 /* Title to rate the app */
@@ -677,7 +677,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="изтича на %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="История на закупките";
+"purchaseHistory"="История на покупките";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящи Споделяния";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */

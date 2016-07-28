@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Não pode descarregar uma pasta vazia";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Sua conta já foi ativada. Por favor, faça o login.";
+"accountAlreadyConfirmed"="Sua conta já está ativada. Por favor, faça o login.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa concordar com os termos de serviço para se registrar em uma conta no MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Este endereço de e-mail já está cadastrado com uma conta MEGA.";
+"emailAlreadyRegistered"="Este endereço de e-mail já registrou uma conta no Mega.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="aguardando confirmação";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Por favor verifique seu e-mail e clique no link para confirmar sua conta.";
+"accountCreated"="Por favor, verifique seu e-mail e clique no link para confirmar sua conta.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, digite sua senha para confirmar sua conta";
 /* Button title that triggers the confirm account action */
@@ -123,7 +123,7 @@
 /* Title for the folder link view */
 "folderLink"="Link da pasta";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Download";
+"downloadButton"="Baixar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="A pasta que você está tentando descarregar é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Sem resultados";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Limpar Lixeira";
+"cloudDriveEmptyState_titleRubbishBin"="Limpar lixeira";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nenhum arquivo salvo Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Unidade em Nuvem (Cloud Drive)";
+"cloudDrive"="Nuvem de Arquivos";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d arquivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -221,7 +221,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Captar";
 /* Menu option from the `Add` section that allows you to create a "New Folder" */
-"newFolder"="Nova pasta";
+"newFolder"="Nova Pasta";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nome da nova pasta";
 /* Title button for the create folder alert.  */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Salvar imagens";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obter link";
+"getLink"="Obter Link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obter links";
 /* Message shown when a link to a file or folder is being generated */
@@ -447,7 +447,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Adicionar a partir dos contatos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Adicionar contato";
+"addContact"="Adicionar novo contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail do contato";
 /* Button title to "Add" the contact to your contacts list */
@@ -489,7 +489,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Apenas de leitura";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Ler e Gravar";
+"readAndWrite"="Ler & Escrever";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Acesso total";
 /* Title of the Settings section */
@@ -539,7 +539,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chave de Recuperação";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Mudar a senha";
+"changePasswordLabel"="Mudar senha";
 /* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Exportação Key Recovery";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Sair e apagar dados local após 10 tentativas fracassadas de senha";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centro de Ajuda";
+"helpCentreLabel"="Central de Ajuda";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Obtenha ajuda ou leia os tópicos mais populares.";
 /* Title to rate the app */
@@ -659,7 +659,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Descarregamento de transferências";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Minha Conta";
+"myAccount"="Minha conta";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Deslogar";
 /* String shown when you are logging out of your account. */
@@ -673,11 +673,11 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponível";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRÁTIS";
+"free"="GRATUITA";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Histórico de Compras";
+"purchaseHistory"="Histórico de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partilhas Recebidas";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */

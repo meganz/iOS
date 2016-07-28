@@ -11,7 +11,7 @@
 /*  */
 "passcode"="Codice di accesso";
 /* "Size" of the file or folder you are sharing */
-"size"="Grandezza";
+"size"="Dimensione";
 /*  */
 "folder"="Cartella";
 /* Error message shown when there's no camera available on the device */
@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Non è possibile scaricare una cartella vuota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Il tuo account è già stato attivato. Effettua il Log in.";
+"accountAlreadyConfirmed"="Il tuo account è già stato attivato. Ti preghiamo di effettuare il log in.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -65,7 +65,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Accesso crittografato dovunque,a qualunque momento";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Accedi";
+"login"="Accesso";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Crea Account";
 /* Message shown when the user writes a wrong email or password on login */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Devi accettare i termini di servizio per registrare un account su MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Questo indirizzo e-mail ha già registrato un account Mega.";
+"emailAlreadyRegistered"="Questo indirizzo e-mail è già registrato ad un account MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="In attesa della conferma";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="In attesa della conferma dell'email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="SI prega di controllare l'e-mail e cliccare sul link di conferma.";
+"accountCreated"="Per favore controlla la tua e-mail e clicca il link per confermare il tuo account.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Si prega di inserire la password per confermare il tuo account";
 /* Button title that triggers the confirm account action */
@@ -107,7 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Hai bisogno di liberare un pò di spazio";
 /* Title for the file link view */
-"fileLink"="Link file";
+"fileLink"="Collegamenti di file";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Apri";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Nessun risultato";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Svuota Cestino";
+"cloudDriveEmptyState_titleRubbishBin"="Svuota il Cestino";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Nessun file salvato in Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Partizione Cloud";
+"cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -489,7 +489,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Solo lettura";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lettura e Scrittura";
+"readAndWrite"="Lettura & Scrittura";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Accesso completo";
 /* Title of the Settings section */
@@ -515,7 +515,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Non hai un account e-mail configurato sul dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Informativa Privacy";
+"privacyPolicyLabel"="Informativa sulla privacy";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
 "termsOfServicesLabel"="Termini di Servizio";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -539,7 +539,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chiave di recupero";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Cambia password";
+"changePasswordLabel"="Modifica password";
 /* Title shown when you try to export your MEGA Recovery Key */
 "exportMasterKey"="Esporta la Chiave di recupero";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Esci e cancella i dati locali dopo 10 tentativi falliti";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Servizio Clienti";
+"helpCentreLabel"="Assistenza";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Richiedi assistenza o leggi gli argomenti popolari.";
 /* Title to rate the app */
@@ -659,7 +659,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD trasferimenti";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Mio profilo";
+"myAccount"="Il mio account";
 /* Title of the button which logs out from your account. */
 "logoutLabel"="Esci";
 /* String shown when you are logging out of your account. */
@@ -677,7 +677,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="scade il %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Storico acquisti";
+"purchaseHistory"="Cronologia Acquisti";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Condivisioni in arrivo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -689,7 +689,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Aggiorna l'account";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="di spazio d'archiviazione";
+"productSpace"="Spazio";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
 "productBandwidth"="Larghezza banda";
 /* Price asociated with the MEGA PRO account level you can subscribe */
