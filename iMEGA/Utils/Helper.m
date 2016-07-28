@@ -749,13 +749,18 @@ static BOOL copyToPasteboard;
         size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
         rawtime = [[node creationTime] timeIntervalSince1970];
     }
-    struct tm *timeinfo = localtime(&rawtime);
-    char buffer[80];
-    strftime(buffer, 80, "%d %B %Y %I:%M %p", timeinfo);
     
-    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+    NSString *date = [self dateWithISO8601FormatOfRawTime:rawtime];
     
     return [NSString stringWithFormat:@"%@ • %@", size, date];
+}
+
++ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
+    struct tm *timeinfo = localtime(&rawtime);
+    char buffer[80];
+    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+    
+    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {

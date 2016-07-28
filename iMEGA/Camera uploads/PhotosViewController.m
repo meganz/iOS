@@ -166,7 +166,10 @@
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"MMMM yyyy"];
+    df.dateStyle = NSDateFormatterLongStyle;
+    df.timeStyle = NSDateFormatterNoStyle;
+    df.locale = [NSLocale currentLocale];
+    df.dateFormat = @"LLLL yyyy";
     
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
