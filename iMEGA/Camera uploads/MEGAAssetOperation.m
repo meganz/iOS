@@ -463,6 +463,9 @@
             } else {
                 MEGALogDebug(@"The asset exists in MEGA in the correct folder");
                 [self completeOperation];
+                if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
+                    [[CameraUploads syncManager] setBadgeValue];
+                }
                 if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && _automatically) {
                     [[CameraUploads syncManager] resetOperationQueue];
                 }

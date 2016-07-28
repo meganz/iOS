@@ -910,7 +910,7 @@ static BOOL copyToPasteboard;
 
 #pragma mark - Logout
 
-+ (void)logout {    
++ (void)logout {
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1028,6 +1028,9 @@ static BOOL copyToPasteboard;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];

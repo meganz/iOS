@@ -4,6 +4,8 @@
 #import "MEGAReachabilityManager.h"
 #import "SVProgressHUD.h"
 
+#import <Photos/Photos.h>
+
 @interface SaveToCameraRollActivity () <MEGATransferDelegate>
 
 @property (nonatomic, strong) MEGANode *node;
@@ -49,13 +51,6 @@
     return UIActivityCategoryAction;
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (!error) {
-        NSString *imagePath = CFBridgingRelease(contextInfo);
-        [[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
-    }
-}
-
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -64,10 +59,18 @@
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
-        UIImage *image = [UIImage imageWithContentsOfFile:transfer.path];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
-            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (void*)CFBridgingRetain(transfer.path));
-        });
+        NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
+            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
+            [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
+            if (nserror) {
+                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            }
+        }];
     }
 }
 
