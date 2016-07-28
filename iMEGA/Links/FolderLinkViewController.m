@@ -29,7 +29,6 @@
 
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "MEGAPreview.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -47,7 +46,7 @@
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MWPhotoBrowserDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -278,7 +277,10 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.editBarButtonItem setEnabled:boolValue];
+    
     [self.downloadBarButtonItem setEnabled:boolValue];
+    [self.importBarButtonItem setEnabled:boolValue];
 }
 
 - (void)deleteTempDocuments {
@@ -489,9 +491,9 @@
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
                 if (self.parentNode == nil) {
-                    self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+                    return;
                 }
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
             }
             
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
@@ -500,7 +502,10 @@
         if ([_tableView isEditing]) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
-            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+            if (self.parentNode == nil) {
+                return;
+            }
+            [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
         }
         [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
         
@@ -692,9 +697,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -713,9 +717,8 @@
                         fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
                         
                         if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MEGAPreview *megaPreview = [MEGAPreview photoWithNode:n];
+                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
                             megaPreview.isFromFolderLink = YES;
-                            megaPreview.caption = [n name];
                             [self.cloudImages addObject:megaPreview];
                             if ([n handle] == [node handle]) {
                                 offsetIndex = (int)[self.cloudImages count] - 1;
@@ -724,8 +727,7 @@
                     }
                 }
                 
-                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-                
+                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];                
                 photoBrowser.displayActionButton = YES;
                 photoBrowser.displayNavArrows = YES;
                 photoBrowser.displaySelectionButtons = NO;
@@ -979,20 +981,6 @@
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return 40.0f;
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.cloudImages.count;
-}
-
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.cloudImages.count) {
-        return [self.cloudImages objectAtIndex:index];
-    }
-    
-    return nil;
 }
 
 #pragma mark - MEGAGlobalDelegate

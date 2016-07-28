@@ -11,4 +11,6 @@
 + (BOOL)isReachableViaWiFi;
 + (bool)hasCellularConnection;
 
++ (BOOL)isReachableHUDIfNot;
+
 @end

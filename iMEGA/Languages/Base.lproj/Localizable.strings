@@ -166,7 +166,7 @@
 "requestCancelled"="Request cancelled";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Request deleted";
-/* Title shown when there's no pending request */
+/* Title shown when there's no pending contact requests */
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Paused Transfers";
@@ -381,9 +381,9 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Select items";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1+} photos" */
-"photosPerMonth"="%lu photos";
+"photosPerMonth"="%lu items";
 /* Title shown on the Camera Uploads section that specifies the number of photos uploaded during a month. "{1} photo" */
-"photoPerMonth"="%lu photo";
+"photoPerMonth"="%lu item";
 /* Button title that skips the current action */
 "skipButton"="Skip";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
@@ -472,6 +472,10 @@
 "contactWithoutEmail"="The contact does not have an email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Leave";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder left";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -657,7 +661,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="My Account";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Log out";
+"logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
@@ -744,3 +748,5 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Saved in Photos";

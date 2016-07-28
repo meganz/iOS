@@ -26,6 +26,8 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "NSMutableAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
@@ -33,9 +35,17 @@
 #import "OfflineTableViewController.h"
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
+#import "SortByTableViewController.h"
 
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
+
+static NSString *kFileName = @"kFileName";
+static NSString *kIndex = @"kIndex";
+static NSString *kPath = @"kPath";
+static NSString *kModificationDate = @"kModificationDate";
+static NSString *kFileSize = @"kFileSize";
+static NSString *kisDirectory = @"kisDirectory";
 
 @interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
@@ -43,9 +53,10 @@
     BOOL isSwipeEditing;
 }
 
-@property (nonatomic, strong) NSMutableArray *offlineFilesAndFolders;
+@property (nonatomic, strong) NSMutableArray *offlineSortedItems;
 @property (nonatomic, strong) NSMutableArray *offlineFiles;
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
+@property (nonatomic, strong) NSMutableArray *offlineItems;
 
 @property (nonatomic, strong) NSString *folderPathFromOffline;
 
@@ -56,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sortByBarButtonItem;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
@@ -89,7 +101,7 @@
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
     }
-    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, _editBarButtonItem]];
+    [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editBarButtonItem, self.sortByBarButtonItem]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,14 +137,14 @@
 #pragma mark - Private
 
 - (void)reloadUI {
-    
-    self.offlineFilesAndFolders = [[NSMutableArray alloc] init];
+    self.offlineSortedItems = [[NSMutableArray alloc] init];
     self.offlineFiles = [[NSMutableArray alloc] init];
     self.offlineMultimediaFiles = [[NSMutableArray alloc] init];
+    self.offlineItems = [[NSMutableArray alloc] init];
     
     NSString *directoryPathString = [self currentOfflinePath];
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
-        
+    
     int offsetIndex = 0;
     for (int i = 0; i < (int)[directoryContents count]; i++) {
         NSString *filePath = [directoryPathString stringByAppendingPathComponent:[directoryContents objectAtIndex:i]];
@@ -146,19 +158,72 @@
         if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
             
             NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
-            [tempDictionary setValue:fileName forKey:kMEGANode];
+            [tempDictionary setValue:fileName forKey:kFileName];
             [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
             [tempDictionary setValue:[NSURL fileURLWithPath:filePath] forKey:kPath];
-            [self.offlineFilesAndFolders addObject:tempDictionary];
             
+            NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
             BOOL isDirectory;
             [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory];
+            
+            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory ? YES : NO] forKey:kisDirectory];
+            
+            [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
+            [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
+            
+            [self.offlineItems addObject:tempDictionary];
+            
+            if (!isDirectory) {
+                if (!isMultimedia(fileName.pathExtension)) {
+                    offsetIndex++;
+                }
+            }
+        }
+    }
+    
+    //Sort configuration by default is "default ascending"
+    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"]) {
+        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
+    [self sortBySortType:sortOrderType];
+    
+    offsetIndex = 0;
+    for (NSDictionary *p in self.offlineItems) {
+        NSURL *fileURL = [p objectForKey:kPath];
+        NSString *fileName = [p objectForKey:kFileName];
+        
+        // Inbox folder in documents folder is created by the system. Don't show it
+        if ([[[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"] isEqualToString:[fileURL path]]) {
+            continue;
+        }
+        
+        if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+            
+            NSMutableDictionary *tempDictionary = [NSMutableDictionary new];
+            [tempDictionary setValue:fileName forKey:kFileName];
+            [tempDictionary setValue:[NSNumber numberWithInt:offsetIndex] forKey:kIndex];
+            [tempDictionary setValue:fileURL forKey:kPath];
+            
+            NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
+            BOOL isDirectory;
+            [[NSFileManager defaultManager] fileExistsAtPath:[fileURL path] isDirectory:&isDirectory];
+            
+            [tempDictionary setValue:[NSNumber numberWithBool:isDirectory ? YES : NO] forKey:kisDirectory];
+            
+            [tempDictionary setValue:[filePropertiesDictionary objectForKey:NSFileSize] forKey:kFileSize];
+            [tempDictionary setValue:[filePropertiesDictionary valueForKey:NSFileModificationDate] forKey:kModificationDate];
+            
+            [self.offlineSortedItems addObject:tempDictionary];
+            
             if (!isDirectory) {
                 if (isMultimedia(fileName.pathExtension)) {
-                    [self.offlineMultimediaFiles addObject:filePath];
+                    [self.offlineMultimediaFiles addObject:[fileURL path]];
                 } else {
                     offsetIndex++;
-                    [self.offlineFiles addObject:filePath];
+                    [self.offlineFiles addObject:[fileURL path]];
                 }
             }
         }
@@ -277,6 +342,45 @@
     return isDirectory;
 }
 
+- (void)sortBySortType:(MEGASortOrderType)sortOrderType {
+    NSSortDescriptor *sortDescriptor = nil;
+    NSSortDescriptor *sortDirectoryDescriptor = nil;
+    
+    switch (sortOrderType) {
+        case MEGASortOrderTypeDefaultAsc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kFileName ascending:YES selector:@selector(localizedStandardCompare:)];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:NO];
+            break;
+        case MEGASortOrderTypeDefaultDesc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kFileName ascending:NO selector:@selector(localizedStandardCompare:)];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:YES];
+            break;
+        case MEGASortOrderTypeSizeAsc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kFileSize ascending:YES];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:NO];
+            break;
+        case MEGASortOrderTypeSizeDesc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kFileSize ascending:NO];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:YES];
+            break;
+        case MEGASortOrderTypeModificationAsc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kModificationDate ascending:YES];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:NO];
+            break;
+        case MEGASortOrderTypeModificationDesc:
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:kModificationDate ascending:NO];
+            sortDirectoryDescriptor = [[NSSortDescriptor alloc] initWithKey:kisDirectory ascending:YES];
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDirectoryDescriptor, sortDescriptor, nil];
+    NSArray *sortedArray = [self.offlineItems sortedArrayUsingDescriptors:sortDescriptors];
+    self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -284,14 +388,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.offlineFilesAndFolders.count == 0) {
+    if (self.offlineSortedItems.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self.editBarButtonItem setEnabled:NO];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [self.editBarButtonItem setEnabled:YES];
     }
-    return self.offlineFilesAndFolders.count;
+    return self.offlineSortedItems.count;
 }
 
 
@@ -304,19 +408,8 @@
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     NSString *directoryPathString = [self currentOfflinePath];
-    NSString *nameString = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kMEGANode];
+    NSString *nameString = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kFileName];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
-    
-    NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
-    
-    struct tm *timeinfo;
-    char buffer[80];
-    time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
-    timeinfo = localtime(&rawtime);
-    strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
-    NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
-    
-    unsigned long long size;
     
     [cell setItemNameString:nameString];
     
@@ -330,7 +423,18 @@
     if (isDirectory) {
         [cell.thumbnailImageView setImage:[Helper folderImage]];
         
-        size = [Helper sizeOfFolderAtPath:pathForItem];
+        NSInteger files = 0;
+        NSInteger folders = 0;
+        
+        NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:pathForItem error:nil];
+        for (NSString *file in directoryContents) {
+            BOOL isDirectory;
+            NSString *path = [pathForItem stringByAppendingPathComponent:file];
+            [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
+            isDirectory ? folders++ : files++;
+        }
+        
+        [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];
     } else {
         NSString *extension = [[nameString pathExtension] lowercaseString];
         NSString *fileTypeIconString = [Helper fileTypeIconForExtension:extension];
@@ -382,13 +486,19 @@
             }
         }
         
+        NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
+        
+        time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
+        NSString *date = [Helper dateWithISO8601FormatOfRawTime:rawtime];
+        
+        unsigned long long size;        
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
+        
+        NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
+        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
+        [cell.infoLabel setText:sizeAndDate];
     }
     [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
-    
-    NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
-    NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
-    [cell.infoLabel setText:sizeAndDate];
     
     if (self.isEditing) {
         for (NSURL *url in self.selectedItems) {
@@ -454,7 +564,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
         [self.selectedItems addObject:filePathURL];
         
         if (self.selectedItems.count > 0) {
@@ -466,7 +576,7 @@
             [self.deleteBarButtonItem setEnabled:YES];
         }
         
-        if (self.selectedItems.count == self.offlineFilesAndFolders.count) {
+        if (self.selectedItems.count == self.offlineSortedItems.count) {
             allItemsSelected = YES;
         } else {
             allItemsSelected = NO;
@@ -495,7 +605,7 @@
         previewController.delegate = self;
         previewController.dataSource = self;
         
-        NSInteger selectedIndexFile = [[[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
+        NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
         
         [previewController setCurrentPreviewItemIndex:selectedIndexFile];
         [previewController setTransitioningDelegate:self];
@@ -508,7 +618,7 @@
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (tableView.isEditing) {
-        NSURL *filePathURL = [[self.offlineFilesAndFolders objectAtIndex: indexPath.row] objectForKey:kPath];
+        NSURL *filePathURL = [[self.offlineSortedItems objectAtIndex: indexPath.row] objectForKey:kPath];
         
         NSMutableArray *tempArray = [self.selectedItems copy];
         for (NSURL *url in tempArray) {
@@ -536,10 +646,10 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSURL *fileULR = [[self.offlineFilesAndFolders objectAtIndex:indexPath.row] objectForKey:kPath];
+    NSURL *fileURL = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
     
     self.selectedItems = [[NSMutableArray alloc] init];
-    [self.selectedItems addObject:fileULR];
+    [self.selectedItems addObject:fileURL];
     [self.deleteBarButtonItem setEnabled:YES];
     [self.activityBarButtonItem setEnabled:YES];
     
@@ -592,8 +702,8 @@
     if (!allItemsSelected) {
         NSURL *filePathURL = nil;
         
-        for (NSInteger i = 0; i < self.offlineFilesAndFolders.count; i++) {
-            filePathURL = [[self.offlineFilesAndFolders objectAtIndex:i] objectForKey:kPath];
+        for (NSInteger i = 0; i < self.offlineSortedItems.count; i++) {
+            filePathURL = [[self.offlineSortedItems objectAtIndex:i] objectForKey:kPath];
             [self.selectedItems addObject:filePathURL];
         }
         
@@ -675,6 +785,16 @@
                                               cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                               otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
     [alertView show];
+}
+
+- (IBAction)sortByTapped:(UIBarButtonItem *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
+    SortByTableViewController *sortByTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
+    sortByTableViewController.offline = YES;
+    
+    MEGANavigationController *megaNavigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
+    
+    [self presentViewController:megaNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - UIDocumentInteractionController

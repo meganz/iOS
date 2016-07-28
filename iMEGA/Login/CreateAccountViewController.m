@@ -76,7 +76,7 @@
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingConfirmation", nil)];
+    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
     [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
@@ -171,23 +171,20 @@
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSURL *URL = [NSURL URLWithString:@"https://mega.nz/ios_terms.html"];
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:URL];
         [webViewController setBarsTintColor:[UIColor mnz_redD90007]];
         [self presentViewController:webViewController animated:YES completion:nil];
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];    }
+    }
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
     if ([self validateForm]) {
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
             [self.createAccountButton setEnabled:NO];
-        } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
         }
     }
 }

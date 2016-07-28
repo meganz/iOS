@@ -110,6 +110,7 @@ static CameraUploads *instance = nil;
     _isCameraUploadsEnabled = isCameraUploadsEnabled;
     
     if (isCameraUploadsEnabled) {
+        MEGALogInfo(@"Camera Uploads enabled");
         self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
         self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
         if (![[NSUserDefaults standardUserDefaults] objectForKey:kCameraUploadsNodeHandle]){
@@ -154,6 +155,7 @@ static CameraUploads *instance = nil;
             [self getAssetsForUpload];
         }
     } else {
+        MEGALogInfo(@"Camera Uploads disabled");
         [self resetOperationQueue];
         
         _isCameraUploadsEnabled = NO;
@@ -189,19 +191,18 @@ static CameraUploads *instance = nil;
             assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
         }
         
-        [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
-            
-            NSDate *assetCreationTime = asset.creationDate;
-            
-            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+        MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
+        
+        for (PHAsset *asset in assetsFetchResult) {
+            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            } else if (asset.mediaType == PHAssetMediaTypeImage && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
+            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }
-            
-        }];
+        }
+        
     } else {
         __block NSInteger totalAssets = 0;
         

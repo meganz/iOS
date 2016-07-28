@@ -107,10 +107,9 @@
 - (IBAction)changePasswordTouchUpIndise:(UIButton *)sender {
     if ([self validateForm]) {
         [_changePasswordButton setEnabled:NO];
-        if ([MEGAReachabilityManager isReachable]) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [[MEGASdkManager sharedMEGASdk] changePassword:[_currentPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
         } else {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
             [_changePasswordButton setEnabled:YES];
         }
     }

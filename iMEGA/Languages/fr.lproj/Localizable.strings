@@ -3,7 +3,7 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Uploader";
+"upload"="Téléverser";
 /*  */
 "error"="Erreur";
 /*  */
@@ -25,91 +25,91 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Vous ne pouvez pas télécharger un dossier vide";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Votre compte a déjà été activé. Veuillez vous connecter.";
+"accountAlreadyConfirmed"="Votre compte a déjà été activé. Connectez-vous.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Lien non valide";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertTitle"="Entrez la clé de décryptage";
+"decryptionKeyAlertTitle"="Saisir la clé de déchiffrement";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pour accéder à ce dossier/fichier, vous aurez besoin de sa Clef de Déchiffrement. Si vous ne possédez pas cette clef, veuillez contacter le créateur de ce lien.";
+"decryptionKeyAlertMessage"="Afin d'accéder à ce dossier/fichier, il vous faudra sa clé de déchiffrement. Si vous ne possédez pas la clé, veuillez contacter le créateur du lien.";
 /* Hint text to suggest that the user has to write the decryption key */
-"decryptionKey"="Clef de déchiffrement";
+"decryptionKey"="Clé de déchiffrement";
 /* Button title to try to decrypt the link */
-"decrypt"="Décrypter";
+"decrypt"="Déchiffrer";
 /* Alert title shown when you have written a decryption key not valid */
-"decryptionKeyNotValid"="Clef de déchiffrement invalide";
+"decryptionKeyNotValid"="Clé de déchiffrement invalide";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="Déconnecté(e)";
+"loggedOut_alertTitle"="Déconnecté";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Vous avez été déconnecté(e) de cet appareil depuis un autre endroit";
+"loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d'un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="La clef SSL du serveur de ne pas être vérifiée. Il se peut que vous soyez affectée par une attaque de l'homme au milieu.";
+"sslUnverified_alertTitle"="La clé SSL du serveur ne peut pas être vérifiée. Vous pourriez être la cible d'une attaque de l'homme du milieu.";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
 "serversTooBusy"="Les serveurs sont trop occupés. Veuillez patienter...";
 /* Alert title shown when you need to log in to continue with the action you want to do */
-"pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
+"pleaseLogInToYourAccount"="Connectez-vous dans votre compte.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="ESPACE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
 "megaSpeed"="VITESSE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="CONFIDENTIALITÉ";
+"megaPrivacy"="CONFIDENTIALITÉ MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
 "megaAccess"="ACCÈS MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="Créez un compte maintenant et recevez vos 50Go d'espace gratuit.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Les envois sont rapides.Partagez rapidement des fichiers avec tout le monde.";
+"megaSpeedText"="Les téléversements sont rapides. Partagez rapidement des fichiers avec tout le monde.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Conservez tous vos fichiers en sécurité avec le chiffrement de \"bout-en-bout\" de MEGA";
+"megaPrivacyText"="Assurez la sécurité de tous vos fichiers avec le chiffrement de bout en bout de MEGA";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Disposez d'un accès complètement chiffré où vous voulez.quand vous voulez";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Se Connecter";
+"login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Créer un compte";
+"createAccount"="Créer un Compte";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Adresse e-mail ou mot de passe non valide. Merci d'essayer à nouveau";
+"invalidMailOrPassword"="Adresse courriel ou mot de passe invalide. Veuillez ressayer";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Renseignez un e-mail valide";
+"emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Renseignez un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-mail";
+"emailPlaceholder"="Adresse courriel";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Mot de passe";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="J'accepte les Conditions d'Utilisation de MEGA";
+"termsOfServiceButton"="J'accepte les conditions générales d'utilisation de MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Renseignez un nom valide";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Vous devez être d'accord avec les termes de service pour enregistrer un compte sur MEGA.";
+"termsCheckboxUnselected"="Vous devez accepter les conditions générales d'utilisation pour ouvrir un compte sur MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Cette adresse e-mail est déjà utilisée par un autre compte MEGA.";
+"emailAlreadyRegistered"="Un compte MEGA a déjà été enregistré avec cette adresse courriel";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="En attente de confirmation";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="En attente de la confirmation de l'e-mail.";
+"awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Veuillez vérifier vos e-mails et cliquer sur le lien pour confirmer votre compte.";
+"accountCreated"="Veuillez vérifier vos courriels et cliquer sur le lien pour confirmer votre compte.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Veuillez renseigner votre mot de passe pour confirmer votre compte";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirmer votre compte";
+"confirmAccountButton"="Confirmez votre compte";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Mauvais mot de passe";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Vous êtes authentifié(e) avec un autre compte";
+"alreadyLoggedInAlertTitle"="Vous êtes connecté avec un autre compte";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Si vous acceptez, vous serez déconnecté(e) de votre compte et toutes les données Hors-ligne seront effacées. Voulez-vous continuer?";
+"alreadyLoggedInAlertMessage"="Si vous acceptez, le compte actuel sera déconnecté et toutes les données Hors ligne seront effacées. Voulez-vous poursuivre?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Vous avez besoin de libérer de l'espace sur votre appareil";
 /* Title for the file link view */
 "fileLink"="Lien du fichier";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
-"openButton"="Ouvrir le fichier";
+"openButton"="Ouvrir";
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Le fichier que vous essayez de télécharger est plus grand que la mémoire disponible actuelle.";
 /* Error message shown when you try to open something bigger than the free space in your device */
@@ -121,7 +121,7 @@
 /* Message shown when a download starts */
 "downloadStarted"="Téléchargement démarré";
 /* Title for the folder link view */
-"folderLink"="Lien du dossier";
+"folderLink"="Lien du Dossier";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Télécharger";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -135,7 +135,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Aucun fichier dans le dossier";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Pas de fichiers sur votre Cloud";
+"cloudDriveEmptyState_title"="Aucun fichier dans votre stockage nuagique";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Ajouter des fichiers";
 /* Title shown when you make a search and there is 'No Results' */
@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Vider la Corbeille";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Aucun fichier enregistré en hors-ligne";
+"offlineEmptyState_title"="Aucun fichier enregistré hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Vous n'avez pas de contacts";
+"contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Aucun dossier de partage entrant";
+"noIncomingSharedItemsEmptyState_text"="Aucun dossier partagé entrant";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Aucun dossier de partage sortant";
+"noOutgoingSharedItemsEmptyState_text"="Aucun dossier partagé sortant";
 /* Title of My Contacts section */
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
@@ -157,7 +157,7 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Ajouter des contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
-"sent"="Envoyée(s)";
+"sent"="Envoyées";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
 "requests"="Demandes";
 /* Success message shown when you acepted a contact request */
@@ -166,8 +166,8 @@
 "requestCancelled"="Demande annulée";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Demande supprimée";
-/* Title shown when there's no pending request */
-"noRequestPending"="Aucune requête en attente à l'heure actuelle";
+/* Title shown when there's no pending contact requests */
+"noRequestPending"="Aucune requête en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -177,7 +177,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Lecteur Racine";
+"cloudDrive"="Stockage nuagique";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d fichier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -203,7 +203,7 @@
 /* Section title of the "Sort by" */
 "sortTitle"="TRIER";
 /* Button title to "Save" the selected option */
-"save"="Sauvegarder";
+"save"="Enregistrer";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="nom (ordre croissant)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
@@ -229,13 +229,13 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importer depuis ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] déjà uploadé avec le nom [B]";
+"fileExistAlertController_Message"="[A] déjà téléversé avec le nom [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Ce fichier a déjà été uploadé avec le nom %@";
+"fileAlreadyExistMessage"="Ce fichier a déjà été téléversé avec le nom %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d fichiers sélectionnés ont déjà été uploadés dans ce dossier.";
+"filesAlreadyExistMessage"="%d fichiers sélectionnés ont déjà été téléversés dans ce dossier.";
 /* Message shown when a upload starts */
-"uploadStarted_Message"="Upload démarré";
+"uploadStarted_Message"="Téléversement démarré";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
 "fileMovedToTheRubbishBin_alertTitle"="Ce fichier a été placé dans la Corbeille";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
@@ -249,25 +249,39 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n'avez plus accès à ce dossier";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Sauvegarder en hors-ligne";
+"saveForOffline"="Enregistré hors ligne";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Sauvegardé(s) en mode Hors Ligne";
+"savedForOffline"="Enregistré hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Le label \"Boîte de réception\" est réservé pour utilisation propre à Apple";
-/* List option shown on the details of a file or folder */
-"getLink"="Obtenir le lien";
-/* Message shown when a link to the file is being generated */
-"generatingLink"="Génération du lien en cours...";
+/* Title shown under the action that allows you to save an image to your camera roll */
+"saveImage"="Enregistrer l'Image";
+/* Title shown under the action that allows you to save several images to your camera roll */
+"saveImages"="Enregistrer les Images";
+/* Title shown under the action that allows you to get a link to file or folder */
+"getLink"="Récupérer le lien";
+/* Title shown under the action that allows you to get several links to files and/or folders */
+"getLinks"="Obtenir les liens";
+/* Message shown when a link to a file or folder is being generated */
+"generatingLink"="Génération du lien...";
+/* Message shown when some links to files and/or folders are being generated */
+"generatingLinks"="Génération des liens en cours...";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Lien copié";
+/* Message shown when some links have been copied to the pasteboard */
+"linksCopied"="Liens copiés";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Ouvrir avec";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Supprimer le lien";
-/* Message shown when the link to a file has been removed */
-"removeLinkSuccess"="Le lien a été supprimé";
+"removeLink"="Retirer le lien";
+/* Message shown when there is an active link that can be removed or disabled */
+"removeLinks"="Retirer les liens";
+/* Message shown when the link to a file or folder has been removed */
+"linkRemoved"="Lien supprimé";
+/* Message shown when the links to files and/or folders have been removed */
+"linksRemoved"="Liens supprimés";
 /* Title show when a file is being downloaded */
-"downloading"="Téléchargement en cours : [X]%";
+"downloading"="Téléchargement...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Voulez-vous annuler le téléchargement?";
 /* Title for the action that allows you to move a file or folder */
@@ -313,21 +327,21 @@
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
 "moveToTheRubbishBin"="Déplacer vers la Corbeille";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
-"moveFileToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer 1 fichier vers la Corbeille?";
+"moveFileToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
-"moveFilesToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer %d fichier vers la Corbeille?";
+"moveFilesToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
-"moveFolderToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer 1 dossier vers la Corbeille?";
+"moveFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 dossier vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer %d dossiers vers la Corbeille?";
+"moveFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer %d dossiers vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer 1 fichier et 1 dossier vers la Corbeille?";
+"moveFileFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et 1 dossier vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer 1 fichier et %d dossiers vers la Corbeille?";
+"moveFileFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer 1 fichier et %d dossiers vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer %d fichiers et 1 dossier vers la Corbeille?";
+"moveFilesFolderToRubbishBinMessage"="Voulez-vous vraiment déplacer %d fichiers et 1 dossier vers la corbeille?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Êtes-vous certain(e) de bien vouloir déplacer [A] fichiers et [B] dossiers dans la Corbeille?";
+"moveFilesFoldersToRubbishBinMessage"="Voulez-vous vraiment déplacer [A] fichiers et [B] dossiers dans la corbeille?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fichier déplacé vers la Corbeille";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -373,17 +387,19 @@
 /* Button title that skips the current action */
 "skipButton"="Passer";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activer l'Envoi des Photos de la Caméra";
+"enableCameraUploadsButton"="Activer téléversement photos";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Les Uploads de la Caméra ont été activés";
+"cameraUploadsEnabled"="Les téléversements de l'appareil photo sont activés";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu élément sélectionné";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu éléments sélectionnés";
+/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
+"cameraUploadsWillBeDisabled"="Le téléversement de l'appareil photo sera désactivé";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Les Uploads de la Caméra vont être désactivés parce que vous n'avez pas assez de place sur votre appareil";
+"cameraUploadsDisabled_alertView_message"="Le téléversement de l'appareil photo va être désactivé, car vous n'avez pas assez d'espace sur votre appareil";
 /* Title of the Offline section */
-"offline"="Hors-ligne";
+"offline"="Hors ligne";
 /* Title of the Contacts section */
 "contactsTitle"="Contacts";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
@@ -393,7 +409,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Insérez un e-mail";
+"addFromEmail"="Insérer une adresse courriel";
 /* Title of Shared Items section */
 "sharedItems"="Éléments partagés";
 /* Title of the tab bar item for the Shared Items section */
@@ -415,11 +431,11 @@
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="Supprimer le partage";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Êtes-vous certain(e) de bien vouloir supprimer ce partage? (Partagé avec 1 contact)";
+"removeOneShareOneContactMessage"="Voulez-vous vraiment retirer ce partage? (Partagé avec 1 contact)";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Êtes-vous certain(e) de bien vouloir supprimé ce partage? (Partagé avec %d contacts)";
+"removeOneShareMultipleContactsMessage"="Voulez-vous vraiment retirer ce partage? (Partagé avec %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Êtes-vous certain(e) de bien vouloir supprimé ces partages? (Partagés avec %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="Voulez-vous vraiment retirer ces partages? (Partagés avec %d contacts)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Annulation du mode Partage réussi";
 /* Message shown when some shares have been removed */
@@ -427,13 +443,13 @@
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="Propriétaire";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="Partager avec";
+"sharedWith"="Partagé avec";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Ajouter depuis les contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Ajouter un contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="E-Mail du Contact";
+"contactEmail"="Adresse courriel du contact";
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Ajouter";
 /* Success message shown when a contact has been invited */
@@ -441,11 +457,11 @@
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Erreur lors de l'ajout d'un contact";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Supprimer un contact";
+"removeUserTitle"="Supprimer les contacts";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Êtes-vous certain(e) de bien vouloir supprimer %@ de votre liste de contacts?";
+"removeUserMessage"="Voulez-vous vraiment supprimer %@ de votre liste de contacts?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
-"removeMultipleUsersMessage"="Êtes-vous certain(e) de bien vouloir supprimer %d utilisateurs de votre liste de contacts?";
+"removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts supprimés";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
@@ -453,27 +469,33 @@
 /* Label shown when a contact request is pending */
 "pending"="En attente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="Le contact n'a pas d'e-mail";
+"contactWithoutEmail"="Le contact n'a pas d'adresse courriel";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Partir";
+/* Alert message shown when the user tap on the leave share action for one inshare */
+"leaveShareAlertMessage"="Voulez-vous vraiment quitter ce partage?";
+/* Alert message shown when the user tap on the leave share action selecting multiple inshares */
+"leaveSharesAlertMessage"="Voulez-vous vraiment quitter ces partages?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Dossier quitté";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partager le dossier";
+/* Button title which, if tapped, will trigger the action of sharing the folders selected */
+"shareFolders"="Dossiers partagés";
 /* Button that allows you to select a given folder */
 "select"="Sélectionner";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Permissions";
+"permissions"="Droits d'accès";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Lecture seule";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lecture et Ecriture";
+"readAndWrite"="Lecture et Écriture";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Accès complet";
 /* Title of the Settings section */
-"settingsTitle"="Paramètres";
+"settingsTitle"="Réglages";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Envoi des Photos de la Caméra";
+"cameraUploadsLabel"="Téléversement de l'appareil";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -481,55 +503,55 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Options de Sécurité";
 /* Title of one of the Settings sections where you can see things "About" the app */
-"about"="A propos";
+"about"="À Propos";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Langage";
+"language"="Langue";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Langue";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
-"sendFeedbackLabel"="Envoyer un Feedback";
+"sendFeedbackLabel"="Envoyer une rétroaction";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Veuillez rédiger vos remarques ici :";
+"pleaseWriteYourFeedback"="Veuillez rédiger vos commentaires ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Aucun compte e-mail défini sur votre appareil";
+"noEmailAccountConfigured"="Aucun compte courriel n'est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
 "privacyPolicyLabel"="Politique de Confidentialité";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Conditions d'Utilisation";
+"termsOfServicesLabel"="Conditions générales d'utilisation ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
-"off"="Off";
+"off"="Désactivé";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
-"on"="On";
+"on"="Activé";
 /* Header to explain that "Upload videos", "Use cellular connection" and "Only when charging" are options of the Camera Uploads */
 "options"="Options";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Envoyer vidéos";
+"uploadVideosLabel"="Téléversement de vidéos";
 /* Option title to enable using the device cellular connection with Camera Uploads */
 "useCellularConnectionLabel"="Utiliser le réseau de données cellulaires";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Seulement pendant le rechargement";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Lorsque l'option est activée, toute nouvelle photo ou vidéo sera uploadée.";
+"cameraUploads_footer"="Si cette option est activée, les nouvelles photos et vidéos seront téléversées.";
 /* Label for the "Version" number of the app */
 "version"="Version";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Remerciements";
+"acknowledgements"="Crédits";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Clef Maître";
+"masterKey"="Clé de récupération";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Changer de mot de passe";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exporter la Clef-Maître";
+"exportMasterKey"="Exporter la clé de récupération";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Avertissement de sécurité: Ceci est une opération très risquée. Voulez-vous continuer?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporter la Clef Maître et la conserver dans un lieu sécuriser vous permettra de récupérer votre compte en cas de mot de passe perdu, et ce sans perte de donnée quelconque.";
+"exportMasterKeyFooter"="En exportant et en conservant la clé de récupération dans un endroit sécurisé, vous pourrez définir un nouveau mot de passe, sans encourir de perte de données.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Clef-Maître exportée";
+"masterKeyExported"="Clé de récupération exportée";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="RecoveryKey.txt a été sauvegardé sur cet appareil. Reliez-le à votre ordinateur et ouvrez iTunes pour y accéder dans MEGA Documents. Nous vous recommandons fortement de conserver ce fichier en toute sécurité !";
+"masterKeyExported_alertMessage"="La clé de récupération a été exportée dans la section Hors ligne sous RecoveryKey.txt. Note : elle sera supprimée si vous vous déconnectez. Veuillez la conserver dans un endroit sûr.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Clef Maître supprimée";
+"masterKeyRemoved"="Clé de récupération supprimée";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt a été supprimé du dossier Documents";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -544,6 +566,14 @@
 "emptyRubbishBin"="Vider la Corbeille";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tous les éléments de la corbeille vont être supprimés";
+/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
+"imageAndVideoDownloadsHeader"="Téléchargements d'images et de vidéos";
+/* Section title where you can enable the option 'Save images in gallery' */
+"saveImagesInGallery"="Enregistrer les images dans Photos";
+/* Section title where you can enable the option 'Save videos in gallery' */
+"saveVideosInGallery"="Enregistrer les vidéos dans Photos";
+/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
+"imageAndVideoDownloadsFooter"="Enregistrer les images et les vidéos compatibles iOS dans la galerie de votre appareil (note : les images et les vidéos ne seront pas enregistré hors ligne).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Utilisation actuelle de %s";
 /* Title for the action that allows to remove a file or folder */
@@ -589,7 +619,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmer le mot de passe";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Votre mot de passe a été changé.";
+"passwordChanged"="Votre mot de passe a été modifié.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
 "oldAndNewPasswordMatch"="Le nouveau et le mot de passe ne peuvent pas être le même.";
 /* Section title where you can change the app's passcode */
@@ -599,21 +629,21 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Se déconnecter et effacer toutes les données locales après 10 mauvaises tentatives d'insertion du code de verrouillage";
+"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d'accès";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centre d'Aide";
+"helpCentreLabel"="Centre d'aide";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Trouvez de l'aide ou lire des sujets populaires.";
 /* Title to rate the app */
 "rateUsLabel"="Nous noter";
 /* Title of the Transfers section */
-"transfers"="Tranferts";
+"transfers"="Transferts";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tous";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Téléchargements";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
-"uploads"="Uploads";
+"uploads"="Téléversements";
 /* Success message shown when one transfer has been cancelled */
 "transferCancelled"="Transfert annulé";
 /* Success message shown when all the transfers have been cancelled */
@@ -625,15 +655,15 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOUS les transferts";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="Transferts UPLOADS";
+"uploadInUppercaseTransfers"="Transferts en TÉLÉVERSEMENT";
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Transferts TÉLÉCHARGEMENTS";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mon compte";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Se déconnecter";
+"logoutLabel"="Se Déconnecter";
 /* String shown when you are logging out of your account. */
-"loggingOut"="Déconnexion en cours";
+"loggingOut"="Déconnexion";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilisation";
 /* Title for "Local" used space. */
@@ -649,7 +679,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Historique des achats";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Partages Entrants";
+"incomingShares"="Partages entrants";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -665,15 +695,15 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%.2f%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Choisissez un des plans ci-dessous :";
+"choosePlan"="Choisir une des offres ci-dessous :";
 /* Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money */
-"twoMonthsFree"="Gagnez deux mois gratuits si vous souscrivez à une plan PRO d'une année";
+"twoMonthsFree"="Obtenez deux mois gratuits si vous vous abonnez à une offre PRO d'un an";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Choisissez une adhésion";
+"selectMembership"="Choisir un abonnement : ";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Économisez 17%";
+"save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="MAUVAIS ACHAT  %@ (%ld)";
+"wrongPurchase"="L'ACHAT A ÉCHOUÉ  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Les achats intégrés dans l'application sont désactivés, veuillez les activer dans les Réglages d'iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -701,20 +731,22 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Erreur de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="L'achat précédent n'a pas pu être trouvé. Veuillez sélectionner le produit précédemment acheté pour le restaurer. Vous NE serez PAS facturé(e) à nouveau.";
+"incompleteRestore_message"="L'achat précédent n'a pas été trouvé. Veuillez sélectionner le produit acheté précédemment afin de le rétablir. Vous ne serez PAS facturé de nouveau.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restauration interrompue";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Soit la requête a été annulée soir l'achat préalable n'a pas pu être restaurer. Veuillez essayer à nouveau plus tard ou contacter ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Activer le mode de DEBOGGAGE";
+"enableDebugMode_title"="Activer le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un fichier de journalisation a été créé dans la section Hors-Ligne (MEGAiOS.log).";
+"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log).";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Désactiver le mode de DEBOGGAGE";
+"disableDebugMode_title"="Désactiver le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le fichier de journalisation (MEGAiOS.log) sera supprimé de la section Hors-Ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Êtes-vous certain(e) de bien vouloir supprimer cet élément du mode Hors-Ligne?";
+"removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément du mode Hors ligne?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Êtes-vous certain(e) de bien vouloir supprimer ces éléments du mode Hors-Ligne?";
+"removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments du mode Hors ligne?";
+/* Success message shown when you save a photo in Photos app */
+"savedInCameraRoll"="Enregistré dans Photos";

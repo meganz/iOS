@@ -152,8 +152,12 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+        return 3;
+    } else {
+        return 4;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

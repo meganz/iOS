@@ -42,7 +42,7 @@ static NSString* const B = @"[B]";
     return nil;
 }
 
-- (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
++ (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
     NSString *filesString = [NSString stringWithFormat:@"%ld", (long)files];
     NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)folders];
     

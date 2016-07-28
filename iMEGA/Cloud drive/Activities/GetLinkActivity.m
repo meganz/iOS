@@ -72,7 +72,7 @@
 }
 
 - (void)performActivity {
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [Helper setCopyToPasteboard:YES];
         
         if (self.nodes != nil) {
@@ -86,8 +86,6 @@
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
             [self activityDidFinish:YES];
         }
-    } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", nil)];
     }
 }
 

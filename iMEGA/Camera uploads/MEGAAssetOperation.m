@@ -36,6 +36,7 @@
 @property (nonatomic, strong) MEGANode *cameraUploadNode;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, assign) BOOL automatically;
+@property (nonatomic, assign) NSInteger retries;
 
 @end
 
@@ -49,6 +50,7 @@
         executing = NO;
         finished = NO;
         _automatically = automatically;
+        _retries = 0;
     }
     return self;
 }
@@ -133,7 +135,11 @@
     
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionCurrent;
+        if (_retries < 10) {
+            options.version = PHImageRequestOptionsVersionCurrent;
+        } else {
+            options.version = PHImageRequestOptionsVersionOriginal;
+        }
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
@@ -141,14 +147,7 @@
          options:options
          resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
              if (!imageData) {
-                 NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                 if (error) {
-                     MEGALogError(@"Request image data for asset failed with error: %@", error);
-                     [self disableCameraUploadWithError:error];
-                 } else {
-                     [self start];
-                     MEGALogDebug(@"There are no image data - Info: %@", info);
-                 }
+                 [self manageErrorWithPHAssetInfo:info];
                  return;
              }
              NSString *filePath = [self filePathWithInfo:info];
@@ -159,22 +158,14 @@
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHVideoRequestOptionsVersionCurrent;
+        options.version = PHImageRequestOptionsVersionOriginal;
         options.networkAccessAllowed = YES;
         
         [[PHImageManager defaultManager]
          requestAVAssetForVideo:_phasset
          options:options resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
              if (!asset) {
-                 NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                 if (error) {
-                     MEGALogError(@"Request avasset for video failed with error: %@", error);
-                     [self disableCameraUploadWithError:error];
-                 } else {
-                     [self start];
-                     MEGALogDebug(@"There are no avasset - Info: %@", info);
-                 }
-                 
+                 [self manageErrorWithPHAssetInfo:info];
                  return;
              }
              if ([asset isKindOfClass:[AVURLAsset class]]) {
@@ -253,6 +244,7 @@
     finished = YES;
     
     if (_automatically) {
+        [[CameraUploads syncManager] setBadgeValue];
         if (_phasset) {
             if (_phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadPhotoDate];
@@ -279,13 +271,21 @@
 }
 
 - (NSString *)filePathWithInfo:(NSDictionary *)info {
-    MEGALogDebug(@"Photo asset info: %@", info);
+    MEGALogDebug(@"Asset %@\n%@", _phasset, info);
     NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
     if (!url) {
         url = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
     }
     
     NSString *extension = [[url pathExtension] lowercaseString];
+    if (!extension) {
+        if (_phasset.mediaType == PHAssetMediaTypeImage) {
+            extension = @"jpg";
+        }
+        if (_phasset.mediaType == PHAssetMediaTypeVideo) {
+            extension = @"mov";
+        }
+    }
     NSString *name = [[_dateFormatter stringFromDate:_phasset.creationDate] stringByAppendingPathExtension:extension];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
     return filePath;
@@ -321,7 +321,7 @@
     MEGALogDebug(@"Disable Camera Uploads: %@", message);
     if (_automatically) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsEmptyState_title", nil)
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
                                                                 message:message
                                                                delegate:self
                                                       cancelButtonTitle:AMLocalizedString(@"ok", nil)
@@ -329,6 +329,49 @@
             [alertView show];
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
         });
+    }
+}
+
+- (void)manageErrorWithPHAssetInfo:(NSDictionary *)info {
+    NSError *error = [info objectForKey:@"PHImageErrorKey"];
+    switch (error.code) {
+        case 0:
+        case 28:
+        case 81: {
+            if (_retries < 20) {
+                _retries++;
+                if (error.code == 0) {
+                    MEGALogDebug(@"There are no image data - Info: %@", info);
+                } else {
+                    MEGALogError(@"Request image data for asset failed with error: %@", error);
+                }
+                [self start];
+            } else {
+                MEGALogDebug(@"Max attempts reached");
+                [self completeOperation];
+            }
+            break;
+        }
+            
+        case 25:
+            [self completeOperation];
+            break;
+            
+        case 640:
+            [self disableCameraUploadWithError:error];
+            break;
+            
+        default: {
+            if (_retries < 20) {
+                _retries++;
+                MEGALogError(@"Request image data for asset failed with error: %@", error);
+                [self start];
+            } else {
+                MEGALogDebug(@"Max attempts reached");
+                [self disableCameraUploadWithError:error];
+            }
+            break;
+        }
     }
 }
 
@@ -418,7 +461,11 @@
                     [[MEGASdkManager sharedMEGASdk] renameNode:node newName:name delegate:self];
                 }
             } else {
+                MEGALogDebug(@"The asset exists in MEGA in the correct folder");
                 [self completeOperation];
+                if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
+                    [[CameraUploads syncManager] setBadgeValue];
+                }
                 if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && _automatically) {
                     [[CameraUploads syncManager] resetOperationQueue];
                 }
@@ -476,11 +523,6 @@
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
-    }
-    
-    NSError *nserror = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&nserror]) {
-        MEGALogError(@"Remove item at path failed with error: %@", nserror);
     }
     
     if ([transfer type] == MEGATransferTypeUpload) {

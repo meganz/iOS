@@ -21,6 +21,7 @@
 
 
 #import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SSKeychain.h"
@@ -254,6 +255,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     return YES;
 }
 
@@ -340,6 +347,24 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return YES;
+}
+
+- (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application {
+    if ([[MEGASdkManager sharedMEGASdk] areTransferPausedForDirection:0]) {
+        [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO forDirection:0];
+    }
+    if ([[MEGASdkManager sharedMEGASdkFolder] areTransferPausedForDirection:0]) {
+        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO forDirection:0];
+    }
+}
+
+- (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application {
+    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 1) {
+        [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES forDirection:0];
+    }
+    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 1) {
+        [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
+    }
 }
 
 //#pragma mark - Push Notifications
@@ -801,15 +826,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
     } else {
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
-    }
-}
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    if (!error) {
-        NSString *imagePath = CFBridgingRelease(contextInfo);
-        [[NSFileManager defaultManager] removeItemAtPath:imagePath error:nil];
-    } else {
-        MEGALogError(@"Save image to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     }
 }
 
@@ -1437,10 +1453,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             
             if (isImage([transfer fileName].pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
-                UIImage *image = [UIImage imageWithContentsOfFile:transfer.path];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
-                    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (void*)CFBridgingRetain(transfer.path));
-                });
+                NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
+                
+                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                    PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
+                    [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
+                    
+                } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
+                    [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
+                    if (nserror) {
+                        MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+                    }
+                }];
             }
             return;
         }
