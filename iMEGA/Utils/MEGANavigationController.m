@@ -19,6 +19,8 @@
  * program.
  */
 
+#import "Helper.h"
+
 #import "MEGANavigationController.h"
 
 @implementation MEGANavigationController
@@ -34,6 +36,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
     if([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.topViewController supportedInterfaceOrientations];
     }

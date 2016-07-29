@@ -89,6 +89,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -251,7 +255,7 @@
             [self.termsCheckboxButton setUserInteractionEnabled:NO];
             [self.createAccountButton setEnabled:NO];
             
-            [self.accountCreatedView setHidden:NO];
+            self.view = self.accountCreatedView;
         }
             
         default:
