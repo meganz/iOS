@@ -198,11 +198,15 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    if ([request type] == MEGARequestTypeLogin) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+    }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD dismiss];
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs:

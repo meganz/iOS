@@ -1176,6 +1176,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
         }
         
+        if ([request type] == MEGARequestTypeExport) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD showErrorWithStatus:error.name];
+        }
+        
         if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
@@ -1254,6 +1259,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             isFetchNodesDone = YES;
             
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
             
             [self setBadgeValueForIncomingContactRequests];
