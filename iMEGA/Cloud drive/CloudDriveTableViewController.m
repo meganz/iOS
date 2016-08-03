@@ -1265,6 +1265,12 @@
     }
 }
 
+- (void)endEditingAndReloadSearch { 
+    [self.searchDisplayController.searchResultsTableView setEditing:NO animated:YES];
+    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
+    [self.searchDisplayController.searchResultsTableView reloadData];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1620,6 +1626,11 @@
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"permissionTitle", nil) message:AMLocalizedString(@"permissionMessage", nil) delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
                 [alertView show];
             }
+        } else {
+            if ([request type] == MEGARequestTypeMove || [request type] == MEGARequestTypeRemove) {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD showErrorWithStatus:error.name];
+            }
         }
         return;
     }
@@ -1672,7 +1683,8 @@
                 
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
-                [self setEditing:NO animated:YES];
+                
+                [self.searchDisplayController isActive] ? [self endEditingAndReloadSearch] : [self setEditing:NO animated:YES];
             }
             break;
         }
@@ -1713,7 +1725,8 @@
                     message = AMLocalizedString(@"shareFolderLeaved", @"Folder leave");
                 }
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
-                [self setEditing:NO animated:YES];
+                
+                [self.searchDisplayController isActive] ? [self endEditingAndReloadSearch] : [self setEditing:NO animated:YES];
             }
             break;
         }
