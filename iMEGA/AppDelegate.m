@@ -1172,6 +1172,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+                
+            case MEGAErrorTypeApiEBlocked: {
+                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                                    message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked")
+                                                                   delegate:self
+                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [api logout];
+                }
+                
+                break;
+            }
+                
             default:
                 break;
         }
