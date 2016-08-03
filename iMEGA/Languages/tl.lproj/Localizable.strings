@@ -153,21 +153,21 @@
 /* Title of My Contacts section */
 "myContacts"="Contacts";
 /* Title of Contacts requests section */
-"contactRequests"="Mga kahilingan ng mga contacts";
+"contactRequests"="Mga request ng contact";
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Magdagdag ng contacts";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent"="Naipadala";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
-"requests"="Kahilingan";
+"requests"="Mga Requests";
 /* Success message shown when you acepted a contact request */
-"requestAccepted"="Tinanggap ang kahilingan";
+"requestAccepted"="Tinanggap ang request";
 /* Success message shown when you Cancelled a contact request */
-"requestCancelled"="Tinanggihan ang kahilingan";
+"requestCancelled"="Itinigil ang request";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Binura ang kahilingan";
+"requestDeleted"="Binura ang request";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Walang pending na kahilingan";
+"noRequestPending"="Walang pending na request";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Itigil muna ang Paglilipat";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -453,7 +453,7 @@
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Magdagdag";
 /* Success message shown when a contact has been invited */
-"requestSent"="Naipadala na ang kahilingan";
+"requestSent"="Naipadala na ang request";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Nabigo ang pagdagdag sa contact";
 /* Alert title shown when you want to remove one or more contacts */

@@ -281,7 +281,10 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.editBarButtonItem setEnabled:boolValue];
+    
     [self.downloadBarButtonItem setEnabled:boolValue];
+    [self.importBarButtonItem setEnabled:boolValue];
 }
 
 - (void)deleteTempDocuments {
@@ -492,9 +495,9 @@
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
             } else {
                 if (self.parentNode == nil) {
-                    self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+                    return;
                 }
-                browserVC.selectedNodesArray = [NSArray arrayWithObject:_parentNode];
+                browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
             }
             
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
@@ -503,7 +506,10 @@
         if ([_tableView isEditing]) {
             [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
         } else {
-            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+            if (self.parentNode == nil) {
+                return;
+            }
+            [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
         }
         [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
         

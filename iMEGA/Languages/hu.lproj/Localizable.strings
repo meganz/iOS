@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Nem tölthet le üres mappát";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="A fiók már aktiválva van. Kérjük, jelentkezzél be.";
+"accountAlreadyConfirmed"="Fiókod már aktiválva van. Kérlek jelentkezz be.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Érvénytelen link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="El kell fogadnia az általános szolgáltatási feltételeket a MEGA-n fiók regisztrálásához.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Ez az e-mail cím már regisztrálva lett egy MEGA fiókhoz.";
+"emailAlreadyRegistered"="Ez az email cím már regisztrált egy fiókot a MEGÁ-n";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Várakozás megerősítésre";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Kérjük, ellenőrizze az e-mailjeit és kattintson a linkre a fiókja aktiválásához.";
+"accountCreated"="Kérjük ellenőrizze e-mailjeit, majd kattintson a linkre fiókja visszaigazolásához.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Kérjük írja be jelszavát fiókja megerősítéséhez";
 /* Button title that triggers the confirm account action */
@@ -107,7 +107,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Fel kell szabadítania némi helyet";
 /* Title for the file link view */
-"fileLink"="Fájl link";
+"fileLink"="Fájllink";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Megnyitás";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Szemetes kiürítése";
+"cloudDriveEmptyState_titleRubbishBin"="Szemetesláda kiürítése";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -259,7 +259,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Save Images";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Link megszerzése";
+"getLink"="Link beszerzése";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Get links";
 /* Message shown when a link to a file or folder is being generated */
@@ -451,7 +451,7 @@
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kapcsolat e-mailje";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="Hozzáad";
+"addContactButton"="Hozzáadás";
 /* Success message shown when a contact has been invited */
 "requestSent"="Kérés elküldve";
 /* Error message shown when it hasn't been posible to add a contact */
@@ -489,7 +489,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Írásvédett";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Olvasási és Írási jog";
+"readAndWrite"="Írás és olvasás";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Teljes hozzáférés";
 /* Title of the Settings section */
@@ -497,7 +497,7 @@
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Kamerafeltöltések";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Szemetes";
+"rubbishBinLabel"="Szemetesláda";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Haladó";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -515,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Nincs beállítva email fiók a készüléken";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Adatvédelmi Irányelvek";
+"privacyPolicyLabel"="Adatvédelmi nyilatkozat";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Szolgáltatási Feltételek";
+"termsOfServicesLabel"="Általános szolgáltatási feltételek";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Ki";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -629,9 +629,9 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Helyi adatok törlése";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Kijelentkezés és a helyi adatok törlése 10 sikertelen próbálkozás után";
+"failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Segítségnyújtás";
+"helpCentreLabel"="Súgóközpont";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Kérhetsz támogatást vagy olvasd el a populáris témákat.";
 /* Title to rate the app */
