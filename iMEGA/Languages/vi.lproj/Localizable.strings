@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Hủy bỏ";
 /* Button title to accept something */
-"ok"="Đồng ý";
+"ok"="OK";
 /* */
 "upload"="Tải lên";
 /*  */
@@ -11,7 +11,7 @@
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
-"size"="Kích cỡ";
+"size"="Kích thước";
 /*  */
 "folder"="Thư mục";
 /* Error message shown when there's no camera available on the device */
@@ -25,7 +25,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Bạn không thể tải về một thư mục không chứa dữ liệu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Tài khoản của bạn vừa được kích hoạt. Vui lòng đăng nhập.";
+"accountAlreadyConfirmed"="Tài khoản của bạn đã được kích hoạt rồi. Xin đăng nhập.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường dẫn liên kết không hợp lệ";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -87,13 +87,13 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Bạn cần phải đồng ý với các điều khoản của dịch vụ để đăng ký tài khoản MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Email này đã được đăng ký.";
+"emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingConfirmation"="Đang chờ việc xác minh";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Đang chờ việc xác thực email.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Hãy kiểm tra hộp thư của bạn và xác nhận tài khoản của bạn.";
+"accountCreated"="Xin kiểm tra email và click vào liên kết để xác nhận tài khoản.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Xin nhập mật khẩu để xác thực tài khoản";
 /* Button title that triggers the confirm account action */
@@ -123,7 +123,7 @@
 /* Title for the folder link view */
 "folderLink"="Đường dẫn liên kết Thư mục";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Tải về";
+"downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
@@ -141,7 +141,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Không có Kết quả";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Làm sạch Thùng rác";
+"cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -367,7 +367,7 @@
 /* Title shown on the main bar when you are importing a link to your Cloud Drive */
 "importTitle"="Chuyển nhập vào";
 /* Button title that triggers the importing link action */
-"import"="Lấy nội dung";
+"import"="Nhập";
 /* Message shown when a file has been imported */
 "fileImported"="Đã nhập tệp tin!";
 /* Message shown when some files have been imported */
@@ -485,19 +485,19 @@
 /* Button that allows you to select a given folder */
 "select"="Chọn";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Cấp phép";
+"permissions"="Quyền sử dụng";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Chỉ được xem";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Đọc & Ghi";
+"readAndWrite"="Xem & Sửa";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Không giới hạn";
+"fullAccess"="Toàn quyền";
 /* Title of the Settings section */
 "settingsTitle"="Thiết đặt";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Thùng rác";
+"rubbishBinLabel"="Thùng Rác";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Nâng cao";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -515,9 +515,9 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
-"privacyPolicyLabel"="Chính sách riêng tư";
+"privacyPolicyLabel"="Chính sách Riêng tư";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Điều khoản dịch vụ";
+"termsOfServicesLabel"="Điều khoản Dịch vụ";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Tắt";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -541,17 +541,17 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Export Recovery Key";
+"exportMasterKey"="Xuất Mã Khóa Phục Hồi";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Cảnh báo! Thao tác này có rủi ro cao. Bạn có muốn tiếp tục không?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key exported";
+"masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key removed";
+"masterKeyRemoved"="Đã xóa Mã Phục Hồi";
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -619,7 +619,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Xác nhận mật khẩu";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Mật khẩu đã được thay đổi.";
+"passwordChanged"="Mật khẩu của bạn đã được đổi.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
 "oldAndNewPasswordMatch"="Mật khẩu mới và cũ không được giống nhau.";
 /* Section title where you can change the app's passcode */
@@ -631,7 +631,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong máy";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Trung tâm trợ giúp";
+"helpCentreLabel"="Trung tâm Hỗ trợ";
 /* Footer message that explain what you can do on the "Help centre" */
 "helpCentreFooter"="Nhận hỗ trợ trực tiếp hoặc tham khảo một số bài viết.";
 /* Title to rate the app */
@@ -677,7 +677,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Lịch sử thanh toán";
+"purchaseHistory"="Lịch sử mua hàng";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Mục Chia Sẻ Bạn Nhận Được";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */

@@ -492,13 +492,8 @@ static NSString *kisDirectory = @"kisDirectory";
         
         NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
         
-        struct tm *timeinfo;
-        char buffer[80];
         time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
-        timeinfo = localtime(&rawtime);
-        strftime(buffer, 80, "%d/%m/%y %H:%M", timeinfo);
-        
-        NSString *date = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
+        NSString *date = [Helper dateWithISO8601FormatOfRawTime:rawtime];
         
         unsigned long long size;        
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];

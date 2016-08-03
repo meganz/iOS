@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Zapusti";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Ste prepričani, da želite zapustiti to deljenje?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Ali ste prepričani, da želite zapustiti ta deljenja?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Mapa zapuščena!";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ali ste prepričani, da želite izbrisati te predmete iz datotek brez povezave?";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="Shranjeno med fotografije";

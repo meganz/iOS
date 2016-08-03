@@ -473,9 +473,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="떠나기";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="이 공유를 떠나시겠습니까?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="이 공유들에서 나가시겠습니까?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="폴더 떠남";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -749,4 +749,4 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="정말 이 항목들을 오프라인에서 삭제하시겠습니까?";
 /* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
+"savedInCameraRoll"="Photos에 저장됨";
