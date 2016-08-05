@@ -32,7 +32,6 @@
 }
 
 @property (nonatomic, strong) MEGANodeList *nodes;
-@property (nonatomic, strong) NSMutableArray *folderNodes;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -158,8 +157,6 @@
 }
 
 - (void)reloadUI {
-    self.folderNodes = [NSMutableArray new];
-    
     if ([self.parentNode.name isEqualToString:[[[MEGASdkManager sharedMEGASdk] rootNode] name]]) {
         [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
         self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
@@ -172,14 +169,6 @@
         NSString *importTitle = AMLocalizedString(@"importTitle", nil);
         importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
         [self.navigationItem setTitle:importTitle];
-    }
-    
-    for (NSInteger i = 0; i < self.nodes.size.integerValue; i++) {
-        MEGANode *node = [self.nodes nodeAtIndex:i];
-        
-        if (node.isFolder) {
-            [self.folderNodes addObject:node];
-        }
     }
     
     [self.tableView reloadData];
@@ -465,16 +454,34 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return self.folderNodes.count;
+    return self.nodes.size.integerValue;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NodeTableViewCell *cell = (NodeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     
-    MEGANode *node = [self.folderNodes objectAtIndex:indexPath.row];
+    MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
     
-    [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+    if (node.isFile) {
+        if ([node hasThumbnail]) {
+            cell.nodeHandle = [node handle];
+            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
+        } else {
+            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+        }
+        cell.userInteractionEnabled = NO;
+        cell.nameLabel.enabled = NO;
+        cell.infoLabel.enabled = NO;
+        cell.thumbnailImageView.alpha = 0.5;
+    } else {
+        cell.userInteractionEnabled = YES;
+        cell.nameLabel.enabled = YES;
+        cell.infoLabel.enabled = YES;
+        cell.thumbnailImageView.alpha = 1.0;
+        [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+    }
+    
     
     cell.nameLabel.text = [node name];
     
@@ -491,7 +498,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *newParent = [self.folderNodes objectAtIndex:indexPath.row];
+    MEGANode *newParent = [self.nodes nodeAtIndex:indexPath.row];
     
     BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
     [browserVC setParentNode:newParent];
@@ -630,6 +637,16 @@
                 MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.parentHandle];
                 [self importRelatedNodeToNewFolder:newFolderNode inParent:parentNode];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeGetAttrFile: {
+            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
+                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
+                }
             }
             break;
         }
