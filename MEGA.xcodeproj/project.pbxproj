@@ -183,6 +183,7 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
@@ -546,6 +547,9 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E80620A91CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
@@ -697,6 +701,7 @@
 				E8C289F01BF5F81300F7A034 /* Fonts */,
 				4180A0CB1B5D6034007E3DE2 /* MEGA.entitlements */,
 				1373618E1A6664C300B740E8 /* Info.plist */,
+				E803CB661D5336F100F81A36 /* InfoPlist.strings */,
 				1373618F1A6664C300B740E8 /* main.m */,
 				415227411A692F8D00EC7BB6 /* Localizable.strings */,
 				4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */,
@@ -1559,6 +1564,7 @@
 				411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */,
 				411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */,
 				4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
+				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				4115042E1CEB07C700BF38E3 /* ImageSelectedOff.png in Resources */,
 				4115043D1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png in Resources */,
 				411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */,
@@ -1803,6 +1809,17 @@
 				41ADAA121ADE8B8800641BB4 /* zh-Hant */,
 			);
 			name = SVWebViewController.strings;
+			sourceTree = "<group>";
+		};
+		E803CB661D5336F100F81A36 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E803CB651D5336F100F81A36 /* Base */,
+				E803CB681D53374A00F81A36 /* es */,
+				E803CB691D54AB6A00F81A36 /* es-ES */,
+			);
+			name = InfoPlist.strings;
+			path = Languages;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
