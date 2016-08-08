@@ -179,6 +179,10 @@ static CameraUploads *instance = nil;
         return;
     }
     
+    if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         PHFetchResult *assetsFetchResult = nil;
         
@@ -193,16 +197,15 @@ static CameraUploads *instance = nil;
         
         MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
         
-        for (PHAsset *asset in assetsFetchResult) {
+        [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
             if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            }
-        }
-        
+            }            
+        }];
     } else {
         __block NSInteger totalAssets = 0;
         

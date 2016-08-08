@@ -1172,8 +1172,28 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+                
+            case MEGAErrorTypeApiEBlocked: {
+                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                                    message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked")
+                                                                   delegate:self
+                                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [api logout];
+                }
+                
+                break;
+            }
+                
             default:
                 break;
+        }
+        
+        if ([request type] == MEGARequestTypeExport) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD showErrorWithStatus:error.name];
         }
         
         if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
@@ -1254,6 +1274,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             isFetchNodesDone = YES;
             
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
             
             [self setBadgeValueForIncomingContactRequests];
