@@ -1040,8 +1040,9 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        if ([request type] == MEGARequestTypeInviteContact) {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        if ([request type] == MEGARequestTypeInviteContact || [request type] == MEGARequestTypeShare) {
+            [SVProgressHUD showErrorWithStatus:error.name];
         }
         return;
     }
