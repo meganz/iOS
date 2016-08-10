@@ -1093,10 +1093,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [launchVC.activityIndicatorView stopAnimating];
                 [launchVC.activityIndicatorView setHidden:YES];
                 isFirstFetchNodesRequestUpdate = NO;
+                
+                [launchVC.logoImageView.layer addSublayer:launchVC.circularShapeLayer];
+                launchVC.circularShapeLayer.strokeStart = 0.0f;
             }
             
-            if (progress > 0 && progress < 0.99) {
-                [launchVC.progressView setProgress:progress];
+            if (progress > 0 && progress <= 1.0) {
+                launchVC.circularShapeLayer.strokeEnd = progress;
             }
         }
     }

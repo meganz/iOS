@@ -285,7 +285,6 @@
             [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
                 [window setRootViewController:launchVC];
             } completion:nil];
-            [launchVC.progressView setHidden:NO];
             [[UIApplication sharedApplication] setStatusBarHidden:YES];
             break;
         }
