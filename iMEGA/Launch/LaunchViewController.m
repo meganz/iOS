@@ -19,19 +19,9 @@
  * program.
  */
 
-#import <sys/utsname.h>
-
-#import "Helper.h"
-
 #import "LaunchViewController.h"
 
 @interface LaunchViewController ()
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewHeightLayoutConstraint;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewLeadingLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewTrailingMarginLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressViewBottomLayoutConstraint;
 
 @end
 
@@ -42,57 +32,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    NSString *modelName = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    NSString *versionNumber = @"";
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        versionNumber = [modelName substringFromIndex:5]; //"iPadX,X"
-        if ([versionNumber isEqualToString:@"1,1"]) {
-            [_progressViewHeightLayoutConstraint setConstant:2.0f];
-            
-            [_progressViewLeadingLayoutConstraint setConstant:72.0f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:72.0f];
-            [_progressViewBottomLayoutConstraint setConstant:111.0f];
-        } else {
-            [_progressViewHeightLayoutConstraint setConstant:4.0f];
-            
-            [_progressViewLeadingLayoutConstraint setConstant:145.0f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:145.0f];
-            [_progressViewBottomLayoutConstraint setConstant:221.0f];
-        }
-    } else {
-        [_progressViewHeightLayoutConstraint setConstant:4.0f];
-        
-        if ([[UIDevice currentDevice] iPhone4X]) {
-            [_progressViewLeadingLayoutConstraint setConstant:40.0f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:40.0f];
-            [_progressViewBottomLayoutConstraint setConstant:85.0f];
-        } else if ([[UIDevice currentDevice] iPhone5X]) {
-            [_progressViewLeadingLayoutConstraint setConstant:40.0f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:40.0f];
-            [_progressViewBottomLayoutConstraint setConstant:107.0f];
-        } else if ([[UIDevice currentDevice] iPhone6X]) {
-            [_progressViewLeadingLayoutConstraint setConstant:67.5f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:67.5f];
-            [_progressViewBottomLayoutConstraint setConstant:125.0f];
-        } else if ([[UIDevice currentDevice] iPhone6XPlus]) {
-            [_progressViewLeadingLayoutConstraint setConstant:52.0f];
-            [_progressViewTrailingMarginLayoutConstraint setConstant:52.0f];
-            [_progressViewBottomLayoutConstraint setConstant:138.0f];
-        }
-    }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
+    self.circularShapeLayer = [CAShapeLayer layer];
+    self.circularShapeLayer.bounds = self.logoImageView.bounds;
+    CGFloat radiusLogoImageView = self.logoImageView.bounds.size.width/2.0f;
+    self.circularShapeLayer.position = CGPointMake(radiusLogoImageView, radiusLogoImageView);
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(radiusLogoImageView, radiusLogoImageView) radius:(radiusLogoImageView + 4.0f) startAngle:-M_PI_2 endAngle:3*M_PI_2 clockwise:YES];
+    self.circularShapeLayer.path = [path CGPath];
+    self.circularShapeLayer.strokeColor = [[UIColor colorWithWhite:1.0 alpha:0.75] CGColor];
+    self.circularShapeLayer.fillColor = [[UIColor clearColor] CGColor];
+    self.circularShapeLayer.lineWidth = 2.0f;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
     
