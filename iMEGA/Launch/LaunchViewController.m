@@ -38,7 +38,7 @@
     self.circularShapeLayer.position = CGPointMake(radiusLogoImageView, radiusLogoImageView);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(radiusLogoImageView, radiusLogoImageView) radius:(radiusLogoImageView + 4.0f) startAngle:-M_PI_2 endAngle:3*M_PI_2 clockwise:YES];
     self.circularShapeLayer.path = [path CGPath];
-    self.circularShapeLayer.strokeColor = [[UIColor colorWithWhite:1.0 alpha:0.75] CGColor];
+    self.circularShapeLayer.strokeColor = [[UIColor colorWithWhite:1.0 alpha:0.70] CGColor];
     self.circularShapeLayer.fillColor = [[UIColor clearColor] CGColor];
     self.circularShapeLayer.lineWidth = 2.0f;
 }

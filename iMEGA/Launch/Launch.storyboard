@@ -99,6 +99,47 @@
             </objects>
             <point key="canvasLocation" x="-110" y="-197"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="3cQ-tN-h1l">
+            <objects>
+                <viewController storyboardIdentifier="PrivacyViewControllerID" id="CRT-0R-cG9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9fY-nQ-oIc"/>
+                        <viewControllerLayoutGuide type="bottom" id="5vS-En-s3D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bat-qs-IDA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenMEGALogo" translatesAutoresizingMaskIntoConstraints="NO" id="ngD-mU-eHw" userLabel="Logo Image">
+                                <rect key="frame" x="235" y="235" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="l5y-fQ-cng"/>
+                                    <constraint firstAttribute="width" constant="130" id="quD-5y-Wdk"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ngD-mU-eHw" firstAttribute="centerX" secondItem="bat-qs-IDA" secondAttribute="centerX" id="Dbp-NP-vSb"/>
+                            <constraint firstItem="ngD-mU-eHw" firstAttribute="leading" secondItem="bat-qs-IDA" secondAttribute="leadingMargin" constant="-40" id="T3R-hw-li8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ngD-mU-eHw" secondAttribute="trailing" constant="-40" id="wJn-nM-31z"/>
+                            <constraint firstItem="ngD-mU-eHw" firstAttribute="centerY" secondItem="bat-qs-IDA" secondAttribute="centerY" id="xxJ-Dd-JAz"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="wJn-nM-31z"/>
+                                <exclude reference="T3R-hw-li8"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="p4L-K4-IwV"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AG4-TT-5G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="547" y="-197"/>
+        </scene>
     </scenes>
     <resources>
         <image name="splashScreenMEGALogo" width="524" height="524"/>

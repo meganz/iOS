@@ -93,9 +93,7 @@ static NSString *deviceName;
 - (NSString *)deviceName {
     if (deviceName == nil) {
         NSString *deviceNameTemp = [[UIDevice devicesDictionary] objectForKey:[[UIDevice currentDevice] hardwareType]];
-        if (deviceNameTemp == nil) {
-            deviceName = [self unknownDevice];
-        }
+        deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
     }
     return deviceName;
 }
