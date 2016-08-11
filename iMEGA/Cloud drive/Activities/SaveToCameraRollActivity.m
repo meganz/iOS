@@ -2,9 +2,9 @@
 #import "SaveToCameraRollActivity.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "SVProgressHUD.h"
+#import "NSFileManager+MNZCategory.h"
 
-#import <Photos/Photos.h>
+#import "SVProgressHUD.h"
 
 @interface SaveToCameraRollActivity () <MEGATransferDelegate>
 
@@ -43,7 +43,10 @@
 
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:NSTemporaryDirectory() delegate:self];
+        NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+        NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.node.name];
+        NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:localPath appData:@"SaveInPhotosApp" delegate:self];
     }
 }
 
@@ -55,23 +58,6 @@
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
-        NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
-        
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
-            [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
-            
-        } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-            [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
-            if (nserror) {
-                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
-            }
-        }];
-    }
 }
 
 @end

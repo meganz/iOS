@@ -23,6 +23,7 @@
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
@@ -635,10 +636,13 @@ static BOOL copyToPasteboard;
                 [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
                 [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
             } else {
+                NSString *appData = nil;
                 if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
-                    absoluteFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:offlineNameString];
+                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    absoluteFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    appData = @"SaveInPhotosApp";
                 }
-                [api startDownloadNode:node localPath:absoluteFilePath];
+                [api startDownloadNode:node localPath:absoluteFilePath appData:appData];
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
@@ -1008,6 +1012,14 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:downloadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
 }
 
 + (void)deleteMasterKey {

@@ -1466,14 +1466,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        // Don't add to the database downloads to the tmp folder
-        if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // Don't add to the database files saved in others applications
+        if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
 
-            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"]) {
+            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path)) {
                 UISaveVideoAtPathToSavedPhotosAlbum(transfer.path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
             }
             
-            if (isImage([transfer fileName].pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
+            if (isImage([transfer fileName].pathExtension)) {
                 NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
                 
                 [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
