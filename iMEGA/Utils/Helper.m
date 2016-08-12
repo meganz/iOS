@@ -642,7 +642,7 @@ static BOOL copyToPasteboard;
                     absoluteFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     appData = @"SaveInPhotosApp";
                 }
-                [api startDownloadNode:node localPath:absoluteFilePath appData:appData];
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:absoluteFilePath appData:appData];
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
