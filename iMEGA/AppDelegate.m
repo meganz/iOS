@@ -310,11 +310,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
     } else {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
-        
-        [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
     }
     
     // Clean up temporary directory
@@ -722,23 +718,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self presentLinkViewController:browserNavigationController];
     }
     self.link = nil;
-}
-
-- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
-        } else {
-            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
-                NSError *error = nil;
-                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
-                }
-            }
-        }
-    }
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
@@ -1222,6 +1201,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
+            [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
             [timerAPI_EAGAIN invalidate];
             
             if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
