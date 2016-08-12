@@ -164,6 +164,18 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (isFetchNodesDone) {
+            [self setNavigationBarTitleLabel];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -171,11 +183,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
-        [self setNavigationBarTitleLabel];
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
-    }
+    [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     if ([[_nodeList size] unsignedIntegerValue] == 0) {
@@ -196,29 +204,14 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    NSString *title = [self.parentNode name];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0]
-                                         range:[title rangeOfString:title]];
-    
-    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:12.0]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    _navigationBarLabel = label;
-    [self.navigationItem setTitleView:label];
+    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationBarLabel = label;
+        [self.navigationItem setTitleView:self.navigationBarLabel];
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
+    }
 }
 
 - (void)showUnavailableLinkView {

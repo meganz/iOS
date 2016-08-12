@@ -126,6 +126,18 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
+            [self setNavigationBarTitleLabel];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -339,7 +351,7 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    NSString *accessTypeString = @"";
+    NSString *accessTypeString;
     switch (accessType) {
         case MEGAShareTypeAccessRead:
             accessTypeString = AMLocalizedString(@"readOnly", nil);
@@ -352,30 +364,20 @@
         case MEGAShareTypeAccessFull:
             accessTypeString = AMLocalizedString(@"fullAccess", nil);
             break;
+            
+        default:
+            accessTypeString = @"";
+            break;
     }
     
-    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", accessTypeString];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:12.0]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    NSString *title = [self.node name];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0]
-                                         range:[title rangeOfString:title]];
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-    navigationBarLabel = label;
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    [self.navigationItem setTitleView:label];
+    if ([self.node name] != nil) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:accessTypeString];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        navigationBarLabel = label;
+        [self.navigationItem setTitleView:navigationBarLabel];
+    } else {
+        [self.navigationItem setTitle:[NSString stringWithFormat:@"(%@)", accessTypeString]];
+    }
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {

@@ -129,6 +129,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UIEdgeInsets)capInsetsForEmptyStateButton;
 + (UIEdgeInsets)rectInsetsForEmptyStateButton;
 
+#pragma mark - Utils for UI
++ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+
 #pragma mark - Logout
 
 + (void)logout;
