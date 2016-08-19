@@ -1119,6 +1119,9 @@
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     
     if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
