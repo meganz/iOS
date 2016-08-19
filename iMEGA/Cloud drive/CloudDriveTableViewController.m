@@ -30,6 +30,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -1001,7 +1002,7 @@
             UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
         }
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -1010,12 +1011,14 @@
         [formatter setLocale:locale];
         
         NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
-        NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+        
+        NSString *uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+        NSString *imagePath = [uploadsDirectory stringByAppendingPathComponent:filename];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode appData:nil isSourceTemporary:YES];
     }
     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
     
@@ -1546,7 +1549,7 @@
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;
