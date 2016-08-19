@@ -72,6 +72,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    BOOL startCameraUploadLater;
     
     UIAlertView *overquotaAlertView;
     BOOL isOverquota;
@@ -309,23 +310,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
-    } else {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-    }
-    
-    // Clean up temporary directory
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path failed with error: %@", error);
-    }
-    
-    // Clean up Documents/Inbox directory
-    NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
-        error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
-        }
     }
 }
 
@@ -1005,6 +989,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (!nodeList) {
+        MEGATransferList *transferList = [api transfers];
+        if (transferList.size.integerValue == 0) {
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            }
+        } else {
+            BOOL allTransferAreDownloads = YES;
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.type == MEGATransferTypeUpload) {
+                    allTransferAreDownloads = NO;
+                    if (transfer.appData) {
+                        startCameraUploadLater = YES;
+                    } else {
+                        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                        }
+                    }
+                }
+            }
+            if (allTransferAreDownloads) {                
+                if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1202,6 +1219,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
         case MEGARequestTypeFetchNodes: {
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
+            startCameraUploadLater = NO;
             [timerAPI_EAGAIN invalidate];
             
             if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
@@ -1242,9 +1260,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             
             [[CameraUploads syncManager] setTabBarController:_mainTBC];
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
@@ -1425,11 +1440,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (node) {
             [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
         }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
-        }
     }
     
     if ([error type]) {
@@ -1518,6 +1528,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     } else if ([transfer type] == MEGATransferTypeUpload) {
+        if (startCameraUploadLater) {
+            startCameraUploadLater = NO;
+            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            }
+        }
         if (isImage([transfer fileName].pathExtension)) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
             [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];

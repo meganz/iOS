@@ -1020,6 +1020,12 @@ static BOOL copyToPasteboard;
         }
     }
     
+    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
 }
 
 + (void)deleteMasterKey {

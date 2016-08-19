@@ -392,7 +392,7 @@
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

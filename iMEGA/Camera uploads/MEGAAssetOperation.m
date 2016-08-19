@@ -23,6 +23,8 @@
 #import "MEGAAssetOperation.h"
 #import "Helper.h"
 #import "CameraUploads.h"
+
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
@@ -37,6 +39,7 @@
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, assign) BOOL automatically;
 @property (nonatomic, assign) NSInteger retries;
+@property (nonatomic, copy) NSString *uploadsDirectory; // Local directory
 
 @end
 
@@ -110,6 +113,8 @@
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [_dateFormatter setLocale:locale];
     
+    _uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    
     [self willChangeValueForKey:@"isExecuting"];
     [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
     executing = YES;
@@ -129,10 +134,6 @@
 #pragma mark - Private methods
 
 - (void)checkiOS8AndiOS9PHAsset {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         if (_retries < 10) {
@@ -208,7 +209,7 @@
     NSDate *creationDate = [_alasset valueForProperty:ALAssetPropertyDate];
     NSString *extension = [[[[[_alasset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
     NSString *name = [[_dateFormatter stringFromDate:creationDate] stringByAppendingPathExtension:extension];
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+    NSString *filePath = [_uploadsDirectory stringByAppendingPathComponent:name];
     
     ALAssetRepresentation *assetRepresentation = [_alasset defaultRepresentation];
     NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForAssetRepresentation:assetRepresentation modificationTime:creationDate];
@@ -287,7 +288,7 @@
         }
     }
     NSString *name = [[_dateFormatter stringFromDate:_phasset.creationDate] stringByAppendingPathExtension:extension];
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+    NSString *filePath = [_uploadsDirectory stringByAppendingPathComponent:name];
     return filePath;
 }
 
@@ -428,16 +429,24 @@
         
         NSString *newName = [self newNameForName:name];
         
+        NSString *appData = nil;
+        if (_automatically) {
+            appData = _phasset ? _phasset.localIdentifier : [[[[[_alasset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"?id=" andString:@"&ext="] lowercaseString];
+            if (!appData) {
+                appData = @"CameraUploads";
+            }
+        }
+        
         if (![name isEqualToString:newName]) {
-            NSString *newFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:newName];
+            NSString *newFilePath = [_uploadsDirectory stringByAppendingPathComponent:newName];
             
             NSError *error = nil;
             if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath parent:_cameraUploadNode delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath parent:_cameraUploadNode delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         }
     } else {
         if (!imageData && !assetRepresentation) {
@@ -513,7 +522,7 @@
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEIncomplete) {
+        if ([error type] == MEGAErrorTypeApiEIncomplete && !self.isCancelled) {
             if (_automatically) {
                 [self start];
             } else {
@@ -527,9 +536,6 @@
     
     if ([transfer type] == MEGATransferTypeUpload) {
         [self completeOperation];
-        if (_automatically) {
-            [[CameraUploads syncManager] setBadgeValue];
-        }
     }
     
     if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && _automatically) {
