@@ -447,7 +447,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
         }
             
@@ -470,7 +470,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
             }
             break;
         }
@@ -1442,6 +1442,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
+    if ([transfer type] == MEGATransferTypeUpload && isImage([transfer fileName].pathExtension)) {
+        NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+        if ([error type] == MEGAErrorTypeApiOk) {
+            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
+            
+            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+        }
+        else {
+            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] error:nil];
+            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] error:nil];
+        }
+    }
+    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
@@ -1459,19 +1474,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
         // Don't add to the database files saved in others applications
         if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
 
-            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path)) {
-                UISaveVideoAtPathToSavedPhotosAlbum(transfer.path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
+                UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
             }
             
             if (isImage([transfer fileName].pathExtension)) {
-                NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
+                NSURL *imageURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
                 
                 [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                     PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
                     [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
                     
                 } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-                    [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
+                    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
                     if (nserror) {
                         MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
                     }
@@ -1483,7 +1498,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
             MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
-            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
+            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
+            if (replaceRange.location != NSNotFound) {
+                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
+                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+            }
         }
         
         if (isImage([transfer fileName].pathExtension)) {
@@ -1491,19 +1510,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
             if (!thumbnailExists) {
-                [api createThumbnail:[transfer path] destinatioPath:thumbnailFilePath];
+                [api createThumbnail:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:thumbnailFilePath];
             }
             
             NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
             BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
             
             if (!previewExists) {
-                [api createPreview:[transfer path] destinatioPath:previewFilePath];
+                [api createPreview:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:previewFilePath];
             }
         }
         
         if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
-            NSURL *videoURL = [NSURL fileURLWithPath:transfer.path];
+            NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
             AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
             generator.appliesPreferredTrackTransform = YES;
@@ -1533,11 +1552,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
-        }
-        if (isImage([transfer fileName].pathExtension)) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
-            [api createPreview:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
         }
     }
 }

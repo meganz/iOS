@@ -444,9 +444,17 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
+            if (isImage(name.pathExtension)) {
+                [[MEGASdkManager sharedMEGASdk] createThumbnail:newFilePath destinatioPath:[newFilePath stringByAppendingString:@"_thumbnail"]];
+                [[MEGASdkManager sharedMEGASdk] createPreview:newFilePath destinatioPath:[newFilePath stringByAppendingString:@"_preview"]];
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
+            if (isImage(name.pathExtension)) {
+                [[MEGASdkManager sharedMEGASdk] createThumbnail:filePath destinatioPath:[filePath stringByAppendingString:@"_thumbnail"]];
+                [[MEGASdkManager sharedMEGASdk] createPreview:filePath destinatioPath:[filePath stringByAppendingString:@"_preview"]];
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         }
     } else {
         if (!imageData && !assetRepresentation) {

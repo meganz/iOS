@@ -88,6 +88,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
++ (NSString *)relativePathForOffline;
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;
 

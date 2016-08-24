@@ -565,7 +565,7 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
         
         for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
         
         [self setEditing:NO animated:YES];

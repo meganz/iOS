@@ -461,10 +461,10 @@
             
             if ([_tableView isEditing]) {
                 for (MEGANode *node in _selectedNodesArray) {
-                    [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES];
             }
         }];
     } else {
