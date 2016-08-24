@@ -1457,6 +1457,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
+    if ([transfer type] == MEGATransferTypeUpload && startCameraUploadLater) {
+        startCameraUploadLater = NO;
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        }
+    }
+    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEOverQuota: {
@@ -1545,13 +1552,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [api setPreviewNode:node sourceFilePath:previewFilePath];
             
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
-        }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        if (startCameraUploadLater) {
-            startCameraUploadLater = NO;
-            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
         }
     }
 }
