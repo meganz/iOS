@@ -181,7 +181,12 @@
                  NSString *filePath = [self filePathWithInfo:info];
                  NSError *error = nil;
                  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-                 if (![[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error] && !fileExists) {
+                 if (fileExists) {                                          
+                     if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
+                         MEGALogError(@"Remove item at path failed with error: %@", error);
+                     }
+                 }
+                 if (![[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
                      if (error) {
                          MEGALogError(@"Copy item at path failed with error: %@", error);
                          [self disableCameraUploadWithError:error];
