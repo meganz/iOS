@@ -500,6 +500,17 @@ static BOOL copyToPasteboard;
     return pathString;
 }
 
++ (NSString *)relativePathForOffline {
+    static NSString *pathString = nil;
+    
+    if (pathString == nil) {
+        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = [pathString lastPathComponent];
+    }
+    
+    return pathString;
+}
+
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath {
     NSRange rangeOfSubstring = [totalPath rangeOfString:[Helper pathForOffline]];
     NSString *relativePath = [totalPath substringFromIndex:rangeOfSubstring.length];
@@ -632,9 +643,15 @@ static BOOL copyToPasteboard;
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
             
             if (offlineNodeExist) {
-                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
+                NSRange replaceRange = [absoluteFilePath rangeOfString:@"Documents/"];
+                if (replaceRange.location != NSNotFound) {
+                    NSString *result = [absoluteFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                    if (![itemPath isEqualToString:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath]]) {
+                        [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath] error:nil];
+                        [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+                    }
+                }
             } else {
                 NSString *appData = nil;
                 if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
@@ -646,6 +663,7 @@ static BOOL copyToPasteboard;
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
+        absoluteFilePath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNameString];
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
@@ -654,6 +672,7 @@ static BOOL copyToPasteboard;
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];
+        absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
             [self downloadNode:child folderPath:absoluteFilePath isFolderLink:isFolderLink];

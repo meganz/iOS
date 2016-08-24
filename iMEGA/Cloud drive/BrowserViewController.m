@@ -21,6 +21,8 @@
 
 #import "MEGAReachabilityManager.h"
 
+#import "NSFileManager+MNZCategory.h"
+
 #import "BrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "Helper.h"
@@ -391,8 +393,18 @@
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSError *error = nil;
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:self.localpath.lastPathComponent];
+        if (![[NSFileManager defaultManager] moveItemAtPath:self.localpath toPath:localFilePath error:&error]) {
+            MEGALogError(@"Move item at path failed with error: %@", error);
+        }
+        
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.localpath parent:self.parentNode appData:nil isSourceTemporary:YES];
+        if (isImage(self.localpath.pathExtension)) {
+            [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_thumbnail"]];
+            [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_preview"]];
+        }
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

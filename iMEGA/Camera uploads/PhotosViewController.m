@@ -349,7 +349,7 @@
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     [self setEditing:NO animated:YES];
 }
