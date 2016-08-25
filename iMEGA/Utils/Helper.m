@@ -624,7 +624,7 @@ static BOOL copyToPasteboard;
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
-    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self pathForOffline]]) {
+    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
         return;
     }
@@ -639,7 +639,7 @@ static BOOL copyToPasteboard;
     NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {            
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath]]) {
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
             
             if (offlineNodeExist) {
@@ -656,6 +656,7 @@ static BOOL copyToPasteboard;
                 NSString *appData = nil;
                 if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     absoluteFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     appData = @"SaveInPhotosApp";
                 }
@@ -663,7 +664,7 @@ static BOOL copyToPasteboard;
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
-        absoluteFilePath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNameString];
+        absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath];
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
