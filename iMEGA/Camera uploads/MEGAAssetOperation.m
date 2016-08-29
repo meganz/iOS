@@ -535,7 +535,7 @@
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
-        if ([error type] == MEGAErrorTypeApiEIncomplete && !self.isCancelled) {
+        if ([error type] == MEGAErrorTypeApiEIncomplete) {
             if (_automatically) {
                 [self start];
             } else {
