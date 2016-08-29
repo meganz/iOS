@@ -1006,10 +1006,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     allTransferAreDownloads = NO;
                     if (transfer.appData) {
                         startCameraUploadLater = YES;
-                    } else {
-                        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                        }
+                        break;
                     }
                 }
             }
