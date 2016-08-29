@@ -636,35 +636,33 @@ static BOOL copyToPasteboard;
     }
     
     NSString *offlineNameString = [api escapeFsIncompatible:node.name];
-    NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
+    NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath]]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
             
             if (offlineNodeExist) {
-                NSRange replaceRange = [absoluteFilePath rangeOfString:@"Documents/"];
+                NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
                 if (replaceRange.location != NSNotFound) {
-                    NSString *result = [absoluteFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+                    NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
                     NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    if (![itemPath isEqualToString:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath]]) {
-                        [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath] error:nil];
-                        [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
-                    }
+                    [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                    [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
                 }
             } else {
                 NSString *appData = nil;
                 if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-                    absoluteFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     appData = @"SaveInPhotosApp";
                 }
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:absoluteFilePath appData:appData];
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
-        absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:absoluteFilePath];
+        NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath];
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
@@ -673,10 +671,9 @@ static BOOL copyToPasteboard;
             }
         }
         MEGANodeList *nList = [api childrenForParent:node];
-        absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:absoluteFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
         }
     }
 }
