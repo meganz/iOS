@@ -93,7 +93,7 @@ static CameraUploads *instance = nil;
     
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
     
-    [self setBadgeValue];
+    [self setBadgeValue:nil];
     
     if (_isCameraUploadsEnabled) {
         if (_isUseCellularConnectionEnabled) {
@@ -206,6 +206,8 @@ static CameraUploads *instance = nil;
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }            
         }];
+        
+        [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
     } else {
         __block NSInteger totalAssets = 0;
         
@@ -255,7 +257,7 @@ static CameraUploads *instance = nil;
 
 #pragma mark - Utils
 
-- (void)setBadgeValue {
+- (void)setBadgeValue:(NSString *)value {
     NSInteger cameraUploadsTabPosition;
     for (cameraUploadsTabPosition = 0 ; cameraUploadsTabPosition < self.tabBarController.viewControllers.count ; cameraUploadsTabPosition++) {
         if ([[[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem] tag] == 1) {
@@ -263,16 +265,15 @@ static CameraUploads *instance = nil;
         }
     }
     
-    NSString *badgeValue = nil;
-    if ([self.assetsOperationQueue operationCount] > 0) {
-        badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[self.assetsOperationQueue operationCount]];
+    if (![value boolValue]) {
+        value = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if ((cameraUploadsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
-            [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
+            [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:value];
         }
-        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = badgeValue;
+        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = value;
     });
 }
 

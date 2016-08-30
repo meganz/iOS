@@ -44,6 +44,6 @@
 
 + (CameraUploads *)syncManager;
 - (void)resetOperationQueue;
-- (void)setBadgeValue;
+- (void)setBadgeValue:(NSString *)value;
 
 @end

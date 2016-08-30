@@ -250,7 +250,7 @@
     finished = YES;
     
     if (_automatically) {
-        [[CameraUploads syncManager] setBadgeValue];
+        [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]]];
         if (_phasset) {
             if (_phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadPhotoDate];
@@ -436,9 +436,9 @@
         
         NSString *appData = nil;
         if (_automatically) {
-            appData = _phasset ? _phasset.localIdentifier : [[[[[_alasset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"?id=" andString:@"&ext="] lowercaseString];
+            appData = [NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
             if (!appData) {
-                appData = @"CameraUploads";
+                appData = @"CU";
             }
         }
         
@@ -486,7 +486,7 @@
                 MEGALogDebug(@"The asset exists in MEGA in the correct folder");
                 [self completeOperation];
                 if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount]) {
-                    [[CameraUploads syncManager] setBadgeValue];
+                    [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]]];
                 }
                 if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && _automatically) {
                     [[CameraUploads syncManager] resetOperationQueue];
@@ -520,12 +520,6 @@
 }
 
 #pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer type] == MEGATransferTypeUpload && _automatically) {
-        [[CameraUploads syncManager] setBadgeValue];
-    }
-}
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if ([self isCancelled]) {

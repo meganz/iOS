@@ -1037,6 +1037,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     allTransferAreDownloads = NO;
                     if (transfer.appData) {
                         startCameraUploadLater = YES;
+                        [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                         break;
                     }
                 }
