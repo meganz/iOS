@@ -541,7 +541,7 @@
             } else {
                 [self completeOperation];
             }
-        } else if ([error type] != MEGAErrorTypeApiEExist && _automatically) {
+        } else if (_automatically) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;

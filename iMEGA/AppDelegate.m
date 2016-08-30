@@ -33,6 +33,7 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 
 #import "AppDelegate.h"
 #import "BrowserViewController.h"
@@ -310,6 +311,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
+    }
+    
+    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] == 0) {
+        [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
+        
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error)
+        }
+        
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error)
+        }
     }
 }
 
@@ -725,6 +739,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
     }
     [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
+}
+
+- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
+        } else {
+            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                }
+            }
+        }
+    }
 }
 
 - (void)startTimerAPI_EAGAIN {
