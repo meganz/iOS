@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -48,7 +48,7 @@
                                 <rect key="frame" x="0.0" y="66" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bGI-9o-2Bo" id="CCP-jb-wsa">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1x-fl-Ov3" userLabel="Up Image View">
@@ -178,7 +178,7 @@
                                 <rect key="frame" x="0.0" y="110" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U5P-II-4Q1" id="DI9-Ll-OQc">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2nY-7c-rRy" userLabel="Middle Image View">
@@ -447,17 +447,38 @@
                                     <constraint firstAttribute="bottom" secondItem="8Xy-WI-wWd" secondAttribute="bottom" constant="11" id="1N4-Au-aPQ"/>
                                     <constraint firstAttribute="height" constant="180" id="3KA-pz-SCn"/>
                                     <constraint firstItem="r08-az-XN8" firstAttribute="top" secondItem="2zt-gN-F0L" secondAttribute="bottom" constant="5" id="7EG-e2-DRJ"/>
+                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="centerY" secondItem="YNO-Cb-1Vd" secondAttribute="centerY" id="7XI-Qv-AcR">
+                                        <variation key="heightClass=compact" constant="-22"/>
+                                    </constraint>
                                     <constraint firstItem="r08-az-XN8" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="9dF-j9-1R5"/>
                                     <constraint firstItem="AaT-lc-NKa" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="FzU-Uk-LYt"/>
                                     <constraint firstItem="8Xy-WI-wWd" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="leading" constant="30" id="RIK-Jl-z70"/>
-                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="ULH-Zd-yIl"/>
+                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="ULH-Zd-yIl">
+                                        <variation key="heightClass=compact" constant="66"/>
+                                    </constraint>
                                     <constraint firstItem="8Xy-WI-wWd" firstAttribute="top" secondItem="AaT-lc-NKa" secondAttribute="bottom" constant="4" id="WEV-CW-ZJW"/>
                                     <constraint firstItem="AaT-lc-NKa" firstAttribute="top" secondItem="r08-az-XN8" secondAttribute="bottom" constant="4" id="XUN-pN-rKZ"/>
                                     <constraint firstItem="r08-az-XN8" firstAttribute="centerX" secondItem="2zt-gN-F0L" secondAttribute="centerX" id="riC-ZC-9Hc"/>
                                     <constraint firstAttribute="trailing" secondItem="8Xy-WI-wWd" secondAttribute="trailing" constant="30" id="tr6-5P-beI"/>
+                                    <constraint firstItem="2zt-gN-F0L" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="top" constant="22" id="uAs-gd-uF5"/>
                                     <constraint firstAttribute="trailing" secondItem="r08-az-XN8" secondAttribute="trailing" constant="30" id="wPx-Gm-Yiv"/>
                                     <constraint firstAttribute="trailing" secondItem="AaT-lc-NKa" secondAttribute="trailing" constant="30" id="zIq-9j-EuL"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7XI-Qv-AcR"/>
+                                        <exclude reference="uAs-gd-uF5"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="3KA-pz-SCn"/>
+                                        <exclude reference="1N4-Au-aPQ"/>
+                                        <include reference="7XI-Qv-AcR"/>
+                                        <exclude reference="ULH-Zd-yIl"/>
+                                        <exclude reference="uAs-gd-uF5"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="190"/>
                                 </variation>
@@ -641,12 +662,41 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Thh-CY-kSq" secondAttribute="trailing" id="2aW-GO-898"/>
                             <constraint firstItem="YNO-Cb-1Vd" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="LaS-nr-Rr1"/>
+                            <constraint firstItem="YNO-Cb-1Vd" firstAttribute="width" secondItem="Thh-CY-kSq" secondAttribute="width" id="Lg1-Qh-lKw"/>
                             <constraint firstItem="rue-95-cLa" firstAttribute="top" secondItem="Thh-CY-kSq" secondAttribute="bottom" id="ROf-c8-c22"/>
                             <constraint firstItem="Thh-CY-kSq" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="bottom" id="TcT-eF-BBt"/>
                             <constraint firstAttribute="trailing" secondItem="YNO-Cb-1Vd" secondAttribute="trailing" id="XRx-lg-7z8"/>
+                            <constraint firstItem="rue-95-cLa" firstAttribute="top" secondItem="YNO-Cb-1Vd" secondAttribute="bottom" constant="112" id="apk-2R-0eR">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="Thh-CY-kSq" firstAttribute="top" secondItem="hrr-0G-qoa" secondAttribute="bottom" constant="180" id="bfW-Ac-f3P">
+                                <variation key="heightClass=compact" constant="22"/>
+                            </constraint>
                             <constraint firstItem="YNO-Cb-1Vd" firstAttribute="top" secondItem="hrr-0G-qoa" secondAttribute="bottom" id="jYL-Dy-7X5"/>
+                            <constraint firstItem="Thh-CY-kSq" firstAttribute="leading" secondItem="YNO-Cb-1Vd" secondAttribute="trailing" constant="-600" id="kbO-VL-gCe">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="Thh-CY-kSq" firstAttribute="leading" secondItem="NEO-Fs-8vu" secondAttribute="leading" id="yD1-7c-wfP"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Lg1-Qh-lKw"/>
+                                <exclude reference="bfW-Ac-f3P"/>
+                                <exclude reference="kbO-VL-gCe"/>
+                                <exclude reference="apk-2R-0eR"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="Lg1-Qh-lKw"/>
+                                <exclude reference="XRx-lg-7z8"/>
+                                <exclude reference="TcT-eF-BBt"/>
+                                <include reference="bfW-Ac-f3P"/>
+                                <include reference="kbO-VL-gCe"/>
+                                <exclude reference="yD1-7c-wfP"/>
+                                <include reference="apk-2R-0eR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="epU-tf-jJu">

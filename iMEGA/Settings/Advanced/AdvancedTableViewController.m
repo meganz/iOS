@@ -109,7 +109,7 @@
     
 }
 
-#pragma mark - Private Methods
+#pragma mark - Private
 
 - (void)deleteFolderContentsInPath:(NSString *)folderPath {
     NSFileManager *fileManager = [NSFileManager defaultManager];

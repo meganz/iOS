@@ -103,55 +103,33 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([self.node name] == nil) {
-        [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
-    } else {
-        [self setNavigationBarTitleLabel];
-    }
+    [self setNavigationBarTitleLabel];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self setNavigationBarTitleLabel];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
 
 - (void)setNavigationBarTitleLabel {
-    if (_navigationBarLabel == nil && ([self.node name] != nil)) {
-        NSString *title = [self.node name];
-        NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-        [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:kFont size:18.0]
-                                             range:[title rangeOfString:title]];
-        NSString *subtitle;
-        if (self.fileLinkMode == FileLinkModeDefault) {
-            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
-        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
-        }
-        
-        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-        [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                value:[UIColor mnz_redD90007]
-                                                range:[subtitle rangeOfString:subtitle]];
-        [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                                value:[UIFont fontWithName:kFont size:12.0]
-                                                range:[subtitle rangeOfString:subtitle]];
-        
-        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-        [label setNumberOfLines:2];
-        [label setTextAlignment:NSTextAlignmentCenter];
-        [label setAttributedText:titleMutableAttributedString];
-        _navigationBarLabel = label;
-        [self.navigationItem setTitleView:label];
+    if ([self.node name] != nil) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:((self.fileLinkMode == FileLinkModeDefault) ? AMLocalizedString(@"fileLink", nil) : AMLocalizedString(@"folderLink", nil))];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationBarLabel = label;
+        [self.navigationItem setTitleView:self.navigationBarLabel];
     } else {
-        [self.navigationItem setTitleView:_navigationBarLabel];
+        [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
     }
 }
 
@@ -175,7 +153,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X && ![text isEqualToString:@""]) {
+    if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     
