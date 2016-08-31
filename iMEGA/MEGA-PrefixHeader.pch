@@ -4,4 +4,5 @@
     #import "MEGALogMacros.h"
 
     #import "UIColor+MNZCategory.h"
+    #import "UIDevice+MNZCategory.h"
 #endif

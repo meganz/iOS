@@ -126,7 +126,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)checkiOS8AndiOS9PHAsset {
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {

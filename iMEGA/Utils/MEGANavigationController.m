@@ -19,6 +19,8 @@
  * program.
  */
 
+#import "Helper.h"
+
 #import "MEGANavigationController.h"
 
 @implementation MEGANavigationController
@@ -34,17 +36,23 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
     if([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.topViewController supportedInterfaceOrientations];
     }
-    return UIInterfaceOrientationMaskPortrait;
+    
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-        return [self.topViewController preferredInterfaceOrientationForPresentation];
-    }
-    return UIInterfaceOrientationPortrait;
-}
+//TODO: LANDSCAPE: Delete it or not?
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+//    if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+//        return [self.topViewController preferredInterfaceOrientationForPresentation];
+//    }
+//    return UIInterfaceOrientationPortrait;
+//}
 
 @end
