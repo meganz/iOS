@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Haluatko varmasti poistaa kohteen offline-tilasta?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Haluatko varmasti poistaa kohteet offline-tilasta?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Tallennettu valokuviin";

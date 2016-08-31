@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Tem certeza que deseja excluir este item de Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Tem certeza de que deseja excluir esses itens de Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Guardada em Photos";

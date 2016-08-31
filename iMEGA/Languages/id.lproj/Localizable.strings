@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

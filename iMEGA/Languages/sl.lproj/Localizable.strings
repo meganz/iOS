@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Ali ste prepričani, da želite izbrisati ta predmet iz datotek brez povezave?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ali ste prepričani, da želite izbrisati te predmete iz datotek brez povezave?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Shranjeno med fotografije";

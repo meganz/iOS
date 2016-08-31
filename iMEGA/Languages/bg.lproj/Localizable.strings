@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Сигурни ли сте, че искате да изтриете този елемент от Офлайн?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Сигурни ли сте, че искате да изтриете тези елементи от Офлайн?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Съхранена в Снимки";

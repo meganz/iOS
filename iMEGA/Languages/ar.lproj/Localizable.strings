@@ -748,5 +748,3 @@
 "removeItemFromOffline"="هل أنت متأكد من حذف الملفات من دون اتصال؟";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="هل أنت متأكد من حذف العناصر من دون اتصال؟";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="تم حفظه في الصور";
