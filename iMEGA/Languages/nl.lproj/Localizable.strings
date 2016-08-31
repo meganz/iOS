@@ -143,13 +143,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Leeg Prullenbak";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="No files Saved for Offline";
+"offlineEmptyState_title"="Geen bestanden opgeslagen voor offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Geen Contacten";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
+"noIncomingSharedItemsEmptyState_text"="Geen inkomende Gedeelde mappen";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
+"noOutgoingSharedItemsEmptyState_text"="Geen uitgaande Gedeelde mappen";
 /* Title of My Contacts section */
 "myContacts"="Contacten";
 /* Title of Contacts requests section */
@@ -167,9 +167,9 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Verzoek verwijderd";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="No pending requests";
+"noRequestPending"="Geen verzoeken in behandeling";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Paused Transfers";
+"transfersEmptyState_titlePaused"="Onderbroken transfers";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -541,19 +541,19 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig wachtwoord";
 /* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Export Recovery Key";
+"exportMasterKey"="Exporteer herstel sleutel";
 /* Message shown when you try to export the Recovery Key to alert the user.*/
 "exportMasterKey_alertMessage"="Beveiligingswaarschuwing! Dit is een handeling met een hoge risicofactor. Wil je doorgaan?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="Het exporteren van de coderingssleutel en het bewaren op een veilige plaats stelt u in staat uw account zonder gegevensverlies te herstellen in het geval van een verloren wachtwoord.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recovery Key exported";
+"masterKeyExported"="Herstel sleutel geëxporteerd";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
+"masterKeyExported_alertMessage"="De coderingssleutel is geëxporteerd naar het Offline gedeelte als RecoveryKey.txt. Opmerking: het zal worden verwijderd als u uitlogt, bewaar het alstublieft op een veilige plaats.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key removed";
+"masterKeyRemoved"="Herstel sleutel verwijderd";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
+"masterKeyRemoved_alertMessage"="RecoveryKey.txt werd verwijderd uit de map Documenten.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Op uw apparaat";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -573,7 +573,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Bewaar video's in galerij";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="Bewaar iOS compatible afbeeldingen en video's in de galerij van uw apparaat (Let op: afbeeldingen en video's worden niet in Offline opgeslagen). ";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %s in gebruik";
 /* Title for the action that allows to remove a file or folder */
@@ -629,7 +629,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Log uit en verwijder alle lokale data na 10 foute passcode pogingen";
+"failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help Center";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Weet u zeker dat u dit item wilt verwijderen uit Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Weet u zeker dat u deze items wilt verwijderen van Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

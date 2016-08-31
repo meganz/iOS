@@ -440,8 +440,11 @@ static NSString *kisDirectory = @"kisDirectory";
         for (NSString *file in directoryContents) {
             BOOL isDirectory;
             NSString *path = [pathForItem stringByAppendingPathComponent:file];
-            [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
-            isDirectory ? folders++ : files++;
+            if (![path.pathExtension.lowercaseString isEqualToString:@"mega"]) {
+                [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
+                isDirectory ? folders++ : files++;
+            }
+
         }
         
         [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];

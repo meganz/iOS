@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Sigur doreşti să ştergi acest element din offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur doreşti să ştergi aceste elemente din offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Salvată în Fotografii";

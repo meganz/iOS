@@ -317,9 +317,9 @@
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
                 
                 if (self.fileLinkMode == FileLinkModeDefault) {
-                    [Helper downloadNode:_node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                    [Helper downloadNode:_node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
                 } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper pathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper relativePathForOffline] isFolderLink:YES];
                 }
             }];
         } else {

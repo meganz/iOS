@@ -748,5 +748,3 @@
 "removeItemFromOffline"="האם אתה בטוח שברצונך למחוק את הפריט הזה מגישה לא מקוונת?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="שמור ב-\"תמונות\"";

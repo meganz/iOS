@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Är du säker på att du vill ta bort objektet från offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Är du säker på att du vill ta bort dessa objekt från offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Sparad i bilder";
