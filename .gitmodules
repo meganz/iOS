@@ -37,3 +37,6 @@
 [submodule "iMEGA/Vendor/PureLayout"]
 	path = iMEGA/Vendor/PureLayout
 	url = https://github.com/smileyborg/PureLayout
+[submodule "iMEGA/Vendor/UIBarButtonItem-Badge"]
+	path = iMEGA/Vendor/UIBarButtonItem-Badge
+	url = https://github.com/meganz/UIBarButtonItem-Badge.git
