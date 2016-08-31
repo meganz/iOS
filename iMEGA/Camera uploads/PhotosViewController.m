@@ -92,7 +92,7 @@
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -100,10 +100,10 @@
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
-    if (iPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         itemsPerRow = 7;
     } else {
-        if (iPhone4X || iPhone5X) {
+        if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
             itemsPerRow = 3;
         } else {
             itemsPerRow = 4;
@@ -146,14 +146,20 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.photosCollectionView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)reloadUI {
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -648,15 +654,8 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -669,13 +668,16 @@
     return [UIColor whiteColor];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+}
+
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight;
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled] || iPhone4X) {
-        spaceHeight = 40.0f;
-    } else {
-        spaceHeight = 60.0f;
+    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
+    if (![[CameraUploads syncManager] isCameraUploadsEnabled] || ![[UIDevice currentDevice] iPhone4X]) {
+        spaceHeight += 20.0f;
     }
+    
     return spaceHeight;
 }
 

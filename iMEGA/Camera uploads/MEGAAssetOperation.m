@@ -131,7 +131,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)checkiOS8AndiOS9PHAsset {
     if (_phasset.mediaType == PHAssetMediaTypeImage) {

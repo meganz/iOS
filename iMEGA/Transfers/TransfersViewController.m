@@ -94,7 +94,7 @@
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [self.negativeSpaceBarButtonItem setWidth:-5.0];
     } else {
         [self.negativeSpaceBarButtonItem setWidth:-1.0];
@@ -131,11 +131,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -399,7 +405,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)transfersList {
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
@@ -744,7 +750,7 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGARequestDelegate
