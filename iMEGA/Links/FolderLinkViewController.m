@@ -117,7 +117,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -161,11 +161,21 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (isFetchNodesDone) {
+            [self setNavigationBarTitleLabel];
+        }
+        
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
@@ -175,11 +185,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
-        [self setNavigationBarTitleLabel];
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
-    }
+    [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     if ([[_nodeList size] unsignedIntegerValue] == 0) {
@@ -200,29 +206,14 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    NSString *title = [self.parentNode name];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0]
-                                         range:[title rangeOfString:title]];
-    
-    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:12.0]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    _navigationBarLabel = label;
-    [self.navigationItem setTitleView:label];
+    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationBarLabel = label;
+        [self.navigationItem setTitleView:self.navigationBarLabel];
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
+    }
 }
 
 - (void)showUnavailableLinkView {
@@ -237,7 +228,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X) {
+    if ([[UIDevice currentDevice] iPhone4X]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     
@@ -976,15 +967,11 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self.searchDisplayController isActive]) {
-        return -66.0;
-    }
-    
-    return 0.0f;
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAGlobalDelegate

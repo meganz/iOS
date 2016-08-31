@@ -69,8 +69,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
-    UIVisualEffectView *visualEffectView;
-    
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     BOOL startCameraUploadLater;
@@ -82,6 +80,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isFirstAPI_EAGAIN;
     NSTimer *timerAPI_EAGAIN;
 }
+
+@property (nonatomic, strong) UIView *privacyView;
 
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
@@ -276,15 +276,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
     
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        if (visualEffectView == nil ) {
-            UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-            visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-            [visualEffectView.contentView setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:0.75]];
-            visualEffectView.frame = self.window.bounds;
-        }
-        [self.window addSubview:visualEffectView];
+    if (self.privacyView == nil) {
+        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        self.privacyView = privacyVC.view;
     }
+    [self.window addSubview:self.privacyView];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -292,9 +288,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        [visualEffectView removeFromSuperview];
-    }
+    [self.privacyView removeFromSuperview];
+    self.privacyView = nil;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -1118,10 +1113,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [launchVC.activityIndicatorView stopAnimating];
                 [launchVC.activityIndicatorView setHidden:YES];
                 isFirstFetchNodesRequestUpdate = NO;
+                
+                [launchVC.logoImageView.layer addSublayer:launchVC.circularShapeLayer];
+                launchVC.circularShapeLayer.strokeStart = 0.0f;
             }
             
-            if (progress > 0 && progress < 0.99) {
-                [launchVC.progressView setProgress:progress];
+            if (progress > 0 && progress <= 1.0) {
+                launchVC.circularShapeLayer.strokeEnd = progress;
             }
         }
     }

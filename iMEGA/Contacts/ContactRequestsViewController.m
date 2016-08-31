@@ -52,6 +52,8 @@
 
 @implementation ContactRequestsViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -89,11 +91,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
@@ -149,7 +157,7 @@
                                                     otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
     [actionSheet setTag:0];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
     } else {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
@@ -416,15 +424,8 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -434,7 +435,7 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods

@@ -105,9 +105,6 @@
     self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
     [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
     
-    [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
-    
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -121,7 +118,7 @@
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+            if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -206,11 +203,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -789,15 +792,8 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -807,15 +803,11 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self.searchDisplayController isActive]) {
-        return -66.0;
-    }
-    
-    return 0.0f;
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
@@ -1069,7 +1061,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)reloadUI {
     switch (self.displayMode) {
@@ -1119,8 +1111,14 @@
     
     if ([[self.nodes size] unsignedIntegerValue] == 0) {
         [_editBarButtonItem setEnabled:NO];
+        
+        [self.tableView setTableHeaderView:nil];
+        [self.tableView setContentOffset:CGPointZero];
     } else {
         [_editBarButtonItem setEnabled:YES];
+        
+        [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
+        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
     }
     
     [self.tableView reloadData];
@@ -1146,7 +1144,7 @@
         imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         imagePickerController.delegate = self;
         
-        if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        if ([[UIDevice currentDevice] iPadDevice] && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
             UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -1330,7 +1328,7 @@
                                          otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     }
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
     } else {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];

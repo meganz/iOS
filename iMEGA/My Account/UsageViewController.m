@@ -34,10 +34,9 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIScrollView *usageScrollView;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pieChartTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartMainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartSecondaryLabel;
@@ -68,8 +67,8 @@
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
-    if (!iPhone4X) {
-        [_usageScrollView setScrollEnabled:NO];
+    if ([[UIDevice currentDevice] iPhone4X]) {
+        self.pieChartTopLayoutConstraint.constant = 22.0;
     }
     
     [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
@@ -105,11 +104,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Private
