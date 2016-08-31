@@ -85,7 +85,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Di tugma ang password";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Kelang mong pumayag sa terms of service para mag-register ng account sa MEGA.";
+"termsCheckboxUnselected"="Kailagan mong pumayag sa Terms of Service para makapag-register ng account sa MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ang e-mail address na ito ay meron ng registered account sa MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -517,7 +517,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
 "privacyPolicyLabel"="Pribadong Patakaran";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
-"termsOfServicesLabel"="Mga Termino ng Serbisyo";
+"termsOfServicesLabel"="Terms of Service";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Gusto mo bang burahin ang bagay na ito sa iyong Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Gusto mo bang pahiin ang items sa iyong Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Naka-save sa Photos";

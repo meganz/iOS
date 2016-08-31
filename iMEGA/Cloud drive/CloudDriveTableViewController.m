@@ -30,6 +30,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -987,13 +988,14 @@
     
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
         NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
-        NSString *moviePath = [videoUrl path];
         
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-            UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
+        NSError *error = nil;
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoUrl.lastPathComponent];
+        if (![[NSFileManager defaultManager] moveItemAtPath:[videoUrl path] toPath:localFilePath error:&error]) {
+            MEGALogError(@"Move item at path failed with error: %@", error);
         }
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -1002,12 +1004,18 @@
         [formatter setLocale:locale];
         
         NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
-        NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+        
+        NSString *uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+        NSString *imagePath = [uploadsDirectory stringByAppendingPathComponent:filename];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
+        if (isImage(imagePath.pathExtension)) {
+            [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
+            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
+        }
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
     }
     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
     
@@ -1338,7 +1346,7 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *n in self.selectedNodesArray) {
-        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     
     [self setEditing:NO animated:YES];
@@ -1538,7 +1546,11 @@
 
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
     if (controller.documentPickerMode == UIDocumentPickerModeImport) {
-        NSString *localFilePath = [url path];
+        NSError *error = nil;
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:url.lastPathComponent];
+        if (![[NSFileManager defaultManager] moveItemAtPath:[url path] toPath:localFilePath error:&error]) {
+            MEGALogError(@"Move item at path failed with error: %@", error);
+        }
         
         NSString *crcLocal = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeByCRC:crcLocal parent:self.parentNode];
@@ -1547,7 +1559,11 @@
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+            if (isImage(localFilePath.pathExtension)) {
+                [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_thumbnail"]];
+                [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_preview"]];
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;

@@ -67,7 +67,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Вход";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Создать учётную запись";
+"createAccount"="Регистрация";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Неправильный email/пароль. Пожалуйста попробуйте еще раз.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -119,7 +119,7 @@
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Это могло произойти по следующим причинам:- Файл был удален из-за нарушения условий предоставления услуг.- Неправильный URL - ссылка, к которой Вы пытаетесь получить доступ, не существует.- Файл был удален пользователем.";
 /* Message shown when a download starts */
-"downloadStarted"="Скачка начата";
+"downloadStarted"="Загрузка запущена";
 /* Title for the folder link view */
 "folderLink"="Ссылка папки";
 /* Button title which downloads a file/folder to your device */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Сохранено в фотографиях";

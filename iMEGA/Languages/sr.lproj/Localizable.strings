@@ -169,7 +169,7 @@
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="No pending requests";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Paused Transfers";
+"transfersEmptyState_titlePaused"="Паузирани Трансфери";
 /* Title shown when the there's no transfers and they aren't paused */
 "transfersEmptyState_titleAll"="No Transfers";
 /* Title shown when the there's no transfers, and the filter "Download" option is selected */
@@ -255,9 +255,9 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Инбокс је резервисан за коришћење од стране Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Save Image";
+"saveImage"="Сачувај фотографију";
 /* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="Save Images";
+"saveImages"="Сачувај фотографије";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Креирај линк";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -269,7 +269,7 @@
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Линк ископиран";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Links copied";
+"linksCopied"="Линкови су ископирани";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Отвори у...";
 /* Message shown when there is an active link that can be removed or disabled */
@@ -277,9 +277,9 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLinks"="Уклони линкове";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link removed";
+"linkRemoved"="Линк је уклоњен";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links removed";
+"linksRemoved"="Линкови су уклоњени";
 /* Title show when a file is being downloaded */
 "downloading"="Преузимање у току: [X]%";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -371,7 +371,7 @@
 /* Message shown when a file has been imported */
 "fileImported"="Документ увезен";
 /* Message shown when some files have been imported */
-"filesImported"="Files imported";
+"filesImported"="Документи увежени";
 /* Error message shown when you have used more MEGA storage than you can */
 "quotaExceeded"="Квота прекорачена";
 /* Alert title shown when the user is overquota */
@@ -537,7 +537,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Признања";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Recovery Key";
+"masterKey"="Резервни Кључ";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Промените шифру";
 /* Title shown when you try to export your MEGA Recovery Key */
@@ -555,7 +555,7 @@
 /* Alert message shown to explain that the master was removed of your device. */
 "masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="На Вашем уређају";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Очисти офлајн документе";
 /* Section title where you can 'Clear Cache' of your MEGA app */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

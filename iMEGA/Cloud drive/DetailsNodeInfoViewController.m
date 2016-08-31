@@ -194,7 +194,7 @@
         }
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];

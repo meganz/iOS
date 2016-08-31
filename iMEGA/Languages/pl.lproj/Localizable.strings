@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Czy na pewno chcesz usunąć ten plik z trybu Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Czy na pewno chcesz usunąć te pliki z trybu Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Zapisz w Zdjęcia";

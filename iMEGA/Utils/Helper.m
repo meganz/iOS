@@ -23,6 +23,7 @@
 #import "SSKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
@@ -499,6 +500,17 @@ static BOOL copyToPasteboard;
     return pathString;
 }
 
++ (NSString *)relativePathForOffline {
+    static NSString *pathString = nil;
+    
+    if (pathString == nil) {
+        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = [pathString lastPathComponent];
+    }
+    
+    return pathString;
+}
+
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath {
     NSRange rangeOfSubstring = [totalPath rangeOfString:[Helper pathForOffline]];
     NSString *relativePath = [totalPath substringFromIndex:rangeOfSubstring.length];
@@ -612,7 +624,7 @@ static BOOL copyToPasteboard;
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
-    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self pathForOffline]]) {
+    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
         return;
     }
@@ -624,24 +636,33 @@ static BOOL copyToPasteboard;
     }
     
     NSString *offlineNameString = [api escapeFsIncompatible:node.name];
-    NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
+    NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {            
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
             
             if (offlineNodeExist) {
-                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
-            } else {
-                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
-                    absoluteFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:offlineNameString];
+                NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+                if (replaceRange.location != NSNotFound) {
+                    NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                    [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                    [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
                 }
-                [api startDownloadNode:node localPath:absoluteFilePath];
+            } else {
+                NSString *appData = nil;
+                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    appData = @"SaveInPhotosApp";
+                }
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
+        NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath];
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
@@ -652,7 +673,7 @@ static BOOL copyToPasteboard;
         MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:absoluteFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
         }
     }
 }
@@ -1086,6 +1107,20 @@ static BOOL copyToPasteboard;
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:downloadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
