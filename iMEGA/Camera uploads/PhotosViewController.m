@@ -149,6 +149,15 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.photosCollectionView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
 
 #pragma mark - Private
 
@@ -645,7 +654,10 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:[Helper capInsetsForEmptyStateButton] resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:[Helper rectInsetsForEmptyStateButton]];
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -656,13 +668,16 @@
     return [UIColor whiteColor];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+}
+
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight;
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled] || [[UIDevice currentDevice] iPhone4X]) {
-        spaceHeight = 40.0f;
-    } else {
-        spaceHeight = 60.0f;
+    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
+    if (![[CameraUploads syncManager] isCameraUploadsEnabled] || ![[UIDevice currentDevice] iPhone4X]) {
+        spaceHeight += 20.0f;
     }
+    
     return spaceHeight;
 }
 

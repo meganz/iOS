@@ -129,7 +129,11 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UIEdgeInsets)capInsetsForEmptyStateButton;
 + (UIEdgeInsets)rectInsetsForEmptyStateButton;
 
++ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
++ (CGFloat)spaceHeightForEmptyState;
+
 #pragma mark - Utils for UI
+
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
 #pragma mark - Logout
