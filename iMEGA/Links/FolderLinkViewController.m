@@ -171,6 +171,8 @@
         if (isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
         }
+        
+        [self.tableView reloadEmptyDataSet];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
     }];
@@ -965,15 +967,11 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self.searchDisplayController isActive]) {
-        return -66.0;
-    }
-    
-    return 0.0f;
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAGlobalDelegate

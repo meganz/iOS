@@ -916,7 +916,7 @@ static BOOL copyToPasteboard;
 #pragma mark - Utils for empty states
 
 + (UIEdgeInsets)capInsetsForEmptyStateButton {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
     
     return capInsets;
 }
@@ -924,14 +924,46 @@ static BOOL copyToPasteboard;
 + (UIEdgeInsets)rectInsetsForEmptyStateButton {
     UIEdgeInsets rectInsets;
     if ([[UIDevice currentDevice] iPhoneDevice]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if ([[UIDevice currentDevice] iPad]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if ([[UIDevice currentDevice] iPadPro]) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+            rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+        } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+            CGFloat emptyStateButtonWidth = ([[UIScreen mainScreen] bounds].size.height);
+            CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
+            rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
+        }
+    } else if ([[UIDevice currentDevice] iPadDevice]) {
+        CGFloat emptyStateButtonWidth = 400.0f;
+        CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
+        rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
     }
     
     return rectInsets;
+}
+
++ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive {
+    CGFloat verticalOffset = 0.0f;
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        if (isSearchBarActive) {
+            verticalOffset += -navigationBarSize.height;
+        }
+    } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+        if ([[UIDevice currentDevice] iPhoneDevice]) {
+            verticalOffset += -navigationBarSize.height/2;
+        }
+    }
+    
+    return verticalOffset;
+}
+
++ (CGFloat)spaceHeightForEmptyState {
+    CGFloat spaceHeight = 40.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
 }
 
 #pragma mark - Utils for UI
