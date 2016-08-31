@@ -100,7 +100,6 @@
 		41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */; };
 		41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
 		41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
-		41AC2AC81AE69B11003C09E5 /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2AC71AE69B11003C09E5 /* PieChartView.m */; };
 		41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */; };
 		41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC66471AB1D493003FE8DA /* AboutTableViewController.m */; };
@@ -180,6 +179,7 @@
 		41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EAAE431D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m */; };
 		41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EAAE451D06B49400622FAF /* UIImage+CTAssetsPickerController.m */; };
 		41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC68341D76DA93003EC803 /* UIBarButtonItem+Badge.m */; };
+		41EC68551D76E0F6003EC803 /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EC68541D76E0F6003EC803 /* PieChartView.m */; };
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
@@ -374,8 +374,6 @@
 		41AB8EC01A7103B300E40A39 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41AC2ABE1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
-		41AC2AC61AE69B11003C09E5 /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
-		41AC2AC71AE69B11003C09E5 /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
 		41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
@@ -541,6 +539,8 @@
 		41EAAE451D06B49400622FAF /* UIImage+CTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CTAssetsPickerController.m"; sourceTree = "<group>"; };
 		41EC68331D76DA93003EC803 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		41EC68341D76DA93003EC803 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
+		41EC68531D76E0F6003EC803 /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PieChartView.h; path = Vendor/PieChartView/PieChartDemo/PieChartView.h; sourceTree = "<group>"; };
+		41EC68541D76E0F6003EC803 /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PieChartView.m; path = Vendor/PieChartView/PieChartDemo/PieChartView.m; sourceTree = "<group>"; };
 		41FC83A61AA732ED008FA551 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Vendor/Reachability/Reachability.h; sourceTree = "<group>"; };
 		41FC83A71AA732ED008FA551 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Vendor/Reachability/Reachability.m; sourceTree = "<group>"; };
 		41FC83AF1AA853CC008FA551 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
@@ -825,13 +825,13 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				41EC68561D76E101003EC803 /* PieChartView */,
 				41EC68161D76DA93003EC803 /* UIBarButtonItem-Badge */,
 				41D21DF31D01AEC3002E6296 /* CTAssetsPickerController */,
 				41D21DE61D01AE89002E6296 /* PureLayout */,
 				413199651BD7BD5D002CD6EA /* DateTools */,
 				4166251E1B66552800AEB579 /* SSKeychain */,
 				4122C0E31B274E6A001CE833 /* AMLocalizedString */,
-				41AC2AC51AE69B11003C09E5 /* PieChart */,
 				41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */,
 				41ADA9F31ADE8B8800641BB4 /* SVWebViewController */,
 				4156C8071AD7E79A00F5E818 /* LTHPasscodeViewController */,
@@ -1083,16 +1083,6 @@
 			path = Vendor/DZNEmptyDataSet/Source;
 			sourceTree = "<group>";
 		};
-		41AC2AC51AE69B11003C09E5 /* PieChart */ = {
-			isa = PBXGroup;
-			children = (
-				41AC2AC61AE69B11003C09E5 /* PieChartView.h */,
-				41AC2AC71AE69B11003C09E5 /* PieChartView.m */,
-			);
-			name = PieChart;
-			path = Vendor/PieChart;
-			sourceTree = "<group>";
-		};
 		41AC66441AB1D488003FE8DA /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -1313,6 +1303,15 @@
 			);
 			name = "UIBarButtonItem-Badge";
 			path = "Vendor/UIBarButtonItem-Badge";
+			sourceTree = "<group>";
+		};
+		41EC68561D76E101003EC803 /* PieChartView */ = {
+			isa = PBXGroup;
+			children = (
+				41EC68531D76E0F6003EC803 /* PieChartView.h */,
+				41EC68541D76E0F6003EC803 /* PieChartView.m */,
+			);
+			name = PieChartView;
 			sourceTree = "<group>";
 		};
 		41FC83A51AA732DC008FA551 /* Reachability */ = {
@@ -1619,6 +1618,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41EC68551D76E0F6003EC803 /* PieChartView.m in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				41D21E661D01AEC3002E6296 /* CTAssetsGridViewController.m in Sources */,
@@ -1755,7 +1755,6 @@
 				41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				41E88F0C1CF451B000BD3B79 /* MWGridCell.m in Sources */,
-				41AC2AC81AE69B11003C09E5 /* PieChartView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

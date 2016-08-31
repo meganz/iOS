@@ -40,3 +40,6 @@
 [submodule "iMEGA/Vendor/UIBarButtonItem-Badge"]
 	path = iMEGA/Vendor/UIBarButtonItem-Badge
 	url = https://github.com/meganz/UIBarButtonItem-Badge.git
+[submodule "iMEGA/Vendor/PieChartView"]
+	path = iMEGA/Vendor/PieChartView
+	url = https://github.com/astrokin/PieChart.git
