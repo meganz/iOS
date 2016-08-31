@@ -445,13 +445,13 @@
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="分享與";
 /* Item menu option to add a contact through your device app Contacts */
-"addFromContacts"="通過聯絡簿添加";
+"addFromContacts"="使用聯絡人清單新增";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="添加聯絡人";
+"addContact"="新增聯絡人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="聯絡人郵箱";
 /* Button title to "Add" the contact to your contacts list */
-"addContactButton"="添加";
+"addContactButton"="新增";
 /* Success message shown when a contact has been invited */
 "requestSent"="已寄出聯絡人邀請";
 /* Error message shown when it hasn't been posible to add a contact */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="您確定要從離線部份中刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="您確定要從離線模式中刪除這些項目？";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="已儲存於相片中";

@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Opravdu chcete odsranit tuto položku z offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Opravdu chcete odsranit tyto položky z offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Uloženo do Fotek";

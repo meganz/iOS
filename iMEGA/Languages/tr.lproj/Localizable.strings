@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Bu öğeyi Çevrimdışı'dan silmek isteğinizden emin misiniz?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Bu öğeleri Çevrimdışı'dan silmek isteğinizden emin misiniz?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Fotoğraflarıma Kaydedildi";

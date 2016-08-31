@@ -97,7 +97,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Zur Aktivierung Ihres Accounts geben Sie bitte Ihr Passwort ein";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Bitte bestätigen SIe Ihr Konto";
+"confirmAccountButton"="Bitte bestätigen Sie Ihr Konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Falsches Passwort";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -748,5 +748,3 @@
 "removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="In Photos gespeichert";

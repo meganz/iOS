@@ -748,5 +748,3 @@
 "removeItemFromOffline"="คุณแน่ใจหรือไม่ว่าจะลบรายการนี้ออกจากออฟไลน์";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="คุณแน่ใจหรือไม่ว่าจะลบรายการเหล่านี้ออกจากออฟไลน์";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";
