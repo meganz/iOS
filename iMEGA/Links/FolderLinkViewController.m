@@ -1,23 +1,4 @@
-/**
- * @file FolderLinkViewController.m
- * @brief View controller that allows to see and manage MEGA folder links.
- *
- * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "FolderLinkViewController.h"
 
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -33,7 +14,6 @@
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
 
-#import "FolderLinkViewController.h"
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
@@ -1096,12 +1076,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
 @end

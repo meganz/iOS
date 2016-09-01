@@ -1,24 +1,3 @@
-/**
- * @file UpgradeTableViewController.m
- * @brief View controller that shows the products available in MEGA.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
 #import "UpgradeTableViewController.h"
 #import "ProductTableViewCell.h"
 #import "MEGASdkManager.h"
@@ -77,11 +56,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProductTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
-    
-//    if (indexPath.row <= self.megaAccountType && !self.megaAccountType == MEGAAccountTypeFree && !(self.megaAccountType == 4)) {
-//        cell.contentView.backgroundColor = [UIColor colorWithRed:237/255.0f green:237/255.0f blue:237/255.0f alpha:0.5f];
-//        [cell setUserInteractionEnabled:NO];
-//    }
     
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 100.0, 0.0, 0.0)];
     

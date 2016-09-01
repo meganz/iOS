@@ -1,5 +1,5 @@
-
 #import "SaveToCameraRollActivity.h"
+
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
@@ -35,10 +35,6 @@
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
     return YES;
-}
-
-- (void)prepareWithActivityItems:(NSArray *)activityItems {
-    
 }
 
 - (void)performActivity {
