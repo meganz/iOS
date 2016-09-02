@@ -1,6 +1,6 @@
 #import "ConfirmAccountViewController.h"
 
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "MainTabBarController.h"
@@ -173,7 +173,7 @@
             
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         }
             
         default:
