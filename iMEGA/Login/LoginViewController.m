@@ -1,6 +1,6 @@
 #import "LoginViewController.h"
 
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
@@ -258,7 +258,7 @@
     switch ([request type]) {
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
             
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
             UIWindow *window = [[[UIApplication sharedApplication] delegate] window];

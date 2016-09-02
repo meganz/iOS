@@ -4,7 +4,7 @@
 #import <Photos/Photos.h>
 
 #import "LTHPasscodeViewController.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "CameraUploads.h"
@@ -114,14 +114,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self languageCompatibility];
     
     // Delete username and password if exists - V1
-    if ([SSKeychain passwordForService:@"MEGA" account:@"username"] && [SSKeychain passwordForService:@"MEGA" account:@"password"]) {
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"username"];
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"password"];
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"username"] && [SAMKeychain passwordForService:@"MEGA" account:@"password"]) {
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"username"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
     }
     
     // Session from v2
-    NSData *sessionV2 = [SSKeychain passwordDataForService:@"MEGA" account:@"session"];
-    NSString *sessionV3 = [SSKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    NSData *sessionV2 = [SAMKeychain passwordDataForService:@"MEGA" account:@"session"];
+    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     if (sessionV2) {
         // Save session for v3 and delete the previous one
@@ -130,7 +130,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
-        [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+        [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
         
         [self removeOldStateCache];
         
@@ -149,7 +149,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         // Camera uploads settings
         [self cameraUploadsSettingsCompatibility];
         
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"session"];
     }
 
     // Rename attributes (thumbnails and previews)- handle to base64Handle
@@ -283,7 +283,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
-    if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if (![SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
     }
     
@@ -304,7 +304,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     self.link = url;
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
         }
@@ -633,7 +633,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
     if (isBackupLink) {
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
             [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
@@ -659,7 +659,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isIncomingPendingContactsLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]; //mega://"#fm/ipc"
     if (isIncomingPendingContactsLink) {
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
             [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
@@ -680,7 +680,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)openIn {
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
@@ -1210,7 +1210,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeLogin: {
             [timerAPI_EAGAIN invalidate];
             
-            if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
             } else {

@@ -4,7 +4,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
@@ -244,7 +244,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self deleteTempFile];
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
@@ -288,7 +288,7 @@
             }
         }
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                     [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];

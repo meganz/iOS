@@ -1,7 +1,7 @@
 #import "Helper.h"
 
 #import "LTHPasscodeViewController.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
@@ -1040,7 +1040,7 @@ static BOOL copyToPasteboard;
 }
 
 + (void)clearSession {
-    [SSKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
 }
 
 + (void)deleteUserData {

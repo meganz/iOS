@@ -82,8 +82,6 @@
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
 		415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */; };
-		416625281B66552800AEB579 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625231B66552800AEB579 /* SSKeychain.m */; };
-		416625291B66552800AEB579 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 416625251B66552800AEB579 /* SSKeychainQuery.m */; };
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
@@ -159,9 +157,10 @@
 		41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
 		41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
 		41D9D8E81B7123F100D9B850 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D9D8E71B7123F100D9B850 /* StoreKit.framework */; };
-		41DB620C1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */; };
 		41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		41E23C3D1C6BB992003E1DA9 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41E23C3C1C6BB992003E1DA9 /* Photos.framework */; };
+		41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
+		41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		41E88F0B1CF451B000BD3B79 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EF71CF451B000BD3B79 /* MWCaptionView.m */; };
 		41E88F0C1CF451B000BD3B79 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFA1CF451B000BD3B79 /* MWGridCell.m */; };
 		41E88F0D1CF451B000BD3B79 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */; };
@@ -346,10 +345,6 @@
 		415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
 		415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestsViewController.h; sourceTree = "<group>"; };
 		415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactRequestsViewController.m; sourceTree = "<group>"; };
-		416625221B66552800AEB579 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		416625231B66552800AEB579 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
-		416625241B66552800AEB579 /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
-		416625251B66552800AEB579 /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALogMacros.h; sourceTree = "<group>"; };
 		4178409E1AC328A600713F3C /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		4178409F1AC328A600713F3C /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -497,13 +492,16 @@
 		41D8ECDC1BCEBD3200B8FA08 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		41D9D8E71B7123F100D9B850 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		41DB620A1BFBAC4C0099D33D /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
-		41DB620B1BFBAC4C0099D33D /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		41DC6F701D54E7080081832C /* NSFileManager+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+MNZCategory.h"; sourceTree = "<group>"; };
 		41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+MNZCategory.m"; sourceTree = "<group>"; };
 		41DFFB071B9A33A00003FB72 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41E23C3C1C6BB992003E1DA9 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		41E2500F1D79E9D400499A6C /* SAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychain.h; sourceTree = "<group>"; };
+		41E250101D79E9D400499A6C /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychain.m; sourceTree = "<group>"; };
+		41E250111D79E9D400499A6C /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
+		41E250121D79E9D400499A6C /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
+		41E250171D79EA0200499A6C /* SAMKeychainQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
 		41E88EF61CF451B000BD3B79 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		41E88EF71CF451B000BD3B79 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		41E88EF91CF451B000BD3B79 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
@@ -863,12 +861,13 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				41E250151D79E9EF00499A6C /* Import */,
+				41E2500E1D79E9D400499A6C /* SAMKeychain */,
 				41EC68561D76E101003EC803 /* PieChartView */,
 				41EC68161D76DA93003EC803 /* UIBarButtonItem-Badge */,
 				41D21DF31D01AEC3002E6296 /* CTAssetsPickerController */,
 				41D21DE61D01AE89002E6296 /* PureLayout */,
 				413199651BD7BD5D002CD6EA /* DateTools */,
-				4166251E1B66552800AEB579 /* SSKeychain */,
 				4122C0E31B274E6A001CE833 /* AMLocalizedString */,
 				41AC2ABD1AE67D8E003C09E5 /* DZNEmptyDataSet */,
 				41ADA9F31ADE8B8800641BB4 /* SVWebViewController */,
@@ -1020,18 +1019,6 @@
 			);
 			name = LTHPasscodeViewController;
 			path = Vendor/LTHPasscodeViewController/LTHPasscodeViewController;
-			sourceTree = "<group>";
-		};
-		4166251E1B66552800AEB579 /* SSKeychain */ = {
-			isa = PBXGroup;
-			children = (
-				416625221B66552800AEB579 /* SSKeychain.h */,
-				416625231B66552800AEB579 /* SSKeychain.m */,
-				416625241B66552800AEB579 /* SSKeychainQuery.h */,
-				416625251B66552800AEB579 /* SSKeychainQuery.m */,
-			);
-			name = SSKeychain;
-			path = Vendor/sskeychain/SSKeychain;
 			sourceTree = "<group>";
 		};
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
@@ -1335,6 +1322,35 @@
 				41EAAE451D06B49400622FAF /* UIImage+CTAssetsPickerController.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		41E2500E1D79E9D400499A6C /* SAMKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				41E2500F1D79E9D400499A6C /* SAMKeychain.h */,
+				41E250101D79E9D400499A6C /* SAMKeychain.m */,
+				41E250111D79E9D400499A6C /* SAMKeychainQuery.h */,
+				41E250121D79E9D400499A6C /* SAMKeychainQuery.m */,
+			);
+			name = SAMKeychain;
+			path = Vendor/SAMKeychain/Sources;
+			sourceTree = "<group>";
+		};
+		41E250151D79E9EF00499A6C /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				41E250161D79E9EF00499A6C /* SAMKeychain */,
+			);
+			name = Import;
+			path = Vendor/Import;
+			sourceTree = "<group>";
+		};
+		41E250161D79E9EF00499A6C /* SAMKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				41E250171D79EA0200499A6C /* SAMKeychainQuery.h */,
+			);
+			path = SAMKeychain;
 			sourceTree = "<group>";
 		};
 		41EC68161D76DA93003EC803 /* UIBarButtonItem-Badge */ = {
@@ -1741,6 +1757,7 @@
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				41EAAE4A1D06B49400622FAF /* PHAsset+CTAssetsPickerController.m in Sources */,
 				41D21E6B1D01AEC3002E6296 /* CTAssetsPageViewController.m in Sources */,
@@ -1749,7 +1766,6 @@
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
-				416625291B66552800AEB579 /* SSKeychainQuery.m in Sources */,
 				41E88F0D1CF451B000BD3B79 /* MWGridViewController.m in Sources */,
 				E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
@@ -1764,7 +1780,6 @@
 				41D21E611D01AEC3002E6296 /* CTAssetSelectionButton.m in Sources */,
 				411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */,
 				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
-				416625281B66552800AEB579 /* SSKeychain.m in Sources */,
 				41D21E5C1D01AEC3002E6296 /* CTAssetCollectionViewCell.m in Sources */,
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
@@ -1778,6 +1793,7 @@
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				41FC83A81AA732ED008FA551 /* Reachability.m in Sources */,
+				41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
@@ -2015,6 +2031,7 @@
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
 					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2055,6 +2072,7 @@
 					iMEGA/Vendor/SSKeychain,
 					iMEGA/Vendor/PureLayout/PureLayout,
 					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
