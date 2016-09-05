@@ -70,6 +70,12 @@
 "createAccount"="Luo tili";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Virheellinen sähköposti ja/tai salasana. Ole hyvä ja yritä uudelleen.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Käyttäjätilisi on estetty. Ole hyvä, ota yhteyttä support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Syötä kelpaava sähköpostiosoite";
 /* Message shown when the user enters a wrong password  */

@@ -70,6 +70,12 @@
 "createAccount"="إنشاء حساب";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="البريد الإلكتروني و/أو كلمة المرور غير صالح. حاول مرة اخرى";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة جدا، الرجاء الانتظار حتى  %@  والمحاولة مرة أخرى.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="يرجى التحقق من البريد الإلكتروني الخاص بك وانقر على الرابط لتأكيد حسابك.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="ادخل يريد إليكتروني صالح";
 /* Message shown when the user enters a wrong password  */

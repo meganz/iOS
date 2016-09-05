@@ -70,6 +70,12 @@
 "createAccount"="アカウント作成";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="アドレス、又はパスワード無効。再度トライして下さい。";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="あなたのアカウントはブロックされています。support@mega.nzへ連絡して下さい。";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="正しいメールを入力して下さい";
 /* Message shown when the user enters a wrong password  */

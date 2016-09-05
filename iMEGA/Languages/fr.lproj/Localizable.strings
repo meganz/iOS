@@ -63,13 +63,19 @@
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
 "megaPrivacyText"="Assurez la sécurité de tous vos fichiers grâce au chiffrement de bout en bout de MEGA";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Disposer d'un accès entièrement chiffré n'importe où, n'importe quand.";
+"megaAccessText"="Disposez d'un accès entièrement chiffré n'importe où, n'importe quand.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un Compte";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Adresse courriel ou mot de passe invalide. Veuillez ressayer";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu'à %@ et ressayer.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Veuillez vérifier vos courriels et cliquer sur le lien afin de confirmer votre compte.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Votre compte a été bloqué. Veuillez contacter support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Message shown when the user enters a wrong password  */

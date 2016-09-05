@@ -70,6 +70,12 @@
 "createAccount"="Crear cuenta";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Has intentado acceder demasiadas veces. Por favor, espera hasta las %@ e inténtalo de nuevo.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Por favor, comprueba tu correo y pulsa el enlace de confirmación de tu cuenta.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Tu cuenta ha sido bloqueada. Por favor contacta con support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Introduce un email válido";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="¿Seguro que quieres eliminar este elemento disponible sin conexión?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos disponibles sin conexión?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Guardado en Fotos";

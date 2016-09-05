@@ -70,6 +70,12 @@
 "createAccount"="Регистрация";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Неправильный email/пароль. Пожалуйста попробуйте еще раз.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Вы пытались зайти очень много раз. Пожалуйста, подождите до %@ и попробуйте снова.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Проверьте электронную почту и перейдите по ссылке для подтверждения учётной записи.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Введите правильный email";
 /* Message shown when the user enters a wrong password  */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Выйти";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Действительно покинуть?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Действительно покинуть?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Папка оставлена";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */

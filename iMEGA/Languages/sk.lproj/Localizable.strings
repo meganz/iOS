@@ -70,6 +70,12 @@
 "createAccount"="Vytvoriť účet";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Neplatný email a/alebo heslo. Prosím skúste to znovu.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Príliš veľa krát ste sa pokúsili prihlásiť. Prosím počkajte do %@ a skúste to znovu.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Prosím skontrolujte si svoj email a kliknite na odkaz pre potvrdenie svojho účtu.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Váš účet bol zablokovaný. Prosím kontaktujte support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Zadajte platný email";
 /* Message shown when the user enters a wrong password  */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Ponechať";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Ste si istý, že chcete toto zdieľanie opustiť?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Ste si istý, že chcete opustiť tieto zdieľania?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Priečinok opustený";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */

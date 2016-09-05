@@ -70,6 +70,12 @@
 "createAccount"="Account Aanmaken";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ongeldig e-mail en/of wachtwoord. Probeer aub opnieuw";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="U hebt te vaak geprobeerd om in te loggen. Wacht alstublieft tot %@ en probeer het opnieuw.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Controleer alstublieft uw e-mail en klik op de link om uw account te bevestigen.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Vul een correct email adres in";
 /* Message shown when the user enters a wrong password  */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Verlaten";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Weet u zeker dat u deze gedeelde map wilt verlaten?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Weet u zeker dat u deze gedeelde mappen wilt verlaten?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Map verlaten";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
