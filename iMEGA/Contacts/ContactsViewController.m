@@ -95,13 +95,13 @@
         case ContactsShareFolderWith:
         case ContactsShareFoldersWith: {
             [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-            [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
+            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
             [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
             
             [_insertAnEmailBarButtonItem setTitle:AMLocalizedString(@"addFromEmail", nil)];
             [_shareFolderWithBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
-            [_insertAnEmailBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_insertAnEmailBarButtonItem.tag] forState:UIControlStateNormal];
-            [_shareFolderWithBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_shareFolderWithBarButtonItem.tag] forState:UIControlStateNormal];
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             [self.navigationController.topViewController setToolbarItems:@[_shareFolderWithBarButtonItem, flexibleItem, _insertAnEmailBarButtonItem ] animated:NO];
             [self.navigationController setToolbarHidden:NO];
@@ -308,29 +308,6 @@
     }
 }
 
-- (UIImage *)permissionsButtonImageFor:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
-}
-
 - (void)shareFolder {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
@@ -356,25 +333,6 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
     
     return [emailTest evaluateWithObject:email];
-}
-
-- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
-    
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    
-    switch (buttonTag) {
-        case 0:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-            break;
-            
-        case 1:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"SFUIText-Regular" size:17.0] forKey:NSFontAttributeName];
-            break;
-    }
-    
-    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
-    
-    return titleTextAttributesDictionary;
 }
 
 - (BOOL)userTypeHasChanged:(MEGAUser *)user {
@@ -578,7 +536,7 @@
             [self requestUserNameAndLastNameWithEmail:userEmail];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
-        [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
+        [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         [cell.nameLabel setText:userEmail];
