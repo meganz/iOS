@@ -467,6 +467,29 @@ static BOOL copyToPasteboard;
     return uploadQueuedTransferImage;
 }
 
++ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType {
+    UIImage *image;
+    switch (shareType) {
+        case MEGAShareTypeAccessRead:
+            image = [UIImage imageNamed:@"readPermissions"];
+            break;
+            
+        case MEGAShareTypeAccessReadWrite:
+            image =  [UIImage imageNamed:@"readWritePermissions"];
+            break;
+            
+        case MEGAShareTypeAccessFull:
+            image = [UIImage imageNamed:@"fullAccessPermissions"];
+            break;
+            
+        default:
+            image = nil;
+            break;
+    }
+    
+    return image;
+}
+
 #pragma mark - Paths
 
 + (NSString *)pathForOffline {

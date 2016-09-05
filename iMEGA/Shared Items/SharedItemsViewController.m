@@ -272,29 +272,6 @@
     [_toolbar setItems:toolbarItemsMutableArray];
 }
 
-- (UIImage *)permissionsButtonImageFor:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
-}
-
 - (void)removeSelectedIncomingShares {
     self.remainingOperations = [self.selectedNodesMutableArray count];
     self.numberOfShares = self.remainingOperations;
@@ -718,7 +695,7 @@
             [cell.infoLabel setText:infoLabelText];
             
             MEGAShareType shareType = (self.sharedItemsMode == SharedItemsModeDefault) ? [share access] : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-            [cell.permissionsButton setImage:[self permissionsButtonImageFor:shareType] forState:UIControlStateNormal];
+            [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
             
             cell.nodeHandle = [node handle];
             

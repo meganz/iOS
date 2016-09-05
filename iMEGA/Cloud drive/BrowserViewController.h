@@ -11,13 +11,14 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionOpenIn
 };
 
-@interface BrowserViewController : UIViewController <MEGADelegate, UIActionSheetDelegate>
+@interface BrowserViewController : UIViewController
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray *selectedNodesArray;
 @property (nonatomic, strong) NSArray *selectedUsersArray;
 
 @property (nonatomic) BrowserAction browserAction;
+@property (nonatomic, getter=isChildBrowser) BOOL childBrowser;
 
 @property (nonatomic, strong) NSString *localpath;
 
