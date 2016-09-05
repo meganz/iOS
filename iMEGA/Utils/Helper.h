@@ -55,6 +55,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UIImage *)downloadQueuedTransferImage;
 + (UIImage *)uploadQueuedTransferImage;
 
++ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
+
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
