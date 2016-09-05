@@ -507,16 +507,7 @@
     return YES;
 }
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-}
-
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
@@ -584,9 +575,6 @@
     }
 }
 
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -599,9 +587,6 @@
     }
 }
 
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
         return;
@@ -611,9 +596,6 @@
         [self openTempFile];
         [SVProgressHUD dismiss];
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

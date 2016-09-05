@@ -26,12 +26,4 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-//TODO: LANDSCAPE: Delete it or not?
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-//    if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-//        return [self.topViewController preferredInterfaceOrientationForPresentation];
-//    }
-//    return UIInterfaceOrientationPortrait;
-//}
-
 @end

@@ -521,9 +521,6 @@
             photoBrowser.enableGrid = YES;
             photoBrowser.startOnGrid = NO;
             
-            // Optionally set the current visible photo before displaying
-            //    [browser setCurrentPhotoIndex:1];
-            
             [self.navigationController pushViewController:photoBrowser animated:YES];
             
             [photoBrowser showNextPhotoAnimated:YES];

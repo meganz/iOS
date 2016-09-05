@@ -538,7 +538,6 @@
     } else {
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
-//    MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
     
     if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] < MEGAShareTypeAccessFull) {
         return UITableViewCellEditingStyleNone;

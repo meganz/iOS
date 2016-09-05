@@ -51,10 +51,6 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)confirmTouchUpInside:(id)sender {
