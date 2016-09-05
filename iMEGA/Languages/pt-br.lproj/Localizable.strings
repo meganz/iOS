@@ -70,6 +70,12 @@
 "createAccount"="Criar conta";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail inválido e / ou senha. Por favor, tente novamente";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até%@ e tente novamente.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Por favor, verifique seu e-mail e clique no link para confirmar sua conta.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Digite  e-mail válido";
 /* Message shown when the user enters a wrong password  */

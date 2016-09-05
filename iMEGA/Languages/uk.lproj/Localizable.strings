@@ -70,6 +70,12 @@
 "createAccount"="Створити обліковий запис";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Невірна адреса е-пошти та/або пароль. Будь ласка, спробуйте ще раз";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Ви зробили забагато спроб входу. Будь ласка, зачекайте %@ і спробуйте ще раз.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Будь ласка, перевірте свою е-пошту і натисніть на ланку підтвердження акаунту.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ваш обліковий запис заблоковано. Будь ласка, зв'яжіться з нами support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Введіть дійсну адресу е-пошти";
 /* Message shown when the user enters a wrong password  */

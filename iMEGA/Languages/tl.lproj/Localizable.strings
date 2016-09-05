@@ -70,6 +70,12 @@
 "createAccount"="Gumawa ng account";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Maling e-mail at/o password. Subukang muli";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Sinubukan mo ng mag-log in ng maraming beses. Maghintay muna hanggang %@ at subukang muli.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="I-check ang iyong email at i-click ang link para kumpirmahin ang iyong account.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ang iyong account ni-block. Kontakin ang support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Maglagay ng valid email";
 /* Message shown when the user enters a wrong password  */

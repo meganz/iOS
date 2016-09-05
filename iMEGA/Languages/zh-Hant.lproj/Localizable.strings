@@ -70,6 +70,12 @@
 "createAccount"="建立帳號";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至 %@ 後再重試。";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="請檢查您的電子郵件，並點擊連結以確認啟用您的帳戶。";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="您的帳號已被鎖定。請連繫support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="請輸入有效的郵箱地址";
 /* Message shown when the user enters a wrong password  */

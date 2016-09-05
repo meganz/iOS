@@ -70,6 +70,12 @@
 "createAccount"="Tạo Tài khoản";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email hoặc mật khẩu nhập không đúng. Xin thử lại";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Bạn đã nhập thông tin đăng nhập sai quá nhiều lần. Xin vui lòng chờ tới %@ rồi thử lại.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Xin kiểm tra hộp thư email của bạn và click vào đường liên kết để xác thực tài khoản.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Message shown when the user enters a wrong password  */
@@ -166,7 +172,7 @@
 "requestCancelled"="Đã hủy yêu cầu";
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Đã xóa bỏ yêu cầu";
-/* Title shown when there's no pending request */
+/* Title shown when there's no pending contact requests */
 "noRequestPending"="Không có lời mời nào cần xem";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Các Truyền Tải Bị Dừng";
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Rời khỏi";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi mục chia sẻ này không?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Đã rời khỏi thư mục";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
