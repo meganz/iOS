@@ -564,6 +564,9 @@
     MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
+    cell.thumbnailImageView.layer.cornerRadius = 4.0f;
+    cell.thumbnailImageView.layer.masksToBounds = YES;
+    
     if (node.isFile) {
         if ([node hasThumbnail]) {
             cell.nodeHandle = [node handle];
@@ -584,7 +587,11 @@
     cell.nameLabel.text = [node name];
     
     if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
-        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+        if (node.isFile) {
+            cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+        } else {
+            cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+        }
     } else if (self.browserSegmentedControl.selectedSegmentIndex == 1) {
         MEGAShare *share = [self.shares shareAtIndex:indexPath.row];
         cell.infoLabel.text = [share user];
