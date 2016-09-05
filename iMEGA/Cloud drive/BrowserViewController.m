@@ -783,7 +783,6 @@
             remainingOperations--;
             
             if (remainingOperations == 0) {
-//                NSString *message = (self.selectedNodesArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"fileMoved", nil)] : [NSString stringWithFormat:AMLocalizedString(@"filesMoved", nil), self.selectedNodesArray.count];
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }

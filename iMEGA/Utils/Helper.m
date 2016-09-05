@@ -1130,7 +1130,6 @@ static BOOL copyToPasteboard;
 }
 
 + (void)deleteMasterKey {
-    // Remove Recovery Key exported file if exist
     NSError *error = nil;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

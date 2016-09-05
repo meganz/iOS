@@ -115,17 +115,6 @@
     }
 }
 
-//TODO: LANDSCAPE: Delete it or not?
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-//    if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
-//        if ([self.selectedViewController isEqual:self.moreNavigationController]) {
-//            return UIInterfaceOrientationPortrait;
-//        }
-//        return [self.selectedViewController preferredInterfaceOrientationForPresentation];
-//    }
-//    return UIInterfaceOrientationPortrait;
-//}
-
 #pragma mark - Private
 
 - (void)customizeMoreNavigationController {

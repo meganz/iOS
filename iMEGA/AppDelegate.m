@@ -221,17 +221,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    // Let the device know we want to receive push notifications
-//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-//                                                                                             |UIRemoteNotificationTypeSound
-//                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
-//        [application registerUserNotificationSettings:settings];
-//    } else {
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        [application registerForRemoteNotificationTypes:myTypes];
-//    }
-    
     if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
@@ -334,41 +323,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
     }
 }
-
-//#pragma mark - Push Notifications
-//
-//#ifdef __IPHONE_8_0
-//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-//    //register to receive notifications
-//    [application registerForRemoteNotifications];
-//}
-//
-//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-//    //handle the actions
-//    if ([identifier isEqualToString:@"declineAction"]){
-//    }
-//    else if ([identifier isEqualToString:@"answerAction"]){
-//    }
-//}
-//#endif
-//
-//- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
-//    NSString* newToken = [deviceToken description];
-//    NSLog(@"device token %@", newToken);
-//}
-//
-//- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
-//    NSLog(@"Failed to get token, error: %@", error);
-//}
-//
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-//        [[CameraUploads syncManager] getAllAssetsForUpload];
-//        [self startBackgroundTask];
-//    
-//        completionHandler(UIBackgroundFetchResultNewData);
-//    }
-//}
 
 #pragma mark - Private
 
@@ -801,12 +755,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)batteryChanged:(NSNotification *)notification {
     if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        // Status battery unplugged
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
             [[CameraUploads syncManager] resetOperationQueue];
-        }
-        // Status battery plugged
-        else {
+        } else {
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
@@ -1079,10 +1030,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-#endif
-    
     if ([request type] == MEGARequestTypeFetchNodes){
         if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
             LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
@@ -1397,10 +1344,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-#endif
-    
     switch ([request type]) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
@@ -1423,12 +1366,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [[Helper downloadingNodes] setObject:[NSNumber numberWithInteger:transfer.tag] forKey:base64Handle];
     }
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-#endif
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1560,12 +1497,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-#endif
 }
 
 #pragma mark - MEGAContactRequest

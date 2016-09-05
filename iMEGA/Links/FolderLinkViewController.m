@@ -869,9 +869,6 @@
     return YES;
 }
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-}
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
