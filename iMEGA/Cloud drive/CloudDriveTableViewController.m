@@ -963,13 +963,19 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [formatter setLocale:locale];
     
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
-        NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
-        
+        NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[videoUrl path] error:nil];
+        NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
+        NSString *videoName = [[formatter stringFromDate:modificationDate] stringByAppendingPathExtension:@"mov"];
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
-        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoUrl.lastPathComponent];
         if (![[NSFileManager defaultManager] moveItemAtPath:[videoUrl path] toPath:localFilePath error:&error]) {
             MEGALogError(@"Move item at path failed with error: %@", error);
         }
@@ -977,11 +983,6 @@
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        [formatter setLocale:locale];
-        
         NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
         
         NSString *uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
@@ -1807,17 +1808,6 @@
         if (indexPath != nil) {
             [self reloadRowsAtIndexPaths:@[indexPath]];
         }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
-            MEGANode *node = [api nodeForHandle:[transfer nodeHandle]];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            [formatter setLocale:locale];
-            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"mov"];
-            [api renameNode:node newName:name];
-        } 
     }
 }
 
