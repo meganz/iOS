@@ -113,8 +113,7 @@
 
         [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
         
-        [_downloadBarButtonItem setEnabled:NO];
-        [_importBarButtonItem setEnabled:NO];
+        [self setActionButtonsEnabled:NO];
     } else {
         [self reloadUI];
     }
@@ -246,14 +245,12 @@
 
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
+    [self setActionButtonsEnabled:boolValue];
     
     [self.tableView reloadData];
 }
 
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editBarButtonItem setEnabled:boolValue];
-    
+- (void)setToolbarButtonsEnabled:(BOOL)boolValue {
     [self.downloadBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
 }
@@ -334,8 +331,7 @@
     
     [_tableView setEditing:editing animated:YES];
     
-    [_downloadBarButtonItem setEnabled:!editing];
-    [_importBarButtonItem setEnabled:!editing];
+    [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
         [_editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
@@ -374,13 +370,7 @@
         [self setAllNodesSelected:NO];
     }
     
-    if (self.selectedNodesArray.count == 0) {
-        [_downloadBarButtonItem setEnabled:NO];
-        [_importBarButtonItem setEnabled:NO];
-    } else if (self.selectedNodesArray.count >= 1) {
-        [_downloadBarButtonItem setEnabled:YES];
-        [_importBarButtonItem setEnabled:YES];
-    }
+    (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
     
     [_tableView reloadData];
 }
@@ -631,8 +621,7 @@
     if (tableView.isEditing) {
         [_selectedNodesArray addObject:node];
         
-        [_downloadBarButtonItem setEnabled:YES];
-        [_importBarButtonItem setEnabled:YES];
+        [self setToolbarButtonsEnabled:YES];
         
         if ([_selectedNodesArray count] == [_nodeList.size integerValue]) {
             [self setAllNodesSelected:YES];
@@ -791,13 +780,7 @@
             }
         }
         
-        if (_selectedNodesArray.count == 0) {
-            [_downloadBarButtonItem setEnabled:NO];
-            [_importBarButtonItem setEnabled:NO];
-        } else if (self.selectedNodesArray.count < 1) {
-            [_downloadBarButtonItem setEnabled:YES];
-            [_importBarButtonItem setEnabled:YES];
-        }
+        (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
         
         [self setAllNodesSelected:NO];
         
@@ -1047,8 +1030,6 @@
             isFetchNodesDone = YES;
             [self reloadUI];
             
-            [_importBarButtonItem setEnabled:YES];
-            [_downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];
             }
