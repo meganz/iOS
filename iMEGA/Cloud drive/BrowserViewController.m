@@ -1,5 +1,6 @@
 #import "BrowserViewController.h"
 
+#import "UIScrollView+EmptyDataSet.h"
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
@@ -9,7 +10,7 @@
 
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <UIActionSheetDelegate, UIAlertViewDelegate, MEGADelegate> {
+@interface BrowserViewController () <UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
     UIAlertView *folderAlertView;
     NSUInteger remainingOperations;
 }
@@ -47,6 +48,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     if (self.isChildBrowser || self.browserAction == BrowserActionSelectFolderToShare) {
         self.browserSegmentedControlView.hidden = YES;
@@ -95,6 +99,8 @@
         if (self.isChildBrowser && (self.parentShareType != MEGAShareTypeAccessOwner)) {
             [self setNavigationBarTitleLabel];
         }
+        
+        [self.tableView reloadEmptyDataSet];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
     }];
@@ -614,6 +620,52 @@
     browserVC.childBrowser = YES;
 
     [self.navigationController pushViewController:browserVC animated:YES];
+}
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && !self.isChildBrowser) {
+            text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", @"Title shown when there's no incoming Shared Items");
+        } else {
+            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+        }
+    } else {
+        text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    UIImage *image = nil;
+    if ([MEGAReachabilityManager isReachable]) {
+        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && !self.isChildBrowser) {
+            image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
+        } else {
+            image = [UIImage imageNamed:@"emptyFolder"];
+        }
+    } else {
+        image = [UIImage imageNamed:@"noInternetConnection"];
+    }
+    
+    return image;
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGARequestDelegate
