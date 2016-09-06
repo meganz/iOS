@@ -744,6 +744,11 @@
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    if (parentShareType == MEGAShareTypeAccessRead) {
+        return nil;
+    }
+    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
@@ -771,6 +776,11 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    if (parentShareType == MEGAShareTypeAccessRead) {
+        return nil;
+    }
+    
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
