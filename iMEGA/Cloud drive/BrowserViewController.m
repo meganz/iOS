@@ -576,11 +576,7 @@
         }
         [self setNodeTableViewCell:cell enabled:NO];
     } else {
-        if (self.childBrowser) {
-            (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
-        } else {
-            [self setNodeTableViewCell:cell enabled:YES];
-        }
+        (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
     }
     
