@@ -152,8 +152,6 @@
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     matchSearchNodes = [[NSMutableArray alloc] init];
-    
-    [self reloadUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,6 +161,8 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
+    [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
