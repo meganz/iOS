@@ -33,6 +33,8 @@
     UILabel *navigationBarLabel;
 }
 
+@property (nonatomic) BOOL isOwnChange;
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -453,12 +455,12 @@
         case 1: {
             if (buttonIndex == 1) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    self.isOwnChange = YES;
                     if (self.displayMode == DisplayModeCloudDrive) {
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
                     } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
                         [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
             break;
@@ -1033,9 +1035,28 @@
             break;
         }
             
+        case MEGARequestTypeMove:
         case MEGARequestTypeRemove: {
-            if (self.displayMode == DisplayModeSharedItem) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", nil)];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            if (self.displayMode == DisplayModeCloudDrive) {
+                NSString *message;
+                if ([self.node isFile]) {
+                    message = AMLocalizedString(@"fileMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file to the Rubbish Bin");
+                } else if ([self.node isFolder]) {
+                    message = AMLocalizedString(@"folderMovedToRubbishBinMessage", @"Success message shown when you have moved 1 folder to the Rubbish Bin");
+                }
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
+            } else if (self.displayMode == DisplayModeRubbishBin) {
+                NSString *message;
+                if ([self.node isFile]) {
+                    message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
+                } else if ([self.node isFolder]) {
+                    message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
+                }
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
+            } else if (self.displayMode == DisplayModeSharedItem) {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", @"Message shown when a share has been left")];
             }
             break;
         }
@@ -1048,6 +1069,8 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.isOwnChange) return;
+    
     MEGANode *nodeUpdated;
     
     NSUInteger size = [[nodeList size] unsignedIntegerValue];
