@@ -949,27 +949,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
-        MEGATransferList *transferList = [api transfers];
+        MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
         } else {
-            BOOL allTransferAreDownloads = YES;
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                if (transfer.type == MEGATransferTypeUpload) {
-                    allTransferAreDownloads = NO;
-                    if (transfer.appData) {
-                        startCameraUploadLater = YES;
-                        [[CameraUploads syncManager] setBadgeValue:transfer.appData];
-                        break;
+                if (transfer.appData) {
+                    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                        if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+                            [api cancelTransfer:transfer];
+                        } else {
+                            startCameraUploadLater = YES;
+                            [[CameraUploads syncManager] setBadgeValue:transfer.appData];
+                        }
+                    } else {
+                        [api cancelTransfer:transfer];
                     }
-                }
-            }
-            if (allTransferAreDownloads) {                
-                if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+                    break;
                 }
             }
         }

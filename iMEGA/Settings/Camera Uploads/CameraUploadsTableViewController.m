@@ -6,6 +6,7 @@
 #import "MEGAReachabilityManager.h"
 
 #import "CameraUploads.h"
+#import "Helper.h"
 
 @interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
 
@@ -81,6 +82,18 @@
 }
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
+    if (!sender.isOn) {
+        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+        if (transferList.size.integerValue > 0) {
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.appData) {
+                    [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
+                }
+            }
+        }
+    }
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
@@ -149,6 +162,18 @@
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
+    if (!sender.isOn) {
+        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+        if (transferList.size.integerValue > 0) {
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.appData && isVideo(transfer.fileName.pathExtension)) {
+                    [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
+                }
+            }
+        }
+    }
+    
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
     
     [[CameraUploads syncManager] resetOperationQueue];
