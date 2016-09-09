@@ -18,6 +18,8 @@
 @property (nonatomic, assign) BOOL isUseCellularConnectionEnabled;
 @property (nonatomic, assign) BOOL isOnlyWhenChargingEnabled;
 
+@property (nonatomic, assign) BOOL shouldCameraUploadsBeDelayed;
+
 @property (nonatomic, strong) NSDate *lastUploadPhotoDate;
 @property (nonatomic, strong) NSDate *lastUploadVideoDate;
 
