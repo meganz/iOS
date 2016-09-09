@@ -50,7 +50,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
-    BOOL startCameraUploadLater;
     
     UIAlertView *overquotaAlertView;
     BOOL isOverquota;
@@ -962,7 +961,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
                             [api cancelTransfer:transfer];
                         } else {
-                            startCameraUploadLater = YES;
+                            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
                             [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                         }
                     } else {
@@ -1171,7 +1170,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
         case MEGARequestTypeFetchNodes: {
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-            startCameraUploadLater = NO;
+            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
             
             if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
@@ -1367,6 +1366,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+        [api cancelTransfer:transfer];
+    }
+}
+
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (transfer.isStreamingTransfer) {
         return;
@@ -1399,8 +1404,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    if ([transfer type] == MEGATransferTypeUpload && startCameraUploadLater) {
-        startCameraUploadLater = NO;
+    if ([transfer type] == MEGATransferTypeUpload && [CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
+        [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
