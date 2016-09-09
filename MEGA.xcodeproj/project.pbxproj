@@ -1507,6 +1507,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
+				41BF6BE71D82D93100330785 /* ShellScript */,
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
@@ -1671,6 +1672,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41BF6BE71D82D93100330785 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/iMEGA/Vendor/CTAssetsPickerController/\n./create_bundle.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		137361861A6664C300B740E8 /* Sources */ = {
