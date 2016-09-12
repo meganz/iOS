@@ -1,23 +1,4 @@
-/**
- * @file SharedItemsViewController.m
- * @brief View controller that allows to see and manage the incoming and outgoing shares of your account.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "SharedItemsViewController.h"
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -29,7 +10,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "SharedItemsViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 
@@ -107,7 +87,7 @@
     }
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -149,11 +129,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
@@ -284,29 +270,6 @@
     }
     
     [_toolbar setItems:toolbarItemsMutableArray];
-}
-
-- (UIImage *)permissionsButtonImageFor:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
 }
 
 - (void)removeSelectedIncomingShares {
@@ -565,7 +528,7 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
         
         for (MEGANode *n in _selectedNodesMutableArray) {
-            [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+            [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         }
         
         [self setEditing:NO animated:YES];
@@ -732,7 +695,7 @@
             [cell.infoLabel setText:infoLabelText];
             
             MEGAShareType shareType = (self.sharedItemsMode == SharedItemsModeDefault) ? [share access] : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
-            [cell.permissionsButton setImage:[self permissionsButtonImageFor:shareType] forState:UIControlStateNormal];
+            [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
             
             cell.nodeHandle = [node handle];
             
@@ -1041,7 +1004,7 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -1059,10 +1022,6 @@
 }
 
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
@@ -1158,14 +1117,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    
 }
 
 @end

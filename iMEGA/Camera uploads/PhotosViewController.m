@@ -1,23 +1,4 @@
-/**
- * @file PhotosViewController.m
- * @brief View controller that show your photos upload to Camera Uploads folder
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "PhotosViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -31,7 +12,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 
-#import "PhotosViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
 #import "CameraUploads.h"
@@ -92,7 +72,7 @@
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -100,10 +80,10 @@
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
-    if (iPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         itemsPerRow = 7;
     } else {
-        if (iPhone4X || iPhone5X) {
+        if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
             itemsPerRow = 3;
         } else {
             itemsPerRow = 4;
@@ -146,14 +126,20 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.photosCollectionView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)reloadUI {
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -349,7 +335,7 @@
     }
     
     for (MEGANode *n in [self.selectedItemsDictionary allValues]) {
-        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     [self setEditing:NO animated:YES];
 }
@@ -535,9 +521,6 @@
             photoBrowser.enableGrid = YES;
             photoBrowser.startOnGrid = NO;
             
-            // Optionally set the current visible photo before displaying
-            //    [browser setCurrentPhotoIndex:1];
-            
             [self.navigationController pushViewController:photoBrowser animated:YES];
             
             [photoBrowser showNextPhotoAnimated:YES];
@@ -648,15 +631,8 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -669,13 +645,16 @@
     return [UIColor whiteColor];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+}
+
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight;
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled] || iPhone4X) {
-        spaceHeight = 40.0f;
-    } else {
-        spaceHeight = 60.0f;
+    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
+    if (![[CameraUploads syncManager] isCameraUploadsEnabled] || ![[UIDevice currentDevice] iPhone4X]) {
+        spaceHeight += 20.0f;
     }
+    
     return spaceHeight;
 }
 

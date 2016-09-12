@@ -70,6 +70,12 @@
 "createAccount"="Vytvořit účet";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Neplatný e-mail a/nebo heslo. Zkuste to znovu";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Pokusili jste se přihlásit příliš mnohokrát. Čekejte do %@ a zkuste to znovu.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Zkontrolujte svůj e-mail a klikněte na odkaz pro potvrzení vašeho účtu.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Váš účet byl zablokován. Obraťte se na support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Zadejte platný e-mail";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Opravdu chcete odsranit tuto položku z offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Opravdu chcete odsranit tyto položky z offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Uloženo do Fotek";

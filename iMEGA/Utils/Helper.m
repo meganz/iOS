@@ -1,35 +1,16 @@
-/**
- * @file Helper.m
- * @brief Common methods for the app.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "Helper.h"
 
 #import "LTHPasscodeViewController.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 
-#import "Helper.h"
 #import "CameraUploads.h"
 #import "NodeTableViewCell.h"
 #import "PhotoCollectionViewCell.h"
@@ -486,6 +467,29 @@ static BOOL copyToPasteboard;
     return uploadQueuedTransferImage;
 }
 
++ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType {
+    UIImage *image;
+    switch (shareType) {
+        case MEGAShareTypeAccessRead:
+            image = [UIImage imageNamed:@"readPermissions"];
+            break;
+            
+        case MEGAShareTypeAccessReadWrite:
+            image =  [UIImage imageNamed:@"readWritePermissions"];
+            break;
+            
+        case MEGAShareTypeAccessFull:
+            image = [UIImage imageNamed:@"fullAccessPermissions"];
+            break;
+            
+        default:
+            image = nil;
+            break;
+    }
+    
+    return image;
+}
+
 #pragma mark - Paths
 
 + (NSString *)pathForOffline {
@@ -494,6 +498,17 @@ static BOOL copyToPasteboard;
     if (pathString == nil) {
         pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         pathString = [pathString stringByAppendingString:@"/"];
+    }
+    
+    return pathString;
+}
+
++ (NSString *)relativePathForOffline {
+    static NSString *pathString = nil;
+    
+    if (pathString == nil) {
+        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = [pathString lastPathComponent];
     }
     
     return pathString;
@@ -612,7 +627,7 @@ static BOOL copyToPasteboard;
     MEGASdk *api;
     
     // Can't create Inbox folder on documents folder, Inbox is reserved for use by Apple
-    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self pathForOffline]]) {
+    if ([node.name isEqualToString:@"Inbox"] && [folderPath isEqualToString:[self relativePathForOffline]]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderInboxError", nil)];
         return;
     }
@@ -624,24 +639,33 @@ static BOOL copyToPasteboard;
     }
     
     NSString *offlineNameString = [api escapeFsIncompatible:node.name];
-    NSString *absoluteFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
+    NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
-        if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {            
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
             MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
             
             if (offlineNodeExist) {
-                NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:absoluteFilePath error:nil];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:absoluteFilePath] decomposedStringWithCanonicalMapping]];
-            } else {
-                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
-                    absoluteFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:offlineNameString];
+                NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
+                if (replaceRange.location != NSNotFound) {
+                    NSString *result = [relativeFilePath stringByReplacingCharactersInRange:replaceRange withString:@""];
+                    NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                    [[NSFileManager defaultManager] copyItemAtPath:itemPath toPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                    [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
                 }
-                [api startDownloadNode:node localPath:absoluteFilePath];
+            } else {
+                NSString *appData = nil;
+                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    appData = @"SaveInPhotosApp";
+                }
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:node] localPath:relativeFilePath appData:appData];
             }
         }
     } else if (node.type == MEGANodeTypeFolder && [[api sizeForNode:node] longLongValue] != 0) {
+        NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath];
         if (![[NSFileManager defaultManager] fileExistsAtPath:absoluteFilePath]) {
             NSError *error;
             [[NSFileManager defaultManager] createDirectoryAtPath:absoluteFilePath withIntermediateDirectories:YES attributes:nil error:&error];
@@ -652,7 +676,7 @@ static BOOL copyToPasteboard;
         MEGANodeList *nList = [api childrenForParent:node];
         for (NSInteger i = 0; i < nList.size.integerValue; i++) {
             MEGANode *child = [nList nodeAtIndex:i];
-            [self downloadNode:child folderPath:absoluteFilePath isFolderLink:isFolderLink];
+            [self downloadNode:child folderPath:relativeFilePath isFolderLink:isFolderLink];
         }
     }
 }
@@ -913,6 +937,87 @@ static BOOL copyToPasteboard;
     return [filesURLMutableArray copy];
 }
 
+#pragma mark - Utils for empty states
+
++ (UIEdgeInsets)capInsetsForEmptyStateButton {
+    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
+    
+    return capInsets;
+}
+
++ (UIEdgeInsets)rectInsetsForEmptyStateButton {
+    UIEdgeInsets rectInsets;
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+            rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
+        } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+            CGFloat emptyStateButtonWidth = ([[UIScreen mainScreen] bounds].size.height);
+            CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
+            rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
+        }
+    } else if ([[UIDevice currentDevice] iPadDevice]) {
+        CGFloat emptyStateButtonWidth = 400.0f;
+        CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
+        rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
+    }
+    
+    return rectInsets;
+}
+
++ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive {
+    CGFloat verticalOffset = 0.0f;
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        if (isSearchBarActive) {
+            verticalOffset += -navigationBarSize.height;
+        }
+    } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+        if ([[UIDevice currentDevice] iPhoneDevice]) {
+            verticalOffset += -navigationBarSize.height/2;
+        }
+    }
+    
+    return verticalOffset;
+}
+
++ (CGFloat)spaceHeightForEmptyState {
+    CGFloat spaceHeight = 40.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
+}
+
+#pragma mark - Utils for UI
+
++ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleMutableAttributedString addAttribute:NSFontAttributeName
+                                         value:[UIFont fontWithName:kFont size:18.0f]
+                                         range:[title rangeOfString:title]];
+    
+    subtitle = [NSString stringWithFormat:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? @"\n(%@)" : @" (%@)"), subtitle];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                            value:[UIColor mnz_redD90007]
+                                            range:[subtitle rangeOfString:subtitle]];
+    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
+                                            value:[UIFont fontWithName:kFont size:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? 12.0f : 14.0f)]
+                                            range:[subtitle rangeOfString:subtitle]];
+    
+    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    
+    UILabel *label = [[UILabel alloc] init];
+    [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAttributedText:titleMutableAttributedString];
+    
+    return label;
+}
+
 #pragma mark - Logout
 
 + (void)logout {
@@ -958,7 +1063,7 @@ static BOOL copyToPasteboard;
 }
 
 + (void)clearSession {
-    [SSKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
 }
 
 + (void)deleteUserData {
@@ -1008,10 +1113,23 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:downloadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
 }
 
 + (void)deleteMasterKey {
-    // Remove Recovery Key exported file if exist
     NSError *error = nil;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

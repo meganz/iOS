@@ -1,27 +1,4 @@
-/**
- * @file SortByTableViewController.m
- * @brief View controller that shows sort options
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
 #import "SortByTableViewController.h"
-
-#import "MEGASdk.h"
 #import "Helper.h"
 
 @interface SortByTableViewController () {
@@ -45,10 +22,10 @@
     self.title = AMLocalizedString(@"sortTitle", nil);
     
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
+    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
 
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
-    [_saveBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_saveBarButtonItem.tag] forState:UIControlStateNormal];
+    [self.saveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}forState:UIControlStateNormal];
     
     if (!self.isOffline) {
         self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
@@ -65,33 +42,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Private
-
-- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
-    
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    
-    switch (buttonTag) {
-        case 0:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-            break;
-            
-        case 1:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"SFUIText-Regular" size:17.0] forKey:NSFontAttributeName];
-            break;
-    }
-    
-    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
-    
-    return titleTextAttributesDictionary;
-}
 
 - (MEGASortOrderType)orderTypeForRow:(NSInteger)row {
     

@@ -70,6 +70,12 @@
 "createAccount"="Hesap oluştur";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Geçersiz e-posta ve/veya şifre. Lütfen tekrar deneyin";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Çok fazla giriş denemesi yaptınız. Lütfen bekleyin %@";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Lütfen epostanızı kontrol edin ve hesabınızı onaylamak için gönderilen linke tıklayın.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Geçerli bir e-posta girin";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Bu öğeyi Çevrimdışı'dan silmek isteğinizden emin misiniz?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Bu öğeleri Çevrimdışı'dan silmek isteğinizden emin misiniz?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Fotoğraflarıma Kaydedildi";

@@ -70,6 +70,12 @@
 "createAccount"="Konto erstellen";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ihr Account wurde gesperrt. Bitte setzen Sie sich mit support@mega.nz in Verbindung.";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Bitte geben Sie eine gültige E-Mail-Adresse ein";
 /* Message shown when the user enters a wrong password  */
@@ -97,7 +103,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Zur Aktivierung Ihres Accounts geben Sie bitte Ihr Passwort ein";
 /* Button title that triggers the confirm account action */
-"confirmAccountButton"="Bitte bestätigen SIe Ihr Konto";
+"confirmAccountButton"="Bitte bestätigen Sie Ihr Konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Falsches Passwort";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -661,7 +667,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mein Account";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Ausloggen";
+"logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logge aus";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="In Photos gespeichert";

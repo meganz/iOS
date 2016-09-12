@@ -70,6 +70,12 @@
 "createAccount"="צור חשבון";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="כתובת מייל ו\או סיסמא לא תקינים. אנא נסה שוב";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="ניסית להתחבר יותר מדי פעמים. אנא חכה עד %@ ונסה שוב.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="אנא בדוק את המייל שלך ואשר את חשבונך.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="החשבון שלך נחסם. אנא צור קשר עם support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="הכנס אימייל תקין";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="האם אתה בטוח שברצונך למחוק את הפריט הזה מגישה לא מקוונת?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="שמור ב-\"תמונות\"";

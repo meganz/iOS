@@ -70,6 +70,12 @@
 "createAccount"="Naredi račun";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Napačna e-pošta in/ali geslo. Prosim, poskusite ponovno";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Prevečkrat ste se poskusili prijaviti. Prosim, počakajte do %@ in poskusite ponovno.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Prosim, preverite svojo e-pošto in kliknite povezavo za potrditev računa.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Vaš račun je bil blokiran. Prosim, stopite v stik s support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Vnesi veljavno e-pošto";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Ali ste prepričani, da želite izbrisati ta predmet iz datotek brez povezave?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ali ste prepričani, da želite izbrisati te predmete iz datotek brez povezave?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Shranjeno med fotografije";

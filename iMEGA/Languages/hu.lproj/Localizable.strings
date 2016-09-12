@@ -70,6 +70,12 @@
 "createAccount"="Fiók létrehozása";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Érvénytelen email és/vagy jelszó. Kérjük próbálja újra.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Fiókod le lett tiltva. Kérlek vedd fel a kapcsolatot a support@mega.nz-vel";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Írjon be érvényes emailt";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

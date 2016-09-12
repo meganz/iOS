@@ -1,24 +1,3 @@
-/**
- * @file Helper.h
- * @brief Common methods for the app.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -39,15 +18,6 @@
 #define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
 #define kFont @"SFUIText-Light"
-
-#pragma mark - Device
-
-#define iPhone4X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 480)
-#define iPhone5X    ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
-#define iPhone6     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)
-#define iPhone6Plus ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 736)
-#define iPad        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1024)
-#define iPadPro     ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -85,9 +55,12 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UIImage *)downloadQueuedTransferImage;
 + (UIImage *)uploadQueuedTransferImage;
 
++ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
+
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
++ (NSString *)relativePathForOffline;
 
 + (NSString *)pathRelativeToOfflineDirectory:(NSString *)totalPath;
 
@@ -132,6 +105,18 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSUInteger)totalOperations;
 + (void)setCopyToPasteboard:(BOOL)boolValue;
 + (BOOL)copyToPasteboard;
+
+#pragma mark - Utils for empty states
+
++ (UIEdgeInsets)capInsetsForEmptyStateButton;
++ (UIEdgeInsets)rectInsetsForEmptyStateButton;
+
++ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
++ (CGFloat)spaceHeightForEmptyState;
+
+#pragma mark - Utils for UI
+
++ (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
 #pragma mark - Logout
 
