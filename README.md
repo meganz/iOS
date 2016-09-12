@@ -14,7 +14,7 @@ This document will guide you to build the application on a Mac machine with Xcod
 * Get the source code
 
 ```
-git clone --recursive https://github.com/meganz/ios.git
+git clone https://github.com/meganz/ios.git
 cd ios
 git submodule update --init --recursive
 ```
@@ -26,7 +26,7 @@ git submodule update --init --recursive
 
 3.- Download the prebuilt third party dependencies from this link: https://mega.nz/#!hJkQSRwJ!TffjMjC5qIE1tgSk6OdU6uYQtbBHlXKrj-Wskb6Yy7Q
 
-4.- Uncompress that file and move the folder `3rdparty` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`
+4.- Uncompress that file and move the folders `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`
 
 5.- Open `iMEGA.xcworkspace`
 
