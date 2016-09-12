@@ -1,24 +1,3 @@
-/**
- * @file CreateAccountViewController.m
- * @brief View controller that allows to create an account on MEGA
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
 #import "CreateAccountViewController.h"
 
 #import "Helper.h"
@@ -66,7 +45,7 @@
     
     [self.termsOfServiceButton setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
-    if (iPhone4X || iPhone5X) {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
     }
     
@@ -89,14 +68,14 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (BOOL)validateForm {
     if (![self validateName:self.nameTextField.text]) {
@@ -219,9 +198,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         switch ([error type]) {
@@ -251,19 +227,12 @@
             [self.termsCheckboxButton setUserInteractionEnabled:NO];
             [self.createAccountButton setEnabled:NO];
             
-            [self.accountCreatedView setHidden:NO];
+            self.view = self.accountCreatedView;
         }
             
         default:
             break;
     }
 }
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 
 @end

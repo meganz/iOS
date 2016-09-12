@@ -1,23 +1,4 @@
-/**
- * @file TransfersViewController.m
- * @brief View controller that shows the transfers associated with the logged user.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "TransfersViewController.h"
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -27,7 +8,6 @@
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 
-#import "TransfersViewController.h"
 #import "TransferTableViewCell.h"
 
 @interface TransfersViewController () <UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -94,7 +74,7 @@
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     self.negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [self.negativeSpaceBarButtonItem setWidth:-5.0];
     } else {
         [self.negativeSpaceBarButtonItem setWidth:-1.0];
@@ -131,11 +111,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -399,7 +385,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)transfersList {
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
@@ -744,13 +730,10 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
@@ -775,9 +758,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
 #pragma mark - MEGATransferDelegate
@@ -838,9 +818,6 @@
     
     [self removeTransfer:transfer];
     [self.tableView reloadData];
-}
-
-- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

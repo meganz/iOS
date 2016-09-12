@@ -1,36 +1,16 @@
-/**
- * @file FileLinkViewController.m
- * @brief View controller that allows to see and manage MEGA file links.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "FileLinkViewController.h"
 
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
-#import "FileLinkViewController.h"
 #import "BrowserViewController.h"
 #import "UnavailableLinkView.h"
 #import "OfflineTableViewController.h"
@@ -103,55 +83,33 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([self.node name] == nil) {
-        [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
-    } else {
-        [self setNavigationBarTitleLabel];
-    }
+    [self setNavigationBarTitleLabel];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self setNavigationBarTitleLabel];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
 
 - (void)setNavigationBarTitleLabel {
-    if (_navigationBarLabel == nil && ([self.node name] != nil)) {
-        NSString *title = [self.node name];
-        NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-        [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:kFont size:18.0]
-                                             range:[title rangeOfString:title]];
-        NSString *subtitle;
-        if (self.fileLinkMode == FileLinkModeDefault) {
-            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"fileLink", nil)];
-        } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-            subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
-        }
-        
-        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-        [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                value:[UIColor mnz_redD90007]
-                                                range:[subtitle rangeOfString:subtitle]];
-        [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                                value:[UIFont fontWithName:kFont size:12.0]
-                                                range:[subtitle rangeOfString:subtitle]];
-        
-        [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-        [label setNumberOfLines:2];
-        [label setTextAlignment:NSTextAlignmentCenter];
-        [label setAttributedText:titleMutableAttributedString];
-        _navigationBarLabel = label;
-        [self.navigationItem setTitleView:label];
+    if ([self.node name] != nil) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:((self.fileLinkMode == FileLinkModeDefault) ? AMLocalizedString(@"fileLink", nil) : AMLocalizedString(@"folderLink", nil))];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationBarLabel = label;
+        [self.navigationItem setTitleView:self.navigationBarLabel];
     } else {
-        [self.navigationItem setTitleView:_navigationBarLabel];
+        [self.navigationItem setTitle:AMLocalizedString(@"fileLink", nil)];
     }
 }
 
@@ -175,7 +133,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X && ![text isEqualToString:@""]) {
+    if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     
@@ -286,7 +244,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self deleteTempFile];
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
@@ -330,7 +288,7 @@
             }
         }
         
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                     [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
@@ -339,9 +297,9 @@
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
                 
                 if (self.fileLinkMode == FileLinkModeDefault) {
-                    [Helper downloadNode:_node folderPath:[Helper pathForOffline] isFolderLink:NO];
+                    [Helper downloadNode:_node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
                 } else if (self.fileLinkMode == FileLinkModeNodeFromFolderLink) {
-                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper pathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:self.nodeFromFolderLink folderPath:[Helper relativePathForOffline] isFolderLink:YES];
                 }
             }];
         } else {
@@ -549,16 +507,7 @@
     return YES;
 }
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-}
-
 #pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     
@@ -626,9 +575,6 @@
     }
 }
 
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -641,9 +587,6 @@
     }
 }
 
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-}
-
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
         return;
@@ -653,9 +596,6 @@
         [self openTempFile];
         [SVProgressHUD dismiss];
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

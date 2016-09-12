@@ -1,31 +1,12 @@
-/**
- * @file CameraUploadsTableViewController.m
- * @brief View controller that show camera uploads options
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "CameraUploadsTableViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 
-#import "CameraUploadsTableViewController.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CameraUploads.h"
+#import "Helper.h"
 
 @interface CameraUploadsTableViewController ()  <UIAlertViewDelegate>
 
@@ -88,11 +69,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - IBActions
@@ -105,6 +82,18 @@
 }
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
+    if (!sender.isOn) {
+        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+        if (transferList.size.integerValue > 0) {
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.appData) {
+                    [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
+                }
+            }
+        }
+    }
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
@@ -173,9 +162,16 @@
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path failed with error: %@", error);
+    if (!sender.isOn) {
+        MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+        if (transferList.size.integerValue > 0) {
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.appData && isVideo(transfer.fileName.pathExtension)) {
+                    [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
+                }
+            }
+        }
     }
     
     [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;

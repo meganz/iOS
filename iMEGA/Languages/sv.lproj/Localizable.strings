@@ -70,6 +70,12 @@
 "createAccount"="Skapa konto";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ogiltig e-post och / eller lösenord. Var god försök igen";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Du har försökt logga in för många gånger. Vänta tills% @ och försök igen.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Kontrollera din e-post och klicka på länken för att bekräfta ditt konto.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ditt konto har blivit blockerat. Var vänlig och kontakta support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Skriv in en giltig email";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Är du säker på att du vill ta bort objektet från offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Är du säker på att du vill ta bort dessa objekt från offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Sparad i bilder";

@@ -140,8 +140,6 @@
         [[MEGAPurchase sharedInstance] purchaseProduct:[MEGAPurchase sharedInstance].validProduct];
         
     } else {
-        // Product is NOT available in the App Store, so notify user.
-        
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         UIAlertView *unavailAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"productNotAvailable", nil) message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
         [unavailAlert show];
@@ -149,28 +147,10 @@
 }
 
 - (void)successfulPurchase:(MEGAPurchase *)megaPurchase restored:(BOOL)isRestore {
-    // Purchase or Restore request was successful, so...
-    // 1 - Unlock the purchased content for your new customer!
-    // 2 - Notify the user that the transaction was successful.
-    
     if (!isPurchased) {
-        // If paid status has not yet changed, then do so now. Checking
-        // isPurchased boolean ensures user is only shown Thank You message
-        // once even if multiple transaction receipts are successfully
-        // processed (such as past subscription renewals).
-        
         isPurchased = YES;
         
-        //-------------------------------------
-        
-        // 1 - Unlock the purchased content and update the app's stored settings.
-        
-        //-------------------------------------
-        
-        // 2 - Notify the user that the transaction was successful.
-        
         if (isRestore) {
-            // This was a Restore request.
             UIAlertView *updatedAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"thankYou_title", nil) message:AMLocalizedString(@"purchaseRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
             [updatedAlert setDelegate:self];
             [updatedAlert setTag:0];
@@ -189,11 +169,6 @@
 }
 
 - (void)incompleteRestore {
-    // Restore queue did not include any transactions, so either the user has not yet made a purchase
-    // or the user's prior purchase is unavailable, so notify user to make a purchase within the app.
-    // If the user previously purchased the item, they will NOT be re-charged again, but it should
-    // restore their purchase.
-    
     UIAlertView *incompleteRestoreAlert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"incompleteRestore_title", nil) message:AMLocalizedString(@"incompleteRestore_message", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
     [incompleteRestoreAlert show];
 }

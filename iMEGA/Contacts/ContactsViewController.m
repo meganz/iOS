@@ -1,23 +1,4 @@
-/**
- * @file ContactsTableViewController.m
- * @brief View controller that show your contacts
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "ContactsViewController.h"
 
 #import <AddressBookUI/AddressBookUI.h>
 #import <ContactsUI/ContactsUI.h>
@@ -33,7 +14,6 @@
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 
-#import "ContactsViewController.h"
 #import "ContactTableViewCell.h"
 #import "BrowserViewController.h"
 #import "SharedItemsViewController.h"
@@ -93,7 +73,7 @@
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -115,13 +95,13 @@
         case ContactsShareFolderWith:
         case ContactsShareFoldersWith: {
             [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-            [_cancelBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_cancelBarButtonItem.tag] forState:UIControlStateNormal];
+            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
             [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
             
             [_insertAnEmailBarButtonItem setTitle:AMLocalizedString(@"addFromEmail", nil)];
             [_shareFolderWithBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
-            [_insertAnEmailBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_insertAnEmailBarButtonItem.tag] forState:UIControlStateNormal];
-            [_shareFolderWithBarButtonItem setTitleTextAttributes:[self titleTextAttributesForButton:_shareFolderWithBarButtonItem.tag] forState:UIControlStateNormal];
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             [self.navigationController.topViewController setToolbarItems:@[_shareFolderWithBarButtonItem, flexibleItem, _insertAnEmailBarButtonItem ] animated:NO];
             [self.navigationController setToolbarHidden:NO];
@@ -196,11 +176,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -306,7 +292,7 @@
                                                     otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
     [actionSheet setTag:1];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showInView:self.view];
     } else {
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
@@ -320,29 +306,6 @@
             [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }
     }
-}
-
-- (UIImage *)permissionsButtonImageFor:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
 }
 
 - (void)shareFolder {
@@ -370,25 +333,6 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
     
     return [emailTest evaluateWithObject:email];
-}
-
-- (NSDictionary *)titleTextAttributesForButton:(NSInteger)buttonTag {
-    
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    
-    switch (buttonTag) {
-        case 0:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-            break;
-            
-        case 1:
-            [titleTextAttributesDictionary setValue:[UIFont fontWithName:@"SFUIText-Regular" size:17.0] forKey:NSFontAttributeName];
-            break;
-    }
-    
-    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
-    
-    return titleTextAttributesDictionary;
 }
 
 - (BOOL)userTypeHasChanged:(MEGAUser *)user {
@@ -486,7 +430,7 @@
                                                     otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
     [actionSheet setTag:0];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
     } else {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
@@ -592,7 +536,7 @@
             [self requestUserNameAndLastNameWithEmail:userEmail];
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
-        [cell.permissionsImageView setImage:[self permissionsButtonImageFor:share.access]];
+        [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         [cell.nameLabel setText:userEmail];
@@ -1023,15 +967,8 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
-    }
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -1041,7 +978,7 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods

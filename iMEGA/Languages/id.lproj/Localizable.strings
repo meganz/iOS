@@ -70,6 +70,12 @@
 "createAccount"="Buat Akun";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail atau password tidak sah. Harap coba kembali";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Harap cek email anda dan klik link untuk mengkonfirmasi akun anda.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Akun anda telah di-blok. Harap kontak support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Masukan email yang benar";
 /* Message shown when the user enters a wrong password  */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Tinggalkan";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder ditinggalkan";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

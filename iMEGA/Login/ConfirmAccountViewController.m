@@ -1,29 +1,10 @@
-/**
- * @file ConfirmAccountViewController.m
- * @brief View controller that allows to confirm an account on MEGA
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
 #import "ConfirmAccountViewController.h"
+
+#import "SAMKeychain.h"
+#import "SVProgressHUD.h"
+
 #import "MainTabBarController.h"
 
-#import "SSKeychain.h"
-#import "SVProgressHUD.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
@@ -63,11 +44,11 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    if ([[UIDevice currentDevice] iPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - IBActions
@@ -87,7 +68,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (BOOL)validateForm {
     if (![self validatePassword:self.passwordTextField.text]) {
@@ -142,9 +123,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         switch ([error type]) {
@@ -191,15 +169,12 @@
             
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-            [SSKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         }
             
         default:
             break;
     }
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
 @end

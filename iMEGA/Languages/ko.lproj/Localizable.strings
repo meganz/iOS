@@ -70,6 +70,12 @@
 "createAccount"="계정 만들기";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="잘못된 이메일 또는 비밀번호입니다. 다시 시도하세요";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="로그인 시도를 너무 많이 했습니다. %@까지 기다렸다가 다시 시도하세요.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="계정을 인증하려면 이메일을 확인하고 링크를 클릭하세요.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="계정이 막혔습니다. support@mega.nz로 연락하세요";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
 /* Message shown when the user enters a wrong password  */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="정말 이 항목을 오프라인에서 삭제하시겠습니까?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="정말 이 항목들을 오프라인에서 삭제하시겠습니까?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Photos에 저장됨";

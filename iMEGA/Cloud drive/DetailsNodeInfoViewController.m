@@ -1,23 +1,4 @@
-/**
- * @file DetailsNodeInfoViewController.m
- * @brief View controller that show details info about a node
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "DetailsNodeInfoViewController.h"
 
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
@@ -25,7 +6,6 @@
 
 #import "Helper.h"
 
-#import "DetailsNodeInfoViewController.h"
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "NodeTableViewCell.h"
@@ -52,6 +32,8 @@
     
     UILabel *navigationBarLabel;
 }
+
+@property (nonatomic) BOOL isOwnChange;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
@@ -123,12 +105,22 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
+            [self setNavigationBarTitleLabel];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
+
+#pragma mark - Private
 
 - (void)reloadUI {
     if ([self.node type] == MEGANodeTypeFile) {
@@ -177,8 +169,6 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Private
-
 - (void)download {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (![Helper isFreeSpaceEnoughToDownloadNode:self.node isFolderLink:NO]) {
@@ -186,7 +176,7 @@
         }
         
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-        [Helper downloadNode:self.node folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:self.node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
         
         if ([self.node isFolder]) {
             [self.navigationController popViewControllerAnimated:YES];
@@ -343,7 +333,7 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    NSString *accessTypeString = @"";
+    NSString *accessTypeString;
     switch (accessType) {
         case MEGAShareTypeAccessRead:
             accessTypeString = AMLocalizedString(@"readOnly", nil);
@@ -356,30 +346,20 @@
         case MEGAShareTypeAccessFull:
             accessTypeString = AMLocalizedString(@"fullAccess", nil);
             break;
+            
+        default:
+            accessTypeString = @"";
+            break;
     }
     
-    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", accessTypeString];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:12.0]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    NSString *title = [self.node name];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0]
-                                         range:[title rangeOfString:title]];
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-    navigationBarLabel = label;
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    [self.navigationItem setTitleView:label];
+    if ([self.node name] != nil) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.node.name subtitle:accessTypeString];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        navigationBarLabel = label;
+        [self.navigationItem setTitleView:navigationBarLabel];
+    } else {
+        [self.navigationItem setTitle:[NSString stringWithFormat:@"(%@)", accessTypeString]];
+    }
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
@@ -475,12 +455,12 @@
         case 1: {
             if (buttonIndex == 1) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    self.isOwnChange = YES;
                     if (self.displayMode == DisplayModeCloudDrive) {
                         [[MEGASdkManager sharedMEGASdk] moveNode:self.node newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
                     } else { //DisplayModeRubbishBin (Remove), DisplayModeSharedItem (Remove share)
                         [[MEGASdkManager sharedMEGASdk] removeNode:self.node];
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
             break;
@@ -1009,10 +989,6 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         return;
@@ -1059,9 +1035,28 @@
             break;
         }
             
+        case MEGARequestTypeMove:
         case MEGARequestTypeRemove: {
-            if (self.displayMode == DisplayModeSharedItem) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", nil)];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            if (self.displayMode == DisplayModeCloudDrive) {
+                NSString *message;
+                if ([self.node isFile]) {
+                    message = AMLocalizedString(@"fileMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file to the Rubbish Bin");
+                } else if ([self.node isFolder]) {
+                    message = AMLocalizedString(@"folderMovedToRubbishBinMessage", @"Success message shown when you have moved 1 folder to the Rubbish Bin");
+                }
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudRubbishBin"] status:message];
+            } else if (self.displayMode == DisplayModeRubbishBin) {
+                NSString *message;
+                if ([self.node isFile]) {
+                    message = AMLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
+                } else if ([self.node isFolder]) {
+                    message = AMLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
+                }
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
+            } else if (self.displayMode == DisplayModeSharedItem) {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"shareLeft", @"Message shown when a share has been left")];
             }
             break;
         }
@@ -1071,21 +1066,11 @@
     }
 }
 
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 #pragma mark - MEGAGlobalDelegate
 
-- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList{
-}
-
-- (void)onReloadNeeded:(MEGASdk *)api {
-}
-
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.isOwnChange) return;
+    
     MEGANode *nodeUpdated;
     
     NSUInteger size = [[nodeList size] unsignedIntegerValue];
@@ -1168,9 +1153,6 @@
             [self.tableView reloadData];
         }
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

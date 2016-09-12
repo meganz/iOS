@@ -1,7 +1,7 @@
+#import "PreviewDocumentViewController.h"
 
 #import <QuickLook/QuickLook.h>
 
-#import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 
@@ -46,11 +46,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate

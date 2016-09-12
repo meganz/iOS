@@ -1,31 +1,9 @@
-/**
- * @file CameraUploads.m
- * @brief Uploads assets from device to your mega account
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
-#import <UIKit/UIKit.h>
+#import "CameraUploads.h"
 
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "MEGAAssetOperation.h"
 
-#import "CameraUploads.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
@@ -93,15 +71,11 @@ static CameraUploads *instance = nil;
     
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
     
-    [self setBadgeValue];
+    [self setBadgeValue:nil];
     
     if (_isCameraUploadsEnabled) {
-        if (_isUseCellularConnectionEnabled) {
+        if (_isUseCellularConnectionEnabled || [MEGAReachabilityManager isReachableViaWiFi]) {
             [self setIsCameraUploadsEnabled:YES];
-        } else {
-            if ([MEGAReachabilityManager isReachableViaWiFi]) {
-                [self setIsCameraUploadsEnabled:YES];
-            }
         }
     }
 }
@@ -110,6 +84,10 @@ static CameraUploads *instance = nil;
     _isCameraUploadsEnabled = isCameraUploadsEnabled;
     
     if (isCameraUploadsEnabled) {
+        if (self.shouldCameraUploadsBeDelayed) {
+            return;
+        }
+        
         MEGALogInfo(@"Camera Uploads enabled");
         self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
         self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
@@ -162,6 +140,7 @@ static CameraUploads *instance = nil;
         self.isUploadVideosEnabled = NO;
         self.isUseCellularConnectionEnabled = NO;
         self.isOnlyWhenChargingEnabled = NO;
+        self.shouldCameraUploadsBeDelayed = NO;
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:_isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
@@ -198,14 +177,16 @@ static CameraUploads *instance = nil;
         MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
         
         [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
-            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] >= [self.lastUploadVideoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
+            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] >= [self.lastUploadPhotoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }            
         }];
+        
+        [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
     } else {
         __block NSInteger totalAssets = 0;
         
@@ -216,10 +197,10 @@ static CameraUploads *instance = nil;
                               resultBlock:^(ALAsset *asset) {
                                   NSDate *assetCreationTime = [asset valueForProperty:ALAssetPropertyDate];
                                   
-                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] >= [self.lastUploadVideoDate timeIntervalSince1970])) {
                                       MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
-                                  } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
+                                  } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] >= [self.lastUploadPhotoDate timeIntervalSince1970])) {
                                       MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
                                   }
@@ -255,7 +236,7 @@ static CameraUploads *instance = nil;
 
 #pragma mark - Utils
 
-- (void)setBadgeValue {
+- (void)setBadgeValue:(NSString *)value {
     NSInteger cameraUploadsTabPosition;
     for (cameraUploadsTabPosition = 0 ; cameraUploadsTabPosition < self.tabBarController.viewControllers.count ; cameraUploadsTabPosition++) {
         if ([[[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem] tag] == 1) {
@@ -263,16 +244,15 @@ static CameraUploads *instance = nil;
         }
     }
     
-    NSString *badgeValue = nil;
-    if ([self.assetsOperationQueue operationCount] > 0) {
-        badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[self.assetsOperationQueue operationCount]];
+    if (![value boolValue]) {
+        value = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ((cameraUploadsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
-            [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
+        if ((cameraUploadsTabPosition >= 4) && [[UIDevice currentDevice] iPhoneDevice]) {
+            [[[self.tabBarController moreNavigationController] tabBarItem] setBadgeValue:value];
         }
-        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = badgeValue;
+        [[self.tabBarController.viewControllers objectAtIndex:cameraUploadsTabPosition] tabBarItem].badgeValue = value;
     });
 }
 

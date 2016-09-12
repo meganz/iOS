@@ -1,23 +1,4 @@
-/**
- * @file CloudDriveTableViewController.m
- * @brief Cloud drive table view controller of the app.
- *
- * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "CloudDriveTableViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -30,6 +11,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
 
+#import "NSFileManager+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -42,7 +24,6 @@
 #import "MEGAStore.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveTableViewController.h"
 #import "DetailsNodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
@@ -104,9 +85,6 @@
     self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
     [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
     
-    [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
-    
     [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -120,7 +98,7 @@
             MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
             
             UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+            if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
                 [negativeSpaceBarButtonItem setWidth:-8.0];
             } else {
                 [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -205,11 +183,17 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -554,7 +538,6 @@
     } else {
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
-//    MEGANode *n = [self.nodes nodeAtIndex:indexPath.row];
     
     if (self.displayMode == DisplayModeCloudDrive && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] < MEGAShareTypeAccessFull) {
         return UITableViewCellEditingStyleNone;
@@ -761,6 +744,11 @@
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    if (parentShareType == MEGAShareTypeAccessRead) {
+        return nil;
+    }
+    
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
@@ -788,15 +776,13 @@
 }
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 54.0, 12.0, 54.0);
-    UIEdgeInsets rectInsets;
-    if (iPhone4X || iPhone5X || iPhone6 || iPhone6Plus) {
-        rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-    } else  if (iPad) {
-        rectInsets = UIEdgeInsetsMake(0.0, -182.0, 0.0, -182.0);
-    } else if (iPadPro) {
-        rectInsets = UIEdgeInsetsMake(0.0, -310.0, 0.0, -310.0);
+    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+    if (parentShareType == MEGAShareTypeAccessRead) {
+        return nil;
     }
+    
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
     return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
@@ -806,15 +792,11 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self.searchDisplayController isActive]) {
-        return -66.0;
-    }
-    
-    return 0.0f;
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
@@ -991,31 +973,39 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [formatter setLocale:locale];
     
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
-        NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
-        NSString *moviePath = [videoUrl path];
-        
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-            UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
+        NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[videoUrl path] error:nil];
+        NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
+        NSString *videoName = [[formatter stringFromDate:modificationDate] stringByAppendingPathExtension:@"mov"];
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] moveItemAtPath:[videoUrl path] toPath:localFilePath error:&error]) {
+            MEGALogError(@"Move item at path failed with error: %@", error);
         }
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:moviePath parent:self.parentNode];
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        [formatter setLocale:locale];
-        
         NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
-        NSString *imagePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
+        
+        NSString *uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+        NSString *imagePath = [uploadsDirectory stringByAppendingPathComponent:filename];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:imagePath parent:self.parentNode];
+        if (isImage(imagePath.pathExtension)) {
+            [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
+            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
+        }
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
     }
     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
     
@@ -1061,7 +1051,7 @@
     }
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 - (void)reloadUI {
     switch (self.displayMode) {
@@ -1111,14 +1101,23 @@
     
     if ([[self.nodes size] unsignedIntegerValue] == 0) {
         [_editBarButtonItem setEnabled:NO];
+        
+        [self.tableView setTableHeaderView:nil];
+        [self.tableView setContentOffset:CGPointZero];
     } else {
         [_editBarButtonItem setEnabled:YES];
+        
+        [self.tableView setTableHeaderView:self.searchDisplayController.searchBar];
+        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
     }
     
     [self.tableView reloadData];
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     
     if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
@@ -1135,7 +1134,7 @@
         imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
         imagePickerController.delegate = self;
         
-        if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        if ([[UIDevice currentDevice] iPadDevice] && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
             UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -1319,7 +1318,7 @@
                                          otherButtonTitles:AMLocalizedString(@"newFolder", @"New Folder"), AMLocalizedString(@"choosePhotoVideo", @"Choose"), AMLocalizedString(@"capturePhotoVideo", @"Capture"), nil];
     }
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
     } else {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
@@ -1337,7 +1336,7 @@
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
     
     for (MEGANode *n in self.selectedNodesArray) {
-        [Helper downloadNode:n folderPath:[Helper pathForOffline] isFolderLink:NO];
+        [Helper downloadNode:n folderPath:[Helper relativePathForOffline] isFolderLink:NO];
     }
     
     [self setEditing:NO animated:YES];
@@ -1537,7 +1536,11 @@
 
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
     if (controller.documentPickerMode == UIDocumentPickerModeImport) {
-        NSString *localFilePath = [url path];
+        NSError *error = nil;
+        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:url.lastPathComponent];
+        if (![[NSFileManager defaultManager] moveItemAtPath:[url path] toPath:localFilePath error:&error]) {
+            MEGALogError(@"Move item at path failed with error: %@", error);
+        }
         
         NSString *crcLocal = [[MEGASdkManager sharedMEGASdk] CRCForFilePath:localFilePath];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeByCRC:crcLocal parent:self.parentNode];
@@ -1546,7 +1549,11 @@
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath parent:self.parentNode];
+            if (isImage(localFilePath.pathExtension)) {
+                [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_thumbnail"]];
+                [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_preview"]];
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;
@@ -1739,19 +1746,12 @@
     }
 }
 
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-}
-
 #pragma mark - MEGAGlobalDelegate
-
-- (void)onReloadNeeded:(MEGASdk *)api {
-}
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self.nodesIndexPathMutableDictionary removeAllObjects];
     [self reloadUI];
 }
-
 
 #pragma mark - MEGATransferDelegate
 
@@ -1818,21 +1818,7 @@
         if (indexPath != nil) {
             [self reloadRowsAtIndexPaths:@[indexPath]];
         }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        if ([[transfer fileName] isEqualToString:@"capturedvideo.MOV"]) {
-            MEGANode *node = [api nodeForHandle:[transfer nodeHandle]];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            [formatter setLocale:locale];
-            NSString *name = [[formatter stringFromDate:node.modificationTime] stringByAppendingPathExtension:@"mov"];
-            [api renameNode:node newName:name];
-        } 
     }
-}
-
-- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
 }
 
 @end

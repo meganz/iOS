@@ -1,30 +1,10 @@
-/**
- * @file AppDelegate.m
- * @brief The AppDelegate of the app
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
-
+#import "AppDelegate.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 
 #import "LTHPasscodeViewController.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "CameraUploads.h"
@@ -33,8 +13,8 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 
-#import "AppDelegate.h"
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ConfirmAccountViewController.h"
@@ -68,8 +48,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
-    UIVisualEffectView *visualEffectView;
-    
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -80,6 +58,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     BOOL isFirstAPI_EAGAIN;
     NSTimer *timerAPI_EAGAIN;
 }
+
+@property (nonatomic, strong) UIView *privacyView;
 
 @property (nonatomic, strong) NSURL *link;
 @property (nonatomic) URLType urlType;
@@ -133,14 +113,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self languageCompatibility];
     
     // Delete username and password if exists - V1
-    if ([SSKeychain passwordForService:@"MEGA" account:@"username"] && [SSKeychain passwordForService:@"MEGA" account:@"password"]) {
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"username"];
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"password"];
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"username"] && [SAMKeychain passwordForService:@"MEGA" account:@"password"]) {
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"username"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
     }
     
     // Session from v2
-    NSData *sessionV2 = [SSKeychain passwordDataForService:@"MEGA" account:@"session"];
-    NSString *sessionV3 = [SSKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    NSData *sessionV2 = [SAMKeychain passwordDataForService:@"MEGA" account:@"session"];
+    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     if (sessionV2) {
         // Save session for v3 and delete the previous one
@@ -149,7 +129,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
         sessionV3 = [sessionV3 stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
-        [SSKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+        [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
         
         [self removeOldStateCache];
         
@@ -168,7 +148,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         // Camera uploads settings
         [self cameraUploadsSettingsCompatibility];
         
-        [SSKeychain deletePasswordForService:@"MEGA" account:@"session"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"session"];
     }
 
     // Rename attributes (thumbnails and previews)- handle to base64Handle
@@ -240,17 +220,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    // Let the device know we want to receive push notifications
-//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-//                                                                                             |UIRemoteNotificationTypeSound
-//                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
-//        [application registerUserNotificationSettings:settings];
-//    } else {
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        [application registerForRemoteNotificationTypes:myTypes];
-//    }
-    
     if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
@@ -274,15 +243,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self startBackgroundTask];
     
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        if (visualEffectView == nil ) {
-            UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-            visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-            [visualEffectView.contentView setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:0.75]];
-            visualEffectView.frame = self.window.bounds;
-        }
-        [self.window addSubview:visualEffectView];
+    if (self.privacyView == nil) {
+        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        self.privacyView = privacyVC.view;
     }
+    [self.window addSubview:self.privacyView];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -290,9 +255,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        [visualEffectView removeFromSuperview];
-    }
+    [self.privacyView removeFromSuperview];
+    self.privacyView = nil;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -307,27 +271,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
-    if (![SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if (![SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [Helper logout];
-    } else {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
-        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
-        
+    }
+    
+    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] == 0) {
         [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
-    }
-    
-    // Clean up temporary directory
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
-        MEGALogError(@"Remove item at path failed with error: %@", error);
-    }
-    
-    // Clean up Documents/Inbox directory
-    NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
-        error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
+        
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error)
+        }
+        
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error)
         }
     }
@@ -336,7 +292,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     self.link = url;
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
             [self processLink:self.link];
         }
@@ -366,41 +322,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
     }
 }
-
-//#pragma mark - Push Notifications
-//
-//#ifdef __IPHONE_8_0
-//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-//    //register to receive notifications
-//    [application registerForRemoteNotifications];
-//}
-//
-//- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-//    //handle the actions
-//    if ([identifier isEqualToString:@"declineAction"]){
-//    }
-//    else if ([identifier isEqualToString:@"answerAction"]){
-//    }
-//}
-//#endif
-//
-//- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
-//    NSString* newToken = [deviceToken description];
-//    NSLog(@"device token %@", newToken);
-//}
-//
-//- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
-//    NSLog(@"Failed to get token, error: %@", error);
-//}
-//
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
-//        [[CameraUploads syncManager] getAllAssetsForUpload];
-//        [self startBackgroundTask];
-//    
-//        completionHandler(UIBackgroundFetchResultNewData);
-//    }
-//}
 
 #pragma mark - Private
 
@@ -467,7 +388,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:NO];
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
             break;
         }
             
@@ -490,7 +411,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)self.window.rootViewController];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
             }
             break;
         }
@@ -665,7 +586,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isBackupLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#backup"]; //mega://"#backup"
     if (isBackupLink) {
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
             [securityOptionsTVC.navigationItem setRightBarButtonItem:[self cancelBarButtonItem]];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
@@ -691,7 +612,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     BOOL isIncomingPendingContactsLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#fm/ipc"]; //mega://"#fm/ipc"
     if (isIncomingPendingContactsLink) {
-        if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
             [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
@@ -712,7 +633,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)openIn {
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
         browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
@@ -722,23 +643,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self presentLinkViewController:browserNavigationController];
     }
     self.link = nil;
-}
-
-- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
-        } else {
-            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
-                NSError *error = nil;
-                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error)
-                }
-            }
-        }
-    }
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
@@ -762,6 +666,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
     }
     [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
+}
+
+- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
+        } else {
+            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
+                    MEGALogError(@"Remove item at path failed with error: %@", error)
+                }
+            }
+        }
+    }
 }
 
 - (void)startTimerAPI_EAGAIN {
@@ -833,12 +754,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)batteryChanged:(NSNotification *)notification {
     if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        // Status battery unplugged
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
             [[CameraUploads syncManager] resetOperationQueue];
-        }
-        // Status battery plugged
-        else {
+        } else {
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
@@ -1026,6 +944,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (!nodeList) {
+        MEGATransferList *transferList = [api uploadTransfers];
+        if (transferList.size.integerValue == 0) {
+            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            }
+        } else {
+            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
+                MEGATransfer *transfer = [transferList transferAtIndex:i];
+                if (transfer.appData) {
+                    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                        if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+                            [api cancelTransfer:transfer];
+                        } else {
+                            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
+                            [[CameraUploads syncManager] setBadgeValue:transfer.appData];
+                        }
+                    } else {
+                        [api cancelTransfer:transfer];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1080,10 +1028,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-#endif
-    
     if ([request type] == MEGARequestTypeFetchNodes){
         if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
             LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
@@ -1093,10 +1037,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [launchVC.activityIndicatorView stopAnimating];
                 [launchVC.activityIndicatorView setHidden:YES];
                 isFirstFetchNodesRequestUpdate = NO;
+                
+                [launchVC.logoImageView.layer addSublayer:launchVC.circularShapeLayer];
+                launchVC.circularShapeLayer.strokeStart = 0.0f;
             }
             
-            if (progress > 0 && progress < 0.99) {
-                [launchVC.progressView setProgress:progress];
+            if (progress > 0 && progress <= 1.0) {
+                launchVC.circularShapeLayer.strokeEnd = progress;
             }
         }
     }
@@ -1208,7 +1155,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeLogin: {
             [timerAPI_EAGAIN invalidate];
             
-            if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
             } else {
@@ -1222,6 +1169,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
+            [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
+            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
             
             if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
@@ -1262,9 +1211,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             
             [[CameraUploads syncManager] setTabBarController:_mainTBC];
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
@@ -1396,10 +1342,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-#endif
-    
     switch ([request type]) {
         case MEGARequestTypeLogin:
         case MEGARequestTypeFetchNodes: {
@@ -1425,9 +1367,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-#endif
+    if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
+        [api cancelTransfer:transfer];
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1445,10 +1387,27 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (node) {
             [[Helper downloadingNodes] removeObjectForKey:node.base64Handle];
         }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:transfer.path error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error)
+    }
+    
+    if ([transfer type] == MEGATransferTypeUpload && isImage([transfer fileName].pathExtension)) {
+        NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+        if ([error type] == MEGAErrorTypeApiOk) {
+            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
+            
+            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+            [[NSFileManager defaultManager] moveItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
+        }
+        else {
+            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_thumbnail"] error:nil];
+            [[NSFileManager defaultManager] removeItemAtPath:[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByAppendingString:@"_preview"] error:nil];
+        }
+    }
+    
+    if ([transfer type] == MEGATransferTypeUpload && [CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
+        [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
+        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }
     
@@ -1466,22 +1425,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     if ([transfer type] == MEGATransferTypeDownload) {
-        // Don't add to the database downloads to the tmp folder
-        if ([transfer.path rangeOfString:@"/tmp/" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // Don't add to the database files saved in others applications
+        if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
 
-            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(transfer.path) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"]) {
-                UISaveVideoAtPathToSavedPhotosAlbum(transfer.path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
+                UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
             }
             
-            if (isImage([transfer fileName].pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) {
-                NSURL *imageURL = [NSURL fileURLWithPath:transfer.path];
+            if (isImage([transfer fileName].pathExtension)) {
+                NSURL *imageURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
                 
                 [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                     PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
                     [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
                     
                 } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-                    [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
+                    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] error:nil];
                     if (nserror) {
                         MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
                     }
@@ -1493,7 +1452,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
         if (!offlineNodeExist) {
             MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
-            [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[[Helper pathRelativeToOfflineDirectory:transfer.path] decomposedStringWithCanonicalMapping]];
+            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
+            if (replaceRange.location != NSNotFound) {
+                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
+                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
+            }
         }
         
         if (isImage([transfer fileName].pathExtension)) {
@@ -1501,19 +1464,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
             if (!thumbnailExists) {
-                [api createThumbnail:[transfer path] destinatioPath:thumbnailFilePath];
+                [api createThumbnail:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:thumbnailFilePath];
             }
             
             NSString *previewFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"];
             BOOL previewExists = [[NSFileManager defaultManager] fileExistsAtPath:previewFilePath];
             
             if (!previewExists) {
-                [api createPreview:[transfer path] destinatioPath:previewFilePath];
+                [api createPreview:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:previewFilePath];
             }
         }
         
         if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
-            NSURL *videoURL = [NSURL fileURLWithPath:transfer.path];
+            NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
             AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
             generator.appliesPreferredTrackTransform = YES;
@@ -1537,19 +1500,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
-    } else if ([transfer type] == MEGATransferTypeUpload) {
-        if (isImage([transfer fileName].pathExtension)) {
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            [api createThumbnail:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"]];
-            [api createPreview:transfer.path destinatioPath:[Helper pathForNode:node searchPath:NSCachesDirectory directory:@"previewsV3"]];
-        }
     }
-}
-
--(void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-#ifdef DEBUG
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-#endif
 }
 
 #pragma mark - MEGAContactRequest

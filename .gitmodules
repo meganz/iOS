@@ -7,9 +7,6 @@
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
-[submodule "iMEGA/Vendor/sskeychain"]
-	path = iMEGA/Vendor/sskeychain
-	url = https://github.com/meganz/sskeychain.git
 [submodule "iMEGA/Vendor/GKContactImage"]
 	path = iMEGA/Vendor/GKContactImage
 	url = https://github.com/gekitz/GKContactImage.git
@@ -37,3 +34,12 @@
 [submodule "iMEGA/Vendor/PureLayout"]
 	path = iMEGA/Vendor/PureLayout
 	url = https://github.com/smileyborg/PureLayout
+[submodule "iMEGA/Vendor/UIBarButtonItem-Badge"]
+	path = iMEGA/Vendor/UIBarButtonItem-Badge
+	url = https://github.com/meganz/UIBarButtonItem-Badge.git
+[submodule "iMEGA/Vendor/PieChartView"]
+	path = iMEGA/Vendor/PieChartView
+	url = https://github.com/astrokin/PieChart.git
+[submodule "iMEGA/Vendor/SAMKeychain"]
+	path = iMEGA/Vendor/SAMKeychain
+	url = https://github.com/soffes/SAMKeychain.git

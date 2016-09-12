@@ -70,6 +70,12 @@
 "createAccount"="Tạo Tài khoản";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email hoặc mật khẩu nhập không đúng. Xin thử lại";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Bạn đã nhập thông tin đăng nhập sai quá nhiều lần. Xin vui lòng chờ tới %@ rồi thử lại.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Xin kiểm tra hộp thư email của bạn và click vào đường liên kết để xác thực tài khoản.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Message shown when the user enters a wrong password  */
@@ -121,7 +127,7 @@
 /* Message shown when a download starts */
 "downloadStarted"="Đang tải xuống";
 /* Title for the folder link view */
-"folderLink"="Đường dẫn liên kết Thư mục";
+"folderLink"="Đường dẫn liên kết Thư Mục";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -143,13 +149,13 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Dọn Thùng Rác";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="No files Saved for Offline";
+"offlineEmptyState_title"="Không có tệp tin nào được Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Không có liên lạc";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
+"noIncomingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ mới nào được gửi TỚI bạn";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
+"noOutgoingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ mới nào được gửi ĐI từ bạn";
 /* Title of My Contacts section */
 "myContacts"="Danh bạ";
 /* Title of Contacts requests section */
@@ -167,7 +173,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="Đã xóa bỏ yêu cầu";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="No pending requests";
+"noRequestPending"="Không có lời mời nào cần xem";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Các Truyền Tải Bị Dừng";
 /* Title shown when the there's no transfers and they aren't paused */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Rời khỏi";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi mục chia sẻ này không?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các mục chia sẻ này không?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Đã rời khỏi thư mục";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -505,7 +511,7 @@
 /* Title of one of the Settings sections where you can see things "About" the app */
 "about"="Thông tin";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Ngôn ngữ";
+"language"="Language";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
@@ -549,11 +555,11 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
+"masterKeyExported_alertMessage"="Mã Phục Hồi đã được lưu vào mục Ngoại Tuyến với tên RecoveryKey.txt. Ghi chú: tệp tin sẽ bị xóa một khi bạn đăng xuất, xin chuyển tệp tin tới một chỗ khác an toàn hơn.";
 /* Alert title shown when you have removed your MEGA Recovery Key */
 "masterKeyRemoved"="Đã xóa Mã Phục Hồi";
 /* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
+"masterKeyRemoved_alertMessage"="Tệp tin chứa Mã Phục Hồi (RecoveryKey.txt) đã được xóa khỏi thư mục Tệp Tài Liệu.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Trong điện thoại";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Bạn có chắc muốn xóa mục này khỏi mục lưu Ngoại Tuyến?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Saved in Photos";

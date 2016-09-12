@@ -67,9 +67,15 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Вход";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Создать учётную запись";
+"createAccount"="Регистрация";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Неправильный email/пароль. Пожалуйста попробуйте еще раз.";
+/* Error message when to many attempts to login */
+"tooManyAttemptsLogin"="Вы пытались зайти очень много раз. Пожалуйста, подождите до %@ и попробуйте снова.";
+/* Error message when trying to login to an account not validated */
+"accountNotValidated"="Проверьте электронную почту и перейдите по ссылке для подтверждения учётной записи.";
+/* Error message when trying to login and the account is blocked */
+"accountBlocked"="Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
 "emailInvalidFormat"="Введите правильный email";
 /* Message shown when the user enters a wrong password  */
@@ -119,7 +125,7 @@
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="Это могло произойти по следующим причинам:- Файл был удален из-за нарушения условий предоставления услуг.- Неправильный URL - ссылка, к которой Вы пытаетесь получить доступ, не существует.- Файл был удален пользователем.";
 /* Message shown when a download starts */
-"downloadStarted"="Скачка начата";
+"downloadStarted"="Загрузка запущена";
 /* Title for the folder link view */
 "folderLink"="Ссылка папки";
 /* Button title which downloads a file/folder to your device */
@@ -473,9 +479,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Выйти";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="Действительно покинуть?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="Действительно покинуть?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Папка оставлена";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
@@ -748,5 +754,3 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
-/* Success message shown when you save a photo in Photos app */
-"savedInCameraRoll"="Сохранено в фотографиях";

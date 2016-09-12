@@ -1,23 +1,4 @@
-/**
- * @file UsageViewController.h
- * @brief View controller to see your space usage.
- *
- * (c) 2013-2015 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "UsageViewController.h"
 
 #import "PieChartView.h"
 #import "SVProgressHUD.h"
@@ -28,16 +9,13 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
-#import "UsageViewController.h"
-
 @interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIScrollView *usageScrollView;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pieChartTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartMainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartSecondaryLabel;
@@ -68,8 +46,8 @@
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
-    if (!iPhone4X) {
-        [_usageScrollView setScrollEnabled:NO];
+    if ([[UIDevice currentDevice] iPhone4X]) {
+        self.pieChartTopLayoutConstraint.constant = 22.0;
     }
     
     [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
@@ -105,11 +83,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 #pragma mark - Private

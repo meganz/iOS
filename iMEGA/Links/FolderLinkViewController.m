@@ -1,29 +1,10 @@
-/**
- * @file FolderLinkViewController.m
- * @brief View controller that allows to see and manage MEGA folder links.
- *
- * (c) 2013-2016 by Mega Limited, Auckland, New Zealand
- *
- * This file is part of the MEGA SDK - Client Access Engine.
- *
- * Applications using the MEGA API must present a valid application key
- * and comply with the the rules set forth in the Terms of Service.
- *
- * The MEGA SDK is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Simplified (2-clause) BSD License.
- *
- * You should have received a copy of the license along with this
- * program.
- */
+#import "FolderLinkViewController.h"
 
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "SVProgressHUD.h"
-#import "SSKeychain.h"
+#import "SAMKeychain.h"
 #import "MWPhotoBrowser.h"
 #import "UIScrollView+EmptyDataSet.h"
 
@@ -33,7 +14,6 @@
 #import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
 
-#import "FolderLinkViewController.h"
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
@@ -117,7 +97,7 @@
     [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || iPhone6Plus) {
+    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
         [negativeSpaceBarButtonItem setWidth:-8.0];
     } else {
         [negativeSpaceBarButtonItem setWidth:-4.0];
@@ -133,8 +113,7 @@
 
         [self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem];
         
-        [_downloadBarButtonItem setEnabled:NO];
-        [_importBarButtonItem setEnabled:NO];
+        [self setActionButtonsEnabled:NO];
     } else {
         [self reloadUI];
     }
@@ -161,11 +140,21 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (isFetchNodesDone) {
+            [self setNavigationBarTitleLabel];
+        }
+        
+        [self.tableView reloadEmptyDataSet];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
 }
 
 #pragma mark - Private
@@ -175,11 +164,7 @@
         self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
     }
     
-    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
-        [self setNavigationBarTitleLabel];
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
-    }
+    [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode];
     if ([[_nodeList size] unsignedIntegerValue] == 0) {
@@ -200,29 +185,14 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    NSString *title = [self.parentNode name];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0]
-                                         range:[title rangeOfString:title]];
-    
-    NSString *subtitle = [NSString stringWithFormat:@"\n(%@)", AMLocalizedString(@"folderLink", nil)];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:12.0]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44)];
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    _navigationBarLabel = label;
-    [self.navigationItem setTitleView:label];
+    if ([self.parentNode name] != nil && !isFolderLinkNotValid) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationBarLabel = label;
+        [self.navigationItem setTitleView:self.navigationBarLabel];
+    } else {
+        [self.navigationItem setTitle:AMLocalizedString(@"folderLink", nil)];
+    }
 }
 
 - (void)showUnavailableLinkView {
@@ -237,7 +207,7 @@
     [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
     [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
     
-    if (iPhone4X) {
+    if ([[UIDevice currentDevice] iPhone4X]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
     }
     
@@ -275,14 +245,12 @@
 
 - (void)internetConnectionChanged {
     BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
+    [self setActionButtonsEnabled:boolValue];
     
     [self.tableView reloadData];
 }
 
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editBarButtonItem setEnabled:boolValue];
-    
+- (void)setToolbarButtonsEnabled:(BOOL)boolValue {
     [self.downloadBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
 }
@@ -363,8 +331,7 @@
     
     [_tableView setEditing:editing animated:YES];
     
-    [_downloadBarButtonItem setEnabled:!editing];
-    [_importBarButtonItem setEnabled:!editing];
+    [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
         [_editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
@@ -403,13 +370,7 @@
         [self setAllNodesSelected:NO];
     }
     
-    if (self.selectedNodesArray.count == 0) {
-        [_downloadBarButtonItem setEnabled:NO];
-        [_importBarButtonItem setEnabled:NO];
-    } else if (self.selectedNodesArray.count >= 1) {
-        [_downloadBarButtonItem setEnabled:YES];
-        [_importBarButtonItem setEnabled:YES];
-    }
+    (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
     
     [_tableView reloadData];
 }
@@ -451,7 +412,7 @@
         }
     }
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
             if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
                 [Helper changeToViewController:[OfflineTableViewController class] onTabBarController:(MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
@@ -461,10 +422,10 @@
             
             if ([_tableView isEditing]) {
                 for (MEGANode *node in _selectedNodesArray) {
-                    [Helper downloadNode:node folderPath:[Helper pathForOffline] isFolderLink:YES];
+                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper pathForOffline] isFolderLink:YES];
+                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES];
             }
         }];
     } else {
@@ -485,7 +446,7 @@
 - (IBAction)importAction:(UIBarButtonItem *)sender {
     [self deleteTempDocuments];
     
-    if ([SSKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
@@ -660,8 +621,7 @@
     if (tableView.isEditing) {
         [_selectedNodesArray addObject:node];
         
-        [_downloadBarButtonItem setEnabled:YES];
-        [_importBarButtonItem setEnabled:YES];
+        [self setToolbarButtonsEnabled:YES];
         
         if ([_selectedNodesArray count] == [_nodeList.size integerValue]) {
             [self setAllNodesSelected:YES];
@@ -820,13 +780,7 @@
             }
         }
         
-        if (_selectedNodesArray.count == 0) {
-            [_downloadBarButtonItem setEnabled:NO];
-            [_importBarButtonItem setEnabled:NO];
-        } else if (self.selectedNodesArray.count < 1) {
-            [_downloadBarButtonItem setEnabled:YES];
-            [_importBarButtonItem setEnabled:YES];
-        }
+        (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
         
         [self setAllNodesSelected:NO];
         
@@ -915,9 +869,6 @@
     return YES;
 }
 
-- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-}
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -976,15 +927,11 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self.searchDisplayController isActive]) {
-        return -66.0;
-    }
-    
-    return 0.0f;
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return 40.0f;
+    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -1080,8 +1027,6 @@
             isFetchNodesDone = YES;
             [self reloadUI];
             
-            [_importBarButtonItem setEnabled:YES];
-            [_downloadBarButtonItem setEnabled:YES];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [api pauseTransfers:YES];
             }
@@ -1109,12 +1054,6 @@
         default:
             break;
     }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
 }
 
 @end
