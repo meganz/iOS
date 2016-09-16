@@ -103,9 +103,11 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
                         if (isCameraUploadsEnabled) {
+                            MEGALogInfo(@"Enable Camera Uploads");
                             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
                             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
                         } else {
+                            MEGALogInfo(@"Disable Camera Uploads");
                             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
                             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
                             
@@ -125,6 +127,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
                         [alert show];
+                        MEGALogInfo(@"Disable Camera Uploads");
                         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
                             
                         [self.uploadVideosSwitch setOn:NO animated:YES];
@@ -146,9 +149,11 @@
     } else {
         BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
         if (isCameraUploadsEnabled) {
+            MEGALogInfo(@"Enable Camera Uploads");
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         } else {
+            MEGALogInfo(@"Disable Camera Uploads");
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
             
@@ -162,6 +167,7 @@
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
+    MEGALogInfo(@"%@ uploads videos", sender.isOn ? @"Enable" : @"Disable");
     if (!sender.isOn) {
         MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
         if (transferList.size.integerValue > 0) {
@@ -184,8 +190,10 @@
 }
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
+    MEGALogInfo(@"%@ mobile data", sender.isOn ? @"Enable" : @"Disable");
     [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
     if ([[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
+        MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     } else {
         if (![MEGAReachabilityManager isReachableViaWiFi]) {
@@ -204,6 +212,7 @@
             [[CameraUploads syncManager] resetOperationQueue];
         }
     } else {
+        MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
