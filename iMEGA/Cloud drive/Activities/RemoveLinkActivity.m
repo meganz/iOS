@@ -6,18 +6,11 @@
 
 @interface RemoveLinkActivity ()
 
-@property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) NSArray *nodes;
 
 @end
 
 @implementation RemoveLinkActivity
-
-- (instancetype)initWithNode:(MEGANode *)nodeCopy {
-    _node = nodeCopy;
-    
-    return self;
-}
 
 - (instancetype)initWithNodes:(NSArray *)nodesArray {
     _nodes = nodesArray;
@@ -51,8 +44,6 @@
             for (MEGANode *n in self.nodes) {
                 [[MEGASdkManager sharedMEGASdk] disableExportNode:n];
             }
-        } else {
-            [[MEGASdkManager sharedMEGASdk] disableExportNode:self.node];
         }
         
         if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
