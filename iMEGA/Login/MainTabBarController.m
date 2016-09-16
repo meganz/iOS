@@ -103,7 +103,11 @@
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if ([self.selectedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-            return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+            if ([self.selectedViewController isEqual:self.moreNavigationController]) {
+                return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+            }
+            
+            return [self.selectedViewController supportedInterfaceOrientations];
         }
         
         if ([self.selectedViewController isEqual:self.moreNavigationController]) {
