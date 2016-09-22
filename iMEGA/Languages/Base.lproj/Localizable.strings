@@ -626,8 +626,28 @@
 "confirmPassword"="Confirm Password";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Your password has been changed.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="The new and the old password must not match.";
+/* Hint text to suggest that the user have to write the new email on it */
+"newEmail"="New email";
+/* Button text for the user to confirm their change of email address. */
+"confirmEmail"="Confirm email";
+/* Hint text where the user have to re-write the new email to confirm it */
+"confirmNewEmail"="Confirm new email";
+/* The title of the alert dialog to change the email associated to an account. */
+"changeEmail"="Change email";
+/* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
+"oldAndNewEmailMatch"="The new and the old email must not match";
+/* Error message shown when you have not written the same email when confirming a new one */
+"emailsDoNotMatch"="Emails do not match";
+/* Error message when a use wants to validate the same email twice */
+"emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
+/* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
+"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new e-mail address.";
+/* Text shown on the confirm email view to remind the user what to do */
+"verifyYourEmailAddress_description"="Please enter your password to verify your email address";
+/* The [X] will be replaced with the e-mail address. */
+"congratulationsNewEmailAddress"="Congratulations, your new e-mail address for this MEGA account is: [X]";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Change passcode";
 /* Title to describe a simple (four digit) passcode */

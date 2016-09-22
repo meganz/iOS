@@ -11,7 +11,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *exportMasterKeyLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *masterKeySwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *changeEmailLabel;
 
 @end
 
@@ -27,6 +30,8 @@
     [self.exportMasterKeyLabel setText:AMLocalizedString(@"masterKey", nil)];
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     
+    self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
+    
     [self reloadUI];
 }
 
@@ -35,11 +40,6 @@
     
     [self isMasterKeyExported];
     [_masterKeySwitch setOn:isMasterKeyExported animated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Private
@@ -53,6 +53,12 @@
 - (void)isMasterKeyExported {
     NSString *fileExist = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     isMasterKeyExported = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"RecoveryKey.txt"]];
+}
+
+- (void)pushChangeViewControllerType:(ChangeType)changeType {
+    ChangePasswordViewController *changePasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+    changePasswordVC.changeType = changeType;
+    [self.navigationController pushViewController:changePasswordVC animated:YES];
 }
 
 #pragma mark - IBActions
@@ -106,7 +112,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -130,9 +136,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 1: {
-            ChangePasswordViewController *changePasswordVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-            [self.navigationController pushViewController:changePasswordVC animated:YES];
-            
+            [self pushChangeViewControllerType:ChangeTypePassword];
+            break;
+        }
+        
+        case 2: {
+            [self pushChangeViewControllerType:ChangeTypeEmail];
             break;
         }
             

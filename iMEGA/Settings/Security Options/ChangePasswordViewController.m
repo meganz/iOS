@@ -14,6 +14,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
 
+@property (weak, nonatomic) IBOutlet UIView *emailIsChangingView;
+@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingDescriptionLabel;
+
 @end
 
 @implementation ChangePasswordViewController
@@ -23,27 +27,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"changePasswordLabel", @"The title of the change password view")];
+    if (self.changeType == ChangeTypePassword) {
+        self.navigationItem.title = AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
+        
+        self.currentPasswordTextField.placeholder = AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.");
+        self.theNewPasswordTextField.placeholder = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
+        self.confirmPasswordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
+        
+        [self.changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
+        
+        [self.currentPasswordTextField becomeFirstResponder];
+    } else if (self.changeType == ChangeTypeEmail) {
+        self.navigationItem.title = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
+        
+        self.currentPasswordImageView.image = [UIImage imageNamed:@"emailExisting"];
+        self.currentPasswordTextField.text = [[MEGASdkManager sharedMEGASdk] myEmail];
+        self.currentPasswordTextField.secureTextEntry = NO;
+        self.currentPasswordTextField.userInteractionEnabled = NO;
+        
+        self.theNewPasswordImageView.image = [UIImage imageNamed:@"email"];
+        self.theNewPasswordTextField.placeholder = AMLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.");
+        self.theNewPasswordTextField.secureTextEntry = NO;
+        
+        self.confirmPasswordImageView.image = [UIImage imageNamed:@"emailConfirm"];
+        self.confirmPasswordTextField.placeholder = AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.");
+        self.confirmPasswordTextField.secureTextEntry = NO;
+        
+        [self.changePasswordButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
+        
+        [self.theNewPasswordTextField becomeFirstResponder];
+        
+        self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+        self.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
+    }
     
-    [_currentPasswordTextField setPlaceholder:AMLocalizedString(@"currentPassword", @"Placeholder text to explain that the current password should be written on this text field.")];
-    [_theNewPasswordTextField setPlaceholder:AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.")];
-    [_confirmPasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.")];
-    
-    [_changePasswordButton setTitle:AMLocalizedString(@"changePasswordLabel", nil) forState:UIControlStateNormal];
-    [self.changePasswordButton.layer setBorderWidth:2.0f];
-    [self.changePasswordButton.layer setBorderColor:[[UIColor mnz_redD90007] CGColor]];
     [self.changePasswordButton.layer setCornerRadius:4];
-    [self.changePasswordButton.layer setMasksToBounds:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    [_currentPasswordTextField becomeFirstResponder];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - Private
 
-- (BOOL)validateForm {
+- (BOOL)validatePasswordForm {
     if (_currentPasswordTextField.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [_currentPasswordTextField becomeFirstResponder];
@@ -81,16 +110,71 @@
     }
 }
 
+- (BOOL)validateEmail {
+    NSString *newEmail = self.theNewPasswordTextField.text;
+    
+    NSString *emailRegex =
+    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
+    BOOL validEmail = [emailTest evaluateWithObject:newEmail];
+    
+    if (newEmail.length == 0 || !validEmail) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
+        
+        self.currentPasswordImageView.image = [UIImage imageNamed:@"emailExisting"];
+        
+        [self.theNewPasswordTextField becomeFirstResponder];
+        return NO;
+    } else if ([newEmail isEqualToString:self.currentPasswordTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"oldAndNewEmailMatch", @"")];
+        
+        self.currentPasswordImageView.image = [UIImage imageNamed:@"errorEmailExisting"];
+        
+        [self.theNewPasswordTextField becomeFirstResponder];
+        return NO;
+    } else if (![newEmail isEqualToString:self.confirmPasswordTextField.text]) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailsDoNotMatch", @"Error message shown when you have not written the same email")];
+        
+        self.currentPasswordImageView.image = [UIImage imageNamed:@"emailExisting"];
+        
+        [self.confirmPasswordTextField becomeFirstResponder];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)emailHasChanged {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"emailHasChanged" object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - IBAction
 
 - (IBAction)changePasswordTouchUpIndise:(UIButton *)sender {
-    if ([self validateForm]) {
-        [_changePasswordButton setEnabled:NO];
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            [[MEGASdkManager sharedMEGASdk] changePassword:[_currentPasswordTextField text] newPassword:[self.theNewPasswordTextField text] delegate:self];
-        } else {
-            [_changePasswordButton setEnabled:YES];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (self.changeType == ChangeTypePassword) {
+            if ([self validatePasswordForm]) {
+                self.changePasswordButton.enabled = NO;
+                [[MEGASdkManager sharedMEGASdk] changePassword:self.currentPasswordTextField.text newPassword:self.theNewPasswordTextField.text delegate:self];
+            }
+        } else if (self.changeType == ChangeTypeEmail) {
+            if ([self validateEmail]) {
+                self.changePasswordButton.enabled = NO;
+                [[MEGASdkManager sharedMEGASdk] changeEmail:self.confirmPasswordTextField.text delegate:self];
+            } else {
+                self.theNewPasswordImageView.image = [UIImage imageNamed:@"errorEmail"];
+                self.confirmPasswordImageView.image = [UIImage imageNamed:@"errorEmailConfirm"];
+            }
         }
+    } else {
+        self.changePasswordButton.enabled = YES;
     }
 }
 
@@ -122,18 +206,36 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
-        [_currentPasswordTextField setText:@""];
-        [self.theNewPasswordTextField setText:@""];
-        [_confirmPasswordTextField setText:@""];
-        [_currentPasswordTextField becomeFirstResponder];
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [_changePasswordButton setEnabled:YES];
-        return;
+        [self.changePasswordButton setEnabled:YES];
+        
+        if (request.type == MEGARequestTypeChangePassword) {
+            self.currentPasswordTextField.text = @"";
+            self.theNewPasswordTextField.text = @"";
+            self.confirmPasswordTextField.text = @"";
+            [self.currentPasswordTextField becomeFirstResponder];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+            return;
+        } else if (request.type == MEGARequestTypeGetChangeEmailLink) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested")
+                                                                message:nil
+                                                               delegate:nil
+                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            
+            self.currentPasswordImageView.image = [UIImage imageNamed:@"emailExisting"];
+            self.theNewPasswordImageView.image = [UIImage imageNamed:@"errorEmail"];
+            self.confirmPasswordImageView.image = [UIImage imageNamed:@"errorEmailConfirm"];
+            return;
+        }
     }
     
     if ([request type] == MEGARequestTypeChangePassword) {
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+        
         [self.navigationController popViewControllerAnimated:YES];
+    } else if ([request type] == MEGARequestTypeGetChangeEmailLink) {
+        self.view = self.emailIsChangingView;
     }
 }
 

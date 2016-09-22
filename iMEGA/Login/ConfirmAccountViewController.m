@@ -26,11 +26,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.confirmTextLabel setText:AMLocalizedString(@"confirmText", @"Please enter your password to confirm your account")];
+    if (self.confirmType == ConfirmTypeAccount) {
+        self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
+        [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Button title that triggers the confirm account action") forState:UIControlStateNormal];
+    } else if (self.confirmType == ConfirmTypeEmail) {
+        self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
+        [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
+    }
     
     self.confirmAccountButton.layer.cornerRadius = 4.0f;
     self.confirmAccountButton.layer.masksToBounds = YES;
-    [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Confirm your account") forState:UIControlStateNormal];
     [self.confirmAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     
     self.cancelButton.layer.cornerRadius = 4.0f;
@@ -54,11 +59,15 @@
 #pragma mark - IBActions
 
 - (IBAction)confirmTouchUpInside:(id)sender {
-    if ([self validateForm]) {
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if ([self validateForm]) {
             [SVProgressHUD show];
             [self lockUI:YES];
-            [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
+            if (self.confirmType == ConfirmTypeAccount) {
+                [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:[self.passwordTextField text] delegate:self];
+            } else if (self.confirmType == ConfirmTypeEmail) {
+                [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordTextField.text delegate:self];
+            }
         }
     }
 }
@@ -71,20 +80,12 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
-    if (![self validatePassword:self.passwordTextField.text]) {
+    if (self.passwordTextField.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
         [self.passwordTextField becomeFirstResponder];
         return NO;
     }
     return YES;
-}
-
-- (BOOL)validatePassword:(NSString *)password {
-    if (password.length == 0) {
-        return NO;
-    } else {
-        return YES;
-    }
 }
 
 - (void)lockUI:(BOOL)boolValue {
@@ -126,7 +127,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         switch ([error type]) {
-            case MEGAErrorTypeApiENoent: {
+            case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink
                 [self lockUI:NO];
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordWrong", @"Wrong password")];
                 break;
@@ -170,6 +171,24 @@
         case MEGARequestTypeLogin: {
             NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
             [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            break;
+        }
+            
+        case MEGARequestTypeConfirmChangeEmailLink: {
+            [SVProgressHUD dismiss];
+            [self.passwordTextField resignFirstResponder];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"emailHasChanged" object:nil];
+            
+            NSString *alertMessage = [AMLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newEmail", @"Hint text to suggest that the user have to write the new email on it")
+                                                                message:alertMessage
+                                                               delegate:nil
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            [alertView show];
+            break;
         }
             
         default:

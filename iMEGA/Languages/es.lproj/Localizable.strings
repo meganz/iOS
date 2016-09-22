@@ -626,8 +626,28 @@
 "confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Tu contraseña ha sido cambiada.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
+/* Hint text to suggest that the user have to write the new email on it */
+"newEmail"="Nuevo correo electrónico";
+/* Button text for the user to confirm their change of email address. */
+"confirmEmail"="Confirmar correo electrónico";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmNewEmail"="Confirma el nuevo correo electrónico";
+/* The title of the alert dialog to change the email associated to an account. */
+"changeEmail"="Cambiar correo electrónico";
+/* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
+"oldAndNewEmailMatch"="El correo electrónico nuevo y el viejo no pueden coincidir";
+/* Error message shown when you have not written the same email when confirming a new one */
+"emailsDoNotMatch"="El correo electrónico no coincide";
+/* Error message when a use wants to validate the same email twice */
+"emailAddressChangeAlreadyRequested"="Ya has solicitado un enlace de confirmación para esa dirección de correo electrónico.";
+/* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
+"emailIsChanging_description"="Por favor accede a tu bandeja de entrada y pulsa el enlace para confirmar tu nuevo correo electrónico.";
+/* Text shown on the confirm email view to remind the user what to do */
+"verifyYourEmailAddress_description"="Por favor, introduce tu contraseña para verificar tu dirección de correo electrónico";
+/* The [X] will be replaced with the e-mail address. */
+"congratulationsNewEmailAddress"="Felicidades, el nuevo correo electrónico para tu cuenta MEGA es: [X]";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Cambiar código de acceso";
 /* Title to describe a simple (four digit) passcode */
