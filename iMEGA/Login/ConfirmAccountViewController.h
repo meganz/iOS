@@ -4,6 +4,13 @@
 
 @interface ConfirmAccountViewController : UIViewController 
 
+typedef NS_ENUM(NSUInteger, ConfirmType) {
+    ConfirmTypeAccount = 0,
+    ConfirmTypeEmail
+};
+
+@property (nonatomic) ConfirmType confirmType;
+
 @property (strong, nonatomic) NSString *confirmationLinkString;
 @property (strong, nonatomic) NSString *emailString;
 

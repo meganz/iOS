@@ -44,7 +44,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
     URLTypeBackupLink,
-    URLTypeIncomingPendingContactsLink
+    URLTypeIncomingPendingContactsLink,
+    URLTypeChangeEmailLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -474,6 +475,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isChangeEmailLink:afterSlashesString]) {
+        self.urlType = URLTypeChangeEmailLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -594,12 +600,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
             [self presentLinkViewController:navigationController];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self showPleaseLogInToYourAccountAlert];
         }
         return YES;
     }
@@ -621,12 +622,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
             [self presentLinkViewController:navigationController];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isChangeEmailLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isChangeEmailLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]; //mega://"#verify"
+    if (isChangeEmailLink) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+            [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:megaURLString];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
         }
         return YES;
     }
@@ -751,6 +766,26 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     }
+}
+
+- (void)showPleaseLogInToYourAccountAlert {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email {
+    MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
+    
+    ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
+    confirmAccountVC.confirmType = confirmType;
+    confirmAccountVC.confirmationLinkString = link;
+    confirmAccountVC.emailString = email;
+    
+    [self presentLinkViewController:confirmAccountNavigationController];
 }
 
 #pragma mark - Battery changed
@@ -1075,6 +1110,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                                           cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
+                } else if ([request type] == MEGARequestTypeQueryRecoveryLink) {
+                    [self showLinkNotValid];
                 }
                 break;
             }
@@ -1235,13 +1272,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
         case MEGARequestTypeQuerySignUpLink: {
             if (self.urlType == URLTypeConfirmationLink) {
-                MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
-                
-                ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
-                [confirmAccountVC setConfirmationLinkString:[request link]];
-                [confirmAccountVC setEmailString:[request email]];
-                
-                [self presentLinkViewController:confirmAccountNavigationController];
+                [self presentConfirmViewControllerType:ConfirmTypeAccount link:request.link email:request.email];
             } else if (self.urlType == URLTypeNewSignUpLink) {
 
                 if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
@@ -1268,6 +1299,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         }
                     }
                 }
+            }
+            break;
+        }
+            
+        case MEGARequestTypeQueryRecoveryLink: {
+            if (self.urlType == URLTypeChangeEmailLink) {
+                [self presentConfirmViewControllerType:ConfirmTypeEmail link:request.link email:request.email];
             }
             break;
         }

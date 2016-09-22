@@ -6,16 +6,17 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="SF-UI-Display-Light.otf">
-            <string>SFUIDisplay-Light</string>
-        </mutableArray>
         <mutableArray key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
         </mutableArray>
         <mutableArray key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
@@ -611,7 +612,7 @@
                             <tableViewSection footerTitle="Get support or read popular topics." id="lkd-E6-zox">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="rnm-ww-Rui">
-                                        <rect key="frame" x="0.0" y="131.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rnm-ww-Rui" id="d7g-dk-jXd">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -769,6 +770,27 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="" footerTitle="" id="DIb-cs-pWo">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="IER-Qw-muP" style="IBUITableViewCellStyleDefault" id="etO-9p-087" userLabel="Change Email Table View Cell">
+                                        <rect key="frame" x="0.0" y="196" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="etO-9p-087" id="aP8-YV-7Gv">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Change Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IER-Qw-muP">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="RbN-4G-5On" id="Yzf-Q8-dWZ"/>
@@ -779,6 +801,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="gP8-MT-A3E"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="changeEmailLabel" destination="IER-Qw-muP" id="j0A-LO-6jt"/>
                         <outlet property="changePasswordLabel" destination="cVP-iG-p29" id="1Rp-Un-ciE"/>
                         <outlet property="exportMasterKeyLabel" destination="7K2-9E-myF" id="doV-Gz-ggC"/>
                         <outlet property="masterKeySwitch" destination="5Zg-r1-Uu0" id="VsN-cb-zRR"/>
@@ -807,17 +830,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="padlock" translatesAutoresizingMaskIntoConstraints="NO" id="ddP-st-5kT" userLabel="Current Password Padlock Image View">
-                                                <rect key="frame" x="30" y="20" width="32" height="32"/>
+                                                <rect key="frame" x="30" y="26" width="32" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="NaI-9o-Au0"/>
                                                     <constraint firstAttribute="width" constant="32" id="vhS-Nz-gG2"/>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I30-Sl-69j">
-                                                <rect key="frame" x="74" y="19" width="496" height="30"/>
+                                                <rect key="frame" x="74" y="27" width="496" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="AwV-YM-TJv"/>
                                                 </constraints>
+                                                <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                                 <connections>
@@ -825,24 +849,25 @@
                                                 </connections>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kgp-GT-dsf" userLabel="Line Image View">
-                                                <rect key="frame" x="30" y="64" width="540" height="2"/>
-                                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <rect key="frame" x="30" y="64" width="540" height="1"/>
+                                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="2" id="Ymf-N3-QMK"/>
+                                                    <constraint firstAttribute="height" constant="1" id="Ymf-N3-QMK"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="key" translatesAutoresizingMaskIntoConstraints="NO" id="ftC-bG-Jrj" userLabel="New Password Image View">
-                                                <rect key="frame" x="30" y="86" width="32" height="32"/>
+                                                <rect key="frame" x="30" y="91" width="32" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="FmK-Sd-iWn"/>
                                                     <constraint firstAttribute="width" constant="32" id="wZX-fm-3Hv"/>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ryf-7d-GGn">
-                                                <rect key="frame" x="74" y="85" width="496" height="30"/>
+                                                <rect key="frame" x="74" y="92" width="496" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="AHL-5m-bh8"/>
                                                 </constraints>
+                                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                                 <connections>
@@ -850,24 +875,25 @@
                                                 </connections>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u9b-Zu-Ewc" userLabel="Line Image View">
-                                                <rect key="frame" x="30" y="130" width="540" height="2"/>
-                                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <rect key="frame" x="30" y="129" width="540" height="1"/>
+                                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="2" id="WcG-9h-yi5"/>
+                                                    <constraint firstAttribute="height" constant="1" id="WcG-9h-yi5"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyDouble" translatesAutoresizingMaskIntoConstraints="NO" id="fp2-Td-e9h" userLabel="Confirm Password Image View">
-                                                <rect key="frame" x="30" y="152" width="32" height="32"/>
+                                                <rect key="frame" x="30" y="156" width="32" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="32" id="8G8-kU-3g1"/>
                                                     <constraint firstAttribute="height" constant="32" id="TXR-3z-paU"/>
                                                 </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
-                                                <rect key="frame" x="74" y="151" width="496" height="30"/>
+                                                <rect key="frame" x="74" y="157" width="496" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="opE-ii-KYc"/>
                                                 </constraints>
+                                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                                 <connections>
@@ -875,20 +901,21 @@
                                                 </connections>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="py9-Rd-k8X" userLabel="Line Image View">
-                                                <rect key="frame" x="20" y="196" width="550" height="2"/>
-                                                <color key="backgroundColor" white="0.93000000719999998" alpha="1" colorSpace="calibratedWhite"/>
+                                                <rect key="frame" x="30" y="194" width="540" height="1"/>
+                                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="2" id="0mf-nX-0hg"/>
+                                                    <constraint firstAttribute="height" constant="1" id="0mf-nX-0hg"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugg-UB-5iL" userLabel="Change password Button">
-                                                <rect key="frame" x="30" y="242" width="540" height="44"/>
+                                                <rect key="frame" x="30" y="239" width="540" height="64"/>
+                                                <color key="backgroundColor" red="1" green="0.30196078430000001" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="eUM-YH-fj8"/>
+                                                    <constraint firstAttribute="height" constant="64" id="eUM-YH-fj8"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                                 <state key="normal" title="Change password">
-                                                    <color key="titleColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="changePasswordTouchUpIndise:" destination="Xlz-H7-CBT" eventType="touchUpInside" id="RLJ-qw-k36"/>
@@ -905,27 +932,37 @@
                                             <constraint firstItem="bX8-QE-I91" firstAttribute="leading" secondItem="fp2-Td-e9h" secondAttribute="trailing" constant="12" id="CZV-lU-GTc"/>
                                             <constraint firstAttribute="trailing" secondItem="py9-Rd-k8X" secondAttribute="trailing" constant="30" id="EXU-4V-08Z"/>
                                             <constraint firstAttribute="trailing" secondItem="Ryf-7d-GGn" secondAttribute="trailing" constant="30" id="FpD-Hn-5eJ"/>
+                                            <constraint firstItem="I30-Sl-69j" firstAttribute="centerY" secondItem="ddP-st-5kT" secondAttribute="centerY" id="GaY-VR-Bsy"/>
                                             <constraint firstItem="Ugg-UB-5iL" firstAttribute="top" secondItem="py9-Rd-k8X" secondAttribute="bottom" constant="44" id="Gby-93-8TN"/>
                                             <constraint firstItem="Ugg-UB-5iL" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="HaI-8h-7R4"/>
-                                            <constraint firstItem="u9b-Zu-Ewc" firstAttribute="top" secondItem="ftC-bG-Jrj" secondAttribute="bottom" constant="12" id="Je4-KF-Kq4"/>
+                                            <constraint firstItem="u9b-Zu-Ewc" firstAttribute="top" secondItem="ftC-bG-Jrj" secondAttribute="bottom" constant="6" id="Je4-KF-Kq4"/>
                                             <constraint firstItem="I30-Sl-69j" firstAttribute="leading" secondItem="ddP-st-5kT" secondAttribute="trailing" constant="12" id="PM2-wv-mcY"/>
                                             <constraint firstItem="fp2-Td-e9h" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="UXZ-nW-4So"/>
                                             <constraint firstAttribute="trailing" secondItem="bX8-QE-I91" secondAttribute="trailing" constant="30" id="VX1-q6-non"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="centerX" secondItem="cAv-zt-lSj" secondAttribute="centerX" id="XD1-kX-ZrR"/>
-                                            <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="I30-Sl-69j" secondAttribute="bottom" constant="15" id="XOi-nI-NKP"/>
+                                            <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="I30-Sl-69j" secondAttribute="bottom" constant="14" id="XOi-nI-NKP"/>
                                             <constraint firstItem="u9b-Zu-Ewc" firstAttribute="top" secondItem="Kgp-GT-dsf" secondAttribute="bottom" constant="64" id="aYP-9b-W2C"/>
                                             <constraint firstItem="ftC-bG-Jrj" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="blB-rh-bHd"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="u9b-Zu-Ewc" secondAttribute="bottom" constant="64" id="gDb-pb-Nzf"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="cAv-zt-lSj" secondAttribute="top" constant="64" id="gvU-66-et8"/>
                                             <constraint firstAttribute="trailing" secondItem="I30-Sl-69j" secondAttribute="trailing" constant="30" id="iSn-od-hD0"/>
                                             <constraint firstItem="Kgp-GT-dsf" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="lHg-q5-YaM"/>
-                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="20" id="nNj-IJ-POl"/>
-                                            <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="ddP-st-5kT" secondAttribute="bottom" constant="12" id="syf-YK-1ss"/>
+                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="nNj-IJ-POl"/>
+                                            <constraint firstItem="bX8-QE-I91" firstAttribute="centerY" secondItem="fp2-Td-e9h" secondAttribute="centerY" id="qJN-H9-UZd"/>
+                                            <constraint firstItem="Kgp-GT-dsf" firstAttribute="top" secondItem="ddP-st-5kT" secondAttribute="bottom" constant="6" id="syf-YK-1ss"/>
                                             <constraint firstItem="Ryf-7d-GGn" firstAttribute="leading" secondItem="ftC-bG-Jrj" secondAttribute="trailing" constant="12" id="uIL-il-S9o"/>
                                             <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="bX8-QE-I91" secondAttribute="bottom" constant="15" id="wwd-fs-Jcv"/>
-                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="fp2-Td-e9h" secondAttribute="bottom" constant="12" id="xJA-kC-UXk"/>
+                                            <constraint firstItem="py9-Rd-k8X" firstAttribute="top" secondItem="fp2-Td-e9h" secondAttribute="bottom" constant="6" id="xJA-kC-UXk"/>
                                             <constraint firstItem="ddP-st-5kT" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" constant="30" id="xyc-IN-Au6"/>
+                                            <constraint firstItem="Ryf-7d-GGn" firstAttribute="centerY" secondItem="ftC-bG-Jrj" secondAttribute="centerY" id="zRp-13-zgg"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="XOi-nI-NKP"/>
+                                                <exclude reference="7to-0s-0vt"/>
+                                                <exclude reference="wwd-fs-Jcv"/>
+                                            </mask>
+                                        </variation>
                                     </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -951,10 +988,76 @@
                         <outlet property="confirmPasswordTextField" destination="bX8-QE-I91" id="nZP-4e-8sf"/>
                         <outlet property="currentPasswordImageView" destination="ddP-st-5kT" id="lnl-z6-74f"/>
                         <outlet property="currentPasswordTextField" destination="I30-Sl-69j" id="p55-du-2pD"/>
+                        <outlet property="emailIsChangingDescriptionLabel" destination="Gh4-XS-wZS" id="crs-Hs-zMx"/>
+                        <outlet property="emailIsChangingTitleLabel" destination="HrE-UQ-dj9" id="E0a-rs-GSg"/>
+                        <outlet property="emailIsChangingView" destination="1oP-CL-t7s" id="sWg-G5-Y2m"/>
                         <outlet property="theNewPasswordImageView" destination="ftC-bG-Jrj" id="yss-Fl-twN"/>
                         <outlet property="theNewPasswordTextField" destination="Ryf-7d-GGn" id="104-mQ-F3V"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" restorationIdentifier="AwaitingEmailConfirmationViewID" id="1oP-CL-t7s" userLabel="Please check your email View">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting e-mail confirmation." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrE-UQ-dj9">
+                            <rect key="frame" x="30" y="318" width="540" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="IMi-Xd-cDN"/>
+                                <constraint firstAttribute="height" constant="48" id="boz-Rh-p7N"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
+                            <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="IMi-Xd-cDN"/>
+                                </mask>
+                            </variation>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="KOe-X4-Z3n">
+                            <rect key="frame" x="238" y="186" width="124" height="96"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="124" id="OI7-Yp-gtx"/>
+                                <constraint firstAttribute="height" constant="96" id="txW-W0-6BI"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please go to your inbox and click the link to confirm your new e-mail address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gh4-XS-wZS">
+                            <rect key="frame" x="30" y="390" width="540" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="5Jx-cb-nfP"/>
+                                <constraint firstAttribute="height" constant="42" id="VXH-Fi-lRL"/>
+                                <constraint firstAttribute="height" constant="42" id="XXc-EL-ZhD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
+                            <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="VXH-Fi-lRL"/>
+                                    <exclude reference="XXc-EL-ZhD"/>
+                                </mask>
+                            </variation>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="HrE-UQ-dj9" secondAttribute="trailing" constant="30" id="315-Cv-eYV"/>
+                        <constraint firstAttribute="centerX" secondItem="KOe-X4-Z3n" secondAttribute="centerX" id="8Lk-cs-Ha0"/>
+                        <constraint firstItem="Gh4-XS-wZS" firstAttribute="leading" secondItem="1oP-CL-t7s" secondAttribute="leading" constant="30" id="PHA-xv-Z2w"/>
+                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="top" secondItem="KOe-X4-Z3n" secondAttribute="bottom" constant="36" id="U50-i1-iM1"/>
+                        <constraint firstAttribute="trailing" secondItem="Gh4-XS-wZS" secondAttribute="trailing" constant="30" id="UdF-R1-y9F"/>
+                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="centerX" secondItem="KOe-X4-Z3n" secondAttribute="centerX" id="fdT-HS-QH5"/>
+                        <constraint firstItem="Gh4-XS-wZS" firstAttribute="top" secondItem="HrE-UQ-dj9" secondAttribute="bottom" constant="24" id="i6C-9i-Po1"/>
+                        <constraint firstItem="KOe-X4-Z3n" firstAttribute="centerY" secondItem="1oP-CL-t7s" secondAttribute="centerY" constant="-66" id="iI3-F7-Nnf"/>
+                        <constraint firstItem="KOe-X4-Z3n" firstAttribute="top" secondItem="1oP-CL-t7s" secondAttribute="top" constant="92" id="jy1-JR-eqB"/>
+                        <constraint firstItem="HrE-UQ-dj9" firstAttribute="leading" secondItem="1oP-CL-t7s" secondAttribute="leading" constant="30" id="lBE-kl-S10"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="jy1-JR-eqB"/>
+                        </mask>
+                    </variation>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhb-cj-fvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-487" y="-1197"/>
@@ -1282,6 +1385,7 @@
         <image name="help" width="32" height="32"/>
         <image name="key" width="32" height="32"/>
         <image name="keyDouble" width="32" height="32"/>
+        <image name="mailBig" width="124" height="96"/>
         <image name="padlock" width="32" height="32"/>
         <image name="rate" width="32" height="32"/>
         <image name="settingsIcon" width="26" height="26"/>
