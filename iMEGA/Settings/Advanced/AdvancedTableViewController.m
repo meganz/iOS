@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *savePhotosTableViewCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *saveVideosTableViewCell;
+
 @property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
@@ -144,12 +147,8 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
-        return 3;
-    } else {
-        return 5;
-    }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -158,6 +157,18 @@
         numberOfRows = 2;
     }
     return numberOfRows;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+        if(cell == self.savePhotosTableViewCell || cell == self.saveVideosTableViewCell) {
+            cell.hidden = YES;
+            return 0;
+        }
+    }
+    
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -172,7 +183,7 @@
             break;
             
         case 3: //Downloads
-            titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            titleHeader = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -201,7 +212,7 @@
         }
             
         case 3: { //Image and videos downloads
-            titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            titleFooter = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
             break;
         }
     }
