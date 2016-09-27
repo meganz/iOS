@@ -38,6 +38,7 @@
 #define kFirstRun @"FirstRun"
 
 typedef NS_ENUM(NSUInteger, URLType) {
+    URLTypeDefault,
     URLTypeFileLink,
     URLTypeFolderLink,
     URLTypeConfirmationLink,
@@ -45,7 +46,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeNewSignUpLink,
     URLTypeBackupLink,
     URLTypeIncomingPendingContactsLink,
-    URLTypeChangeEmailLink
+    URLTypeChangeEmailLink,
+    URLTypeCancelAccountLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -480,6 +482,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isCancelAccountLink:afterSlashesString]) {
+        self.urlType = URLTypeCancelAccountLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -649,6 +656,25 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isCancelAccountLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isCancelAccountLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#cancel"]; //mega://"#cancel"
+    if (isCancelAccountLink) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+            [[MEGASdkManager sharedMEGASdk] queryCancelLink:megaURLString];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)openIn {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -732,6 +758,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showLinkNotValid {
     [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
     self.link = nil;
+    self.urlType = URLTypeDefault;
 }
 
 - (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
@@ -1032,9 +1059,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
-        case MEGARequestTypeLogout:
+        case MEGARequestTypeLogout: {
+            if (self.urlType == URLTypeCancelAccountLink) {
+                return;
+            }
+            
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
+        }
             
         case MEGARequestTypeExport: {
             if (self.remainingOperations == 0) {
@@ -1102,6 +1134,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEExpired: {
+                if (request.type == MEGARequestTypeQueryRecoveryLink) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)")];
+                }
+                break;
+            }
+                
             case MEGAErrorTypeApiENoent: {
                 if ([request type] == MEGARequestTypeQuerySignUpLink) {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
@@ -1117,6 +1156,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
+                if (self.urlType == URLTypeCancelAccountLink) {
+                    self.urlType = URLTypeDefault;
+                    [Helper logout];
+                    return;
+                }
+                
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (![_API_ESIDAlertView isVisible]) {
                         _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -1306,6 +1351,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeQueryRecoveryLink: {
             if (self.urlType == URLTypeChangeEmailLink) {
                 [self presentConfirmViewControllerType:ConfirmTypeEmail link:request.link email:request.email];
+            } else if (self.urlType == URLTypeCancelAccountLink) {
+                [self presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
             }
             break;
         }
