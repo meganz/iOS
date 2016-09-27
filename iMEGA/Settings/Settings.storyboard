@@ -1577,7 +1577,9 @@
                         <outlet property="emptyRubbishBinLabel" destination="c4p-Ce-HHU" id="BpO-vs-BwL"/>
                         <outlet property="photosSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
                         <outlet property="savePhotosLabel" destination="gFD-P4-mTY" id="tda-4j-GxT"/>
+                        <outlet property="savePhotosTableViewCell" destination="qCA-HQ-nS1" id="JXc-6u-cVc"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
+                        <outlet property="saveVideosTableViewCell" destination="2uJ-Cf-XIf" id="I5y-gX-gS8"/>
                         <outlet property="videosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
                     </connections>
                 </tableViewController>
