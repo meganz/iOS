@@ -12,8 +12,11 @@
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
+            <string>SFUIText-Light</string>
         </mutableArray>
         <mutableArray key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+            <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
             <string>SFUIText-Regular</string>
@@ -563,6 +566,74 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7n9-QG-mcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1329" y="-1987"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eDA-pb-57e">
+            <objects>
+                <viewController storyboardIdentifier="AwaitingEmailConfirmationViewControllerID" id="9Rs-ec-DwQ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ngi-NT-tsh"/>
+                        <viewControllerLayoutGuide type="bottom" id="FXU-C6-kxZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Toq-To-HdQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mailBig" translatesAutoresizingMaskIntoConstraints="NO" id="tbN-A8-iqp">
+                                <rect key="frame" x="238" y="186" width="124" height="96"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="124" id="eu6-oN-C4V"/>
+                                    <constraint firstAttribute="height" constant="96" id="mYm-1g-m28"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awaiting e-mail confirmation." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0y-no-tYa">
+                                <rect key="frame" x="162" y="318" width="275" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="POf-W7-aaU"/>
+                                    <constraint firstAttribute="width" constant="200" id="Xta-Pe-f5I"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Xta-Pe-f5I"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please go to your inbox and click the link to confirm your new e-mail address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCY-fG-fcV">
+                                <rect key="frame" x="30" y="390" width="540" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="B7T-aU-0AE"/>
+                                    <constraint firstAttribute="height" constant="100" id="HeX-hh-8BH"/>
+                                    <constraint firstAttribute="height" constant="42" id="dTE-xB-a5m"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
+                                <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="B7T-aU-0AE"/>
+                                        <exclude reference="dTE-xB-a5m"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tbN-A8-iqp" firstAttribute="centerY" secondItem="Toq-To-HdQ" secondAttribute="centerY" constant="-66" id="3gx-yv-hKZ"/>
+                            <constraint firstItem="tbN-A8-iqp" firstAttribute="centerX" secondItem="Toq-To-HdQ" secondAttribute="centerX" id="85w-nj-zyC"/>
+                            <constraint firstItem="i0y-no-tYa" firstAttribute="centerX" secondItem="tbN-A8-iqp" secondAttribute="centerX" id="MYN-7J-LpX"/>
+                            <constraint firstItem="i0y-no-tYa" firstAttribute="top" secondItem="tbN-A8-iqp" secondAttribute="bottom" constant="36" id="Vzs-vL-7u0"/>
+                            <constraint firstItem="SCY-fG-fcV" firstAttribute="top" secondItem="i0y-no-tYa" secondAttribute="bottom" constant="24" id="c1i-2z-XPn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SCY-fG-fcV" secondAttribute="trailing" constant="10" id="cBf-u5-ONo"/>
+                            <constraint firstItem="SCY-fG-fcV" firstAttribute="leading" secondItem="Toq-To-HdQ" secondAttribute="leadingMargin" constant="10" id="fWh-X4-nHJ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L4G-DN-M8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="-2530"/>
         </scene>
         <!--Feedback Table View Controller-->
         <scene sceneID="sHK-kV-UQe">
@@ -1202,8 +1273,8 @@
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="4b4f431" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2yk-9P-9uF">
-                                                    <rect key="frame" x="514" y="11" width="71" height="21.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="33b0383" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2yk-9P-9uF">
+                                                    <rect key="frame" x="505.5" y="11" width="79.5" height="21.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1446,6 +1517,27 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="Aud-92-mag">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdvancedCell" textLabel="Cab-ov-Gol" style="IBUITableViewCellStyleDefault" id="v47-Zp-rZ5" userLabel="Clear Offline Files Table View Cell">
+                                        <rect key="frame" x="0.0" y="474.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v47-Zp-rZ5" id="Zjj-Ay-Iax">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Cancel account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cab-ov-Gol">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Zqt-Yf-u7D" id="fsO-jn-Ndg"/>
@@ -1456,6 +1548,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="UtK-bA-8Sz"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelAccountLabel" destination="Cab-ov-Gol" id="cgP-TO-wow"/>
                         <outlet property="clearCacheLabel" destination="ogF-KK-8A5" id="YHu-oM-aAm"/>
                         <outlet property="clearOfflineFilesLabel" destination="3Yt-m5-7Wy" id="mpF-84-qPx"/>
                         <outlet property="emptyRubbishBinLabel" destination="c4p-Ce-HHU" id="BpO-vs-BwL"/>

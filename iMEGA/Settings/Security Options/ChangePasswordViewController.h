@@ -9,4 +9,8 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
 
 @property (nonatomic) ChangeType changeType;
 
+@property (weak, nonatomic) IBOutlet UIView *emailIsChangingView;
+@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingDescriptionLabel;
+
 @end

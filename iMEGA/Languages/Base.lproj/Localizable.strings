@@ -582,6 +582,20 @@
 "imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing" = "Currently using %s";
+/* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
+"closeYourAccount" = "Close your account";
+/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"youWillLooseAllData" = "You will loose all data associated with this account. Are you sure you want to proceed?";
+/*  */
+"pleaseCheckYourEmail" = "Please check your email.";
+/* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
+"ifYouCantAccessYourEmailAccount" = "If you can't access your email, please contact support@mega.nz.";
+/* During account cancellation (deletion) */
+"cancellationLinkHasExpired" = "Cancellation link has expired.";
+/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
+"enterYourPasswordToConfirmThatYouWanToClose" = "Please enter your password to confirm that you want to close your account.";
+/* Account closure, password check dialog when user click on closure email. */
+"closeAccount" = "Close account";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Remove";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */

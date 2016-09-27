@@ -6,7 +6,8 @@
 
 typedef NS_ENUM(NSUInteger, ConfirmType) {
     ConfirmTypeAccount = 0,
-    ConfirmTypeEmail
+    ConfirmTypeEmail,
+    ConfirmTypeCancelAccount
 };
 
 @property (nonatomic) ConfirmType confirmType;

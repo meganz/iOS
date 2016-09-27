@@ -14,10 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
 
-@property (weak, nonatomic) IBOutlet UIView *emailIsChangingView;
-@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailIsChangingDescriptionLabel;
-
 @end
 
 @implementation ChangePasswordViewController
