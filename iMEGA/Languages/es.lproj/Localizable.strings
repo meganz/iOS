@@ -662,6 +662,10 @@
 "verifyYourEmailAddress_description"="Por favor, introduce tu contraseña para verificar tu dirección de correo electrónico";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Felicidades, el nuevo correo electrónico para tu cuenta MEGA es: [X]";
+/* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
+"closeOtherSessions" = "Cerrar el resto de sesiones";
+/* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
+"sessionsClosed" = "Sesiones cerradas";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Cambiar código de acceso";
 /* Title to describe a simple (four digit) passcode */

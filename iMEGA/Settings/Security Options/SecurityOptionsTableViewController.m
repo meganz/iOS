@@ -1,11 +1,13 @@
 #import "SecurityOptionsTableViewController.h"
 
+#import "SVProgressHUD.h"
+
 #import "MEGASdkManager.h"
 
 #import "CloudDriveTableViewController.h"
 #import "ChangePasswordViewController.h"
 
-@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate> {
     BOOL isMasterKeyExported;
 }
 
@@ -15,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changeEmailLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *closeOtherSessionsLabel;
 
 @end
 
@@ -31,6 +35,8 @@
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     
     self.changeEmailLabel.text = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
+    
+    self.closeOtherSessionsLabel.text = AMLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
     [self reloadUI];
 }
@@ -112,7 +118,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -145,8 +151,26 @@
             break;
         }
             
+        case 3: { //Close other sessions
+            [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
+        }
+            
         default:
             break;
+    }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (error.type) {
+        return;
+    }
+    
+    if (request.type == MEGARequestTypeKillSession) {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
     }
 }
 
