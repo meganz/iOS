@@ -58,7 +58,11 @@ static CameraUploads *instance = nil;
     self.isUseCellularConnectionEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUseCellularConnectionEnabled] boolValue];
     self.isOnlyWhenChargingEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsOnlyWhenChargingEnabled] boolValue];
     
-    [self resetOperationQueue];
+    self.assetsOperationQueue = [[NSOperationQueue alloc] init];
+    if ([self.assetsOperationQueue respondsToSelector:@selector(qualityOfService)]) {
+        self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
+    }    
+    self.assetsOperationQueue.maxConcurrentOperationCount = 1;
 }
 
 - (void)resetOperationQueue {
@@ -68,13 +72,13 @@ static CameraUploads *instance = nil;
     if ([self.assetsOperationQueue respondsToSelector:@selector(qualityOfService)]) {
         self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
     }
-    
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
     
     [self setBadgeValue:nil];
     
     if (_isCameraUploadsEnabled) {
         if (_isUseCellularConnectionEnabled || [MEGAReachabilityManager isReachableViaWiFi]) {
+            MEGALogInfo(@"Enable Camera Uploads");
             [self setIsCameraUploadsEnabled:YES];
         }
     }
@@ -88,7 +92,6 @@ static CameraUploads *instance = nil;
             return;
         }
         
-        MEGALogInfo(@"Camera Uploads enabled");
         self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
         self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
         if (![[NSUserDefaults standardUserDefaults] objectForKey:kCameraUploadsNodeHandle]){
@@ -133,7 +136,6 @@ static CameraUploads *instance = nil;
             [self getAssetsForUpload];
         }
     } else {
-        MEGALogInfo(@"Camera Uploads disabled");
         [self resetOperationQueue];
         
         _isCameraUploadsEnabled = NO;
@@ -177,14 +179,16 @@ static CameraUploads *instance = nil;
         MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
         
         [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
-            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] >= [self.lastUploadVideoDate timeIntervalSince1970])) {
+            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] >= [self.lastUploadPhotoDate timeIntervalSince1970])) {
+            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                 MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
                 [_assetsOperationQueue addOperation:uploadAssetsOperation];
             }            
         }];
+        
+        MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
         
         [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
     } else {
@@ -197,10 +201,10 @@ static CameraUploads *instance = nil;
                               resultBlock:^(ALAsset *asset) {
                                   NSDate *assetCreationTime = [asset valueForProperty:ALAssetPropertyDate];
                                   
-                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] >= [self.lastUploadVideoDate timeIntervalSince1970])) {
+                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
                                       MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
-                                  } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] >= [self.lastUploadPhotoDate timeIntervalSince1970])) {
+                                  } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
                                       MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
                                       [_assetsOperationQueue addOperation:uploadAssetsOperation];
                                   }
@@ -227,6 +231,7 @@ static CameraUploads *instance = nil;
         [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
                                     usingBlock:assetGroupEnumerator
                                   failureBlock:^(NSError *error) {
+                                      MEGALogInfo(@"Disable Camera Uploads");
                                       [self setIsCameraUploadsEnabled:NO];
                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
                                       MEGALogError(@"Enumerate groups with types failed with error: %@", error);

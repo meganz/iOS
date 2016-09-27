@@ -4,7 +4,6 @@
 
 @interface RemoveLinkActivity : UIActivity
 
-- (instancetype)initWithNode:(MEGANode *)nodeCopy;
 - (instancetype)initWithNodes:(NSArray *)nodesArray;
 
 @end

@@ -285,6 +285,7 @@
 - (void)selectedSharesOfSelectedNodes {
     self.numberOfShares = 0;
     self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
+    
     for (MEGANode *node in self.selectedNodesMutableArray) {
         NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
         self.numberOfShares += [outSharesOfNodeMutableArray count];
@@ -579,13 +580,22 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self selectedSharesOfSelectedNodes];
         
+        NSMutableArray *usersMutableArray = [[NSMutableArray alloc] init];
+        if (self.selectedSharesMutableArray != nil) {
+            for (MEGAShare *share in self.selectedSharesMutableArray) {
+                if (![usersMutableArray containsObject:share.user]) {
+                    [usersMutableArray addObject:share.user];
+                }
+            }
+        }
+        
         NSString *alertMessage;
-        if ((self.numberOfShares == 1) && ([_selectedNodesMutableArray count] == 1)) {
+        if ((usersMutableArray.count == 1) && ([self.selectedNodesMutableArray count] == 1)) {
             alertMessage = AMLocalizedString(@"removeOneShareOneContactMessage", nil);
-        } else if ((self.numberOfShares > 1) && ([_selectedNodesMutableArray count] == 1)) {
-            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), _numberOfShares];
+        } else if ((usersMutableArray.count > 1) && ([self.selectedNodesMutableArray count] == 1)) {
+            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), usersMutableArray.count];
         } else {
-            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), _numberOfShares];
+            alertMessage = [NSString stringWithFormat:AMLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), usersMutableArray.count];
         }
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
