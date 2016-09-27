@@ -220,7 +220,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled] && [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
+    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        MEGALogInfo(@"Disable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
     
@@ -251,7 +252,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {
+    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
+        MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
     }
     
@@ -707,6 +709,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)disableCameraUploads {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        MEGALogInfo(@"Disable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     }
 }
@@ -951,6 +954,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
+                MEGALogInfo(@"Enable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
         } else {
@@ -961,6 +965,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
                             [api cancelTransfer:transfer];
                         } else {
+                            MEGALogInfo(@"Camera Upload should be delayed");
+                            MEGALogInfo(@"Set badge value to %@", transfer.appData);
                             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
                             [[CameraUploads syncManager] setBadgeValue:transfer.appData];
                         }
@@ -1407,6 +1413,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([transfer type] == MEGATransferTypeUpload && [CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
         [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+            MEGALogInfo(@"Enable Camera Uploads");
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
     }

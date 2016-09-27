@@ -148,6 +148,7 @@
             }
             
             if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
+                MEGALogInfo(@"Enable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
             }
         }

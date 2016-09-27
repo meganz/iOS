@@ -291,6 +291,7 @@
                                                       otherButtonTitles:nil];
             [alertView show];
             if (_automatically) {
+                MEGALogInfo(@"Disable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
             }
         });

@@ -1,6 +1,7 @@
 #import "SettingsTableViewController.h"
 
 #import <MessageUI/MFMailComposeViewController.h>
+
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 #import "SVWebViewController.h"
@@ -199,7 +200,32 @@
             NSString *version = [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
             
             [mailComposeVC setSubject:[NSString stringWithFormat:@"Feedback %@", version]];
-            [mailComposeVC setMessageBody:AMLocalizedString(@"pleaseWriteYourFeedback", nil) isHTML:NO];
+            NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+            
+            NSString *appVersion = [[NSBundle mainBundle]
+                                    objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+            NSString *shortAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+            NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+            
+            NSArray *languageArray = [NSLocale preferredLanguages];
+            NSString *language = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:[languageArray objectAtIndex:0]];
+            
+            NSString *connectionStatus = @"No internet connection";
+            if ([MEGAReachabilityManager isReachable]) {
+                if ([MEGAReachabilityManager isReachableViaWiFi]) {
+                    connectionStatus = @"WiFi";
+                } else {
+                    connectionStatus = @"Mobile Data";
+                }
+            }
+            
+            NSString *messageBody = AMLocalizedString(@"pleaseWriteYourFeedback", @"Message body of the email that appears when the users tap on \"Send feedback\"");
+            messageBody = [messageBody stringByAppendingFormat:@"\n\n\nApp Information:\nApp Name: %@\n", appName];
+            messageBody = [messageBody stringByAppendingFormat:@"App Version: %@ (%@)\n\n", shortAppVersion, appVersion];
+            
+            messageBody = [messageBody stringByAppendingFormat:@"Device information:\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@\nConnection Status: %@", [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name, connectionStatus];
+            
+            [mailComposeVC setMessageBody:messageBody isHTML:NO];
             
             [self presentViewController:mailComposeVC animated:YES completion:nil];
         } else {

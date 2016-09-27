@@ -41,4 +41,7 @@
  */
 @property (nonatomic, readonly) BOOL iPadPro;
 
+
+- (NSString *)deviceName;
+
 @end

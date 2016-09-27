@@ -126,6 +126,10 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -248,6 +252,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
         [alert show];
     } else {
+        MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [self reloadUI];
