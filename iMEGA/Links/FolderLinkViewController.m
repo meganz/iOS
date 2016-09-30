@@ -11,7 +11,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAQLPreviewController.h"
 #import "Helper.h"
 
 #import "FileLinkViewController.h"
@@ -26,15 +26,13 @@
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
     BOOL isFolderLinkNotValid;
     
     NSMutableArray *matchSearchNodes;
-    
-    NSString *previewDocumentPath;
     
     UIAlertView *decryptionAlertView;
 }
@@ -255,22 +253,6 @@
     [self.importBarButtonItem setEnabled:boolValue];
 }
 
-- (void)deleteTempDocuments {
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
-    for (NSString *item in directoryContents) {
-        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([item pathExtension]), NULL);
-        if ([QLPreviewController canPreviewItem:[NSURL URLWithString:(__bridge NSString *)(fileUTI)]] || UTTypeConformsTo(fileUTI, kUTTypeText)) {
-            NSError *error = nil;
-            if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:item] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
-        }
-        if (fileUTI) {
-            CFRelease(fileUTI);
-        }
-    }
-}
-
 - (void)showLinkNotValid {
     isFolderLinkNotValid = YES;
     
@@ -309,8 +291,6 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [self deleteTempDocuments];
-    
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
@@ -397,8 +377,6 @@
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
-    [self deleteTempDocuments];
-    
     if ([_tableView isEditing]) {
         for (MEGANode *node in _selectedNodesArray) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
@@ -444,8 +422,6 @@
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
-    [self deleteTempDocuments];
-    
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -711,14 +687,20 @@
             } else {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
+                
+                NSString *previewDocumentPath = nil;
                 if (offlineNodeExist) {
                     previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                    
-                    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-                    [previewController setDelegate:self];
-                    [previewController setDataSource:self];
-                    [previewController setTransitioningDelegate:self];
-                    [previewController setTitle:name];
+                } else {
+                    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
+                    NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
+                        previewDocumentPath = tmpFilePath;
+                    }
+                }
+                
+                if (previewDocumentPath) {
+                    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
                     [self presentViewController:previewController animated:YES completion:nil];
                 } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdkFolder] httpServerStart:YES port:4443]) {
                     MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:YES];
@@ -835,37 +817,6 @@
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
     [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
     
-    return YES;
-}
-
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    
-    if ([presented isKindOfClass:[QLPreviewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    
-    return nil;
-}
-
-#pragma mark - QLPreviewControllerDataSource
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return 1;
-}
-
-- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    if (previewDocumentPath != nil) {
-        return [NSURL fileURLWithPath:previewDocumentPath];
-    }
-    
-    return nil;
-}
-
-#pragma mark - QLPreviewControllerDelegate
-
-- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
     return YES;
 }
 
