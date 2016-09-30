@@ -10,7 +10,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAQLPreviewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "OfflineTableViewCell.h"
@@ -27,7 +27,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineTableViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
     NSString *previewDocumentPath;
     BOOL allItemsSelected;
     BOOL isSwipeEditing;
@@ -594,14 +594,11 @@ static NSString *kisDirectory = @"kisDirectory";
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {
-        QLPreviewController *previewController = [[QLPreviewController alloc]init];
-        previewController.delegate = self;
-        previewController.dataSource = self;
+        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
         
         NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
         
         [previewController setCurrentPreviewItemIndex:selectedIndexFile];
-        [previewController setTransitioningDelegate:self];
         [self presentViewController:previewController animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
@@ -796,17 +793,6 @@ static NSString *kisDirectory = @"kisDirectory";
     return self;
 }
 
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    
-    if ([presented isKindOfClass:[QLPreviewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    
-    return nil;
-}
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -849,17 +835,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - QLPreviewControllerDataSource
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return self.offlineFiles.count;
-}
-
-- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    previewDocumentPath = [self.offlineFiles objectAtIndex:index];
-    return [NSURL fileURLWithPath:previewDocumentPath];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -907,12 +882,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self reloadUI];
         [self setEditing:NO animated:YES];
     }
-}
-
-#pragma mark - QLPreviewControllerDelegate
-
-- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
-    return YES;
 }
 
 #pragma mark - MEGATransferDelegate

@@ -22,15 +22,21 @@
     [super viewDidLoad];
     
     NSError * error = nil;
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:&error]) {
-        MEGALogError(@"Create directory at path failed with error: %@", error);
-    }
-
-    NSString *localPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_node.name];
-    [self.api startDownloadNode:_node localPath:localPath delegate:self];
+    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
+    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
     
-    [self setTitle:_node.name];
-    [_imageView setImage:[Helper infoImageForNode:self.node]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
+        }
+    }
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:nodeFilePath isDirectory:nil]) {
+        [self.api startDownloadNode:self.node localPath:nodeFilePath delegate:self];
+    }
+    
+    [self setTitle:self.node.name];
+    [self.imageView setImage:[Helper infoImageForNode:self.node]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -81,14 +87,6 @@
 }
 
 - (void)previewControllerWillDismiss:(QLPreviewController *)controller {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentTransfer.path];
-    if (fileExists) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentTransfer.path error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-    
     previewDocumentTransfer = nil;
     
     if (([[[UIDevice currentDevice] systemVersion] compare:@"9.0" options:NSNumericSearch] != NSOrderedAscending)) {
@@ -110,10 +108,10 @@
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [_activityIndicator stopAnimating];
-    [_progressView setHidden:NO];
+    [self.activityIndicator stopAnimating];
+    [self.progressView setHidden:NO];
     float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
-    [_progressView setProgress:percentage];
+    [self.progressView setProgress:percentage];
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
