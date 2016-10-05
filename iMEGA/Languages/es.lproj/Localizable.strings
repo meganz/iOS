@@ -3,6 +3,10 @@
 /* Button title to accept something */
 "ok"="Aceptar";
 /* */
+"yes" = "Si";
+/* */
+"no" = "No";
+/* */
 "upload"="Subir";
 /*  */
 "error"="Error";
@@ -660,6 +664,18 @@
 "youRecoveryKeyIsGoingTo" = "Tu Clave de Recuperación va a utilizarse para resetear tu contraseña. Por favor, introduce tu nueva contraseña.";
 /*  */
 "yourPasswordHasBeenReset" = "Tu contraseña ha sido reiniciada con éxito. Por favor accede a tu cuenta.";
+/* First paragraph of the screen when the password has been forgotten */
+"forgotPassword_firstParagraph" = "Si tienes una copia de tu Clave de Recuperación, puedes resetear tu contraseña seleccionando SI. No se perderá ningún dato.";
+/* Second paragraph of the screen when the password has been forgotten */
+"forgotPassword_secondParagraph" = "Aún puedes exportar tu Clave de Recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, no podrás ya desencriptar tu cuenta existente, pero aún puede empezar una nueva utilizando el mismo email si seleccionas NO.";
+/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
+"doYouHaveABackupOfYourRecoveryKey" = "¿Tienes copia de tu Clave de Recuperación?";
+/* Headline when the user chose YES */
+"great" = "¡Bien!";
+/* Text of the alert message to ask for the link to reset the pass with the MK */
+"recoveryLinkToResetYourPassword" = "Por favor introduce tu email a continuación. Recibirás un enlace de recuperación que te permitirá enviar tu Clave de Recuperación y resetear tu contraseña.";
+/* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
+"send" = "Enviar";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */

@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 @end
 
@@ -43,6 +45,7 @@
     [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitle:AMLocalizedString(@"forgotPassword", @"An option to reset the password.") forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,6 +127,11 @@
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
     return [formatter stringFromDate:date];
+}
+
+- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ForgotPasswordNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UIResponder

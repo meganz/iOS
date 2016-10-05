@@ -3,6 +3,10 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
+"yes" = "Yes";
+/* */
+"no" = "No";
+/* */
 "upload"="Upload";
 /*  */
 "error"="Error";
@@ -660,6 +664,18 @@
 "youRecoveryKeyIsGoingTo" = "Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
 /*  */
 "yourPasswordHasBeenReset" = "Your password has been reset successfully. Please log into your account now.";
+/* First paragraph of the screen when the password has been forgotten */
+"forgotPassword_firstParagraph" = "If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
+/* Second paragraph of the screen when the password has been forgotten */
+"forgotPassword_secondParagraph" = "You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
+/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
+"doYouHaveABackupOfYourRecoveryKey" = "Do you have a backup of your Recovery Key?";
+/* Headline when the user chose YES */
+"great" = "Great!";
+/* Text of the alert message to ask for the link to reset the pass with the MK */
+"recoveryLinkToResetYourPassword" = "Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+/* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
+"send" = "Send";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email";
 /* Button text for the user to confirm their change of email address. */

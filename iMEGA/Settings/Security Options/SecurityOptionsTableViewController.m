@@ -71,7 +71,7 @@
 
 - (void)passwordReset {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"passwordReset" object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - IBActions
