@@ -593,7 +593,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired" = "El enlace de cancelación ha caducado.";
 /* Account closure, warning dialog after user confirm that he want to cancel account. */
-"enterYourPasswordToConfirmThatYouWanToClose" = "Por favor, introduce tu contraseña para confirmar que tu quieres cerrar tu cuenta.";
+"enterYourPasswordToConfirmThatYouWanToClose" = "Por favor, introduce tu contraseña para confirmar que quieres cerrar tu cuenta.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount" = "Cerrar cuenta";
 /* Title for the action that allows to remove a file or folder */
@@ -642,12 +642,30 @@
 "passwordChanged"="Tu contraseña ha sido cambiada.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
+/* An option to reset the password. */
+"forgotPassword" = "¿Contraseña olvidada?";
+/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
+"youWillReceiveARecoveryLink" = "Recibirás un enlace de recuperación que te permitirá resetear tu contraseña. Por favor, comprueba tu email para continuar.";
+/* Message shown during forgot your password process if the link to reset password has expired */
+"recoveryLinkHasExpired" = "Este enlace recuperación ha caducado, por favor, inténtalo de nuevo.";
+/* Headline of the password reset recovery procedure */
+"passwordReset" = "Resetear contraseña";
+/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
+"pleaseWriteYourRecoveryKey" = "Por favor, escribe tu clave de recuperación.";
+/* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account "Master Key", and can unlock (recover) the account if the user forgets their password. */
+"recoveryKey" = "Clave de recuperación";
+/* An alert title where the user provided the incorrect Recovery Key. */
+"invalidRecoveryKey" = "Clave de recuperación incorrecta";
+/* Text of the alert after opening the recovery link to reset pass being logged. */
+"youRecoveryKeyIsGoingTo" = "Tu Clave de Recuperación va a utilizarse para resetear tu contraseña. Por favor, introduce tu nueva contraseña.";
+/*  */
+"yourPasswordHasBeenReset" = "Tu contraseña ha sido reiniciada con éxito. Por favor accede a tu cuenta.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmar correo electrónico";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmNewEmail"="Confirma el nuevo correo electrónico";
+"confirmNewEmail"="Confirmar nuevo correo electrónico";
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="Cambiar correo electrónico";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
