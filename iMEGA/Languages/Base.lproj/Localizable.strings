@@ -642,6 +642,24 @@
 "passwordChanged"="Your password has been changed.";
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="The new and the old password must not match.";
+/* An option to reset the password. */
+"forgotPassword" = "Forgot password?";
+/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
+"youWillReceiveARecoveryLink" = "You will receive a recovery link that will allow you to reset your password. Please check your email to proceed.";
+/* Message shown during forgot your password process if the link to reset password has expired */
+"recoveryLinkHasExpired" = "This recovery link has expired, please try again.";
+/* Headline of the password reset recovery procedure */
+"passwordReset" = "Password reset";
+/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
+"pleaseWriteYourRecoveryKey" = "Please, write your Recovery Key";
+/* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
+"recoveryKey" = "Recovery Key";
+/* An alert title where the user provided the incorrect Recovery Key. */
+"invalidRecoveryKey" = "Invalid Recovery Key";
+/* Text of the alert after opening the recovery link to reset pass being logged. */
+"youRecoveryKeyIsGoingTo" = "Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+/*  */
+"yourPasswordHasBeenReset" = "Your password has been reset successfully. Please log into your account now.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email";
 /* Button text for the user to confirm their change of email address. */

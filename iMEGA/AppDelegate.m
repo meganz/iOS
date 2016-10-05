@@ -17,6 +17,7 @@
 
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
+#import "ChangePasswordViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
@@ -47,7 +48,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeBackupLink,
     URLTypeIncomingPendingContactsLink,
     URLTypeChangeEmailLink,
-    URLTypeCancelAccountLink
+    URLTypeCancelAccountLink,
+    URLTypeRecoverLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -487,6 +489,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isRecoverLink:afterSlashesString]) {
+        self.urlType = URLTypeRecoverLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -675,6 +682,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isRecoverLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 7) {
+        return NO;
+    }
+    
+    BOOL isRecoverLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#recover"]; //mega://"#recover"
+    if (isRecoverLink) {
+        NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+        [[MEGASdkManager sharedMEGASdk] queryResetPasswordLink:megaURLString];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)openIn {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -815,6 +837,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self presentLinkViewController:confirmAccountNavigationController];
 }
 
+- (void)presentChangePasswordViewControllerForEmail:(NSString *)email masterKey:(NSString *)masterKey link:(NSString *)link {
+    ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+    changePasswordVC.changeType = ChangeTypeResetPassword;
+    changePasswordVC.email = email;
+    changePasswordVC.masterKey = masterKey;
+    changePasswordVC.link = link;
+    
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
+    [self presentLinkViewController:navigationController];
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -845,6 +878,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         } else if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }
+    } else if (alertView.tag == 2 && buttonIndex == 1) { //masterKeyLoggedInAlertView
+        [self presentChangePasswordViewControllerForEmail:self.emailOfNewSignUpLink masterKey:[[MEGASdkManager sharedMEGASdk] masterKey] link:self.exportedLinks];
+        
+        self.emailOfNewSignUpLink = nil;
+        self.exportedLinks = nil;
     }
 }
 
@@ -1135,8 +1173,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiEExpired: {
-                if (request.type == MEGARequestTypeQueryRecoveryLink) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)")];
+                if (request.type == MEGARequestTypeQueryRecoveryLink || request.type == MEGARequestTypeConfirmRecoveryLink) {
+                //TODO: Replace HUDs for UnavailableLinkView 
+                    if (self.urlType == URLTypeCancelAccountLink) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)")];
+                    } else if (self.urlType == URLTypeRecoverLink) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired")];
+                    }
                 }
                 break;
             }
@@ -1353,6 +1396,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self presentConfirmViewControllerType:ConfirmTypeEmail link:request.link email:request.email];
             } else if (self.urlType == URLTypeCancelAccountLink) {
                 [self presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
+            } else if (self.urlType == URLTypeRecoverLink) {
+                if (request.flag) {
+                    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                        UIAlertView *masterKeyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                        masterKeyLoggedInAlertView.tag = 2;
+                        [masterKeyLoggedInAlertView show];
+                    } else {
+                        
+                    }
+                    
+                    self.emailOfNewSignUpLink = request.email;
+                    self.exportedLinks = request.link;
+                } else {
+                    //TODO: PARK ACCOUNT AND CREATE NEW ONE
+                }
             }
             break;
         }
