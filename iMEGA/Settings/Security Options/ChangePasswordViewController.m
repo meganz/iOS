@@ -306,7 +306,7 @@
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
                     title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
                 } else {
-                    
+                    title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
                 }
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
                 [alertView show];

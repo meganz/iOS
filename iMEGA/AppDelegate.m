@@ -878,8 +878,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         } else if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }
-    } else if (alertView.tag == 2 && buttonIndex == 1) { //masterKeyLoggedInAlertView
-        [self presentChangePasswordViewControllerForEmail:self.emailOfNewSignUpLink masterKey:[[MEGASdkManager sharedMEGASdk] masterKey] link:self.exportedLinks];
+    } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
+        NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
+        [self presentChangePasswordViewControllerForEmail:self.emailOfNewSignUpLink masterKey:masterKey link:self.exportedLinks];
         
         self.emailOfNewSignUpLink = nil;
         self.exportedLinks = nil;
@@ -1403,7 +1404,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                         masterKeyLoggedInAlertView.tag = 2;
                         [masterKeyLoggedInAlertView show];
                     } else {
-                        
+                        UIAlertView *masterKeyLoggedOutAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseWriteYourRecoveryKey", @"Message shown to explain that you have to write your recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                        masterKeyLoggedOutAlertView.tag = 3;
+                        masterKeyLoggedOutAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+                        UITextField *textField = [masterKeyLoggedOutAlertView textFieldAtIndex:0];
+                        textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                        [masterKeyLoggedOutAlertView show];
                     }
                     
                     self.emailOfNewSignUpLink = request.email;
