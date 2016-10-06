@@ -308,9 +308,9 @@
                             <mask key="constraints">
                                 <exclude reference="K8O-4O-P7M"/>
                                 <exclude reference="cVJ-oX-6Oe"/>
-                                <exclude reference="4Ax-FI-0Xd"/>
                                 <exclude reference="nwH-5I-baW"/>
                                 <exclude reference="rR2-1X-C13"/>
+                                <exclude reference="4Ax-FI-0Xd"/>
                                 <exclude reference="APv-kF-mSu"/>
                                 <exclude reference="bHI-ts-jfQ"/>
                                 <exclude reference="o7A-Yp-H1S"/>
@@ -330,12 +330,12 @@
                                 <exclude reference="oim-4F-hs1"/>
                                 <exclude reference="VkO-cz-vEq"/>
                                 <include reference="cVJ-oX-6Oe"/>
-                                <include reference="4Ax-FI-0Xd"/>
-                                <exclude reference="hNL-yb-t8h"/>
                                 <exclude reference="JkT-Xn-kkU"/>
                                 <exclude reference="h3Y-fP-3Of"/>
                                 <include reference="nwH-5I-baW"/>
                                 <include reference="rR2-1X-C13"/>
+                                <include reference="4Ax-FI-0Xd"/>
+                                <exclude reference="hNL-yb-t8h"/>
                                 <include reference="APv-kF-mSu"/>
                                 <exclude reference="XyH-gX-kuV"/>
                                 <exclude reference="Zmj-92-pmY"/>
@@ -989,11 +989,24 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have a backup of your master crypto key, you can reset your password by selecting YES. No data will be lost." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHE-oi-efL">
                                 <rect key="frame" x="50" y="0.0" width="500" height="100"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="700" id="5au-Pp-U26">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="580"/>
+                                    </constraint>
                                     <constraint firstAttribute="height" constant="100" id="mY2-no-h7k"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5au-Pp-U26"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="5au-Pp-U26"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiA-UF-Krc">
                                 <rect key="frame" x="50" y="100" width="500" height="180"/>
@@ -1070,6 +1083,7 @@
                             <constraint firstItem="8OL-qv-vwb" firstAttribute="height" secondItem="8Su-XS-eEy" secondAttribute="height" id="R1K-tJ-R3X"/>
                             <constraint firstItem="yiA-UF-Krc" firstAttribute="leading" secondItem="lHE-oi-efL" secondAttribute="leading" id="RaQ-ka-mqI"/>
                             <constraint firstItem="8Su-XS-eEy" firstAttribute="leading" secondItem="P2q-1T-y0O" secondAttribute="leading" id="Vhm-R4-OBS"/>
+                            <constraint firstItem="lHE-oi-efL" firstAttribute="centerX" secondItem="ozX-mh-sWi" secondAttribute="centerX" id="cEA-Yh-4di"/>
                             <constraint firstItem="8Su-XS-eEy" firstAttribute="width" secondItem="8OL-qv-vwb" secondAttribute="width" id="dea-8x-45j"/>
                             <constraint firstItem="8Su-XS-eEy" firstAttribute="top" secondItem="P2q-1T-y0O" secondAttribute="bottom" constant="30" id="dlh-Ov-C8r"/>
                             <constraint firstItem="P2q-1T-y0O" firstAttribute="top" secondItem="yiA-UF-Krc" secondAttribute="bottom" id="iz7-wQ-DMX"/>
@@ -1083,12 +1097,20 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="cEA-Yh-4di"/>
                                 <exclude reference="9wm-t2-QAP"/>
                                 <exclude reference="Orj-ox-FVu"/>
                                 <exclude reference="OtK-cL-Pfj"/>
                                 <exclude reference="Vhm-R4-OBS"/>
                                 <exclude reference="rJn-xa-YN0"/>
                                 <exclude reference="Pq4-DE-Kel"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="cEA-Yh-4di"/>
+                                <exclude reference="sjy-zz-tyI"/>
+                                <exclude reference="vII-Qw-9kU"/>
                             </mask>
                         </variation>
                     </view>
