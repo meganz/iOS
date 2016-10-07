@@ -5,7 +5,8 @@
 typedef NS_ENUM(NSUInteger, ChangeType) {
     ChangeTypePassword = 0,
     ChangeTypeEmail,
-    ChangeTypeResetPassword
+    ChangeTypeResetPassword,
+    ChangeTypeParkAccount
 };
 
 @property (nonatomic) ChangeType changeType;
