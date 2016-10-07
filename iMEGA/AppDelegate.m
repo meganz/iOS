@@ -1230,6 +1230,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD dismiss];
             
             [self setBadgeValueForIncomingContactRequests];
+            
+            
+            [[MEGASdkManager sharedMEGAChatSdk] openSession:FALSE delegate:self];
             break;
         }
             
@@ -1362,6 +1365,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
     }
 }
+
+#pragma mark - MEGAChatRequestDelegate
+
+- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    if ([error type] != MEGAChatErrorTypeOk)
+    {
+        NSLog(@"ERROR IN CHAT REQUEST");
+        return;
+    }
+    
+    NSLog(@"CHAT REQUEST FINISHED OK");
+    if ([request type] == MEGAChatRequestTypeInitialize)
+    {
+        [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
+    }
+}
+
 
 #pragma mark - MEGATransferDelegate
 

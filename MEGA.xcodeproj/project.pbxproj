@@ -185,6 +185,27 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		947E55A01DA2D8A00025B551 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55951DA2D8A00025B551 /* libevent_core.a */; };
+		947E55A11DA2D8A00025B551 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55961DA2D8A00025B551 /* libevent_extra.a */; };
+		947E55A21DA2D8A00025B551 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55971DA2D8A00025B551 /* libevent_openssl.a */; };
+		947E55A31DA2D8A00025B551 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55981DA2D8A00025B551 /* libevent_pthreads.a */; };
+		947E55A41DA2D8A00025B551 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55991DA2D8A00025B551 /* libevent.a */; };
+		949092201DA2D995001C2AC7 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559A1DA2D8A00025B551 /* libexpat.a */; };
+		949092231DA2D9C3001C2AC7 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559F1DA2D8A00025B551 /* libws.a */; };
+		94BB900F1DA5859A008182BB /* libstrophe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB900E1DA58599008182BB /* libstrophe.a */; };
+		94BB90111DA5870C008182BB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90101DA5870C008182BB /* libicucore.tbd */; };
+		94BB90131DA58719008182BB /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90121DA58719008182BB /* libxml2.tbd */; };
+		94BB90171DA587D9008182BB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90161DA587D9008182BB /* VideoToolbox.framework */; };
+		94BB901A1DA65F78008182BB /* MEGAChatSdk.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB90191DA65F78008182BB /* MEGAChatSdk.mm */; };
+		94BB90201DA66050008182BB /* DelegateMEGAChatLoggerListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB901D1DA66050008182BB /* DelegateMEGAChatLoggerListener.mm */; };
+		94BB90211DA66050008182BB /* DelegateMEGAChatRequestListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB901F1DA66050008182BB /* DelegateMEGAChatRequestListener.mm */; };
+		94BB90281DA6649D008182BB /* MEGAChatError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB90251DA6649D008182BB /* MEGAChatError.mm */; };
+		94BB90291DA6649D008182BB /* MEGAChatRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB90271DA6649D008182BB /* MEGAChatRequest.mm */; };
+		94C828731DA2DA3100A22DB0 /* libservices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559D1DA2D8A00025B551 /* libservices.a */; };
+		94C828761DA2DA5800A22DB0 /* librtcmodule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559C1DA2D8A00025B551 /* librtcmodule.a */; };
+		94C828771DA2DA7900A22DB0 /* libkarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559B1DA2D8A00025B551 /* libkarere.a */; };
+		94E081E01DA57146009CC8F7 /* libWebRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E081DF1DA57146009CC8F7 /* libWebRTC.a */; };
+		94E081E21DA571E0009CC8F7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E081E11DA571E0009CC8F7 /* GLKit.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -555,6 +576,38 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		947E55951DA2D8A00025B551 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
+		947E55961DA2D8A00025B551 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
+		947E55971DA2D8A00025B551 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_openssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_openssl.a; sourceTree = "<group>"; };
+		947E55981DA2D8A00025B551 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_pthreads.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_pthreads.a; sourceTree = "<group>"; };
+		947E55991DA2D8A00025B551 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent.a; sourceTree = "<group>"; };
+		947E559A1DA2D8A00025B551 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libexpat.a; sourceTree = "<group>"; };
+		947E559B1DA2D8A00025B551 /* libkarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkarere.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libkarere.a; sourceTree = "<group>"; };
+		947E559C1DA2D8A00025B551 /* librtcmodule.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librtcmodule.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/librtcmodule.a; sourceTree = "<group>"; };
+		947E559D1DA2D8A00025B551 /* libservices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libservices.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libservices.a; sourceTree = "<group>"; };
+		947E559F1DA2D8A00025B551 /* libws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libws.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libws.a; sourceTree = "<group>"; };
+		94BB900E1DA58599008182BB /* libstrophe.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstrophe.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libstrophe.a; sourceTree = "<group>"; };
+		94BB90101DA5870C008182BB /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		94BB90121DA58719008182BB /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		94BB90141DA5877C008182BB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		94BB90161DA587D9008182BB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		94BB90181DA65F78008182BB /* MEGAChatSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatSdk.h; sourceTree = "<group>"; };
+		94BB90191DA65F78008182BB /* MEGAChatSdk.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatSdk.mm; sourceTree = "<group>"; };
+		94BB901C1DA66050008182BB /* DelegateMEGAChatLoggerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateMEGAChatLoggerListener.h; sourceTree = "<group>"; };
+		94BB901D1DA66050008182BB /* DelegateMEGAChatLoggerListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DelegateMEGAChatLoggerListener.mm; sourceTree = "<group>"; };
+		94BB901E1DA66050008182BB /* DelegateMEGAChatRequestListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateMEGAChatRequestListener.h; sourceTree = "<group>"; };
+		94BB901F1DA66050008182BB /* DelegateMEGAChatRequestListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DelegateMEGAChatRequestListener.mm; sourceTree = "<group>"; };
+		94BB90221DA66358008182BB /* MEGAChatLoggerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatLoggerDelegate.h; sourceTree = "<group>"; };
+		94BB90231DA66358008182BB /* MEGAChatRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatRequestDelegate.h; sourceTree = "<group>"; };
+		94BB90241DA6649D008182BB /* MEGAChatError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatError.h; sourceTree = "<group>"; };
+		94BB90251DA6649D008182BB /* MEGAChatError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatError.mm; sourceTree = "<group>"; };
+		94BB90261DA6649D008182BB /* MEGAChatRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatRequest.h; sourceTree = "<group>"; };
+		94BB90271DA6649D008182BB /* MEGAChatRequest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatRequest.mm; sourceTree = "<group>"; };
+		94BB902A1DA66A37008182BB /* MEGAChatError+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatError+init.h"; sourceTree = "<group>"; };
+		94BB902B1DA66A37008182BB /* MEGAChatRequest+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatRequest+init.h"; sourceTree = "<group>"; };
+		94BB902C1DA66A37008182BB /* MEGAChatSdk+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatSdk+init.h"; sourceTree = "<group>"; };
+		94E081DF1DA57146009CC8F7 /* libWebRTC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWebRTC.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libWebRTC.a; sourceTree = "<group>"; };
+		94E081E11DA571E0009CC8F7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -675,6 +728,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94BB90171DA587D9008182BB /* VideoToolbox.framework in Frameworks */,
+				94BB90131DA58719008182BB /* libxml2.tbd in Frameworks */,
+				94BB90111DA5870C008182BB /* libicucore.tbd in Frameworks */,
+				94E081E21DA571E0009CC8F7 /* GLKit.framework in Frameworks */,
+				94C828771DA2DA7900A22DB0 /* libkarere.a in Frameworks */,
+				94C828761DA2DA5800A22DB0 /* librtcmodule.a in Frameworks */,
+				94C828731DA2DA3100A22DB0 /* libservices.a in Frameworks */,
+				949092231DA2D9C3001C2AC7 /* libws.a in Frameworks */,
+				949092201DA2D995001C2AC7 /* libexpat.a in Frameworks */,
+				947E55A01DA2D8A00025B551 /* libevent_core.a in Frameworks */,
+				947E55A11DA2D8A00025B551 /* libevent_extra.a in Frameworks */,
+				94BB900F1DA5859A008182BB /* libstrophe.a in Frameworks */,
+				94E081E01DA57146009CC8F7 /* libWebRTC.a in Frameworks */,
+				947E55A21DA2D8A00025B551 /* libevent_openssl.a in Frameworks */,
+				947E55A31DA2D8A00025B551 /* libevent_pthreads.a in Frameworks */,
+				947E55A41DA2D8A00025B551 /* libevent.a in Frameworks */,
 				41E23C3D1C6BB992003E1DA9 /* Photos.framework in Frameworks */,
 				41D9D8E81B7123F100D9B850 /* StoreKit.framework in Frameworks */,
 				414296111B133EFA00639A20 /* libMEGASDK.a in Frameworks */,
@@ -864,6 +933,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				94E081DB1DA56E24009CC8F7 /* MEGAchat */,
 				41E250151D79E9EF00499A6C /* Import */,
 				41E2500E1D79E9D400499A6C /* SAMKeychain */,
 				41EC68561D76E101003EC803 /* PieChartView */,
@@ -1029,6 +1099,23 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94BB90161DA587D9008182BB /* VideoToolbox.framework */,
+				94BB90141DA5877C008182BB /* CoreVideo.framework */,
+				94BB90121DA58719008182BB /* libxml2.tbd */,
+				94BB90101DA5870C008182BB /* libicucore.tbd */,
+				94BB900E1DA58599008182BB /* libstrophe.a */,
+				94E081E11DA571E0009CC8F7 /* GLKit.framework */,
+				94E081DF1DA57146009CC8F7 /* libWebRTC.a */,
+				947E55951DA2D8A00025B551 /* libevent_core.a */,
+				947E55961DA2D8A00025B551 /* libevent_extra.a */,
+				947E55971DA2D8A00025B551 /* libevent_openssl.a */,
+				947E55981DA2D8A00025B551 /* libevent_pthreads.a */,
+				947E55991DA2D8A00025B551 /* libevent.a */,
+				947E559A1DA2D8A00025B551 /* libexpat.a */,
+				947E559B1DA2D8A00025B551 /* libkarere.a */,
+				947E559C1DA2D8A00025B551 /* librtcmodule.a */,
+				947E559D1DA2D8A00025B551 /* libservices.a */,
+				947E559F1DA2D8A00025B551 /* libws.a */,
 				41E23C3C1C6BB992003E1DA9 /* Photos.framework */,
 				E8E1BD431BA98F5B00AB689D /* libresolv.dylib */,
 				41D9D8E71B7123F100D9B850 /* StoreKit.framework */,
@@ -1395,6 +1482,37 @@
 			path = "Camera Uploads";
 			sourceTree = "<group>";
 		};
+		94BB901B1DA66050008182BB /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				94BB902A1DA66A37008182BB /* MEGAChatError+init.h */,
+				94BB902B1DA66A37008182BB /* MEGAChatRequest+init.h */,
+				94BB902C1DA66A37008182BB /* MEGAChatSdk+init.h */,
+				94BB901C1DA66050008182BB /* DelegateMEGAChatLoggerListener.h */,
+				94BB901D1DA66050008182BB /* DelegateMEGAChatLoggerListener.mm */,
+				94BB901E1DA66050008182BB /* DelegateMEGAChatRequestListener.h */,
+				94BB901F1DA66050008182BB /* DelegateMEGAChatRequestListener.mm */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		94E081DB1DA56E24009CC8F7 /* MEGAchat */ = {
+			isa = PBXGroup;
+			children = (
+				94BB90241DA6649D008182BB /* MEGAChatError.h */,
+				94BB90251DA6649D008182BB /* MEGAChatError.mm */,
+				94BB90261DA6649D008182BB /* MEGAChatRequest.h */,
+				94BB90271DA6649D008182BB /* MEGAChatRequest.mm */,
+				94BB90221DA66358008182BB /* MEGAChatLoggerDelegate.h */,
+				94BB90231DA66358008182BB /* MEGAChatRequestDelegate.h */,
+				94BB901B1DA66050008182BB /* Private */,
+				94BB90181DA65F78008182BB /* MEGAChatSdk.h */,
+				94BB90191DA65F78008182BB /* MEGAChatSdk.mm */,
+			);
+			name = MEGAchat;
+			path = Vendor/MEGAchat;
+			sourceTree = "<group>";
+		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
@@ -1711,6 +1829,8 @@
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				41D21E6E1D01AEC3002E6296 /* CTAssetsPickerController.m in Sources */,
+				94BB90281DA6649D008182BB /* MEGAChatError.mm in Sources */,
+				94BB90291DA6649D008182BB /* MEGAChatRequest.mm in Sources */,
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */,
@@ -1742,6 +1862,7 @@
 				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
 				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
+				94BB90211DA66050008182BB /* DelegateMEGAChatRequestListener.mm in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
@@ -1775,6 +1896,7 @@
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
+				94BB90201DA66050008182BB /* DelegateMEGAChatLoggerListener.mm in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
@@ -1808,6 +1930,7 @@
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
+				94BB901A1DA65F78008182BB /* MEGAChatSdk.mm in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
 				E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */,
@@ -2047,6 +2170,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					HAVE_LIBUV,
+					ENABLE_CHAT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2055,6 +2179,7 @@
 					iMEGA/Vendor/PureLayout/PureLayout,
 					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2062,6 +2187,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -2088,7 +2214,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/MEGA-PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_LIBUV;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_LIBUV,
+					ENABLE_CHAT,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -2096,6 +2225,7 @@
 					iMEGA/Vendor/PureLayout/PureLayout,
 					"iMEGA/Vendor/MWPhotoBrowser/**",
 					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
 				);
 				INFOPLIST_FILE = iMEGA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2103,6 +2233,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
