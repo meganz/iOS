@@ -60,10 +60,10 @@
         
         self.emailIsChangingTitleLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after creating an account to remenber the user what to do to complete the account creation proccess");
         self.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
-    } else if (self.changeType == ChangeTypeResetPassword) {
+    } else if (self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
         
-        self.navigationItem.title = AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure");
+        self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
         
         self.currentPasswordImageView.image = [UIImage imageNamed:@"email"];
         self.currentPasswordTextField.text = self.email;
@@ -72,6 +72,9 @@
         
         self.theNewPasswordTextField.placeholder = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
         self.confirmPasswordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
+        
+        NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
+        [self.changePasswordButton setTitle:buttonTitle forState:UIControlStateNormal];
         
         [self.theNewPasswordTextField becomeFirstResponder];
     }
@@ -185,6 +188,12 @@
             if ([self validatePasswordForm]) {
                 [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordTextField.text masterKey:self.masterKey delegate:self];
             }
+        } else if (self.changeType == ChangeTypeParkAccount) {
+            if ([self validatePasswordForm]) {
+                UIAlertView *startingFreshAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                startingFreshAccountAlertView.tag = 2;
+                [startingFreshAccountAlertView show];
+            }
         }
     } else {
         self.changePasswordButton.enabled = YES;
@@ -211,6 +220,10 @@
             UITextField *textField = [alertView textFieldAtIndex:0];
             [textField resignFirstResponder];
             [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    } else if (alertView.tag == 2) { //startingFreshAccountAlertView
+        if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordTextField.text masterKey:nil delegate:self];
         }
     }
 }
@@ -300,13 +313,17 @@
         case MEGARequestTypeConfirmRecoveryLink: {
             if (self.changeType == ChangeTypePassword) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
-            } else if (self.changeType == ChangeTypeResetPassword) {
+            } else {
                 NSString *title;
-                if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
-                    title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
-                } else {
-                    title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
+                if (self.changeType == ChangeTypeResetPassword) {
+                    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
+                        title = AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
+                    } else {
+                        title = AMLocalizedString(@"yourPasswordHasBeenReset", nil);
+                    }
+                } else if (self.changeType == ChangeTypeParkAccount) {
+                    title = AMLocalizedString(@"yourAccounHasBeenParked", nil);
                 }
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil];
                 [alertView show];

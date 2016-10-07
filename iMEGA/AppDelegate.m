@@ -837,9 +837,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self presentLinkViewController:confirmAccountNavigationController];
 }
 
-- (void)presentChangePasswordViewControllerForEmail:(NSString *)email masterKey:(NSString *)masterKey link:(NSString *)link {
+- (void)presentChangeViewType:(ChangeType)changeType email:(NSString *)email masterKey:(NSString *)masterKey link:(NSString *)link {
     ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
-    changePasswordVC.changeType = ChangeTypeResetPassword;
+    changePasswordVC.changeType = changeType;
     changePasswordVC.email = email;
     changePasswordVC.masterKey = masterKey;
     changePasswordVC.link = link;
@@ -880,7 +880,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
         NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
-        [self presentChangePasswordViewControllerForEmail:self.emailOfNewSignUpLink masterKey:masterKey link:self.exportedLinks];
+        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.exportedLinks];
         
         self.emailOfNewSignUpLink = nil;
         self.exportedLinks = nil;
@@ -1415,7 +1415,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     self.emailOfNewSignUpLink = request.email;
                     self.exportedLinks = request.link;
                 } else {
-                    //TODO: PARK ACCOUNT AND CREATE NEW ONE
+                    [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
                 }
             }
             break;

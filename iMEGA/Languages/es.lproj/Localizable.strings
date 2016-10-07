@@ -676,6 +676,22 @@
 "recoveryLinkToResetYourPassword" = "Por favor introduce tu email a continuación. Recibirás un enlace de recuperación que te permitirá enviar tu Clave de Recuperación y resetear tu contraseña.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send" = "Enviar";
+/* The title of the screen to park an account. */
+"noMasterKey_title" = "Vaya...";
+/* First paragraph of the screen to park an account */
+"noMasterKey_firstParagraph" = "Debido a nuestro a paradigma de encriptación punto-a-punto, no podrás acceder a tus datos sin tu contraseña o una copia de tu Clave de Recuperación.";
+/* Second paragraph of the screen to park an account */
+"noMasterKey_secondParagraph" = "Puedes aparcar tu cuenta y empezar una nueva bajo el mismo correo electrónico. Tus datos se almacenarán durante al menos 60 días. En caso de que recuerdes la contraseña de tu cuenta aparcada, por favor contacta con support@mega.nz";
+/* Text of the dialog message to ask for the link to park the account */
+"recoveryLinkToParkYourAccount" = "Por favor, introduce tu correo electrónico a continuación. Recibirás un enlace de recuperación que te permitirá aparcar tu cuenta.";
+/* Headline for parking an account (basically restarting from scratch) */
+"parkAccount" = "Aparcar cuenta";
+/* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
+"startingFreshAccount" = "Acepto que estoy creando una cuenta nueva, sin contenidos, y que perderé todos los datos de mi cuenta actual salvo que recuerde mi contraseña o encuentre mi Clave de Recuperación.";
+/* Caption of the button to proceed */
+"startNewAccount" = "Crear cuenta nueva";
+/*  */
+"yourAccounHasBeenParked" = "Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nuevo correo electrónico";
 /* Button text for the user to confirm their change of email address. */
