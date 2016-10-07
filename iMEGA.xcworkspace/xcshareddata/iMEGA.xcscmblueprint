@@ -4,45 +4,55 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : 0,
-    "1945E551F17CC8F4796C756EF87EADA8A3EADD91" : 0,
-    "3E02169055262138F7D692446C25677927AC13EE" : 0,
-    "C16576B571172538D95183F9515DC5DB064EAF7F" : 0,
-    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : 0,
-    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : 0,
-    "9F9B14DA276794D9192F387F0CC62561009373D0" : 0,
-    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : 0,
-    "7070BA961BCA286ED2393408B1E3D78393C99B33" : 0,
-    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : 0,
-    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : 0
+    "E762C42BC8C71A1AD1A00E2FC726C42A9BF54268" : 9223372036854775807,
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : 9223372036854775807,
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : 9223372036854775807,
+    "7070BA961BCA286ED2393408B1E3D78393C99B33" : 9223372036854775807,
+    "08C1DA4DCD3A676FACD29A3E823E30C353DAC834" : 9223372036854775807,
+    "3E02169055262138F7D692446C25677927AC13EE" : 9223372036854775807,
+    "C16576B571172538D95183F9515DC5DB064EAF7F" : 9223372036854775807,
+    "2ACD55DC2C09557CD027EC23DA3FA73537703B13" : 9223372036854775807,
+    "E6248D77DBBC6B1D6F6059D14C6A0B9ED1677585" : 9223372036854775807,
+    "BDFA195447E23E7077125556D5DE624222871CE5" : 9223372036854775807,
+    "F8622BA04EBD09F8BA8DC9C0C199149407552BFA" : 9223372036854775807,
+    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : 9223372036854775807,
+    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : 9223372036854775807,
+    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : 9223372036854775807,
+    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : 9223372036854775807,
+    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E0E59F3C-ECC8-4B12-BC45-F37C2054C81B",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "90D22726-558B-45A2-90EE-F171BACF478D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : "meganz:iOS3iMEGA\/Vendor\/DZNEmptyDataSet",
-    "1945E551F17CC8F4796C756EF87EADA8A3EADD91" : "meganz:iOS3iMEGA\/Vendor\/AMLocalizedString",
-    "3E02169055262138F7D692446C25677927AC13EE" : "meganz:iOS3iMEGA\/Vendor\/LTHPasscodeViewController",
-    "C16576B571172538D95183F9515DC5DB064EAF7F" : "meganz:iOS3iMEGA\/Vendor\/sskeychain",
-    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "meganz:iOS3iMEGA\/Vendor\/SVProgressHUD",
-    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : "meganz:iOS3iMEGA\/Vendor\/SVWebViewController",
-    "9F9B14DA276794D9192F387F0CC62561009373D0" : "meganz:iOS3iMEGA\/Vendor\/MWPhotoBrowser",
-    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : "meganz:iOS3iMEGA\/Vendor\/GKContactImage",
-    "7070BA961BCA286ED2393408B1E3D78393C99B33" : "meganz:iOS3iMEGA\/Vendor\/Reachability",
-    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : "meganz:iOS3iMEGA\/Vendor\/SDK",
-    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : "meganz:iOS3"
+    "E762C42BC8C71A1AD1A00E2FC726C42A9BF54268" : "ios3\/iMEGA\/Vendor\/CTAssetsPickerController\/",
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : "ios3\/iMEGA\/Vendor\/MWPhotoBrowser\/",
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "ios3\/iMEGA\/Vendor\/SVProgressHUD\/",
+    "7070BA961BCA286ED2393408B1E3D78393C99B33" : "ios3\/iMEGA\/Vendor\/Reachability\/",
+    "08C1DA4DCD3A676FACD29A3E823E30C353DAC834" : "ios3\/iMEGA\/Vendor\/AMLocalizedString\/",
+    "3E02169055262138F7D692446C25677927AC13EE" : "ios3\/iMEGA\/Vendor\/LTHPasscodeViewController\/",
+    "C16576B571172538D95183F9515DC5DB064EAF7F" : "ios3\/iMEGA\/Vendor\/SAMKeychain\/",
+    "2ACD55DC2C09557CD027EC23DA3FA73537703B13" : "ios3\/iMEGA\/Vendor\/PieChartView\/",
+    "E6248D77DBBC6B1D6F6059D14C6A0B9ED1677585" : "ios3\/iMEGA\/Vendor\/PureLayout\/",
+    "BDFA195447E23E7077125556D5DE624222871CE5" : "ios3\/iMEGA\/Vendor\/UIBarButtonItem-Badge\/",
+    "F8622BA04EBD09F8BA8DC9C0C199149407552BFA" : "ios3\/iMEGA\/Vendor\/DateTools\/",
+    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : "ios3\/iMEGA\/Vendor\/SVWebViewController\/",
+    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : "ios3\/iMEGA\/Vendor\/DZNEmptyDataSet\/",
+    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : "ios3\/iMEGA\/Vendor\/SDK\/",
+    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : "ios3\/iMEGA\/Vendor\/GKContactImage\/",
+    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : "ios3\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "iMEGA",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iMEGA.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/SVWebViewController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TransitApp\/SVWebViewController.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "00DEE37500E6C7998F4D113C875F3996AE26D5BE"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tagyro\/AMLocalizedString.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1945E551F17CC8F4796C756EF87EADA8A3EADD91"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "08C1DA4DCD3A676FACD29A3E823E30C353DAC834"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/sdk.git",
@@ -50,17 +60,22 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2AADEAED908340583C88E195E0B330D50D5EFB2E"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jnavarrom\/LTHPasscodeViewController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/astrokin\/PieChart.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2ACD55DC2C09557CD027EC23DA3FA73537703B13"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rolandleth\/LTHPasscodeViewController.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3E02169055262138F7D692446C25677927AC13EE"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/Reachability.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tonymillion\/Reachability.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7070BA961BCA286ED2393408B1E3D78393C99B33"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/SVProgressHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SVProgressHUD\/SVProgressHUD.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5"
     },
@@ -70,22 +85,42 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9F9B14DA276794D9192F387F0CC62561009373D0"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/iOS3.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/ios3.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/sskeychain.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/UIBarButtonItem-Badge.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BDFA195447E23E7077125556D5DE624222871CE5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/soffes\/SAMKeychain.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C16576B571172538D95183F9515DC5DB064EAF7F"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/DZNEmptyDataSet.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/dzenbot\/DZNEmptyDataSet.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/GKContactImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/smileyborg\/PureLayout",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E6248D77DBBC6B1D6F6059D14C6A0B9ED1677585"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chiunam\/CTAssetsPickerController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E762C42BC8C71A1AD1A00E2FC726C42A9BF54268"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MatthewYork\/DateTools.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F8622BA04EBD09F8BA8DC9C0C199149407552BFA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gekitz\/GKContactImage.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FFD45562D681BCF3154B3744FD74B029E1BBF63E"
     }
