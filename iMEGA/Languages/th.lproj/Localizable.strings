@@ -3,6 +3,10 @@
 /* Button title to accept something */
 "ok"="ตกลง";
 /* */
+"yes"="ใช่";
+/* */
+"no"="ไม่";
+/* */
 "upload"="อัปโหลด";
 /*  */
 "error"="ผิดพลาด";
@@ -582,6 +586,20 @@
 "imageAndVideoDownloadsFooter"="iOS รองรับการบันทึกรูปภาพและวิดีโอที่แกลเลอรีบนอุปกรณ์ของคุณ (หมายเหตุ: รูปภาพและวิดีโอจะไม่ถูกบันทึกไว้ในออฟไลน์)";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="ใช้ไปแล้ว %s";
+/* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
+"closeYourAccount"="ปิดบัญชีของคุณ";
+/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
+/*  */
+"pleaseCheckYourEmail"="Please check your email.";
+/* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
+"ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
+/* During account cancellation (deletion) */
+"cancellationLinkHasExpired"="ลิงก์ยกเลิกหมดอายุแล้ว";
+/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
+"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to close your account.";
+/* Account closure, password check dialog when user click on closure email. */
+"closeAccount"="ปิดบัญชี";
 /* Title for the action that allows to remove a file or folder */
 "remove"="ลบออก";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -626,8 +644,78 @@
 "confirmPassword"="ยืนยันรหัสผ่าน";
 /* Success message shown when the password has been changed */
 "passwordChanged"="รหัสผ่านของคุณถูกเปลี่ยนเรียบร้อยแล้ว";
-/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="รหัสผ่านใหม่และเก่าจะต้องไม่เหมือนกัน";
+/* An option to reset the password. */
+"forgotPassword"="Forgot password?";
+/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
+"youWillReceiveARecoveryLink"="You will receive a recovery link that will allow you to reset your password. Please check your email to proceed.";
+/* Message shown during forgot your password process if the link to reset password has expired */
+"recoveryLinkHasExpired"="ลิงก์สำหรับการกู้คืนได้หมดอายุแล้ว กรุณาลองใหม่อีกครั้ง";
+/* Headline of the password reset recovery procedure */
+"passwordReset"="รีเซ็ตรหัสผ่าน";
+/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
+"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+/* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
+"recoveryKey"="คีย์สำหรับกู้คืน";
+/* An alert title where the user provided the incorrect Recovery Key. */
+"invalidRecoveryKey"="คีย์หลักไม่ถูกต้อง";
+/* Text of the alert after opening the recovery link to reset pass being logged. */
+"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+/*  */
+"yourPasswordHasBeenReset"="รหัสผ่านของคุณถูกรีเซ็ตเรียบร้อยแล้ว กรุณาเข้าสู่ระบบด้วยบัญชีตอนนี้ได้แล้ว";
+/* First paragraph of the screen when the password has been forgotten */
+"forgotPassword_firstParagraph"="If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
+/* Second paragraph of the screen when the password has been forgotten */
+"forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
+/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
+"doYouHaveABackupOfYourRecoveryKey"="คุณมีการสำรองข้อมูลคีย์หลักแล้วหรือยัง";
+/* Headline when the user chose YES */
+"great"="ยอดเยี่ยม!";
+/* Text of the alert message to ask for the link to reset the pass with the MK */
+"recoveryLinkToResetYourPassword"="Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+/* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
+"send"="ส่ง";
+/* The title of the screen to park an account. */
+"noMasterKey_title"="Oops!";
+/* First paragraph of the screen to park an account */
+"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
+/* Second paragraph of the screen to park an account */
+"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
+/* Text of the dialog message to ask for the link to park the account */
+"recoveryLinkToParkYourAccount"="Please enter you e-mail address below. You will receive a recovery link that will allow you to park your account.";
+/* Headline for parking an account (basically restarting from scratch) */
+"parkAccount"="ระงับใช้งานบัญชี";
+/* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
+"startingFreshAccount"="ฉันยอมรับว่าฉันจะเริ่มบัญชีใหม่และเคลียร์ข้อมูลบัญชีทั้งหมดในปัจจุบัน จนกว่าจะจำรหัสผ่านหรือค้นหาคีย์หลักที่ฉันได้ส่งออกไว้ได้";
+/* Caption of the button to proceed */
+"startNewAccount"="เริ่มบัญชีใหม่";
+/*  */
+"yourAccounHasBeenParked"="บัญชีเก่าของคุณถูกระงับการใช้งานเรียบร้อยแล้ว ตอนนี้คุณสามารถเข้าสู่บัญชีใหม่ได้แล้ว";
+/* Hint text to suggest that the user have to write the new email on it */
+"newEmail"="New email";
+/* Button text for the user to confirm their change of email address. */
+"confirmEmail"="ยืนยันอีเมล";
+/* Hint text where the user have to re-write the new email to confirm it */
+"confirmNewEmail"="Confirm new email";
+/* The title of the alert dialog to change the email associated to an account. */
+"changeEmail"="Change email";
+/* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
+"oldAndNewEmailMatch"="The new and the old email must not match";
+/* Error message shown when you have not written the same email when confirming a new one */
+"emailsDoNotMatch"="Emails do not match";
+/* Error message when a use wants to validate the same email twice */
+"emailAddressChangeAlreadyRequested"="คุณมีการยืนยันลิงก์คำขอสำหรับอีเมลแล้ว";
+/* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
+"emailIsChanging_description"="กรุณาไปที่กล่องจดหมายและคลิกลิงก์เพื่อยืนยันอีเมลใหม่ของคุณ";
+/* Text shown on the confirm email view to remind the user what to do */
+"verifyYourEmailAddress_description"="กรุณาใส่รหัสผ่านเพื่อยืนยันอีเมลของคุณ";
+/* The [X] will be replaced with the e-mail address. */
+"congratulationsNewEmailAddress"="ขอแสดงความยินดี อีเมลใหม่ของคุณสำหรับบัญชี MEGA นี้คือ: [X]";
+/* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
+"closeOtherSessions"="ปิดเซสชั่นอื่นๆ";
+/* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
+"sessionsClosed"="Sessions closed";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="เปลี่ยนรหัสผ่าน";
 /* Title to describe a simple (four digit) passcode */
