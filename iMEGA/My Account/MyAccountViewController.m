@@ -12,7 +12,7 @@
 #import "UsageViewController.h"
 #import "SettingsTableViewController.h"
 
-@interface MyAccountViewController () <MEGARequestDelegate> {
+@interface MyAccountViewController () <MEGARequestDelegate, MEGAChatRequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
     long long availableSize;
@@ -188,7 +188,7 @@
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
     }
 }
 
@@ -319,6 +319,18 @@
             
         default:
             break;
+    }
+}
+
+#pragma mark - MEGAChatRequestDelegate
+
+- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    if ([error type] != MEGAChatErrorTypeOk) {
+        return;
+    }
+    
+    if ([request type] == MEGAChatRequestTypeLogout) {
+        [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
 
