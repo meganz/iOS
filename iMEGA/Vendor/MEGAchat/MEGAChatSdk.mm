@@ -70,6 +70,24 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
     return _megaChatApi;
 }
 
+#pragma mark - Logout
+
+- (void)logoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->logout([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)logout {
+    self.megaChatApi->logout();
+}
+
+- (void)localLogoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->localLogout([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)localLogout {
+    self.megaChatApi->localLogout();
+}
+
 #pragma mark - Private methods
 
 - (MegaChatRequestListener *)createDelegateMEGAChatRequestListener:(id<MEGAChatRequestDelegate>)delegate singleListener:(BOOL)singleListener {
