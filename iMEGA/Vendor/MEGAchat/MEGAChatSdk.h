@@ -27,4 +27,10 @@ typedef NS_ENUM (NSInteger, MEGAChatLogLevel) {
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)connect;
 
+#pragma mark - Logout
+
+- (void)logoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)logout;
+- (void)localLogoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)localLogout;
 @end
