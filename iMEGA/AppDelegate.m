@@ -1231,8 +1231,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [self setBadgeValueForIncomingContactRequests];
             
-            
-            [[MEGASdkManager sharedMEGAChatSdk] openSession:FALSE delegate:self];
+            if (isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] openSession:NO delegate:self];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] openSession:YES delegate:self];
+            }
             break;
         }
             
