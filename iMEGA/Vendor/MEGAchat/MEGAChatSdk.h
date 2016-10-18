@@ -36,8 +36,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus) {
 
 - (instancetype)init:(MEGASdk *)megaSDK;
 
-- (void)openSession:(BOOL)resumeSession delegate:(id<MEGAChatRequestDelegate>)delegate;
-- (void)openSession:(BOOL)resumeSession;
+- (void)initKarereWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)initKarere;
 
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)connect;

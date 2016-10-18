@@ -52,12 +52,12 @@ using namespace megachat;
     return self;
 }
 
-- (void)openSession:(BOOL)resumeSession delegate:(id<MEGAChatRequestDelegate>)delegate {
-    self.megaChatApi->init(resumeSession, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+- (void)initKarereWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->init([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
 }
 
-- (void)openSession:(BOOL)resumeSession {
-    self.megaChatApi->init(resumeSession);
+- (void)initKarere {
+    self.megaChatApi->init();
 }
 
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
