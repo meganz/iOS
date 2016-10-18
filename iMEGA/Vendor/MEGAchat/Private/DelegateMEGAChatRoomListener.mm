@@ -42,11 +42,11 @@ void DelegateMEGAChatRoomListener::onMessageReceived(megachat::MegaChatApi *api,
     }
 }
 
-void DelegateMEGAChatRoomListener::onMessageUpdated(megachat::MegaChatApi *api, megachat::MegaChatMessage *message) {
-    if (listener != nil && [listener respondsToSelector:@selector(onMessageUpdated:message:)]) {
+void DelegateMEGAChatRoomListener::onMessageUpdate(megachat::MegaChatApi *api, megachat::MegaChatMessage *message) {
+    if (listener != nil && [listener respondsToSelector:@selector(onMessageUpdate:message:)]) {
         MegaChatMessage *tempMessage = message->copy();
         dispatch_async(dispatch_get_main_queue(), ^{
-            [listener onMessageUpdated:this->megaChatSDK message:[[MEGAChatMessage alloc] initWithMegaChatMessage:tempMessage cMemoryOwn:YES]];
+            [listener onMessageUpdate:this->megaChatSDK message:[[MEGAChatMessage alloc] initWithMegaChatMessage:tempMessage cMemoryOwn:YES]];
         });
     }
 }
