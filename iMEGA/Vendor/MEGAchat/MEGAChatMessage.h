@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageType) {
 
 typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
     MEGAChatMessageChangeTypeStatus = 0x01,
+    MEGAChatMessageChangeTypeContent = 0x02
 };
 
 @interface MEGAChatMessage : NSObject
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
 @property (readonly, nonatomic) uint64_t temporalId;
 @property (readonly, nonatomic) NSInteger messageIndex;
 @property (readonly, nonatomic) uint64_t userHande;
-@property (readonly, nonatomic) MEGAChatMessageChangeType type;
+@property (readonly, nonatomic) MEGAChatMessageType type;
 @property (readonly, nonatomic) NSDate *timestamp;
 @property (readonly, nonatomic) NSString *content;
 @property (readonly, nonatomic) NSInteger changes;

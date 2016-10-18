@@ -57,8 +57,8 @@ using namespace megachat;
     return self.megaChatMessage->getUserHandle();
 }
 
-- (MEGAChatMessageChangeType)type {
-    return (MEGAChatMessageChangeType) self.megaChatMessage->getType();
+- (MEGAChatMessageType)type {
+    return (MEGAChatMessageType) self.megaChatMessage->getType();
 }
 
 - (NSDate *)timestamp {
