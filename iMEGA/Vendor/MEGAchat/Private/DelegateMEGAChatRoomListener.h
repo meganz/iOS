@@ -12,7 +12,7 @@ public:
     void onChatRoomUpdate(megachat::MegaChatApi *api, megachat::MegaChatRoom *chat);
     void onMessageLoaded(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
     void onMessageReceived(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
-    void onMessageUpdated(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
+    void onMessageUpdate(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
     
 private:
     MEGAChatSdk *megaChatSDK;
