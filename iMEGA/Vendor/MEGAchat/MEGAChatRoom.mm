@@ -38,8 +38,8 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [[NSString alloc] initWithFormat:@"<id: %llu - Own privilege %zd - Participants: %tu - Group: %@ - Title: %@ - Unread: %zd>", self.chatId, self.ownPrivilege, self.peerCount,
-            self.isGroup ? @"YES" : @"NO", self.title, self.unreadCount];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, changes=%@, unread=%ld ",
+            [self class], self.chatId, (long)self.ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, @(self.onlineState), @(self.changes), (long)self.unreadCount];
 }
 
 - (uint64_t)chatId {

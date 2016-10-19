@@ -37,6 +37,11 @@ using namespace megachat;
     return self.megaChatError;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: name=%@, type=%@>",
+            [self class], self.name, @(self.type)];
+}
+
 - (MEGAChatErrorType)type {
     return (MEGAChatErrorType) (self.megaChatError ? self.megaChatError->getErrorCode() : 0);
 }

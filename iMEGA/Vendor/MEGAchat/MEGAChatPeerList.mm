@@ -37,6 +37,11 @@ using namespace megachat;
     return self.megaChatPeerList;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: size=%ld>",
+            [self class], (long)self.size];
+}
+
 - (NSInteger)size {
     return self.megaChatPeerList->size();
 }
