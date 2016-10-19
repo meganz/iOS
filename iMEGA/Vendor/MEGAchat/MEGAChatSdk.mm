@@ -193,8 +193,8 @@ using namespace megachat;
     return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getMessage(chatId, messageId) cMemoryOwn:YES] : nil;
 }
 
-- (MEGAChatMessage *)sendMessageToChat:(uint64_t)chatId message:(NSString *)message messageType:(MEGAChatMessageType)type {
-    return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->sendMessage(chatId, message ? [message UTF8String] : NULL, (MegaChatMessage::Type)type) cMemoryOwn:YES] : nil;
+- (MEGAChatMessage *)sendMessageToChat:(uint64_t)chatId message:(NSString *)message {
+    return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->sendMessage(chatId, message ? [message UTF8String] : NULL) cMemoryOwn:YES] : nil;
 }
 
 - (MEGAChatMessage *)editMessageForChat:(uint64_t)chatId messageId:(uint64_t)messageId message:(NSString *)message {
