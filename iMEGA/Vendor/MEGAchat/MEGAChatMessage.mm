@@ -37,6 +37,11 @@ using namespace megachat;
     return self.megaChatMessage;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%zd, index=%zd, user handle=%llu, type=%@, timestamp=%@, content=%@, changes=%ld>",
+            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHande, @(self.type), self.timestamp, self.content, (long)self.changes];
+}
+
 - (NSInteger)status {
     return self.megaChatMessage->getStatus();
 }
@@ -67,6 +72,14 @@ using namespace megachat;
 
 - (NSString *)content {
     return [[NSString alloc] initWithUTF8String:self.megaChatMessage->getContent()];
+}
+
+- (BOOL)isEdited {
+    return self.megaChatMessage->isEdited();
+}
+
+- (BOOL)isDeleted {
+    return self.megaChatMessage->isDeleted();
 }
 
 - (NSInteger)changes {

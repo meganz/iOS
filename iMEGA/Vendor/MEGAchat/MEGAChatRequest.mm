@@ -37,6 +37,11 @@ using namespace megachat;
     return self.megaChatRequest;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: requestString=%@, type=%@>",
+            [self class], self.requestString, @(self.type)];
+}
+
 - (MEGAChatRequestType)type {
     return (MEGAChatRequestType) (self.megaChatRequest ? self.megaChatRequest->getType() : -1);
 }

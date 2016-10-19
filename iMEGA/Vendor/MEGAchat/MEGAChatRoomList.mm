@@ -39,7 +39,8 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return @"blabla";
+    return [NSString stringWithFormat:@"<%@: size=%ld>",
+            [self class], (long)self.size];
 }
 
 - (NSInteger)size {
