@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-//#import "MEGAChatSdk.h"
 
 typedef NS_ENUM (NSInteger, MEGAChatRoomChangeType) {
     MEGAChatRoomChangeTypeStatus      = 0x01,
@@ -41,12 +40,12 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
 @property (readonly, nonatomic) MEGAChatRoomState onlineState;
 @property (readonly, nonatomic) MEGAChatRoomChangeType changes;
 @property (readonly, nonatomic) NSInteger unreadCount;
-//@property (readonly, nonatomic) MEGAChatStatus onlineStatus;
+@property (readonly, nonatomic) NSInteger onlineStatus;
 
 - (instancetype)clone;
 
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande;
-- (NSInteger)peerHandeAtIndex:(NSUInteger)index;
+- (uint64_t)peerHandleAtIndex:(NSUInteger)index;
 - (MEGAChatRoomPrivilege)peerPrivilegeAtIndex:(NSUInteger)index;
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType;
 

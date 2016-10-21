@@ -47,7 +47,7 @@ void DelegateMEGAChatRequestListener::onRequestUpdate(MegaChatApi *api, MegaChat
 }
 
 void DelegateMEGAChatRequestListener::onRequestTemporaryError(MegaChatApi *api, MegaChatRequest *request, MegaChatError *e) {
-    if (listener != nil && [listener respondsToSelector:@selector(onhatRequestTemporaryError:request:error:)]) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatRequestTemporaryError:request:error:)]) {
         MegaChatRequest *tempRequest = request->copy();
         MegaChatError *tempError = e->copy();
         dispatch_async(dispatch_get_main_queue(), ^{
