@@ -38,8 +38,8 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, changes=%@, unread=%ld ",
-            [self class], self.chatId, (long)self.ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, @(self.onlineState), @(self.changes), (long)self.unreadCount];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, online status=%ld changes=%@, unread=%ld ",
+            [self class], self.chatId, (long)self.ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, @(self.onlineState), self.onlineStatus, @(self.changes), (long)self.unreadCount];
 }
 
 - (uint64_t)chatId {
@@ -74,15 +74,15 @@ using namespace megachat;
     return self.megaChatRoom->getUnreadCount();
 }
 
-//- (MEGAChatStatus)onlineStatus {
-//    return (MEGAChatStatus) self.megaChatRoom->getOnlineStatus();
-//}
+- (NSInteger)onlineStatus {
+    return self.megaChatRoom->getOnlineStatus();
+}
 
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande {
     return self.megaChatRoom->getPeerPrivilegeByHandle(userHande);
 }
 
-- (NSInteger)peerHandeAtIndex:(NSUInteger)index {
+- (uint64_t)peerHandleAtIndex:(NSUInteger)index {
     return self.megaChatRoom->getPeerHandle((int)index);
 }
 
