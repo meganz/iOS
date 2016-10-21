@@ -174,7 +174,13 @@ using namespace megachat;
 }
 
 - (void)closeChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate {
-    self.megaChatApi->closeChatRoom(chatId, [self createDelegateMEGAChatRoomListener:delegate singleListener:YES]);
+    for (std::set<DelegateMEGAChatRoomListener *>::iterator it = _activeChatRoomListeners.begin() ; it != _activeChatRoomListeners.end() ; it++) {        
+        if ((*it)->getListener() == delegate) {
+            self.megaChatApi->closeChatRoom(chatId, (*it));
+            [self freeChatRoomListener:(*it)];
+            break;
+        }
+    }
 }
 
 - (void)closeChatRoom:(uint64_t)chatId {

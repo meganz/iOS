@@ -71,7 +71,7 @@ using namespace megachat;
 }
 
 - (NSString *)content {
-    return [[NSString alloc] initWithUTF8String:self.megaChatMessage->getContent()];
+    return self.megaChatMessage->getContent() ? [[NSString alloc] initWithUTF8String:self.megaChatMessage->getContent()] : nil;
 }
 
 - (BOOL)isEdited {

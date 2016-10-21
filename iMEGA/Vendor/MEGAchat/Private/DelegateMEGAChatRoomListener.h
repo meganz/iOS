@@ -14,6 +14,8 @@ public:
     void onMessageReceived(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
     void onMessageUpdate(megachat::MegaChatApi *api, megachat::MegaChatMessage *message);
     
+    const id<MEGAChatRoomDelegate> getListener();
+    
 private:
     MEGAChatSdk *megaChatSDK;
     id<MEGAChatRoomDelegate>listener;
