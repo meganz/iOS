@@ -1080,6 +1080,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (![_API_ESIDAlertView isVisible]) {
                         _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -1275,6 +1276,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeLogout: {
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            
             [Helper logout];
             [SVProgressHUD dismiss];
             

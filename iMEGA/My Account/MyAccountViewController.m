@@ -317,11 +317,6 @@
             break;
         }
             
-        case MEGARequestTypeLogout: {
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
-            break;
-        }
-            
         default:
             break;
     }
