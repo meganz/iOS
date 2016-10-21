@@ -86,10 +86,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus) {
 - (void)setChatTitle:(uint64_t)chatId title:(NSString *)title;
 
 - (BOOL)openChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate;
-- (BOOL)openChatRoom:(uint64_t)chatId;
 
 - (void)closeChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate;
-- (void)closeChatRoom:(uint64_t)chatId;
 
 - (NSInteger)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count;
 - (BOOL)isFullHistoryLoadedForChat:(uint64_t)chatId;

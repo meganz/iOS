@@ -169,10 +169,6 @@ using namespace megachat;
     return self.megaChatApi->openChatRoom(chatId, [self createDelegateMEGAChatRoomListener:delegate singleListener:YES]);
 }
 
-- (BOOL)openChatRoom:(uint64_t)chatId {
-    return self.megaChatApi->openChatRoom(chatId);
-}
-
 - (void)closeChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate {
     for (std::set<DelegateMEGAChatRoomListener *>::iterator it = _activeChatRoomListeners.begin() ; it != _activeChatRoomListeners.end() ; it++) {        
         if ((*it)->getListener() == delegate) {
@@ -181,10 +177,6 @@ using namespace megachat;
             break;
         }
     }
-}
-
-- (void)closeChatRoom:(uint64_t)chatId {
-    self.megaChatApi->closeChatRoom(chatId);
 }
 
 - (NSInteger)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count {
