@@ -524,8 +524,7 @@
     NSString *userName = nil;
     if (self.contactsMode == ContactsFolderSharedWith) {
         userName = [self.namesMutableDictionary objectForKey:userEmail];
-        BOOL isNameEmpty = [[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
-        if (userName != nil && !isNameEmpty) {
+        if (userName != nil && ((id)userName != [NSNull null])) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
             [cell.shareLabel setText:userEmail];
@@ -533,7 +532,9 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [self requestUserNameAndLastNameWithEmail:userEmail];
+            if ((id)userName != [NSNull null]) {
+                [self requestUserNameAndLastNameWithEmail:userEmail];
+            }
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
@@ -1031,14 +1032,15 @@
                     case MEGAUserAttributeLastname: {
                         name = [self.namesMutableDictionary objectForKey:[request email]];
                         name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                        if (name != nil) {
+                        BOOL isNameEmpty = [[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+                        if (name != nil && !isNameEmpty) {
                             [self.namesMutableDictionary setObject:name forKey:[request email]];
                         } else {
-                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
+                            [self.namesMutableDictionary setObject:[NSNull null] forKey:[request email]];
                         }
                         
                         [self.userNamesRequestedMutableArray removeObject:[request email]];
-                        shouldUpdateCell = YES;
+                        shouldUpdateCell = !isNameEmpty;
                         break;
                     }
                 }
