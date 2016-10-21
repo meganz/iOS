@@ -188,7 +188,7 @@
 
 - (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
+        [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
     }
 }
 
@@ -317,20 +317,13 @@
             break;
         }
             
+        case MEGARequestTypeLogout: {
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            break;
+        }
+            
         default:
             break;
-    }
-}
-
-#pragma mark - MEGAChatRequestDelegate
-
-- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if ([error type] != MEGAChatErrorTypeOk) {
-        return;
-    }
-    
-    if ([request type] == MEGAChatRequestTypeLogout) {
-        [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
 
