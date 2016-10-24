@@ -169,12 +169,12 @@
     NSString *titleFooter;
     switch (section) {
         case 0: { //Offline
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), [self.offlineSizeString UTF8String]];
+            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), self.offlineSizeString];
             break;
         }
             
         case 1: { //Cache
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), [self.cacheSizeString UTF8String]];
+            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), self.cacheSizeString];
             break;
         }
             
@@ -182,8 +182,7 @@
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[rubbishBinSizeNumber longLongValue]];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
-            const char *cString = [stringFromByteCount cStringUsingEncoding:NSUTF8StringEncoding];
-            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), cString];
+            titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), stringFromByteCount];
             break;
         }
             

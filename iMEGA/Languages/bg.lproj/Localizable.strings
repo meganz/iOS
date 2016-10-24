@@ -581,7 +581,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Запази iOS съвместими изображения и видео в Галерията на вашето устройство (Забележка: снимките и клиповете няма да бъдат запазени в Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="В момента използвате %s";
+"currentlyUsing"="В момента използвате %@";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Изтрий";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */

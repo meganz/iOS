@@ -581,7 +581,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="iOS 호환 가능 이미지와 동영상을 장치의 갤러리에 저장하세요 (참고: 이미지와 동영상은 오프라인에 저장되지 않을 것입니다).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="현재 %s 사용중";
+"currentlyUsing"="현재 %@ 사용중";
 /* Title for the action that allows to remove a file or folder */
 "remove"="제거";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
