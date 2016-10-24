@@ -581,7 +581,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="於您裝置上之圖庫中儲存iOS兼容的圖片和影片（註：圖片和影片將不會被存於離線模式中）。";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="目前已使用 %s";
+"currentlyUsing"="目前已使用 %@";
 /* Title for the action that allows to remove a file or folder */
 "remove"="移除";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */

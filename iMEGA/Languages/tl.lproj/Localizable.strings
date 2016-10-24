@@ -581,7 +581,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Itabi ang iOS compatible na mga imahe at videos sa inyong sa gallery ng inyong device (Paalala: ang mga imahe at videos ay hindi maitatabi Offline)";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="Gumagamit ngayon ng %s";
+"currentlyUsing"="Gumagamit ngayon ng %@";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Alisin";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
