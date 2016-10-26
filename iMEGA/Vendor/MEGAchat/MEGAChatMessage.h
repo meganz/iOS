@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
 @property (readonly, nonatomic) NSString *content;
 @property (readonly, nonatomic, getter=isEdited) BOOL edited;
 @property (readonly, nonatomic, getter=isDeleted) BOOL deleted;
+@property (readonly, nonatomic, getter=isEditable) BOOL editable;
 @property (readonly, nonatomic) NSInteger changes;
 
 - (instancetype)clone;
