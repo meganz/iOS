@@ -45,8 +45,12 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
 - (instancetype)clone;
 
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande;
+- (NSString *)peerFirstnameByHandle:(uint64_t)userHande;
+- (NSString *)peerLastnameByHandle:(uint64_t)userHande;
 - (uint64_t)peerHandleAtIndex:(NSUInteger)index;
 - (MEGAChatRoomPrivilege)peerPrivilegeAtIndex:(NSUInteger)index;
+- (NSString *)peerFirstnameAtIndex:(NSUInteger)index;
+- (NSString *)peerLastnameAtIndex:(NSUInteger)index;
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType;
 
 @end

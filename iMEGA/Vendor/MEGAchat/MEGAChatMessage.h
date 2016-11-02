@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
 
 @interface MEGAChatMessage : NSObject
 
-@property (readonly, nonatomic) NSInteger status;
+@property (readonly, nonatomic) MEGAChatMessageStatus status;
 @property (readonly, nonatomic) uint64_t messageId;
 @property (readonly, nonatomic) uint64_t temporalId;
 @property (readonly, nonatomic) NSInteger messageIndex;

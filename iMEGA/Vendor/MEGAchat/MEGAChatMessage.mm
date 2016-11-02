@@ -42,8 +42,8 @@ using namespace megachat;
             [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHande, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), self.changes];
 }
 
-- (NSInteger)status {
-    return self.megaChatMessage->getStatus();
+- (MEGAChatMessageStatus)status {
+    return (MEGAChatMessageStatus) self.megaChatMessage->getStatus();
 }
 
 - (uint64_t)messageId {
