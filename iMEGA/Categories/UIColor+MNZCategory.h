@@ -25,4 +25,9 @@
 
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 
+#pragma mark - MEGAChat colors
+
++ (UIColor *)mzn_vividGreen13E03C;
++ (UIColor *)mzn_brownishGrey666666;
+
 @end

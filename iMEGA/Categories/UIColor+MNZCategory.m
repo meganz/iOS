@@ -82,4 +82,14 @@
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 }
 
+#pragma mark - MEGAChat colors
+
++ (UIColor *)mzn_vividGreen13E03C {
+    return [UIColor colorWithRed:19.0f / 255.0f green:224.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f];
+}
+
++ (UIColor *)mzn_brownishGrey666666 {
+    return [UIColor colorWithWhite:102.0f / 255.0f alpha:1.0f];
+}
+
 @end
