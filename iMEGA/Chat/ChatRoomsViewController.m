@@ -74,6 +74,12 @@
     if (chatRoom.isGroup) {
         cell.onlineStatusView.hidden = YES;
     } else {
+        if (chatRoom.onlineStatus == 0) {
+            cell.onlineStatusView.backgroundColor = [UIColor mzn_brownishGrey666666];            
+        } else if (chatRoom.onlineStatus == 3) {
+            cell.onlineStatusView.backgroundColor = [UIColor mzn_vividGreen13E03C];
+            
+        }
         cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
     }
     
