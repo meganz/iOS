@@ -47,8 +47,6 @@ using namespace megachat;
 }
 
 - (NSString *)requestString {
-    if(!self.megaChatRequest) return nil;
-    
     return self.megaChatRequest->getRequestString() ? [[NSString alloc] initWithUTF8String:self.megaChatRequest->getRequestString()] : nil;
 }
 

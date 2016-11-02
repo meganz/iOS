@@ -38,7 +38,7 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, online status=%ld changes=%@, unread=%ld ",
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, online status=%ld changes=%@, unread=%ld>",
             [self class], self.chatId, (long)self.ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, @(self.onlineState), self.onlineStatus, @(self.changes), (long)self.unreadCount];
 }
 
@@ -59,7 +59,7 @@ using namespace megachat;
 }
 
 - (NSString *)title {
-    return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getTitle()] : nil;
+    return self.megaChatRoom->getTitle() ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getTitle()] : nil;
 }
 
 - (MEGAChatRoomState)onlineState {
@@ -83,11 +83,11 @@ using namespace megachat;
 }
 
 - (NSString *)peerFirstnameByHandle:(uint64_t)userHande {
-    return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstnameByHandle(userHande)] : nil;
+    return self.megaChatRoom->getPeerFirstnameByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstnameByHandle(userHande)] : nil;
 }
 
 - (NSString *)peerLastnameByHandle:(uint64_t)userHande {
-    return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastnameByHandle(userHande)] : nil;
+    return self.megaChatRoom->getPeerLastnameByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastnameByHandle(userHande)] : nil;
 }
 
 - (uint64_t)peerHandleAtIndex:(NSUInteger)index {
@@ -99,11 +99,11 @@ using namespace megachat;
 }
 
 - (NSString *)peerFirstnameAtIndex:(NSUInteger)index {
-    return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstname((unsigned int)index)] : nil;
+    return self.megaChatRoom->getPeerFirstname((unsigned int)index) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstname((unsigned int)index)] : nil;
 }
 
 - (NSString *)peerLastnameAtIndex:(NSUInteger)index {
-    return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastname((unsigned int)index)] : nil;
+    return self.megaChatRoom->getPeerLastname((unsigned int)index) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastname((unsigned int)index)] : nil;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType {
