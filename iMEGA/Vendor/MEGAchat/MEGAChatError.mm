@@ -47,7 +47,7 @@ using namespace megachat;
 }
 
 - (NSString *)name {
-    return [[NSString alloc] initWithUTF8String:self.megaChatError->getErrorString()];
+    return self.megaChatError->getErrorString() ? [[NSString alloc] initWithUTF8String:self.megaChatError->getErrorString()] : nil;
 }
 
 @end
