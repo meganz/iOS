@@ -11,7 +11,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:8];
+    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:9];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateInitialViewController]];
@@ -20,6 +20,7 @@
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateInitialViewController]];
     [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateInitialViewController]];
+    [defaultViewControllersMutableArray addObject:[[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateInitialViewController]];
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
@@ -69,6 +70,12 @@
                 [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
+                break;
+                //TODO: Change the image and the selectedImage
+            case 8:
+                [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
+                [tabBarItem setTitle:@"Chat"];
                 break;
         }
     }

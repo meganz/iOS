@@ -43,3 +43,6 @@
 [submodule "iMEGA/Vendor/SAMKeychain"]
 	path = iMEGA/Vendor/SAMKeychain
 	url = https://github.com/soffes/SAMKeychain.git
+[submodule "iMEGA/Vendor/JSQMessagesViewController"]
+	path = iMEGA/Vendor/JSQMessagesViewController
+	url = https://github.com/meganz/JSQMessagesViewController.git
