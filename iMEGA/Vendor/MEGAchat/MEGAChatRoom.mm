@@ -82,11 +82,11 @@ using namespace megachat;
     return self.megaChatRoom->getPeerPrivilegeByHandle(userHande);
 }
 
-- (NSString *)peerFirstNameByHandle:(uint64_t)userHande {
+- (NSString *)peerFirstnameByHandle:(uint64_t)userHande {
     return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstnameByHandle(userHande)] : nil;
 }
 
-- (NSString *)peerLastNameByHandle:(uint64_t)userHande {
+- (NSString *)peerLastnameByHandle:(uint64_t)userHande {
     return self.megaChatRoom ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastnameByHandle(userHande)] : nil;
 }
 
