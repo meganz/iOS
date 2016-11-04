@@ -8,6 +8,7 @@
 #import "MEGAChatRequestDelegate.h"
 #import "MEGAChatLoggerDelegate.h"
 #import "MEGAChatRoomDelegate.h"
+#import "MEGAChatDelegate.h"
 
 typedef NS_ENUM (NSInteger, MEGAChatLogLevel) {
     MEGAChatLogLevelFatal = 0,
@@ -55,6 +56,9 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus) {
 #pragma mark - Add and remove delegates
 
 - (void)addChatRoomDelegate:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate;
+
+- (void)addChatDelegate:(id<MEGAChatDelegate>)delegate;
+- (void)removeChatDelegate:(id<MEGAChatDelegate>)delegate;
 
 #pragma mark - Chat rooms
 

@@ -10,6 +10,7 @@
 #import "DelegateMEGAChatRequestListener.h"
 #import "DelegateMEGAChatLoggerListener.h"
 #import "DelegateMEGAChatRoomListener.h"
+#import "DelegateMEGAChatListener.h"
 
 #import <set>
 #import <pthread.h>
@@ -22,6 +23,7 @@ using namespace megachat;
 
 @property (nonatomic, assign) std::set<DelegateMEGAChatRequestListener *>activeRequestListeners;
 @property (nonatomic, assign) std::set<DelegateMEGAChatRoomListener *>activeChatRoomListeners;
+@property (nonatomic, assign) std::set<DelegateMEGAChatListener *>activeChatListeners;
 
 - (MegaChatRequestListener *)createDelegateMEGAChatRequestListener:(id<MEGAChatRequestDelegate>)delegate singleListener:(BOOL)singleListener;
 
@@ -99,6 +101,33 @@ using namespace megachat;
 
 - (void)addChatRoomDelegate:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate {
     self.megaChatApi->addChatRoomListener(chatId, [self createDelegateMEGAChatRoomListener:delegate singleListener:YES]);
+}
+
+- (void)addChatDelegate:(id<MEGAChatDelegate>)delegate {
+    self.megaChatApi->addChatListener([self createDelegateMEGAChatListener:delegate singleListener:NO]);
+}
+
+- (void)removeChatDelegate:(id<MEGAChatDelegate>)delegate {
+    std::vector<DelegateMEGAChatListener *> listenersToRemove;
+    
+    pthread_mutex_lock(&listenerMutex);
+    std::set<DelegateMEGAChatListener *>::iterator it = _activeChatListeners.begin();
+    while (it != _activeChatListeners.end()) {
+        DelegateMEGAChatListener *delegateListener = *it;
+        if (delegateListener->getUserListener() == delegate) {
+            listenersToRemove.push_back(delegateListener);
+            _activeChatListeners.erase(it++);
+        }
+        else {
+            it++;
+        }
+    }
+    pthread_mutex_unlock(&listenerMutex);
+    
+    for (int i = 0; i < listenersToRemove.size(); i++)
+    {
+        self.megaChatApi->removeChatListener(listenersToRemove[i]);
+    }
 }
 
 #pragma mark - Chat rooms
@@ -248,6 +277,25 @@ using namespace megachat;
     
     pthread_mutex_lock(&listenerMutex);
     _activeChatRoomListeners.erase(delegate);
+    pthread_mutex_unlock(&listenerMutex);
+    delete delegate;
+}
+
+- (MegaChatListener *)createDelegateMEGAChatListener:(id<MEGAChatDelegate>)delegate singleListener:(BOOL)singleListener {
+    if (delegate == nil) return nil;
+    
+    DelegateMEGAChatListener *delegateListener = new DelegateMEGAChatListener(self, delegate, singleListener);
+    pthread_mutex_lock(&listenerMutex);
+    _activeChatListeners.insert(delegateListener);
+    pthread_mutex_unlock(&listenerMutex);
+    return delegateListener;
+}
+
+- (void)freeChatListener:(DelegateMEGAChatListener *)delegate {
+    if (delegate == nil) return;
+    
+    pthread_mutex_lock(&listenerMutex);
+    _activeChatListeners.erase(delegate);
     pthread_mutex_unlock(&listenerMutex);
     delete delegate;
 }
