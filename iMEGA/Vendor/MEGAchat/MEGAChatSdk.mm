@@ -171,7 +171,7 @@ using namespace megachat;
 
 - (void)closeChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate {
     for (std::set<DelegateMEGAChatRoomListener *>::iterator it = _activeChatRoomListeners.begin() ; it != _activeChatRoomListeners.end() ; it++) {        
-        if ((*it)->getListener() == delegate) {
+        if ((*it)->getUserListener() == delegate) {
             self.megaChatApi->closeChatRoom(chatId, (*it));
             [self freeChatRoomListener:(*it)];
             break;

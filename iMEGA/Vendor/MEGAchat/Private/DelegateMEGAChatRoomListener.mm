@@ -50,7 +50,3 @@ void DelegateMEGAChatRoomListener::onMessageUpdate(megachat::MegaChatApi *api, m
         });
     }
 }
-
-const id<MEGAChatRoomDelegate> DelegateMEGAChatRoomListener::getListener () {
-    return this->listener;
-}
