@@ -2216,6 +2216,7 @@
 				41EC68551D76E0F6003EC803 /* PieChartView.m in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
+				41D6DB481DCB7DE700EFD0FF /* MEGAChatListItem.mm in Sources */,
 				417279351DB663FA001AC818 /* NSString+JSQMessages.m in Sources */,
 				417279391DB663FA001AC818 /* JSQMessagesViewController.m in Sources */,
 				41D21E661D01AEC3002E6296 /* CTAssetsGridViewController.m in Sources */,
