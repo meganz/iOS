@@ -1,4 +1,5 @@
 #import "MessagesViewController.h"
+#import "Helper.h"
 #import "MEGAMessage.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate>
@@ -50,15 +51,19 @@
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
-    /**
-     *  Create message bubble images objects.
-     *
-     *  Be sure to create your bubble images one time and reuse them for good performance.
-     *
-     */
-    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    
+    [self customNavigationBarLabel];
+    
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor whiteColor]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE3E3E3]];
+    
+    self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFont size:14.0f];
+    
+    self.tabBarController.tabBar.hidden = YES;
+    
+    [self customToolbarContentView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -87,6 +92,99 @@
         default:
             break;
     }
+}
+
+- (void)customNavigationBarLabel {
+    NSString *chatRoomState;
+    switch (self.chatRoom.onlineStatus) {
+        case MEGAChatRoomStateOffline:
+            chatRoomState = AMLocalizedString(@"offline", @"");
+            break;
+        case MEGAChatRoomStateOnline:
+            chatRoomState = AMLocalizedString(@"online", @"");
+            break;
+    }
+    
+    UILabel *label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+    label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+    [self.navigationItem setTitleView:label];
+}
+
+- (void)customToolbarContentView {
+    UIImage *image = [UIImage imageNamed:@"add"];
+    UIButton *attachButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [attachButton setImage:image forState:UIControlStateNormal];
+    [attachButton setFrame:CGRectMake(30, 0, 22, 22)];
+    self.inputToolbar.contentView.leftBarButtonItem = attachButton;
+
+    image = [UIImage imageNamed:@"send"];
+    UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendButton setImage:image forState:UIControlStateNormal];
+    [sendButton setFrame:CGRectMake(0, 0, 22, 22)];
+    self.inputToolbar.contentView.rightBarButtonItem = sendButton;
+}
+
+- (BOOL)showDateBetweenMessage:(MEGAMessage *)message previousMessage:(MEGAMessage *)previousMessage {
+    if ((previousMessage.senderId != message.senderId) || (previousMessage.date != message.date)) {
+        NSDateComponents *previousDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:previousMessage.date];
+        NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:message.date];
+        if (previousDateComponents.day != currentDateComponents.day || previousDateComponents.month != currentDateComponents.month || previousDateComponents.year != currentDateComponents.year) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (BOOL)showHourForMessage:(MEGAMessage *)message withIndexPath:(NSIndexPath *)indexPath {
+    BOOL showHour = NO;
+    MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item - 1)]];
+    if ([message.senderId isEqualToString:previousMessage.senderId]) {
+        if ([self showHourBetweenDate:message.date previousDate:previousMessage.date]) {
+            showHour = YES;
+        } else {
+            //TODO: Improve algorithm it has some issues when going back on the messages history
+            NSUInteger count = self.indexesMessages.count;
+            for (NSUInteger i = 1; i < count; i++) {
+                NSInteger index = (indexPath.item - (i + 1));
+                if (index > 0) {
+                    MEGAMessage *messagePriorToThePreviousOne = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:index]];
+                    if (messagePriorToThePreviousOne.index < 0) {
+                        break;
+                    }
+                    
+                    if ([message.senderId isEqualToString:messagePriorToThePreviousOne.senderId]) {
+                        if ([self showHourBetweenDate:message.date previousDate:messagePriorToThePreviousOne.date]) {
+                            JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+                            if (cell.messageBubbleTopLabel == nil) {
+                                showHour = NO;
+                            } else {
+                                showHour = YES;
+                            }
+                            break;
+                        }
+                    } else { // The timestamp should not appear because is already shown on the previous message
+                        showHour = NO;
+                        break;
+                    }
+                }
+            }
+        }
+    } else { //If the previous message is from other sender, show timestamp
+        showHour = YES;
+    }
+    
+    return showHour;
+}
+
+- (BOOL)showHourBetweenDate:(NSDate *)date previousDate:(NSDate *)previousDate {
+    NSUInteger numberOfSecondsToShowHour = (60 * 6) - 1;
+    NSTimeInterval timeDifferenceBetweenMessages = [date timeIntervalSinceDate:previousDate];
+    if (timeDifferenceBetweenMessages > numberOfSecondsToShowHour) {
+        return YES;
+    }
+
+    return NO;
 }
 
 #pragma mark - Custom menu actions for cells
@@ -184,35 +282,53 @@
     return nil;
 }
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath{
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    
     MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
-    return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    BOOL showDayMonthYear = NO;
+    if (indexPath.item == 0) {
+        showDayMonthYear = YES;
+    } else if (indexPath.item - 1 > 0) {
+        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item -1)]];
+        showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
+    }
+    
+    if (showDayMonthYear) {
+        NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+        return dateAttributedString;
+    }
+    
+    return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    
     MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
-    // iOS7-style sender name labels
-    if ([message.senderId isEqualToString:self.senderId]) {
-        return nil;
+    BOOL showHour = NO;
+    if (indexPath.item == 0) {
+        showHour = YES;
+    } else if (indexPath.item - 1 > 0) {
+        showHour = [self showHourForMessage:message withIndexPath:indexPath];
     }
     
-    if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item-1]];
-        if ([[previousMessage senderId] isEqualToString:message.senderId]) {
-            return nil;
-        }
+    if (showHour) {
+        NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
+        return [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
     }
     
-    NSString *name = [NSString stringWithFormat:@"%@ %@", [self.chatRoom peerFirstnameByHandle:message.userHandle], [self.chatRoom peerLastnameByHandle:message.userHandle]];
-    return [[NSAttributedString alloc] initWithString:name];
+    return nil;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     if (megaMessage.isEdited) {
-        return [[NSAttributedString alloc] initWithString:@"Edited"];
+        NSString *editedString = AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.");
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:editedString attributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}];
+        return dateAttributedString;
     }
+    
     return nil;
 }
 
@@ -229,17 +345,7 @@
     if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
-    }
-    
-    if (!megaMessage.isMediaMessage) {
-        
-        if ([megaMessage.senderId isEqualToString:self.senderId]) {
-            cell.textView.textColor = [UIColor blackColor];
-        }
-        else {
-            cell.textView.textColor = [UIColor whiteColor];
-        }
-        
+        cell.textView.textColor = [UIColor mnz_black333333];
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
@@ -301,30 +407,47 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    BOOL showDayMonthYear = NO;
+    if (indexPath.item == 0) {
+        showDayMonthYear = YES;
+    } else if (indexPath.item - 1 > 0) {
+        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item - 1)]];
+        showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
+    }
+    
+    if (showDayMonthYear) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    }
+    
+    return 0.0f;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    // iOS7-style sender name labels
-    MEGAMessage *currentMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
-    if ([[currentMessage senderId] isEqualToString:self.senderId]) {
-        return 0.0f;
+    BOOL showHour = NO;
+    if (indexPath.item == 0) {
+        showHour = YES;
+    } else if (indexPath.item - 1 > 0) {
+        MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+        showHour = [self showHourForMessage:message withIndexPath:indexPath];
     }
     
-    if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item - 1]];
-        if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
-            return 0.0f;
-        }
+    if (showHour) {
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
     
-    return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    return 0.0f;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    return 30.0f;
+    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    if (megaMessage.isEdited) {
+        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    }
+    
+    return 0.0f;
 }
 
 #pragma mark - Responding to collection view tap events

@@ -1018,6 +1018,31 @@ static BOOL copyToPasteboard;
     return label;
 }
 
++ (UILabel *)customChatNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    [titleMutableAttributedString addAttribute:NSFontAttributeName
+                                         value:[UIFont fontWithName:kFont size:15.0f]
+                                         range:[title rangeOfString:title]];
+    
+    subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
+                                            value:[UIColor mnz_gray666666]
+                                            range:[subtitle rangeOfString:subtitle]];
+    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
+                                            value:[UIFont fontWithName:kFont size:12.0f]
+                                            range:[subtitle rangeOfString:subtitle]];
+    
+    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
+    
+    UILabel *label = [[UILabel alloc] init];
+    [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAttributedText:titleMutableAttributedString];
+    
+    return label;
+}
+
 #pragma mark - Logout
 
 + (void)logout {

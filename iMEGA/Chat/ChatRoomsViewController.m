@@ -27,6 +27,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.tabBarController.tabBar.hidden = NO;
+    
     self.chatRoomList = [[MEGASdkManager sharedMEGAChatSdk] chatRooms];
     [self.tableView reloadData];
 }
