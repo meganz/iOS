@@ -28,6 +28,13 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus) {
     MEGAChatStatusChatty
 };
 
+typedef NS_ENUM (NSInteger, MEGAChatSource) {
+    MEGAChatSourceError = -1,
+    MEGAChatSourceNone  = 0,
+    MEGAChatSourceLocal,
+    MEGAChatSourceRemote
+};
+
 @interface MEGAChatSdk : NSObject
 
 
@@ -93,7 +100,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus) {
 
 - (void)closeChatRoom:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate;
 
-- (NSInteger)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count;
+- (MEGAChatSource)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count;
 - (BOOL)isFullHistoryLoadedForChat:(uint64_t)chatId;
 
 - (MEGAChatMessage *)messageForChat:(uint64_t)chatId messageId:(uint64_t)messageId;
