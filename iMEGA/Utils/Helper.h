@@ -117,6 +117,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
++ (UILabel *)customChatNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
 #pragma mark - Logout
 
