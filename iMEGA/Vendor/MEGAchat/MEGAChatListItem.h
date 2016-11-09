@@ -6,6 +6,7 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeUnreadCount  = 0x04,
     MEGAChatListItemChangeTypeParticipants = 0x08,
     MEGAChatListItemChangeTypeTitle        = 0x10,
+    MEGAChatListItemChangeTypeClosed       = 0x20
 };
 
 @interface MEGAChatListItem : NSObject
