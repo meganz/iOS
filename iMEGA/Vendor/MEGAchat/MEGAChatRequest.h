@@ -10,8 +10,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRequestType) {
     MEGAChatRequestTypeAnswerChatCall,
     MEGAChatRequestTypeMuteChatCall,
     MEGAChatRequestTypeHangChatCall,
-    MEGAChatRequestTypeEditMessage,
-    MEGAChatRequestTypeDeleteMessage,
     MEGAChatRequestTypeCreateChatRoom,
     MEGAChatRequestTypeRemoveFromChatRoom,
     MEGAChatRequestTypeInviteToChatRoom,
@@ -19,8 +17,9 @@ typedef NS_ENUM (NSInteger, MEGAChatRequestType) {
     MEGAChatRequestTypeEditChatRoomName,
     MEGAChatRequestTypeEditChatRoomPic,
     MEGAChatRequestTypeTruncateHistory,
-    MEGAChatRequestTypeGetHistory,
-    MEGAChatRequestTypeShareContact
+    MEGAChatRequestTypeShareContact,
+    MEGAChatRequestTypeGetFirstname,
+    MEGAChatRequestTypeGetLastname
 };
 
 @interface MEGAChatRequest : NSObject
