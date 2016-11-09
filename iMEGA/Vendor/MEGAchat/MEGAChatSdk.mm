@@ -208,8 +208,8 @@ using namespace megachat;
     }
 }
 
-- (NSInteger)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count {
-    return self.megaChatApi->loadMessages(chatId, (int)count);
+- (MEGAChatSource)loadMessagesForChat:(uint64_t)chatId count:(NSInteger)count {
+    return (MEGAChatSource) self.megaChatApi->loadMessages(chatId, (int)count);
 }
 
 - (BOOL)isFullHistoryLoadedForChat:(uint64_t)chatId {
