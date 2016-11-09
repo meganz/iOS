@@ -141,7 +141,7 @@ using namespace megachat;
 }
 
 - (MEGAChatRoom *)chatRoomByUser:(uint64_t)userHandle {
-    return [[MEGAChatRoom alloc] initWithMegaChatRoom:self.megaChatApi->getChatRoomByUser(userHandle) cMemoryOwn:YES];
+    return self.megaChatApi->getChatRoomByUser(userHandle) ? [[MEGAChatRoom alloc] initWithMegaChatRoom:self.megaChatApi->getChatRoomByUser(userHandle) cMemoryOwn:YES] : nil;
 }
 
 #pragma mark - Chat management
@@ -217,7 +217,7 @@ using namespace megachat;
 }
 
 - (MEGAChatMessage *)messageForChat:(uint64_t)chatId messageId:(uint64_t)messageId {
-    return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getMessage(chatId, messageId) cMemoryOwn:YES] : nil;
+    return self.megaChatApi->getMessage(chatId, messageId) ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getMessage(chatId, messageId) cMemoryOwn:YES] : nil;
 }
 
 - (MEGAChatMessage *)sendMessageToChat:(uint64_t)chatId message:(NSString *)message {

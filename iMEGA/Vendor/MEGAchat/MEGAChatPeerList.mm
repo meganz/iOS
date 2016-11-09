@@ -46,8 +46,8 @@ using namespace megachat;
     return self.megaChatPeerList->size();
 }
 
-- (void)addPeerWithHandle:(uint64_t)hande privilege:(NSInteger)privilege {
-    self.megaChatPeerList->addPeer(hande, (int)privilege);
+- (void)addPeerWithHandle:(uint64_t)handle privilege:(NSInteger)privilege {
+    self.megaChatPeerList->addPeer(handle, (int)privilege);
 }
 
 - (uint64_t)peerHandleAtIndex:(NSInteger)index {

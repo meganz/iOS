@@ -13,6 +13,7 @@ using namespace megachat;
 @implementation MEGAChatRoom
 
 - (instancetype)initWithMegaChatRoom:(MegaChatRoom *)megaChatRoom cMemoryOwn:(BOOL)cMemoryOwn {
+    NSParameterAssert(megaChatRoom);
     self = [super init];
     
     if (self != nil) {

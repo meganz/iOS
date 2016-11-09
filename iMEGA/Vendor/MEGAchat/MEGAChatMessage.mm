@@ -13,6 +13,7 @@ using namespace megachat;
 @implementation MEGAChatMessage
 
 - (instancetype)initWithMegaChatMessage:(megachat::MegaChatMessage *)megaChatMessage cMemoryOwn:(BOOL)cMemoryOwn {
+    NSParameterAssert(megaChatMessage);
     self = [super init];
     
     if (self != nil) {
