@@ -42,10 +42,13 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
-    [self.forgotPasswordButton setTitle:AMLocalizedString(@"forgotPassword", @"An option to reset the password.") forState:UIControlStateNormal];
+    NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
+    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
+    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
+    [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,8 +162,37 @@
 
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    BOOL shoulBeLoginButtonGray = NO;
+    switch ([textField tag]) {
+        case 0: {
+            if ([text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+                shoulBeLoginButtonGray = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""]) {
+                shoulBeLoginButtonGray = YES;
+            }
+            break;
+        }
+    }
     
+    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
             [self.passwordTextField becomeFirstResponder];
