@@ -12,6 +12,8 @@
 "error"="Error";
 /*  */
 "name"="Nombre";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Guardada";
 /*  */
 "passcode"="Código de acceso";
 /* "Size" of the file or folder you are sharing */
@@ -550,20 +552,22 @@
 "masterKey"="Clave de recuperación";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambiar contraseña";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exportar clave de recuperación";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Deseas continuar?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportando la clave de recuperación y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
+"exportMasterKeyFooter"="Guardando la clave de recuperación y almacenándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perder la contraseña, sin perder ningún dato.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="¿Por qué necesito la clave de recuperación?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Tus datos solo pueden ser leídos a través de una cadena de operaciones de descifrado que comienzan con tu clave de cifrado (Clave de Recuperación) maestra, que almacenamos cifrada con tu contraseña. Esto significa que si pierdes tu contraseña, tu Clave de Recuperación ya no podrá ser descifrada, y que tú no podrás descifrar tus datos.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Exportar la Clave de Recuperación y guardarla a buen recaudo te permitirá fijar una nueva contraseña sin pérdida de datos.";
+/*  */
+"masterKey_thirdParagraph"="Un atacante desde el exterior no puede acceder a tu cuenta solo con tu clave. Un restablecimiento de contraseña requiere tanto la clave principal como el acceso a tu correo electrónico.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Clave de recuperación copiada al portapapeles";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Clave de recuperación exportada";
+"masterKeyExported"="Clave de recuperación guardada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Tu clave de recuperación (RecoveryKey.txt) ha sido guardada en este dispositivo. Conéctate a tu ordenador y abre iTunes para poder acceder a ella en los documentos de MEGA. ¡Aconsejamos mantener este archivo seguro!";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="clave de recuperación borrada";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt fue borrado de la carpeta de documentos.";
+"masterKeyExported_alertMessage"="Se ha guardado la Clave de Recuperación en la sección Offline como RecoveryKey.txt. Aviso: Se eliminará si te desconectas, por favor almacénala en un lugar seguro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -667,7 +671,7 @@
 /* First paragraph of the screen when the password has been forgotten */
 "forgotPassword_firstParagraph" = "Si tienes una copia de tu Clave de Recuperación, puedes resetear tu contraseña seleccionando SI. No se perderá ningún dato.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph" = "Aún puedes exportar tu Clave de Recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, no podrás ya desencriptar tu cuenta existente, pero aún puede empezar una nueva utilizando el mismo email si seleccionas NO.";
+"forgotPassword_secondParagraph" = "Aún puedes exportar tu Clave de Recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, no podrás ya descifrar tu cuenta existente, pero aún puedes empezar una nueva utilizando el mismo email si seleccionas NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey" = "¿Tienes copia de tu Clave de Recuperación?";
 /* Headline when the user chose YES */
