@@ -12,6 +12,8 @@
 "error"="Error";
 /*  */
 "name"="Name";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -550,20 +552,22 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Change password";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Export Recovery Key";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Security warning! This is a high risk operation. Do you want to continue?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="Saving the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Your data is only readable through a chain of decryption operations that begins with your master encryption key (Recovery Key), which we store encrypted with your password. This means that if you lose your password, your Recovery Key can no longer be decrypted, and you can no longer decrypt your data.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
+/*  */
+"masterKey_thirdParagraph"="An external attacker cannot gain access to your account with just your key. A password reset requires both the key and access to your e-mail.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Recovery Key copied to clipboard";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Recovery Key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key removed";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */

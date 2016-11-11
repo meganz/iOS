@@ -199,6 +199,7 @@
 		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
+		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
 		E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */; };
 		E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */; };
 		E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */; };
@@ -632,6 +633,8 @@
 		E8BB737F1D773AA20067D89C /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73801D773AA80067D89C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E8BB73811D773AC30067D89C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterKeyViewController.h; sourceTree = "<group>"; };
+		E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterKeyViewController.m; sourceTree = "<group>"; };
 		E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Light.otf"; path = "Fonts/SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
 		E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Light.otf"; path = "Fonts/SF-UI-Text-Light.otf"; sourceTree = "<group>"; };
 		E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Regular.otf"; path = "Fonts/SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -1102,6 +1105,8 @@
 			children = (
 				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
 				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
+				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
+				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
 				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
 				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 			);
@@ -1714,6 +1719,7 @@
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
 				E8130A3C1DA64E1500B1AD67 /* ParkAccountViewController.m in Sources */,
+				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				41D21E6E1D01AEC3002E6296 /* CTAssetsPickerController.m in Sources */,

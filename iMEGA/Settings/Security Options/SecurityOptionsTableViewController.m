@@ -7,12 +7,10 @@
 #import "CloudDriveTableViewController.h"
 #import "ChangePasswordViewController.h"
 
-@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate> {
-    BOOL isMasterKeyExported;
-}
+@interface SecurityOptionsTableViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *exportMasterKeyLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *masterKeySwitch;
+@property (weak, nonatomic) IBOutlet UILabel *masterKeyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *masterKeyRightDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *resetPasswordLabel;
@@ -32,7 +30,9 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"securityOptions", @"Title for Security Options section")];
     
-    [self.exportMasterKeyLabel setText:AMLocalizedString(@"masterKey", nil)];
+    self.masterKeyLabel.text = AMLocalizedString(@"masterKey", nil);
+    self.masterKeyRightDetailLabel.text = @"";
+    
     [self.changePasswordLabel setText:AMLocalizedString(@"changePasswordLabel", @"The name for the change password label")];
     self.resetPasswordLabel.text = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
     
@@ -40,27 +40,23 @@
     
     self.closeOtherSessionsLabel.text = AMLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
-    [self reloadUI];
+    [self isMasterKeyExported];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self isMasterKeyExported];
-    [_masterKeySwitch setOn:isMasterKeyExported animated:YES];
-}
-
-#pragma mark - Private
-
-- (void)reloadUI {
-    [self isMasterKeyExported];
     
     [self.tableView reloadData];
 }
 
+#pragma mark - Private
+
 - (void)isMasterKeyExported {
     NSString *fileExist = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    isMasterKeyExported = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"RecoveryKey.txt"]];
+    BOOL isMasterKeyExported = [[NSFileManager defaultManager] fileExistsAtPath:[fileExist stringByAppendingPathComponent:@"RecoveryKey.txt"]];
+    self.masterKeyRightDetailLabel.text = isMasterKeyExported ? AMLocalizedString(@"saved", @"State shown if something is 'Saved' (String as short as possible).") : @"";
 }
 
 - (void)pushChangeViewControllerType:(ChangeType)changeType {
@@ -74,52 +70,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - IBActions
-
-- (IBAction)masterKeySwitchValueChanged:(UISwitch *)sender {
-
-    if (isMasterKeyExported) {
-        NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:nil];
-        
-        if (success) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyRemoved", nil) message:AMLocalizedString(@"masterKeyRemoved_alertMessage", @"RecoveryKey.txt was removed to the Documents folder") delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-            [alertView show];
-        }
-        
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"exportMasterKey", @"Export Recovery Key") message:AMLocalizedString(@"exportMasterKey_alertMessage", @"Message shown when you try to export the Recovery Key to alert the user.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [alertView setTag:1];
-        [alertView show];
-    }
-    
-    [self reloadUI];
-}
-
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if ((alertView.tag == 1)) {
-        if (buttonIndex == 0) {
-            [_masterKeySwitch setOn:NO animated:YES];
-        } else if (buttonIndex == 1) {
-            NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-            
-            BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
-            
-            if (success) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"masterKeyExported", nil) message:AMLocalizedString(@"masterKeyExported_alertMessage", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-                [alertView show];
-                
-                [_masterKeySwitch setOn:YES animated:YES];
-            } else {
-                [_masterKeySwitch setOn:NO animated:YES];
-            }
-        }
-        [self reloadUI];
-    } else  if (alertView.tag == 2) {
+    if (alertView.tag == 2) {
         if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] hasMasterKey:YES delegate:self];
             
@@ -157,6 +111,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
+        case 0: {
+            UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
+            [self.navigationController pushViewController:viewController animated:YES];
+            break;
+        }
+            
         case 1: {
             if (indexPath.row == 0) {
                 [self pushChangeViewControllerType:ChangeTypePassword];
