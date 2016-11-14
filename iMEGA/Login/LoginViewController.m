@@ -251,7 +251,7 @@
                 
             case MEGAErrorTypeApiEIncomplete: {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"accountNotValidated", @"Error message when trying to login to an account not validated")
+                                                                message:AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess")
                                                                delegate:self
                                                       cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];

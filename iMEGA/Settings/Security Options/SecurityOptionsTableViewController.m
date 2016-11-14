@@ -121,7 +121,7 @@
             if (indexPath.row == 0) {
                 [self pushChangeViewControllerType:ChangeTypePassword];
             } else if (indexPath.row == 1) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillReceiveARecoveryLink", @"Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youCanResetYourPasswordByFollowing", @"Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                 [alertView setTag:2];
                 [alertView show];
             }
