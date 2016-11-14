@@ -43,11 +43,11 @@
     
     self.noButton.layer.borderWidth = 2.0f;
     self.noButton.layer.cornerRadius = 4.0f;
-    self.noButton.layer.borderColor = [[UIColor mnz_gray999999] CGColor];
+    self.noButton.layer.borderColor = [[UIColor mnz_gray777777] CGColor];
     
     self.yesButton.layer.borderWidth = 2.0f;
     self.yesButton.layer.cornerRadius = 4.0f;
-    self.yesButton.layer.borderColor = [[UIColor mnz_green31B500] CGColor];
+    self.yesButton.layer.borderColor = [[UIColor mnz_redFF4C52] CGColor];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
