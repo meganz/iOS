@@ -12,6 +12,17 @@ using namespace megachat;
 
 @implementation MEGAChatPeerList
 
+- (instancetype)init {
+    self = [super init];
+    
+    if (self != nil) {
+        _megaChatPeerList = megachat::MegaChatPeerList::createInstance();
+    }
+    
+    return self;
+
+}
+
 - (instancetype)initWithMegaChatPeerList:(megachat::MegaChatPeerList *)megaChatPeerList cMemoryOwn:(BOOL)cMemoryOwn {
     self = [super init];
     
