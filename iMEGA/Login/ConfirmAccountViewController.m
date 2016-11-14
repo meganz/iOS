@@ -152,6 +152,8 @@
             }
 
             default:
+                [self lockUI:NO];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
                 break;
         }
         
