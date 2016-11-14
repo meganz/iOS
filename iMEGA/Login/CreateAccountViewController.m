@@ -55,7 +55,7 @@
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
     [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
-    [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
+    self.accountCreatedLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess.");
     
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
