@@ -31,6 +31,14 @@
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_grayCCCCCC {
+    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayFFFFFF {
+    return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_grayF7F7F7 {
     return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
 }

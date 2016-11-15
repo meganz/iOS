@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SF-UI-Text-Light.otf">
-            <string>SFUIText-Light</string>
             <string>SFUIText-Light</string>
         </mutableArray>
     </customFonts>
@@ -18,50 +17,53 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
-                    <rect key="frame" x="180" y="195" width="240" height="211"/>
+                    <rect key="frame" x="200" y="215" width="200" height="170"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="240" id="7hi-wX-zCa"/>
-                        <constraint firstAttribute="height" constant="211" id="a2b-EF-YS0"/>
+                        <constraint firstAttribute="width" constant="200" id="7hi-wX-zCa"/>
+                        <constraint firstAttribute="height" constant="170" id="a2b-EF-YS0"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                    <rect key="frame" x="16" y="422" width="568" height="22"/>
+                    <rect key="frame" x="277" y="425" width="46" height="22"/>
                     <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
-                    <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaU-6T-JvV">
-                    <rect key="frame" x="16" y="451" width="568" height="150"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="150" id="eLP-ni-h1O"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIz-Fn-kCu">
+                    <rect key="frame" x="80" y="487" width="440.5" height="76.5"/>
                     <string key="text">This could be due to the following reasons:
 - The file has been removed because of a ToS/AUP violation.
 - Invalid URL – the link you are trying to access does not exist.
 - The file has been deleted by the user.</string>
-                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="JaU-6T-JvV" secondAttribute="trailing" constant="16" id="6Km-9E-He8"/>
+                <constraint firstItem="GIz-Fn-kCu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="30" id="0Xm-v2-5Iq"/>
+                <constraint firstItem="GIz-Fn-kCu" firstAttribute="top" secondItem="Bur-Bl-fx0" secondAttribute="bottom" constant="40" id="3Dg-w6-ZBD"/>
+                <constraint firstItem="GIz-Fn-kCu" firstAttribute="centerX" secondItem="Bur-Bl-fx0" secondAttribute="centerX" id="6GF-gW-we3"/>
                 <constraint firstItem="Bur-Bl-fx0" firstAttribute="centerX" secondItem="rvn-KO-Arx" secondAttribute="centerX" id="EAg-cM-XtK"/>
-                <constraint firstItem="JaU-6T-JvV" firstAttribute="top" secondItem="Bur-Bl-fx0" secondAttribute="bottom" constant="8" id="Nrw-1j-ChR"/>
                 <constraint firstItem="rvn-KO-Arx" firstAttribute="centerX" secondItem="tbQ-LB-Do7" secondAttribute="centerX" id="Vuf-cO-KcF"/>
-                <constraint firstItem="JaU-6T-JvV" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="16" id="cql-8m-zTI"/>
                 <constraint firstAttribute="trailing" secondItem="Bur-Bl-fx0" secondAttribute="trailing" constant="16" id="eJR-rx-fae"/>
                 <constraint firstItem="rvn-KO-Arx" firstAttribute="centerY" secondItem="tbQ-LB-Do7" secondAttribute="centerY" id="fkN-Wx-co3"/>
-                <constraint firstItem="Bur-Bl-fx0" firstAttribute="top" secondItem="rvn-KO-Arx" secondAttribute="bottom" constant="16" id="pDu-EN-WU7"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GIz-Fn-kCu" secondAttribute="trailing" constant="30" id="hDb-3o-cr7"/>
+                <constraint firstItem="Bur-Bl-fx0" firstAttribute="top" secondItem="rvn-KO-Arx" secondAttribute="bottom" constant="40" id="pDu-EN-WU7"/>
                 <constraint firstItem="Bur-Bl-fx0" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="16" id="r0S-2v-Qot"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="eJR-rx-fae"/>
+                    <exclude reference="r0S-2v-Qot"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="imageView" destination="rvn-KO-Arx" id="vG6-tf-OQF"/>
                 <outlet property="imageViewCenterYLayoutConstraint" destination="fkN-Wx-co3" id="gTK-LS-Suo"/>
-                <outlet property="textView" destination="JaU-6T-JvV" id="c8v-kg-hig"/>
+                <outlet property="textLabel" destination="GIz-Fn-kCu" id="Fs4-vv-qKh"/>
                 <outlet property="titleLabel" destination="Bur-Bl-fx0" id="dgL-3z-AAU"/>
             </connections>
             <point key="canvasLocation" x="-56.5" y="206.5"/>
