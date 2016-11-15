@@ -11,6 +11,7 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
+		410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */; };
 		4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F21CEB07C700BF38E3 /* ImageError.png */; };
 		4115042C1CEB07C700BF38E3 /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F31CEB07C700BF38E3 /* ImageError@2x.png */; };
 		4115042D1CEB07C700BF38E3 /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F41CEB07C700BF38E3 /* ImageError@3x.png */; };
@@ -245,6 +246,8 @@
 		410333FA1B9995DC00380FF3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAVViewController.h; sourceTree = "<group>"; };
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
+		410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
+		410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
 		411503F21CEB07C700BF38E3 /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		411503F31CEB07C700BF38E3 /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
 		411503F41CEB07C700BF38E3 /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
@@ -989,6 +992,8 @@
 				410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */,
 				410AD3C01C883AA900BF939E /* MEGAAVViewController.m */,
 				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
+				410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */,
+				410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				41D21E711D01AEC3002E6296 /* CTAssetThumbnailOverlay.m in Sources */,
 				41D21DF01D01AE89002E6296 /* ALView+PureLayout.m in Sources */,
 				41E88F0F1CF451B000BD3B79 /* MWPhotoBrowser.m in Sources */,
+				410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */,
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,

@@ -585,7 +585,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en sin conexión).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing" = "Actualmente en uso %s";
+"currentlyUsing" = "Actualmente en uso %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "closeYourAccount" = "Cierra tu cuenta";
 /* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
