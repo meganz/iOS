@@ -17,13 +17,11 @@
 #import "NodeTableViewCell.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
 #import "PreviewDocumentViewController.h"
 
-@interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, MEGADelegate, MEGARequestDelegate, MEGATransferDelegate> {
-    NSString *previewDocumentPath;
-    
+@interface FileLinkViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate> {
     UIAlertView *decryptionAlertView;
 }
 
@@ -140,29 +138,6 @@
     [self.view addSubview:unavailableLinkView];
 }
 
-- (void)openTempFile {
-    QLPreviewController *previewController = [[QLPreviewController alloc] init];
-    [previewController setDelegate:self];
-    [previewController setDataSource:self];
-    [previewController setTransitioningDelegate:self];
-    [previewController setTitle:[self.node name]];
-    [self presentViewController:previewController animated:YES completion:nil];
-}
-
-- (void)deleteTempFile {
-    if (self.node == nil) {
-        return;
-    }
-    
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath];
-    if (fileExists) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:previewDocumentPath error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-}
-
 - (void)showLinkNotValid {
     [SVProgressHUD dismiss];
     
@@ -233,8 +208,6 @@
     [Helper setLinkNode:nil];
     [Helper setSelectedOptionOnLink:0];
     
-    [self deleteTempFile];
-    
     [SVProgressHUD dismiss];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -242,8 +215,6 @@
 
 - (void)import {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self deleteTempFile];
-        
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -276,8 +247,6 @@
 
 - (void)download {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self deleteTempFile];
-        
         if (self.fileLinkMode == FileLinkModeDefault) {
             if (![Helper isFreeSpaceEnoughToDownloadNode:_node isFolderLink:NO]) {
                 return;
@@ -320,16 +289,21 @@
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:_node]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
         
+        NSString *previewDocumentPath = nil;
         if (offlineNodeExist) {
             previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-            
-            QLPreviewController *previewController = [[QLPreviewController alloc] init];
-            [previewController setDelegate:self];
-            [previewController setDataSource:self];
-            [previewController setTransitioningDelegate:self];
-            [previewController setTitle:[self.node name]];
+        } else {
+            NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[self.node base64Handle]];
+            NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
+                previewDocumentPath = tmpFilePath;
+            }
+        }
+        
+        if (previewDocumentPath) {
+            MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
             [self presentViewController:previewController animated:YES completion:nil];
         } else {
             if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
@@ -480,33 +454,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-   
-    if ([presented isKindOfClass:[QLPreviewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    
-    return nil;
-}
-
-#pragma mark - QLPreviewControllerDataSource
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return 1;
-}
-
-- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:previewDocumentPath];
-}
-
-#pragma mark - QLPreviewControllerDelegate
-
-- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
-    return YES;
-}
-
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -572,29 +519,6 @@
       
         default:
             break;
-    }
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
-        return;
-    }
-    
-    if (([transfer type] == MEGATransferTypeDownload) && ([transfer.path isEqualToString:previewDocumentPath])) {
-        [SVProgressHUD show];
-    }
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([transfer isStreamingTransfer] || ([transfer type] == MEGATransferTypeUpload)) {
-        return;
-    }
-    
-    if ([transfer type] == MEGATransferTypeDownload && ([transfer.path isEqualToString:previewDocumentPath])) {
-        [self openTempFile];
-        [SVProgressHUD dismiss];
     }
 }
 
