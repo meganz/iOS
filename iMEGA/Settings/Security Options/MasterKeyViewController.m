@@ -2,16 +2,13 @@
 
 #import "MEGASdkManager.h"
 
+#import "WhyDoINeedARecoveryKeyViewController.h"
+
 @interface MasterKeyViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *carbonCopyMasterKeyButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveMasterKey;
-@property (weak, nonatomic) IBOutlet UILabel *whyDoINeedARecoveryKeyButtonLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *whyDoINeedARecoveryKeyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *firstParagraphLabel;
-@property (weak, nonatomic) IBOutlet UILabel *secondParagraphLabel;
-@property (weak, nonatomic) IBOutlet UILabel *thirdParagraphLabel;
 
 @end
 
@@ -29,13 +26,6 @@
     
     self.saveMasterKey.layer.cornerRadius = 4.0f;
     [self.saveMasterKey setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
-    
-    self.whyDoINeedARecoveryKeyButtonLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
-    
-    self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
-    self.firstParagraphLabel.text = AMLocalizedString(@"masterKey_firstParagraph", @"Detailed explanation of how the master encryption key (now renamed 'Recovery Key') works, and why it is important to remember your password.");
-    self.secondParagraphLabel.text = AMLocalizedString(@"masterKey_secondParagraph", @"Advising the user to keep the user's recovery key safe.");
-    self.thirdParagraphLabel.text = AMLocalizedString(@"masterKey_thirdParagraph", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,14 +73,10 @@
     }
 }
 
-- (IBAction)cancelTouchUpInside:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (IBAction)whyDoINeedARecoveryKeyTouchUpInside:(UIButton *)sender {
-    MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"WhyDoINeedARecoveryKeyID"];
-    masterKeyVC.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:masterKeyVC animated:YES completion:nil];
+    WhyDoINeedARecoveryKeyViewController *whyDoINeedARecoveryKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"WhyDoINeedARecoveryKeyID"];
+    whyDoINeedARecoveryKeyVC.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:whyDoINeedARecoveryKeyVC animated:YES completion:nil];
 }
 
 @end
