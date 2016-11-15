@@ -788,7 +788,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:imageName]];
     [unavailableLinkView.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [unavailableLinkView.titleLabel setText:title];
-    [unavailableLinkView.textView setText:text];
+    unavailableLinkView.textLabel.text = text;
     [unavailableLinkView setFrame:self.window.frame];
     
     UIViewController *viewController = [[UIViewController alloc] init];
@@ -1175,12 +1175,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 
             case MEGAErrorTypeApiEExpired: {
                 if (request.type == MEGARequestTypeQueryRecoveryLink || request.type == MEGARequestTypeConfirmRecoveryLink) {
-                //TODO: Replace HUDs for UnavailableLinkView 
+                    NSString *alertTitle;
                     if (self.urlType == URLTypeCancelAccountLink) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)")];
+                        alertTitle = AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)");
                     } else if (self.urlType == URLTypeRecoverLink) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired")];
+                        alertTitle = AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
                     }
+                    UIAlertView *linkHasExpiredAlertView = [[UIAlertView alloc] initWithTitle:alertTitle message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                    [linkHasExpiredAlertView show];
                 }
                 break;
             }
