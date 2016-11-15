@@ -3,11 +3,17 @@
 /* Button title to accept something */
 "ok"="Aceptar";
 /* */
+"yes" = "Si";
+/* */
+"no" = "No";
+/* */
 "upload"="Subir";
 /*  */
 "error"="Error";
 /*  */
 "name"="Nombre";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Guardada";
 /*  */
 "passcode"="Código de acceso";
 /* "Size" of the file or folder you are sharing */
@@ -72,12 +78,12 @@
 "invalidMailOrPassword"="Correo electrónico y/o contraseña no válidos. Por favor, inténtalo de nuevo";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Has intentado acceder demasiadas veces. Por favor, espera hasta las %@ e inténtalo de nuevo.";
-/* Error message when trying to login to an account not validated */
-"accountNotValidated"="Por favor, comprueba tu correo y pulsa el enlace de confirmación de tu cuenta.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Por favor, comprueba tu correo y pulsa en el enlace para confirmar tu cuenta.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Tu cuenta ha sido bloqueada. Por favor contacta con support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
-"emailInvalidFormat"="Introduce un email válido";
+"emailInvalidFormat"="Introduce un correo electrónico válido";
 /* Message shown when the user enters a wrong password  */
 "passwordInvalidFormat"="Introduce una contraseña válida";
 /* Hint text to suggest that the user has to write his email */
@@ -95,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Está dirección de correo electrónico ya fue utilizada para el registro de una cuenta en MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Esperando email de confirmación.";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Esperando email de confirmación.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Por favor, comprueba tu correo y haz clic en el enlace para confirmar tu cuenta.";
+"awaitingEmailConfirmation"="Esperando confirmación por correo electrónico.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
 /* Button title that triggers the confirm account action */
@@ -141,7 +143,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Carpeta vacía";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="No hay archivos en tu Cloud Drive";
+"cloudDriveEmptyState_title"="No hay archivos en tu Disco";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Añadir archivos";
 /* Title shown when you make a search and there is 'No Results' */
@@ -183,7 +185,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay subidas";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Disco";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d archivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -393,19 +395,19 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activar subidas de la cámara";
+"enableCameraUploadsButton"="Activar Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Subidas de la cámara activadas";
+"cameraUploadsEnabled"="Camera Uploads activadas";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu elemento seleccionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Las subidas de la cámara serán desactivadas";
+"cameraUploadsWillBeDisabled"="Camera Uploads será desactivado";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Subidas de la cámara será desactivado, porque no tienes suficiente espacio en el dispositivo";
+"cameraUploadsDisabled_alertView_message"="Camera Uploads será desactivado, porque no tienes suficiente espacio en el dispositivo";
 /* Title of the Offline section */
-"offline"="Offline";
+"offline"="Sin conexión";
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Subtitle shown on the Contacts section under the name of the contact you haven't shared anything with */
@@ -455,7 +457,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Añadir contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Email del contacto";
+"contactEmail"="Correo electrónico del contacto";
 /* Button title to "Add" the contact to your contacts list */
 "addContactButton"="Añadir";
 /* Success message shown when a contact has been invited */
@@ -475,7 +477,7 @@
 /* Label shown when a contact request is pending */
 "pending"="Pendiente";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="El contacto no tiene email";
+"contactWithoutEmail"="El contacto no tiene correo electrónico";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Abandonar";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -501,7 +503,7 @@
 /* Title of the Settings section */
 "settingsTitle"="Ajustes";
 /* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
-"cameraUploadsLabel"="Subidas de la cámara";
+"cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA "Rubbish Bin" */
 "rubbishBinLabel"="Papelera";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -519,7 +521,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Por favor, escribe tus comentarios:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="No hay una cuenta de email configurada";
+"noEmailAccountConfigured"="No hay una cuenta de correo electrónico configurada";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
 "privacyPolicyLabel"="Política de Privacidad";
 /* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
@@ -546,20 +548,22 @@
 "masterKey"="Clave de recuperación";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Cambiar contraseña";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exportar clave de recuperación";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="¡Alerta de seguridad! Esta es una operación de alto riesgo. ¿Deseas continuar?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportando la clave de recuperación y guardándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perdida de la contraseña, sin perder ningún dato.";
+"exportMasterKeyFooter"="Guardando la clave de recuperación y almacenándola en un sitio seguro, te permite recuperar tu cuenta en el caso de perder la contraseña, sin perder ningún dato.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="¿Por qué necesito la clave de recuperación?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Tus datos solo pueden ser leídos a través de una cadena de operaciones de descifrado que comienzan con tu clave de cifrado (Clave de recuperación) maestra, que almacenamos cifrada con tu contraseña. Esto significa que si pierdes tu contraseña, tu clave de recuperación ya no podrá ser descifrada, y que tú no podrás descifrar tus datos.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Exportar la clave de recuperación y guardarla a buen recaudo te permitirá fijar una nueva contraseña sin pérdida de datos.";
+/*  */
+"masterKey_thirdParagraph"="Un atacante desde el exterior no puede acceder a tu cuenta solo con tu clave. Un restablecimiento de contraseña requiere tanto la clave principal como el acceso a tu correo electrónico.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Clave de recuperación copiada al portapapeles";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Clave de recuperación exportada";
+"masterKeyExported"="Clave de recuperación guardada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Tu clave de recuperación (RecoveryKey.txt) ha sido guardada en este dispositivo. Conéctate a tu ordenador y abre iTunes para poder acceder a ella en los documentos de MEGA. ¡Aconsejamos mantener este archivo seguro!";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="clave de recuperación borrada";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt fue borrado de la carpeta de documentos.";
+"masterKeyExported_alertMessage"="Se ha guardado la clave de recuperación en la sección sin conexión como RecoveryKey.txt. Aviso: Se eliminará si te desconectas, por favor almacénala en un lugar seguro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="En el dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -579,9 +583,23 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Guardar vídeos en la galería";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en Offline).";
+"imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en sin conexión).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing" = "Actualmente en uso %@";
+/* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
+"closeYourAccount" = "Cierra tu cuenta";
+/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"youWillLooseAllData" = "Perderás todos los datos asociados con esta cuenta. ¿Estas seguro de que quieres continuar?";
+/*  */
+"pleaseCheckYourEmail" = "Por favor, comprueba tu correo electrónico.";
+/* Account closure, warning dialog to remind user to contact mega support after he confirms that he wants to cancel account. */
+"ifYouCantAccessYourEmailAccount" = "Si no puedes acceder a tu correo electrónico, por favor, contacta con support@mega.nz.";
+/* During account cancellation (deletion) */
+"cancellationLinkHasExpired" = "El enlace de cancelación ha caducado.";
+/* Account closure, warning dialog after user confirm that he want to cancel account. */
+"enterYourPasswordToConfirmThatYouWanToClose" = "Por favor, introduce tu contraseña para confirmar que quieres cerrar tu cuenta.";
+/* Account closure, password check dialog when user click on closure email. */
+"closeAccount" = "Cerrar cuenta";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Eliminar";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -626,8 +644,78 @@
 "confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Tu contraseña ha sido cambiada.";
-/* Error message shown when the users tryes to change his/her password and writes the current one as if it's new */
+/* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="La contraseña nueva y la vieja no pueden coincidir.";
+/* An option to reset the password. */
+"forgotPassword" = "¿Contraseña olvidada?";
+/* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
+"youCanResetYourPasswordByFollowing"="Puedes restablecer tu contraseña si sigues el enlace de recuperación que será enviado a tu correo electrónico.";
+/* Message shown during forgot your password process if the link to reset password has expired */
+"recoveryLinkHasExpired" = "Este enlace recuperación ha caducado, por favor, inténtalo de nuevo.";
+/* Headline of the password reset recovery procedure */
+"passwordReset" = "Restablecer contraseña";
+/* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
+"pleaseWriteYourRecoveryKey" = "Por favor, escribe tu clave de recuperación.";
+/* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account "Master Key", and can unlock (recover) the account if the user forgets their password. */
+"recoveryKey" = "Clave de recuperación";
+/* An alert title where the user provided the incorrect Recovery Key. */
+"invalidRecoveryKey" = "Clave de recuperación incorrecta";
+/* Text of the alert after opening the recovery link to reset pass being logged. */
+"youRecoveryKeyIsGoingTo" = "Tu clave de recuperación va a utilizarse para restablecer tu contraseña. Por favor, introduce tu nueva contraseña.";
+/*  */
+"yourPasswordHasBeenReset" = "Tu contraseña ha sido reiniciada con éxito. Por favor accede a tu cuenta.";
+/* First paragraph of the screen when the password has been forgotten */
+"forgotPassword_firstParagraph" = "Si tienes una copia de tu clave de recuperación, puedes restablecer tu contraseña seleccionando SI. No se perderá ningún dato.";
+/* Second paragraph of the screen when the password has been forgotten */
+"forgotPassword_secondParagraph" = "Aún puedes exportar tu clave de recuperación si tienes una sesión de MEGA activa en cualquier navegador en este u otro ordenador. Si no, no podrás descifrar tu cuenta existente, pero aún puedes empezar una nueva utilizando el mismo correo electrónico si seleccionas NO.";
+/* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
+"doYouHaveABackupOfYourRecoveryKey" = "¿Tienes copia de tu clave de recuperación?";
+/* Headline when the user chose YES */
+"great" = "¡Bien!";
+/* Text of the alert message to ask for the link to reset the pass with the MK */
+"recoveryLinkToResetYourPassword" = "Por favor introduce tu correo electrónico a continuación. Recibirás un enlace que te permitirá usar tu clave de recuperación y restablecer tu contraseña.";
+/* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
+"send" = "Enviar";
+/* The title of the screen to park an account. */
+"noMasterKey_title" = "Vaya...";
+/* First paragraph of the screen to park an account */
+"noMasterKey_firstParagraph" = "Debido a nuestro a paradigma de encriptación punto-a-punto, no podrás acceder a tus datos sin tu contraseña o una copia de tu clave de recuperación.";
+/* Second paragraph of the screen to park an account */
+"noMasterKey_secondParagraph" = "Puedes aparcar tu cuenta y empezar una nueva con el mismo correo electrónico. Tus datos se almacenarán durante al menos 60 días. En caso de que recuerdes la contraseña de tu cuenta aparcada, por favor contacta con support@mega.nz";
+/* Text of the dialog message to ask for the link to park the account */
+"recoveryLinkToParkYourAccount" = "Por favor, introduce tu correo electrónico a continuación. Recibirás un enlace de recuperación que te permitirá aparcar tu cuenta.";
+/* Headline for parking an account (basically restarting from scratch) */
+"parkAccount" = "Aparcar cuenta";
+/* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
+"startingFreshAccount" = "Acepto que estoy creando una cuenta nueva, sin contenidos, y que perderé todos los datos de mi cuenta actual salvo que recuerde mi contraseña o encuentre mi clave de recuperación.";
+/* Caption of the button to proceed */
+"startNewAccount" = "Crear cuenta nueva";
+/*  */
+"yourAccounHasBeenParked" = "Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.";
+/* Hint text to suggest that the user have to write the new email on it */
+"newEmail"="Nuevo correo electrónico";
+/* Button text for the user to confirm their change of email address. */
+"confirmEmail"="Confirmar correo electrónico";
+/* Hint text where the user have to re-write the new password to confirm it */
+"confirmNewEmail"="Confirmar nuevo correo electrónico";
+/* The title of the alert dialog to change the email associated to an account. */
+"changeEmail"="Cambiar correo electrónico";
+/* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
+"oldAndNewEmailMatch"="El correo electrónico nuevo y el viejo no pueden coincidir";
+/* Error message shown when you have not written the same email when confirming a new one */
+"emailsDoNotMatch"="El correo electrónico no coincide";
+/* Error message when a use wants to validate the same email twice */
+"emailAddressChangeAlreadyRequested"="Ya has solicitado un enlace de confirmación para esa dirección de correo electrónico.";
+/* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
+"emailIsChanging_description"="Por favor accede a tu bandeja de entrada y pulsa el enlace para confirmar tu nuevo correo electrónico.";
+/* Text shown on the confirm email view to remind the user what to do */
+"verifyYourEmailAddress_description"="Por favor, introduce tu contraseña para verificar tu dirección de correo electrónico";
+/* The [X] will be replaced with the e-mail address. */
+"congratulationsNewEmailAddress"="Felicidades, el nuevo correo electrónico para tu cuenta MEGA es: [X]";
+/* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
+"closeOtherSessions" = "Cerrar el resto de sesiones";
+/* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
+"sessionsClosed" = "Sesiones cerradas";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Cambiar código de acceso";
 /* Title to describe a simple (four digit) passcode */

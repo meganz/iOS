@@ -5,21 +5,29 @@
 #import "MEGAStore.h"
 #import "Helper.h"
 
+#import "ChangePasswordViewController.h"
+
 #import "SVProgressHUD.h"
 
 
-@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate> {
+@interface AdvancedTableViewController () <UIAlertViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     NSByteCountFormatter *byteCountFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *clearOfflineFilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *clearCacheLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emptyRubbishBinLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
 @property (weak, nonatomic) IBOutlet UILabel *saveVideosLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *savePhotosTableViewCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *saveVideosTableViewCell;
+
+@property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
@@ -40,6 +48,8 @@
     
     self.offlineSizeString = [[NSString alloc] init];
     self.cacheSizeString = [[NSString alloc] init];
+    
+    self.cancelAccountLabel.text = AMLocalizedString(@"closeYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,19 +134,21 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+    if (alertView.tag == 0) {
+        if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+        }
+    } else if (alertView.tag == 1) {
+        if (buttonIndex == 1) {
+            [[MEGASdkManager sharedMEGASdk] cancelAccountWithDelegate:self];
+        }
     }
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
-        return 3;
-    } else {
-        return 4;
-    }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -145,6 +157,18 @@
         numberOfRows = 2;
     }
     return numberOfRows;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
+        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+        if(cell == self.savePhotosTableViewCell || cell == self.saveVideosTableViewCell) {
+            cell.hidden = YES;
+            return 0;
+        }
+    }
+    
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -159,7 +183,7 @@
             break;
             
         case 3: //Downloads
-            titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+            titleHeader = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
             break;
     }
     return titleHeader;
@@ -187,7 +211,7 @@
         }
             
         case 3: { //Image and videos downloads
-            titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+            titleFooter = ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) ? @"" : AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
             break;
         }
     }
@@ -239,12 +263,48 @@
                                                                          delegate:self
                                                                 cancelButtonTitle:AMLocalizedString(@"cancel", nil)
                                                                 otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            emptyRubbishBinAlertView.tag = 0;
             [emptyRubbishBinAlertView show];
             break;
         }
+            
+        case 4: { //Cancel account
+            UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted.")
+                                                                               message:nil
+                                                                              delegate:self
+                                                                     cancelButtonTitle:AMLocalizedString(@"cancel", nil)
+                                                                     otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+            cancelAccountAlertView.tag = 1;
+            [cancelAccountAlertView show];
+            break;
+        }
+            
+        default:
+            break;
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (error.type) {
+        return;
+    }
+    
+    switch (request.type) {
+        case MEGARequestTypeGetCancelLink: {
+            ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+            changePasswordVC.emailIsChangingTitleLabel.text = AMLocalizedString(@"pleaseCheckYourEmail", nil);
+            changePasswordVC.emailIsChangingDescriptionLabel.text = AMLocalizedString(@"ifYouCantAccessYourEmailAccount", @"Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account.");
+            self.view = changePasswordVC.emailIsChangingView;
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate

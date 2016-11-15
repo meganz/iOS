@@ -127,9 +127,7 @@
     [unavailableLinkView setFrame:self.view.bounds];
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:@"invalidFileLink"]];
     [unavailableLinkView.titleLabel setText:title];
-    [unavailableLinkView.textView setText:text];
-    [unavailableLinkView.textView setFont:[UIFont fontWithName:kFont size:14.0]];
-    [unavailableLinkView.textView setTextColor:[UIColor mnz_gray666666]];
+    unavailableLinkView.textLabel.text = text;
     
     if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
         [unavailableLinkView.imageViewCenterYLayoutConstraint setConstant:-64];
