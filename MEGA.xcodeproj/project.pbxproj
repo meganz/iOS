@@ -198,6 +198,7 @@
 		E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */; };
 		E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E81B566EC400ECEFDF /* UsageViewController.m */; };
 		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
+		E8B3FE781DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B3FE771DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m */; };
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
@@ -602,6 +603,8 @@
 		E88E6D7E1CF355FA00C9AD9E /* UIColor+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MNZCategory.h"; sourceTree = "<group>"; };
 		E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MNZCategory.m"; sourceTree = "<group>"; };
 		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8B3FE761DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhyDoINeedARecoveryKeyViewController.h; sourceTree = "<group>"; };
+		E8B3FE771DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhyDoINeedARecoveryKeyViewController.m; sourceTree = "<group>"; };
 		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
@@ -1108,6 +1111,8 @@
 		41AA1A191AC07EB900D32691 /* Security Options */ = {
 			isa = PBXGroup;
 			children = (
+				E8B3FE761DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.h */,
+				E8B3FE771DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m */,
 				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
 				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
@@ -1787,6 +1792,7 @@
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
+				E8B3FE781DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
