@@ -1277,11 +1277,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD showErrorWithStatus:error.name];
         }
         
-        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
-        }
-        
         return;
     }
     
@@ -1296,13 +1291,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isAccountFirstLogin = YES;
                 self.link = nil;
             }
-                        
-            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
@@ -1438,11 +1432,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 }
             }
-            break;
-        }
-            
-        case MEGARequestTypeSubmitPurchaseReceipt: {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
         }
             
