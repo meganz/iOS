@@ -50,7 +50,7 @@
     
     self.createAccountButton.layer.cornerRadius = 4.0f;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
@@ -85,7 +85,7 @@
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
-    } else if (![self validatePassword:self.passwordTextField.text]) {
+    } else if (![self validatePassword]) {
         if ([self.passwordTextField.text length] == 0) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordTextField becomeFirstResponder];
@@ -109,12 +109,47 @@
     }
 }
 
-- (BOOL)validatePassword:(NSString *)password {
-    if (password.length == 0 || ![password isEqualToString:self.retypePasswordTextField.text]) {
+- (BOOL)validatePassword {
+    if (self.passwordTextField.text.length == 0 || self.retypePasswordTextField.text.length == 0 || ![self.passwordTextField.text isEqualToString:self.retypePasswordTextField.text]) {
         return NO;
     } else {
         return YES;
     }
+}
+
+- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
+    BOOL isAnyTextFieldEmpty = NO;
+    switch (tag) {
+        case 0: {
+            if ([self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 2: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 3: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+    }
+    
+    return isAnyTextFieldEmpty;
 }
 
 #pragma mark - UIResponder
@@ -155,8 +190,27 @@
 
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
+    }
+    
+    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    
+    return YES;
+}
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
             [self.emailTextField becomeFirstResponder];

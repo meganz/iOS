@@ -163,6 +163,34 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
+    BOOL isAnyTextFieldEmpty = NO;
+    switch (tag) {
+        case 0: {
+            if ([self.theNewPasswordTextField.text isEqualToString:@""] || [self.confirmPasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([self.currentPasswordTextField.text isEqualToString:@""] || [self.confirmPasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 2: {
+            if ([self.currentPasswordTextField.text isEqualToString:@""] || [self.theNewPasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+    }
+    
+    return isAnyTextFieldEmpty;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -230,7 +258,27 @@
 
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ([text isEqualToString:@""]) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
+    }
+    
+    shoulBeCreateAccountButtonGray ? [self.changePasswordButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.changePasswordButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.changePasswordButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     switch ([textField tag]) {
         case 0:
