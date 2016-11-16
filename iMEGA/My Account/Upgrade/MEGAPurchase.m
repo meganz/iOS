@@ -1,5 +1,6 @@
 
 #import "MEGAPurchase.h"
+#import "SVProgressHUD.h"
 
 @implementation MEGAPurchase
 
@@ -101,29 +102,42 @@
 #pragma mark - SKPaymentTransactionObserver Methods
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    MEGALogInfo(@"receipt URL: %@", receiptURL);
+    
+    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    if (!receiptData) {
+        MEGALogInfo(@"No receipt data");
+    }
+    
+    BOOL shouldSubmitReceiptOnRestore = YES; // If restore purchase, send only one time the receipt.
+    
     for(SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
-                
             case SKPaymentTransactionStatePurchasing:
                 break;
                 
             case SKPaymentTransactionStatePurchased:
-                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedStringWithOptions:0]];
+                MEGALogInfo(@"Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
+                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                 
                 [_delegate successfulPurchase:self restored:NO];
                 
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+
                 break;
                 
             case SKPaymentTransactionStateRestored:
+                MEGALogInfo(@"Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
+                if (shouldSubmitReceiptOnRestore) {
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                    [_delegate successfulPurchase:self restored:YES];
+                    shouldSubmitReceiptOnRestore = NO;
+                }
                 
-                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[transaction.transactionReceipt base64EncodedStringWithOptions:0]];
-                
-                [_delegate successfulPurchase:self restored:YES];
-                
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+
                 break;
                 
             case SKPaymentTransactionStateFailed:
@@ -159,12 +173,22 @@
     [_delegate failedRestore:error.code message:error.localizedDescription];
 }
 
-
-
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];        
+    }
     if (error.type) {
+        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
+        }
         return;
     }
     
