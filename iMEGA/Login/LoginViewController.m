@@ -122,6 +122,27 @@
     }
 }
 
+- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
+    BOOL isAnyTextFieldEmpty = NO;
+    switch (tag) {
+        case 0: {
+            if ([self.passwordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([self.emailTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+    }
+    
+    return isAnyTextFieldEmpty;
+}
+
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterNoStyle];
@@ -165,20 +186,10 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeLoginButtonGray = NO;
-    switch ([textField tag]) {
-        case 0: {
-            if ([text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
-                shoulBeLoginButtonGray = YES;
-            }
-            break;
-        }
-            
-        case 1: {
-            if ([text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""]) {
-                shoulBeLoginButtonGray = YES;
-            }
-            break;
-        }
+    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+        shoulBeLoginButtonGray = YES;
+    } else {
+        shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
     shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
