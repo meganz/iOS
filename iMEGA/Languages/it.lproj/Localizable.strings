@@ -12,6 +12,8 @@
 "error"="Errore";
 /*  */
 "name"="Nome";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Codice di accesso";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Chiave di decriptazione non valida";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="La chiave SSL del server non può essere verificata. Potresti essere affetto da un attacco di tipo man-in-the-middle.";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Hai provato ad accedere troppe colte. Per favore, attendi fino alle %@ e riprova.";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Per favore, controlla la tua email e clicca sul link per confermare il tuo account.";
+"accountNotConfirmed"="Per favore, controlla la tua email e clicca sul link per confermare il tuo account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Il tuo account è stato bloccato. Si prega di contattare support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Questo indirizzo e-mail è già registrato ad un account MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="In attesa della conferma";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="In attesa della conferma dell'email.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Per favore controlla la tua e-mail e clicca il link per confermare il tuo account.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Si prega di inserire la password per confermare il tuo account";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="Aprire";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Rimuovi link";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Rimuovi i link";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link rimosso";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Link rimossi";
 /* Title show when a file is being downloaded */
-"downloading"="Scaricando: [X]%";
+"downloading"="Scaricando...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vuoi annullare il download?";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Accesso completo";
 /* Title of the Settings section */
 "settingsTitle"="Impostazioni";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Cestino";
@@ -550,20 +548,22 @@
 "masterKey"="Chiave di recupero";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Modifica password";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Esporta la Chiave di recupero";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Avviso di sicurezza! Questa è un'operazione ad alto rischio. Vuoi continuare?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Esportare la Chiave di recupero e mantenerla in uno spazio sicuro ti permette di recuperare il tuo account in caso di perdita della password senza perdite di dati.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="I tuoi dati sono solo leggibili attraverso una catena di decriptazione che inizia con la tua chiave mastra di criptazione (Chiave di Recupero), che immagazziniamo in modo criptato insieme alla tua password. Questo significa che se tu perdi la tua password, la tua Chiave di Recupero non potrà più essere decriptata, e che non potrai più decriptare i tuoi dati.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.";
+/*  */
+"masterKey_thirdParagraph"="Un attaccante esterno non può accedere al tuo account solo con la chiave. Un reset della password richiede sia la chiave e l'accesso alla tua e-mail.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Chiave di recupero copiata negli appunti";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Chiave di recupero esportata";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="La Chiave di recupero è stata esportata nella sezione Offline con il nome RecoveryKey.txt. Nota: Sarà cancellata se esci dalla sessione, per favore, mettila in un posto sicuro.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Chiave di recupero rimossa";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt è stato rimosso dalla cartella Documenti.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sul dispositivo";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Password dimenticata?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Riceverai un link di recupero che ti permetterà di resettare la tua password. Per favore, controlla la tua email per procedere.";
+"youCanResetYourPasswordByFollowing"="Riceverai un link di recupero che ti permetterà di resettare la tua password. Per favore, controlla la tua email per procedere.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Questo link di recupero è scaduto, si prega di riprovare.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Reset Password";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Per favore, inserisci la tua chiave di recupero";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Chiave di recupero";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="Ottimo!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Per favore, inserisci la tua email qui sotto. Riceverai un link di recupero che ti permetterà di inserire la tua Chiave di Recupero e resettare la tua password.";
+"recoveryLinkToResetYourPassword"="Per favore, inserisci il tuo indirizzo email qui sotto. Riceverai un link di recupero che ti permetterà di inserire la tua Chiave di Recupero e resettare la tua password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Invia";
 /* The title of the screen to park an account. */

@@ -12,6 +12,8 @@
 "error"="錯誤";
 /*  */
 "name"="名稱";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="密碼";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="無效的密鑰";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="伺服器 SSL 金鑰未能認證。您可能會收到第三方攻擊。";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至 %@ 後再重試。";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="請檢查您的電子郵件，並點擊連結以確認啟用您的帳戶。";
+"accountNotConfirmed"="請檢查您的電子郵件，並點擊連結以確認啟用您的帳戶。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="您的帳號已被鎖定。請連繫support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="這個電子郵件信箱在Mega已被註冊。";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="等待系統確認中";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="正在等待確認電子信箱。";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="請檢查你的電子郵件，並點擊信中的連結以確認帳號。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="請輸入您的密碼來確認賬戶";
 /* Button title that triggers the confirm account action */
@@ -151,7 +149,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="沒有符合搜尋的項目";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="清除垃圾夾";
+"cloudDriveEmptyState_titleRubbishBin"="空的垃圾桶";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="離線模式中沒有儲存檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -205,7 +203,7 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 資料夾 • %d 檔案";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="序列";
+"queued"="已入排程";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="該文件有待處理的下載";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
@@ -237,7 +235,7 @@
 /* Title button for the create folder alert.  */
 "createFolderButton"="建立";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
-"uploadFrom"="自... 導入";
+"uploadFrom"="自...匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已成功上傳 [A] 檔案，其於MEGA的名稱為 [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
@@ -247,9 +245,9 @@
 /* Message shown when a upload starts */
 "uploadStarted_Message"="已開始上傳";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="這個檔案已被移到垃圾夾";
+"fileMovedToTheRubbishBin_alertTitle"="這個檔案已被移到垃圾桶";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="這個資料夾已被移到垃圾夾";
+"folderMovedToTheRubbishBin_alertTitle"="這個資料夾已被移到垃圾桶";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
 "fileMoved_alertTitle"="這個檔案已移動";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
@@ -259,9 +257,9 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您已不再擁該資料夾權限";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="保存離線使用";
+"saveForOffline"="離線儲存";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="存儲供離線使用";
+"savedForOffline"="離線儲存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="這個收件夾標籤僅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -284,14 +282,14 @@
 "openIn"="開啟於...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="移除連結";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="移除分享連結";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="已移除連結";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="已移除連結";
 /* Title show when a file is being downloaded */
-"downloading"="正在下載：[X]%";
+"downloading"="正在下載...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="您確定取消下載嗎?";
 /* Title for the action that allows you to move a file or folder */
@@ -335,7 +333,7 @@
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="輸入新名字";
 /* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
-"moveToTheRubbishBin"="移至垃圾箱";
+"moveToTheRubbishBin"="移至垃圾桶";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
 "moveFileToRubbishBinMessage"="您確定要移動 1 個檔案至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
@@ -351,23 +349,23 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="您確定要移動 1 個檔案和 1 個資料夾至垃圾箱嗎？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="您確定要將 [A] 檔案和 [B] 資料夾移至垃圾夾嗎？";
+"moveFilesFoldersToRubbishBinMessage"="您確定要將 [A] 檔案和 [B] 資料夾移至垃圾桶嗎？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 檔案移到垃圾夾";
+"fileMovedToRubbishBinMessage"="已將1個檔案移到垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d檔案移到垃圾夾";
+"filesMovedToRubbishBinMessage"="已將%d個檔案移到垃圾桶";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 資料夾移到垃圾夾";
+"folderMovedToRubbishBinMessage"="已將1個資料夾移到垃圾桶";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d 資料夾已移到垃圾夾";
+"foldersMovedToRubbishBinMessage"="已將%d個資料夾移到垃圾桶";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移到垃圾夾";
+"fileFolderMovedToRubbishBinMessage"="1個檔案與1個資料夾已移到垃圾桶";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移到垃圾夾";
+"fileFoldersMovedToRubbishBinMessage"="1個檔案與%d個資料夾已移到垃圾桶";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移到垃圾夾";
+"filesFolderMovedToRubbishBinMessage"="%d個檔案與1個資料夾已移到垃圾桶";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] 個檔案與[B]個資料夾已移到垃圾夾";
+"filesFoldersMovedToRubbishBinMessage"="[A]個檔案與[B]個資料夾已移到垃圾桶";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="未獲得授權";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -453,7 +451,7 @@
 /* Text shown next to name of the "Owner" of the folder that is being shared */
 "owner"="所有者";
 /* Title of the view where you see with who you have shared a folder */
-"sharedWith"="分享與";
+"sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="使用聯絡人清單新增";
 /* Alert title shown when you select to add a contact inserting his/her email */
@@ -497,17 +495,17 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="允許";
 /* Permissions given to the user you share your folder with */
-"readOnly"="只讀";
+"readOnly"="僅能閱讀";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="讀取與寫入";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="全權使用";
 /* Title of the Settings section */
 "settingsTitle"="設定";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相機上傳";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="垃圾夾";
+"rubbishBinLabel"="垃圾桶";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="進階";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -550,20 +548,22 @@
 "masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="變更密碼";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="匯出還原金鑰";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="安全提示！這是高風險的操作，妳確定要繼續？";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="匯出還原金鑰並將其保存於安全的位置。使您因遺失密碼而需還原您的帳戶時，不會有資料遺失。";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="您的資料只有在經過一連串的解密操作後才能讀取，此操作屬於嚴謹加密方式，需使用您的主加密密鑰（還原金鑰）才能解密，我們已使用您的密碼加密儲存該金鑰。也就是說，如果您遺失了您的密碼，還原金鑰將無法再被解密匯出，您也無法再解密您的資料。";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="預先匯出還原金鑰並存放在安全之處，可以讓您在不丟失資料的狀況下重新設定密碼。";
+/*  */
+"masterKey_thirdParagraph"="外來攻擊者如持有您的金鑰仍將無法獲取您的資料。密碼重置將會需要金鑰以及需可存取您的電子郵件。";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="已複製還原金鑰至剪貼簿";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="已匯出還原金鑰";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="還原金鑰已以RecoveryKey.txt(還原金鑰文字檔)匯出至離線模式中。注意：您登出後它將會被刪除，請將其存放於安全之處。";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="已移除還原金鑰";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="已從文件資料夾中移除 RecoveryKey.txt (還原金鑰文字檔)";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="於您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -573,7 +573,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="於MEGA上";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="清空垃圾箱";
+"emptyRubbishBin"="清空垃圾桶";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="所有垃圾桶中的項目將均被刪除";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -589,15 +589,15 @@
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "closeYourAccount"="刪除您的帳戶";
 /* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
+"youWillLooseAllData"="您將遺失所有與此帳戶相關的資料，確定要繼續嗎？";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="如果您無法進入您的信箱，請聯絡support@mega.nz。";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="註銷連接已失效。";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to close your account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="請輸入您的密碼以確認您要關閉帳戶。";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="註銷帳戶";
 /* Title for the action that allows to remove a file or folder */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="忘記密碼了？";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="您將收到一個復原連結，讓您可以重設您的密碼。請至您的電子信箱收信以繼續進行。";
+"youCanResetYourPasswordByFollowing"="您將收到一個復原連結，讓您可以重設您的密碼。請至您的電子信箱收信以繼續進行。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="這個復原連結已失效，請再試一次。";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="密碼重設";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="請輸入您的還原金鑰";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="還原金鑰";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="很好!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="請於下方輸入您的電子信箱。您將收到一個復原連結，讓您可以提交您的還原金鑰，並重設您的密碼。";
+"recoveryLinkToResetYourPassword"="請於下方輸入您的電子郵件地址。您將收到一個還原連結，讓您可以提交您的還原金鑰並重置密碼。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* The title of the screen to park an account. */
@@ -681,7 +681,7 @@
 /* First paragraph of the screen to park an account */
 "noMasterKey_firstParagraph"="因我們使用嚴謹的端對端加密模式，您將無法在沒有密碼或還原金鑰的備份下取得您的資料。";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="您可以先封存現有的帳戶，再以同一個電子信箱重新註冊。您的資料將會被保存至少60天。在這之間，如果您回想起您此一封存帳號的密碼，請聯繫[A]support@mega.nz[/A]以尋求復原協助。";
+"noMasterKey_secondParagraph"="您可以先封存現有的帳戶，再以同一個電子信箱重新註冊。您的資料將會被保存至少60天。在這之間，如果您回想起您此一封存帳號的密碼，請聯繫support@mega.nz以尋求復原協助。";
 /* Text of the dialog message to ask for the link to park the account */
 "recoveryLinkToParkYourAccount"="請於下方輸入您的電子郵件地址。您將收到還原金鑰連結，讓您可以封存您的帳戶。";
 /* Headline for parking an account (basically restarting from scratch) */
@@ -701,7 +701,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="更改電子信箱";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email must not match";
+"oldAndNewEmailMatch"="新的和舊的電子郵件不能一模一樣";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="您輸入的電子郵件不一樣";
 /* Error message when a use wants to validate the same email twice */

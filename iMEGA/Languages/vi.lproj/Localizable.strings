@@ -12,6 +12,8 @@
 "error"="Lỗi";
 /*  */
 "name"="Tên";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Mã giải khóa không hợp lệ";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Bạn đã bị đăng xuất ra bơi một phiên đăng nhập từ chỗ khác";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Không xác thực được SSL key từ máy chủ. Xem chừng bạn đã bị tác động bởi người hack trung gian.";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Bạn đã nhập thông tin đăng nhập sai quá nhiều lần. Xin vui lòng chờ tới %@ rồi thử lại.";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Xin kiểm tra hộp thư email của bạn và click vào đường liên kết để xác thực tài khoản.";
+"accountNotConfirmed"="Xin kiểm tra hộp thư email của bạn và click vào đường liên kết để xác thực tài khoản.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Đang chờ việc xác minh";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Đang chờ việc xác thực email.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Xin kiểm tra email và click vào liên kết để xác nhận tài khoản.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Xin nhập mật khẩu để xác thực tài khoản";
 /* Button title that triggers the confirm account action */
@@ -157,11 +155,11 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Không có liên lạc";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ mới nào được gửi TỚI bạn";
+"noIncomingSharedItemsEmptyState_text"="Chưa có Thư Mục Chia Sẻ mới nào được gửi tới cho bạn";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ mới nào được gửi ĐI từ bạn";
+"noOutgoingSharedItemsEmptyState_text"="Chưa có Thư Mục Chia Sẻ mới nào được gửi đi từ bạn";
 /* Title of My Contacts section */
-"myContacts"="Danh bạ";
+"myContacts"="Danh Bạ";
 /* Title of Contacts requests section */
 "contactRequests"="Các yêu cầu thêm danh bạ";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -261,7 +259,7 @@
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Lưu để dùng ngoại tuyến";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Đã lưu về dùng Ngoại Tuyến";
+"savedForOffline"="Lưu về Ngoại Tuyến";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Mục này được bảo lưu cho Apple, bạn không có quyền hạn.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -284,7 +282,7 @@
 "openIn"="Mở với...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Xóa đường dẫn liên kết";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Xóa đường liên lết";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Đường liên kết đã được xóa";
@@ -425,9 +423,9 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Mục Chia Sẻ";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Nhận được";
+"incoming"="Nhận Được";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Gửi đi";
+"outgoing"="Gửi Đi";
 /* Text shown to explain that you have shared a folder with one contact */
 "sharedWithOneContact"="Được chia sẻ cho 1 tên liên lạc";
 /* Text shown to explain with how many contacts you have shared a folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Toàn quyền";
 /* Title of the Settings section */
 "settingsTitle"="Thiết đặt";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Thùng Rác";
@@ -539,37 +537,39 @@
 /* Option title to enable using the device cellular connection with Camera Uploads */
 "useCellularConnectionLabel"="Dùng mạng điện thoại để tải lên";
 /* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Chỉ lúc sạc pin";
+"onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video quay sẽ được tải lên MEGA.";
+"cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên MEGA của bạn.";
 /* Label for the "Version" number of the app */
 "version"="Phiên bản";
 /* Title for the section "Acknowledgements" of the app */
-"acknowledgements"="Ghi nhận";
+"acknowledgements"="Thỏa thuận";
 /* Title for the MEGA Recovery Key */
 "masterKey"="Mã Khóa Phục Hồi";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Xuất Mã Khóa Phục Hồi";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Cảnh báo! Thao tác này có rủi ro cao. Bạn có muốn tiếp tục không?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu trong trường hợp khôi phục tài khoản và không có mật khẩu.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Dữ liệu của bạn chỉ có thể đọc được qua một dãy mã từ hệ thống giải khóa sử dụng mã khóa chủ (Mã Phục Hồi) từ tài khoản của bạn, mã mà chúng tôi sử dụng để dịch mật khẩu của bạn. Nói cách khác, nếu bạn mất mật khẩu của mình, Mã Phục Hồi sẽ không thể giải được, và bạn sẽ không thể truy cập được dữ liệu của mình.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Việc xuất ra Mã Phục Hồi và lưu trữ bản sao của mã này ở một nơi an toàn sẽ giúp bạn phòng tránh việc mất dữ liệu khi bạn quên mất mật khẩu.";
+/*  */
+"masterKey_thirdParagraph"="Các kẻ tấn công không thể nào truy cập vào tài khoản của bạn chỉ với mã-khóa không thôi. Thủ tục đặt lại mật khẩu yêu cầu bạn phải có mã-khóa master và quyền truy cập vào email của bạn.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Mã Khóa Phục Hồi đã được lưu vào bộ nhớ";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Mã Phục Hồi đã được lưu vào mục Ngoại Tuyến với tên RecoveryKey.txt. Ghi chú: tệp tin sẽ bị xóa một khi bạn đăng xuất, xin chuyển tệp tin tới một chỗ khác an toàn hơn.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Đã xóa Mã Phục Hồi";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Tệp tin chứa Mã Phục Hồi (RecoveryKey.txt) đã được xóa khỏi thư mục Tệp Tài Liệu.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Trong điện thoại";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Dọn Các Tệp Ngoại Tuyến";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="Dọn bộ nhớ tạm";
+"clearCache"="Dọn Bộ Nhớ Tạm";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
@@ -583,7 +583,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Lưu video nhận được vào máy";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Lưu lại những hình ảnh và video phù hợp với iOS vào điện thoại (Ghi chú: hình ảnh và video sẽ được lưu thẳng vào điện thoại, không phải mục Ngoại Tuyến).";
+"imageAndVideoDownloadsFooter"="Chức năng này lưu lại những hình ảnh và video phù hợp với iOS vào điện thoại (Ghi chú: hình ảnh và video sẽ được lưu thẳng vào điện thoại, không phải mục Ngoại Tuyến).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Hiện đang dùng %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Quên mất mật khẩu?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Bạn sẽ nhận được một email chứa đường liên kết để đặt lại mật khẩu. Xin kiểm tra hộp thư email của bạn để tiến hành bước kế tiếp.";
+"youCanResetYourPasswordByFollowing"="Bạn sẽ nhận được một email chứa đường liên kết để đặt lại mật khẩu. Xin kiểm tra hộp thư email của bạn để tiến hành bước kế tiếp.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Liên kết phục hồi này đã bị hết hạn, xin thử lại.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Đặt lại mật khẩu";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Xin nhập Mã Phục Hồi";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Mã Khóa Phục Hồi";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="Vậy thì tốt!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Xin điền địa chỉ email của bạn ở dưới đây. Sau đó, bạn sẽ nhận được một đường liên kết cho phép bạn điền Mã Phục Hồi và đặt lại mật khẩu mới.";
+"recoveryLinkToResetYourPassword"="Xin nhập địa chỉ email của bạn ở dưới đây. Bạn sẽ nhận được một thư email có chứa đường liên kết khôi phục tài khoản để nhập Mã Phục Hồi và đặt lại mật khẩu.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gửi";
 /* The title of the screen to park an account. */
@@ -731,7 +731,7 @@
 /* Title to rate the app */
 "rateUsLabel"="Đánh giá app";
 /* Title of the Transfers section */
-"transfers"="Các Phiên Truyền Tải";
+"transfers"="Các phiên truyền tải";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tất Cả";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
@@ -767,7 +767,7 @@
 /* Title for MEGA "Available" space. */
 "availableLabel"="Còn lại (mạng)";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="MIễN PHÍ";
+"free"="MIẼN PHÍ";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
