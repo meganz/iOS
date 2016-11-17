@@ -371,7 +371,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showCameraUploadsPopUp {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
-    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+        if ([Helper selectedOptionOnLink] != 0) {
+            [self processSelectedOptionOnLink];
+        }
+    }];
 }
 
 - (void)processSelectedOptionOnLink {
@@ -436,7 +440,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
-    if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
+    if (afterSlashesString.length < 2) {
         [self showLinkNotValid];
         return;
     }
@@ -526,6 +530,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 3) {
+        return NO;
+    }
+    
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
     BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
     if (isFolderLink) {
@@ -706,8 +714,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
         [self presentLinkViewController:browserNavigationController];
+        
+        self.link = nil;
     }
-    self.link = nil;
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
@@ -1321,15 +1330,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 
                 if (![LTHPasscodeViewController doesPasscodeExist]) {
                     if (isAccountFirstLogin) {
-                        [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
-                        
-                        if ([Helper selectedOptionOnLink] != 0) {
-                            [self performSelector:@selector(processSelectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                        } else {
-                            if (self.urlType == URLTypeOpenInLink) {
-                                [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
-                            }
-                        }
+                        [self showCameraUploadsPopUp];
                     }
                     
                     if (self.link != nil) {
