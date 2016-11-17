@@ -12,6 +12,8 @@
 "error"="Hata";
 /*  */
 "name"="İsim";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Parola";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Geçersiz şifre çözme anahtarı";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Çıkış yapıldı";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Başka bir yerden oturum açıldığı için bu cihazdan çıkış yapıldı";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Sunucunun SSL anahtarı doğrulanamadı. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısı altında olabilirsiniz.";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Çok fazla giriş denemesi yaptınız. Lütfen bekleyin %@";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Lütfen epostanızı kontrol edin ve hesabınızı onaylamak için gönderilen linke tıklayın.";
+"accountNotConfirmed"="Lütfen epostanızı kontrol edin ve hesabınızı onaylamak için gönderilen linke tıklayın.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Bu e-posta adresi ile daha önceden bir Mega hesabı alınmış.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Onay bekleniyor";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Eposta onayı bekleniyor.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Lütfen e-posta kutunuzu kontrol edin, ve hesabınızı doğrulamak için gönderilen linke tıklayın.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Hesabınızı onaylamak için şifrenizi girin";
 /* Button title that triggers the confirm account action */
@@ -284,7 +282,7 @@
 "openIn"="Uygulamada aç...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Bağlantıyı kaldır";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Bağlantıları kaldır";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Bağlantı kaldırıldı";
@@ -504,7 +502,7 @@
 "fullAccess"="Tam erişim";
 /* Title of the Settings section */
 "settingsTitle"="Ayarlar";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Kamera Yüklemeleri";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Çöp Kutusu";
@@ -550,20 +548,22 @@
 "masterKey"="Kurtarma Anahtarı";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Şifre değiştir";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Kurtarma Anahtarını Dışarı Aktar";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Güvenlik uyarısı! Bu yüksek riskli bir işlemdir. Devam etmek istiyor musunuz?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Kurtarma Anahtarını Dışarıya Aktarmak ve güvenli bir yerde saklamak veri kaybına uğramadan şifrenizi sıfırlamanıza olanak sağlar.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Verileriniz sadece Kurtarma Anahtarınız ile başlayan deşifreleme zincirinden geçerek okunulabilir hale gelir, biz bu anahtarı parolanızla birlikte şifrelenmiş olarak saklıyoruz. Bu demektir ki parolanızı unutursanız, Kurtarma Anahtarınız ve verileriniz deşifrelenemez.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Kurtarma Anahtarını dışarıya aktarıp güvenli bir yerde saklamak veri kaybına uğramadan şifre değiştirmenizi sağlar.";
+/*  */
+"masterKey_thirdParagraph"="Harici bir saldırgan sadece anahtarınız ile hesabınıza erişim sağlayamaz. Şifre sıfırlama hem anahtar hem de e-posta adresinize erişim gerektirir.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Kurtarma Anahtarı panoya kopyalandı";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Kurtarma Anahtarı dışarı aktarıldı";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Kurtarma Anahtarınız Çevrimdışı bölgeye RecoveryKey.txt olarak aktarıldı. Not: Çıkış yaptığınızda silinecektir, lütfen güvenli bir yerde saklayın.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Kurtarma Anahtarı silindi";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="KurtarmaAnahtarı.txt Belgelerim klasöründen silindi.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Cihazınızda";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Şifrenizi mi unuttunuz?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Şifrenizi sıfırlamak için bir kurtarma linki gönderilecek. Devam etmek için epostanızı kontrol edin.";
+"youCanResetYourPasswordByFollowing"="Şifrenizi sıfırlamak için bir kurtarma linki gönderilecek. Devam etmek için epostanızı kontrol edin.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Bu kurtarma bağlantısının süresi doldu, lütfen tekrar deneyin.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Şifre sıfırlama";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Lütfen Kurtarma Anahtarını girin";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Kurtarma Anahtarı";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="Harika!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Lütfen e-posta adresinizi aşağıya girin. Şifrenizi sıfırlamak için gereken Kurtarma Anahtarını girebileceğiniz bir kurtarma linki gönderilecektir.";
+"recoveryLinkToResetYourPassword"="Lütfen e-posta adresinizi aşağıya girin. Kurtarma Anahtarınızı girip şifrenizi sıfırlayabileceğiniz bir kurtarma linki göndereceğiz.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Gönder";
 /* The title of the screen to park an account. */

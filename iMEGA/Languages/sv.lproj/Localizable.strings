@@ -12,6 +12,8 @@
 "error"="Fel";
 /*  */
 "name"="Namn";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Lösenord";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Ogiltig krypteringsnyckel";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Loggade ut";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Du har loggats ut från den här enheten från en annan plats";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Serverns SSL kan inte verifieras, du kan vara utsatt för intrång. ";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Du har försökt logga in för många gånger. Vänta tills% @ och försök igen.";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Kontrollera din e-post och klicka på länken för att bekräfta ditt konto.";
+"accountNotConfirmed"="Kontrollera din e-post och klicka på länken för att bekräfta ditt konto.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ditt konto har blivit blockerat. Var vänlig och kontakta support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Den här email adressen har redan kopplats till ett annat MEGA konto.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Väntar på bekräftelse";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Väntar på mail verifiering";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Kolla din e-post och tryck på länken för att aktivera ditt konto.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Ange ditt lösenord för att bekräfta ditt konto";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="Öppna i...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Ta bort länk";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Ta bort länkar";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Länk borttagen";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Länkar borttagna";
 /* Title show when a file is being downloaded */
-"downloading"="Laddar ner: [X]%";
+"downloading"="Laddar ner...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vill du avbryta nedladdningen?";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Full tillgång";
 /* Title of the Settings section */
 "settingsTitle"="Inställningar";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Uppladdning av bilder";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papperskorg";
@@ -550,20 +548,22 @@
 "masterKey"="Återställningsnyckel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Ändra lösenord";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exportera återställningsnyckel";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Säkerhetsvarning! Detta är en högriskoperation. Vill du fortsätta?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exportera återställningsnyckel och håll den på en säker plats så kan du återställa kontot i händelse av ett förlorat lösenord utan förlust av data.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Dina uppgifter är endast läsbara genom en kedja av dekrypterings operationer som börjar med din huvudkrypteringsnyckel (Recovery Key), som vi lagrar krypterad med ditt lösenord. Detta innebär att om du förlorar ditt lösenord, är din återställningsnyckel inte längre användbar, och du kan inte längre dekryptera data.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Export av återställningsnyckel och förvara den på en säker plats så kan du ställa in ett nytt lösenord utan förlust av data.";
+/*  */
+"masterKey_thirdParagraph"="En extern angripare kan inte få tillgång till ditt konto med endast din huvudnyckel. En lösenordsåterställning kräver både din huvudnyckel och åtkomst till din epost.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Återställningsnyckel kopierad till urklipp";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Återställningsnyckel exporterad";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Återställningsnyckeln har exporterats till avsnittet Offline som Recovery Key.txt. OBS: Det kommer att tas bort om du loggar ut, vänligen förvara den på ett säkert ställe.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Återställningsnyckel borttagen";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt Har tagits bort från mappen dokument.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Din enhet";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Glömt lösenord?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Du kommer att få en återhämtningslänk som gör att du kan återställa ditt lösenord. Kontrollera din e-post för att fortsätta.";
+"youCanResetYourPasswordByFollowing"="Du kommer att få en återhämtningslänk som gör att du kan återställa ditt lösenord. Kontrollera din e-post för att fortsätta.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Din återställningslänk har gått ut, var god försök igen.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Återställ lösenord";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Var vänlig skriv in din återställningsnyckel";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Återställningsnyckel";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="Underbart!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Ange du e-post adress nedan. Du kommer att få en återhämtningslänk som gör att du kan skicka in din återställningsnyckel och återställa lösenordet.";
+"recoveryLinkToResetYourPassword"="Ange din e-post adress nedan. Du kommer att få en återställningslänk som gör att du kan skicka in din återställningsnyckel och återställa lösenordet.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Skicka";
 /* The title of the screen to park an account. */

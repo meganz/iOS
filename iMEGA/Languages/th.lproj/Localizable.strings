@@ -12,6 +12,8 @@
 "error"="ผิดพลาด";
 /*  */
 "name"="ชื่อ";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="รหัสผ่าน";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="คีย์ถอดรหัสลับไม่ถูกต้อง";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ออกจากระบบ";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="คีย์ SSL ของเซิร์ฟเวอร์ไม่สามารถตรวจสอบได้ คุณอาจจะได้รับผลกระทบจากการลักลอบดักข้อมูล";
@@ -76,8 +78,8 @@
 "invalidMailOrPassword"="อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
-/* Error message when trying to login to an account not validated */
-"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="บัญชีของคุณถูกบล็อก กรุณาติดต่อ support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="ที่อยู่อีเมลนี้เคยลงทะเบียนกับ MEGA แล้ว";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="รอการยืนยัน";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="รอการยืนยันทางอีเมล";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="กรุณาตรวจสอบอีเมลของคุณและคลิกที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="กรุณาใส่รหัสผ่านเพื่อยืนยันบัญชีของคุณ";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="เปิดด้วย...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="เอาลิงก์ออก";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="เอาลิงก์ออก";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="ลิงก์ถูกลบแล้ว";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="ลิงก์ถูกลบแล้ว";
 /* Title show when a file is being downloaded */
-"downloading"="กำลังดาวน์โหลด: [X]%";
+"downloading"="กำลังดาวน์โหลด...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="คุณต้องการที่จะยกเลิกการดาวน์โหลดหรือไม่";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="เข้าถึงได้เต็มที่";
 /* Title of the Settings section */
 "settingsTitle"="ตั้งค่า";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="อัปโหลดจากกล้องถ่ายรูป";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="ถังขยะ";
@@ -550,20 +548,22 @@
 "masterKey"="คีย์สำหรับกู้คืน";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="เปลี่ยนรหัสผ่าน";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Export Recovery Key";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="แจ้งเตือนความปลอดภัย! การดำเนินการนี้มีความเสี่ยงสูง คุณต้องการดำเนินการต่อหรือไม่";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="ข้อมูลของคุณเป็นเพียงแค่ทางผ่านของการดำเนินงานการถอดรหัส ที่จะขึ้นต้นด้วยคีย์เข้ารหัสลับหลักที่เราเก็บเข้ารหัสด้วยรหัสผ่านของคุณเท่านั้น ซึ่งหมายความว่า ถ้าคุณลืมรหัสผ่านของคุณ คีย์หลักจะไม่สามารถถอดรหัสและไม่สามารถถอดรหัสข้อมูลได้";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="การส่งออกคีย์หลักและเก็บรักษาไว้ในสถานที่ปลอดภัย จะช่วยให้คุณตั้งค่ารหัสผ่านใหม่ได้โดยไม่ต้องสูญเสียข้อมูลใดๆ ทั้งสิ้น";
+/*  */
+"masterKey_thirdParagraph"="การมีผู้บุกรุกจากภายนอกจะไม่สามารถเข้าถึงบัญชีของคุณที่มีเพียงแค่คีย์หลักของคุณได้ การรีเซ็ตรหัสผ่านต้องมีการใช้คีย์และการเข้าถึงอีเมลของคุณเท่านั้น";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="คีย์สำหรับกู้คืนถูกคัดลอกไปที่คลิปบอร์ดแล้ว";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Recovery Key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key removed";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="บนอุปกรณ์ของคุณ";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Forgot password?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="You will receive a recovery link that will allow you to reset your password. Please check your email to proceed.";
+"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="ลิงก์สำหรับการกู้คืนได้หมดอายุแล้ว กรุณาลองใหม่อีกครั้ง";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="รีเซ็ตรหัสผ่าน";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Please enter your Recovery Key";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="คีย์สำหรับกู้คืน";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="ยอดเยี่ยม!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+"recoveryLinkToResetYourPassword"="กรุณากรอกที่อยู่อีเมลด้านล่างนี้ คุณจะได้รับลิงก์สำหรับกู้คืน ที่จะช่วยส่งคีย์หลักและการตั้งค่ารหัสผ่านของคุณได้";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="ส่ง";
 /* The title of the screen to park an account. */

@@ -12,6 +12,8 @@
 "error"="Hiba";
 /*  */
 "name"="Név";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Számkód";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Invalid decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Kijelentkezve";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ebből a készülékből másik helyről jelentkezett ki";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="A szerver SSL kulcsa nem erősíthető meg. Lehetséges, hogy közbeékelődéses támadás áldozata.";
@@ -76,8 +78,8 @@
 "invalidMailOrPassword"="Érvénytelen email és/vagy jelszó. Kérjük próbálja újra.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
-/* Error message when trying to login to an account not validated */
-"accountNotValidated"="Please check your email and click the link to confirm your account.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Fiókod le lett tiltva. Kérlek vedd fel a kapcsolatot a support@mega.nz-vel";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ez az email cím már regisztrált egy fiókot a MEGÁ-n";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Várakozás megerősítésre";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Awaiting email confirmation.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Kérjük ellenőrizze e-mailjeit, majd kattintson a linkre fiókja visszaigazolásához.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Kérjük írja be jelszavát fiókja megerősítéséhez";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="Megnyitás máshol...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Link eltávolítása";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Remove links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Link removed";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links removed";
 /* Title show when a file is being downloaded */
-"downloading"="Letöltés: [X]%";
+"downloading"="Letöltés...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Meg szeretné szakítani a letöltést?";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Teljes hozzáférés";
 /* Title of the Settings section */
 "settingsTitle"="Beállítások";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Kamerafeltöltések";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Szemetesláda";
@@ -550,20 +548,22 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Jelszócsere";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Export Recovery Key";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Biztonsági figyelmeztetés! Ez egy veszélyes művelet. Folytatni akarod?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Adatai kizárólag egy visszafejtési műveletsoron keresztül olvashatók, ami titkosító mesterkulcsával kezdődik, amelyet jelszavával együtt titkosítva tárolunk. Ez azt jelenti, hogy ha elveszíti jelszavát, mesterkulcsa többé nem fejthető vissza, ahogyan adatai sem.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="A master kulcs exportálása és biztonságos helyen való tárolása lehetővé teszi új jelszó beállítását adatvesztés nélkül.";
+/*  */
+"masterKey_thirdParagraph"="Egy külső támadó nem tud hozzáférést nyerni fiókjához pusztán a kulcsal. Egy jelszó alaphelyzetbe állításához szükség van mind a kulcsra és e-mailjéhez való hozzáférésre is.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Recovery Key copied to clipboard";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Recovery Key exported";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Recovery Key removed";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt was removed from the Documents folder.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Forgot password?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="You will receive a recovery link that will allow you to reset your password. Please check your email to proceed.";
+"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Ez a visszaszerzési link lejárt, kérjük próbálja újra.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Jelszó alaphelyzetbe állítása";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Please enter your Recovery Key";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Recovery Key";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,11 +673,11 @@
 /* Headline when the user chose YES */
 "great"="Remek!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+"recoveryLinkToResetYourPassword"="Kérlek alább írd be email címed. Kapni fogsz egy helyreállítási linket, amely lehetővé teszi master kulcsod beküldését és jelszavad alaphelyzetbe állítását.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Küldés";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
+"noMasterKey_title"="Hoppá!";
 /* First paragraph of the screen to park an account */
 "noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
 /* Second paragraph of the screen to park an account */

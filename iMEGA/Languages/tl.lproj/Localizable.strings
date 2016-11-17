@@ -12,6 +12,8 @@
 "error"="Error";
 /*  */
 "name"="Pangalan";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Naisave";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Maling decryption key";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Naglog-out na";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ikaw ay nag-log out sa device na ito sa ibang lokasyon";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ang SSL key ng Server ay hindi ma-verify. Ikaw ay maaaring apektado ng isang man-in-the-middle attack.";
@@ -76,8 +78,8 @@
 "invalidMailOrPassword"="Maling e-mail at/o password. Subukang muli";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Sinubukan mo ng mag-log in ng maraming beses. Maghintay muna hanggang %@ at subukang muli.";
-/* Error message when trying to login to an account not validated */
-"accountNotValidated"="I-check ang iyong email at i-click ang link para kumpirmahin ang iyong account.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Para kumpirmahin ang iyong account, tingnan ang iyong email at sundan ang link.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ang iyong account ni-block. Kontakin ang support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ang e-mail address na ito ay meron ng registered account sa MEGA.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Inaantay pa ang pagkumpirma";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Hinihintay ang kumpirmasyon sa email";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="I-check ang inyong e-mail address at i-click ang link para i-confirm ang inyong account.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Ilagay ang inyong password para makumpirma ang inyong account";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="Buksan sa...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Alisin ang link";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Tanggalin ang links";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Tinanggal ang link";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Tinanggal ang mga link";
 /* Title show when a file is being downloaded */
-"downloading"="Idinadownload: [X]%";
+"downloading"="Idinadownload...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Gusto mo bang kanselahin ang pagda-download?";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Ganap na access";
 /* Title of the Settings section */
 "settingsTitle"="Mga Settings";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Camera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Basurahan";
@@ -515,7 +513,7 @@
 /* Title of one of the Settings sections where you can see things "About" the app */
 "about"="Tungkol sa";
 /* Title of one of the Settings sections where you can set up the "Language" of the app */
-"language"="Lingwahe";
+"language"="Lenggwahe";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Application language";
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
@@ -550,20 +548,22 @@
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Palitan ang password";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="I-export ang Recovery Key";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Babala pangseguridad! Ito ay isang operasyon na may mataas na panganib. Gusto mo bang ipagpatuloy?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Ang pag-eexport sa Recovery Key at ang pagtatabi nito sa isang maingat na lokasyon ay magbibigay daan upang mabawi mo ang iyong account sakaling mawala mo ang iyong password ng walang data loss.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Bakit ko ba kailangan ang Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Ang inyong data ay mababasa lamang sa pamamagitan ng sunod-sunod na operasyon ng decryption na magsisimula sa iyong master encryption key (Recovery Key), na aming inilalagay na encrypted sa inyong password. Ito ay nangangahulugang na kapag naiwala mo ang iyong password, ang iyong Recovery Key ay hindi na made-decrypt, hindi mo na din made-decrypt ang iyong data.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Ang pag-iexport ng Recovery Key at pag-iingat nito sa isang sigurado lugar ay magbibigay daan upang makapagset ka ng bagong password ng walang data loss.";
+/*  */
+"masterKey_thirdParagraph"="Hindi maaaring makuha ng isang external attacker ang inyong account gamit lamang ang isang key. Ang pagbabago ng passoword ay nangangailangan ng key at access sa inyong email.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Kinopya na ang Recovery Key sa clipboard";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Na-export na ang Recovery Key";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Ang Recovery Key ay na-export na sa Offline section bilang RecoveryKey.txt. Paalala: Ito ay buburahin kung hindi ka magla-log out, paalalang ingatan ito.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Tinanggal ang Recovery Key";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Tinanggal sa Documents folder ang Recovery.txt";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Sa iyong device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Nalimutan ang password?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Ikaw ay makakatanggap ng recovery link na magbibigay daan upang mai-reset mo iyong password. Tingnan ang iyong email para magpatuloy.";
+"youCanResetYourPasswordByFollowing"="Sundan ang recovery link na ipapadala sa emai mo upang mai-reset ang password.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Ang recovery link ay lipas na, subukang muli.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Ireset ang password";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Ilagay ang inyong Recovery Keys";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Recovery Key";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -673,7 +673,7 @@
 /* Headline when the user chose YES */
 "great"="'Yun oh!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Ilagay ang e-mail address sa ibaba. Makakatanggap ka ng recovery link na magbibigay daan para isumite mo ang iyong Recovery Key at mai-reset ang iyong password.";
+"recoveryLinkToResetYourPassword"="Ilagay ang e-mail address sa ibaba. Makakatanggap ka ng recovery link na mabibigay daan sa iyo upang maisumite ang Recovery Key at upang i-reset ang iyong password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Ipadala";
 /* The title of the screen to park an account. */

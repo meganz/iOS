@@ -12,6 +12,8 @@
 "error"="Chyba";
 /*  */
 "name"="Meno";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Heslo";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Neplatný dešifrovací odkaz";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Odhlásený";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Z tohoto zariadenia ste boli z iného miesta odhlásený";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Nebolo možné overiť serverový SSL kľúč. Je možné, že ste pod vplyvom útoku typu man-in-the-middle.";
@@ -77,7 +79,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Príliš veľa krát ste sa pokúsili prihlásiť. Prosím počkajte do %@ a skúste to znovu.";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Prosím skontrolujte si svoj email a kliknite na odkaz pre potvrdenie svojho účtu.";
+"accountNotConfirmed"="Prosím skontrolujte si svoj email a kliknite na odkaz pre potvrdenie svojho účtu.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Váš účet bol zablokovaný. Prosím kontaktujte support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Táto e-mailová adresa, už má na MEGA registrovaný účet.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Čaká na potvrdenie";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Čaká sa na potvrdenie emailu.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Prosím, skontrolujte si e-mailovú schránku a kliknite na odkaz pre overenie vášho účtu.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Prosím zadajte vaše heslo pre potvrdenie vášho účtu";
 /* Button title that triggers the confirm account action */
@@ -284,7 +282,7 @@
 "openIn"="Otvoriť v...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Odstrániť link";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Odstrániť odkazy";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Odkaz odstránený";
@@ -504,7 +502,7 @@
 "fullAccess"="Plný prístup";
 /* Title of the Settings section */
 "settingsTitle"="Nastavenia";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Upload z fotoaparátu";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Kôš";
@@ -550,20 +548,22 @@
 "masterKey"="Kľúč pre obnovu";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Zmena hesla";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Exportovať kľúč pre obnovu";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Bezpečnostné varovanie! Táto operácia je veľmi riskantná. Chcete pokračovať?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exportovanie vášho Kľúča pre obnovu a uchovanie ho na bezpečnom mieste vám umožní znovu získať prístup ku vášmu účtu v prípade strateného heslo, bez straty dát.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Vaše dáta sú čitateľné iba cez zreťazené dešifrovacie operácie, ktoré začínajú vašim hlavným dešifrovacím heslom (Kľúčom pre obnovu), ktorý máme uložený šifrovaný vašim heslom. To znamená, že ak prídete o svoje heslo, Váš kľúč pre obnovu sa nebude dať dešifrovať a vy nebudete schopný dešifrovať svoje dáta.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Export Kľúča pre obnovu a držsanie ho na bezpečnom mieste dovoľuje zmeniť si svoje heslo bez straty údajov.";
+/*  */
+"masterKey_thirdParagraph"="Vzdialený útočník nemôže získať prístup k vášmu účtu len pomocou kľúča. Reset hesla si vyžaduje ako váš kľúč, tak aj váš email.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Kľúč pre obnovu skopírovaný do schránky";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Kľúč pre obnovu exportovaný";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="Kľúč pre obnovu bol exportovaný do Offline sekcie ako RecoveryKey.txt.Poznámka: Ak sa odhlásite, súbor bude zmazaný. Prosím uchovajte ho na bezpečnom mieste.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Kľúč pre obnovu odstránený";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="Súbor RecoveryKey.txt bol odstránený z priečinka Dokuenty.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Na vašom zariadení";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Zabudli ste heslo?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Dostanete odkaz pre obnovu, ktorý vám umožní zmeniť svoje heslo. Prosím, skontrolujte si váš email pre pokračovanie.";
+"youCanResetYourPasswordByFollowing"="Dostanete odkaz pre obnovu, ktorý vám umožní zmeniť svoje heslo. Prosím, skontrolujte si váš email pre pokračovanie.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Temuto odkazu pre obnovu vypršala platnosť, prosím skúste to znovu.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Reset hesla";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Prosím zadajte váš Kľúč pre obnovu";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Kľúč pre obnovu";
 /* An alert title where the user provided the incorrect Recovery Key. */

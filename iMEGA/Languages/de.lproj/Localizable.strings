@@ -12,6 +12,8 @@
 "error"="Fehler";
 /*  */
 "name"="Name";
+/* State shown if something is 'Saved' (String as short as possible). */
+"saved"="Saved";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -44,7 +46,7 @@
 "decryptionKeyNotValid"="Ungültiger Schlüssel";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Ausgeloggt";
-/* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
+/* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ihre Sitzung wurde beendet";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Der Server-SSL-Schlüssel kann nicht verifiziert werden. Es könnte ein Man-in-the-middle-Angriff vorliegen.";
@@ -71,13 +73,13 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Konto erstellen";
+"createAccount"="Account erstellen";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Zuviele Fehlversuche. Bitte warten Sie bis %@ und versuchen Sie es dann erneut.";
 /* Error message when trying to login to an account not validated */
-"accountNotValidated"="Bitte sehen Sie in Ihrem Posteingang nach und klicken Sie auf den Bestätigungslink, um Ihren Account zu aktivieren.";
+"accountNotConfirmed"="Bitte sehen Sie in Ihrem Posteingang nach und klicken Sie auf den Bestätigungslink, um Ihren Account zu aktivieren.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ihr Account wurde gesperrt. Bitte setzen Sie sich mit support@mega.nz in Verbindung.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -99,11 +101,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Unter dieser E-Mail-Adresse ist bereits ein MEGA-Account registriert.";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingConfirmation"="Warte auf Bestätigung";
-/* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "awaitingEmailConfirmation"="Ein Bestätigungslink ist Ihnen per E-Mail zugegangen.";
-/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountCreated"="Bitte öffnen Sie Ihre E-Mail und bestätigen Sie Ihren Account, indem Sie den entsprechenden Link anklicken.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Zur Aktivierung Ihres Accounts geben Sie bitte Ihr Passwort ein";
 /* Button title that triggers the confirm account action */
@@ -284,14 +282,14 @@
 "openIn"="Öffnen in...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Link entfernen";
-/* Message shown when there is an active link that can be removed or disabled */
+/* Message shown when there are some active links that can be removed or disabled */
 "removeLinks"="Links löschen";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="Der Link wurde gelöscht";
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Links wurden entfernt";
 /* Title show when a file is being downloaded */
-"downloading"="Downloading: [X]%";
+"downloading"="Downloading...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Möchten Sie den Download abbrechen?";
 /* Title for the action that allows you to move a file or folder */
@@ -504,7 +502,7 @@
 "fullAccess"="Unbeschränkter Zugang";
 /* Title of the Settings section */
 "settingsTitle"="Einstellungen";
-/* Title of one of the Settings sections where you can set up the "Camera Uploads" options */
+/* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Kamera Uploads";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Papierkorb";
@@ -550,20 +548,22 @@
 "masterKey"="Rettungsschlüssel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Passwort ändern";
-/* Title shown when you try to export your MEGA Recovery Key */
-"exportMasterKey"="Rettungsschlüssel exportieren";
-/* Message shown when you try to export the Recovery Key to alert the user.*/
-"exportMasterKey_alertMessage"="Sicherheitswarnung: Diese Operation ist potentiell gefährlich. Fortfahren?";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="Ein exportierter und an einem sicheren Ort verwahrter Rettungsschlüssel erlaubt es Ihnen, Ihr Passwort ohne Datenverlust neu zu setzen.";
+/* Question button to present a view where it's explained what is the Recovery Key */
+"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
+"masterKey_firstParagraph"="Der Zugriff auf Ihre Daten erfolgt über eine Kaskade von Entschlüsselungsoperationen, die mit Ihrem Masterschlüssel beginnt, den wir mit Ihrem Accountpasswort verschlüsselt speichern. Dies bedeutet, dass der Verlust Ihres Passworts Ihren Masterschlüssel und damit alle Ihre Daten unlesbar macht.";
+/* Advising the user to keep the user's recovery key safe. */
+"masterKey_secondParagraph"="Der Export Ihres Rettungsschlüssels und das Verwahren an einem sicheren Ort ermöglicht es Ihnen, Ihr Passwort ohne Datenverlust zurückzusetzen.";
+/*  */
+"masterKey_thirdParagraph"="Ein Angreifer, der sich eine Kopie Ihres Rettungsschlüssels verschafft hat, kann damit trotzdem noch nicht auf Ihre Daten zugreifen, da ein Passwort-Reset zusätzlich den Zugang zu Ihrer E-Mail voraussetzt.";
+/* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
+"recoveryKeyCopiedToClipboard"="Rettungsschlüssel in die Zwischenablage kopiert";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
-/* Alert title shown when you have removed your MEGA Recovery Key */
-"masterKeyRemoved"="Rettungsschlüssel entfernt";
-/* Alert message shown to explain that the master was removed of your device. */
-"masterKeyRemoved_alertMessage"="RecoveryKey.txt wurde aus dem Dokumentenordner entfernt.";
+"masterKeyExported_alertMessage"="Ihr Rettungsschlüssel wurde im Offlinebereich unter RecoveryKey.txt abgelegt. Achtung: Er wird gelöscht, sobald Sie sich ausloggen - speichern Sie ihn bitte an einem sicheren Ort.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -649,13 +649,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Passwort vergessen?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youWillReceiveARecoveryLink"="Sie erhalten einen Link per E-Mail, mit dem Sie Ihr Passwort zurücksetzen können.";
+"youCanResetYourPasswordByFollowing"="Sie erhalten einen Link per E-Mail, mit dem Sie Ihr Passwort zurücksetzen können.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Dieser Resetlink hat seinen Gültigkeitszeitrahmen überschritten - bitte versuchen Sie es erneut.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Passwort-Reset";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please, write your Recovery Key";
+"pleaseWriteYourRecoveryKey"="Geben Sie Ihren Rettungsschlüssel ein";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Rettungsschlüssel";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -669,17 +669,17 @@
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Haben Sie Ihren Rettungsschlüssel gesichert?";
+"doYouHaveABackupOfYourRecoveryKey"="Haben Sie Ihren Rettungsschlüssel zur Hand?";
 /* Headline when the user chose YES */
 "great"="Gut!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+"recoveryLinkToResetYourPassword"="Bitte geben Sie Ihre E-Mail-Adresse ein. Sie erhalten einen Link, mit dem Sie unter Verwendung Ihres Rettungsschlüssels Ihr Passwort neu setzen können.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Absenden";
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Oh weh!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
+"noMasterKey_firstParagraph"="Wegen unseres durchgehenden Verschlüsselungsprinzips erfordert der Zugriff auf Ihre Daten Ihr Passwort oder einen vorher exportierten Rettungsschlüssel.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
@@ -687,7 +687,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Account parken";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Ich bestätige, dass ich einen neuen, leeren Account anlege und dass die Daten in meinem jetzigen Account verloren sind, sofern ich nicht mein altes Passwort oder einen exportierten Masterschlüssel lokalisiere.";
+"startingFreshAccount"="Ich bestätige, dass ich einen neuen, leeren Account erstelle und alle Daten in meinem jetzigen Account für immer verliere, sofern ich mein Passwort oder den exportieren Rettungsschlüssel nicht wiederfinde.";
 /* Caption of the button to proceed */
 "startNewAccount"="Neuen Account erstellen";
 /*  */
@@ -773,7 +773,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Einkaufsverlauf";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Freigegebene Ordner eingehend";
+"incomingShares"="Ordnerfreigaben Ihrer Kontakte";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="von %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
