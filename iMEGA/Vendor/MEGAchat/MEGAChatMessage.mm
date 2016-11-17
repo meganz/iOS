@@ -39,8 +39,8 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%ld, index=%ld, user handle=%llu, type=%@, timestamp=%@, content=%@, edited=%@, deleted=%@, editable=%@ changes=%ld>",
-            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHande, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), self.changes];
+    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%ld, index=%ld, user handle=%llu, type=%@, timestamp=%@, content=%@, edited=%@, deleted=%@, editable=%@, management message=%@, userHandleOfAction=%lld, privilege=%ld, changes=%ld>",
+            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHande, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), @(self.managementMessage), self.userHandleOfAction, (long)self.privilege, self.changes];
 }
 
 - (MEGAChatMessageStatus)status {
@@ -85,6 +85,18 @@ using namespace megachat;
 
 - (BOOL)isEditable {
     return self.megaChatMessage->isEditable();
+}
+
+- (BOOL)isManagementMessage {
+    return self.megaChatMessage->isManagementMessage();
+}
+
+- (uint64_t)userHandleOfAction {
+    return self.megaChatMessage->getUserHandleOfAction();
+}
+
+- (NSInteger)privilege {
+    return self.megaChatMessage->getPrivilege();
 }
 
 - (NSInteger)changes {
