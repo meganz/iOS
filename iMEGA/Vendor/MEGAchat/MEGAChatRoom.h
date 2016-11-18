@@ -6,7 +6,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomChangeType) {
     MEGAChatRoomChangeTypeParticipans = 0x04,
     MEGAChatRoomChangeTypeTitle       = 0x08,
     MEGAChatRoomChangeTypeChatState   = 0x10,
-    MEGAChatRoomChangeTypeUserTyping  = 0x20
+    MEGAChatRoomChangeTypeUserTyping  = 0x20,
+    MEGAChatRoomChangeTypeClosed      = 0x40
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege) {
