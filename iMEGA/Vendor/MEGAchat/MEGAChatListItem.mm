@@ -1,5 +1,6 @@
 #import "MEGAChatListItem.h"
 #import "megachatapi.h"
+#import "MEGAChatMessage+init.h"
 
 using namespace megachat;
 
@@ -64,6 +65,10 @@ using namespace megachat;
 
 - (NSInteger)unreadCount {
     return self.megaChatListItem->getUnreadCount();
+}
+
+- (MEGAChatMessage *)lastMessage {
+    return self.megaChatListItem->getLastMessage() ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatListItem->getLastMessage() cMemoryOwn:YES] : nil;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
