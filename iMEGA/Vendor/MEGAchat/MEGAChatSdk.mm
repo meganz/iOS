@@ -170,6 +170,14 @@ using namespace megachat;
     self.megaChatApi->removeFromChat(chatId, userHandle);
 }
 
+- (void)leaveChat:(uint64_t)chatId delegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->leaveChat(chatId, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)leaveChat:(uint64_t)chatId {
+    self.megaChatApi->leaveChat(chatId);
+}
+
 - (void)updateChatPermissions:(uint64_t)chatId userHandle:(uint64_t)userHandle privilege:(NSInteger)privilege delegate:(id<MEGAChatRequestDelegate>)delegate {
     self.megaChatApi->updateChatPermissions(chatId, userHandle, (int)privilege, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
 }
@@ -184,6 +192,14 @@ using namespace megachat;
 
 - (void)truncateChat:(uint64_t)chatId messageId:(uint64_t)messageId {
     self.megaChatApi->truncateChat(chatId, messageId);
+}
+
+- (void)clearChatHistory:(uint64_t)chatId delegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->clearChatHistory(chatId, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)clearChatHistory:(uint64_t)chatId {
+    self.megaChatApi->clearChatHistory(chatId);
 }
 
 - (void)setChatTitle:(uint64_t)chatId title:(NSString *)title delegate:(id<MEGAChatRequestDelegate>)delegate {

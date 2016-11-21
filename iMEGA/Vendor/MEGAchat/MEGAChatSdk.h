@@ -83,8 +83,10 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 - (void)removeFromChat:(uint64_t)chatId userHandle:(uint64_t)userHandle
               delegate:(id<MEGAChatRequestDelegate>)delegate;
-
 - (void)removeFromChat:(uint64_t)chatId userHandle:(uint64_t)userHandle;
+
+- (void)leaveChat:(uint64_t)chatId delegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)leaveChat:(uint64_t)chatId;
 
 - (void)updateChatPermissions:(uint64_t)chatId userHandle:(uint64_t)userHandle privilege:(NSInteger)privilege
                      delegate:(id<MEGAChatRequestDelegate>)delegate;
@@ -92,6 +94,9 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 - (void)truncateChat:(uint64_t)chatId messageId:(uint64_t)messageId delegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)truncateChat:(uint64_t)chatId messageId:(uint64_t)messageId;
+
+- (void)clearChatHistory:(uint64_t)chatId delegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)clearChatHistory:(uint64_t)chatId;
 
 - (void)setChatTitle:(uint64_t)chatId title:(NSString *)title delegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)setChatTitle:(uint64_t)chatId title:(NSString *)title;
