@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "MEGAChatMessage.h"
 
 typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeStatus       = 0x01,
@@ -6,7 +7,8 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeUnreadCount  = 0x04,
     MEGAChatListItemChangeTypeParticipants = 0x08,
     MEGAChatListItemChangeTypeTitle        = 0x10,
-    MEGAChatListItemChangeTypeClosed       = 0x20
+    MEGAChatListItemChangeTypeClosed       = 0x20,
+    MEGAChatListItemChangeTypeLastMsg      = 0x40
 };
 
 @interface MEGAChatListItem : NSObject
@@ -17,6 +19,7 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
 @property (readonly, nonatomic) NSInteger onlineStatus;
 @property (readonly, nonatomic) NSInteger visibility;
 @property (readonly, nonatomic) NSInteger unreadCount;
+@property (readonly, nonatomic) MEGAChatMessage *lastMessage;
 
 - (instancetype)clone;
 
