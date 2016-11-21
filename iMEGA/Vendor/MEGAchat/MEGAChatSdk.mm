@@ -240,6 +240,10 @@ using namespace megachat;
     return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getLastMessageSeen(chatId) cMemoryOwn:YES] : nil;
 }
 
+- (void)removeUnsentMessageForChat:(uint64_t)chatId temporalId:(uint64_t)temporalId {
+    self.megaChatApi->removeUnsentMessage(chatId, temporalId);
+}
+
 #pragma mark - Private methods
 
 - (MegaChatRequestListener *)createDelegateMEGAChatRequestListener:(id<MEGAChatRequestDelegate>)delegate singleListener:(BOOL)singleListener {
