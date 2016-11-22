@@ -75,6 +75,10 @@ using namespace megachat;
     return self.megaChatListItem->isGroup();
 }
 
+- (uint64_t)peerHandle {
+    return self.megaChatListItem->getPeerHandle();
+}
+
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
     return self.megaChatListItem->hasChanged((int) changeType);
 }
