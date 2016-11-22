@@ -68,7 +68,7 @@ using namespace megachat;
 }
 
 - (MEGAChatMessage *)lastMessage {
-    return self.megaChatListItem->getLastMessage() ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatListItem->getLastMessage() cMemoryOwn:YES] : nil;
+    return self.megaChatListItem->getLastMessage() ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatListItem->getLastMessage() cMemoryOwn:NO] : nil;
 }
 
 - (BOOL)isGroup {
