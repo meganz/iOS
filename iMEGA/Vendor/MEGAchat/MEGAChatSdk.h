@@ -76,6 +76,8 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 - (MEGAChatListItem *)chatListItemForChatId:(uint64_t)chatId;
 
+- (uint64_t)chatIdByUserHandle:(uint64_t)userHandle;
+
 #pragma mark - Users attributes
 
 - (NSString *)userEmailByUserHandle:(uint64_t)userHandle;
