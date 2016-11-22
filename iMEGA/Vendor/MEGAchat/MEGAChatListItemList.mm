@@ -17,7 +17,7 @@ using namespace megachat;
     self = [super init];
     
     if (self != nil) {
-        megaChatListItemList = megaChatListItemList;
+        _megaChatListItemList = megaChatListItemList;
         _cMemoryOwn = cMemoryOwn;
     }
     
