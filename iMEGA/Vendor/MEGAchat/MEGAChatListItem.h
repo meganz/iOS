@@ -21,6 +21,7 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic) MEGAChatMessage *lastMessage;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
+@property (readonly, nonatomic) uint64_t peerHandle;
 
 - (instancetype)clone;
 
