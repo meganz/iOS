@@ -154,6 +154,12 @@ using namespace megachat;
     return self.megaChatApi->getChatListItem(chatId) ? [[MEGAChatListItem alloc] initWithMegaChatListItem:self.megaChatApi->getChatListItem(chatId) cMemoryOwn:YES] : nil;
 }
 
+#pragma mark - Users attributes
+
+- (NSString *)userEmailByUserHandle:(uint64_t)userHandle {
+    return self.megaChatApi->getUserEmail(userHandle) ? [[NSString alloc] initWithUTF8String:self.megaChatApi->getUserEmail(userHandle)] : nil;
+}
+
 #pragma mark - Chat management
 
 - (void)createChatGroup:(BOOL)group peers:(MEGAChatPeerList *)peers delegate:(id<MEGAChatRequestDelegate>)delegate {
