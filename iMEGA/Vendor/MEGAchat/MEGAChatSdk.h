@@ -5,6 +5,7 @@
 #import "MEGAChatRoom.h"
 #import "MEGAChatRoomList.h"
 #import "MEGAChatPeerList.h"
+#import "MEGAChatListItemList.h"
 #import "MEGAChatRequestDelegate.h"
 #import "MEGAChatLoggerDelegate.h"
 #import "MEGAChatRoomDelegate.h"
@@ -39,6 +40,7 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 
 @property (nonatomic, readonly) MEGAChatRoomList *chatRooms;
+@property (nonatomic, readonly) MEGAChatListItemList *chatListItems;
 
 #pragma mark - Init
 
@@ -67,10 +69,12 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 - (void)addChatDelegate:(id<MEGAChatDelegate>)delegate;
 - (void)removeChatDelegate:(id<MEGAChatDelegate>)delegate;
 
-#pragma mark - Chat rooms
+#pragma mark - Chat rooms and chat list items
 
 - (MEGAChatRoom *)chatRoomForChatId:(uint64_t)chatId;
 - (MEGAChatRoom *)chatRoomByUser:(uint64_t)userHandle;
+
+- (MEGAChatListItem *)chatListItemForChatId:(uint64_t)chatId;
 
 #pragma mark - Chat management
 

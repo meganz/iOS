@@ -79,6 +79,7 @@
 		4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
 		4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
 		4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
+		4155D1D71DE36F3900F56DD4 /* MEGAChatListItemList.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4155D1D61DE36F3900F56DD4 /* MEGAChatListItemList.mm */; };
 		4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
@@ -419,6 +420,9 @@
 		415227391A692EEF00EC7BB6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		415227401A692F8D00EC7BB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		415227421A692F9B00EC7BB6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4155D1D51DE36F3900F56DD4 /* MEGAChatListItemList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatListItemList.h; sourceTree = "<group>"; };
+		4155D1D61DE36F3900F56DD4 /* MEGAChatListItemList.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatListItemList.mm; sourceTree = "<group>"; };
+		4155D1D81DE375B700F56DD4 /* MEGAChatListItemList+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatListItemList+init.h"; sourceTree = "<group>"; };
 		4156C8081AD7E79A00F5E818 /* LTHKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHKeychainUtils.h; sourceTree = "<group>"; };
 		4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
 		4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
@@ -1860,6 +1864,7 @@
 				41B979221DAC131800DF8D92 /* MEGAChatPeerList+init.h */,
 				419A027A1DACFB53000B9DC9 /* MEGAChatMessage+init.h */,
 				41D6DB491DCB7E3D00EFD0FF /* MEGAChatListItem+init.h */,
+				4155D1D81DE375B700F56DD4 /* MEGAChatListItemList+init.h */,
 				94BB901C1DA66050008182BB /* DelegateMEGAChatLoggerListener.h */,
 				94BB901D1DA66050008182BB /* DelegateMEGAChatLoggerListener.mm */,
 				94BB901E1DA66050008182BB /* DelegateMEGAChatRequestListener.h */,
@@ -1896,6 +1901,8 @@
 				419A02781DACF778000B9DC9 /* MEGAChatMessage.mm */,
 				41D6DB461DCB7DE700EFD0FF /* MEGAChatListItem.h */,
 				41D6DB471DCB7DE700EFD0FF /* MEGAChatListItem.mm */,
+				4155D1D51DE36F3900F56DD4 /* MEGAChatListItemList.h */,
+				4155D1D61DE36F3900F56DD4 /* MEGAChatListItemList.mm */,
 			);
 			name = MEGAchat;
 			path = Vendor/MEGAchat;
@@ -2269,6 +2276,7 @@
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
 				41ADAA161ADE8B8800641BB4 /* SVWebViewController.m in Sources */,
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
+				4155D1D71DE36F3900F56DD4 /* MEGAChatListItemList.mm in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
 				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,

@@ -7,6 +7,8 @@
 #import "MEGAChatRoomList+init.h"
 #import "MEGAChatPeerList+init.h"
 #import "MEGAChatMessage+init.h"
+#import "MEGAChatListItem+init.h"
+#import "MEGAChatListItemList+init.h"
 #import "DelegateMEGAChatRequestListener.h"
 #import "DelegateMEGAChatLoggerListener.h"
 #import "DelegateMEGAChatRoomListener.h"
@@ -130,7 +132,7 @@ using namespace megachat;
     }
 }
 
-#pragma mark - Chat rooms
+#pragma mark - Chat rooms and chat list items
 
 - (MEGAChatRoomList *)chatRooms {
     return [[MEGAChatRoomList alloc] initWithMegaChatRoomList:self.megaChatApi->getChatRooms() cMemoryOwn:YES];
@@ -142,6 +144,14 @@ using namespace megachat;
 
 - (MEGAChatRoom *)chatRoomByUser:(uint64_t)userHandle {
     return self.megaChatApi->getChatRoomByUser(userHandle) ? [[MEGAChatRoom alloc] initWithMegaChatRoom:self.megaChatApi->getChatRoomByUser(userHandle) cMemoryOwn:YES] : nil;
+}
+
+- (MEGAChatListItemList *)chatListItems {
+    return [[MEGAChatListItemList alloc] initWithMegaChatListItemList:self.megaChatApi->getChatListItems() cMemoryOwn:YES];
+}
+
+- (MEGAChatListItem *)chatListItemForChatId:(uint64_t)chatId {
+    return self.megaChatApi->getChatListItem(chatId) ? [[MEGAChatListItem alloc] initWithMegaChatListItem:self.megaChatApi->getChatListItem(chatId) cMemoryOwn:YES] : nil;
 }
 
 #pragma mark - Chat management
