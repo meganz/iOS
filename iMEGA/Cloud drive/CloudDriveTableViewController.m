@@ -512,6 +512,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row > self.nodes.size.integerValue) {
+        return;
+    }
     MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
@@ -565,8 +568,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node;
     if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (indexPath.row > matchSearchNodes.count) {
+            return @"";
+        }
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        if (indexPath.row > self.nodes.size.integerValue) {
+            return @"";
+        }
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
