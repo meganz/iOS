@@ -26,6 +26,8 @@
     
     self.saveMasterKey.layer.cornerRadius = 4.0f;
     [self.saveMasterKey setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
+    
+    self.whyDoINeedARecoveryKeyLabel.text = AMLocalizedString(@"whyDoINeedARecoveryKey", @"Question button to present a view where it's explained what is the Recovery Key");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
