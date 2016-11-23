@@ -1059,6 +1059,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 #pragma mark - MEGAGlobalDelegate
 
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger userListCount = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < userListCount; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange == 0)) { //If the change is external
+            if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one 
+                NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+                if (fileExists) {
+                    [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                }
+                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+            }
+        }
+    }
+}
+
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
