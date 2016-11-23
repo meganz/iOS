@@ -100,8 +100,6 @@
     isAccountDetailsAvailable = NO;
     byteCountFormatter = [[NSByteCountFormatter alloc] init];
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
-    
-    [_emailLabel setText:[[MEGASdkManager sharedMEGASdk] myEmail]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,6 +123,8 @@
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
     
     [self setUserAvatar];
+    
+    self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -139,7 +139,10 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
     if (!fileExists) {
-        [self.userAvatarImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(88, 88)]];
+        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
+        CGSize avatarSize = self.userAvatarImageView.frame.size;
+        UIImage *avatarImage = [UIImage imageForName:[user email].uppercaseString size:avatarSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(avatarSize.width/2)]];
+        self.userAvatarImageView.image = avatarImage;
         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
     } else {
         [self.userAvatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
