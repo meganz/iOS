@@ -28,18 +28,19 @@
             case 0:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cloudDriveSelectedIcon"]];
+                tabBarItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case 1:
                 [tabBarItem setImage:[[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"cameraUploadsSelectedIcon"]];
-                [tabBarItem setTitle:@"Camera Uploads"];
+                tabBarItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case 2:
                 [tabBarItem setImage:[[UIImage imageNamed:@"offlineIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"offlineSelectedIcon"]];
-                [tabBarItem setTitle:@"Offline"];
+                tabBarItem.title = AMLocalizedString(@"offline", @"Title of the Offline section");
                 break;
                 
             case 3:

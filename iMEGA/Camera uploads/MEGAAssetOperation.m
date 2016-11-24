@@ -323,6 +323,7 @@
         case 0:
         case 28:
         case 81:
+        case 150:
         case 1000: {
             if (_retries < 20) {
                 _retries++;

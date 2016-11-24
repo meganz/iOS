@@ -3,4 +3,4 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA menggunakan camera anda saat anda mengambil video atau foto dari dalam app.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA accesses your photos or/and videos when you select some of them to upload or when you have enabled the Camera Uploads.";
+"NSPhotoLibraryUsageDescription"="MEGA mengakses foto dan/atau video anda ketika anda memilih beberapa dari nya untuk upload atau saat anda mengaktifkan Camera Uploads.";

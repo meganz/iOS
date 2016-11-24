@@ -17,6 +17,7 @@
 
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
+#import "ChangePasswordViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
@@ -38,13 +39,17 @@
 #define kFirstRun @"FirstRun"
 
 typedef NS_ENUM(NSUInteger, URLType) {
+    URLTypeDefault,
     URLTypeFileLink,
     URLTypeFolderLink,
     URLTypeConfirmationLink,
     URLTypeOpenInLink,
     URLTypeNewSignUpLink,
     URLTypeBackupLink,
-    URLTypeIncomingPendingContactsLink
+    URLTypeIncomingPendingContactsLink,
+    URLTypeChangeEmailLink,
+    URLTypeCancelAccountLink,
+    URLTypeRecoverLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
@@ -366,7 +371,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showCameraUploadsPopUp {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
-    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+    [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+        if ([Helper selectedOptionOnLink] != 0) {
+            [self processSelectedOptionOnLink];
+        }
+    }];
 }
 
 - (void)processSelectedOptionOnLink {
@@ -431,7 +440,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     NSString *afterSlashesString = [[url absoluteString] substringFromIndex:7]; // "mega://" = 7 characters
         
-    if ([afterSlashesString isEqualToString:@""] || (afterSlashesString.length < 2)) {
+    if (afterSlashesString.length < 2) {
         [self showLinkNotValid];
         return;
     }
@@ -474,6 +483,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isChangeEmailLink:afterSlashesString]) {
+        self.urlType = URLTypeChangeEmailLink;
+        return;
+    }
+    
+    if ([self isCancelAccountLink:afterSlashesString]) {
+        self.urlType = URLTypeCancelAccountLink;
+        return;
+    }
+    
+    if ([self isRecoverLink:afterSlashesString]) {
+        self.urlType = URLTypeRecoverLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -506,6 +530,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isFolderLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 3) {
+        return NO;
+    }
+    
     NSString *megaURLTypeString = [afterSlashesString substringToIndex:3]; // mega://"#F!"
     BOOL isFolderLink = [megaURLTypeString isEqualToString:@"#F!"];
     if (isFolderLink) {
@@ -594,12 +622,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:securityOptionsTVC];
             [self presentLinkViewController:navigationController];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self showPleaseLogInToYourAccountAlert];
         }
         return YES;
     }
@@ -621,13 +644,61 @@ typedef NS_ENUM(NSUInteger, URLType) {
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
             [self presentLinkViewController:navigationController];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self showPleaseLogInToYourAccountAlert];
         }
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isChangeEmailLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isChangeEmailLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#verify"]; //mega://"#verify"
+    if (isChangeEmailLink) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+            [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:megaURLString];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isCancelAccountLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 6) {
+        return NO;
+    }
+    
+    BOOL isCancelAccountLink = [[afterSlashesString substringToIndex:7] isEqualToString:@"#cancel"]; //mega://"#cancel"
+    if (isCancelAccountLink) {
+        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+            [[MEGASdkManager sharedMEGASdk] queryCancelLink:megaURLString];
+        } else {
+            [self showPleaseLogInToYourAccountAlert];
+        }
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isRecoverLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 7) {
+        return NO;
+    }
+    
+    BOOL isRecoverLink = [[afterSlashesString substringToIndex:8] isEqualToString:@"#recover"]; //mega://"#recover"
+    if (isRecoverLink) {
+        NSString *megaURLString = [@"https://mega.nz/" stringByAppendingString:afterSlashesString];
+        [[MEGASdkManager sharedMEGASdk] queryResetPasswordLink:megaURLString];
         return YES;
     }
     
@@ -643,8 +714,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
         [self presentLinkViewController:browserNavigationController];
+        
+        self.link = nil;
     }
-    self.link = nil;
 }
 
 - (void)setBadgeValueForIncomingContactRequests {
@@ -717,6 +789,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)showLinkNotValid {
     [self showEmptyStateViewWithImageNamed:@"noInternetConnection" title:AMLocalizedString(@"linkNotValid", nil) text:@""];
     self.link = nil;
+    self.urlType = URLTypeDefault;
 }
 
 - (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
@@ -724,7 +797,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [unavailableLinkView.imageView setImage:[UIImage imageNamed:imageName]];
     [unavailableLinkView.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [unavailableLinkView.titleLabel setText:title];
-    [unavailableLinkView.textView setText:text];
+    unavailableLinkView.textLabel.text = text;
     [unavailableLinkView setFrame:self.window.frame];
     
     UIViewController *viewController = [[UIViewController alloc] init];
@@ -751,6 +824,37 @@ typedef NS_ENUM(NSUInteger, URLType) {
     } else {
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     }
+}
+
+- (void)showPleaseLogInToYourAccountAlert {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", nil)
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)presentConfirmViewControllerType:(ConfirmType)confirmType link:(NSString *)link email:(NSString *)email {
+    MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
+    
+    ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
+    confirmAccountVC.confirmType = confirmType;
+    confirmAccountVC.confirmationLinkString = link;
+    confirmAccountVC.emailString = email;
+    
+    [self presentLinkViewController:confirmAccountNavigationController];
+}
+
+- (void)presentChangeViewType:(ChangeType)changeType email:(NSString *)email masterKey:(NSString *)masterKey link:(NSString *)link {
+    ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+    changePasswordVC.changeType = changeType;
+    changePasswordVC.email = email;
+    changePasswordVC.masterKey = masterKey;
+    changePasswordVC.link = link;
+    
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
+    [self presentLinkViewController:navigationController];
 }
 
 #pragma mark - Battery changed
@@ -783,6 +887,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
         } else if (buttonIndex == 1) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }
+    } else if ((alertView.tag == 2 && buttonIndex == 1) || (alertView.tag == 3 && buttonIndex == 1)) { //masterKeyLoggedInAlertView, masterKeyLoggedOutAlertView
+        NSString *masterKey = (alertView.tag == 2) ? [[MEGASdkManager sharedMEGASdk] masterKey] : [[alertView textFieldAtIndex:0] text];
+        [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.exportedLinks];
+        
+        self.emailOfNewSignUpLink = nil;
+        self.exportedLinks = nil;
     }
 }
 
@@ -949,6 +1059,23 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 #pragma mark - MEGAGlobalDelegate
 
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger userListCount = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < userListCount; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange == 0)) { //If the change is external
+            if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one 
+                NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+                if (fileExists) {
+                    [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                }
+                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+            }
+        }
+    }
+}
+
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
@@ -997,9 +1124,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
-        case MEGARequestTypeLogout:
+        case MEGARequestTypeLogout: {
+            if (self.urlType == URLTypeCancelAccountLink) {
+                return;
+            }
+            
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:AMLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             break;
+        }
             
         case MEGARequestTypeExport: {
             if (self.remainingOperations == 0) {
@@ -1067,6 +1199,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEExpired: {
+                if (request.type == MEGARequestTypeQueryRecoveryLink || request.type == MEGARequestTypeConfirmRecoveryLink) {
+                    NSString *alertTitle;
+                    if (self.urlType == URLTypeCancelAccountLink) {
+                        alertTitle = AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)");
+                    } else if (self.urlType == URLTypeRecoverLink) {
+                        alertTitle = AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
+                    }
+                    UIAlertView *linkHasExpiredAlertView = [[UIAlertView alloc] initWithTitle:alertTitle message:nil delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
+                    [linkHasExpiredAlertView show];
+                }
+                break;
+            }
+                
             case MEGAErrorTypeApiENoent: {
                 if ([request type] == MEGARequestTypeQuerySignUpLink) {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
@@ -1075,12 +1221,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                                           cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
+                } else if ([request type] == MEGARequestTypeQueryRecoveryLink) {
+                    [self showLinkNotValid];
                 }
                 break;
             }
                 
             case MEGAErrorTypeApiESid: {
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
+                if (self.urlType == URLTypeCancelAccountLink) {
+                    self.urlType = URLTypeDefault;
+                    [Helper logout];
+                    return;
+                }
+                
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (![_API_ESIDAlertView isVisible]) {
                         _API_ESIDAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) delegate:nil cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
@@ -1150,11 +1304,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD showErrorWithStatus:error.name];
         }
         
-        if ([request type] == MEGARequestTypeSubmitPurchaseReceipt) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"wrongPurchase", nil), [error name], (long)[error type]]];
-        }
-        
         return;
     }
     
@@ -1169,13 +1318,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 isAccountFirstLogin = YES;
                 self.link = nil;
             }
-                        
-            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
@@ -1200,15 +1348,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 
                 if (![LTHPasscodeViewController doesPasscodeExist]) {
                     if (isAccountFirstLogin) {
-                        [self performSelector:@selector(showCameraUploadsPopUp) withObject:nil afterDelay:0.0];
-                        
-                        if ([Helper selectedOptionOnLink] != 0) {
-                            [self performSelector:@selector(processSelectedOptionOnLink) withObject:nil afterDelay:0.75f];
-                        } else {
-                            if (self.urlType == URLTypeOpenInLink) {
-                                [self performSelector:@selector(openIn) withObject:nil afterDelay:0.75f];
-                            }
-                        }
+                        [self showCameraUploadsPopUp];
                     }
                     
                     if (self.link != nil) {
@@ -1238,13 +1378,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
         case MEGARequestTypeQuerySignUpLink: {
             if (self.urlType == URLTypeConfirmationLink) {
-                MEGANavigationController *confirmAccountNavigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ConfirmAccountNavigationControllerID"];
-                
-                ConfirmAccountViewController *confirmAccountVC = confirmAccountNavigationController.viewControllers.firstObject;
-                [confirmAccountVC setConfirmationLinkString:[request link]];
-                [confirmAccountVC setEmailString:[request email]];
-                
-                [self presentLinkViewController:confirmAccountNavigationController];
+                [self presentConfirmViewControllerType:ConfirmTypeAccount link:request.link email:request.email];
             } else if (self.urlType == URLTypeNewSignUpLink) {
 
                 if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
@@ -1275,6 +1409,35 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeQueryRecoveryLink: {
+            if (self.urlType == URLTypeChangeEmailLink) {
+                [self presentConfirmViewControllerType:ConfirmTypeEmail link:request.link email:request.email];
+            } else if (self.urlType == URLTypeCancelAccountLink) {
+                [self presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
+            } else if (self.urlType == URLTypeRecoverLink) {
+                if (request.flag) {
+                    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                        UIAlertView *masterKeyLoggedInAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                        masterKeyLoggedInAlertView.tag = 2;
+                        [masterKeyLoggedInAlertView show];
+                    } else {
+                        UIAlertView *masterKeyLoggedOutAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseWriteYourRecoveryKey", @"Message shown to explain that you have to write your recovery key to continue with the reset password process.") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                        masterKeyLoggedOutAlertView.tag = 3;
+                        masterKeyLoggedOutAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+                        UITextField *textField = [masterKeyLoggedOutAlertView textFieldAtIndex:0];
+                        textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                        [masterKeyLoggedOutAlertView show];
+                    }
+                    
+                    self.emailOfNewSignUpLink = request.email;
+                    self.exportedLinks = request.link;
+                } else {
+                    [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
+                }
+            }
+            break;
+        }
+            
         case MEGARequestTypeLogout: {
             [[MEGASdkManager sharedMEGAChatSdk] logout];
             
@@ -1292,11 +1455,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                 }
             }
-            break;
-        }
-            
-        case MEGARequestTypeSubmitPurchaseReceipt: {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
         }
             
