@@ -561,11 +561,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.selectedItems addObject:filePathURL];
         
         if (self.selectedItems.count > 0) {
-            if ([self isDirectorySelected]) {
-                [self.activityBarButtonItem setEnabled:NO];
-            } else {
-                [self.activityBarButtonItem setEnabled:YES];
-            }
+            [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
             [self.deleteBarButtonItem setEnabled:YES];
         }
         
@@ -621,11 +617,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.activityBarButtonItem setEnabled:NO];
             [self.deleteBarButtonItem setEnabled:NO];
         } else {
-            if ([self isDirectorySelected]) {
-                [self.activityBarButtonItem setEnabled:NO];
-            } else {
-                [self.activityBarButtonItem setEnabled:YES];
-            }
+            [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
             [self.deleteBarButtonItem setEnabled:YES];
         }
         
@@ -641,7 +633,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.selectedItems = [[NSMutableArray alloc] init];
     [self.selectedItems addObject:fileURL];
     [self.deleteBarButtonItem setEnabled:YES];
-    [self.activityBarButtonItem setEnabled:YES];
+    [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
     
     isSwipeEditing = YES;
     
@@ -706,11 +698,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.activityBarButtonItem setEnabled:NO];
         [self.deleteBarButtonItem setEnabled:NO];
     } else if (self.selectedItems.count >= 1) {
-        if ([self isDirectorySelected]) {
-            [self.activityBarButtonItem setEnabled:NO];
-        } else {
-            [self.activityBarButtonItem setEnabled:YES];
-        }
+        [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
         [self.deleteBarButtonItem setEnabled:YES];
     }
 
