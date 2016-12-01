@@ -192,8 +192,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self setupAppearance];
     
-    [MEGAStore shareInstance];
-    
     self.link = nil;
     isFetchNodesDone = NO;
     
@@ -857,6 +855,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self presentLinkViewController:navigationController];
 }
 
+- (void)requestContactsFullname {
+    MEGAUserList *userList = [[MEGASdkManager sharedMEGASdk] contacts];
+    for (NSInteger i = 0; i < userList.size.integerValue; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (![[MEGAStore shareInstance] fetchUserWithMEGAUser:user] && user.visibility == MEGAUserVisibilityVisible) {
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+        }
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1063,14 +1072,28 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSInteger userListCount = userList.size.integerValue;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange == 0)) { //If the change is external
-            if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one 
-                NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                if (fileExists) {
-                    [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
+            if (user.isOwnChange == 0) { //If the change is external
+                if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
+                    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+                    if (fileExists) {
+                        [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                    }
+                    [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                 }
-                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+            }
+        } else {
+            if (user.changes) {
+                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                }
+                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                }
+            } else if (user.visibility == MEGAUserVisibilityVisible) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
             }
         }
     }
@@ -1370,6 +1393,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
             
+            [self requestContactsFullname];
             [self setBadgeValueForIncomingContactRequests];
             
             [[MEGASdkManager sharedMEGAChatSdk] initKarereWithDelegate:self];
@@ -1500,6 +1524,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 } else { //Disable link
                     status = areSeveralOperations ? AMLocalizedString(@"linksRemoved", @"Message shown when the links to files and folders have been removed") : AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed");
                     [SVProgressHUD showSuccessWithStatus:status];
+                }
+            }
+            break;
+        }
+            
+        case MEGARequestTypeGetAttrUser: {
+            MEGAUser *user = [api contactForEmail:request.email];
+            if (user) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+                if (moUser) {
+                    if (request.paramType == MEGAUserAttributeFirstname) {
+                        [[MEGAStore shareInstance] updateUser:user firstname:request.text];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname) {
+                        [[MEGAStore shareInstance] updateUser:user lastname:request.text];
+                        
+                    }
+                } else {
+                    if (request.paramType == MEGAUserAttributeFirstname) {
+                        [[MEGAStore shareInstance] insertUser:user firstname:request.text lastname:nil];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname) {
+                        [[MEGAStore shareInstance] insertUser:user firstname:nil lastname:request.text];
+                    }
                 }
             }
             break;

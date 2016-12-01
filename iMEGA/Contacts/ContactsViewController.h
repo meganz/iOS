@@ -15,8 +15,6 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic) ContactsMode contactsMode;
 
-@property (nonatomic, strong) NSMutableDictionary *namesMutableDictionary;
-
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
 
