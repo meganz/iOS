@@ -40,7 +40,7 @@ using namespace megachat;
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%ld, index=%ld, user handle=%llu, type=%@, timestamp=%@, content=%@, edited=%@, deleted=%@, editable=%@, management message=%@, userHandleOfAction=%lld, privilege=%ld, changes=%ld>",
-            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHande, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), @(self.managementMessage), self.userHandleOfAction, (long)self.privilege, self.changes];
+            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHandle, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), @(self.managementMessage), self.userHandleOfAction, (long)self.privilege, self.changes];
 }
 
 - (MEGAChatMessageStatus)status {
@@ -59,7 +59,7 @@ using namespace megachat;
     return self.megaChatMessage->getMsgIndex();
 }
 
-- (uint64_t)userHande {
+- (uint64_t)userHandle {
     return self.megaChatMessage->getUserHandle();
 }
 
