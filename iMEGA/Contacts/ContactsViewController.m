@@ -7,12 +7,14 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
+#import "MEGAUser+MNZCategory.h"
 
 #import "ContactTableViewCell.h"
 #import "BrowserViewController.h"
@@ -55,8 +57,6 @@
 @property (strong, nonatomic) NSString *email;
 
 @property (nonatomic, strong) NSMutableDictionary *indexPathsMutableDictionary;
-@property (nonatomic, strong) NSMutableArray *userNamesRequestedMutableArray;
-@property (nonatomic, strong) NSMutableArray *usersAvatarRequestedMutableArray;
 
 @end
 
@@ -83,8 +83,6 @@
     
     switch (self.contactsMode) {
         case Contacts: {
-            self.namesMutableDictionary = [[NSMutableDictionary alloc] init];
-            
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             
@@ -110,10 +108,6 @@
         }
             
         case ContactsFolderSharedWith: {
-            if(self.namesMutableDictionary == nil) {
-                self.namesMutableDictionary = [[NSMutableDictionary alloc] init];
-            }
-            
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
             [self.navigationItem setRightBarButtonItems:buttonsItems];
             
@@ -125,8 +119,6 @@
     }
     
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
-    self.userNamesRequestedMutableArray = [[NSMutableArray alloc] init];
-    self.usersAvatarRequestedMutableArray = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,8 +150,6 @@
     if ([self.tableView isEditing]) {
         [self setEditing:NO animated:NO];
     }
-    
-    [self.namesMutableDictionary removeAllObjects];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -332,49 +322,12 @@
             [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
-        [self.usersAvatarRequestedMutableArray removeObject:user.email];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
-        [self.namesMutableDictionary removeObjectForKey:[user email]];
         userHasChanged = YES;
     }
     
     return  userHasChanged;
-}
-
-- (void)requestUserNameAndLastNameWithEmail:(NSString *)userEmail {
-    
-    BOOL isUserNameAlreadyRequested = [self.userNamesRequestedMutableArray containsObject:userEmail];
-    if (!isUserNameAlreadyRequested) {
-        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname delegate:self];
-        [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname delegate:self];
-        [self.userNamesRequestedMutableArray addObject:userEmail];
-    }
-}
-
-- (UIImage *)avatarForUser:(MEGAUser *)user withSize:(CGSize )avatarSize {
-    UIImage *avatar;
-    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-    if (fileExists) {
-        avatar = [UIImage imageWithContentsOfFile:avatarFilePath];
-    } else {
-        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
-        avatar = [UIImage imageForName:[user email].uppercaseString size:avatarSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(avatarSize.width/2)]];
-        
-        [self requestAvatarForUser:user destinationFilePath:avatarFilePath];
-    }
-    
-    return avatar;
-}
-
-- (void)requestAvatarForUser:(MEGAUser *)user destinationFilePath:(NSString *)avatarFilePath {
-    BOOL isUserAvatarAlreadyRequested = [self.usersAvatarRequestedMutableArray containsObject:[user email]];
-    if (!isUserAvatarAlreadyRequested) {
-        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-        [self.usersAvatarRequestedMutableArray addObject:[user email]];
-    }
 }
 
 #pragma mark - IBActions
@@ -506,27 +459,22 @@
     [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
     
     ContactTableViewCell *cell;
-    NSString *userEmail = [user email];
-    NSString *userName = nil;
+    NSString *userName = user.mnz_fullName;
+    
     if (self.contactsMode == ContactsFolderSharedWith) {
-        userName = [self.namesMutableDictionary objectForKey:userEmail];
-        if (userName != nil && ((id)userName != [NSNull null])) {
+        if (userName) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
-            [cell.shareLabel setText:userEmail];
+            cell.shareLabel.text = user.email;
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
-            [cell.nameLabel setText:userEmail];
-            
-            if ((id)userName != [NSNull null]) {
-                [self requestUserNameAndLastNameWithEmail:userEmail];
-            }
+            cell.nameLabel.text = user.email;
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-        [cell.nameLabel setText:userEmail];
+        cell.nameLabel.text = userName ? userName : user.email;
         
         int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
         if (numFilesShares == 0) {
@@ -538,10 +486,7 @@
         }
     }
     
-    UIImage *userAvatarImage = [self avatarForUser:user withSize:cell.avatarImageView.frame.size];
-    cell.avatarImageView.image = userAvatarImage;
-    cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.width/2;
-    cell.avatarImageView.layer.masksToBounds = YES;
+    [cell.avatarImageView mnz_setImageForUser:user];
     
     BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
     
@@ -986,58 +931,6 @@
     }
     
     switch ([request type]) {
-            
-        case MEGARequestTypeGetAttrUser: {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[request email]];
-            NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-            NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
-            
-            BOOL shouldUpdateCell = NO;
-            
-            if ([request file] != nil) {
-                for (ContactTableViewCell *ctvc in [self.tableView visibleCells]) {
-                    NSIndexPath *visibleCellIndexPath = [self.tableView indexPathForCell:ctvc];
-                    if (indexPath == visibleCellIndexPath) {
-                        shouldUpdateCell = YES;
-                        break;
-                    }
-                }
-            } else {
-                NSString *name;
-                switch ([request paramType]) {
-                    case MEGAUserAttributeFirstname: {
-                        name = [request text];
-                        if (name != nil) {
-                            [self.namesMutableDictionary setObject:name forKey:[request email]];
-                        } else {
-                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
-                        }
-                        break;
-                    }
-                        
-                    case MEGAUserAttributeLastname: {
-                        name = [self.namesMutableDictionary objectForKey:[request email]];
-                        name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                        BOOL isNameEmpty = [[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
-                        if (name != nil && !isNameEmpty) {
-                            [self.namesMutableDictionary setObject:name forKey:[request email]];
-                        } else {
-                            [self.namesMutableDictionary setObject:[NSNull null] forKey:[request email]];
-                        }
-                        
-                        [self.userNamesRequestedMutableArray removeObject:[request email]];
-                        shouldUpdateCell = !isNameEmpty;
-                        break;
-                    }
-                }
-            }
-            
-            if (indexPath != nil && shouldUpdateCell) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-            break;
-        }
-            
         case MEGARequestTypeInviteContact:
             remainingOperations--;
             if (remainingOperations == 0) {

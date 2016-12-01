@@ -147,4 +147,70 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
+#pragma mark - MOUser entity
+
+- (void)insertUser:(MEGAUser *)user firstname:(NSString *)firstname lastname:(NSString *)lastname {
+    NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:user.handle];
+    
+    if (!base64userHandle) return;
+    
+    MOUser *moUser          = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    moUser.base64userHandle = base64userHandle;
+    moUser.firstname        = firstname;
+    moUser.lastname         = lastname;
+    
+    MEGALogDebug(@"Save context: base64 user handle: %@", base64userHandle);
+    
+    [self saveContext];
+}
+
+- (void)updateUser:(MEGAUser *)user firstname:(NSString *)firstname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+    
+    if (moUser) {
+        moUser.firstname = firstname;
+        [self saveContext];
+    }
+}
+
+- (void)updateUser:(MEGAUser *)user lastname:(NSString *)lastname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+    
+    if (moUser) {
+        moUser.lastname = lastname;
+        [self saveContext];
+    }
+
+}
+
+- (MOUser *)fetchUserWithMEGAUser:(MEGAUser *)user {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:user.handle]];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+}
+
+- (void)removeAllUsers {
+    NSFetchRequest *allUsers = [[NSFetchRequest alloc] init];
+    [allUsers setEntity:[NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext]];
+    [allUsers setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError *error = nil;
+    NSArray *users = [self.managedObjectContext executeFetchRequest:allUsers error:&error];
+    
+    for (NSManagedObject *user in users) {
+        [self.managedObjectContext deleteObject:user];
+    }
+    
+    [self saveContext];
+}
+
 @end

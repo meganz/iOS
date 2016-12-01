@@ -1188,6 +1188,7 @@ static BOOL copyToPasteboard;
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
     [[MEGAStore shareInstance] removeAllOfflineNodes];
+    [[MEGAStore shareInstance] removeAllUsers];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];

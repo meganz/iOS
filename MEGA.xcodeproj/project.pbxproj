@@ -47,6 +47,7 @@
 		4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		411C4C5E1BBEAFB3006FE451 /* CTAssetsPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */; };
+		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
 		411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */; };
 		4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
 		412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
@@ -133,6 +134,8 @@
 		4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 417279301DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		4172795F1DB663FA001AC818 /* JSQMessagesTypingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 417279321DB663FA001AC818 /* JSQMessagesTypingView.m */; };
 		417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4178409F1AC328A600713F3C /* ChangePasswordViewController.m */; };
+		417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAB1DEC792400A193D5 /* MOUser+CoreDataProperties.m */; };
+		417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */; };
@@ -365,6 +368,8 @@
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
 		411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CTAssetsPicker.xcassets; path = iMEGA/Vendor/CTAssetsPickerController/Resources/CTAssetsPicker.xcassets; sourceTree = SOURCE_ROOT; };
+		411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAUser+MNZCategory.h"; sourceTree = "<group>"; };
+		411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAUser+MNZCategory.m"; sourceTree = "<group>"; };
 		411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGACollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGACollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		4122C0E41B274E8C001CE833 /* LocalizationSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalizationSystem.h; path = Vendor/AMLocalizedString/LocalizationSystem.h; sourceTree = "<group>"; };
@@ -537,6 +542,11 @@
 		417279321DB663FA001AC818 /* JSQMessagesTypingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesTypingView.m; sourceTree = "<group>"; };
 		4178409E1AC328A600713F3C /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		4178409F1AC328A600713F3C /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		417B5AA91DEC771200A193D5 /* MEGACD 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 3.xcdatamodel"; sourceTree = "<group>"; };
+		417B5AAA1DEC792400A193D5 /* MOUser+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOUser+CoreDataProperties.h"; sourceTree = "<group>"; };
+		417B5AAB1DEC792400A193D5 /* MOUser+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOUser+CoreDataProperties.m"; sourceTree = "<group>"; };
+		417B5AAC1DEC792400A193D5 /* MOUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOUser.h; sourceTree = "<group>"; };
+		417B5AAD1DEC792400A193D5 /* MOUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOUser.m; sourceTree = "<group>"; };
 		418072751AA5B9F30078D950 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAReachabilityManager.h; sourceTree = "<group>"; };
 		418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAReachabilityManager.m; sourceTree = "<group>"; };
@@ -1666,6 +1676,8 @@
 				41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */,
 				41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */,
 				41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */,
+				411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */,
+				411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1683,6 +1695,10 @@
 		41D1E0B81B58F0B800982830 /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				417B5AAA1DEC792400A193D5 /* MOUser+CoreDataProperties.h */,
+				417B5AAB1DEC792400A193D5 /* MOUser+CoreDataProperties.m */,
+				417B5AAC1DEC792400A193D5 /* MOUser.h */,
+				417B5AAD1DEC792400A193D5 /* MOUser.m */,
 				41D1E0B91B58F0B800982830 /* MOOfflineNode.h */,
 				41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */,
 			);
@@ -2355,6 +2371,7 @@
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
@@ -2366,6 +2383,7 @@
 				417279491DB663FA001AC818 /* JSQMessage.m in Sources */,
 				417279421DB663FA001AC818 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
+				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
@@ -2432,6 +2450,7 @@
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
+				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
 				41EAAE4C1D06B49400622FAF /* PHImageManager+CTAssetsPickerController.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
@@ -2749,10 +2768,11 @@
 		4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				417B5AA91DEC771200A193D5 /* MEGACD 3.xcdatamodel */,
 				41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */,
 				4147C2D01B4EE8A400A37044 /* MEGACD.xcdatamodel */,
 			);
-			currentVersion = 41BACFBB1B6928BC00E85442 /* MEGACD 2.xcdatamodel */;
+			currentVersion = 417B5AA91DEC771200A193D5 /* MEGACD 3.xcdatamodel */;
 			path = MEGACD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

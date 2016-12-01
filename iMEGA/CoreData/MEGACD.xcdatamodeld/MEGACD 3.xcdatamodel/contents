@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G1108" minimumToolsVersion="Xcode 4.3">
+    <entity name="OfflineNode" representedClassName="MOOfflineNode" syncable="YES">
+        <attribute name="base64Handle" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="fingerprint" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="localPath" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="parentBase64Handle" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="MOUser" syncable="YES">
+        <attribute name="base64userHandle" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="OfflineNode" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="User" positionX="-63" positionY="9" width="128" height="90"/>
+    </elements>
+</model>
