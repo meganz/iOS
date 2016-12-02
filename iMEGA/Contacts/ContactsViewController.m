@@ -16,9 +16,9 @@
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "ContactTableViewCell.h"
 #import "BrowserViewController.h"
-#import "SharedItemsViewController.h"
+#import "ContactDetailsViewController.h"
+#import "ContactTableViewCell.h"
 
 #import "ShareFolderActivity.h"
 
@@ -535,12 +535,12 @@
         userTapped = user;
         [self selectPermissions];
     } else {
-        if ([[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] integerValue] > 0) {
-            SharedItemsViewController *sharedItemsVC = [[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateViewControllerWithIdentifier:@"SharedItemsViewControllerID"];
-            sharedItemsVC.user = user;
-            sharedItemsVC.sharedItemsMode = SharedItemsModeInSharesForUser;
-            [self.navigationController pushViewController:sharedItemsVC animated:YES];
-        }
+        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+        contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+        contactDetailsVC.userEmail = user.email;
+        contactDetailsVC.userName = user.mnz_fullName;
+        contactDetailsVC.userHandle = user.handle;
+        [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
