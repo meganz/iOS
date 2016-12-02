@@ -292,6 +292,7 @@
 		E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
 		E8C8D7851B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D7841B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m */; };
+		E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */; };
 		E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */; };
 		E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */; };
 		E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D36F781AD677C6006D4D40 /* Transfers.storyboard */; };
@@ -900,6 +901,8 @@
 		E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGANavigationController.m; sourceTree = "<group>"; };
 		E8C8D7831B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAQLPreviewControllerTransitionAnimator.h; path = Animators/MEGAQLPreviewControllerTransitionAnimator.h; sourceTree = "<group>"; };
 		E8C8D7841B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAQLPreviewControllerTransitionAnimator.m; path = Animators/MEGAQLPreviewControllerTransitionAnimator.m; sourceTree = "<group>"; };
+		E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailsViewController.h; sourceTree = "<group>"; };
+		E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailsViewController.m; sourceTree = "<group>"; };
 		E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnavailableLinkView.h; sourceTree = "<group>"; };
 		E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnavailableLinkView.m; sourceTree = "<group>"; };
 		E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnavailableLinkView.xib; sourceTree = "<group>"; };
@@ -1196,6 +1199,8 @@
 				415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */,
 				4182B4ED1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.h */,
 				4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */,
+				E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */,
+				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -2350,6 +2355,7 @@
 				41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */,
 				41E88F0B1CF451B000BD3B79 /* MWCaptionView.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
+				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
