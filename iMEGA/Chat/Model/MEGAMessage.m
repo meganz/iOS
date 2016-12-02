@@ -8,9 +8,9 @@
     NSParameterAssert(message != nil);
     self = [super init];
     if (self) {
-        _userHandle        = message.userHande;
+        _userHandle        = message.userHandle;
         _messageId         = message.messageId;
-        _senderId          = [NSString stringWithFormat:@"%llu", message.userHande];
+        _senderId          = [NSString stringWithFormat:@"%llu", message.userHandle];
         _date              = message.timestamp;
         _index             = message.messageIndex;
         _editable          = message.isEditable;
