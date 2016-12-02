@@ -842,3 +842,25 @@
 "removeItemFromOffline"="¿Seguro que quieres eliminar este elemento disponible sin conexión?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos disponibles sin conexión?";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(editado)";
+/*  */
+"online"="Conectado";
+/* title of the contact properties screen */
+"contactInfo"="Información del contacto";
+/*  */
+"notifications"="Notificaciones";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Enviar mensaje";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verificar credenciales";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Limpiar historial del chat";
+/* The footer label for the 'Clear Chat History' section in the details of a chat room */
+"clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
+/* "Next" button in a dialog */
+"continue"="Continuar";
+/*  */
+"closeChat"="Cerrar chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Carpetas compartidas";

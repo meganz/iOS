@@ -844,5 +844,23 @@
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(edited)";
-/* */
+/*  */
 "online"="Online";
+/* title of the contact properties screen */
+"contactInfo"="Contact Info";
+/*  */
+"notifications"="Notifications";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Send Message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Clear Chat History";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
+/* 'Next' button in a dialog */
+"continue"="Continue";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Shared Folders";

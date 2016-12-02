@@ -6,5 +6,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *shareLabel;
 
+@property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
+
 @property (weak, nonatomic) IBOutlet UIImageView *permissionsImageView;
+
+@property (weak, nonatomic) IBOutlet UIButton *infoButton;
+
 @end

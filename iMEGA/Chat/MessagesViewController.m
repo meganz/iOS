@@ -1,4 +1,7 @@
 #import "MessagesViewController.h"
+
+#import "ContactDetailsViewController.h"
+
 #import "Helper.h"
 #import "MEGAMessage.h"
 
@@ -108,6 +111,13 @@
     UILabel *label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     [self.navigationItem setTitleView:label];
+    
+    label.userInteractionEnabled = YES;
+    label.superview.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *titleTapRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
+    label.gestureRecognizers = @[titleTapRecognizer];
 }
 
 - (void)customToolbarContentView {
@@ -185,6 +195,26 @@
     }
 
     return NO;
+}
+
+- (void)chatRoomTitleDidTap {
+    if (self.chatRoom.isGroup) {
+        //TODO: Group chat details
+    } else {
+        NSString *peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+        NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:0];
+        NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:0];
+        NSString *peerName = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
+        uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
+        
+        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
+        contactDetailsVC.chatId = self.chatRoom.chatId;
+        contactDetailsVC.userEmail = peerEmail;
+        contactDetailsVC.userName = peerName;
+        contactDetailsVC.userHandle = peerHandle;
+        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+    }
 }
 
 #pragma mark - Custom menu actions for cells
