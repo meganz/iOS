@@ -640,6 +640,9 @@
                                     <constraint firstItem="zaL-ex-F72" firstAttribute="centerX" secondItem="I0p-vt-iGh" secondAttribute="centerX" id="3q1-RJ-npx"/>
                                     <constraint firstItem="wgN-dK-iZJ" firstAttribute="centerX" secondItem="XHC-l2-3NH" secondAttribute="centerX" id="9Uq-jY-2Zp"/>
                                     <constraint firstItem="DUY-Qz-ows" firstAttribute="top" secondItem="zaL-ex-F72" secondAttribute="top" constant="6" id="AfA-VE-8jZ"/>
+                                    <constraint firstItem="zaL-ex-F72" firstAttribute="centerY" secondItem="I0p-vt-iGh" secondAttribute="centerY" id="C6q-fP-G3C">
+                                        <variation key="heightClass=compact" constant="-32"/>
+                                    </constraint>
                                     <constraint firstItem="DUY-Qz-ows" firstAttribute="trailing" secondItem="zaL-ex-F72" secondAttribute="trailing" constant="-6" id="DsE-W8-8sy"/>
                                     <constraint firstItem="zaL-ex-F72" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="top" constant="21" id="JDX-56-E76"/>
                                     <constraint firstItem="XHC-l2-3NH" firstAttribute="centerX" secondItem="zaL-ex-F72" secondAttribute="centerX" id="Jpl-41-Fmo"/>
@@ -650,8 +653,16 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="C6q-fP-G3C"/>
                                         <exclude reference="sdg-Fy-NXH"/>
                                         <exclude reference="xqa-QG-aSp"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="rfk-56-3JL"/>
+                                        <include reference="C6q-fP-G3C"/>
+                                        <exclude reference="JDX-56-E76"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -737,7 +748,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t20-MW-2qu" userLabel="Send Message Label">
-                                                    <rect key="frame" x="60" y="12" width="116.5" height="20"/>
+                                                    <rect key="frame" x="60" y="12" width="117" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="quK-dz-pdM"/>
                                                     </constraints>
@@ -978,14 +989,43 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="IEd-9Z-WGw" firstAttribute="top" secondItem="4Nr-yU-toX" secondAttribute="bottom" constant="180" id="0xO-pw-dwt">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="I0p-vt-iGh" firstAttribute="top" secondItem="4Nr-yU-toX" secondAttribute="bottom" id="6bs-lB-LKt"/>
                             <constraint firstItem="wFT-bt-Cx0" firstAttribute="top" secondItem="IEd-9Z-WGw" secondAttribute="bottom" id="9Rz-XO-i5n"/>
                             <constraint firstItem="IEd-9Z-WGw" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="bottom" id="Cmq-kC-te1"/>
+                            <constraint firstItem="IEd-9Z-WGw" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="trailing" constant="57" id="EjW-k4-9O5">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="I0p-vt-iGh" secondAttribute="trailing" id="Jby-KN-3N6"/>
+                            <constraint firstItem="IEd-9Z-WGw" firstAttribute="width" secondItem="I0p-vt-iGh" secondAttribute="width" id="Xa2-84-baA"/>
+                            <constraint firstItem="wFT-bt-Cx0" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="bottom" constant="156" id="YpN-Hr-e0k">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="I0p-vt-iGh" firstAttribute="leading" secondItem="dLT-hL-pWA" secondAttribute="leading" id="gYt-nl-MpV"/>
                             <constraint firstAttribute="trailing" secondItem="IEd-9Z-WGw" secondAttribute="trailing" id="k2k-9I-I2O"/>
                             <constraint firstItem="IEd-9Z-WGw" firstAttribute="leading" secondItem="dLT-hL-pWA" secondAttribute="leading" id="meF-5r-MSG"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0xO-pw-dwt"/>
+                                <exclude reference="EjW-k4-9O5"/>
+                                <exclude reference="Xa2-84-baA"/>
+                                <exclude reference="YpN-Hr-e0k"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="Jby-KN-3N6"/>
+                                <include reference="0xO-pw-dwt"/>
+                                <exclude reference="Cmq-kC-te1"/>
+                                <include reference="EjW-k4-9O5"/>
+                                <include reference="Xa2-84-baA"/>
+                                <exclude reference="meF-5r-MSG"/>
+                                <include reference="YpN-Hr-e0k"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="JX8-Qe-6aO">
                         <barButtonItem key="backBarButtonItem" title=" " id="2OC-m7-FtX"/>
@@ -1021,7 +1061,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2543" y="-857"/>
+            <point key="canvasLocation" x="2543" y="-858"/>
         </scene>
     </scenes>
     <resources>
