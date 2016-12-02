@@ -1,5 +1,6 @@
 #import "MEGAChatRequest.h"
 #import "megachatapi.h"
+#import "MEGAChatPeerList+init.h"
 
 using namespace megachat;
 
@@ -48,6 +49,26 @@ using namespace megachat;
 
 - (NSString *)requestString {
     return self.megaChatRequest->getRequestString() ? [[NSString alloc] initWithUTF8String:self.megaChatRequest->getRequestString()] : nil;
+}
+
+- (NSInteger)tag {
+    return self.megaChatRequest->getTag();
+}
+
+- (BOOL)isFlag {
+    return self.megaChatRequest->getFlag();
+}
+
+- (MEGAChatPeerList *)megaChatPeerList {
+    return self.megaChatRequest->getMegaChatPeerList() ? [[MEGAChatPeerList alloc] initWithMegaChatPeerList:self.megaChatRequest->getMegaChatPeerList() cMemoryOwn:YES] : nil;
+}
+
+- (uint64_t)chatHandle {
+    return self.megaChatRequest->getChatHandle();
+}
+
+- (uint64_t)userHandle {
+    return self.megaChatRequest->getUserHandle();
 }
 
 @end
