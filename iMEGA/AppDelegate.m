@@ -1534,11 +1534,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if (user) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
                 if (moUser) {
-                    if (request.paramType == MEGAUserAttributeFirstname) {
+                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
                         [[MEGAStore shareInstance] updateUser:user firstname:request.text];
                     }
                     
-                    if (request.paramType == MEGAUserAttributeLastname) {
+                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
                         [[MEGAStore shareInstance] updateUser:user lastname:request.text];
                         
                     }
