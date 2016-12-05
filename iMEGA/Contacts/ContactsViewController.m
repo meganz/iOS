@@ -82,16 +82,15 @@
     [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
     
     switch (self.contactsMode) {
-        case Contacts: {
+        case ContactsModeDefault: {
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             
             [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
             break;
         }
-            
-        case ContactsShareFolderWith:
-        case ContactsShareFoldersWith: {
+        
+        case ContactsModeShareFoldersWith: {
             [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
             [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
             [self.navigationItem setRightBarButtonItems:@[_cancelBarButtonItem] animated:NO];
@@ -107,7 +106,7 @@
             break;
         }
             
-        case ContactsFolderSharedWith: {
+        case ContactsModeFolderSharedWith: {
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
             [self.navigationItem setRightBarButtonItems:buttonsItems];
             
@@ -126,7 +125,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    if (self.contactsMode == ContactsFolderSharedWith) {
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
         [self.navigationItem setTitle:AMLocalizedString(@"sharedWith", nil)];
     } else {
         [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
@@ -137,7 +136,7 @@
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
-    if (self.contactsMode == ContactsShareFolderWith || self.contactsMode == ContactsShareFoldersWith) {
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
         [self editTapped:_editBarButtonItem];
     }
     
@@ -159,7 +158,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (self.contactsMode == Contacts) {
+    if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self.contactRequestsBarButtonItem setBadgeValue:[NSString stringWithFormat:@"%d", incomingContactsLists.size.intValue]];
     }
@@ -221,7 +220,7 @@
 - (void)reloadUI {
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     
-    if (self.contactsMode == ContactsFolderSharedWith) {
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
         _outSharesForNodeMutableArray = [self outSharesForNode:self.node];
         for (MEGAShare *share in _outSharesForNodeMutableArray) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
@@ -378,7 +377,7 @@
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     
-    if (self.contactsMode == ContactsFolderSharedWith) {
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
         remainingOperations = [self.selectedUsersArray count];
         for (MEGAUser *user in self.selectedUsersArray) {
             [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:self];
@@ -461,7 +460,7 @@
     ContactTableViewCell *cell;
     NSString *userName = user.mnz_fullName;
     
-    if (self.contactsMode == ContactsFolderSharedWith) {
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (userName) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
@@ -531,7 +530,7 @@
         return;
     }
     
-    if (self.contactsMode == ContactsFolderSharedWith) {
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
         userTapped = user;
         [self selectPermissions];
     } else {
@@ -598,19 +597,17 @@
         remainingOperations = 1;
         
         switch (self.contactsMode) {
-            case Contacts: {
+            case ContactsModeDefault: {
                 MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
                 [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:self];
                 break;
             }
-                
-            case ContactsShareFolderWith:
-            case ContactsShareFolderWithEmail:
-            case ContactsShareFoldersWith:
-            case ContactsShareFoldersWithEmail:
+            
+            case ContactsModeShareFoldersWith:
+            case ContactsModeShareFoldersWithEmail:
                 break;
                 
-            case ContactsFolderSharedWith: {
+            case ContactsModeFolderSharedWith: {
                 [self deleteAction:self.deleteBarButtonItem];
                 break;
             }
@@ -672,11 +669,11 @@
                     return;
             }
             
-            if ((self.contactsMode == ContactsShareFolderWith) || (self.contactsMode == ContactsShareFoldersWith)) {
+            if (self.contactsMode == ContactsModeShareFoldersWith) {
                 remainingOperations = self.selectedUsersArray.count;
-            } else if (self.contactsMode == ContactsShareFoldersWithEmail) {
+            } else if (self.contactsMode == ContactsModeShareFoldersWithEmail) {
                 remainingOperations = [self.nodesArray count];
-            } else if ((self.contactsMode == ContactsFolderSharedWith) || (self.contactsMode == ContactsShareFolderWithEmail)) {
+            } else if (self.contactsMode == ContactsModeFolderSharedWith) {
                 remainingOperations = 1;
             }
             
@@ -684,20 +681,7 @@
             [SVProgressHUD show];
             
             switch (self.contactsMode) {
-                case ContactsShareFolderWith: {
-                    for (MEGAUser *u in self.selectedUsersArray) {
-                        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:u level:level delegate:self];
-                    }
-                    break;
-                }
-                    
-                case ContactsShareFolderWithEmail: {
-                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:_email level:level delegate:self];
-                    _email = nil;
-                    break;
-                }
-                    
-                case ContactsShareFoldersWith: {
+                case ContactsModeShareFoldersWith: {
                     for (MEGAUser *u in self.selectedUsersArray) {
                         for (MEGANode *node in self.nodesArray) {
                             [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:u level:level delegate:self];
@@ -706,7 +690,7 @@
                     break;
                 }
                     
-                case ContactsShareFoldersWithEmail: {
+                case ContactsModeShareFoldersWithEmail: {
                     for (MEGANode *node in self.nodesArray) {
                         [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:_email level:level delegate:self];
                     }
@@ -714,7 +698,7 @@
                     break;
                 }
                     
-                case ContactsFolderSharedWith: {
+                case ContactsModeFolderSharedWith: {
                     [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:userTapped level:level delegate:self];
                     break;
                 }
@@ -827,11 +811,7 @@
         [[alertView textFieldAtIndex:0] resignFirstResponder];
         
         if (buttonIndex == 1) {
-            if (self.contactsMode == ContactsShareFolderWith) {
-                [self setContactsMode:ContactsShareFolderWithEmail];
-            } else if (self.contactsMode == ContactsShareFoldersWith) {
-                [self setContactsMode:ContactsShareFoldersWithEmail];
-            }
+            self.contactsMode = ContactsModeShareFoldersWithEmail;
             
             _email = [[alertView textFieldAtIndex:0] text];
             [self shareFolder];
@@ -954,7 +934,7 @@
             if (remainingOperations == 0) {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 
-                if (self.contactsMode == ContactsFolderSharedWith) {
+                if (self.contactsMode == ContactsModeFolderSharedWith) {
                     if ([request access] == MEGAShareTypeAccessUnkown) {
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
                         

@@ -1,12 +1,10 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, ContactsMode) {
-    Contacts = 0,
-    ContactsShareFolderWith,
-    ContactsShareFolderWithEmail,
-    ContactsShareFoldersWith,
-    ContactsShareFoldersWithEmail,
-    ContactsFolderSharedWith
+    ContactsModeDefault = 0,
+    ContactsModeShareFoldersWith,
+    ContactsModeShareFoldersWithEmail,
+    ContactsModeFolderSharedWith
 };
 
 @class ShareFolderActivity;

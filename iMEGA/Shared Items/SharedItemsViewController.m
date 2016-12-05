@@ -431,7 +431,7 @@
                 
             case 1: { //Outgoing
                 ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-                [contactsVC setContactsMode:ContactsFolderSharedWith];
+                contactsVC.contactsMode = ContactsModeFolderSharedWith;
                 
                 CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
                 NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
@@ -530,7 +530,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        [contactsVC setContactsMode:ContactsShareFoldersWith];
+        contactsVC.contactsMode = ContactsModeShareFoldersWith;
         [contactsVC setNodesArray:[_selectedNodesMutableArray copy]];
         [self presentViewController:navigationController animated:YES completion:nil];
         
