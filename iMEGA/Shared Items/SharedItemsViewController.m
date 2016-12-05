@@ -74,14 +74,7 @@
     [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    if (self.sharedItemsMode == SharedItemsModeDefault) {
-        self.navigationItem.title = AMLocalizedString(@"sharedItems", nil);
-    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-        self.navigationItem.title = [self.user email];
-        
-        self.sharedItemsSegmentedControlView.hidden = YES;
-        self.tableViewTopConstraint.constant = -self.sharedItemsSegmentedControlView.frame.size.height;
-    }
+    self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
     UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
@@ -141,20 +134,16 @@
 #pragma mark - Private
 
 - (void)reloadUI {
-    if (self.sharedItemsMode == SharedItemsModeDefault) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: {
-                [self incomingNodes];
-                break;
-            }
-                
-            case 1: {
-                [self outgoingNodes];
-                break;
-            }
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: {
+            [self incomingNodes];
+            break;
         }
-    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-        [self incomingNodes];
+            
+        case 1: {
+            [self outgoingNodes];
+            break;
+        }
     }
     
     [self.tableView reloadData];
@@ -189,21 +178,12 @@
     
     self.incomingNodesMutableArray = [[NSMutableArray alloc] init];
     
-    if (self.sharedItemsMode == SharedItemsModeDefault) {
-        self.incomingShareList = [[MEGASdkManager sharedMEGASdk] inSharesList];
-        NSUInteger count = [[self.incomingShareList size] unsignedIntegerValue];
-        for (NSUInteger i = 0; i < count; i++) {
-            MEGAShare *share = [self.incomingShareList shareAtIndex:i];
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
-            [self.incomingNodesMutableArray addObject:node];
-        }
-    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-        MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
-        NSUInteger count = nodeList.size.unsignedIntegerValue;
-        for (NSUInteger i = 0; i < count; i++) {
-            MEGANode *node = [nodeList nodeAtIndex:i];
-            [self.incomingNodesMutableArray addObject:node];
-        }
+    self.incomingShareList = [[MEGASdkManager sharedMEGASdk] inSharesList];
+    NSUInteger count = [[self.incomingShareList size] unsignedIntegerValue];
+    for (NSUInteger i = 0; i < count; i++) {
+        MEGAShare *share = [self.incomingShareList shareAtIndex:i];
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
+        [self.incomingNodesMutableArray addObject:node];
     }
 }
 
@@ -488,7 +468,7 @@
     DetailsNodeInfoViewController *detailsNodeInfoVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [detailsNodeInfoVC setDisplayMode:DisplayModeSharedItem];
     
-    NSString *email = (self.sharedItemsMode == SharedItemsModeDefault) ? [share user] : [self.user email];
+    NSString *email = [share user];
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     
@@ -617,20 +597,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.sharedItemsMode == SharedItemsModeDefault) {
-            switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-                case 0: { //Incoming
-                    numberOfRows = [self.incomingNodesMutableArray count];
-                    break;
-                }
-                    
-                case 1:  { //Outgoing
-                    numberOfRows = [self.outgoingNodesMutableArray count];
-                    break;
-                }
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: { //Incoming
+                numberOfRows = [self.incomingNodesMutableArray count];
+                break;
             }
-        } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-            numberOfRows = [self.incomingNodesMutableArray count];
+                
+            case 1:  { //Outgoing
+                numberOfRows = [self.outgoingNodesMutableArray count];
+                break;
+            }
         }
     }
     
@@ -669,7 +645,7 @@
             share = [_incomingShareList shareAtIndex:indexPath.row];
             node = [_incomingNodesMutableArray objectAtIndex:indexPath.row];
             
-            NSString *userEmail = (self.sharedItemsMode == SharedItemsModeDefault) ? [share user] : [self.user email];
+            NSString *userEmail = [share user];
             [self.incomingNodesForEmailMutableDictionary setObject:userEmail forKey:node.base64Handle];
             [_incomingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
             
@@ -680,10 +656,10 @@
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
             NSString *userName = user.mnz_fullName ? user.mnz_fullName : userEmail;
             
-            NSString *infoLabelText = (self.sharedItemsMode == SharedItemsModeDefault) ? userName : [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+            NSString *infoLabelText = userName;
             [cell.infoLabel setText:infoLabelText];
             
-            MEGAShareType shareType = (self.sharedItemsMode == SharedItemsModeDefault) ? [share access] : [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+            MEGAShareType shareType = [share access];
             [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
             
             cell.nodeHandle = [node handle];
@@ -744,21 +720,17 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        if (self.sharedItemsMode == SharedItemsModeDefault) {
-            switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-                case 0: { //Incoming
-                    [self removeSelectedIncomingShares];
-                    break;
-                }
-                    
-                case 1: { //Outgoing
-                    [self selectedSharesOfSelectedNodes];
-                    [self removeSelectedOutgoingShares];
-                    break;
-                }
+        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+            case 0: { //Incoming
+                [self removeSelectedIncomingShares];
+                break;
             }
-        } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-            [self removeSelectedIncomingShares];
+                
+            case 1: { //Outgoing
+                [self selectedSharesOfSelectedNodes];
+                [self removeSelectedOutgoingShares];
+                break;
+            }
         }
     }
 }
@@ -871,18 +843,14 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = nil;
-    if (self.sharedItemsMode == SharedItemsModeDefault) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: //Incoming
-                node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
-                break;
-                
-            case 1: //Outgoing
-                node = [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
-                break;
-        }
-    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-        node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: //Incoming
+            node = [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
+            break;
+            
+        case 1: //Outgoing
+            node = [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+            break;
     }
     
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
@@ -899,18 +867,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *titleForDeleteConfirmationButton;
-    if (self.sharedItemsMode == SharedItemsModeDefault) {
-        switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
-            case 0: //Incoming
-                titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", nil);
-                break;
-                
-            case 1: //Outgoing
-                titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", nil);
-                break;
-        }
-    } else if (self.sharedItemsMode == SharedItemsModeInSharesForUser) {
-        titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", nil);
+    switch (self.sharedItemsSegmentedControl.selectedSegmentIndex) {
+        case 0: //Incoming
+            titleForDeleteConfirmationButton = AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder");
+            break;
+            
+        case 1: //Outgoing
+            titleForDeleteConfirmationButton = AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share");
+            break;
     }
     
     return titleForDeleteConfirmationButton;
