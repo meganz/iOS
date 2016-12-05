@@ -108,7 +108,7 @@
     if (buttonIndex == 0) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contactsMode = ContactsShareFoldersWith;
+        contactsVC.contactsMode = ContactsModeShareFoldersWith;
         [self presentViewController:navigationController animated:YES completion:nil];
     }
     

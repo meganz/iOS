@@ -803,7 +803,7 @@
     if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         if (indexPath.section == 0) {
             ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-            [contactsVC setContactsMode:ContactsFolderSharedWith];
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
             [contactsVC setNode:self.node];
             [self.navigationController pushViewController:contactsVC animated:YES];
         } else {
