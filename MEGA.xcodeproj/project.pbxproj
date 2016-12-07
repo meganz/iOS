@@ -275,6 +275,7 @@
 		E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
+		E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */; };
 		E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E87C98351CC4CC1000E2B9E6 /* AdvancedTableViewController.m */; };
 		E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E11B55657E00ECEFDF /* MyAccountViewController.m */; };
@@ -835,6 +836,8 @@
 		E85044C41A6D84620064B675 /* FileLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLinkViewController.h; sourceTree = "<group>"; };
 		E85044C51A6D84620064B675 /* FileLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLinkViewController.m; sourceTree = "<group>"; };
 		E85946861B5D16AC00527153 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyCredentialsViewController.h; sourceTree = "<group>"; };
+		E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyCredentialsViewController.m; sourceTree = "<group>"; };
 		E879DFD81D12A31D009B74FD /* UIDevice+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+MNZCategory.h"; sourceTree = "<group>"; };
 		E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+MNZCategory.m"; sourceTree = "<group>"; };
 		E87C98341CC4CC1000E2B9E6 /* AdvancedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedTableViewController.h; sourceTree = "<group>"; };
@@ -1201,6 +1204,8 @@
 				4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */,
 				E8CA8AAF1DF17F7500C205DE /* ContactDetailsViewController.h */,
 				E8CA8AB01DF17F7500C205DE /* ContactDetailsViewController.m */,
+				E85EB30B1DF58EBA0066AC68 /* VerifyCredentialsViewController.h */,
+				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -2392,6 +2397,7 @@
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */,
+				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				41E88F0D1CF451B000BD3B79 /* MWGridViewController.m in Sources */,
 				E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */,
