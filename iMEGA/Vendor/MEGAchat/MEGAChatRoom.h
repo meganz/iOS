@@ -14,8 +14,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege) {
     MEGAChatRoomPrivilegeUnknown   = -2,
     MEGAChatRoomPrivilegeRm        = -1,
     MEGAChatRoomPrivilegeRo        = 0,
-    MEGAChatRoomPrivilegeStandard  = 1,
-    MEGAChatRoomPrivilegeModerator = 2
+    MEGAChatRoomPrivilegeStandard  = 2,
+    MEGAChatRoomPrivilegeModerator = 3
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
