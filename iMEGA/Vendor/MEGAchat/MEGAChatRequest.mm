@@ -71,4 +71,12 @@ using namespace megachat;
     return self.megaChatRequest->getUserHandle();
 }
 
+- (NSInteger)privilege {
+    return self.megaChatRequest->getPrivilege();
+}
+
+- (NSString *)text {
+    return self.megaChatRequest ? [[NSString alloc] initWithUTF8String:self.megaChatRequest->getText()] : nil;
+}
+
 @end
