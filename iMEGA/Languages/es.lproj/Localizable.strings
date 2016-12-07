@@ -864,3 +864,13 @@
 "closeChat"="Cerrar chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Carpetas compartidas";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Credenciales del contacto";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Esto es mejor hacerlo en el mundo real, cara a cara. Si tienes algún otro canal ya verificado, como OTR o PGP, podrías utilizarlo.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Tus credenciales";
+/* Button to reset the password */
+"reset"="Restablecer";
+/* Button title */
+"approve"="Aprobar";

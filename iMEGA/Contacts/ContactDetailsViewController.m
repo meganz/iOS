@@ -9,6 +9,7 @@
 #import "ContactTableViewCell.h"
 #import "DetailsNodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
+#import "VerifyCredentialsViewController.h"
 
 @interface ContactDetailsViewController () <MEGARequestDelegate>
 
@@ -92,6 +93,11 @@
     [removeContactAlertController addAction:okAction];
     
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
+}
+
+- (void)pushVerifyCredentialsViewController {
+    VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
+    [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
 }
 
 #pragma mark - IBActions
@@ -242,7 +248,7 @@
                     break;
                     
                 case 2: //Verify Credentials
-                    //TODO: Push verify credentials view
+                    [self pushVerifyCredentialsViewController];
                     break;
                     
                 case 3: //Remove Contact
@@ -255,7 +261,7 @@
                     break;
                     
                 case 1: //Verify Credentials
-                    //TODO: Push verify credentials view
+                    [self pushVerifyCredentialsViewController];
                     break;
                     
                 case 2: //Clear Chat History
