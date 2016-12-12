@@ -856,10 +856,6 @@
     }
 }
 
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
-
-}
-
 #pragma mark - UIAlertDelegate
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
