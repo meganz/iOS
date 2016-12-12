@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "JSQMessageData.h"
 #import "MEGAChatMessage.h"
+#import "MEGAChatRoom.h"
 
 @interface MEGAMessage : NSObject <JSQMessageData>
 
@@ -20,12 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic, readonly, getter=isEditable) BOOL editable;
 @property (assign, nonatomic, readonly, getter=isEdited) BOOL edited;
 @property (assign, nonatomic, readonly, getter=isDeleted) BOOL deleted;
+@property (assign, nonatomic, readonly, getter=isManagementMessage) BOOL managementMessage;
+@property (nonatomic, readonly) MEGAChatMessageType type;
 
 #pragma mark - Initialization
 
 // Not a valid initializer.
 - (id)init NS_UNAVAILABLE;
-- (instancetype)initWithMEGAChatMessage:(MEGAChatMessage *)message;
+- (instancetype)initWithMEGAChatMessage:(MEGAChatMessage *)message megaChatRoom:(MEGAChatRoom *)chatRoom;
 
 @end
 

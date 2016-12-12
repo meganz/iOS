@@ -4,7 +4,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeDefault = 0,
     ContactsModeShareFoldersWith,
     ContactsModeShareFoldersWithEmail,
-    ContactsModeFolderSharedWith
+    ContactsModeFolderSharedWith,
+    ContactsChatStartConversation
 };
 
 @class ShareFolderActivity;
@@ -17,5 +18,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 @property (nonatomic, strong) NSArray *nodesArray;
 
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
+
+@property (nonatomic, copy) void(^userSelected)(NSArray *);
 
 @end
