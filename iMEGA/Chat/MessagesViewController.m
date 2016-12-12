@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
+@property (strong, nonatomic) JSQMessagesBubbleImage *managementBubbleImageData;
 
 @property (nonatomic, strong) MEGAMessage *editMessage;
 
@@ -58,9 +59,11 @@
     [self customNavigationBarLabel];
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_grayE3E3E3]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor whiteColor]];
     
+    self.outgoingBubbleImageData   = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor whiteColor]];
+    self.incomingBubbleImageData   = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE3E3E3]];
+    self.managementBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayF5F5F5]];
+
     self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFont size:14.0f];
     
@@ -289,6 +292,13 @@
     return [[[MEGASdkManager sharedMEGASdk] myUser] email];
 }
 
+- (BOOL)isOutgoingMessage:(MEGAMessage *)messageItem {
+    if (messageItem.isManagementMessage) {
+        return NO;
+    }
+    return [super isOutgoingMessage:messageItem];
+}
+
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     return megaMessage;
@@ -300,6 +310,9 @@
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    if (message.isManagementMessage) {
+        return self.managementBubbleImageData;
+    }
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.outgoingBubbleImageData;
@@ -336,16 +349,43 @@
     
     MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
-    BOOL showHour = NO;
+    BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
-        showHour = YES;
-    } else if (indexPath.item - 1 > 0) {
-        showHour = [self showHourForMessage:message withIndexPath:indexPath];
+        showMessageBubleTopLabel = YES;
+    } else {
+        if (message.isManagementMessage) {
+            showMessageBubleTopLabel = YES;
+        } else {
+            showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
+        }
     }
-    
-    if (showHour) {
+
+    if (showMessageBubleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        return [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        NSString *topCellString = nil;
+        
+        if (self.chatRoom.isGroup && !message.isManagementMessage) {
+            NSString *firstName = [self.chatRoom peerFirstnameByHandle:message.userHandle];
+            NSString *lastName = [self.chatRoom peerLastnameByHandle:message.userHandle];
+            if (firstName) {
+                if (lastName) {
+                    topCellString = [[[[firstName stringByAppendingString:@" "] stringByAppendingString:lastName] stringByAppendingString:@" "] stringByAppendingString:hour];
+                } else {
+                    topCellString = [[firstName stringByAppendingString:@" "] stringByAppendingString:hour];
+                }
+            } else {
+                if (lastName) {
+                    topCellString = [[lastName stringByAppendingString:@" "] stringByAppendingString:hour];
+                } else {
+                    // No name
+                    topCellString = hour;
+                }
+            }
+        } else {
+            topCellString = hour;
+        }
+        
+        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
     }
     
     return nil;
@@ -371,6 +411,8 @@
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    
+//    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
     
     if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
@@ -455,15 +497,19 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL showHour = NO;
+    BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
-        showHour = YES;
-    } else if (indexPath.item - 1 > 0) {
+        showMessageBubleTopLabel = YES;
+    } else {
         MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
-        showHour = [self showHourForMessage:message withIndexPath:indexPath];
+        if (message.isManagementMessage) {
+            showMessageBubleTopLabel = YES;
+        } else {
+            showMessageBubleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
+        }
     }
     
-    if (showHour) {
+    if (showMessageBubleTopLabel) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
     
@@ -521,7 +567,7 @@
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
-    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message];
+    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
     
     [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
     [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
@@ -531,10 +577,13 @@
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageLoaded %@", message);
     
-    if (message && message.type != MEGAChatMessageTypeTruncate) {
-        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message];        
+    if (message) {
+        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
         [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
         [self.indexesMessages insertObject:[NSNumber numberWithInteger:message.messageIndex] atIndex:0];
+        
+    //TODO: Solo llamarlo una vez para el último mensaje
+        [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
     } else {
         [self.collectionView reloadData];
         [self scrollToBottomAnimated:YES];
@@ -544,7 +593,7 @@
 - (void)onMessageUpdate:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageUpdate %@", message);
     
-    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message];
+    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
     [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
@@ -565,11 +614,43 @@
             [self scrollToBottomAnimated:YES];
         }
     }
-    
 }
 
 - (void)onChatRoomUpdate:(MEGAChatSdk *)api chat:(MEGAChatRoom *)chat {
-    NSLog(@"onChatRoomUpdate %@", chat);
+    MEGALogInfo(@"onChatRoomUpdate %@", chat);
+    self.chatRoom = chat;
+    switch (chat.changes) {
+        case MEGAChatRoomChangeTypeStatus:
+            
+            break;
+            
+        case MEGAChatRoomChangeTypeUnreadCount:
+            
+            break;
+            
+        case MEGAChatRoomChangeTypeParticipans:
+            
+            break;
+            
+        case MEGAChatRoomChangeTypeTitle:
+            [self customNavigationBarLabel];
+            break;
+            
+        case MEGAChatRoomChangeTypeChatState:
+            
+            break;
+            
+        case MEGAChatRoomChangeTypeUserTyping:
+            
+            break;
+            
+        case MEGAChatRoomChangeTypeClosed:
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

@@ -345,10 +345,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButtonItem" destination="JdI-ia-m0c" id="6ZR-SG-pqs"/>
+                        <outlet property="backBarButtonItem" destination="GTy-dq-ErY" id="8Fm-6h-apb"/>
                         <outlet property="cancelBarButtonItem" destination="Zqr-qV-bMs" id="jRX-zv-vU1"/>
                         <outlet property="contactRequestsBarButtonItem" destination="GvZ-OT-HaA" id="wh8-yW-HiY"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
+                        <outlet property="groupBarButtonItem" destination="xDU-jr-HFu" id="7hV-ad-49c"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
                         <outlet property="selectAllBarButtonItem" destination="Llm-yt-C3F" id="EGI-Ug-yJ5"/>
                         <outlet property="shareFolderBarButtonItem" destination="aEk-h4-ILY" id="EZp-aD-Rnp"/>
@@ -358,6 +360,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5H-yC-IzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="Group" id="xDU-jr-HFu">
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="groupAction:" destination="4jb-uN-Eto" id="RpQ-Mt-XcK"/>
+                    </connections>
+                </barButtonItem>
                 <barButtonItem image="check_mark" id="Llm-yt-C3F" userLabel="Check Mark Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="4jb-uN-Eto" id="hCu-lV-fHf"/>
@@ -384,6 +392,11 @@
                     <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="shareFolderWithAction:" destination="4jb-uN-Eto" id="OXg-S3-u1w"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="backArrow" id="GTy-dq-ErY">
+                    <connections>
+                        <action selector="backAction:" destination="4jb-uN-Eto" id="DNc-pl-fGr"/>
                     </connections>
                 </barButtonItem>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="jvh-Sx-iEq">
@@ -1450,6 +1463,7 @@
     </scenes>
     <resources>
         <image name="add" width="22" height="22"/>
+        <image name="backArrow" width="22" height="22"/>
         <image name="check_mark" width="29" height="29"/>
         <image name="contact_request_accept" width="46" height="44"/>
         <image name="contact_request_deny" width="46" height="44"/>

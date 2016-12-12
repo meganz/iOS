@@ -45,6 +45,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *contactRequestsBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *groupBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
@@ -115,6 +117,14 @@
             
             break;
         }
+            
+        case ContactsChatStartConversation: {
+            self.navigationItem.rightBarButtonItems = @[self.groupBarButtonItem];
+            self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+            
+            break;
+        
+        }
     }
     
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -127,7 +137,9 @@
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         [self.navigationItem setTitle:AMLocalizedString(@"sharedWith", nil)];
-    } else {
+    } else if (self.contactsMode == ContactsChatStartConversation)
+        [self.navigationItem setTitle:AMLocalizedString(@"Start conversation", nil)];
+    else {
         [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
     }
     
@@ -178,39 +190,46 @@
     }];
 }
 
-- (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setTableViewEditing:value animated:YES];
-}
-
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
     [self.tableView setEditing:editing animated:animated];
     
-    if (editing) {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
-        [self.addBarButtonItem setEnabled:NO];
-        if (!isSwipeEditing) {
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+    if (self.contactsMode == ContactsChatStartConversation) {
+        if (editing) {
+        } else {
+            self.selectedUsersArray = [[NSMutableArray alloc] init];
         }
+        
+        if (!self.selectedUsersArray) {
+            self.selectedUsersArray = [[NSMutableArray alloc] init];
+        }
+        
     } else {
-        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
-        allUsersSelected = NO;
-        self.selectedUsersArray = nil;
-        [self.addBarButtonItem setEnabled:YES];
-        self.navigationItem.leftBarButtonItems = @[];
+        if (editing) {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+            [self.addBarButtonItem setEnabled:NO];
+            if (!isSwipeEditing) {
+                self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            }
+        } else {
+            [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+            allUsersSelected = NO;
+            self.selectedUsersArray = nil;
+            [self.addBarButtonItem setEnabled:YES];
+            self.navigationItem.leftBarButtonItems = @[];
+        }
+        
+        if (!self.selectedUsersArray) {
+            self.selectedUsersArray = [NSMutableArray new];
+            [self.deleteBarButtonItem setEnabled:NO];
+            [self.shareFolderBarButtonItem setEnabled:NO];
+        }
+        
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        
+        [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+            self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+        }];
     }
-    
-    if (!self.selectedUsersArray) {
-        self.selectedUsersArray = [NSMutableArray new];
-        [self.deleteBarButtonItem setEnabled:NO];
-        [self.shareFolderBarButtonItem setEnabled:NO];
-    }
-    
-    [self.tabBarController.tabBar addSubview:self.toolbar];
-    
-    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-    }];
     
     isSwipeEditing = NO;
 }
@@ -413,6 +432,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)backAction:(UIBarButtonItem *)sender {
+    self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
+    self.groupBarButtonItem.title = @"Group";
+    self.groupBarButtonItem.enabled = YES;
+    
+    [self setTableViewEditing:NO animated:YES];
+}
+
 - (IBAction)shareFolderWithAction:(UIBarButtonItem *)sender {
     if (_selectedUsersArray.count == 0) {
         return;
@@ -427,6 +454,30 @@
     [[insertAnEmailAlertView textFieldAtIndex:0] setPlaceholder:AMLocalizedString(@"contactEmail", nil)];
     [insertAnEmailAlertView setTag:3];
     [insertAnEmailAlertView show];
+}
+
+- (IBAction)editTapped:(UIBarButtonItem *)sender {
+    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
+    [self setTableViewEditing:value animated:YES];
+}
+
+- (IBAction)groupAction:(UIBarButtonItem *)sender {
+    BOOL value = ![self.groupBarButtonItem.title isEqualToString:@"Ok"];
+    if (value) {
+        self.groupBarButtonItem.title = @"Ok";
+        if (self.selectedUsersArray.count == 0) {
+            self.groupBarButtonItem.enabled = NO;
+        }
+        self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+    } else {
+        if (self.selectedUsersArray.count > 0) {
+            self.userSelected(self.selectedUsersArray);
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            self.groupBarButtonItem.title = @"Group";
+        }
+    }
+    [self setTableViewEditing:value animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -522,6 +573,10 @@
             allUsersSelected = NO;
         }
         
+        if (self.contactsMode == ContactsChatStartConversation && self.selectedUsersArray.count > 0 ) {
+            self.groupBarButtonItem.enabled = YES;
+        }
+        
         return;
     }
     
@@ -533,6 +588,9 @@
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         userTapped = user;
         [self selectPermissions];
+    } else if (self.contactsMode == ContactsChatStartConversation) {
+        self.userSelected(@[user]);
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
@@ -560,8 +618,12 @@
         }
         
         if (self.selectedUsersArray.count == 0) {
-            [self.deleteBarButtonItem setEnabled:NO];
-            [self.shareFolderBarButtonItem setEnabled:NO];
+            if (self.contactsMode != ContactsChatStartConversation) {
+                [self.deleteBarButtonItem setEnabled:NO];
+                [self.shareFolderBarButtonItem setEnabled:NO];
+            } else {
+                self.groupBarButtonItem.enabled = NO;
+            }
         }
         
         allUsersSelected = NO;
@@ -792,6 +854,10 @@
     for (CNContactProperty *contactProperty in contactProperties) {
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
     }
+}
+
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
+
 }
 
 #pragma mark - UIAlertDelegate
