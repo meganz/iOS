@@ -184,6 +184,12 @@
         
     }]];
     
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        alertController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+        popoverPresentationController.barButtonItem = self.addBarButtonItem;
+        popoverPresentationController.sourceView = self.view;
+    }
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -294,6 +300,13 @@
             
         }]];
         
+        if ([[UIDevice currentDevice] iPadDevice]) {
+            alertController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+            CGRect moreRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            popoverPresentationController.sourceRect = moreRect;
+            popoverPresentationController.sourceView = self.tableView;
+        }
         [self presentViewController:alertController animated:YES completion:nil];
     }];
     moreAction.backgroundColor = [UIColor mnz_grayCCCCCC];
@@ -313,6 +326,13 @@
                 [self.tableView setEditing:NO];
             }]];
             
+            if ([[UIDevice currentDevice] iPadDevice]) {
+                leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverPresentationController = [leaveAlertController popoverPresentationController];
+                CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
+                popoverPresentationController.sourceRect = deleteRect;
+                popoverPresentationController.sourceView = self.view;
+            }
             [self presentViewController:leaveAlertController animated:YES completion:nil];
         }];
     } else {
