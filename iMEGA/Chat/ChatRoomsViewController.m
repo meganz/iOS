@@ -6,14 +6,20 @@
 #import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "ContactDetailsViewController.h"
+#import "MEGAReachabilityManager.h"
 
 #import "DateTools.h"
 #import "UIImage+GKContact.h"
-#import "UIImageView+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+#import "Helper.h"
+#import "UIImageView+MNZCategory.h"
+#import "NSMutableAttributedString+MNZCategory.h"
+
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
 @property (nonatomic, strong) NSMutableDictionary *chatListItemIndexPathDictionary;
@@ -26,6 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
     
     self.title = AMLocalizedString(@"Chat", nil);
     self.chatListItemIndexPathDictionary = [[NSMutableDictionary alloc] init];
@@ -33,6 +41,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     self.tabBarController.tabBar.hidden = NO;
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -43,9 +53,84 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
+
+
+#pragma mark - DZNEmptyDataSetSource
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    NSString *text;
+    if ([MEGAReachabilityManager isReachable]) {
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:@"No Conversations" sectionTitle:@"Conversations"];
+    } else {
+        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Light" size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([MEGAReachabilityManager isReachable]) {
+        // TODO: We need change this image with a custom image provided by design team
+        return [UIImage imageNamed:@"emptyContacts"];
+    } else {
+        return [UIImage imageNamed:@"noInternetConnection"];
+    }
+}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        text = @"Invite";
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Light" size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
+    
+    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIColor whiteColor];
+}
+
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return [Helper spaceHeightForEmptyState];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate Methods
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self addTapped:(UIBarButtonItem *)button];
+}
+
+#pragma mark - Private
+
+- (void)internetConnectionChanged {
+    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    self.addBarButtonItem.enabled = boolValue;
+    
+    [self.tableView reloadData];
+}
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
