@@ -146,6 +146,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="fu8-g8-gHZ" id="MMk-4L-0Gs"/>
                         <outlet property="tableView" destination="OEw-WR-Lm7" id="4K9-2w-rBx"/>
                         <segue destination="0Dm-Oc-5lk" kind="show" identifier="seguePushMessagesVC" id="vN7-dR-Wyf"/>
                     </connections>
