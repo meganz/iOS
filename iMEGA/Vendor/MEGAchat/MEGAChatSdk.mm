@@ -273,7 +273,7 @@ using namespace megachat;
 }
 
 - (MEGAChatMessage *)lastChatMessageSeenForChat:(uint64_t)chatId {
-    return self.megaChatApi ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getLastMessageSeen(chatId) cMemoryOwn:YES] : nil;
+    return self.megaChatApi->getLastMessageSeen(chatId) ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatApi->getLastMessageSeen(chatId) cMemoryOwn:YES] : nil;
 }
 
 - (void)removeUnsentMessageForChat:(uint64_t)chatId temporalId:(uint64_t)temporalId {
