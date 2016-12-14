@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong) MEGAMessage *editMessage;
 
+@property (nonatomic, assign) BOOL areAllMessagesSeen;
+
 @end
 
 @implementation MessagesViewController
@@ -75,6 +77,8 @@
     self.tabBarController.tabBar.hidden = YES;
     
     [self customToolbarContentView];
+    
+    self.areAllMessagesSeen = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -417,8 +421,6 @@
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
-//    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
-    
     if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
@@ -577,6 +579,7 @@
     [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
     [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
     [self finishReceivingMessage];
+    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -587,8 +590,17 @@
         [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
         [self.indexesMessages insertObject:[NSNumber numberWithInteger:message.messageIndex] atIndex:0];
         
-    //TODO: Solo llamarlo una vez para el último mensaje
-        [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
+        if (!self.areAllMessagesSeen && message.userHandle != [[[MEGASdkManager sharedMEGASdk] myUser] handle]) {
+            if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
+                if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
+                    self.areAllMessagesSeen = YES;
+                } else {
+                    MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
+                }
+            } else {
+                self.areAllMessagesSeen = YES;
+            }
+        }
     } else {
         [self.collectionView reloadData];
         [self scrollToBottomAnimated:YES];
