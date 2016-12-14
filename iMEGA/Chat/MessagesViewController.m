@@ -42,8 +42,6 @@
         MEGALogError(@"The delegate is NULL or the chatroom is not found");
     }
     
-    self.title = self.chatRoom.title;
-    
     self.inputToolbar.contentView.textView.pasteDelegate = self;
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
@@ -62,8 +60,11 @@
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
-    
-    [self customNavigationBarLabel];
+    if (self.chatRoom.isGroup) {
+        self.title = self.chatRoom.title;
+    } else {
+        [self customNavigationBarLabel];
+    }
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     
@@ -638,7 +639,9 @@
     self.chatRoom = chat;
     switch (chat.changes) {
         case MEGAChatRoomChangeTypeStatus:
-            
+            if (!self.chatRoom.isGroup) {
+                [self customNavigationBarLabel];
+            }
             break;
             
         case MEGAChatRoomChangeTypeUnreadCount:
@@ -650,7 +653,11 @@
             break;
             
         case MEGAChatRoomChangeTypeTitle:
-            [self customNavigationBarLabel];
+            if (self.chatRoom.isGroup) {
+                self.title = self.chatRoom.title;
+            } else {
+                [self customNavigationBarLabel];
+            }
             break;
             
         case MEGAChatRoomChangeTypeChatState:
