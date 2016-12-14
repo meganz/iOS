@@ -5,6 +5,7 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
@@ -583,16 +584,7 @@
     if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
         if ([self.node isInShare]) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
-            NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL avatarExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-            if (avatarExists) {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-                cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width/2;
-                cell.thumbnailImageView.layer.masksToBounds = YES;
-            } else {
-                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-                [cell.thumbnailImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
-            }
+            [cell.thumbnailImageView mnz_setImageForUser:user];
             
             NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", nil)];
             NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];
