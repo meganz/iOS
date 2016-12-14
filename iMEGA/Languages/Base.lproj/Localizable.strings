@@ -874,3 +874,5 @@
 "reset"="Reset";
 /* Button title */
 "approve"="Approve";
+/* Alert message shown when a chat does not exist */
+"Chat not found"="Chat not found";

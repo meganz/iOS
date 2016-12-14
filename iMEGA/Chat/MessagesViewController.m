@@ -28,11 +28,16 @@
     self.indexesMessages = [[NSMutableArray alloc] init];
     self.messagesDictionary = [[NSMutableDictionary alloc] init];
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {        
-        MEGALogDebug(@"Chat room opened");
+    if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
+        MEGALogDebug(@"Chat room opened: %@", self.chatRoom.title);
         [self loadMessages];
     } else {
-        MEGALogDebug(@"The delegate is NULL or the chatroom is not found");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"Chat not found", nil) preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        MEGALogError(@"The delegate is NULL or the chatroom is not found");
     }
     
     self.title = self.chatRoom.title;
