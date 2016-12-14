@@ -9,6 +9,8 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
+#import "MEGAUser+MNZCategory.h"
+
 #import "UsageViewController.h"
 #import "SettingsTableViewController.h"
 
@@ -58,7 +60,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *proExpiryDateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *purchasesHistoryButton;
 
-@property (strong, nonatomic) NSString *fullname;
 @property (nonatomic) MEGAAccountType megaAccountType;
 @property (strong, nonatomic) MEGAPricing *pricing;
 
@@ -78,8 +79,6 @@
     self.upgradeToProButton.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
     self.upgradeToProButton.layer.cornerRadius = 4;
     self.upgradeToProButton.layer.masksToBounds = YES;
-    
-    _fullname = @"";
     
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
@@ -114,16 +113,12 @@
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
     [_localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     
-    _fullname = @"";
-    
-    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname delegate:self];
-    [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname delegate:self];
-    
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
     
     [self setUserAvatar];
     
+    self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     self.emailLabel.text = [[MEGASdkManager sharedMEGASdk] myEmail];
 }
 
@@ -220,17 +215,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeGetAttrUser: {
-            //If paramType = 1 or 2 we are receiving the firstname or the lastname
-            if (request.paramType) {
-                if (request.paramType == MEGAUserAttributeLastname) {
-                    _fullname = [_fullname stringByAppendingString:@" "];
-                }
-                
-                if(request.text){
-                    _fullname = [_fullname stringByAppendingString:request.text];
-                }
-                [self.nameLabel setText:_fullname];
-            } else {
+            if (request.file) {
                 [self setUserAvatar];
             }
             break;

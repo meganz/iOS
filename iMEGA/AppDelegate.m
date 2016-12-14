@@ -855,6 +855,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [self presentLinkViewController:navigationController];
 }
 
+- (void)requestUserName {
+    if (![[MEGAStore shareInstance] fetchUserWithMEGAUser:[[MEGASdkManager sharedMEGASdk] myUser]]) {
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+    }
+}
+
 - (void)requestContactsFullname {
     MEGAUserList *userList = [[MEGASdkManager sharedMEGASdk] contacts];
     for (NSInteger i = 0; i < userList.size.integerValue; i++) {
@@ -1082,6 +1089,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                     }
                     [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                 }
+            }
+            
+            if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+            }
+            if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
             }
         } else {
             if (user.changes) {
@@ -1393,6 +1407,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
             
+            [self requestUserName];
             [self requestContactsFullname];
             [self setBadgeValueForIncomingContactRequests];
             
@@ -1530,7 +1545,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeGetAttrUser: {
-            MEGAUser *user = [api contactForEmail:request.email];
+            MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
             if (user) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
                 if (moUser) {
