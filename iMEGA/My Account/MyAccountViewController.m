@@ -3,6 +3,7 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
+#import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "MEGASdkManager.h"
@@ -129,19 +130,8 @@
 #pragma mark - Private
 
 - (void)setUserAvatar {
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] myUser];
-    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-    
-    if (!fileExists) {
-        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
-        CGSize avatarSize = self.userAvatarImageView.frame.size;
-        UIImage *avatarImage = [UIImage imageForName:[user email].uppercaseString size:avatarSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(avatarSize.width/2)]];
-        self.userAvatarImageView.image = avatarImage;
-        [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-    } else {
-        [self.userAvatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-    }
+    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
+    [self.userAvatarImageView mnz_setImageForUser:myUser];
 }
 
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {
