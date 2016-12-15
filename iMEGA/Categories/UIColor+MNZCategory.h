@@ -10,6 +10,8 @@
 + (UIColor *)mnz_gray777777;
 + (UIColor *)mnz_gray8A8A8A;
 + (UIColor *)mnz_gray999999;
++ (UIColor *)mnz_grayCCCCCC;
++ (UIColor *)mnz_grayFFFFFF;
 + (UIColor *)mnz_grayF7F7F7;
 + (UIColor *)mnz_grayF9F9F9;
 

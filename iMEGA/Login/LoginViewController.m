@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 @end
 
@@ -40,9 +42,13 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
+    NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
+    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
+    forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
+    [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -96,7 +102,7 @@
 }
 
 - (BOOL)validateForm {
-    if (![self validateEmail:self.emailTextField.text]) {
+    if (![Helper validateEmail:self.emailTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -116,19 +122,25 @@
     }
 }
 
-- (BOOL)validateEmail:(NSString *)email {
-    NSString *emailRegex =
-    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
+- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
+    BOOL isAnyTextFieldEmpty = NO;
+    switch (tag) {
+        case 0: {
+            if ([self.passwordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([self.emailTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+    }
     
-    return [emailTest evaluateWithObject:email];
-    
+    return isAnyTextFieldEmpty;
 }
 
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
@@ -139,6 +151,11 @@
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
     return [formatter stringFromDate:date];
+}
+
+- (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ForgotPasswordNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UIResponder
@@ -166,8 +183,27 @@
 
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    BOOL shoulBeLoginButtonGray = NO;
+    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+        shoulBeLoginButtonGray = YES;
+    } else {
+        shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
+    }
     
+    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
             [self.passwordTextField becomeFirstResponder];
@@ -226,7 +262,7 @@
                 
             case MEGAErrorTypeApiEIncomplete: {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"accountNotValidated", @"Error message when trying to login to an account not validated")
+                                                                message:AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess")
                                                                delegate:self
                                                       cancelButtonTitle:AMLocalizedString(@"ok", nil)
                                                       otherButtonTitles:nil];

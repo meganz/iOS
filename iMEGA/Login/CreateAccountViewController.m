@@ -43,7 +43,6 @@
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     [self.retypePasswordTextField setPlaceholder:AMLocalizedString(@"confirmPassword", nil)];
     
-    [self.termsOfServiceButton setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
@@ -51,12 +50,12 @@
     
     self.createAccountButton.layer.cornerRadius = 4.0f;
     self.createAccountButton.layer.masksToBounds = YES;
-    [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
     [self.accountCreatedView.layer setMasksToBounds:YES];
     [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
-    [self.accountCreatedLabel setText:AMLocalizedString(@"accountCreated", @"Please check your e-mail and click the link to confirm your account.")];
+    self.accountCreatedLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess.");
     
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
@@ -82,11 +81,11 @@
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.nameTextField becomeFirstResponder];
         return NO;
-    } else if (![self validateEmail:self.emailTextField.text]) {
+    } else if (![Helper validateEmail:self.emailTextField.text]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
-    } else if (![self validatePassword:self.passwordTextField.text]) {
+    } else if (![self validatePassword]) {
         if ([self.passwordTextField.text length] == 0) {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
             [self.passwordTextField becomeFirstResponder];
@@ -110,26 +109,47 @@
     }
 }
 
-- (BOOL)validatePassword:(NSString *)password {
-    if (password.length == 0 || ![password isEqualToString:self.retypePasswordTextField.text]) {
+- (BOOL)validatePassword {
+    if (self.passwordTextField.text.length == 0 || self.retypePasswordTextField.text.length == 0 || ![self.passwordTextField.text isEqualToString:self.retypePasswordTextField.text]) {
         return NO;
     } else {
         return YES;
     }
 }
 
-- (BOOL)validateEmail:(NSString *)email {
-    NSString *emailRegex =
-    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
+- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
+    BOOL isAnyTextFieldEmpty = NO;
+    switch (tag) {
+        case 0: {
+            if ([self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 1: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 2: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.retypePasswordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+            
+        case 3: {
+            if ([self.nameTextField.text isEqualToString:@""] || [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
+                isAnyTextFieldEmpty = YES;
+            }
+            break;
+        }
+    }
     
-    return [emailTest evaluateWithObject:email];
+    return isAnyTextFieldEmpty;
 }
 
 #pragma mark - UIResponder
@@ -170,8 +190,27 @@
 
 #pragma mark - UITextFieldDelegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    BOOL shoulBeCreateAccountButtonGray = NO;
+    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+        shoulBeCreateAccountButtonGray = YES;
+    } else {
+        shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
+    }
+    
+    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    
+    return YES;
+}
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch ([textField tag]) {
         case 0:
             [self.emailTextField becomeFirstResponder];
