@@ -285,7 +285,7 @@
             [self importFolderFromLink:node inParent:parentNode];
         } else {
             remainingOperations++;
-            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
+            [[MEGASdkManager sharedMEGASdk] copyNode:[[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] newParent:parentNode];
         }
     }
 }
