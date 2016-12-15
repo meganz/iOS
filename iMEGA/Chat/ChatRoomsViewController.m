@@ -7,6 +7,7 @@
 #import "MEGANavigationController.h"
 #import "ContactDetailsViewController.h"
 #import "MEGAReachabilityManager.h"
+#import "GroupChatDetailsViewController.h"
 
 #import "DateTools.h"
 #import "UIImage+GKContact.h"
@@ -310,10 +311,11 @@
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Info", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if (chatListItem.isGroup) {
-                //TODO: details of a group
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TODO" message:@"Not implemented yet" preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
+                GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+                groupChatDetailsVC.chatRoom = chatRoom;
+                
+                [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
             } else {
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
                 NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:[chatRoom peerHandleAtIndex:0]];
