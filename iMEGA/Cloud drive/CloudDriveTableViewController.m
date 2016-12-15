@@ -4,7 +4,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
-#import <QuickLook/QuickLook.h>
 
 #import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
@@ -19,7 +18,7 @@
 #import "MEGAAssetOperation.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 
@@ -30,7 +29,7 @@
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 
-@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIViewControllerTransitioningDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
 
     UIAlertView *folderAlertView;
     UIAlertView *removeAlertView;
@@ -43,8 +42,6 @@
     BOOL isSwipeEditing;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
-    
-    NSString *previewDocumentPath;
     
     NSUInteger numFilesAction, numFoldersAction;
 }
@@ -443,15 +440,20 @@
             } else {
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
                 
+                NSString *previewDocumentPath = nil;
                 if (offlineNodeExist) {
+                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
+                } else {
+                    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];                    
+                    NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
+                        previewDocumentPath = tmpFilePath;
+                    }
+                }
+
+                if (previewDocumentPath) {
                     if (!isMultimedia(node.name.pathExtension)) {
-                        previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                        
-                        QLPreviewController *previewController = [[QLPreviewController alloc] init];
-                        [previewController setDelegate:self];
-                        [previewController setDataSource:self];
-                        [previewController setTransitioningDelegate:self];
-                        [previewController setTitle:name];
+                        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];                       
                         [self presentViewController:previewController animated:YES completion:nil];
                     } else {
                         NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
@@ -471,7 +473,7 @@
                     }
                     return;
                 } else {
-                    if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0) {
+                    if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] > 0) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
                                                                             message:AMLocalizedString(@"documentOpening_alertMessage", nil)
                                                                            delegate:nil
@@ -510,6 +512,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row > self.nodes.size.integerValue) {
+        return;
+    }
     MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
@@ -563,8 +568,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node;
     if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (indexPath.row > matchSearchNodes.count) {
+            return @"";
+        }
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
+        if (indexPath.row > self.nodes.size.integerValue) {
+            return @"";
+        }
         node = [self.nodes nodeAtIndex:indexPath.row];
     }
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
@@ -1592,33 +1603,6 @@
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
     documentPicker.delegate = self;
     [self presentViewController:documentPicker animated:YES completion:nil];
-}
-
-#pragma mark - UIViewControllerTransitioningDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    
-    if ([presented isKindOfClass:[QLPreviewController class]]) {
-        return [[MEGAQLPreviewControllerTransitionAnimator alloc] init];
-    }
-    
-    return nil;
-}
-
-#pragma mark - QLPreviewControllerDataSource
-
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return 1;
-}
-
-- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL fileURLWithPath:previewDocumentPath];
-}
-
-#pragma mark - QLPreviewControllerDelegate
-
-- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
-    return YES;
 }
 
 #pragma mark - MEGARequestDelegate

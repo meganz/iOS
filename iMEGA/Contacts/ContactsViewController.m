@@ -321,20 +321,6 @@
     }
 }
 
-- (BOOL)validateEmail:(NSString *)email {
-    NSString *emailRegex =
-    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
-    
-    return [emailTest evaluateWithObject:email];
-}
-
 - (BOOL)userTypeHasChanged:(MEGAUser *)user {
     BOOL userHasChanged = NO;
     
@@ -524,8 +510,7 @@
     NSString *userName = nil;
     if (self.contactsMode == ContactsFolderSharedWith) {
         userName = [self.namesMutableDictionary objectForKey:userEmail];
-        BOOL isNameEmpty = [[userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
-        if (userName != nil && !isNameEmpty) {
+        if (userName != nil && ((id)userName != [NSNull null])) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userName];
             [cell.shareLabel setText:userEmail];
@@ -533,7 +518,9 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             [cell.nameLabel setText:userEmail];
             
-            [self requestUserNameAndLastNameWithEmail:userEmail];
+            if ((id)userName != [NSNull null]) {
+                [self requestUserNameAndLastNameWithEmail:userEmail];
+            }
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
@@ -884,7 +871,7 @@
     BOOL shouldEnable = YES;
     if ([alertView tag] == 3) {
         NSString *email = [[alertView textFieldAtIndex:0] text];
-        shouldEnable = [self validateEmail:email];
+        shouldEnable = [Helper validateEmail:email];
     }
     
     return shouldEnable;
@@ -1031,14 +1018,15 @@
                     case MEGAUserAttributeLastname: {
                         name = [self.namesMutableDictionary objectForKey:[request email]];
                         name = [name stringByAppendingString:[NSString stringWithFormat:@" %@", [request text]]];
-                        if (name != nil) {
+                        BOOL isNameEmpty = [[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+                        if (name != nil && !isNameEmpty) {
                             [self.namesMutableDictionary setObject:name forKey:[request email]];
                         } else {
-                            [self.namesMutableDictionary setObject:[request email] forKey:[request email]];
+                            [self.namesMutableDictionary setObject:[NSNull null] forKey:[request email]];
                         }
                         
                         [self.userNamesRequestedMutableArray removeObject:[request email]];
-                        shouldUpdateCell = YES;
+                        shouldUpdateCell = !isNameEmpty;
                         break;
                     }
                 }
