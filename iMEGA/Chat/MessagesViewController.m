@@ -1,6 +1,7 @@
 #import "MessagesViewController.h"
 
 #import "ContactDetailsViewController.h"
+#import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
 #import "MEGAMessage.h"
@@ -60,11 +61,7 @@
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
-    if (self.chatRoom.isGroup) {
-        self.title = self.chatRoom.title;
-    } else {
-        [self customNavigationBarLabel];
-    }
+    [self customNavigationBarLabel];
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     
@@ -111,17 +108,28 @@
 }
 
 - (void)customNavigationBarLabel {
-    NSString *chatRoomState;
-    switch (self.chatRoom.onlineStatus) {
-        case MEGAChatRoomStateOffline:
-            chatRoomState = AMLocalizedString(@"offline", @"");
-            break;
-        case MEGAChatRoomStateOnline:
-            chatRoomState = AMLocalizedString(@"online", @"");
-            break;
+    UILabel *label = [[UILabel alloc] init];
+    if (self.chatRoom.isGroup) {
+        NSString *title = self.chatRoom.title;
+        NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
+        [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:18.0f] range:[title rangeOfString:title]];
+        [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.attributedText = titleMutableAttributedString;
+    } else {
+        NSString *chatRoomState;
+        switch (self.chatRoom.onlineStatus) {
+            case MEGAChatRoomStateOffline:
+                chatRoomState = AMLocalizedString(@"offline", @"Title of the Offline section");
+                break;
+            case MEGAChatRoomStateOnline:
+                chatRoomState = AMLocalizedString(@"online", nil);
+                break;
+        }
+        
+        label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
     }
     
-    UILabel *label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
     [self.navigationItem setTitleView:label];
     
@@ -212,7 +220,10 @@
 
 - (void)chatRoomTitleDidTap {
     if (self.chatRoom.isGroup) {
-        //TODO: Group chat details
+        GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
+        groupChatDetailsVC.chatRoom = self.chatRoom;
+        
+        [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
     } else {
         NSString *peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:[self.chatRoom peerHandleAtIndex:0]];
         NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:0];
@@ -639,9 +650,7 @@
     self.chatRoom = chat;
     switch (chat.changes) {
         case MEGAChatRoomChangeTypeStatus:
-            if (!self.chatRoom.isGroup) {
-                [self customNavigationBarLabel];
-            }
+            [self customNavigationBarLabel];
             break;
             
         case MEGAChatRoomChangeTypeUnreadCount:
@@ -653,11 +662,7 @@
             break;
             
         case MEGAChatRoomChangeTypeTitle:
-            if (self.chatRoom.isGroup) {
-                self.title = self.chatRoom.title;
-            } else {
-                [self customNavigationBarLabel];
-            }
+            [self customNavigationBarLabel];
             break;
             
         case MEGAChatRoomChangeTypeChatState:

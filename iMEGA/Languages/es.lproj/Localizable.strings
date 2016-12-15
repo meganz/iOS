@@ -858,9 +858,9 @@
 "clearChatHistory"="Limpiar historial del chat";
 /* The footer label for the 'Clear Chat History' section in the details of a chat room */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
-/* "Next" button in a dialog */
+/* 'Next' button in a dialog */
 "continue"="Continuar";
-/*  */
+/* Button title that allows the user to close a chat. */
 "closeChat"="Cerrar chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Carpetas compartidas";
@@ -874,5 +874,25 @@
 "reset"="Restablecer";
 /* Button title */
 "approve"="Aprobar";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Información del grupo";
+/* Label title for a group chat */
+"groupChat"="Chat de grupo";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Renombrar grupo";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Cambiar avatar del grupo";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Abandonar chat";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Abandonar grupo";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Carpetas compartidas";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participantes";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderador";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Estándar";
 /* Alert message shown when a chat does not exist */
 "Chat not found"="Chat no encontrado";

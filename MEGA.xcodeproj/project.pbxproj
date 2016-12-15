@@ -270,8 +270,11 @@
 		94E081E21DA571E0009CC8F7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E081E11DA571E0009CC8F7 /* GLKit.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
+		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E8130A3C1DA64E1500B1AD67 /* ParkAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
+		E81C8AD71DE5A38E00D7CEB4 /* MEGAParticipant.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */; };
+		E834AC531DEC25DC00F11BDB /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E834AC521DEC25DC00F11BDB /* ContactDetailsViewController.m */; };
 		E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
@@ -283,6 +286,7 @@
 		E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E889C9E81B566EC400ECEFDF /* UsageViewController.m */; };
 		E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		E8B3FE781DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B3FE771DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m */; };
+		E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */; };
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
@@ -815,10 +819,16 @@
 		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E80620A91CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
+		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
+		E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupChatDetailsViewTableViewCell.m; path = Chat/GroupChatDetailsViewTableViewCell.m; sourceTree = "<group>"; };
 		E8130A3A1DA64E1500B1AD67 /* ParkAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkAccountViewController.h; sourceTree = "<group>"; };
 		E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkAccountViewController.m; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
 		E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FolderLinkViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E81C8AD51DE5A38E00D7CEB4 /* MEGAParticipant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAParticipant.h; sourceTree = "<group>"; };
+		E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAParticipant.m; sourceTree = "<group>"; };
+		E834AC511DEC25DC00F11BDB /* ContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailsViewController.h; sourceTree = "<group>"; };
+		E834AC521DEC25DC00F11BDB /* ContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailsViewController.m; sourceTree = "<group>"; };
 		E8404E131D9BBFD100B196FA /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		E84CDB001A7292C9003F4C77 /* Links.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Links.storyboard; sourceTree = "<group>"; };
@@ -858,6 +868,8 @@
 		E894271F1CCF8411008D470D /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8B3FE761DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhyDoINeedARecoveryKeyViewController.h; sourceTree = "<group>"; };
 		E8B3FE771DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhyDoINeedARecoveryKeyViewController.m; sourceTree = "<group>"; };
+		E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewController.h; path = Chat/GroupChatDetailsViewController.h; sourceTree = "<group>"; };
+		E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupChatDetailsViewController.m; path = Chat/GroupChatDetailsViewController.m; sourceTree = "<group>"; };
 		E8B519211AC9CD8000BB7324 /* TransfersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransfersViewController.h; sourceTree = "<group>"; };
 		E8B519221AC9CD8000BB7324 /* TransfersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransfersViewController.m; sourceTree = "<group>"; };
 		E8B519231AC9CD8000BB7324 /* TransferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTableViewCell.h; sourceTree = "<group>"; };
@@ -1196,6 +1208,8 @@
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
 				415226751A692ECC00EC7BB6 /* ContactsViewController.m */,
+				E834AC511DEC25DC00F11BDB /* ContactDetailsViewController.h */,
+				E834AC521DEC25DC00F11BDB /* ContactDetailsViewController.m */,
 				415226761A692ECC00EC7BB6 /* ContactTableViewCell.h */,
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
 				415DCF221BF48EFA00914A1E /* ContactRequestsViewController.h */,
@@ -1697,6 +1711,8 @@
 			children = (
 				41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */,
 				41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */,
+				E81C8AD51DE5A38E00D7CEB4 /* MEGAParticipant.h */,
+				E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -1858,6 +1874,10 @@
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
+				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
+				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
+				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
+				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2426,6 +2446,7 @@
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
+				E81C8AD71DE5A38E00D7CEB4 /* MEGAParticipant.m in Sources */,
 				94BB901A1DA65F78008182BB /* MEGAChatSdk.mm in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
@@ -2451,9 +2472,11 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				417279451DB663FA001AC818 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
 				41D21E671D01AEC3002E6296 /* CTAssetsGridViewFooter.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
+				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				41ADAA191ADE8B8800641BB4 /* SVWebViewControllerActivityChrome.m in Sources */,
 				41E88F0E1CF451B000BD3B79 /* MWPhoto.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
