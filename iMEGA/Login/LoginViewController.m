@@ -81,6 +81,7 @@
             [operationQueue addOperation:operation];
         }
     }
+    [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
 }
 
 #pragma mark - Private

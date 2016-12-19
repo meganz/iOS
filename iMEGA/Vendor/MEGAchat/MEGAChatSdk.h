@@ -36,6 +36,13 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
     MEGAChatSourceRemote
 };
 
+typedef NS_ENUM (NSInteger, MEGAChatInit) {
+    MEGAChatInitError             = -1,
+    MEGAChatInitWaitingNewSession = 0,
+    MEGAChatInitOfflineSession,
+    MEGAChatInitOnlineSession
+};
+
 @interface MEGAChatSdk : NSObject
 
 
@@ -46,8 +53,7 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 - (instancetype)init:(MEGASdk *)megaSDK;
 
-- (void)initKarereWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
-- (void)initKarere;
+- (void)initKarereWithSid:(NSString *)sid;
 
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)connect;

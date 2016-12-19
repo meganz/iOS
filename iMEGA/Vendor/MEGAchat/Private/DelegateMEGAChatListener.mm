@@ -21,5 +21,12 @@ void DelegateMEGAChatListener::onChatListItemUpdate(megachat::MegaChatApi *api, 
             [listener onChatListItemUpdate:this->megaChatSDK item:[[MEGAChatListItem alloc]initWithMegaChatListItem:tempItem cMemoryOwn:YES]];
         });
     }
+}
 
+void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api, int newState) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatInitStateUpdate:newState:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [listener onChatInitStateUpdate:this->megaChatSDK newState:newState];
+        });
+    }
 }

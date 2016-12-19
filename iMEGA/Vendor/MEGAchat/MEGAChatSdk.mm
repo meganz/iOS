@@ -56,12 +56,8 @@ using namespace megachat;
     return self;
 }
 
-- (void)initKarereWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
-    self.megaChatApi->init([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
-}
-
-- (void)initKarere {
-    self.megaChatApi->init();
+- (void)initKarereWithSid:(NSString *)sid {
+    self.megaChatApi->init((sid != nil) ? [sid UTF8String] : NULL);
 }
 
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
