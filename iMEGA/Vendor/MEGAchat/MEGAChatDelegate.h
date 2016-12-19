@@ -10,6 +10,5 @@
 @optional
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item;
-- (void)onChatRoomUpdate:(MEGAChatSdk *)api chat:(MEGAChatRoom *)chat;
 
 @end
