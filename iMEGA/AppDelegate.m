@@ -113,6 +113,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     
     [self languageCompatibility];
@@ -197,6 +199,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (sessionV3) {
         isAccountFirstLogin = NO;
+        [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
@@ -1410,8 +1413,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self requestUserName];
             [self requestContactsFullname];
             [self setBadgeValueForIncomingContactRequests];
-            
-            [[MEGASdkManager sharedMEGAChatSdk] initKarereWithDelegate:self];
+            [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
             break;
         }
             
@@ -1594,17 +1596,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if ([error type] != MEGAChatErrorTypeOk)
-    {
-        NSLog(@"ERROR IN CHAT REQUEST");
+    if ([error type] != MEGAChatErrorTypeOk) {
+        MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
     }
     
-    NSLog(@"CHAT REQUEST FINISHED OK");
-    if ([request type] == MEGAChatRequestTypeInitialize)
-    {
-        [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
-    }
+    MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
+}
+
+- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(NSInteger)newState {
+    MEGALogInfo(@"onChatRequestFinish new state: %ld", newState);
 }
 
 

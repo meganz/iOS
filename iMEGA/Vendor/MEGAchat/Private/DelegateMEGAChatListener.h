@@ -10,6 +10,7 @@ public:
     id<MEGAChatDelegate>getUserListener();
     
     void onChatListItemUpdate(megachat::MegaChatApi *api, megachat::MegaChatListItem *item);
+    void onChatInitStateUpdate(megachat::MegaChatApi *api, int newState);
     
 private:
     MEGAChatSdk *megaChatSDK;
