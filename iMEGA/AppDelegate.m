@@ -199,7 +199,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (sessionV3) {
         isAccountFirstLogin = NO;
-        [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+        if ([[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3] == MEGAChatInitNoCache) {
+            [[MEGASdkManager sharedMEGASdk] invalidateCache];
+        }
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
