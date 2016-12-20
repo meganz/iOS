@@ -81,7 +81,9 @@
             [operationQueue addOperation:operation];
         }
     }
-    [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+    if ([[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil] == MEGAChatInitNoCache) {
+        [[MEGASdkManager sharedMEGASdk] invalidateCache];
+    }
 }
 
 #pragma mark - Private
