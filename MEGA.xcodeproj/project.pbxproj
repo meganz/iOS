@@ -274,7 +274,6 @@
 		E8130A3C1DA64E1500B1AD67 /* ParkAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
 		E81C8AD71DE5A38E00D7CEB4 /* MEGAParticipant.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */; };
-		E834AC531DEC25DC00F11BDB /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E834AC521DEC25DC00F11BDB /* ContactDetailsViewController.m */; };
 		E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
@@ -308,6 +307,8 @@
 		E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */; };
 		E8E1BD441BA98F5B00AB689D /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E1BD431BA98F5B00AB689D /* libresolv.dylib */; };
 		E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */; };
+		E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */; };
+		E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */; };
 		E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */; };
 		E8ED84DB1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8ED84DA1B010BDF008FCDDC /* CameraUploadsPopUpViewController.m */; };
 		E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
@@ -933,6 +934,9 @@
 		E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsTableViewCell.m; sourceTree = "<group>"; };
 		E8E1BD431BA98F5B00AB689D /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAOpenMessageHeaderView.h; path = Chat/MEGAOpenMessageHeaderView.h; sourceTree = "<group>"; };
+		E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAOpenMessageHeaderView.m; path = Chat/MEGAOpenMessageHeaderView.m; sourceTree = "<group>"; };
+		E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MEGAOpenMessageHeaderView.xib; path = Chat/MEGAOpenMessageHeaderView.xib; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 		E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsPopUpViewController.h; sourceTree = "<group>"; };
@@ -1874,6 +1878,9 @@
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
+				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
+				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
+				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
@@ -2215,6 +2222,7 @@
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				411504441CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png in Resources */,
+				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */,
 				411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */,
 				4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
@@ -2314,6 +2322,7 @@
 				4172793D1DB663FA001AC818 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
+				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
 				41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,

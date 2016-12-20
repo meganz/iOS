@@ -3,10 +3,15 @@
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
+#import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessage.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate>
+
+@property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 
 @property (nonatomic, strong) NSMutableArray *indexesMessages;
 @property (nonatomic, strong) NSMutableDictionary *messagesDictionary;
@@ -18,6 +23,7 @@
 @property (nonatomic, strong) MEGAMessage *editMessage;
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
+@property (nonatomic, assign) BOOL areMessagesLoaded;
 
 @end
 
@@ -47,6 +53,8 @@
     
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"MEGAOpenMessageHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID"];
     
      //Set up message accessory button delegate and configuration
     self.collectionView.accessoryDelegate = self;
@@ -88,6 +96,7 @@
 #pragma mark - Private methods
 
 - (void)loadMessages {
+    self.areMessagesLoaded = NO;
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:16];
     switch (loadMessage) {
         case 0:
@@ -241,6 +250,46 @@
     }
 }
 
+- (void)setChatOpenMessageForIndexPath:(NSIndexPath *)indexPath {
+    if (self.openMessageHeaderView == nil) {
+        self.openMessageHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID" forIndexPath:indexPath];
+    }
+    
+    NSString *participantsNames = @"";
+    for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
+        NSString *peerName;
+        NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
+        if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+            peerName = peerFirstname;
+        } else {
+            NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
+            if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+                peerName = peerLastname;
+            }
+        }
+        
+        if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
+            participantsNames = [participantsNames stringByAppendingString:peerName];
+        } else {
+            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
+        }
+    }
+    self.openMessageHeaderView.conversationWithLabel.text = [NSString stringWithFormat:AMLocalizedString(@"conversationWith", @""), participantsNames];
+    self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
+    
+    NSString *confidentialityExplanationString = AMLocalizedString(@"confidentialityExplanation", @"Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
+    NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S] ", confidentialityString] withString:@""];
+    self.openMessageHeaderView.confidentialityLabel.text = confidentialityString;
+    self.openMessageHeaderView.confidentialityExplanationLabel.text = confidentialityExplanationString;
+    
+    NSString *authenticityExplanationString = AMLocalizedString(@"authenticityExplanation", @"Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
+    NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S] ", authenticityString] withString:@""];
+    self.openMessageHeaderView.authenticityLabel.text = authenticityString;
+    self.openMessageHeaderView.authenticityExplanationLabel.text = authenticityExplanationString;
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -294,6 +343,13 @@
                                               otherButtonTitles:NSLocalizedString(@"Send photo", nil), NSLocalizedString(@"Send location", nil), NSLocalizedString(@"Send video", nil), NSLocalizedString(@"Send audio", nil), nil];
     
     [sheet showFromToolbar:self.inputToolbar];
+}
+
+- (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
+    CGFloat topInset = ([UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height);
+    UIEdgeInsets insets = UIEdgeInsetsMake(topInset, 0.0f, bottom, 0.0f);
+    self.collectionView.contentInset = insets;
+    self.collectionView.scrollIndicatorInsets = insets;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -443,6 +499,25 @@
     
     cell.accessoryButton.hidden = YES;
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        [self setChatOpenMessageForIndexPath:indexPath];
+        return self.openMessageHeaderView;
+    }
+
+    return reusableview;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
+    CGFloat height = (isiPhone4XOr5X ? 340.0f : 320.0f);
+    CGFloat minimumHeight = self.areMessagesLoaded ? height : 0.0f;
+    
+    return CGSizeMake(self.view.frame.size.width, minimumHeight);
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -615,6 +690,7 @@
         }
     } else {
         [self.collectionView reloadData];
+        self.areMessagesLoaded = YES;
         [self scrollToBottomAnimated:YES];
     }
 }
