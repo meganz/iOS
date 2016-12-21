@@ -131,7 +131,7 @@
 
 - (void)setUserAvatar {
     MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    [self.userAvatarImageView mnz_setImageForUser:myUser];
+    [self.userAvatarImageView mnz_setImageForUserHandle:myUser.handle];
 }
 
 - (NSMutableAttributedString *)textForSizeLabels:(NSString *)stringFromByteCount {

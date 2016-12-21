@@ -21,10 +21,11 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUser:(MEGAUser *)user firstname:(NSString *)firstname lastname:(NSString *)lastname;
-- (void)updateUser:(MEGAUser *)user firstname:(NSString *)firstname;
-- (void)updateUser:(MEGAUser *)user lastname:(NSString *)lastname;
-- (MOUser *)fetchUserWithMEGAUser:(MEGAUser *)user;
+- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname email:(NSString *)email;
+- (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
+- (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
+- (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
+- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
 - (void)removeAllUsers;
 
 @end

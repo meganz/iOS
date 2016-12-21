@@ -584,7 +584,7 @@
     if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
         if ([self.node isInShare]) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
-            [cell.thumbnailImageView mnz_setImageForUser:user];
+            [cell.thumbnailImageView mnz_setImageForUserHandle:user.handle];
             
             NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", nil)];
             NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];

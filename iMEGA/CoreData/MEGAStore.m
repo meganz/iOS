@@ -77,7 +77,7 @@ static MEGAStore *_megaStore = nil;
     [offlineNode setLocalPath:path];
     [offlineNode setFingerprint:[api fingerprintForNode:node]];
 
-    MEGALogDebug(@"Save context: base64 handle: %@ - local path: %@", node.base64Handle, path);
+    MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
     
     [self saveContext];
 }
@@ -129,6 +129,7 @@ static MEGAStore *_megaStore = nil;
 
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {
     [self.managedObjectContext deleteObject:offlineNode];
+    MEGALogDebug(@"Save context - remove offline node: %@", offlineNode);
     [self saveContext];
 }
 
@@ -141,6 +142,7 @@ static MEGAStore *_megaStore = nil;
     NSArray *offlineNodes = [self.managedObjectContext executeFetchRequest:allOfflineNodes error:&error];
 
     for (NSManagedObject *offNode in offlineNodes) {
+        MEGALogDebug(@"Save context - remove offline node: %@", offNode);
         [self.managedObjectContext deleteObject:offNode];
     }
     
@@ -149,8 +151,8 @@ static MEGAStore *_megaStore = nil;
 
 #pragma mark - MOUser entity
 
-- (void)insertUser:(MEGAUser *)user firstname:(NSString *)firstname lastname:(NSString *)lastname {
-    NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:user.handle];
+- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname email:(NSString *)email {
+    NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;
     
@@ -158,38 +160,50 @@ static MEGAStore *_megaStore = nil;
     moUser.base64userHandle = base64userHandle;
     moUser.firstname        = firstname;
     moUser.lastname         = lastname;
+    moUser.email            = email;
     
-    MEGALogDebug(@"Save context: base64 user handle: %@", base64userHandle);
+    MEGALogDebug(@"Save context - insert user: %@", moUser.description);
     
     [self saveContext];
 }
 
-- (void)updateUser:(MEGAUser *)user firstname:(NSString *)firstname {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+- (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
     
     if (moUser) {
         moUser.firstname = firstname;
+        MEGALogDebug(@"Save context - update firstname: %@", firstname);
         [self saveContext];
     }
 }
 
-- (void)updateUser:(MEGAUser *)user lastname:(NSString *)lastname {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+- (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
     
     if (moUser) {
         moUser.lastname = lastname;
+        MEGALogDebug(@"Save context - update lastname: %@", lastname);
         [self saveContext];
     }
-
 }
 
-- (MOUser *)fetchUserWithMEGAUser:(MEGAUser *)user {
+- (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
+    
+    if (moUser) {
+        moUser.email = email;
+        MEGALogDebug(@"Save context - update email: %@", email);
+        [self saveContext];
+    }
+}
+
+- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:user.handle]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
     [request setPredicate:predicate];
     
     NSError *error;
@@ -207,6 +221,7 @@ static MEGAStore *_megaStore = nil;
     NSArray *users = [self.managedObjectContext executeFetchRequest:allUsers error:&error];
     
     for (NSManagedObject *user in users) {
+        MEGALogDebug(@"Save context - remove user: %@", user);
         [self.managedObjectContext deleteObject:user];
     }
     

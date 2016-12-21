@@ -207,11 +207,11 @@
         }
         
         if ([participant.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
-            [cell.leftImageView mnz_setImageForUser:[[MEGASdkManager sharedMEGASdk] myUser]];
+            [cell.leftImageView mnz_setImageForUserHandle:[[MEGASdkManager sharedMEGASdk] myUser].handle];
         } else {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:participant.email];
             if (user) {
-                [cell.leftImageView mnz_setImageForUser:user];
+                [cell.leftImageView mnz_setImageForUserHandle:user.handle];
             } else {
                 [cell.leftImageView mnz_setImageForParticipant:participant];
             }

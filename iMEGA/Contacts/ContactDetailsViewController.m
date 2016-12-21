@@ -38,7 +38,7 @@
     self.navigationItem.title = AMLocalizedString(@"contactInfo", @"title of the contact properties screen");
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-    [self.avatarImageView mnz_setImageForUser:self.user];
+    [self.avatarImageView mnz_setImageForUserHandle:self.user.handle];
     
     //TODO: Show the blue check if the Contact is verified
     

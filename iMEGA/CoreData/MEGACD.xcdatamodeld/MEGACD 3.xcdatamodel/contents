@@ -8,11 +8,12 @@
     </entity>
     <entity name="User" representedClassName="MOUser" syncable="YES">
         <attribute name="base64userHandle" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="OfflineNode" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="User" positionX="-63" positionY="9" width="128" height="90"/>
+        <element name="User" positionX="-63" positionY="9" width="128" height="105"/>
     </elements>
 </model>
