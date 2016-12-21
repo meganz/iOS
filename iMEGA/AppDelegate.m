@@ -861,7 +861,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)requestUserName {
-    if (![[MEGAStore shareInstance] fetchUserWithMEGAUser:[[MEGASdkManager sharedMEGASdk] myUser]]) {
+    if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]]) {
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
     }
@@ -871,7 +871,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGAUserList *userList = [[MEGASdkManager sharedMEGASdk] contacts];
     for (NSInteger i = 0; i < userList.size.integerValue; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        if (![[MEGAStore shareInstance] fetchUserWithMEGAUser:user] && user.visibility == MEGAUserVisibilityVisible) {
+        if (![[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
@@ -1084,6 +1084,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
     NSInteger userListCount = userList.size.integerValue;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
+        
+        if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
+            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+            if (moUser) {
+                [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
+            } else {
+                [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+            }
+        }
+        
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
             if (user.isOwnChange == 0) { //If the change is external
                 if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
@@ -1551,23 +1561,22 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case MEGARequestTypeGetAttrUser: {
             MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
             if (user) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:user];
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
                 if (moUser) {
                     if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
-                        [[MEGAStore shareInstance] updateUser:user firstname:request.text];
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle firstname:request.text];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
-                        [[MEGAStore shareInstance] updateUser:user lastname:request.text];
-                        
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle lastname:request.text];
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUser:user firstname:request.text lastname:nil];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:request.text lastname:nil email:user.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUser:user firstname:nil lastname:request.text];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
                     }
                 }
             }

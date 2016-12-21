@@ -258,7 +258,7 @@
         
         cell.avatarImageView.image = avatar;
     } else {
-        [cell.avatarImageView mnz_setImageForUser:[[MEGASdkManager sharedMEGASdk] contactForEmail:[MEGASdk base64HandleForUserHandle:chatListItem.peerHandle]]];
+        [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
         if (chatListItem.onlineStatus == 0) {
             cell.onlineStatusView.backgroundColor = [UIColor mnz_gray666666];
         } else if (chatListItem.onlineStatus == 3) {

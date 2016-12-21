@@ -536,7 +536,7 @@
         }
     }
     
-    [cell.avatarImageView mnz_setImageForUser:user];
+    [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
     
     BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"done"]];
     

@@ -4,7 +4,7 @@
 @implementation MEGAUser (MNZCategory)
 
 - (NSString *)mnz_fullName {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithMEGAUser:self];
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.handle];
     NSString *fullName = nil;
     if (moUser) {
         if (moUser.firstname) {
