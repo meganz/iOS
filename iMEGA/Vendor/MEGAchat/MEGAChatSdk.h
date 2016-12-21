@@ -46,7 +46,7 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 
 @interface MEGAChatSdk : NSObject
 
-
+@property (nonatomic, assign) uint64_t myUserHandle;
 @property (nonatomic, readonly) MEGAChatRoomList *chatRooms;
 @property (nonatomic, readonly) MEGAChatListItemList *chatListItems;
 
