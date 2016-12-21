@@ -3,8 +3,6 @@
 #import "UIImage+GKContact.h"
 
 #import "UIImageView+MNZCategory.h"
-#import "MEGAUser+MNZCategory.h"
-#import "MEGAParticipant.h"
 #import "MEGAReachabilityManager.h"
 
 #import "GroupChatDetailsViewTableViewCell.h"
@@ -49,24 +47,12 @@
 - (void)setParticipants {
     self.participantsMutableArray = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
-        NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
-        NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
-        NSString *peerName = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
         uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:i];
-        NSString *peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:peerHandle];
-        MEGAChatRoomPrivilege peerChatRoomPrivilege = [self.chatRoom peerPrivilegeAtIndex:i];
-        
-        MEGAParticipant *participant = [[MEGAParticipant alloc] initWithName:peerName email:peerEmail handle:peerHandle chatRoomPrivilege:peerChatRoomPrivilege];
-        [self.participantsMutableArray addObject:participant];
+        [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:peerHandle]];
     }
     
-    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    NSString *myName = myUser.mnz_fullName;
-    NSString *myEmail = [[MEGASdkManager sharedMEGASdk] myEmail];
-    uint64_t myHandle = myUser.handle;
-    MEGAChatRoomPrivilege myChatRoomPrivilege = self.chatRoom.ownPrivilege;
-    MEGAParticipant *participant = [[MEGAParticipant alloc] initWithName:myName email:myEmail handle:myHandle chatRoomPrivilege:myChatRoomPrivilege];
-    [self.participantsMutableArray addObject:participant];
+    uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
+    [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
 }
 
 - (void)alertTextFieldDidChange:(UITextField *)sender {
@@ -197,30 +183,28 @@
             }
         }
     } else if (indexPath.section == 1) {
-        MEGAParticipant *participant = [self.participantsMutableArray objectAtIndex:indexPath.row];
-        BOOL isNameEmpty = [[participant.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+        uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
+        NSString *peerFullname = [[NSString alloc] init];
+        if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+            // TODO: myUserName + (Me)
+            peerFullname = @"(ME)";
+        } else {
+            peerFullname = [self.chatRoom peerFullnameByHandle:handle];
+        }
+        BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
         if (isNameEmpty) {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
         } else {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantTypeID" forIndexPath:indexPath];
-            cell.nameLabel.text = participant.name;
+            cell.nameLabel.text = peerFullname;
         }
         
-        if ([participant.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
-            [cell.leftImageView mnz_setImageForUserHandle:[[MEGASdkManager sharedMEGASdk] myUser].handle];
-        } else {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:participant.email];
-            if (user) {
-                [cell.leftImageView mnz_setImageForUserHandle:user.handle];
-            } else {
-                [cell.leftImageView mnz_setImageForParticipant:participant];
-            }
-        }
+        [cell.leftImageView mnz_setImageForUserHandle:handle];
         
-        cell.emailLabel.text = participant.email;
+        cell.emailLabel.text = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:handle];
         
         UIImage *permissionsImage;
-        switch (participant.chatRoomPrivilege) {
+        switch ([self.chatRoom peerPrivilegeAtIndex:indexPath.row]) {
             case MEGAChatRoomPrivilegeUnknown:
                 permissionsImage = [UIImage imageNamed:@"permissions"];
                 break;

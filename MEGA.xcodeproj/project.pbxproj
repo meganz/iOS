@@ -273,7 +273,6 @@
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E8130A3C1DA64E1500B1AD67 /* ParkAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
-		E81C8AD71DE5A38E00D7CEB4 /* MEGAParticipant.m in Sources */ = {isa = PBXBuildFile; fileRef = E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */; };
 		E8404E151D9BBFD100B196FA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */; };
 		E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84CDB001A7292C9003F4C77 /* Links.storyboard */; };
 		E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85044C51A6D84620064B675 /* FileLinkViewController.m */; };
@@ -826,8 +825,6 @@
 		E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkAccountViewController.m; sourceTree = "<group>"; };
 		E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderLinkViewController.h; sourceTree = "<group>"; };
 		E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FolderLinkViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E81C8AD51DE5A38E00D7CEB4 /* MEGAParticipant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAParticipant.h; sourceTree = "<group>"; };
-		E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAParticipant.m; sourceTree = "<group>"; };
 		E834AC511DEC25DC00F11BDB /* ContactDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDetailsViewController.h; sourceTree = "<group>"; };
 		E834AC521DEC25DC00F11BDB /* ContactDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactDetailsViewController.m; sourceTree = "<group>"; };
 		E8404E131D9BBFD100B196FA /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
@@ -1715,8 +1712,6 @@
 			children = (
 				41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */,
 				41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */,
-				E81C8AD51DE5A38E00D7CEB4 /* MEGAParticipant.h */,
-				E81C8AD61DE5A38E00D7CEB4 /* MEGAParticipant.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -2455,7 +2450,6 @@
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
-				E81C8AD71DE5A38E00D7CEB4 /* MEGAParticipant.m in Sources */,
 				94BB901A1DA65F78008182BB /* MEGAChatSdk.mm in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
