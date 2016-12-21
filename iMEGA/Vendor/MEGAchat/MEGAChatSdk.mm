@@ -77,6 +77,10 @@ using namespace megachat;
     return _megaChatApi;
 }
 
+- (uint64_t)myUserHandle {
+    return self.megaChatApi->getMyUserHandle();
+}
+
 #pragma mark - Logout
 
 - (void)logoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
