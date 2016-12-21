@@ -91,6 +91,16 @@ using namespace megachat;
     return self.megaChatRoom->getPeerLastnameByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastnameByHandle(userHande)] : nil;
 }
 
+- (NSString *)peerFullnameByHandle:(uint64_t)userHande {
+    const char *val = self.megaChatRoom->getPeerFullnameByHandle(userHande);
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
+}
+
 - (uint64_t)peerHandleAtIndex:(NSUInteger)index {
     return self.megaChatRoom->getPeerHandle((int)index);
 }
@@ -105,6 +115,16 @@ using namespace megachat;
 
 - (NSString *)peerLastnameAtIndex:(NSUInteger)index {
     return self.megaChatRoom->getPeerLastname((unsigned int)index) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastname((unsigned int)index)] : nil;
+}
+
+- (NSString *)peerFullnameAtIndex:(NSUInteger)index {
+    const char *val = self.megaChatRoom->getPeerFullname((unsigned int)index);
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType {
