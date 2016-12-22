@@ -81,7 +81,15 @@
             [operationQueue addOperation:operation];
         }
     }
-    if ([[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil] == MEGAChatInitNoCache) {
+    MEGAChatInit ret = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+    if (ret != MEGAChatInitWaitingNewSession) {
+        MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        [[MEGASdkManager sharedMEGAChatSdk] logout];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else if (ret == MEGAChatInitNoCache) {
         [[MEGASdkManager sharedMEGASdk] invalidateCache];
     }
 }

@@ -199,9 +199,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (sessionV3) {
         isAccountFirstLogin = NO;
-        if ([[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3] == MEGAChatInitNoCache) {
+        MEGAChatInit ret = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+        if (ret == MEGAChatInitNoCache) {
             [[MEGASdkManager sharedMEGASdk] invalidateCache];
+        } else if (ret == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
         }
+        
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
@@ -1615,8 +1624,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
 }
 
-- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(NSInteger)newState {
+- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatRequestFinish new state: %ld", newState);
+    if (newState == MEGAChatInitError) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"The status of the initialization has changed to error." preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        [[MEGASdkManager sharedMEGAChatSdk] logout];
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 

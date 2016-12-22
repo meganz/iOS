@@ -26,7 +26,7 @@ void DelegateMEGAChatListener::onChatListItemUpdate(megachat::MegaChatApi *api, 
 void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api, int newState) {
     if (listener != nil && [listener respondsToSelector:@selector(onChatInitStateUpdate:newState:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [listener onChatInitStateUpdate:this->megaChatSDK newState:newState];
+            [listener onChatInitStateUpdate:this->megaChatSDK newState:(MEGAChatInit)newState];
         });
     }
 }
