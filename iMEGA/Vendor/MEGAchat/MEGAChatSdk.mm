@@ -161,7 +161,13 @@ using namespace megachat;
 #pragma mark - Users attributes
 
 - (NSString *)userEmailByUserHandle:(uint64_t)userHandle {
-    return self.megaChatApi->getUserEmail(userHandle) ? [[NSString alloc] initWithUTF8String:self.megaChatApi->getUserEmail(userHandle)] : nil;
+    const char *val = self.megaChatApi->getUserEmail(userHandle);
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
 }
 
 #pragma mark - Chat management
