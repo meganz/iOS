@@ -1,15 +1,16 @@
 
 #import <Foundation/Foundation.h>
 #import "MEGAChatListItem.h"
-#import "MEGAChatRoom.h"
 
 @class MEGAChatSdk;
+
+typedef NS_ENUM (NSInteger, MEGAChatInit);
 
 @protocol MEGAChatDelegate <NSObject>
 
 @optional
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item;
-- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(NSInteger)newState;
+- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState;
 
 @end
