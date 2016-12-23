@@ -12,6 +12,8 @@
 "error"="Error";
 /*  */
 "name"="Nombre";
+/* Caption of a button to edit the files that are selected */
+"edit" = "Editar";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Guardada";
 /*  */
@@ -766,6 +768,8 @@
 "usedSpaceLabel"="Usado";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponible";
+/* title of the My Account screen */
+"accountType"="Tipo de cuenta";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */

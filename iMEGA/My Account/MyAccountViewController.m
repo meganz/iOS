@@ -30,7 +30,7 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIButton *usageButton;
 @property (weak, nonatomic) IBOutlet UILabel *usageLabel;
@@ -52,6 +52,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *availableLabel;
 @property (weak, nonatomic) IBOutlet UILabel *availableSpaceLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
+
 @property (weak, nonatomic) IBOutlet UIView *freeView;
 @property (weak, nonatomic) IBOutlet UILabel *freeStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *upgradeToProButton;
@@ -59,10 +61,17 @@
 @property (weak, nonatomic) IBOutlet UIView *proView;
 @property (weak, nonatomic) IBOutlet UILabel *proStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *proExpiryDateLabel;
-@property (weak, nonatomic) IBOutlet UIButton *purchasesHistoryButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
 @property (nonatomic) MEGAAccountType megaAccountType;
 @property (strong, nonatomic) MEGAPricing *pricing;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usedLabelTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *freeViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *proViewTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutTopLayoutConstraint;
 
 @end
 
@@ -76,14 +85,11 @@
     self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
     self.userAvatarImageView.layer.masksToBounds = YES;
     
-    self.upgradeToProButton.layer.borderWidth = 2.0f;
-    self.upgradeToProButton.layer.borderColor = [[UIColor mnz_redD90007] CGColor];
     self.upgradeToProButton.layer.cornerRadius = 4;
-    self.upgradeToProButton.layer.masksToBounds = YES;
     
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
-    [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
+    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     
     [self.usageLabel setText:AMLocalizedString(@"usage", nil)];
     [self.settingsLabel setText:AMLocalizedString(@"settingsTitle", nil)];
@@ -92,14 +98,25 @@
     [self.usedLabel setText:AMLocalizedString(@"usedSpaceLabel", @"Used")];
     [self.availableLabel setText:AMLocalizedString(@"availableLabel", @"Available")];
     
+    NSString *accountTypeString = [AMLocalizedString(@"accountType", @"title of the My Account screen") stringByReplacingOccurrencesOfString:@":" withString:@""];
+    self.accountTypeLabel.text = accountTypeString;
+    
     [self.freeStatusLabel setText:AMLocalizedString(@"free", nil)];
     [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeAccount", nil) forState:UIControlStateNormal];
     
-    [self.purchasesHistoryButton setTitle:AMLocalizedString(@"purchasesHistory", @"Purchases history") forState:UIControlStateNormal];
+    self.logoutButton.titleLabel.text = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
     
     isAccountDetailsAvailable = NO;
     byteCountFormatter = [[NSByteCountFormatter alloc] init];
     [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
+    
+    if ([[UIDevice currentDevice] iPhone4X]) {
+        self.usedLabelTopLayoutConstraint.constant = 8.0f;
+        self.freeViewTopLayoutConstraint.constant = 8.0f;
+        self.upgradeAccountTopLayoutConstraint.constant = 8.0f;
+        self.proViewTopLayoutConstraint.constant = 8.0f;
+        self.logoutTopLayoutConstraint.constant = 105.0f;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -174,7 +191,11 @@
 
 #pragma mark - IBActions
 
-- (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
+- (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
+    //TODO: Change Name / Change Avatar / Remove Avatar
+}
+
+- (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:self];
     }
