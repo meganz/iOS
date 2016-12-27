@@ -252,9 +252,7 @@
 		947E55A21DA2D8A00025B551 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55971DA2D8A00025B551 /* libevent_openssl.a */; };
 		947E55A31DA2D8A00025B551 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55981DA2D8A00025B551 /* libevent_pthreads.a */; };
 		947E55A41DA2D8A00025B551 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55991DA2D8A00025B551 /* libevent.a */; };
-		949092201DA2D995001C2AC7 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559A1DA2D8A00025B551 /* libexpat.a */; };
 		949092231DA2D9C3001C2AC7 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559F1DA2D8A00025B551 /* libws.a */; };
-		94BB900F1DA5859A008182BB /* libstrophe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB900E1DA58599008182BB /* libstrophe.a */; };
 		94BB90111DA5870C008182BB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90101DA5870C008182BB /* libicucore.tbd */; };
 		94BB90131DA58719008182BB /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90121DA58719008182BB /* libxml2.tbd */; };
 		94BB90171DA587D9008182BB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BB90161DA587D9008182BB /* VideoToolbox.framework */; };
@@ -264,9 +262,7 @@
 		94BB90281DA6649D008182BB /* MEGAChatError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB90251DA6649D008182BB /* MEGAChatError.mm */; };
 		94BB90291DA6649D008182BB /* MEGAChatRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94BB90271DA6649D008182BB /* MEGAChatRequest.mm */; };
 		94C828731DA2DA3100A22DB0 /* libservices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559D1DA2D8A00025B551 /* libservices.a */; };
-		94C828761DA2DA5800A22DB0 /* librtcmodule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559C1DA2D8A00025B551 /* librtcmodule.a */; };
 		94C828771DA2DA7900A22DB0 /* libkarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E559B1DA2D8A00025B551 /* libkarere.a */; };
-		94E081E01DA57146009CC8F7 /* libWebRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E081DF1DA57146009CC8F7 /* libWebRTC.a */; };
 		94E081E21DA571E0009CC8F7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E081E11DA571E0009CC8F7 /* GLKit.framework */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
@@ -787,12 +783,9 @@
 		947E55971DA2D8A00025B551 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_openssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_openssl.a; sourceTree = "<group>"; };
 		947E55981DA2D8A00025B551 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_pthreads.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_pthreads.a; sourceTree = "<group>"; };
 		947E55991DA2D8A00025B551 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent.a; sourceTree = "<group>"; };
-		947E559A1DA2D8A00025B551 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libexpat.a; sourceTree = "<group>"; };
 		947E559B1DA2D8A00025B551 /* libkarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkarere.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libkarere.a; sourceTree = "<group>"; };
-		947E559C1DA2D8A00025B551 /* librtcmodule.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librtcmodule.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/librtcmodule.a; sourceTree = "<group>"; };
 		947E559D1DA2D8A00025B551 /* libservices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libservices.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libservices.a; sourceTree = "<group>"; };
 		947E559F1DA2D8A00025B551 /* libws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libws.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libws.a; sourceTree = "<group>"; };
-		94BB900E1DA58599008182BB /* libstrophe.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libstrophe.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libstrophe.a; sourceTree = "<group>"; };
 		94BB90101DA5870C008182BB /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		94BB90121DA58719008182BB /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		94BB90141DA5877C008182BB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -812,7 +805,6 @@
 		94BB902A1DA66A37008182BB /* MEGAChatError+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatError+init.h"; sourceTree = "<group>"; };
 		94BB902B1DA66A37008182BB /* MEGAChatRequest+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatRequest+init.h"; sourceTree = "<group>"; };
 		94BB902C1DA66A37008182BB /* MEGAChatSdk+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatSdk+init.h"; sourceTree = "<group>"; };
-		94E081DF1DA57146009CC8F7 /* libWebRTC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWebRTC.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libWebRTC.a; sourceTree = "<group>"; };
 		94E081E11DA571E0009CC8F7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -960,14 +952,10 @@
 				94BB90111DA5870C008182BB /* libicucore.tbd in Frameworks */,
 				94E081E21DA571E0009CC8F7 /* GLKit.framework in Frameworks */,
 				94C828771DA2DA7900A22DB0 /* libkarere.a in Frameworks */,
-				94C828761DA2DA5800A22DB0 /* librtcmodule.a in Frameworks */,
 				94C828731DA2DA3100A22DB0 /* libservices.a in Frameworks */,
 				949092231DA2D9C3001C2AC7 /* libws.a in Frameworks */,
-				949092201DA2D995001C2AC7 /* libexpat.a in Frameworks */,
 				947E55A01DA2D8A00025B551 /* libevent_core.a in Frameworks */,
 				947E55A11DA2D8A00025B551 /* libevent_extra.a in Frameworks */,
-				94BB900F1DA5859A008182BB /* libstrophe.a in Frameworks */,
-				94E081E01DA57146009CC8F7 /* libWebRTC.a in Frameworks */,
 				947E55A21DA2D8A00025B551 /* libevent_openssl.a in Frameworks */,
 				947E55A31DA2D8A00025B551 /* libevent_pthreads.a in Frameworks */,
 				947E55A41DA2D8A00025B551 /* libevent.a in Frameworks */,
@@ -1498,17 +1486,13 @@
 				94BB90141DA5877C008182BB /* CoreVideo.framework */,
 				94BB90121DA58719008182BB /* libxml2.tbd */,
 				94BB90101DA5870C008182BB /* libicucore.tbd */,
-				94BB900E1DA58599008182BB /* libstrophe.a */,
 				94E081E11DA571E0009CC8F7 /* GLKit.framework */,
-				94E081DF1DA57146009CC8F7 /* libWebRTC.a */,
 				947E55951DA2D8A00025B551 /* libevent_core.a */,
 				947E55961DA2D8A00025B551 /* libevent_extra.a */,
 				947E55971DA2D8A00025B551 /* libevent_openssl.a */,
 				947E55981DA2D8A00025B551 /* libevent_pthreads.a */,
 				947E55991DA2D8A00025B551 /* libevent.a */,
-				947E559A1DA2D8A00025B551 /* libexpat.a */,
 				947E559B1DA2D8A00025B551 /* libkarere.a */,
-				947E559C1DA2D8A00025B551 /* librtcmodule.a */,
 				947E559D1DA2D8A00025B551 /* libservices.a */,
 				947E559F1DA2D8A00025B551 /* libws.a */,
 				41E23C3C1C6BB992003E1DA9 /* Photos.framework */,
