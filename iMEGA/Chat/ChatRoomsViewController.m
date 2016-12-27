@@ -17,15 +17,17 @@
 #import "UIImageView+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
 @property (nonatomic, strong) NSArray *chatListItemArray;
+@property (nonatomic, strong) NSArray *searchChatListItemArray;
 @property (nonatomic, strong) NSMutableDictionary *chatListItemIndexPathDictionary;
 
+@property (strong, nonatomic) UISearchController *searchController;
 @end
 
 @implementation ChatRoomsViewController
@@ -37,8 +39,28 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.title = AMLocalizedString(@"Chat", nil);
+    self.tableView.estimatedRowHeight = 64.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    // No search results controller to display the search results in the current view
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
+    self.searchController.searchBar.translucent = YES;
+    [self.searchController.searchBar sizeToFit];
+    
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0];
+    searchTextField.textColor = [UIColor mnz_gray999999];
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    self.title = AMLocalizedString(@"Chats", nil);
     self.chatListItemIndexPathDictionary = [[NSMutableDictionary alloc] init];
+    
+    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -50,7 +72,6 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
     [self sortChatListItems];
-    
     [self.tableView reloadData];
 }
 
@@ -62,20 +83,20 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
-
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        return [NSMutableAttributedString mnz_darkenSectionTitleInString:@"No Conversations" sectionTitle:@"Conversations"];
+    NSString *text = [[NSString alloc] init];
+    if (self.searchController.isActive ) {
+        if (self.searchController.searchBar.text.length > 0) {
+            text = AMLocalizedString(@"noResults", nil);
+        }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:@"No Conversations" sectionTitle:@"Conversations"];
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Light" size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -84,7 +105,15 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         // TODO: We need change this image with a custom image provided by design team
-        return [UIImage imageNamed:@"emptyContacts"];
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                return [UIImage imageNamed:@"emptySearch"];
+            } else {
+                return nil;
+            }
+        } else {
+            return [UIImage imageNamed:@"emptyContacts"];
+        }
     } else {
         return [UIImage imageNamed:@"noInternetConnection"];
     }
@@ -93,7 +122,9 @@
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        text = @"Invite";
+        if (!self.searchController.isActive) {
+            text = @"Invite";
+        }
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Light" size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
@@ -166,6 +197,18 @@
     }
 }
 
+- (MEGAChatListItem *)chatListItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAChatListItem *chatListItem = nil;
+    if (indexPath) {
+        if (self.searchController.isActive) {
+            chatListItem = [self.searchChatListItemArray objectAtIndex:indexPath.row];
+        } else {
+            chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+        }
+    }
+    return chatListItem;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -235,13 +278,32 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chatListItemArray.count;
+    
+    NSInteger numberOfRows = 0;
+    if (self.searchController.isActive) {
+        numberOfRows = self.searchChatListItemArray.count;
+    } else {
+        numberOfRows = self.chatListItemArray.count;
+    }
+    
+    if (numberOfRows == 0) {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    } else {
+        if (self.searchController.isActive) {
+            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        }
+        
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    }
+    
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+    ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
     
-    MEGAChatListItem *chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+    
     MEGALogInfo(@"%@", chatListItem);
     
     cell.chatTitle.text = chatListItem.title;
@@ -280,10 +342,15 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 64;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAChatListItem *chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+    self.searchController.active   = NO;
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
@@ -292,8 +359,8 @@
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAChatListItem *chatListItem = [self.chatListItemArray objectAtIndex:indexPath.row];
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {    
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     
     UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"More", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -380,6 +447,25 @@
     deleteAction.backgroundColor = [UIColor mnz_redFF333A];
     
     return @[deleteAction, moreAction];
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchChatListItemArray = nil;
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    if ([searchString isEqualToString:@""]) {
+        self.searchChatListItemArray = self.chatListItemArray;
+    } else {
+        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
+        self.searchChatListItemArray = [self.chatListItemArray filteredArrayUsingPredicate:resultPredicate];
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - MEGAChatRequestDelegate

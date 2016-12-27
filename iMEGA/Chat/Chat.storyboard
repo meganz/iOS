@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eDp-9x-QPr">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -42,7 +42,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FcT-ET-3dh" id="jai-hc-4uV">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="63.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dTo-eS-oy4">
@@ -136,10 +136,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="GpR-KA-SKM" secondAttribute="bottom" constant="-64" id="EbS-fZ-ZUb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OEw-WR-Lm7" secondAttribute="trailing" constant="-20" id="Gwq-bh-AUQ"/>
-                            <constraint firstItem="4JR-KJ-RZB" firstAttribute="top" secondItem="OEw-WR-Lm7" secondAttribute="bottom" constant="-49" id="dv0-Wj-Fx2"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="lqj-pM-q0p" secondAttribute="leadingMargin" constant="-20" id="kg3-bv-ODC"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="height" secondItem="lqj-pM-q0p" secondAttribute="height" id="51W-bD-gK2"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="lqj-pM-q0p" secondAttribute="top" id="Bxm-9P-9fd"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="lqj-pM-q0p" secondAttribute="leading" id="cHf-GK-XiU"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="width" secondItem="lqj-pM-q0p" secondAttribute="width" id="pvL-gt-KFt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="p5b-7o-fgJ">
