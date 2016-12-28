@@ -36,16 +36,15 @@ using namespace megachat;
 
 @implementation MEGAChatSdk
 
-//static DelegateMEGAChatLogerListener *externalLogger = NULL;
+static DelegateMEGAChatLogerListener *externalLogger = NULL;
 
 #pragma mark - Init
 
 - (instancetype)init:(MEGASdk *)megaSDK {
     
-//    if (!externalLogger)
-//    {
-//        externalLogger = new DelegateMEGAChatLogerListener(nil);
-//    }
+    if (!externalLogger) {
+        externalLogger = new DelegateMEGAChatLogerListener(nil);
+    }
     
     self.megaChatApi = new MegaChatApi((mega::MegaApi *)[megaSDK getCPtr]);
     
@@ -130,6 +129,48 @@ using namespace megachat;
     {
         self.megaChatApi->removeChatListener(listenersToRemove[i]);
     }
+}
+
+#pragma mark - My user attributes
+
+- (NSString *)myFirstname {
+    char *val = self.megaChatApi->getMyFirstname();
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
+}
+
+- (NSString *)myLastname {
+    char *val = self.megaChatApi->getMyLastname();
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
+}
+
+- (NSString *)myFullname {
+    char *val = self.megaChatApi->getMyFullname();
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
+}
+
+- (NSString *)myEmail {
+    char *val = self.megaChatApi->getMyEmail();
+    if (!val) return nil;
+    
+    NSString *ret = [[NSString alloc] initWithUTF8String:val];
+    
+    delete [] val;
+    return ret;
 }
 
 #pragma mark - Chat rooms and chat list items
