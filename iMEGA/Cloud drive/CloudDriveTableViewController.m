@@ -866,40 +866,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    MEGANode *node = [self.selectedNodesArray objectAtIndex:0];
-    NSString *nodeName = [textField text];
-    UITextPosition *beginning = textField.beginningOfDocument;
-    UITextRange *textRange;
-    
-    switch ([node type]) {
-        case MEGANodeTypeFile: {
-            if ([[nodeName pathExtension] isEqualToString:@""] && [nodeName isEqualToString:[nodeName stringByDeletingPathExtension]]) { //File without extension
-                UITextPosition *end = textField.endOfDocument;
-                textRange = [textField textRangeFromPosition:beginning  toPosition:end];
-            } else {
-                NSRange filenameRange = [nodeName rangeOfString:@"." options:NSBackwardsSearch];
-                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
-                textRange = [textField textRangeFromPosition:beginning  toPosition:beforeExtension];
-            }
-            [textField setSelectedTextRange:textRange];
-            break;
-        }
-            
-        case MEGANodeTypeFolder: {
-            UITextPosition *end = textField.endOfDocument;
-            textRange = [textField textRangeFromPosition:beginning  toPosition:end];
-            [textField setSelectedTextRange:textRange];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - Private
 
 - (void)reloadUI {
