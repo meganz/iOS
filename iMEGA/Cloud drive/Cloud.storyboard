@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6uN-CI-8KQ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -306,11 +306,11 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addBarButtonItem" destination="ygf-3J-YTT" id="7Zl-24-bBR"/>
                         <outlet property="carbonCopyBarButtonItem" destination="r3I-l7-OFS" id="rtT-kF-4ld"/>
                         <outlet property="deleteBarButtonItem" destination="yUd-0E-SLT" id="vo9-6g-XHd"/>
                         <outlet property="downloadBarButtonItem" destination="zRS-Iw-IxB" id="0Oz-5g-uLM"/>
                         <outlet property="editBarButtonItem" destination="mLN-ad-YAf" id="cvn-77-Glh"/>
+                        <outlet property="moreBarButtonItem" destination="swl-67-V4v" id="c5k-Jp-gmZ"/>
                         <outlet property="moveBarButtonItem" destination="paI-37-wBm" id="Sj3-a8-hXZ"/>
                         <outlet property="searchDisplayController" destination="qPQ-ZD-KvF" id="5tF-An-RrW"/>
                         <outlet property="selectAllBarButtonItem" destination="Tlb-j4-XPE" id="ymf-3D-A1G"/>
@@ -327,19 +327,19 @@
                         <action selector="selectAllAction:" destination="KWY-Kr-BLD" id="FQc-xa-aUj"/>
                     </connections>
                 </barButtonItem>
+                <barButtonItem image="more" width="22" style="plain" id="swl-67-V4v" userLabel="More Bar Button Item">
+                    <connections>
+                        <action selector="moreAction:" destination="KWY-Kr-BLD" id="R6g-6W-6R3"/>
+                    </connections>
+                </barButtonItem>
                 <barButtonItem image="sortBy" width="22" id="Nq1-wJ-mHM" userLabel="Sort by Bar Button Item">
                     <connections>
                         <action selector="sortByAction:" destination="KWY-Kr-BLD" id="uRk-9s-L19"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="add" width="22" id="ygf-3J-YTT" userLabel="Add Bar Button Item">
-                    <connections>
-                        <action selector="optionAdd:" destination="KWY-Kr-BLD" id="TVR-Dh-oSG"/>
-                    </connections>
-                </barButtonItem>
                 <barButtonItem image="edit" width="22" style="plain" id="mLN-ad-YAf" userLabel="Edit Bar Button Item">
                     <connections>
-                        <action selector="editTapped:" destination="KWY-Kr-BLD" id="Lwc-Lj-rj7"/>
+                        <action selector="editTapped:" destination="KWY-Kr-BLD" id="ERr-ma-ObO"/>
                     </connections>
                 </barButtonItem>
                 <searchDisplayController id="qPQ-ZD-KvF">
@@ -1166,7 +1166,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="22" height="22"/>
         <image name="ascending" width="18" height="18"/>
         <image name="cancel" width="46" height="44"/>
         <image name="check_mark" width="29" height="29"/>
@@ -1174,6 +1173,7 @@
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="edit" width="22" height="22"/>
+        <image name="more" width="26" height="6"/>
         <image name="move" width="32" height="32"/>
         <image name="nodeInfo" width="46" height="44"/>
         <image name="readPermissions" width="46" height="44"/>
