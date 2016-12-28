@@ -210,7 +210,7 @@
 "documentOpening_alertTitle"="There are pending downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Try again later or cancel";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Sort by";
 /* Button title to "Save" the selected option */
 "save"="Save";
@@ -230,7 +230,7 @@
 "choosePhotoVideo"="Choose";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capture";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="New Folder";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Name for the new folder";
