@@ -40,6 +40,10 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
 
 #pragma mark - Init
 
++ (void)setLogWithColors:(BOOL)userColors {
+    MegaChatApi::setLogWithColors(userColors);
+}
+
 - (instancetype)init:(MEGASdk *)megaSDK {
     
     if (!externalLogger) {
