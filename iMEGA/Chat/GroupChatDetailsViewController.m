@@ -185,11 +185,14 @@
     } else if (indexPath.section == 1) {
         uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
         NSString *peerFullname = [[NSString alloc] init];
+        NSString *peerEmail = [[NSString alloc] init];
         if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            // TODO: myUserName + (Me)
-            peerFullname = @"(ME)";
+            NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            peerFullname = [NSString stringWithFormat:@"%@ (Me)", myFullname];
+            peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];
+            peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:handle];
         }
         BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
         if (isNameEmpty) {
@@ -201,7 +204,7 @@
         
         [cell.leftImageView mnz_setImageForUserHandle:handle];
         
-        cell.emailLabel.text = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:handle];
+        cell.emailLabel.text = peerEmail;
         
         UIImage *permissionsImage;
         switch ([self.chatRoom peerPrivilegeAtIndex:indexPath.row]) {
