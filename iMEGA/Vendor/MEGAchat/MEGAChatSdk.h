@@ -74,6 +74,7 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 
 - (void)setOnlineStatus:(NSInteger)status delegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)setOnlineStatus:(NSInteger)status;
+- (NSInteger)onlineStatus;
 
 #pragma mark - Add and remove delegates
 
