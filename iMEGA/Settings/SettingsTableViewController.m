@@ -12,7 +12,6 @@
 #import "CameraUploads.h"
 
 #import "CameraUploadsTableViewController.h"
-#import "CloudDriveTableViewController.h"
 #import "PasscodeTableViewController.h"
 #import "AboutTableViewController.h"
 #import "FeedbackTableViewController.h"
@@ -288,7 +287,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     switch (section) {
-        case 0:
+        case 0: //Camera Uploads
+            numberOfRows = 1;
+            break;
+            
         case 1:
         case 4:
             numberOfRows = 2;
@@ -416,16 +418,6 @@
             if (indexPath.row == 0) {
                 CameraUploadsTableViewController *cameraUploadsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
                 [self.navigationController pushViewController:cameraUploadsTVC animated:YES];
-                break;
-            } else if (indexPath.row == 1) {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-                CloudDriveTableViewController *cloud = [storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                
-                [self.navigationController pushViewController:cloud animated:YES];
-                cloud.navigationItem.title = AMLocalizedString(@"rubbishBinLabel", @"The name for the rubbish bin label");
-                
-                [cloud setParentNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-                [cloud setDisplayMode:DisplayModeRubbishBin];
                 break;
             }
         }
