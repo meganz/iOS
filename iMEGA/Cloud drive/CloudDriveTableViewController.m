@@ -29,7 +29,7 @@
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 
-@interface CloudDriveTableViewController () <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UISearchDisplayDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UISearchDisplayDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     
     UIAlertView *removeAlertView;
     
@@ -941,7 +941,7 @@
         return;
     }
     
-    if (sourceType == UIImagePickerControllerSourceTypeCamera || [[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
         imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         imagePickerController.sourceType = sourceType;
@@ -959,21 +959,17 @@
             [self.tabBarController presentViewController:imagePickerController animated:YES completion:nil];
         }
     } else {
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
-                    picker.delegate = self;
-                    
-                    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                        picker.modalPresentationStyle = UIModalPresentationFormSheet;
-                    }
-                    
-                    [self presentViewController:picker animated:YES completion:nil];
-                });
-            }];
-        }
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CTAssetsPickerController *assetsPickerController = [[CTAssetsPickerController alloc] init];
+                assetsPickerController.delegate = self;
+                
+                if ([[UIDevice currentDevice] iPadDevice]) {
+                    assetsPickerController.modalPresentationStyle = UIModalPresentationFormSheet;
+                }
+                [self presentViewController:assetsPickerController animated:YES completion:nil];
+            });
+        }];
     }
 }
 
