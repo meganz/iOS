@@ -22,11 +22,10 @@ typedef NS_ENUM (NSInteger, MEGAChatLogLevel) {
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus) {
-    MEGAChatStatusOffline = 0,
-    MEGAChatStatusBusy,
-    MEGAChatStatusAway,
-    MEGAChatStatusOnline,
-    MEGAChatStatusChatty
+    MEGAChatStatusOffline = 1,
+    MEGAChatStatusAway    = 2,
+    MEGAChatStatusOnline  = 3,
+    MEGAChatStatusBusy    = 4
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatSource) {
