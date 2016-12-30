@@ -75,8 +75,8 @@ using namespace megachat;
     return self.megaChatRoom->getUnreadCount();
 }
 
-- (NSInteger)onlineStatus {
-    return self.megaChatRoom->getOnlineStatus();
+- (MEGAChatStatus)onlineStatus {
+    return (MEGAChatStatus) self.megaChatRoom->getOnlineStatus();
 }
 
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande {

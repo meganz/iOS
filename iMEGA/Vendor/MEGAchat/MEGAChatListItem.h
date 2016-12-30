@@ -11,12 +11,14 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeLastMsg      = 0x40
 };
 
+typedef NS_ENUM (NSInteger, MEGAChatStatus);
+
 @interface MEGAChatListItem : NSObject
 
 @property (readonly, nonatomic) uint64_t chatId;
 @property (readonly, nonatomic) NSString *title;
 @property (readonly, nonatomic) MEGAChatListItemChangeType changes;
-@property (readonly, nonatomic) NSInteger onlineStatus;
+@property (readonly, nonatomic) MEGAChatStatus onlineStatus;
 @property (readonly, nonatomic) NSInteger visibility;
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic) MEGAChatMessage *lastMessage;
