@@ -20,7 +20,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRequestType) {
     MEGAChatRequestTypeTruncateHistory,
     MEGAChatRequestTypeShareContact,
     MEGAChatRequestTypeGetFirstname,
-    MEGAChatRequestTypeGetLastname
+    MEGAChatRequestTypeGetLastname,
+    MEGAChatRequestTypeDisconnect
 };
 
 @interface MEGAChatRequest : NSObject
