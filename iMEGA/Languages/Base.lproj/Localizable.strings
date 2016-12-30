@@ -846,6 +846,18 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Chat section header */
+"chat"="Chat";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Status";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Voice and Video Calls";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter" = "You can chat with your contacts, share files and make voice and video calls.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter" = "You will apear offline to your contacts and you will not be able to chat with them.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(edited)";
 /*  */
