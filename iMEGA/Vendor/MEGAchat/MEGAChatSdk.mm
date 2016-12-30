@@ -71,6 +71,14 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
     self.megaChatApi->connect();
 }
 
+- (void)disconnectWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->disconnect([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)disconnect {
+    self.megaChatApi->disconnect();
+}
+
 - (void)dealloc {
     delete _megaChatApi;
     pthread_mutex_destroy(&listenerMutex);
