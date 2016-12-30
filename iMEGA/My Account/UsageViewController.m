@@ -13,8 +13,6 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pieChartTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartMainLabel;
@@ -49,8 +47,6 @@
     if ([[UIDevice currentDevice] iPhone4X]) {
         self.pieChartTopLayoutConstraint.constant = 22.0;
     }
-    
-    [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
     
     [self.cloudDriveLabel setText:AMLocalizedString(@"cloudDrive", @"")];
     [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
@@ -233,13 +229,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
-}
-
 
 - (IBAction)leftSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
     NSInteger page = _usagePageControl.currentPage;
