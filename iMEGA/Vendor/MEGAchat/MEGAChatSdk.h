@@ -71,9 +71,9 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 - (void)localLogoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)localLogout;
 
-- (void)setOnlineStatus:(NSInteger)status delegate:(id<MEGAChatRequestDelegate>)delegate;
-- (void)setOnlineStatus:(NSInteger)status;
-- (NSInteger)onlineStatus;
+- (void)setOnlineStatus:(MEGAChatStatus)status delegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)setOnlineStatus:(MEGAChatStatus)status;
+- (MEGAChatStatus)onlineStatus;
 
 #pragma mark - Add and remove delegates
 
