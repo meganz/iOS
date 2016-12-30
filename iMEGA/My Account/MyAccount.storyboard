@@ -554,10 +554,10 @@
                             <mask key="constraints">
                                 <exclude reference="83t-6x-3zq"/>
                                 <exclude reference="ckz-DX-ahf"/>
-                                <exclude reference="uFj-vH-cbE"/>
                                 <exclude reference="d91-ds-faK"/>
                                 <exclude reference="fPM-we-SCy"/>
                                 <exclude reference="N17-Ie-y9x"/>
+                                <exclude reference="uFj-vH-cbE"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -565,12 +565,12 @@
                                 <include reference="83t-6x-3zq"/>
                                 <exclude reference="ckz-DX-ahf"/>
                                 <exclude reference="qnF-zg-xIh"/>
-                                <include reference="uFj-vH-cbE"/>
                                 <exclude reference="ZIK-E4-zH7"/>
                                 <include reference="d91-ds-faK"/>
                                 <include reference="fPM-we-SCy"/>
                                 <exclude reference="vdQ-uA-TjR"/>
                                 <include reference="N17-Ie-y9x"/>
+                                <include reference="uFj-vH-cbE"/>
                             </mask>
                         </variation>
                     </view>
@@ -828,7 +828,7 @@
                                         <rect key="frame" x="0.0" y="126" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jea-MI-w61" id="RlH-vC-6Zv">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXf-6T-XlW">
@@ -1358,14 +1358,7 @@
                         </connections>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Usage" id="F3F-Bz-ZJf">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="OVl-NL-LLe">
-                            <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="logoutTouchUpInside:" destination="72r-XO-9X4" id="daR-W2-1pr"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Usage" id="F3F-Bz-ZJf"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="cloudDriveLabel" destination="9M7-Oo-4Pc" id="hVD-vQ-gpt"/>
@@ -1374,7 +1367,6 @@
                         <outlet property="incomingSharesLabel" destination="Plp-yh-04N" id="Tda-k4-tMj"/>
                         <outlet property="incomingSharesProgressView" destination="yeu-qE-QCb" id="pKr-cO-96x"/>
                         <outlet property="incomingSharesSizeLabel" destination="vIu-ao-KbH" id="JDK-3a-U8h"/>
-                        <outlet property="logoutBarButtonItem" destination="OVl-NL-LLe" id="4ip-e5-6nT"/>
                         <outlet property="pieChartMainLabel" destination="SaZ-Gs-hA6" id="7o7-aW-5BH"/>
                         <outlet property="pieChartSecondaryLabel" destination="nZV-Ur-THg" id="Pna-5u-sh5"/>
                         <outlet property="pieChartTopLayoutConstraint" destination="VmT-gg-WSY" id="hVy-zS-1ff"/>
