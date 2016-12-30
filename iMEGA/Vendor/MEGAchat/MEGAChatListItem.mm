@@ -55,8 +55,8 @@ using namespace megachat;
     return (MEGAChatListItemChangeType) self.megaChatListItem->getChanges();
 }
 
-- (NSInteger)onlineStatus {
-    return self.megaChatListItem->getOnlineStatus();
+- (MEGAChatStatus)onlineStatus {
+    return (MEGAChatStatus) self.megaChatListItem->getOnlineStatus();
 }
 
 - (NSInteger)visibility {

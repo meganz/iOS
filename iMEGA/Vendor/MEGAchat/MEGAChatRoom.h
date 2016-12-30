@@ -25,6 +25,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
     MEGAChatRoomStateOnline     = 3
 };
 
+typedef NS_ENUM (NSInteger, MEGAChatStatus);
+
 @interface MEGAChatRoom : NSObject
 
 /**
@@ -42,7 +44,7 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
 @property (readonly, nonatomic) MEGAChatRoomState onlineState;
 @property (readonly, nonatomic) MEGAChatRoomChangeType changes;
 @property (readonly, nonatomic) NSInteger unreadCount;
-@property (readonly, nonatomic) NSInteger onlineStatus;
+@property (readonly, nonatomic) MEGAChatStatus onlineStatus;
 
 - (instancetype)clone;
 
