@@ -12,6 +12,7 @@
 #import "CameraUploads.h"
 
 #import "CameraUploadsTableViewController.h"
+#import "ChatSettingsTableViewController.h"
 #import "PasscodeTableViewController.h"
 #import "AboutTableViewController.h"
 #import "FeedbackTableViewController.h"
@@ -287,8 +288,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     switch (section) {
-        case 0: //Camera Uploads
-            numberOfRows = 1;
+        case 0: //Camera Uploads, Chat
+            numberOfRows = 2;
             break;
             
         case 1:
@@ -330,6 +331,9 @@
     
     switch (indexPath.section) {
         case 0:
+            cellID = @"settingsRightDetailCellID";
+            break;
+            
         case 1:
             cellID = ((indexPath.row == 0) ? @"settingsRightDetailCellID" : @"settingsBasicCellID");
             break;
@@ -361,7 +365,8 @@
                 [cell.textLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
                 [cell.detailTextLabel setText:([[CameraUploads syncManager] isCameraUploadsEnabled] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil))];
             } else if (indexPath.row == 1) {
-                [cell.textLabel setText:AMLocalizedString(@"rubbishBinLabel", nil)];
+                cell.textLabel.text = AMLocalizedString(@"chat", @"Chat section header");
+                cell.detailTextLabel.text = @"";
             }
             break;
         }
@@ -414,12 +419,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (indexPath.section) {
-        case 0: { //Camera Uploads, Rubbish Bin
+        case 0: { //Camera Uploads, Chat
             if (indexPath.row == 0) {
                 CameraUploadsTableViewController *cameraUploadsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
                 [self.navigationController pushViewController:cameraUploadsTVC animated:YES];
-                break;
+            } else if (indexPath.row == 1) {
+                ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
+                [self.navigationController pushViewController:chatSettingsTVC animated:YES];
             }
+            break;
         }
         
         case 1: { //Pascode, Security Options
