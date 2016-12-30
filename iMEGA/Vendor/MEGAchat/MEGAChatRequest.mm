@@ -55,8 +55,8 @@ using namespace megachat;
     return self.megaChatRequest->getTag();
 }
 
-- (NSNumber *)number {
-    return self.megaChatRequest ? [[NSNumber alloc] initWithLongLong:self.megaChatRequest->getNumber()] : nil;
+- (long long)number {
+    return self.megaChatRequest->getNumber();
 }
 
 - (BOOL)isFlag {

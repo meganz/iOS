@@ -102,16 +102,16 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
     self.megaChatApi->localLogout();
 }
 
-- (void)setOnlineStatus:(NSInteger)status delegate:(id<MEGAChatRequestDelegate>)delegate {
+- (void)setOnlineStatus:(MEGAChatStatus)status delegate:(id<MEGAChatRequestDelegate>)delegate {
     self.megaChatApi->setOnlineStatus((int)status, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
 }
 
-- (void)setOnlineStatus:(NSInteger)status {
+- (void)setOnlineStatus:(MEGAChatStatus)status {
     self.megaChatApi->setOnlineStatus((int)status);
 }
 
-- (NSInteger)onlineStatus {
-    return (NSInteger)self.megaChatApi->getOnlineStatus();
+- (MEGAChatStatus)onlineStatus {
+    return (MEGAChatStatus)self.megaChatApi->getOnlineStatus();
 }
 
 #pragma mark - Add and remove delegates
