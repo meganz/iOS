@@ -127,13 +127,10 @@
         label.attributedText = titleMutableAttributedString;
     } else {
         NSString *chatRoomState;
-        switch (self.chatRoom.onlineStatus) {
-            case MEGAChatRoomStateOffline:
-                chatRoomState = AMLocalizedString(@"offline", @"Title of the Offline section");
-                break;
-            case MEGAChatRoomStateOnline:
-                chatRoomState = AMLocalizedString(@"online", nil);
-                break;
+        if (self.chatRoom.onlineStatus > MEGAChatStatusOffline) {
+            chatRoomState = AMLocalizedString(@"online", nil);
+        } else {
+            chatRoomState = AMLocalizedString(@"offline", @"Title of the Offline section");
         }
         
         label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
