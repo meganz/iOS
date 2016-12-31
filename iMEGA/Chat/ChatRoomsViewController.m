@@ -317,10 +317,10 @@
         cell.avatarImageView.image = avatar;
     } else {
         [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
-        if (chatListItem.onlineStatus == 0) {
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_gray666666];
-        } else if (chatListItem.onlineStatus == 3) {
+        if (chatListItem.onlineStatus > MEGAChatStatusOffline) {
             cell.onlineStatusView.backgroundColor = [UIColor mnz_green13E03C];
+        } else  {
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_gray666666];
         }
         cell.onlineStatusView.hidden             = NO;
         cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
