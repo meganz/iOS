@@ -351,6 +351,10 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
     self.megaChatApi->removeUnsentMessage(chatId, temporalId);
 }
 
+- (void)sendTypingNotificationForChat:(uint64_t)chatId {
+    self.megaChatApi->sendTypingNotification(chatId);
+}
+
 #pragma mark - Private methods
 
 - (MegaChatRequestListener *)createDelegateMEGAChatRequestListener:(id<MEGAChatRequestDelegate>)delegate singleListener:(BOOL)singleListener {
