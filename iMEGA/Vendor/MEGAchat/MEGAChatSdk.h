@@ -142,4 +142,6 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 - (MEGAChatMessage *)lastChatMessageSeenForChat:(uint64_t)chatId;
 - (void)removeUnsentMessageForChat:(uint64_t)chatId temporalId:(uint64_t)temporalId;
 
+- (void)sendTypingNotificationForChat:(uint64_t)chatId;
+
 @end
