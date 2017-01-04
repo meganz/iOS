@@ -39,16 +39,21 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%ld, peer count=%lu, group=%@, title=%@, online state=%@, online status=%ld changes=%@, unread=%ld>",
-            [self class], self.chatId, (long)self.ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, @(self.onlineState), self.onlineStatus, @(self.changes), (long)self.unreadCount];
+    NSString *ownPrivilege = [MEGAChatRoom stringForPrivilege:self.ownPrivilege];
+    NSString *onlineState  = [MEGAChatRoom stringForState:self.onlineState];
+    NSString *onlineStatus = [MEGAChatRoom stringForStatus:self.onlineStatus];
+    NSString *changes      = [MEGAChatRoom stringForChangeType:self.changes];
+    
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%@, peer count=%lu, group=%@, title=%@, online state=%@, online status=%@ changes=%@, unread=%ld, user typing=%llu>",
+            [self class], self.chatId, ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, onlineState, onlineStatus, changes, (long)self.unreadCount, self.userTypingHandle];
 }
 
 - (uint64_t)chatId {
     return self.megaChatRoom->getChatId();
 }
 
-- (NSInteger)ownPrivilege {
-    return self.megaChatRoom->getOwnPrivilege();
+- (MEGAChatRoomPrivilege)ownPrivilege {
+    return (MEGAChatRoomPrivilege) self.megaChatRoom->getOwnPrivilege();
 }
 
 - (NSUInteger)peerCount {
@@ -133,6 +138,50 @@ using namespace megachat;
 
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType {
     return self.megaChatRoom->hasChanged((int)changeType);
+}
+
++ (NSString *)stringForPrivilege:(MEGAChatRoomPrivilege)privilege {
+    return [[NSString alloc] initWithUTF8String:MegaChatRoom::privToString((int)privilege)];
+}
+
++ (NSString *)stringForState:(MEGAChatRoomState)state {
+    return [[NSString alloc] initWithUTF8String:MegaChatRoom::stateToString((int)state)];
+}
+
++ (NSString *)stringForChangeType:(MEGAChatRoomChangeType)changeType {
+    NSString *result;
+    switch (changeType) {
+        case MEGAChatRoomChangeTypeStatus:
+            result = @"Status";
+            break;
+        case MEGAChatRoomChangeTypeUnreadCount:
+            result = @"Unread count";
+            break;
+        case MEGAChatRoomChangeTypeParticipans:
+            result = @"Participants";
+            break;
+        case MEGAChatRoomChangeTypeTitle:
+            result = @"Title";
+            break;
+        case MEGAChatRoomChangeTypeChatState:
+            result = @"Chat state";
+            break;
+        case MEGAChatRoomChangeTypeUserTyping:
+            result = @"User typing";
+            break;
+        case MEGAChatRoomChangeTypeClosed:
+            result = @"Closed";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+}
+
++ (NSString *)stringForStatus:(MEGAChatStatus)status {
+    return [[NSString alloc] initWithUTF8String:MegaChatRoom::statusToString((int)status)];
 }
 
 @end

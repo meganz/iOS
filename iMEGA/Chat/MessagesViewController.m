@@ -44,7 +44,7 @@
     self.messagesDictionary = [[NSMutableDictionary alloc] init];
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
-        MEGALogDebug(@"Chat room opened: %@", self.chatRoom.title);
+        MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
         [self loadMessages];
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
