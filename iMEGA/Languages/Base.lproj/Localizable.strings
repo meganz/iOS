@@ -917,4 +917,6 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
 /* Alert message shown when a chat does not exist */
-"Chat not found"="Chat not found";
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ is typing ...";

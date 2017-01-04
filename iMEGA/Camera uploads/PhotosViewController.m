@@ -7,7 +7,6 @@
 
 #import "Helper.h"
 #import "MEGAAVViewController.h"
-#import "MEGACollectionViewFlowLayout.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"

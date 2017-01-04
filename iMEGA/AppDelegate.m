@@ -1625,7 +1625,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
-    MEGALogInfo(@"onChatRequestFinish new state: %ld", newState);
+    MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
     if (newState == MEGAChatInitError) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"The status of the initialization has changed to error." preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {

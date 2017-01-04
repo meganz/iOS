@@ -12,6 +12,8 @@
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		410B42451D9D375E00B540DE /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */; };
+		41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */; };
+		41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */; };
 		4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F21CEB07C700BF38E3 /* ImageError.png */; };
 		4115042C1CEB07C700BF38E3 /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F31CEB07C700BF38E3 /* ImageError@2x.png */; };
 		4115042D1CEB07C700BF38E3 /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411503F41CEB07C700BF38E3 /* ImageError@3x.png */; };
@@ -338,6 +340,9 @@
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
 		410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
 		410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
+		41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessagesTypingIndicatorFoorterView.h; sourceTree = "<group>"; };
+		41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessagesTypingIndicatorFoorterView.m; sourceTree = "<group>"; };
+		41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessagesTypingIndicatorFoorterView.xib; sourceTree = "<group>"; };
 		411503F21CEB07C700BF38E3 /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		411503F31CEB07C700BF38E3 /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
 		411503F41CEB07C700BF38E3 /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
@@ -1042,6 +1047,17 @@
 				4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		41136FB91E1692650031C516 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */,
+				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */,
+				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */,
+			);
+			name = Views;
+			path = Chat/Views;
 			sourceTree = "<group>";
 		};
 		411503F01CEB07C700BF38E3 /* Assets */ = {
@@ -1862,6 +1878,7 @@
 		41EABF181DA7C53A0087271C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				41136FB91E1692650031C516 /* Views */,
 				41C736BD1DBE6CCE00F1F38A /* Model */,
 				41EABF161DA7C5250087271C /* Chat.storyboard */,
 				415E69081DABCDF90043B75F /* ChatRoomsViewController.h */,
@@ -2245,6 +2262,7 @@
 				4115043D1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap.png in Resources */,
 				4172795C1DB663FA001AC818 /* JSQMessagesToolbarContentView.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
 				411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */,
 				41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
 				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
@@ -2514,6 +2532,7 @@
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
 				41EAAE4C1D06B49400622FAF /* PHImageManager+CTAssetsPickerController.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
+				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				41ADAA1D1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
