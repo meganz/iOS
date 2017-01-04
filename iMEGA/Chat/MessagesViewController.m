@@ -7,11 +7,13 @@
 
 #import "Helper.h"
 #import "MEGAOpenMessageHeaderView.h"
+#import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGAMessage.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
+@property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
 
 @property (nonatomic, strong) NSMutableArray *indexesMessages;
 @property (nonatomic, strong) NSMutableDictionary *messagesDictionary;
@@ -24,6 +26,10 @@
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
 @property (nonatomic, assign) BOOL areMessagesLoaded;
+
+@property (nonatomic, strong) NSTimer *sendTypingTimer;
+@property (nonatomic, strong) NSTimer *receiveTypingTimer;
+@property (nonatomic, strong) NSString *peerTyping;
 
 @end
 
@@ -41,7 +47,7 @@
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom.title);
         [self loadMessages];
     } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"Chat not found", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [self.navigationController popViewControllerAnimated:YES];
         }]];
@@ -54,7 +60,9 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"MEGAOpenMessageHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID"];
+    [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
+    
+    [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
     
      //Set up message accessory button delegate and configuration
     self.collectionView.accessoryDelegate = self;
@@ -287,6 +295,12 @@
     self.openMessageHeaderView.authenticityExplanationLabel.text = authenticityExplanationString;
 }
 
+- (void)hideTypingIndicator {
+    self.showTypingIndicator = NO;
+}
+
+- (void)doNothing {}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -501,6 +515,11 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *reusableview = nil;
     
+    if (self.showTypingIndicator && [kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        self.footerView = [self dequeueTypingIndicatorFooterViewForIndexPath:indexPath];
+        return self.footerView;
+    }
+    
     if (kind == UICollectionElementKindSectionHeader) {
         [self setChatOpenMessageForIndexPath:indexPath];
         return self.openMessageHeaderView;
@@ -515,6 +534,18 @@
     CGFloat minimumHeight = self.areMessagesLoaded ? height : 0.0f;
     
     return CGSizeMake(self.view.frame.size.width, minimumHeight);
+}
+
+#pragma mark - Typing indicator
+
+- (MEGAMessagesTypingIndicatorFoorterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
+    
+    self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                                                                                                 withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
+                                                                                                        forIndexPath:indexPath];
+    self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+    
+    return self.footerView;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -652,7 +683,16 @@
     NSLog(@"Tapped accessory button!");
 }
 
+#pragma mark - UITextViewDelegate
 
+- (void)textViewDidChange:(UITextView *)textView {
+    [super textViewDidChange:textView];
+    NSInteger textLength =  textView.text.length;
+    if (textLength > 0 && ![self.sendTypingTimer isValid]) {
+        self.sendTypingTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(doNothing) userInfo:nil repeats:NO];
+        [[MEGASdkManager sharedMEGAChatSdk] sendTypingNotificationForChat:self.chatRoom.chatId];
+    }
+}
 
 #pragma mark - MEGAChatRoomDelegate
 
@@ -742,9 +782,27 @@
             
             break;
             
-        case MEGAChatRoomChangeTypeUserTyping:
+        case MEGAChatRoomChangeTypeUserTyping: {
+            self.showTypingIndicator = YES;
+            NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+            if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                [self scrollToBottomAnimated:YES];
+            }
+            
+            if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
+                self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
+            }
+            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+            
+            [self.receiveTypingTimer invalidate];
+            self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                                       target:self
+                                                                     selector:@selector(hideTypingIndicator)
+                                                                     userInfo:nil
+                                                                      repeats:YES];
             
             break;
+        }
             
         case MEGAChatRoomChangeTypeClosed:
             
