@@ -45,6 +45,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) MEGAChatRoomChangeType changes;
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic) MEGAChatStatus onlineStatus;
+@property (readonly, nonatomic) uint64_t userTypingHandle;
 
 - (instancetype)clone;
 
