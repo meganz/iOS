@@ -29,4 +29,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType;
 
++ (NSString *)stringForChangeType:(MEGAChatListItemChangeType)changeType;
++ (NSString *)stringForStatus:(MEGAChatStatus)status;
+
 @end

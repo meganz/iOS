@@ -39,8 +39,11 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%ld changes=%@, visibility=%ld, unread=%ld>",
-            [self class], self.chatId, self.title, self.onlineStatus, @(self.changes), self.visibility, (long)self.unreadCount];
+    NSString *onlineStatus = [MEGAChatListItem stringForStatus:self.onlineStatus];
+    NSString *changes      = [MEGAChatListItem stringForChangeType:self.changes];
+    
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%ld, unread=%ld>",
+            [self class], self.chatId, self.title, onlineStatus, changes, self.visibility, (long)self.unreadCount];
 }
 
 - (uint64_t)chatId {
@@ -81,6 +84,62 @@ using namespace megachat;
 
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
     return self.megaChatListItem->hasChanged((int) changeType);
+}
+
++ (NSString *)stringForChangeType:(MEGAChatListItemChangeType)changeType {
+    NSString *result;
+    switch (changeType) {
+        case MEGAChatListItemChangeTypeStatus:
+            result = @"Status";
+            break;
+        case MEGAChatListItemChangeTypeVisibility:
+            result = @"Visibility";
+            break;
+        case MEGAChatListItemChangeTypeUnreadCount:
+            result = @"Unread count";
+            break;
+        case MEGAChatListItemChangeTypeParticipants:
+            result = @"Participants";
+            break;
+        case MEGAChatListItemChangeTypeTitle:
+            result = @"Title";
+            break;
+        case MEGAChatListItemChangeTypeClosed:
+            result = @"Closed";
+            break;
+        case MEGAChatListItemChangeTypeLastMsg:
+            result = @"Last message";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+}
+
++ (NSString *)stringForStatus:(MEGAChatStatus)status {
+    NSString *result;
+    switch ((NSInteger)status) {
+        case 1:
+            result = @"Offline";
+            break;
+        case 2:
+            result = @"Away";
+            break;
+        case 3:
+            result = @"Online";
+            break;
+        case 4:
+            result = @"Bussy";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+
 }
 
 @end

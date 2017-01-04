@@ -37,7 +37,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 /**
  * @brief Your privilege level in this chat
  */
-@property (readonly, nonatomic) NSInteger ownPrivilege;
+@property (readonly, nonatomic) MEGAChatRoomPrivilege ownPrivilege;
 @property (readonly, nonatomic) NSUInteger peerCount;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
 @property (readonly, nonatomic) NSString *title;
@@ -59,5 +59,10 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (NSString *)peerLastnameAtIndex:(NSUInteger)index;
 - (NSString *)peerFullnameAtIndex:(NSUInteger)index;
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType;
+
++ (NSString *)stringForPrivilege:(MEGAChatRoomPrivilege)privilege;
++ (NSString *)stringForState:(MEGAChatRoomState)state;
++ (NSString *)stringForChangeType:(MEGAChatRoomChangeType)changeType;
++ (NSString *)stringForStatus:(MEGAChatStatus)status;
 
 @end
