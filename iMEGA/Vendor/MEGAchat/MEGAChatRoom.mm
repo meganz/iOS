@@ -79,6 +79,10 @@ using namespace megachat;
     return (MEGAChatStatus) self.megaChatRoom->getOnlineStatus();
 }
 
+- (uint64_t)userTypingHandle {
+    return self.megaChatRoom->getUserTyping();
+}
+
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande {
     return self.megaChatRoom->getPeerPrivilegeByHandle(userHande);
 }
