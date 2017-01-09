@@ -60,7 +60,6 @@
 
 @property (strong, nonatomic) NSString *fullname;
 @property (nonatomic) MEGAAccountType megaAccountType;
-@property (strong, nonatomic) MEGAPricing *pricing;
 
 @end
 
@@ -119,7 +118,6 @@
     [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname delegate:self];
     [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname delegate:self];
     
-    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
     
     [self setUserAvatar];
@@ -311,12 +309,6 @@
             
             isAccountDetailsAvailable = YES;
             
-            break;
-        }
-            
-        case MEGARequestTypeGetPricing: {
-            self.pricing = [request pricing];
-            [_upgradeToProButton setUserInteractionEnabled:YES];
             break;
         }
             
