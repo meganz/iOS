@@ -65,7 +65,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
 @property (nonatomic) MEGAAccountType megaAccountType;
-@property (strong, nonatomic) MEGAPricing *pricing;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usedLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *freeViewTopLayoutConstraint;
@@ -131,7 +130,6 @@
     NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
     [_localUsedSpaceLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     
-    [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
     [[MEGASdkManager sharedMEGASdk] getAccountDetailsWithDelegate:self];
     
     [self setUserAvatar];
@@ -307,12 +305,6 @@
             
             isAccountDetailsAvailable = YES;
             
-            break;
-        }
-            
-        case MEGARequestTypeGetPricing: {
-            self.pricing = [request pricing];
-            [_upgradeToProButton setUserInteractionEnabled:YES];
             break;
         }
             
