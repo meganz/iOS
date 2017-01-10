@@ -125,6 +125,9 @@
             break;
         
         }
+            
+        default:
+            break;
     }
     
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -673,6 +676,9 @@
                 [self deleteAction:self.deleteBarButtonItem];
                 break;
             }
+            
+            default:
+                break;
         }
     }
 }

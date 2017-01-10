@@ -58,7 +58,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SelectableTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SelectableTableViewCellID" forIndexPath:indexPath];
     
-    MEGAChatStatus cellStatus;
+    MEGAChatStatus cellStatus = 0;
     switch (indexPath.row) {
         case 0: {
             cell.titleLabel.text = AMLocalizedString(@"online", nil);

@@ -58,7 +58,7 @@
     [_storageSizeLabel setText:_storageString];
     [_bandwidthSizeLabel setText:_bandwidthString];
     
-    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(restore)];
+    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
     [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
     
