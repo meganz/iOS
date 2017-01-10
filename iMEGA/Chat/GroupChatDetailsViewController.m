@@ -192,7 +192,7 @@
             peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];
-            peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:handle];
+            peerEmail = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:handle];
         }
         BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
         if (isNameEmpty) {
