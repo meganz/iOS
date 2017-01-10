@@ -60,6 +60,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary *indexPathsMutableDictionary;
 
+@property (nonatomic) BOOL addingMoreThanOneContact;
+
 @end
 
 @implementation ContactsViewController
@@ -856,6 +858,7 @@
 #pragma mark - CNContactPickerDelegate
 
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
+    self.addingMoreThanOneContact = (contactProperties.count > 1) ? YES : NO;
     remainingOperations = contactProperties.count;
     for (CNContactProperty *contactProperty in contactProperties) {
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
@@ -972,19 +975,38 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        if ([request type] == MEGARequestTypeInviteContact || [request type] == MEGARequestTypeShare) {
+        if ([request type] == MEGARequestTypeInviteContact) {
+            if (error.type == MEGAErrorTypeApiEArgs && [request.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
+            } else if (error.type == MEGAErrorTypeApiEExist) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
+            } else {
+                [SVProgressHUD showErrorWithStatus:error.name];
+            }
+        } else {
             [SVProgressHUD showErrorWithStatus:error.name];
         }
         return;
     }
     
     switch ([request type]) {
-        case MEGARequestTypeInviteContact:
+        case MEGARequestTypeInviteContact: {
             remainingOperations--;
             if (remainingOperations == 0) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
+                NSString *alertTitle;
+                if (self.addingMoreThanOneContact) {
+                    alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
+                } else {
+                    alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+                    alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                }
+                
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alertController animated:YES completion:nil];
             }
             break;
+        }
             
         case MEGARequestTypeRemoveContact: {
             remainingOperations--;
