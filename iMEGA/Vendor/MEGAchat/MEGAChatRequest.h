@@ -21,7 +21,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRequestType) {
     MEGAChatRequestTypeShareContact,
     MEGAChatRequestTypeGetFirstname,
     MEGAChatRequestTypeGetLastname,
-    MEGAChatRequestTypeDisconnect
+    MEGAChatRequestTypeDisconnect,
+    MEGAChatRequestTypeGetEmail
 };
 
 @interface MEGAChatRequest : NSObject
