@@ -239,7 +239,7 @@
         
         [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
     } else {
-        NSString *peerEmail = [[MEGASdkManager sharedMEGAChatSdk] userEmailByUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+        NSString *peerEmail = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[self.chatRoom peerHandleAtIndex:0]];
         NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:0];
         NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:0];
         NSString *peerName = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
