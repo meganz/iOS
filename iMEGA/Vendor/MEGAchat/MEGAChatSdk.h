@@ -96,7 +96,10 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 
 #pragma mark - Users attributes
 
-- (NSString *)userEmailByUserHandle:(uint64_t)userHandle;
+- (void)userEmailByUserHandle:(uint64_t)userHandle delegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)userEmailByUserHandle:(uint64_t)userHandle;
+
+- (NSString *)contacEmailByHandle:(uint64_t)userHandle;
 
 #pragma mark - Chat management
 

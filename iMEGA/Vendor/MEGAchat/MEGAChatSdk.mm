@@ -225,8 +225,16 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
 
 #pragma mark - Users attributes
 
-- (NSString *)userEmailByUserHandle:(uint64_t)userHandle {
-    const char *val = self.megaChatApi->getUserEmail(userHandle);
+- (void)userEmailByUserHandle:(uint64_t)userHandle delegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->getUserEmail(userHandle, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)userEmailByUserHandle:(uint64_t)userHandle {
+    self.megaChatApi->getUserEmail(userHandle);
+}
+
+- (NSString *)contacEmailByHandle:(uint64_t)userHandle {
+    const char *val = self.megaChatApi->getContactEmail(userHandle);
     if (!val) return nil;
     
     NSString *ret = [[NSString alloc] initWithUTF8String:val];
