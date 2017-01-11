@@ -25,28 +25,19 @@
             _managementMessage = message.managementMessage;
             
             uint64_t myHandle = [[[MEGASdkManager sharedMEGASdk] myUser] handle];
-            NSString *fullNameDidAction = nil;
+            NSString *fullNameDidAction = @"";
             
             if (myHandle == message.userHandle) {
                 fullNameDidAction = AMLocalizedString(@"I", @"Personal pronoun. 1st person");
             } else {
-                NSString *firstNameDidAction = [chatRoom peerFirstnameByHandle:message.userHandle];
-                NSString *lastNameDidAction  = [chatRoom peerLastnameByHandle:message.userHandle];
-                if (firstNameDidAction) {
-                    if (lastNameDidAction) {
-                        fullNameDidAction = [firstNameDidAction stringByAppendingString:lastNameDidAction];
-                    } else {
-                        fullNameDidAction = firstNameDidAction;
-                    }
-                } else {
-                    if (lastNameDidAction) {
-                        fullNameDidAction = lastNameDidAction;
-                    }
+                fullNameDidAction = [chatRoom peerFullnameByHandle:message.userHandle];
+                if (fullNameDidAction.length == 0) {
+                    //TODO: Use the app Core Data users cache
+                    fullNameDidAction = @"Unknown user";
                 }
             }
             
-            NSString *firstNameReceiveAction = nil;
-            NSString *lastNameReceiveAction  = nil;
+            NSString *fullNameReceiveAction = @"";
             
             uint64_t tempHandle;
             if (message.type == MEGAChatMessageTypeAlterParticipants || message.type == MEGAChatMessageTypePrivilegeChange) {
@@ -56,19 +47,14 @@
             }
             
             if (tempHandle == myHandle) {
-                firstNameReceiveAction = AMLocalizedString(@"I", @"Personal pronoun. 1st person");
-                lastNameReceiveAction  = @"";
+                fullNameReceiveAction = AMLocalizedString(@"I", @"Personal pronoun. 1st person");
             } else {
-                firstNameReceiveAction = [chatRoom peerFirstnameByHandle:tempHandle];
-                lastNameReceiveAction  = [chatRoom peerLastnameByHandle:tempHandle];
-                if (!firstNameReceiveAction) {
+                fullNameReceiveAction = [chatRoom peerFullnameByHandle:tempHandle];
+                if (fullNameReceiveAction.length == 0) {
                     //TODO: Use the app Core Data users cache
-                    firstNameReceiveAction = @"Unknown user";
-                    lastNameReceiveAction  = @"";
+                    fullNameReceiveAction = @"Unknown user";
                 }
             }
-            
-            NSString *fullNameReceiveAction = [firstNameReceiveAction stringByAppendingString:lastNameReceiveAction];
             
             switch (message.type) {
                 case MEGAChatMessageTypeAlterParticipants:
