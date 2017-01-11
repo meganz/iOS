@@ -856,6 +856,32 @@
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
 /* Chat section header */
 "chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="No Conversations";
+/* Conversations section */
+"conversations"="Conversations";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Invite";
+/* Message shown on the Chat list view as last message when something related to the group has happened, for example, someone left the group or someone has been added */
+"managementMessage"="Management message";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="This message has been deleted";
+/* Personal pronoun. 1st person */
+"I"="I";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Me";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] left the group chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] cleared the chat history.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] was changed to [B] by [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -898,6 +924,10 @@
 "reset"="Reset";
 /* Button title */
 "approve"="Approve";
+/* start a chat/conversation */
+"startConversation"="Start Conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
 "groupInfo"="Group Info";
 /* Label title for a group chat */
@@ -906,6 +936,18 @@
 "renameGroup"="Rename Group";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Change Group Avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Leave";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="More";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Info";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Close";
+/* Alert text that explains what means confirming the action 'Leave' */
+"areYouSureYouWantToLeaveThisGroupChat"="Are you sure you want to leave this group chat?";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Leave Chat";
 /* Button title that allows the user to leave a group chat. */

@@ -48,7 +48,7 @@
         [self loadMessages];
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [self.navigationController popViewControllerAnimated:YES];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -306,7 +306,7 @@
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
      //Display custom menu actions for cells.
     UIMenuController *menu = [notification object];
-    menu.menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"Edit" action:@selector(editAction:megaMessage:)] ];
+    menu.menuItems = @[[[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(editAction:megaMessage:)]];
     
     [super didReceiveMenuWillShowNotification:notification];
 }
