@@ -57,7 +57,7 @@
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
-    self.title = AMLocalizedString(@"Chats", nil);
+    self.title = AMLocalizedString(@"chat", @"Chat section header");
     self.chatListItemIndexPathDictionary = [[NSMutableDictionary alloc] init];
     
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
@@ -89,11 +89,11 @@
     NSString *text = [[NSString alloc] init];
     if (self.searchController.isActive ) {
         if (self.searchController.searchBar.text.length > 0) {
-            text = AMLocalizedString(@"noResults", nil);
+            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        return [NSMutableAttributedString mnz_darkenSectionTitleInString:@"No Conversations" sectionTitle:@"Conversations"];
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
@@ -123,7 +123,7 @@
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.searchController.isActive) {
-            text = @"Invite";
+            text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
         }
     }
     
@@ -217,7 +217,7 @@
         [self dismissViewControllerAnimated:YES completion:^{
         }];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Start conversation", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"startConversation", @"start a chat/conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
@@ -305,7 +305,7 @@
     cell.chatTitle.text = chatListItem.title;
     
     if (chatListItem.lastMessage.isManagementMessage) {
-        cell.chatLastMessage.text = @"Management message";
+        cell.chatLastMessage.text = AMLocalizedString(@"managementMessage", @"Message shown on the Chat list view as last message when something related to the group has happened, for example, someone left the group or someone has been added");
     } else {
         cell.chatLastMessage.text = chatListItem.lastMessage.content;
     }
@@ -358,7 +358,7 @@
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {    
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     
-    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"More", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -366,13 +366,13 @@
             [self.tableView setEditing:NO];
         }]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Mute", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TODO" message:@"Not implemented yet" preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Info", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if (chatListItem.isGroup) {
                 GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
@@ -412,14 +412,14 @@
     UITableViewRowAction *deleteAction = nil;
     
     if (chatListItem.isGroup) {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"Leave", nil)  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Are you sure you want to leave this group chat?", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+            UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"areYouSureYouWantToLeaveThisGroupChat", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                 [self dismissViewControllerAnimated:YES completion:nil];
                 [self.tableView setEditing:NO];
             }]];
             
-            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId delegate:self];
                 [self.tableView setEditing:NO];
             }]];
@@ -434,7 +434,7 @@
             [self presentViewController:leaveAlertController animated:YES completion:nil];
         }];
     } else {
-        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"Close", nil)  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TODO" message:@"Not implemented yet" preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
              [self presentViewController:alertController animated:YES completion:nil];
@@ -546,7 +546,7 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg: {
                     if (item.lastMessage.isManagementMessage) {
-                        cell.chatLastMessage.text = @"Management message";
+                        cell.chatLastMessage.text = AMLocalizedString(@"managementMessage", @"Message shown on the Chat list view as last message when something related to the group has happened, for example, someone left the group or someone has been added");
                     } else {
                         cell.chatLastMessage.text = item.lastMessage.content;
                     }

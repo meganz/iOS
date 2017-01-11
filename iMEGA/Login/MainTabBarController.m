@@ -76,7 +76,7 @@
             case 8:
                 [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
-                [tabBarItem setTitle:@"Chats"];
+                tabBarItem.title = AMLocalizedString(@"chat", @"Chat section header");
                 break;
         }
     }

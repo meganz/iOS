@@ -188,7 +188,7 @@
         NSString *peerEmail = [[NSString alloc] init];
         if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-            peerFullname = [NSString stringWithFormat:@"%@ (Me)", myFullname];
+            peerFullname = [NSString stringWithFormat:@"%@ (%@)", myFullname, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
             peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];

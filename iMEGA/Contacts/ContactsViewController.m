@@ -143,7 +143,7 @@
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         [self.navigationItem setTitle:AMLocalizedString(@"sharedWith", nil)];
     } else if (self.contactsMode == ContactsChatStartConversation)
-        [self.navigationItem setTitle:AMLocalizedString(@"Start conversation", nil)];
+        [self.navigationItem setTitle:AMLocalizedString(@"startConversation", @"start a chat/conversation")];
     else {
         [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
     }
@@ -439,7 +439,7 @@
 
 - (IBAction)backAction:(UIBarButtonItem *)sender {
     self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
-    self.groupBarButtonItem.title = @"Group";
+    self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
     self.groupBarButtonItem.enabled = YES;
     
     [self setTableViewEditing:NO animated:YES];
@@ -467,9 +467,9 @@
 }
 
 - (IBAction)groupAction:(UIBarButtonItem *)sender {
-    BOOL value = ![self.groupBarButtonItem.title isEqualToString:@"Ok"];
+    BOOL value = ![self.groupBarButtonItem.title isEqualToString:AMLocalizedString(@"ok", nil)];
     if (value) {
-        self.groupBarButtonItem.title = @"Ok";
+        self.groupBarButtonItem.title = AMLocalizedString(@"ok", nil);
         if (self.selectedUsersArray.count == 0) {
             self.groupBarButtonItem.enabled = NO;
         }
@@ -479,7 +479,7 @@
             self.userSelected(self.selectedUsersArray);
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
-            self.groupBarButtonItem.title = @"Group";
+            self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
         }
     }
     [self setTableViewEditing:value animated:YES];
