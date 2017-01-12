@@ -500,7 +500,10 @@
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
-    if (!megaMessage.isMediaMessage) {
+    if (megaMessage.isManagementMessage) {
+        cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:11.0f];
+        cell.textView.textColor = [UIColor mnz_black333333];
+    } else if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
         cell.textView.textColor = [UIColor mnz_black333333];
