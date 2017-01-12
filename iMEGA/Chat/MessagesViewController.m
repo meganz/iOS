@@ -398,7 +398,7 @@
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
-    if (message.isManagementMessage) {
+    if (message.isManagementMessage || message.isDeleted) {
         return self.managementBubbleImageData;
     }
     
@@ -500,7 +500,11 @@
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
-    if (megaMessage.isManagementMessage) {
+    
+    if (megaMessage.isDeleted) {
+        cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0f];
+        cell.textView.textColor = [UIColor mnz_blue2BA6DE];
+    } else if (megaMessage.isManagementMessage) {
         cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:11.0f];
         cell.textView.textColor = [UIColor mnz_black333333];
     } else if (!megaMessage.isMediaMessage) {
