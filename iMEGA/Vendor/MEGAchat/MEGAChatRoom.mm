@@ -40,12 +40,11 @@ using namespace megachat;
 
 - (NSString *)description {
     NSString *ownPrivilege = [MEGAChatRoom stringForPrivilege:self.ownPrivilege];
-    NSString *onlineState  = [MEGAChatRoom stringForState:self.onlineState];
     NSString *onlineStatus = [MEGAChatRoom stringForStatus:self.onlineStatus];
     NSString *changes      = [MEGAChatRoom stringForChangeType:self.changes];
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%@, peer count=%lu, group=%@, title=%@, online state=%@, online status=%@ changes=%@, unread=%ld, user typing=%llu>",
-            [self class], self.chatId, ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, onlineState, onlineStatus, changes, (long)self.unreadCount, self.userTypingHandle];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%@, peer count=%lu, group=%@, title=%@, online status=%@ changes=%@, unread=%ld, user typing=%llu>",
+            [self class], self.chatId, ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, onlineStatus, changes, (long)self.unreadCount, self.userTypingHandle];
 }
 
 - (uint64_t)chatId {
@@ -66,10 +65,6 @@ using namespace megachat;
 
 - (NSString *)title {
     return self.megaChatRoom->getTitle() ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getTitle()] : nil;
-}
-
-- (MEGAChatRoomState)onlineState {
-    return (MEGAChatRoomState) self.megaChatRoom->getOnlineState();
 }
 
 - (MEGAChatRoomChangeType)changes {
@@ -144,10 +139,6 @@ using namespace megachat;
     return [[NSString alloc] initWithUTF8String:MegaChatRoom::privToString((int)privilege)];
 }
 
-+ (NSString *)stringForState:(MEGAChatRoomState)state {
-    return [[NSString alloc] initWithUTF8String:MegaChatRoom::stateToString((int)state)];
-}
-
 + (NSString *)stringForChangeType:(MEGAChatRoomChangeType)changeType {
     NSString *result;
     switch (changeType) {
@@ -162,9 +153,6 @@ using namespace megachat;
             break;
         case MEGAChatRoomChangeTypeTitle:
             result = @"Title";
-            break;
-        case MEGAChatRoomChangeTypeChatState:
-            result = @"Chat state";
             break;
         case MEGAChatRoomChangeTypeUserTyping:
             result = @"User typing";

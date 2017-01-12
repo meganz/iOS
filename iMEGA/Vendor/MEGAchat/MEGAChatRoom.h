@@ -5,9 +5,8 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomChangeType) {
     MEGAChatRoomChangeTypeUnreadCount = 0x02,
     MEGAChatRoomChangeTypeParticipans = 0x04,
     MEGAChatRoomChangeTypeTitle       = 0x08,
-    MEGAChatRoomChangeTypeChatState   = 0x10,
-    MEGAChatRoomChangeTypeUserTyping  = 0x20,
-    MEGAChatRoomChangeTypeClosed      = 0x40
+    MEGAChatRoomChangeTypeUserTyping  = 0x10,
+    MEGAChatRoomChangeTypeClosed      = 0x20
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege) {
@@ -16,13 +15,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege) {
     MEGAChatRoomPrivilegeRo        = 0,
     MEGAChatRoomPrivilegeStandard  = 2,
     MEGAChatRoomPrivilegeModerator = 3
-};
-
-typedef NS_ENUM (NSInteger, MEGAChatRoomState) {
-    MEGAChatRoomStateOffline    = 0,
-    MEGAChatRoomStateConnecting = 1,
-    MEGAChatRoomStateJoinning   = 2,
-    MEGAChatRoomStateOnline     = 3
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
@@ -41,7 +33,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) NSUInteger peerCount;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
 @property (readonly, nonatomic) NSString *title;
-@property (readonly, nonatomic) MEGAChatRoomState onlineState;
 @property (readonly, nonatomic) MEGAChatRoomChangeType changes;
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic) MEGAChatStatus onlineStatus;
@@ -61,7 +52,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType;
 
 + (NSString *)stringForPrivilege:(MEGAChatRoomPrivilege)privilege;
-+ (NSString *)stringForState:(MEGAChatRoomState)state;
 + (NSString *)stringForChangeType:(MEGAChatRoomChangeType)changeType;
 + (NSString *)stringForStatus:(MEGAChatStatus)status;
 
