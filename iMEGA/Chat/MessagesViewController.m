@@ -785,10 +785,6 @@
             [self customNavigationBarLabel];
             break;
             
-        case MEGAChatRoomChangeTypeChatState:
-            
-            break;
-            
         case MEGAChatRoomChangeTypeUserTyping: {
             self.showTypingIndicator = YES;
             NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
