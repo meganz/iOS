@@ -18,8 +18,6 @@
 @interface MyAccountViewController () <MEGARequestDelegate, MEGAChatRequestDelegate> {
     BOOL isAccountDetailsAvailable;
     
-    long long availableSize;
-    
     NSNumber *localSize;
     NSNumber *cloudDriveSize;
     NSNumber *rubbishBinSize;
@@ -249,7 +247,8 @@
             maxStorage = [request.megaAccountDetails storageMax];
             
             NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
-            NSString *availableStorageString = [byteCountFormatter stringFromByteCount:([maxStorage longLongValue] - [usedStorage longLongValue])];
+            long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
+            NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             
             [_usedSpaceLabel setAttributedText:[self textForSizeLabels:usedStorageString]];
             [_availableSpaceLabel setAttributedText:[self textForSizeLabels:availableStorageString]];
