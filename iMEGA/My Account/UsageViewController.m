@@ -140,7 +140,8 @@
         }
             
         case 2: {
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:([[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue])];
+            long long availableStorage = [[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue];
+            stringFromByteCount = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             break;
         }
     }
