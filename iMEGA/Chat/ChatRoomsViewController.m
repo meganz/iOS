@@ -56,6 +56,7 @@
     searchTextField.textColor = [UIColor mnz_gray999999];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
     
     self.title = AMLocalizedString(@"chat", @"Chat section header");
     self.chatListItemIndexPathDictionary = [[NSMutableDictionary alloc] init];
@@ -347,8 +348,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-    
-    self.searchController.active = NO;
     
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
