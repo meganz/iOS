@@ -26,13 +26,11 @@
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
     BOOL isFolderLinkNotValid;
-    
-    NSMutableArray *matchSearchNodes;
     
     UIAlertView *decryptionAlertView;
 }
@@ -47,8 +45,12 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 
+@property (strong, nonatomic) UISearchController *searchController;
+
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
+@property (nonatomic, strong) NSArray *nodesArray;
+@property (nonatomic, strong) NSArray *searchNodesArray;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
@@ -66,10 +68,23 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.searchDisplayController.searchResultsTableView.emptyDataSetSource = self;
-    self.searchDisplayController.searchResultsTableView.emptyDataSetDelegate = self;
-    self.searchDisplayController.searchResultsTableView.tableFooterView = [UIView new];
-    [self.searchDisplayController setValue:@"" forKey:@"_noResultsMessage"];
+    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.barTintColor = [UIColor colorWithWhite:235.0f / 255.0f alpha:1.0f];
+    self.searchController.searchBar.translucent = YES;
+    [self.searchController.searchBar sizeToFit];
+    
+    UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    searchTextField.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0];
+    searchTextField.textColor = [UIColor mnz_gray999999];
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
     
     isLoginDone = NO;
     isFetchNodesDone = NO;
@@ -171,14 +186,22 @@
         [self setActionButtonsEnabled:YES];
     }
     
+    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.integerValue];
+    for (NSUInteger i = 0; i < self.nodeList.size.integerValue ; i++) {
+        [tempArray addObject:[self.nodeList nodeAtIndex:i]];
+    }
+    
+    self.nodesArray = tempArray;
+    
     [self.tableView reloadData];
     
     if ([[self.nodeList size] unsignedIntegerValue] == 0) {
         [_tableView setTableHeaderView:nil];
-        [_tableView setContentOffset:CGPointZero];
     } else {
-        [_tableView setTableHeaderView:self.searchDisplayController.searchBar];
-        [_tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchDisplayController.searchBar.frame))];
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        if (!self.tableView.tableHeaderView) {
+            [_tableView setTableHeaderView:self.searchController.searchBar];
+        }
     }
 }
 
@@ -224,19 +247,6 @@
     
     [_importBarButtonItem setEnabled:boolValue];
     [_downloadBarButtonItem setEnabled:boolValue];
-}
-
-- (void)filterContentForSearchText:(NSString*)searchText {
-    
-    matchSearchNodes = [NSMutableArray new];
-    MEGANodeList *allNodeList = nil;
-    
-    allNodeList = [[MEGASdkManager sharedMEGASdkFolder] nodeListSearchForNode:self.parentNode searchString:searchText recursive:YES];
-    
-    for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-        MEGANode *n = [allNodeList nodeAtIndex:i];
-        [matchSearchNodes addObject:n];
-    }
 }
 
 - (void)internetConnectionChanged {
@@ -354,18 +364,10 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CGPoint buttonPosition;
-    NSIndexPath *indexPath;
-    MEGANode *node = nil;
-    if ([self.searchDisplayController isActive]) {
-        buttonPosition = [sender convertPoint:CGPointZero toView:self.searchDisplayController.searchResultsTableView];
-        indexPath = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:buttonPosition];
-        node = [matchSearchNodes objectAtIndex:indexPath.row];
-    } else {
-        buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-        node = [_nodeList nodeAtIndex:indexPath.row];
-    }
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
     FileLinkViewController *fileLinkVC = [self.storyboard instantiateViewControllerWithIdentifier:@"FileLinkViewControllerID"];
     [fileLinkVC setFileLinkMode:FileLinkModeNodeFromFolderLink];
@@ -500,8 +502,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        if (tableView == self.searchDisplayController.searchResultsTableView) {
-            numberOfRows = [matchSearchNodes count];
+        if (self.searchController.isActive) {
+            numberOfRows = self.searchNodesArray.count;
         } else {
             if (isFolderLinkNotValid) {
                 numberOfRows = 0;
@@ -512,16 +514,8 @@
     }
     
     if (numberOfRows == 0) {
-        if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        } else {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        }
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
-        if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.searchDisplayController.searchResultsTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-        }
-        
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     }
     
@@ -530,12 +524,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = nil;
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        node = [matchSearchNodes objectAtIndex:indexPath.row];
-    } else {
-        node = [self.nodeList nodeAtIndex:indexPath.row];
-    }
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     if (cell == nil) {
@@ -583,14 +572,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = nil;
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        node = [matchSearchNodes objectAtIndex:indexPath.row];
-        [self.searchDisplayController setActive:NO animated:YES];
-    } else {
-        node = [self.nodeList nodeAtIndex:indexPath.row];
-    }
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
         [_selectedNodesArray addObject:node];
@@ -624,9 +606,9 @@
                 int offsetIndex = 0;
                 self.cloudImages = [NSMutableArray new];
                 
-                if (tableView == self.searchDisplayController.searchResultsTableView) {
-                    for (NSInteger i = 0; i < matchSearchNodes.count; i++) {
-                        MEGANode *n = [matchSearchNodes objectAtIndex:i];
+                if (self.searchController.isActive) {
+                    for (NSInteger i = 0; i < self.searchNodesArray.count; i++) {
+                        MEGANode *n = [self.searchNodesArray objectAtIndex:i];
                         
                         if (fileUTI) {
                             CFRelease(fileUTI);
@@ -769,13 +751,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = nil;
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        node = [matchSearchNodes objectAtIndex:indexPath.row];
-    } else {
-        node = [self.nodeList nodeAtIndex:indexPath.row];
-    }
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
     DetailsNodeInfoViewController *nodeInfoDetailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"nodeInfoDetails"];
     [nodeInfoDetailsVC setNode:node];
@@ -783,39 +759,26 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        return 44.0;
-    }
-    else {
-        return UITableViewAutomaticDimension;
-    }
+    return 44.0;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        return 44.0;
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchNodesArray = nil;
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    if ([searchString isEqualToString:@""]) {
+        self.searchNodesArray = self.nodesArray;
+    } else {
+        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
+        self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
-    else {
-        return UITableViewAutomaticDimension;
-    }
-}
-
-#pragma mark - UISearchDisplayDelegate
-
-- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
-    [self.searchDisplayController setActive:NO animated:YES];
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-    [self filterContentForSearchText:searchString];
-    
-    return YES;
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
-    [self filterContentForSearchText:self.searchDisplayController.searchBar.text];
-    
-    return YES;
+    [self.tableView reloadData];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -830,7 +793,7 @@
                 text = @"";
             }
         } else {
-            if ([self.searchDisplayController isActive]) {
+            if (self.searchController.isActive) {
                 text = AMLocalizedString(@"noResults", nil);
             } else {
                 text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
@@ -855,7 +818,7 @@
             return nil;
         }
         
-         if ([self.searchDisplayController isActive]) {
+         if (self.searchController.isActive) {
              return [UIImage imageNamed:@"emptySearch"];
          }
         
@@ -876,7 +839,7 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
@@ -990,8 +953,7 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            UITableView *tableView = [self.searchDisplayController isActive] ? self.searchDisplayController.searchResultsTableView : self.tableView;
-            for (NodeTableViewCell *nodeTableViewCell in [tableView visibleCells]) {
+            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
                 if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
