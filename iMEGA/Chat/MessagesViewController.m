@@ -26,6 +26,7 @@
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
 @property (nonatomic, assign) BOOL areMessagesLoaded;
+@property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
 @property (nonatomic, strong) NSTimer *receiveTypingTimer;
@@ -45,6 +46,7 @@
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
+        self.isFirstLoad = YES;
         [self loadMessages];
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -496,10 +498,13 @@
     return [self.indexesMessages count];
 }
 
-- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {    
+    if (indexPath.row == 8 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+        [self loadMessages];
+    }
+    
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
-    
     
     if (megaMessage.isDeleted) {
         cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0f];
@@ -732,10 +737,21 @@
                 self.areAllMessagesSeen = YES;
             }
         }
+
+        
     } else {
-        [self.collectionView reloadData];
+        if (self.isFirstLoad) {
+            [self.collectionView reloadData];
+            self.isFirstLoad = NO;
+        } else {
+            // TODO: improve load earlier messages
+            CGFloat oldContentOffsetFromBottomY = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
+            [self.collectionView reloadData];
+            [self.collectionView layoutIfNeeded];
+            CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentSize.height - oldContentOffsetFromBottomY);
+            self.collectionView.contentOffset = newContentOffset;
+        }
         self.areMessagesLoaded = YES;
-        [self scrollToBottomAnimated:YES];
     }
 }
 
