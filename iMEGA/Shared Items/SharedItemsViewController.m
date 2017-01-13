@@ -611,13 +611,9 @@
     }
     
     if (numberOfRows == 0) {
-        if (tableView == self.searchDisplayController.searchResultsTableView) {
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-        } else {
-            [self setEditing:NO animated:NO];
-            [self setNavigationBarButtonItemsEnabled:NO];
-            [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        }
+        [self setEditing:NO animated:NO];
+        [self setNavigationBarButtonItemsEnabled:NO];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     } else {
         [self setNavigationBarButtonItemsEnabled:YES];
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
