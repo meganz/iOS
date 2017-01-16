@@ -866,8 +866,6 @@
 "managementMessage"="Management message";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
 "thisMessageHasBeenDeleted"="This message has been deleted.";
-/* Personal pronoun. 1st person */
-"I"="I";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Me";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */

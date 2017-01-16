@@ -24,11 +24,11 @@
         } else if (message.isManagementMessage) {
             _managementMessage = message.managementMessage;
             
-            uint64_t myHandle = [[[MEGASdkManager sharedMEGASdk] myUser] handle];
+            uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
             NSString *fullNameDidAction = @"";
             
             if (myHandle == message.userHandle) {
-                fullNameDidAction = AMLocalizedString(@"I", @"Personal pronoun. 1st person");
+                fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
             } else {
                 fullNameDidAction = [chatRoom peerFullnameByHandle:message.userHandle];
                 if (fullNameDidAction.length == 0) {
@@ -47,7 +47,7 @@
             }
             
             if (tempHandle == myHandle) {
-                fullNameReceiveAction = AMLocalizedString(@"I", @"Personal pronoun. 1st person");
+                fullNameReceiveAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
             } else {
                 fullNameReceiveAction = [chatRoom peerFullnameByHandle:tempHandle];
                 if (fullNameReceiveAction.length == 0) {
