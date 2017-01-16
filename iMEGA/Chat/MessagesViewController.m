@@ -543,7 +543,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
     CGFloat height = (isiPhone4XOr5X ? 340.0f : 320.0f);
-    CGFloat minimumHeight = self.areMessagesLoaded ? height : 0.0f;
+    CGFloat minimumHeight = self.isFirstLoad ? 0.0f : height;
     
     return CGSizeMake(self.view.frame.size.width, minimumHeight);
 }
