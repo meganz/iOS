@@ -306,7 +306,8 @@
     cell.chatTitle.text = chatListItem.title;
     
     if (chatListItem.lastMessage.isManagementMessage) {
-        cell.chatLastMessage.text = AMLocalizedString(@"managementMessage", @"Message shown on the Chat list view as last message when something related to the group has happened, for example, someone left the group or someone has been added");
+        //TODO: After #5744 is resolved, show the last text message content
+        cell.chatLastMessage.text = @"Management Message";
     } else {
         cell.chatLastMessage.text = chatListItem.lastMessage.content;
     }
@@ -546,7 +547,8 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg: {
                     if (item.lastMessage.isManagementMessage) {
-                        cell.chatLastMessage.text = AMLocalizedString(@"managementMessage", @"Message shown on the Chat list view as last message when something related to the group has happened, for example, someone left the group or someone has been added");
+                        //TODO: After #5744 is resolved, show the last text message content
+                        cell.chatLastMessage.text = @"Management Message";
                     } else {
                         cell.chatLastMessage.text = item.lastMessage.content;
                     }
