@@ -943,7 +943,7 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="Close";
 /* Alert text that explains what means confirming the action 'Leave' */
-"areYouSureYouWantToLeaveThisGroupChat"="Are you sure you want to leave this group chat?";
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Leave Chat";
 /* Button title that allows the user to leave a group chat. */
