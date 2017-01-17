@@ -37,6 +37,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic) MEGAChatStatus onlineStatus;
 @property (readonly, nonatomic) uint64_t userTypingHandle;
+@property (readonly, nonatomic, getter=isActive) BOOL active;
+
 
 - (instancetype)clone;
 

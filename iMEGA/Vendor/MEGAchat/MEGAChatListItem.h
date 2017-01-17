@@ -24,6 +24,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) MEGAChatMessage *lastMessage;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
 @property (readonly, nonatomic) uint64_t peerHandle;
+@property (readonly, nonatomic, getter=isActive) BOOL active;
 
 - (instancetype)clone;
 
