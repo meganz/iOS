@@ -587,8 +587,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Momenteel %@ in gebruik";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Beëindig uw account";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Beëindig uw account";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="U zal alle gegevens verliezen die op dit account staan. Weet u zeker dat u door wilt gaan?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
