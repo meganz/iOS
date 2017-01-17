@@ -82,6 +82,10 @@ using namespace megachat;
     return self.megaChatListItem->getPeerHandle();
 }
 
+- (BOOL)isActive {
+    return self.megaChatListItem->isActive();
+}
+
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
     return self.megaChatListItem->hasChanged((int) changeType);
 }

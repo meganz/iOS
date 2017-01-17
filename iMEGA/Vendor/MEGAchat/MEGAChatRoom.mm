@@ -83,6 +83,10 @@ using namespace megachat;
     return self.megaChatRoom->getUserTyping();
 }
 
+- (BOOL)isActive {
+    return self.megaChatRoom->isActive();
+}
+
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande {
     return self.megaChatRoom->getPeerPrivilegeByHandle(userHande);
 }
