@@ -49,7 +49,7 @@
     self.offlineSizeString = [[NSString alloc] init];
     self.cacheSizeString = [[NSString alloc] init];
     
-    self.cancelAccountLabel.text = AMLocalizedString(@"closeYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
+    self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -269,7 +269,7 @@
         }
             
         case 4: { //Cancel account
-            UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted.")
+            UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.")
                                                                                message:nil
                                                                               delegate:self
                                                                      cancelButtonTitle:AMLocalizedString(@"cancel", nil)

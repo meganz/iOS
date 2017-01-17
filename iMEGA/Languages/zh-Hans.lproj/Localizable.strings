@@ -587,8 +587,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="当前使用 %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="删除您的账户";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="删除您的账户";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -597,7 +597,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="注销链接已失效";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to close your account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to Cancel your account.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="关闭帐号";
 /* Title for the action that allows to remove a file or folder */
