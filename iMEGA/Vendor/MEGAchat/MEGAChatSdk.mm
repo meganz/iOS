@@ -36,18 +36,14 @@ using namespace megachat;
 
 @implementation MEGAChatSdk
 
-static DelegateMEGAChatLogerListener *externalLogger = NULL;
+static DelegateMEGAChatLoggerListener *externalLogger = NULL;
 
 #pragma mark - Init
-
-+ (void)setLogWithColors:(BOOL)userColors {
-    MegaChatApi::setLogWithColors(userColors);
-}
 
 - (instancetype)init:(MEGASdk *)megaSDK {
     
     if (!externalLogger) {
-        externalLogger = new DelegateMEGAChatLogerListener(nil);
+        externalLogger = new DelegateMEGAChatLoggerListener(nil);
     }
     
     self.megaChatApi = new MegaChatApi((mega::MegaApi *)[megaSDK getCPtr]);
@@ -361,6 +357,22 @@ static DelegateMEGAChatLogerListener *externalLogger = NULL;
 
 - (void)sendTypingNotificationForChat:(uint64_t)chatId {
     self.megaChatApi->sendTypingNotification(chatId);
+}
+
+#pragma mark - Debug log messages
+
++ (void)setLogLevel:(MEGAChatLogLevel)level {
+    MegaChatApi::setLogLevel((int)level);
+}
+
++ (void)setLogObject:(id<MEGAChatLoggerDelegate>)delegate {
+    DelegateMEGAChatLoggerListener *newLogger = new DelegateMEGAChatLoggerListener(delegate);
+    delete externalLogger;
+    externalLogger = newLogger;
+}
+
++ (void)setLogWithColors:(BOOL)userColors {
+    MegaChatApi::setLogWithColors(userColors);
 }
 
 #pragma mark - Private methods

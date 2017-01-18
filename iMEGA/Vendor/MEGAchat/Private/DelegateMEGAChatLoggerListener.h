@@ -1,10 +1,10 @@
 #import "megachatapi.h"
 #import "MEGAChatSdk.h"
 
-class DelegateMEGAChatLogerListener : public megachat::MegaChatLogger {
+class DelegateMEGAChatLoggerListener : public megachat::MegaChatLogger {
     
 public:
-    DelegateMEGAChatLogerListener(id<MEGAChatLoggerDelegate> listener);
+    DelegateMEGAChatLoggerListener(id<MEGAChatLoggerDelegate> listener);
     void log(int loglevel, const char *message);
     
 private:
