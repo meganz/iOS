@@ -55,8 +55,6 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 
 #pragma mark - Init
 
-+ (void)setLogWithColors:(BOOL)userColors;
-
 - (instancetype)init:(MEGASdk *)megaSDK;
 
 - (MEGAChatInit)initKarereWithSid:(NSString *)sid;
@@ -146,5 +144,11 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 - (void)removeUnsentMessageForChat:(uint64_t)chatId temporalId:(uint64_t)temporalId;
 
 - (void)sendTypingNotificationForChat:(uint64_t)chatId;
+
+#pragma mark - Debug log messages
+
++ (void)setLogLevel:(MEGAChatLogLevel)level;
++ (void)setLogObject:(id<MEGAChatLoggerDelegate>)delegate;
++ (void)setLogWithColors:(BOOL)userColors;
 
 @end
