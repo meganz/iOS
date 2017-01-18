@@ -9,6 +9,7 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -31,7 +32,6 @@
 #import "SettingsTableViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -86,8 +86,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+        MEGALogger *logger = [[MEGALogger alloc] init];
+        [MEGAChatSdk setLogObject:logger];
     }
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-
+    
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
 #else

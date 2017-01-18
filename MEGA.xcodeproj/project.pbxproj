@@ -148,6 +148,7 @@
 		418852051A668E5200FDBA15 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852041A668E5200FDBA15 /* libsqlite3.dylib */; };
 		419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 419A02741DACE848000B9DC9 /* ChatRoomCell.m */; };
 		419A02791DACF778000B9DC9 /* MEGAChatMessage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 419A02781DACF778000B9DC9 /* MEGAChatMessage.mm */; };
+		41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D061AE7900F007D7E20 /* UpgradeTableViewController.m */; };
 		41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A66D0C1AE7A0FE007D7E20 /* ProductTableViewCell.m */; };
@@ -575,6 +576,8 @@
 		419A02771DACF778000B9DC9 /* MEGAChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatMessage.h; sourceTree = "<group>"; };
 		419A02781DACF778000B9DC9 /* MEGAChatMessage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatMessage.mm; sourceTree = "<group>"; };
 		419A027A1DACFB53000B9DC9 /* MEGAChatMessage+init.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+init.h"; sourceTree = "<group>"; };
+		41A4204D1C4EA02C002E192E /* MEGALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGALogger.h; sourceTree = "<group>"; };
+		41A4204E1C4EA02C002E192E /* MEGALogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGALogger.m; sourceTree = "<group>"; };
 		41A602981A8A5D11001AE538 /* CameraUploads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploads.h; sourceTree = "<group>"; };
 		41A602991A8A5D11001AE538 /* CameraUploads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploads.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41A66D051AE7900F007D7E20 /* UpgradeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeTableViewController.h; sourceTree = "<group>"; };
@@ -1307,6 +1310,8 @@
 				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
 				410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */,
 				410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */,
+				41A4204D1C4EA02C002E192E /* MEGALogger.h */,
+				41A4204E1C4EA02C002E192E /* MEGALogger.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2338,6 +2343,7 @@
 				4172794D1DB663FA001AC818 /* JSQVideoMediaItem.m in Sources */,
 				415226971A692ECC00EC7BB6 /* OfflineTableViewController.m in Sources */,
 				41E88F131CF451B000BD3B79 /* UIImage+MWPhotoBrowser.m in Sources */,
+				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
 				41B49B9D1DACFEB100458F98 /* DelegateMEGAChatRoomListener.mm in Sources */,
