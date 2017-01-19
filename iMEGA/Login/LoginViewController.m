@@ -49,14 +49,6 @@
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
     [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
-    
-    MEGAChatInit ret = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
-    if (ret != MEGAChatInitWaitingNewSession) {
-        MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
-        [[MEGASdkManager sharedMEGAChatSdk] logout];
-    } else if (ret == MEGAChatInitNoCache) {
-        [[MEGASdkManager sharedMEGASdk] invalidateCache];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -76,6 +68,14 @@
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
+    if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitWaitingNewSession) {
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+        if (chatInit != MEGAChatInitWaitingNewSession) {
+            MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+        }
+    }
+    
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     
