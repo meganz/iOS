@@ -59,6 +59,8 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 
 - (MEGAChatInit)initKarereWithSid:(NSString *)sid;
 
+- (MEGAChatInit)initState;
+
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)connect;
 
