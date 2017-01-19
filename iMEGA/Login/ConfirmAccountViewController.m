@@ -163,6 +163,12 @@
     switch ([request type]) {
             
         case MEGARequestTypeConfirmAccount: {
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+            if (chatInit != MEGAChatInitWaitingNewSession) {
+                MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
+            
             if (![[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                 [[MEGASdkManager sharedMEGASdk] loginWithEmail:[self.emailTextField text] password:[self.passwordTextField text] delegate:self];
             }
