@@ -59,6 +59,10 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     return (MEGAChatInit) self.megaChatApi->init((sid != nil) ? [sid UTF8String] : NULL);
 }
 
+- (MEGAChatInit)initState {
+    return (MEGAChatInit) self.megaChatApi->getInitState();
+}
+
 - (void)connectWithDelegate:(id<MEGAChatRequestDelegate>)delegate {
     self.megaChatApi->connect([self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
 }
