@@ -41,9 +41,11 @@ using namespace megachat;
 - (NSString *)description {
     NSString *onlineStatus = [MEGAChatListItem stringForStatus:self.onlineStatus];
     NSString *changes      = [MEGAChatListItem stringForChangeType:self.changes];
+    NSString *active       = self.isActive ? @"YES" : @"NO";
+    NSString *group        = self.isGroup ? @"YES" : @"NO";
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%ld, unread=%ld>",
-            [self class], self.chatId, self.title, onlineStatus, changes, self.visibility, (long)self.unreadCount];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%ld, unread=%ld, group=%@, active=%@>",
+            [self class], self.chatId, self.title, onlineStatus, changes, self.visibility, (long)self.unreadCount, group, active];
 }
 
 - (uint64_t)chatId {
