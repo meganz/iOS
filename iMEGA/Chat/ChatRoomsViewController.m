@@ -23,9 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
-@property (nonatomic, strong) NSArray *chatListItemArray;
-@property (nonatomic, strong) NSArray *searchChatListItemArray;
-@property (nonatomic, strong) NSMutableDictionary *chatListItemIndexPathDictionary;
+@property (nonatomic, strong) NSMutableArray *chatListItemArray;
+@property (nonatomic, strong) NSMutableArray *searchChatListItemArray;
+@property (nonatomic, strong) NSMutableDictionary *chatIdIndexPathDictionary;
 
 @property (strong, nonatomic) UISearchController *searchController;
 @end
@@ -43,7 +43,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // No search results controller to display the search results in the current view
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
@@ -59,7 +59,8 @@
     self.definesPresentationContext = YES;
     
     self.title = AMLocalizedString(@"chat", @"Chat section header");
-    self.chatListItemIndexPathDictionary = [[NSMutableDictionary alloc] init];
+    _chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
+    _chatListItemArray = [[NSMutableArray alloc] init];
     
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
 }
@@ -72,7 +73,32 @@
     self.tabBarController.tabBar.hidden = NO;
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
-    [self sortChatListItems];
+    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+    for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+        MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+        if (chatListItem.isActive) {
+            [self.chatListItemArray addObject:chatListItem];
+        } else {
+            MEGALogInfo(@"Chat list item inactive %@", chatListItem);
+        }
+    }
+    
+    self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first  = [[(MEGAChatListItem *)a lastMessage] timestamp];
+        NSDate *second = [[(MEGAChatListItem *)b lastMessage] timestamp];
+        
+        if (!first) {
+            first = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        if (!second) {
+            second = [NSDate dateWithTimeIntervalSince1970:0];
+        }
+        
+        return [second compare:first];
+    }] mutableCopy];
+    
+    [self updateChatIdIndexPathDictionary];
+    
     [self.tableView reloadData];
 }
 
@@ -81,6 +107,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
+    [self.chatListItemArray removeAllObjects];    
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
@@ -167,37 +194,6 @@
     [self.tableView reloadData];
 }
 
-- (void)sortChatListItems {
-    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
-    
-    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.chatListItemList.size];
-    for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-        [tempArray addObject:[self.chatListItemList chatListItemAtIndex:i]];
-    }
-    
-    
-    self.chatListItemArray = [tempArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first  = [[(MEGAChatListItem *)a lastMessage] timestamp];
-        NSDate *second = [[(MEGAChatListItem *)b lastMessage] timestamp];
-        
-        if (!first) {
-            first = [NSDate dateWithTimeIntervalSince1970:0];
-        }
-        if (!second) {
-            second = [NSDate dateWithTimeIntervalSince1970:0];
-        }
-        
-        return [second compare:first];
-    }];
-    
-    NSInteger i = 0;
-    for (MEGAChatListItem *item in self.chatListItemArray) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        [self.chatListItemIndexPathDictionary setObject:indexPath forKey:@(item.chatId)];
-        i++;
-    }
-}
-
 - (MEGAChatListItem *)chatListItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = nil;
     if (indexPath) {
@@ -208,6 +204,58 @@
         }
     }
     return chatListItem;
+}
+
+- (void)deleteRowByChatId:(uint64_t)chatId {
+    NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
+    if (self.searchController.isActive) {
+        [self.searchChatListItemArray removeObjectAtIndex:indexPath.row];
+    } else {
+        [self.chatListItemArray removeObjectAtIndex:indexPath.row];
+    }
+    [self updateChatIdIndexPathDictionary];
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+}
+
+- (void)insertRowByChatListItem:(MEGAChatListItem *)item {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    if (self.searchController.isActive) {
+        [self.searchChatListItemArray insertObject:item atIndex:indexPath.row];
+    } else {
+        [self.chatListItemArray insertObject:item atIndex:indexPath.row];
+    }
+    [self updateChatIdIndexPathDictionary];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+}
+
+- (void)moveRowByChatListItem:(MEGAChatListItem *)item {
+    NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
+    if (self.searchController.isActive) {
+        [self.searchChatListItemArray removeObjectAtIndex:indexPath.row];
+        [self.searchChatListItemArray insertObject:item atIndex:0];
+    } else {
+        [self.chatListItemArray removeObjectAtIndex:indexPath.row];
+        [self.chatListItemArray insertObject:item atIndex:0];
+    }
+    
+    [self updateChatIdIndexPathDictionary];
+    
+    [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+}
+
+- (void)updateChatIdIndexPathDictionary {
+    [self.chatIdIndexPathDictionary removeAllObjects];
+    NSInteger i = 0;
+    NSArray *tempArray = self.searchController.isActive ? self.searchChatListItemArray : self.chatListItemArray;
+    for (MEGAChatListItem *item in tempArray) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [self.chatIdIndexPathDictionary setObject:indexPath forKey:@(item.chatId)];
+        i++;
+    }
 }
 
 #pragma mark - IBActions
@@ -332,7 +380,7 @@
         cell.unreadCount.hidden             = NO;
         cell.unreadCount.layer.cornerRadius = 6.0f;
         cell.unreadCount.clipsToBounds      = YES;
-        cell.unreadCount.text               = [NSString stringWithFormat:@"%ld", (long)chatListItem.unreadCount];
+        cell.unreadCount.text               = [NSString stringWithFormat:@"%ld", ABS(chatListItem.unreadCount)];
     } else {
         cell.unreadCount.hidden = YES;
     }
@@ -456,18 +504,23 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    if ([searchString isEqualToString:@""]) {
-        self.searchChatListItemArray = self.chatListItemArray;
-    } else {
-        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
-        self.searchChatListItemArray = [self.chatListItemArray filteredArrayUsingPredicate:resultPredicate];
+    if (searchController.isActive) {
+        if ([searchString isEqualToString:@""]) {
+            self.searchChatListItemArray = self.chatListItemArray;
+        } else {
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
+            self.searchChatListItemArray = [[self.chatListItemArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+        }
     }
+    
+    [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
 }
 
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    MEGALogInfo(@"onChatRequestFinish request: %@ \nerror: %@", request, error);
     if (error.type) return;
     
     switch (request.type) {
@@ -483,11 +536,7 @@
         }
             
         case MEGAChatRequestTypeRemoveFromChatRoom: {
-//            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-//            NSIndexPath *indexPath = [self.chatListItemIndexPathDictionary objectForKey:@(chatRoom.chatId)];
-//            [self.tableView beginUpdates];
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            [self.tableView endUpdates];
+            [self deleteRowByChatId:request.chatHandle];
             break;
         }
             
@@ -503,10 +552,9 @@
     
     // New chat 1on1 or group
     if (item.changes == 0) {
-        [self sortChatListItems];
-        [self.tableView reloadData];
+        [self insertRowByChatListItem:item];
     } else {
-        NSIndexPath *indexPath = [self.chatListItemIndexPathDictionary objectForKey:@(item.chatId)];
+        NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(item.chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
@@ -527,7 +575,7 @@
                         cell.unreadCount.layer.cornerRadius = 6.0f;
                         cell.unreadCount.clipsToBounds      = YES;
                     }
-                    cell.unreadCount.text = [NSString stringWithFormat:@"%ld", (long)item.unreadCount];
+                    cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(item.unreadCount)];
                     break;
                     
                 case MEGAChatListItemChangeTypeParticipants:
@@ -537,13 +585,10 @@
                     cell.chatTitle.text = item.title;
                     break;
                     
-                case MEGAChatListItemChangeTypeClosed:
-                    //TODO: Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'Invalid update: invalid number of rows in section 0.  The number of rows contained in an existing section after the update (15) must be equal to the number of rows contained in that section before the update (15), plus or minus the number of rows inserted or deleted from that section (0 inserted, 1 deleted) and plus or minus the number of rows moved into or out of that section (0 moved in, 0 moved out).'
-                    //                [self.tableView beginUpdates];
-                    //                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    //                [self.chatListItemIndexPathDictionary removeObjectForKey:indexPath];
-                    //                [self.tableView endUpdates];
+                case MEGAChatListItemChangeTypeClosed: {
+                    [self deleteRowByChatId:item.chatId];
                     break;
+                }
                     
                 case MEGAChatListItemChangeTypeLastMsg: {
                     if (item.lastMessage.isManagementMessage) {
@@ -552,7 +597,6 @@
                     } else {
                         cell.chatLastMessage.text = item.lastMessage.content;
                     }
-                    
                     cell.chatLastTime.text = item.lastMessage.timestamp.shortTimeAgoSinceNow;
                     break;
                 }
@@ -562,11 +606,9 @@
             }
         }
         
-        [self sortChatListItems];
-        
         if (item.changes == MEGAChatListItemChangeTypeLastMsg) {
             if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]] != NSOrderedSame) {
-                [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                [self moveRowByChatListItem:item];
             }
         }
     }
