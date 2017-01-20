@@ -42,9 +42,11 @@ using namespace megachat;
     NSString *ownPrivilege = [MEGAChatRoom stringForPrivilege:self.ownPrivilege];
     NSString *onlineStatus = [MEGAChatRoom stringForStatus:self.onlineStatus];
     NSString *changes      = [MEGAChatRoom stringForChangeType:self.changes];
+    NSString *active       = self.isActive ? @"YES" : @"NO";
+    NSString *group        = self.isGroup ? @"YES" : @"NO";
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, own privilege=%@, peer count=%lu, group=%@, title=%@, online status=%@ changes=%@, unread=%ld, user typing=%llu>",
-            [self class], self.chatId, ownPrivilege, (unsigned long)self.peerCount, @(self.isGroup), self.title, onlineStatus, changes, (long)self.unreadCount, self.userTypingHandle];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@, own privilege=%@, peer count=%lu, group=%@, changes=%@, unread=%ld, user typing=%llu, active=%@>",
+            [self class], self.chatId, self.title, onlineStatus, ownPrivilege, (unsigned long)self.peerCount, group, changes, (long)self.unreadCount, self.userTypingHandle, active];
 }
 
 - (uint64_t)chatId {
