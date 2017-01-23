@@ -26,6 +26,14 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
     MEGAChatMessageChangeTypeContent = 0x02
 };
 
+
+typedef NS_ENUM(NSInteger, MEGAChatMessageReason) {
+    MEGAChatMessageReasonPeersChanged  = 1,
+    MEGAChatMessageReasonTooOld        = 2,
+    MEGAChatMessageReasonGeneralReject = 3,
+    MEGAChatMessageReasonNoWriteAcess  = 4
+};
+
 @interface MEGAChatMessage : NSObject
 
 @property (readonly, nonatomic) MEGAChatMessageStatus status;
@@ -43,6 +51,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {
 @property (readonly, nonatomic) uint64_t userHandleOfAction;
 @property (readonly, nonatomic) NSInteger privilege;
 @property (readonly, nonatomic) NSInteger changes;
+@property (readonly, nonatomic) NSInteger code;
 
 - (instancetype)clone;
 
