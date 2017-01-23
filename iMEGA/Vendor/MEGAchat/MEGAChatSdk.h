@@ -37,10 +37,10 @@ typedef NS_ENUM (NSInteger, MEGAChatSource) {
 
 typedef NS_ENUM (NSInteger, MEGAChatInit) {
     MEGAChatInitError             = -1,
-    MEGAChatInitNoCache           = 0,
     MEGAChatInitWaitingNewSession = 1,
     MEGAChatInitOfflineSession    = 2,
-    MEGAChatInitOnlineSession     = 3
+    MEGAChatInitOnlineSession     = 3,
+    MEGAChatInitNoCache           = 7
 };
 
 @interface MEGAChatSdk : NSObject
