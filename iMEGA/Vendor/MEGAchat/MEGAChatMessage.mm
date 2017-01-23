@@ -103,6 +103,10 @@ using namespace megachat;
     return self.megaChatMessage->getChanges();
 }
 
+- (NSInteger)code {
+    return self.megaChatMessage->getCode();
+}
+
 - (BOOL)hasChangedForType:(MEGAChatMessageChangeType)changeType {
     return self.megaChatMessage->hasChanged((int)changeType);
 }
