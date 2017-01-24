@@ -83,6 +83,9 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 - (void)addChatRoomDelegate:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate;
 - (void)removeChatRoomDelegate:(id<MEGAChatRoomDelegate>)delegate;
 
+- (void)addChatRequestDelegate:(id<MEGAChatRequestDelegate>)delegate;
+- (void)removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)delegate;
+
 - (void)addChatDelegate:(id<MEGAChatDelegate>)delegate;
 - (void)removeChatDelegate:(id<MEGAChatDelegate>)delegate;
 
