@@ -125,7 +125,7 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
 #pragma mark - Add and remove delegates
 
 - (void)addChatRoomDelegate:(uint64_t)chatId delegate:(id<MEGAChatRoomDelegate>)delegate {
-    self.megaChatApi->addChatRoomListener(chatId, [self createDelegateMEGAChatRoomListener:delegate singleListener:YES]);
+    self.megaChatApi->addChatRoomListener(chatId, [self createDelegateMEGAChatRoomListener:delegate singleListener:NO]);
 }
 
 - (void)removeChatRoomDelegate:(id<MEGAChatRoomDelegate>)delegate {    
