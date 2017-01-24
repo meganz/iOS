@@ -30,3 +30,11 @@ void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api,
         });
     }
 }
+
+void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [listener onChatOnlineStatusUpdate:this->megaChatSDK status:(MEGAChatStatus)status];
+        });
+    }
+}
