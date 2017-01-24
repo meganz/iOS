@@ -1,4 +1,5 @@
 #import "GroupChatDetailsViewController.h"
+#import "ChatRoomsViewController.h"
 
 #import "UIImage+GKContact.h"
 
@@ -8,7 +9,7 @@
 #import "GroupChatDetailsViewTableViewCell.h"
 #import "ContactTableViewCell.h"
 
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate>
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -20,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
+
+@property (nonatomic, assign) BOOL openChatRoom;
 
 @end
 
@@ -40,6 +43,26 @@
     self.emailLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
     
     [self setParticipants];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2] class] != [ChatRoomsViewController class]) {
+        [[MEGASdkManager sharedMEGAChatSdk] addChatRoomDelegate:self.chatRoom.chatId delegate:self];
+        self.openChatRoom = NO;
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self];
+        self.openChatRoom = YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.openChatRoom) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self];
+    }
 }
 
 #pragma mark - Private
@@ -76,7 +99,7 @@
     }];
     
     UIAlertAction *continueAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [[MEGASdkManager sharedMEGAChatSdk] clearChatHistory:self.chatRoom.chatId];
+        [[MEGASdkManager sharedMEGAChatSdk] clearChatHistory:self.chatRoom.chatId delegate:self];
     }];
     
     [clearChatHistoryAlertController addAction:cancelAction];
@@ -363,12 +386,38 @@
             break;
         }
             
-        case MEGAChatRequestTypeEditChatRoomName: {
-            NSString *newChatRoomName = request.text;
-            self.title = newChatRoomName;
-            self.nameLabel.text = newChatRoomName;
+        default:
             break;
-        }
+    }
+}
+
+
+
+- (void)onChatRoomUpdate:(MEGAChatSdk *)api chat:(MEGAChatRoom *)chat {
+    MEGALogInfo(@"onChatRoomUpdate %@", chat);
+    self.chatRoom = chat;
+    switch (chat.changes) {
+        case MEGAChatRoomChangeTypeStatus:
+            break;
+            
+        case MEGAChatRoomChangeTypeUnreadCount:
+            break;
+            
+        case MEGAChatRoomChangeTypeParticipans:
+            [self setParticipants];
+            [self.tableView reloadData];
+            break;
+            
+        case MEGAChatRoomChangeTypeTitle:
+            self.nameLabel.text = chat.title;
+            break;
+            
+        case MEGAChatRoomChangeTypeUserTyping:
+            break;
+            
+        case MEGAChatRoomChangeTypeClosed:
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            break;
             
         default:
             break;
