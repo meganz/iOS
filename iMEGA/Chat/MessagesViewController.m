@@ -75,11 +75,8 @@
      //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(editAction:megaMessage:)];
     
-    
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-    
-    [self customNavigationBarLabel];
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     
@@ -97,10 +94,17 @@
     self.areAllMessagesSeen = NO;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self customNavigationBarLabel];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
+    }
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
 }
 
 #pragma mark - Private methods
@@ -778,6 +782,14 @@
             [self.collectionView reloadData];
             [self scrollToBottomAnimated:YES];
         }
+        
+        if (message.type == MEGAChatMessageTypeTruncate) {
+            [self.messagesDictionary removeAllObjects];
+            [self.indexesMessages removeAllObjects];
+            [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
+            [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
+            [self.collectionView reloadData];
+        }
     }
 }
 
@@ -790,7 +802,6 @@
             break;
             
         case MEGAChatRoomChangeTypeUnreadCount:
-            
             break;
             
         case MEGAChatRoomChangeTypeParticipans:
@@ -824,7 +835,8 @@
         }
             
         case MEGAChatRoomChangeTypeClosed:
-            
+            [api closeChatRoom:chat.chatId delegate:self];
+            [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             
         default:
