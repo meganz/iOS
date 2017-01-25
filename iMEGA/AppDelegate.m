@@ -86,8 +86,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        MEGALogger *logger = [[MEGALogger alloc] init];
-        [MEGAChatSdk setLogObject:logger];
+        [[MEGALogger sharedLogger] startLogging];
     }
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];

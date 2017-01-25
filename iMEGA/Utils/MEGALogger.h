@@ -5,6 +5,12 @@
 
 @interface MEGALogger : NSObject <MEGALoggerDelegate, MEGAChatLoggerDelegate>
 
-+ (void)stopLog;
++ (MEGALogger *)sharedLogger;
+
+- (void)startLogging;
+- (void)stopLogging;
+
+- (void)useSDKLogger;
+- (void)useChatSDKLogger;
 
 @end
