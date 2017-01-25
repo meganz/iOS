@@ -265,6 +265,18 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     return [[MEGAChatListItemList alloc] initWithMegaChatListItemList:self.megaChatApi->getChatListItems() cMemoryOwn:YES];
 }
 
+- (NSInteger)unreadChats {
+    return self.megaChatApi->getUnreadChats();
+}
+
+- (MEGAChatListItemList *)activeChatListItems {
+    return [[MEGAChatListItemList alloc] initWithMegaChatListItemList:self.megaChatApi->getActiveChatListItems() cMemoryOwn:YES];
+}
+
+- (MEGAChatListItemList *)inactiveChatListItems {
+    return [[MEGAChatListItemList alloc] initWithMegaChatListItemList:self.megaChatApi->getInactiveChatListItems() cMemoryOwn:YES];
+}
+
 - (MEGAChatListItem *)chatListItemForChatId:(uint64_t)chatId {
     return self.megaChatApi->getChatListItem(chatId) ? [[MEGAChatListItem alloc] initWithMegaChatListItem:self.megaChatApi->getChatListItem(chatId) cMemoryOwn:YES] : nil;
 }
