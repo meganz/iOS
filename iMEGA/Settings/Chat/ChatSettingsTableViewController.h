@@ -2,4 +2,6 @@
 
 @interface ChatSettingsTableViewController : UITableViewController
 
+- (void)enableChatWithSession;
+
 @end

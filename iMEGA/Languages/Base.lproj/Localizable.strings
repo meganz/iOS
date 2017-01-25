@@ -858,6 +858,10 @@
 "chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="No Conversations";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Enable";
 /* Conversations section */
 "conversations"="Conversations";
 /* A button on a dialog which invites a contact to join MEGA. */
