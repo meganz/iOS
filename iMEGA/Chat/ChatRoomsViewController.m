@@ -73,14 +73,10 @@
     self.tabBarController.tabBar.hidden = NO;
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
-    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
     for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
         MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-        if (chatListItem.isActive) {
-            [self.chatListItemArray addObject:chatListItem];
-        } else {
-            MEGALogInfo(@"Chat list item inactive %@", chatListItem);
-        }
+        [self.chatListItemArray addObject:chatListItem];
     }
     
     self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
