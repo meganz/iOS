@@ -102,12 +102,12 @@
         }] mutableCopy];
         
         [self updateChatIdIndexPathDictionary];
-        
-        [self.tableView reloadData];
     } else {
         self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
     }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
