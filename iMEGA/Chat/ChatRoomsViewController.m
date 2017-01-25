@@ -75,20 +75,16 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+  
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+            MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+            [self.chatListItemArray addObject:chatListItem];
+        }
         
         self.addBarButtonItem.enabled = YES;
         if (!self.tableView.tableHeaderView) {
             self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
-        
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
-        for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-            MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-            if (chatListItem.isActive) {
-                [self.chatListItemArray addObject:chatListItem];
-            } else {
-                MEGALogInfo(@"Chat list item inactive %@", chatListItem);
-            }
         }
         
         self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
