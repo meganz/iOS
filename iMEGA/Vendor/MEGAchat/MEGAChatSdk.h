@@ -52,6 +52,9 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 @property (nonatomic, readonly) NSString *myEmail;
 @property (nonatomic, readonly) MEGAChatRoomList *chatRooms;
 @property (nonatomic, readonly) MEGAChatListItemList *chatListItems;
+@property (nonatomic, readonly) NSInteger unreadChats;
+@property (nonatomic, readonly) MEGAChatListItemList *activeChatListItems;
+@property (nonatomic, readonly) MEGAChatListItemList *inactiveChatListItems;
 
 #pragma mark - Init
 
