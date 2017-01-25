@@ -366,7 +366,7 @@
                 [cell.detailTextLabel setText:([[CameraUploads syncManager] isCameraUploadsEnabled] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil))];
             } else if (indexPath.row == 1) {
                 cell.textLabel.text = AMLocalizedString(@"chat", @"Chat section header");
-                cell.detailTextLabel.text = @"";
+                cell.detailTextLabel.text = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
             }
             break;
         }

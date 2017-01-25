@@ -112,8 +112,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     
     [self languageCompatibility];
@@ -198,16 +196,24 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (sessionV3) {
         isAccountFirstLogin = NO;
-        MEGAChatInit ret = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-        if (ret == MEGAChatInitNoCache) {
-            [[MEGASdkManager sharedMEGASdk] invalidateCache];
-        } else if (ret == MEGAChatInitError) {
-            MEGALogError(@"Init Karere with session failed");
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            }]];
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
-            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+                [MEGASdkManager createSharedMEGAChatSdk];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+            }
+            
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+            if (chatInit == MEGAChatInitNoCache) {
+                [[MEGASdkManager sharedMEGASdk] invalidateCache];
+            } else if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                }]];
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+            }
         }
         
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
@@ -383,6 +389,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+        isAccountFirstLogin = NO;
         if ([Helper selectedOptionOnLink] != 0) {
             [self processSelectedOptionOnLink];
         }
@@ -1288,7 +1295,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                    [[MEGASdkManager sharedMEGAChatSdk] logout];
+                }
+                
                 if (self.urlType == URLTypeCancelAccountLink) {
                     self.urlType = URLTypeDefault;
                     [Helper logout];
@@ -1433,7 +1443,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self requestUserName];
             [self requestContactsFullname];
             [self setBadgeValueForIncomingContactRequests];
-            [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
+            }
             break;
         }
             
@@ -1500,7 +1513,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeLogout: {
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
             
             [Helper logout];
             [SVProgressHUD dismiss];
@@ -1618,6 +1633,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([error type] != MEGAChatErrorTypeOk) {
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
+    }
+    
+    if (request.type == MEGAChatRequestTypeConnect) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else if (request.type == MEGAChatRequestTypeLogout) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] useSDKLogger];
+        }
+        [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
