@@ -8,5 +8,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *chatLastTime;
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet UILabel *unreadCount;
+@property (weak, nonatomic) IBOutlet UIView *unreadView;
 
 @end

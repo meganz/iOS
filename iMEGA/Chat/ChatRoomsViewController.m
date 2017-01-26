@@ -399,12 +399,11 @@
     }
     
     if (chatListItem.unreadCount != 0) {
-        cell.unreadCount.hidden             = NO;
-        cell.unreadCount.layer.cornerRadius = 6.0f;
-        cell.unreadCount.clipsToBounds      = YES;
-        cell.unreadCount.text               = [NSString stringWithFormat:@"%ld", ABS(chatListItem.unreadCount)];
+        cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(chatListItem.unreadCount)];
+        cell.unreadView.hidden = NO;
+        cell.unreadView.clipsToBounds = NO;
     } else {
-        cell.unreadCount.hidden = YES;
+        cell.unreadView.hidden = YES;
     }
     
     return cell;
@@ -592,10 +591,9 @@
                     break;
                     
                 case MEGAChatListItemChangeTypeUnreadCount:
-                    if (cell.unreadCount.hidden && item.unreadCount != 0) {
-                        cell.unreadCount.hidden             = NO;
-                        cell.unreadCount.layer.cornerRadius = 6.0f;
-                        cell.unreadCount.clipsToBounds      = YES;
+                    if (cell.unreadView.hidden && item.unreadCount != 0) {
+                        cell.unreadView.hidden             = NO;
+                        cell.unreadView.clipsToBounds      = YES;
                     }
                     cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(item.unreadCount)];
                     break;
