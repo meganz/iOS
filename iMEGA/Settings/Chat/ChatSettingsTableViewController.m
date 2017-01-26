@@ -1,6 +1,7 @@
 #import "ChatSettingsTableViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"
+#import "SVProgressHUD.h"
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -120,6 +121,8 @@
     MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
     switch (chatInit) {
         case MEGAChatInitNoCache: {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+            [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
             break;
         }
@@ -223,17 +226,20 @@
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if (error.type) return;
-    
     switch (request.type) {
         case MEGAChatRequestTypeConnect: {
-            [self.chatSwitch setOn:YES animated:YES];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD dismiss];
+            
+            if (error.type) return;
+            
             [self.tableView reloadData];
             break;
         }
             
         case MEGAChatRequestTypeLogout: {
-            [self.chatSwitch setOn:NO animated:YES];
+            if (error.type) return;
+            
             [self.tableView reloadData];
             break;
         }
