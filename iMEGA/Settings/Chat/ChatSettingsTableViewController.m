@@ -42,7 +42,7 @@
     self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
     BOOL isChatEnabled = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) ? YES : NO;
-    [self.chatSwitch setOn:isChatEnabled animated:YES];
+    self.isComingfromEmptyState ? [self.chatSwitch setOn:YES animated:YES] : [self.chatSwitch setOn:isChatEnabled animated:YES];
     if (isChatEnabled) {
         BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
         [self.useMobileDataSwitch setOn:isMobileDataEnabledForChat animated:YES];
