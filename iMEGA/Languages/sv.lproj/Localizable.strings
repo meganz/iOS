@@ -12,8 +12,10 @@
 "error"="Fel";
 /*  */
 "name"="Namn";
+/* Caption of a button to edit the files that are selected */
+"edit"="Ändra";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Sparad";
 /*  */
 "passcode"="Lösenord";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="Ogiltig e-post och / eller lösenord. Var god försök igen";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Du har försökt logga in för många gånger. Vänta tills% @ och försök igen.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Kontrollera din e-post och klicka på länken för att bekräfta ditt konto.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Kontrollera din e-post och följ länken för att bekräfta ditt konto.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ditt konto har blivit blockerat. Var vänlig och kontakta support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Det finns pågående nedladdningar";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Testa igen senare eller avbryt";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Sortera efter";
 /* Button title to "Save" the selected option */
 "save"="Spara";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Välj";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Fånga";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Ny mapp";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Namn för den nya mappen";
@@ -462,6 +464,14 @@
 "addContactButton"="Lägg till";
 /* Success message shown when a contact has been invited */
 "requestSent"="Förfrågan skickad";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Det finns ingen anledning att lägga till din egen e-postadress";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Du har redan en kontakt med den e-postadressen";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Användaren [X] har inbjudits och kommer att läggas till din kontaktlista när denne blivit accepterad.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Användarna har bjudits in och kommer att läggas till din kontaktlista när de blivit accepterade.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Problem med att lägga till kontakt";
 /* Alert title shown when you want to remove one or more contacts */
@@ -551,7 +561,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exportera återställningsnyckel och håll den på en säker plats så kan du återställa kontot i händelse av ett förlorat lösenord utan förlust av data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Varför behöver jag en återställningsnyckel? ";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Dina uppgifter är endast läsbara genom en kedja av dekrypterings operationer som börjar med din huvudkrypteringsnyckel (Recovery Key), som vi lagrar krypterad med ditt lösenord. Detta innebär att om du förlorar ditt lösenord, är din återställningsnyckel inte längre användbar, och du kan inte längre dekryptera data.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,7 +597,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="F.n används %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Stäng ditt konto";
+"cancelYourAccount"="Avsluta ditt konto";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Du kommer förlora alla data som tillhör detta kontot. Är du säker på att du vill fortsätta`";
 /*  */
@@ -649,7 +659,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Glömt lösenord?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Du kommer att få en återhämtningslänk som gör att du kan återställa ditt lösenord. Kontrollera din e-post för att fortsätta.";
+"youCanResetYourPasswordByFollowing"="Du kan återställa lösenordet genom att följa återhämtningen länk som kommer att skickas till din e-post.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Din återställningslänk har gått ut, var god försök igen.";
 /* Headline of the password reset recovery procedure */
@@ -766,6 +776,8 @@
 "usedSpaceLabel"="Använt";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Tillgänglig";
+/* title of the My Account screen */
+"accountType"="Kontotyp:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Är du säker på att du vill ta bort objektet från offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Är du säker på att du vill ta bort dessa objekt från offline?";
+/* Chat section header */
+"chat"="Chatt";
+/* Empty Conversations section */
+"noConversations"="Inga konversationer";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Slå på ";
+/* Conversations section */
+"conversations"="Samtal";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Bjud in";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Meddelandet har tagits bort";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Jag";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] togs bort från gruppchatt av [B] ";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] lämnade gruppchatten";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] anslöt till gruppchatt efter inbjudan av[B] ";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] rensade chattens historik";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] ändrades till [B] av[C] ";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] ändrade gruppchattens namn till [B] ";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Status";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Röst och videosamtal";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Använd mobildata";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="Du kan chatta med dina kontakter, dela filer och göra röst- och videosamtal .";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="Du kommer att visas som offline för dina kontakter och du kommer inte att kunna chatta med dem.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(redigerad)";
+/*  */
+"online"="Ansluten";
+/* title of the contact properties screen */
+"contactInfo"="Information om kontakt";
+/*  */
+"notifications"="Notiser";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Sänd meddelande";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verifiera personliga uppgifter";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Rensa chatthistorik";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Är du säker på att du vill rensa all historik för denna konversation? ";
+/* 'Next' button in a dialog */
+"continue"="Fortsätt";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Stäng chatt";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Delade mappar";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Kontaktuppgifter";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Detta görs bäst i verkliga livet genom att möta ansikte mot ansikte. Om du har en annan redan verifierad kanal såsom verifieras OTR eller PGP, kan du även använda det.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Dina personliga uppgifter";
+/* Button to reset the password */
+"reset"="Återställ";
+/* Button title */
+"approve"="Godkänna";
+/* start a chat/conversation */
+"startConversation"="Starta konversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Grupp";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Grupp info";
+/* Label title for a group chat */
+"groupChat"="Grupp Chatt";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Döp om gruppen";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Ändra gruppens avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Lämna";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Mer";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Info";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Stäng";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Du kommer inte längre ha tillgång till denna konversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Lämna chatt";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Lämna grupp";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Deltagare";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Administratör";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standard";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Konversation med %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA skyddar din chatt med en fullständig (användarstyrd ) kryptering som garanterar dig hög säkerhet:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S] Sekretess. [/ Er] endast författare och avsedda mottagare kan dechiffrera och läsa innehållet.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chatt hittades ej";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ Skriver";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Skriv ett meddelande";

@@ -12,8 +12,10 @@
 "error"="Fehler";
 /*  */
 "name"="Name";
+/* Caption of a button to edit the files that are selected */
+"edit"="Bearbeiten";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Gespeichert";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="Ungültige E-Mail-Adresse und/oder Passwort. Bitte versuchen Sie es noch einmal.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Zuviele Fehlversuche. Bitte warten Sie bis %@ und versuchen Sie es dann erneut.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Bitte sehen Sie in Ihrem Posteingang nach und klicken Sie auf den Bestätigungslink, um Ihren Account zu aktivieren.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um Ihren Account zu bestätigen.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ihr Account wurde gesperrt. Bitte setzen Sie sich mit support@mega.nz in Verbindung.";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Downloads sind aktiv";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Bitte versuchen Sie es später noch einmal";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Sortierung nach";
 /* Button title to "Save" the selected option */
 "save"="Speichern";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Auswählen";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Aufnehmen";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Neuer Ordner";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Name des neuen Ordners";
@@ -462,6 +464,14 @@
 "addContactButton"="Hinzufügen";
 /* Success message shown when a contact has been invited */
 "requestSent"="Anfrage versandt";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Sie stehen bereits mit dieser E-Mail-Adresse in Kontakt";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste auftauchen sobald die Einladung akzeptiert wurde.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen sobald sie die Einladung akzeptiert haben.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Kontakt konnte nicht hinzugefügt werden";
 /* Alert title shown when you want to remove one or more contacts */
@@ -499,7 +509,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Lesen & hinzufügen";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="Unbeschränkter Zugang";
+"fullAccess"="Vollzugriff";
 /* Title of the Settings section */
 "settingsTitle"="Einstellungen";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -551,7 +561,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Ein exportierter und an einem sicheren Ort verwahrter Rettungsschlüssel erlaubt es Ihnen, Ihr Passwort ohne Datenverlust neu zu setzen.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Wozu brauche ich einen Rettungsschlüssel?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Der Zugriff auf Ihre Daten erfolgt über eine Kaskade von Entschlüsselungsoperationen, die mit Ihrem Masterschlüssel beginnt, den wir mit Ihrem Accountpasswort verschlüsselt speichern. Dies bedeutet, dass der Verlust Ihres Passworts Ihren Masterschlüssel und damit alle Ihre Daten unlesbar macht.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,7 +597,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="%@ belegt";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Account schließen";
+"cancelYourAccount"="Account stornieren";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Sie werden alle gespeicherten Daten dieses Accounts verlieren. Wirklich löschen?";
 /*  */
@@ -649,7 +659,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Passwort vergessen?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Sie erhalten einen Link per E-Mail, mit dem Sie Ihr Passwort zurücksetzen können.";
+"youCanResetYourPasswordByFollowing"="Sie können Ihr Passwort durch Klick auf den Link, den wir Ihnen per E-Mail zugeschickt haben, zurücksetzen";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Dieser Resetlink hat seinen Gültigkeitszeitrahmen überschritten - bitte versuchen Sie es erneut.";
 /* Headline of the password reset recovery procedure */
@@ -766,6 +776,8 @@
 "usedSpaceLabel"="Belegt";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Verfügbar";
+/* title of the My Account screen */
+"accountType"="Account Typ:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="Gratis";
 /* Text that shows the expiry date of the account PRO level */
@@ -773,7 +785,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Einkaufsverlauf";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Ordnerfreigaben Ihrer Kontakte";
+"incomingShares"="An Sie freigegebene Ordner";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="von %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Diese Offline-Datei wirklich löschen?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Wollen Sie diese Offline-Dateien löschen?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Keine Unterhaltungen";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Aktivieren";
+/* Conversations section */
+"conversations"="Konversationen";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Einladen";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Diese Nachricht wurde gelöscht";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Ich";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] wurde von [B] auf dem Gruppenchat entfernt.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] hat den Gruppenchat verlassen.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] hat den Gruppenchat auf Einladung von [B] betreten.";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] hat den Chatverlauf gelöscht.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] wurde von [C] auf [B]-Status gesetzt.";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] hat den Namen des Gruppenchats auf '[B]' geändert.";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Status";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Audio- und Videoanrufe";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Mobildatennutzung erlauben";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="Sie können mit Ihren Kontakten chatten, Daten an sie freigeben und Audio-/Videogespräche führen.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="Sie werden Ihren Kontakten als \"Offline\" angezeigt und können mit ihnen nicht chatten.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(bearbeitet)";
+/*  */
+"online"="Online";
+/* title of the contact properties screen */
+"contactInfo"="Kontakt Info";
+/*  */
+"notifications"="Benachrichtigen bei";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Nachricht schicken";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Identität prüfen";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Chatverlauf löschen";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Der Chatverlauf wird komplett gelöscht. Sind Sie sicher?";
+/* 'Next' button in a dialog */
+"continue"="Fortfahren";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Chat schließen";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Freigegebene Ordner";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Kontaktidentität";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Der beste Weg ist ein persönliches Treffen. Sollten Sie über einen bereits verifizierten sicheren Kommunikationskanal verfügen, z.B. verifiziertes OTR oder PGP, so können Sie stattdessen diesen verwenden.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Ihre Identität";
+/* Button to reset the password */
+"reset"="Zurücksetzen";
+/* Button title */
+"approve"="Bestätigen ";
+/* start a chat/conversation */
+"startConversation"="Unterhaltung beginnen";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Gruppe";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Gruppenchat-Infos";
+/* Label title for a group chat */
+"groupChat"="Gruppenchat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Gruppe umbenennen";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Gruppen-Avatar ändern";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Verlassen";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Weitere";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Stummschalten";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Info";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Schließen";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Sie verlieren den Zugriff auf diese Unterhaltung.";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Chat verlassen";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Gruppenchat verlassen";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Teilnehmer";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderator";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standard";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Unterhaltung mit %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA schützt Ihren Chat mit lückenloser (benutzergesteuerter Ende-zu-Ende-)Verschlüsselung mit essentiellen Sicherheitsgarantien:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Vertraulichkeit[/S] Nur der Urheber und seine Empfänger können den Inhalt entschlüsseln und lesen.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Verlässlichkeit.[/S] Das System stellt sicher, dass die empfangenen Daten tatsächlich vom angezeigten Benutzer stammen und zwischenzeitlich nicht verändert wurden.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat nicht gefunden";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ tippt ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Nachricht schreiben...";

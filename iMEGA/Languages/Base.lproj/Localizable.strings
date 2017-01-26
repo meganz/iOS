@@ -683,7 +683,7 @@
 /* Headline when the user chose YES */
 "great" = "Great!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword" = "Please enter you e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
+"recoveryLinkToResetYourPassword"="Please enter your e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send" = "Send";
 /* The title of the screen to park an account. */
@@ -891,7 +891,7 @@
 /* Footer text to explain the meaning of the chat 'Online' status. */
 "chatStatus_OnlineFooter" = "You can chat with your contacts, share files and make voice and video calls.";
 /* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter" = "You will apear offline to your contacts and you will not be able to chat with them.";
+"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(edited)";
 /*  */
