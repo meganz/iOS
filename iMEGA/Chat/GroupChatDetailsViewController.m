@@ -229,13 +229,16 @@
         uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
         NSString *peerFullname = [[NSString alloc] init];
         NSString *peerEmail = [[NSString alloc] init];
+        MEGAChatRoomPrivilege privilege;
         if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
             peerFullname = [NSString stringWithFormat:@"%@ (%@)", myFullname, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
             peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
+            privilege = self.chatRoom.ownPrivilege;
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];
             peerEmail = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:handle];
+            privilege = [self.chatRoom peerPrivilegeAtIndex:indexPath.row];
         }
         BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
         if (isNameEmpty) {
@@ -249,10 +252,9 @@
         
         cell.emailLabel.text = peerEmail;
         
-        UIImage *permissionsImage;
-        switch ([self.chatRoom peerPrivilegeAtIndex:indexPath.row]) {
-            case MEGAChatRoomPrivilegeUnknown:
-                permissionsImage = [UIImage imageNamed:@"permissions"];
+        UIImage *permissionsImage = nil;
+        switch (privilege) {
+            case MEGAChatRoomPrivilegeUnknown:                
                 break;
                 
             case MEGAChatRoomPrivilegeRm:
@@ -268,7 +270,7 @@
                 break;
                 
             case MEGAChatRoomPrivilegeModerator:
-                permissionsImage = [UIImage imageNamed:@"fullAccessPermissions"];
+                permissionsImage = [UIImage imageNamed:@"permissions"];
                 break;
         }
         cell.rightImageView.image = permissionsImage;
@@ -404,6 +406,7 @@
             break;
             
         case MEGAChatRoomChangeTypeParticipans:
+            // TODO: Test when the megachat-native (#6108) bug will be fixed
             [self setParticipants];
             [self.tableView reloadData];
             break;
