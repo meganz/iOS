@@ -92,6 +92,8 @@
     [self customToolbarContentView];
     
     self.areAllMessagesSeen = NO;
+    
+    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -134,11 +136,17 @@
     UILabel *label = [[UILabel alloc] init];
     if (self.chatRoom.isGroup) {
         NSString *title = self.chatRoom.title;
-        NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
-        [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:18.0f] range:[title rangeOfString:title]];
-        [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.attributedText = titleMutableAttributedString;
+        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+            label = [Helper customNavigationBarLabelWithTitle:title subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
+            self.inputToolbar.hidden = YES;
+        } else {
+            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
+            [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:18.0f] range:[title rangeOfString:title]];
+            [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.attributedText = titleMutableAttributedString;
+            self.inputToolbar.hidden = NO;
+        }
     } else {
         NSString *chatRoomState;
         if (self.chatRoom.onlineStatus > MEGAChatStatusOffline) {
@@ -805,7 +813,8 @@
             break;
             
         case MEGAChatRoomChangeTypeParticipans:
-            
+            // TODO: Test when the megachat-native (#6108) bug will be fixed
+            [self customNavigationBarLabel];
             break;
             
         case MEGAChatRoomChangeTypeTitle:
