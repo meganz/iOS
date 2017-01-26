@@ -6,6 +6,7 @@
 #import "ContactsViewController.h"
 #import "MEGANavigationController.h"
 #import "ContactDetailsViewController.h"
+#import "ChatSettingsTableViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "GroupChatDetailsViewController.h"
 
@@ -71,29 +72,40 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     self.tabBarController.tabBar.hidden = NO;
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
-    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-    for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
-        MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-        [self.chatListItemArray addObject:chatListItem];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+        [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+  
+        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+        for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
+            MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
+            [self.chatListItemArray addObject:chatListItem];
+        }
+        
+        self.addBarButtonItem.enabled = YES;
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
+        
+        self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSDate *first  = [[(MEGAChatListItem *)a lastMessage] timestamp];
+            NSDate *second = [[(MEGAChatListItem *)b lastMessage] timestamp];
+            
+            if (!first) {
+                first = [NSDate dateWithTimeIntervalSince1970:0];
+            }
+            if (!second) {
+                second = [NSDate dateWithTimeIntervalSince1970:0];
+            }
+            
+            return [second compare:first];
+        }] mutableCopy];
+        
+        [self updateChatIdIndexPathDictionary];
+    } else {
+        self.addBarButtonItem.enabled = NO;
+        self.tableView.tableHeaderView = nil;
     }
-    
-    self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first  = [[(MEGAChatListItem *)a lastMessage] timestamp];
-        NSDate *second = [[(MEGAChatListItem *)b lastMessage] timestamp];
-        
-        if (!first) {
-            first = [NSDate dateWithTimeIntervalSince1970:0];
-        }
-        if (!second) {
-            second = [NSDate dateWithTimeIntervalSince1970:0];
-        }
-        
-        return [second compare:first];
-    }] mutableCopy];
-    
-    [self updateChatIdIndexPathDictionary];
     
     [self.tableView reloadData];
 }
@@ -117,7 +129,12 @@
         }
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
+        
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
+        } else {
+            return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
+        }
     }
     
     NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
@@ -146,7 +163,9 @@
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (!self.searchController.isActive) {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
+        } else if (!self.searchController.isActive) {
             text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
         }
     }
@@ -178,7 +197,14 @@
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addTapped:(UIBarButtonItem *)button];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
+        chatSettingsTVC.comingFromEmptyState = YES;
+        [chatSettingsTVC enableChatWithSession];
+        [self.navigationController pushViewController:chatSettingsTVC animated:YES];
+    } else {
+        [self addTapped:(UIBarButtonItem *)button];
+    }
 }
 
 #pragma mark - Private

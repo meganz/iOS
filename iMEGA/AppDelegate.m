@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    BOOL showTabBarAfterChatConnect;
     
     UIAlertView *overquotaAlertView;
     BOOL isOverquota;
@@ -86,8 +87,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        MEGALogger *logger = [[MEGALogger alloc] init];
-        [MEGAChatSdk setLogObject:logger];
+        [[MEGALogger sharedLogger] startLogging];
     }
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -112,8 +112,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     
@@ -199,16 +197,24 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (sessionV3) {
         isAccountFirstLogin = NO;
-        MEGAChatInit ret = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-        if (ret == MEGAChatInitNoCache) {
-            [[MEGASdkManager sharedMEGASdk] invalidateCache];
-        } else if (ret == MEGAChatInitError) {
-            MEGALogError(@"Init Karere with session failed");
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            }]];
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
-            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+                [MEGASdkManager createSharedMEGAChatSdk];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+            }
+            
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+            if (chatInit == MEGAChatInitNoCache) {
+                [[MEGASdkManager sharedMEGASdk] invalidateCache];
+            } else if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Error initializing the chat" preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                }]];
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+            }
         }
         
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
@@ -384,6 +390,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+        isAccountFirstLogin = NO;
         if ([Helper selectedOptionOnLink] != 0) {
             [self processSelectedOptionOnLink];
         }
@@ -887,6 +894,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)showMainTabBar {
+    if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+        
+        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:_mainTBC];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                }
+                
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+            }
+        }
+        
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (isAccountFirstLogin) {
+                [self showCameraUploadsPopUp];
+            }
+            
+            if (self.link != nil) {
+                [self processLink:self.link];
+            }
+        }
+    }
+    
+    [[CameraUploads syncManager] setTabBarController:_mainTBC];
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1289,7 +1329,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                    [[MEGASdkManager sharedMEGAChatSdk] logout];
+                }
+                
                 if (self.urlType == URLTypeCancelAccountLink) {
                     self.urlType = URLTypeDefault;
                     [Helper logout];
@@ -1389,37 +1432,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
             
-            if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
-                
-                if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
-                    _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    [self.window setRootViewController:_mainTBC];
-                    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-                    
-                    if ([LTHPasscodeViewController doesPasscodeExist]) {
-                        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                        }
-                        
-                        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                                 withLogout:YES
-                                                                             andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-                    }
-                }
-                
-                if (![LTHPasscodeViewController doesPasscodeExist]) {
-                    if (isAccountFirstLogin) {
-                        [self showCameraUploadsPopUp];
-                    }
-                    
-                    if (self.link != nil) {
-                        [self processLink:self.link];
-                    }
-                }
-            }
-            
-            [[CameraUploads syncManager] setTabBarController:_mainTBC];
-            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
@@ -1434,7 +1446,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self requestUserName];
             [self requestContactsFullname];
             [self setBadgeValueForIncomingContactRequests];
-            [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                showTabBarAfterChatConnect = YES;
+            } else {
+                showTabBarAfterChatConnect = NO;
+                [self showMainTabBar];
+            }
             break;
         }
             
@@ -1501,7 +1520,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeLogout: {
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
             
             [Helper logout];
             [SVProgressHUD dismiss];
@@ -1615,10 +1636,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 #pragma mark - MEGAChatRequestDelegate
 
+- (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect && showTabBarAfterChatConnect) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        [launchVC.activityIndicatorView setHidden:NO];
+        [launchVC.activityIndicatorView startAnimating];
+    }
+}
+
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if ([error type] != MEGAChatErrorTypeOk) {
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
+    }
+    
+    if (request.type == MEGAChatRequestTypeConnect) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        if (showTabBarAfterChatConnect) {
+            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+            [launchVC.activityIndicatorView stopAnimating];
+            [self showMainTabBar];
+        }
+    } else if (request.type == MEGAChatRequestTypeLogout) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] useSDKLogger];
+        }
+        [MEGASdkManager destroySharedMEGAChatSdk];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);

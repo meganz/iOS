@@ -4,6 +4,7 @@
 #import "SVWebViewController.h"
 
 #import "Helper.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
@@ -76,7 +77,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
     }
 }
 

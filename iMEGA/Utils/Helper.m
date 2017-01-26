@@ -8,7 +8,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
-#import "MEGALogger.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 
@@ -1236,19 +1235,6 @@ static BOOL copyToPasteboard;
     logAlertView.tag = enableLog ? 1 : 0;
     
     return logAlertView;
-}
-
-+ (void)enableLog:(BOOL)enableLog {
-    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-    if (enableLog) {
-        MEGALogger *logger = [[MEGALogger alloc] init];
-        [MEGAChatSdk setLogObject:logger];
-    } else {
-        [MEGALogger stopLog];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:enableLog forKey:@"logging"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
