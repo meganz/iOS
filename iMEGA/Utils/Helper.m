@@ -1015,7 +1015,7 @@ static BOOL copyToPasteboard;
                                          value:[UIFont fontWithName:kFont size:18.0f]
                                          range:[title rangeOfString:title]];
     
-    subtitle = [NSString stringWithFormat:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? @"\n(%@)" : @" (%@)"), subtitle];
+    subtitle = [NSString stringWithFormat:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? @"\n%@" : @" %@"), subtitle];
     NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
     [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
                                             value:[UIColor mnz_redD90007]

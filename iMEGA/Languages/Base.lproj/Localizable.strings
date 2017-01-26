@@ -970,3 +970,5 @@
 "chatNotFound"="Chat not found";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%@ is typing ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Write a message...";
