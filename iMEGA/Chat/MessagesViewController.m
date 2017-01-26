@@ -362,7 +362,7 @@
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
     //TODO: Show bottom menu with "Send Media", "Send from Cloud Drive" and "Send Contact" options
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"Not implemented yet" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
