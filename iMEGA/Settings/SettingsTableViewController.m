@@ -94,19 +94,35 @@
     for (NSInteger i = 0; i < [viewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[viewControllersMutableArray objectAtIndex:i] tabBarItem];
         switch (tabBarItem.tag) {
+            case 0:
+                tabBarItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                break;
+                
+            case 1:
+                tabBarItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+                break;
+                
+            case 2:
+                tabBarItem.title = AMLocalizedString(@"chat", @"Chat section header");
+                break;
+            
             case 3:
                 [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
                 break;
                 
             case 4:
-                [tabBarItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
+                tabBarItem.title = AMLocalizedString(@"offline", @"Title of the Offline section");
                 break;
                 
             case 5:
-                [tabBarItem setTitle:AMLocalizedString(@"transfers", nil)];
+                tabBarItem.title = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
                 break;
                 
             case 6:
+                tabBarItem.title = AMLocalizedString(@"transfers", @"Title of the Transfers section");
+                break;
+                
+            case 8:
                 [tabBarItem setTitle:AMLocalizedString(@"settingsTitle", nil)];
                 break;
                 
