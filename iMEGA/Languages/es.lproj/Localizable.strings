@@ -157,15 +157,15 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="No tienes Contactos";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas contigo";
+"noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas entrantes";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="No hay carpetas compartidas con otros";
+"noOutgoingSharedItemsEmptyState_text"="No hay carpetas compartidas salientes";
 /* Title of My Contacts section */
 "myContacts"="Contactos";
 /* Title of Contacts requests section */
 "contactRequests"="Solicitudes de contacto";
 /* Button title shown in empty views when you can 'Add contacts' */
-"addContacts"="Añadir contacto";
+"addContacts"="Añadir contactos";
 /* Title of one of the filters in "Contacts requests" section. In this case "Sent". */
 "sent" = "Enviadas";
 /* Title of one of the filters in "Contacts requests" section. In this case "Requests". */
@@ -210,7 +210,7 @@
 "documentOpening_alertTitle"="Hay descargas pendientes";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Inténtalo más tarde o cancela las descargas.";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Ordenar por";
 /* Button title to "Save" the selected option */
 "save"="Guardar";
@@ -606,8 +606,8 @@
 "ifYouCantAccessYourEmailAccount" = "Si no puedes acceder a tu correo electrónico, por favor, contacta con support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired" = "El enlace de cancelación ha caducado.";
-/* Account closure, warning dialog after user confirm that he want to cancel account. */
-"enterYourPasswordToConfirmThatYouWanToClose" = "Por favor, introduce tu contraseña para confirmar que quieres cerrar tu cuenta.";
+/* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
+"enterYourPasswordToConfirmThatYouWanToClose"="Por favor, introduce tu contraseña para confirmar que quieres cancelar tu cuenta.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount" = "Cerrar cuenta";
 /* Title for the action that allows to remove a file or folder */
@@ -793,7 +793,7 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Mejorar cuenta";
+"upgradeAccount"="Hazte PRO";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -856,16 +856,42 @@
 "removeItemsFromOffline"="¿Seguro que quieres eliminar estos elementos disponibles sin conexión?";
 /* Chat section header */
 "chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="No hay Conversaciones";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Activar";
+/* Conversations section */
+"conversations"="Conversaciones";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Invitar";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Este mensaje ha sido eliminado.";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Yo";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] fue eliminado del chat de grupo por [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] dejó el grupo.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] se unió al grupo por invitación de [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] vació el historial de chat.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] cambiado a [B] por [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] cambió el nombre del grupo a '[B]'.";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Llamadas de voz y videollamadas";
+"voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usar datos móviles";
 /* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Tu puedes chatear con tus Contactos, compartir ficheros y hacer llamadas y videollamadas.";
+"chatStatus_OnlineFooter"="Puedes chatear con tus contactos, compartir ficheros y hacer llamadas y videollamadas.";
 /* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Tu aparecerás como 'Desconectado' a tus Contactos y no podrás chatear con ellos.";
+"chatStatus_OfflineFooter"="Aparecerás como 'Desconectado' a tus Contactos y no podrás chatear con ellos.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editado)";
 /*  */
@@ -880,7 +906,7 @@
 "verifyCredentials"="Verificar credenciales";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Limpiar historial del chat";
-/* The footer label for the 'Clear Chat History' section in the details of a chat room */
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
@@ -898,6 +924,10 @@
 "reset"="Restablecer";
 /* Button title */
 "approve"="Aprobar";
+/* start a chat/conversation */
+"startConversation"="Iniciar Conversación";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Grupo";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
 "groupInfo"="Información del grupo";
 /* Label title for a group chat */
@@ -905,13 +935,23 @@
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Renombrar grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Cambiar avatar del grupo";
+"changeGroupAvatar"="Cambiar avatar de grupo";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Abandonar";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Más";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Silenciar";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Información";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Cerrar";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Ya no tendrás acceso a esta conversación.";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Abandonar chat";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Abandonar grupo";
-/* Title of the incoming shared folders of a user. */
-"sharedFolders"="Carpetas compartidas";
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Participantes";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */

@@ -12,6 +12,8 @@
 "error"="Hiba";
 /*  */
 "name"="Név";
+/* Caption of a button to edit the files that are selected */
+"edit"="Szerkesztés";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Saved";
 /*  */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Letöltések vannak függőben";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Próbálja később vagy szakítsa meg";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="RENDEZÉS";
 /* Button title to "Save" the selected option */
 "save"="Mentés";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Kiválaszt";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Felvétel";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Új mappa";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Az új mappa neve";
@@ -462,6 +464,14 @@
 "addContactButton"="Hozzáadás";
 /* Success message shown when a contact has been invited */
 "requestSent"="Kérés elküldve";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Nem szükséges hozzáadni saját email címét";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Már van ezzel az emaillel rendelkező kapcsolata";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="[X] nevű felhasználó meghívva és amint elfogadja, megjelenik a névjegyzékedben.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Felhasználók meghívva és amint elfogadják, megjelennek a névjegyzékedben.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Kapcsolat hozzáadása sikertelen";
 /* Alert title shown when you want to remove one or more contacts */
@@ -587,7 +597,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Jelenleg használatban %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Érvénytelenítse fiókját";
+"cancelYourAccount"="Fiók érvénytelenítése";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /*  */
@@ -766,6 +776,8 @@
 "usedSpaceLabel"="Felhasználva";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Elérhető";
+/* title of the My Account screen */
+"accountType"="Fiók típusa:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="INGYENES";
 /* Text that shows the expiry date of the account PRO level */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+/* Chat section header */
+"chat"="Csevegő";
+/* Empty Conversations section */
+"noConversations"="Nincsenek beszélgetések";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Enable";
+/* Conversations section */
+"conversations"="Beszélgetések";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Meghívás";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="This message has been deleted";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Én";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] left the group chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] cleared the chat history.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] was changed to [B] by [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Állapot";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Voice and Video Calls";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(szerkesztett)";
+/*  */
+"online"="Online";
+/* title of the contact properties screen */
+"contactInfo"="Kapcsolat információk";
+/*  */
+"notifications"="Értesítések";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Send Message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Clear Chat History";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
+/* 'Next' button in a dialog */
+"continue"="Folytatás";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Megosztott mappák";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Contact Credentials";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Ez leginkább a valós életbe van szemtől szembe. Ha már van egy másik érvényesített csatornád, mint az OTR vagy PGP, használhatod azt is.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Your Credentials";
+/* Button to reset the password */
+"reset"="Jelszó törlése";
+/* Button title */
+"approve"="Elfogad";
+/* start a chat/conversation */
+"startConversation"="Start Conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Group Info";
+/* Label title for a group chat */
+"groupChat"="Group Chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Rename Group";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Change Group Avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Elhagyás";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Továbbiak";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Infó";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Bezárás";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Csevegés elhagyása";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Leave Group";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderátor";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Alapvető";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversation with %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. ";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ is typing ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Üzenet írása...";

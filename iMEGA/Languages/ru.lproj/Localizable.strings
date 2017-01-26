@@ -12,6 +12,8 @@
 "error"="Ошибка";
 /*  */
 "name"="Имя";
+/* Caption of a button to edit the files that are selected */
+"edit"="Редактировать";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Сохранено";
 /*  */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Есть загрузки, поставленные на ожидание";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Попробуйте позже или отмените их";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="СОРТИРОВАТЬ ПО";
 /* Button title to "Save" the selected option */
 "save"="Сохранить";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Выбрать";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Съемка";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Новая папка";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Имя для новой папки";
@@ -462,6 +464,14 @@
 "addContactButton"="Добавить";
 /* Success message shown when a contact has been invited */
 "requestSent"="Запрос отправлен";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="У Вас уже есть контакт с таким email-адресом ";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Пользователи приглашены. Они появятся в вашем списке контактов, если согласятся.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Ошибка при добавлении контакта";
 /* Alert title shown when you want to remove one or more contacts */
@@ -551,7 +561,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Экспортировав ключ восстановления и спрятав его в надёжном месте, вы сможете восстановить учётную запись без потери данных, если забудете пароль.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Для чего нужен ключ восстановления";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Ваши данные доступны для чтения только через цепочку операций расшифровки, которая начинается с мастер-ключа шифрования (ключа восстановления), который мы храним зашифрованным с вашим паролем. Это означает, что если вы потеряете пароль, ключ восстановления уже нельзя будет расшифровать, и вы больше не сможете получить доступ к данным.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,7 +597,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Удалить мой аккаунт";
+"cancelYourAccount"="Удалить учётную запись";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Вы потеряете все связанные данные. Действительно  хотите продолжить?";
 /*  */
@@ -763,9 +773,11 @@
 /* Title for "Local" used space. */
 "localLabel"="Локально";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Используется";
+"usedSpaceLabel"="Использовано";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Доступно";
+/* title of the My Account screen */
+"accountType"="Тип учётной записи:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="БЕСПЛАТНЫЙ";
 /* Text that shows the expiry date of the account PRO level */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Действительно удалить этот элемент локально?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Действительно удалить эти элементы локально?";
+/* Chat section header */
+"chat"="Чат";
+/* Empty Conversations section */
+"noConversations"="Нет разговоров";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Включить";
+/* Conversations section */
+"conversations"="Диалоги";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Пригласить";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Это сообщение было удалено";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Я";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] был удалён из группового чата пользователем [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] покинул(а) групповой чат.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] присоединился к групповому чату по приглашению пользователя [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] очистил(а) историю разговора.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="Изменение статуса пользователя [A] на [B] пользователем [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="Название группового чата изменено на '[B]' пользователем [A].";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Статус";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Голосовые и Видео Звонки";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Использовать данные мобильного устройства";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="Вы можете общаться со своими контактами, делиться файлами, совершать аудио и видео звонки.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="Ваш статус станет \"Не в сети\" для ваших контактов и вы не сможете общаться с ними.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(изменено)";
+/*  */
+"online"="В сети";
+/* title of the contact properties screen */
+"contactInfo"="Информация контакта";
+/*  */
+"notifications"="Оповещения";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Отправить Сообщение";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Подтвердить Учетные Данные";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Очистить историю";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Действительно удалить всю историю этого разговора?";
+/* 'Next' button in a dialog */
+"continue"="Продолжить";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Закрыть Чат";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Общие папки ";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Учетные Данные Контакта";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Лучше всего это сделать в реальной жизни, встречаясь лицом к лицу. Если у вас есть другой проверенный канал, например, проверенный OTR или PGP, вы также можете его использовать.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Ваши Учетные Данные";
+/* Button to reset the password */
+"reset"="Сбросить";
+/* Button title */
+"approve"="Подтвердить";
+/* start a chat/conversation */
+"startConversation"="Начать Разговор";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Группа";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Информация о Группе";
+/* Label title for a group chat */
+"groupChat"="Групповой Чат ";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Переименовать группу";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Изменить Аватар Группы";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Выйти";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Больше";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Приглушить";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Информация";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Закрыть";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="У вас больше не будет доступа к этому разговору.";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Покинуть";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Покинуть Группу";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Участники";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Модератор";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Обычный";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Разговор с %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA защищает ваши разговоры сквозным (контролируемым пользователем) шифрованием, предоставляя необходимые гарантии безопасности:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Конфиденциальность.[/S] Только автор и выбранные получатели могут расшифровать и прочитать содержимое.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Достверность.[/S] Система гарантирует, что отображаются данные, полученные от отправителя, а их содержимое не изменялось при передаче.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Чат не найден";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ печатает ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Напишите сообщение…";

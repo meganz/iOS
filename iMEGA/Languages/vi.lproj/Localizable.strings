@@ -12,8 +12,10 @@
 "error"="Lỗi";
 /*  */
 "name"="Tên";
+/* Caption of a button to edit the files that are selected */
+"edit"="Sửa";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Đã lưu lại";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Hiện đang có phiên tải xuống đang chờ";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Nên thử lại sau hoặc hủy bỏ";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Xếp theo";
 /* Button title to "Save" the selected option */
 "save"="Lưu";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Chọn";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Chụp ảnh";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư mục mới";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Đặt tên cho thư mục";
@@ -462,6 +464,14 @@
 "addContactButton"="Thêm";
 /* Success message shown when a contact has been invited */
 "requestSent"="Đã gửi thư mời";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Bạn không cần phải nhập chính email của mình vào danh bạ";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Bạn đã có tên liên lạc với địa chỉ email đó rồi";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Người dùng [X] đã được mời và sẽ xuất hiện trong danh bạ của quý vị khi họ chấp nhận y/c đó.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong danh bạ sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Lỗi thêm tên danh bạ";
 /* Alert title shown when you want to remove one or more contacts */
@@ -551,7 +561,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu trong trường hợp khôi phục tài khoản và không có mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Dữ liệu của bạn chỉ có thể đọc được qua một dãy mã từ hệ thống giải khóa sử dụng mã khóa chủ (Mã Phục Hồi) từ tài khoản của bạn, mã mà chúng tôi sử dụng để dịch mật khẩu của bạn. Nói cách khác, nếu bạn mất mật khẩu của mình, Mã Phục Hồi sẽ không thể giải được, và bạn sẽ không thể truy cập được dữ liệu của mình.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,7 +597,7 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Hiện đang dùng %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Xóa tài khoản";
+"cancelYourAccount"="Hủy bỏ tài khoản này";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bạn sẽ mất tất cả dữ liệu liên quan đến tới tài khoản này. Bạn có chắc muốn tiếp tục không?";
 /*  */
@@ -723,7 +733,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa mọi dữ liệu đã lưu";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong máy";
+"failedAttempstSectionTitle"="Sau 10 lần nhập sai mã, ứng dụng sẽ tự động thoát tài khoản và xóa các dữ liệu có liên quan đến MEGA trong iPhone";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Trung tâm Hỗ trợ";
 /* Footer message that explain what you can do on the "Help centre" */
@@ -766,6 +776,8 @@
 "usedSpaceLabel"="Đã dùng (mạng)";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Còn lại (mạng)";
+/* title of the My Account screen */
+"accountType"="Hạng T.Khoản:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="MIẼN PHÍ";
 /* Text that shows the expiry date of the account PRO level */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Bạn có chắc muốn xóa mục này khỏi mục lưu Ngoại Tuyến?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Không có Cuộc Trò Chuyện nào";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Bật";
+/* Conversations section */
+"conversations"="Các cuộc trò chuyện";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Mời";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Tin nhắn này đã bị xóa";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Tôi";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] đã bị xóa khỏi nhóm chat bởi [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] rời khỏi nhóm chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] vừa gia nhập nhóm chat từ lời mời của [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] đã xóa lịch sử cuộc trò chuyện.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] được đổi thành [B] bởi [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chat thành '[B]'.";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Tình trạng";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Gọi Thoại và Video";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(đã chỉnh sửa)";
+/*  */
+"online"="Đang online";
+/* title of the contact properties screen */
+"contactInfo"="Thông tin liên lạc";
+/*  */
+"notifications"="Thông báo";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Gửi Tin Nhắn";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Dọn Lịch Sử Tin Nhắn";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Bạn có chắc muốn don toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
+/* 'Next' button in a dialog */
+"continue"="Tiếp tục";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Thư mục được chia sẻ";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Contact Credentials";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Đây là cách tốt nhất để tạo các buổi meeting người thật với nhau. Nếu bạn đã có phương thức xác minh khác như OTR hay PGP, bạn cũng có thể dùng được.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Your Credentials";
+/* Button to reset the password */
+"reset"="Khôi phục";
+/* Button title */
+"approve"="Chấp nhận";
+/* start a chat/conversation */
+"startConversation"="Bắt Đầu Trò Chuyện";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Group Info";
+/* Label title for a group chat */
+"groupChat"="Nhóm Chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Đổi Tên Nhóm";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Thay Đổi Ảnh Nhóm Chat";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Rời khỏi";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Thêm nữa";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Thông tin";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Đóng";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Ròi khỏi cuộc trò chuyện";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Rời Nhóm Chat";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Người quản lý";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Cơ bản";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Cuộc trò chuyện với %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện của bạn nghiêm ngặt với công nghệ bảo mật đầu-cuối cung cấp sự đảm bảo an toàn cần thiết:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Bảo Mật.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Độ Xác Thực.[/S] Hệ thống được đảm bảo rằng các dữ liệu nhận được từ người gửi sẽ hiển thị rõ ràng, và nội dung đó sẽ được nguyên vẹn và không bị chế tác trong quá trình truyền tải.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ đang viết tin nhắn ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Viết tin nhắn...";

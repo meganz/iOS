@@ -12,6 +12,8 @@
 "error"="Erreur";
 /*  */
 "name"="Nom";
+/* Caption of a button to edit the files that are selected */
+"edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Enregistré";
 /*  */
@@ -208,7 +210,7 @@
 "documentOpening_alertTitle"="Il y a des téléchargement en attente";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Ressayer plus tard ou annuler";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="TRIER";
 /* Button title to "Save" the selected option */
 "save"="Enregistrer";
@@ -228,7 +230,7 @@
 "choosePhotoVideo"="Choisir";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Prendre";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nouveau dossier";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nom du nouveau dossier";
@@ -462,6 +464,14 @@
 "addContactButton"="Ajouter";
 /* Success message shown when a contact has been invited */
 "requestSent"="La demande a été envoyée";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Vous avez déjà un contact avec cette adresse courriel";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="L'utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s'il accepte.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s'ils acceptent.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Erreur d'ajout de contact";
 /* Alert title shown when you want to remove one or more contacts */
@@ -587,9 +597,9 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Utilise actuellement %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Fermer votre compte";
+"cancelYourAccount"="Annuler votre compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="Vous perdrez toute donnée associée avec ce compte. Êtes-vous certain(e) de bien vouloir continuer?";
+"youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment continuer?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -597,7 +607,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d'annulation a expiré.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Veuillez renseigner votre compte pour confirmer que vous souhaitez fermer votre compte.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Veuillez saisir votre mot de passe pour confirmer que vous souhaitez fermer votre compte.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Fermer le compte";
 /* Title for the action that allows to remove a file or folder */
@@ -766,6 +776,8 @@
 "usedSpaceLabel"="Utilisés";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponible";
+/* title of the My Account screen */
+"accountType"="Type de compte :";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATUIT";
 /* Text that shows the expiry date of the account PRO level */
@@ -842,3 +854,121 @@
 "removeItemFromOffline"="Voulez-vous vraiment supprimer cet élément hors ligne?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments hors ligne?";
+/* Chat section header */
+"chat"="Messagerie";
+/* Empty Conversations section */
+"noConversations"="Aucune conversation";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Activer";
+/* Conversations section */
+"conversations"="Conversations";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Inviter";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Ce message a été supprimé";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Moi";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] a été retiré de la conversation de groupe par [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] a quitté la conversation de groupe";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] a rejoint la conversation de groupe sur invitation de [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] a effacé l'historique de la conversation.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] a été changé en [B] par [C]. ";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] a changé le nom de la conversation de groupe en '[B]'.";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Statut";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Appels vocaux et vidéos";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Utiliser les données mobiles";
+/* Footer text to explain the meaning of the chat 'Online' status. */
+"chatStatus_OnlineFooter"="Vous pouvez clavarder avec vos contacts, partager des fichiers et faire des appels vocaux ou vidéos.";
+/* Footer text to explain the meaning of the chat 'Offline' status. */
+"chatStatus_OfflineFooter"="Vous apparaîtrez comme hors ligne pour vos contacts et vous ne pourrez pas clavarder avec eux.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(modifié)";
+/*  */
+"online"="En ligne";
+/* title of the contact properties screen */
+"contactInfo"="Renseignement sur le contact";
+/*  */
+"notifications"="Notifications";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Envoyer un message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Vérifier les coordonnées";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Effacer l'historique de la conversation";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Voulez-vous vraiment effacer l'historique entier des messages de cette conversation?";
+/* 'Next' button in a dialog */
+"continue"="Poursuivre";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Fermer la conversation";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Dossiers partagés";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Coordonnées du contact";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre canal de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Vos coordonnées";
+/* Button to reset the password */
+"reset"="Réinitialiser";
+/* Button title */
+"approve"="Approuver";
+/* start a chat/conversation */
+"startConversation"="Commencer une conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Groupe";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Infos sur le groupe";
+/* Label title for a group chat */
+"groupChat"="Conversation de groupe";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Renommer le groupe";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Changer l'avatar du groupe";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Quitter";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Plus";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Sourdine";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Infos";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Fermer";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Vous ne pourrez plus accéder à cette conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Quitter la conversation";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Quitter le groupe";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Modérateur";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Normal";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversation avec %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA protège votre conversaton grâce au chiffrement de bout en bout (contrôlé par l'utilisateur) apportant ainsi une garantie de sécurité essentielle.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Confidentialité.[/S] Seuls l'auteur et les destinataires visés peuvent déchiffrer et lire le contenu.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Authenticité.[/S] Le système garantit que les données reçues proviennent de l'expéditeur affiché, et que leur contenu n'a pas été manipulé pendant le transfert.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="La conversation est introuvable";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ écrit...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Rédiger un message...";
