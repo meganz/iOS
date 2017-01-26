@@ -11,6 +11,8 @@
 + (void)setUserAgent:(NSString *)userAgent;
 + (MEGASdk *)sharedMEGASdk;
 + (MEGAChatSdk *)sharedMEGAChatSdk;
++ (void)createSharedMEGAChatSdk;
++ (void)destroySharedMEGAChatSdk;
 
 + (MEGASdk *)sharedMEGASdkFolder;
 

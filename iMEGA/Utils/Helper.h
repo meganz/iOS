@@ -131,6 +131,5 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Log
 
 + (UIAlertView *)logAlertView:(BOOL)enableLog;
-+ (void)enableLog:(BOOL)enableLog;
 
 @end

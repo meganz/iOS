@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGANavigationController.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
@@ -68,6 +69,10 @@
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
+    if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitWaitingNewSession) {
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
         if (chatInit != MEGAChatInitWaitingNewSession) {
@@ -185,7 +190,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
     }
 }
 
