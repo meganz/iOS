@@ -243,9 +243,13 @@
                 case 0: //Notifications
                     break;
                     
-                case 1: //Send Message
+                case 1: { //Send Message
                     //TODO: If there's a chat with this contact, open it. If not, start conversation.
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [self presentViewController:alertController animated:YES completion:nil];
                     break;
+                }
                     
                 case 2: //Verify Credentials
                     [self pushVerifyCredentialsViewController];
