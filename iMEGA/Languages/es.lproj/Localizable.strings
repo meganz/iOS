@@ -859,7 +859,7 @@
 /* Empty Conversations section */
 "noConversations"="No hay Conversaciones";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activar";
 /* Conversations section */
