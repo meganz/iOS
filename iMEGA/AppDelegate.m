@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
+    BOOL showTabBarAfterChatConnect;
     
     UIAlertView *overquotaAlertView;
     BOOL isOverquota;
@@ -893,6 +894,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)showMainTabBar {
+    if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+        
+        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:_mainTBC];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                }
+                
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+            }
+        }
+        
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (isAccountFirstLogin) {
+                [self showCameraUploadsPopUp];
+            }
+            
+            if (self.link != nil) {
+                [self processLink:self.link];
+            }
+        }
+    }
+    
+    [[CameraUploads syncManager] setTabBarController:_mainTBC];
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1398,37 +1432,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
             
-            if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
-                
-                if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
-                    _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    [self.window setRootViewController:_mainTBC];
-                    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-                    
-                    if ([LTHPasscodeViewController doesPasscodeExist]) {
-                        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                        }
-                        
-                        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                                 withLogout:YES
-                                                                             andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-                    }
-                }
-                
-                if (![LTHPasscodeViewController doesPasscodeExist]) {
-                    if (isAccountFirstLogin) {
-                        [self showCameraUploadsPopUp];
-                    }
-                    
-                    if (self.link != nil) {
-                        [self processLink:self.link];
-                    }
-                }
-            }
-            
-            [[CameraUploads syncManager] setTabBarController:_mainTBC];
-            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
@@ -1446,6 +1449,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
+                showTabBarAfterChatConnect = YES;
+            } else {
+                showTabBarAfterChatConnect = NO;
+                [self showMainTabBar];
             }
             break;
         }
@@ -1629,6 +1636,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 #pragma mark - MEGAChatRequestDelegate
 
+- (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect && showTabBarAfterChatConnect) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        [launchVC.activityIndicatorView setHidden:NO];
+        [launchVC.activityIndicatorView startAnimating];
+    }
+}
+
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if ([error type] != MEGAChatErrorTypeOk) {
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
@@ -1638,6 +1653,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (request.type == MEGAChatRequestTypeConnect) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        if (showTabBarAfterChatConnect) {
+            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+            [launchVC.activityIndicatorView stopAnimating];
+            [self showMainTabBar];
+        }
     } else if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
             [[MEGALogger sharedLogger] useSDKLogger];
