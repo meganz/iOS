@@ -37,7 +37,7 @@
                 tabBarItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
-            case 2:
+            case 4:
                 [tabBarItem setImage:[[UIImage imageNamed:@"offlineIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"offlineSelectedIcon"]];
                 tabBarItem.title = AMLocalizedString(@"offline", @"Title of the Offline section");
@@ -49,19 +49,19 @@
                 [tabBarItem setTitle:AMLocalizedString(@"shared", nil)];
                 break;
                 
-            case 4:
+            case 5:
                 [tabBarItem setImage:[[UIImage imageNamed:@"contactsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"contactsSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
                 break;
                 
-            case 5:
+            case 6:
                 [tabBarItem setImage:[[UIImage imageNamed:@"transfersIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"transfersSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"transfers", nil)];
                 break;
                 
-            case 6:
+            case 8:
                 [tabBarItem setImage:[[UIImage imageNamed:@"settingsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"settingsSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"settingsTitle", nil)];
@@ -72,10 +72,10 @@
                 [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
                 [tabBarItem setTitle:AMLocalizedString(@"myAccount", nil)];
                 break;
-                //TODO: Change the image and the selectedImage
-            case 8:
-                [tabBarItem setImage:[[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                [tabBarItem setSelectedImage:[UIImage imageNamed:@"myAccountSelectedIcon"]];
+                
+            case 2:
+                [tabBarItem setImage:[[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                [tabBarItem setSelectedImage:[UIImage imageNamed:@"chatSelectedIcon"]];
                 tabBarItem.title = AMLocalizedString(@"chat", @"Chat section header");
                 break;
         }
