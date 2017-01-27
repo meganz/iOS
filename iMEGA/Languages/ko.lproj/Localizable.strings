@@ -544,8 +544,6 @@
 "options"="옵션";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="동영상 업로드";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="셀룰러 연결 사용";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="충전중일 때만";
 /* Footer text to explain the Camera Uploads functionality */

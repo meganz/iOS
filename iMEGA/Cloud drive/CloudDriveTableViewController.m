@@ -732,7 +732,7 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
-            [self moreAction:self.moreBarButtonItem];
+            [self presentUploadAlertController];
             break;
         }
             
@@ -1116,6 +1116,63 @@
     }
 }
 
+- (void)presentUploadAlertController {
+    UIAlertController *uploadAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [uploadAlertController addAction:fromPhotosAlertAction];
+    
+    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
+                if (permissionGranted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        }]];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                        }]];
+                        
+                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    });
+                }
+            }];
+        }
+    }];
+    [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [uploadAlertController addAction:captureAlertAction];
+    
+    UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
+        documentMenuViewController.delegate = self;
+        if ([documentMenuViewController respondsToSelector:@selector(popoverPresentationController)]) {
+            documentMenuViewController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
+        } else {
+            documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        
+        [self presentViewController:documentMenuViewController animated:YES completion:nil];
+    }];
+    [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [uploadAlertController addAction:importFromAlertAction];
+    
+    [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1153,60 +1210,7 @@
     }]];
     
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIAlertController *uploadAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
-        
-        UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-        }];
-        [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [uploadAlertController addAction:fromPhotosAlertAction];
-        
-        UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
-                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                    if (permissionGranted) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                        });
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                            
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                                [self dismissViewControllerAnimated:YES completion:nil];
-                            }]];
-                            
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                            }]];
-                            
-                            [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                        });
-                    }
-                }];
-            }
-        }];
-        [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [uploadAlertController addAction:captureAlertAction];
-        
-        UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
-            documentMenuViewController.delegate = self;
-            if ([documentMenuViewController respondsToSelector:@selector(popoverPresentationController)]) {
-                documentMenuViewController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
-            } else {
-                documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-            }
-            
-            [self presentViewController:documentMenuViewController animated:YES completion:nil];
-        }];
-        [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [uploadAlertController addAction:importFromAlertAction];
-        
-        [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
+        [self presentUploadAlertController];
     }];
     [uploadAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [moreAlertController addAction:uploadAlertAction];
