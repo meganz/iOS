@@ -544,8 +544,6 @@
 "options"="Tùy chọn";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Cho phép tải video lên";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Dùng mạng điện thoại để tải lên";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */

@@ -544,8 +544,6 @@
 "options"="Опції";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Відвантажити відео";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Використовувати стільниковий зв'язок";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Тільки під час зарядки";
 /* Footer text to explain the Camera Uploads functionality */

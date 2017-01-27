@@ -45,7 +45,7 @@
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
     
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
-    [_useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", @"Use cellular connection")];
+    self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
     [_skipButton.layer setBorderWidth:2.0f];
     [_skipButton.layer setCornerRadius:4.0f];

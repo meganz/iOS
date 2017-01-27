@@ -102,7 +102,7 @@
     [self.freeStatusLabel setText:AMLocalizedString(@"free", nil)];
     [self.upgradeToProButton setTitle:AMLocalizedString(@"upgradeAccount", nil) forState:UIControlStateNormal];
     
-    self.logoutButton.titleLabel.text = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
+    [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
     isAccountDetailsAvailable = NO;
     byteCountFormatter = [[NSByteCountFormatter alloc] init];

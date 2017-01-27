@@ -544,8 +544,6 @@
 "options"="Opsyon";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Mag-upload ng videos";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Gamitin ang cellular connection";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
 /* Footer text to explain the Camera Uploads functionality */

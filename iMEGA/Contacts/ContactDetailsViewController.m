@@ -155,7 +155,7 @@
         } else {
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
             
-            NSInteger redRowsFrom = (self.contactDetailsMode == ContactDetailsModeDefault) ? 3 : 2;
+            NSInteger redRowsFrom = 2;
             if (indexPath.row > redRowsFrom) {
                 cell.nameLabel.font = [UIFont fontWithName:@"SFUIText-Regular" size:17.0];
                 cell.nameLabel.textColor = [UIColor mnz_redD90007];

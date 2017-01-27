@@ -544,8 +544,6 @@
 "options"="Opzioni";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Carica video";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Utilizza dati cellulare";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Solo mentre è in carica";
 /* Footer text to explain the Camera Uploads functionality */
