@@ -199,8 +199,6 @@
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
-        chatSettingsTVC.comingFromEmptyState = YES;
-        [chatSettingsTVC enableChatWithSession];
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
     } else {
         [self addTapped:(UIBarButtonItem *)button];
