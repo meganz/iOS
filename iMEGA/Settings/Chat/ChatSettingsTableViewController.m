@@ -40,9 +40,9 @@
     self.statusLabel.text = AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
     self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
-    
+        
     BOOL isChatEnabled = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) ? YES : NO;
-    self.isComingfromEmptyState ? [self.chatSwitch setOn:YES animated:YES] : [self.chatSwitch setOn:isChatEnabled animated:YES];
+    [self.chatSwitch setOn:isChatEnabled animated:YES];
     if (isChatEnabled) {
         BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
         [self.useMobileDataSwitch setOn:isMobileDataEnabledForChat animated:YES];
