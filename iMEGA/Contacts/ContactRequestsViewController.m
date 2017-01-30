@@ -1,8 +1,5 @@
 #import "ContactRequestsViewController.h"
 
-#import <AddressBookUI/AddressBookUI.h>
-#import <ContactsUI/ContactsUI.h>
-
 #import "MEGASdkManager.h"
 #import "Helper.h"
 
@@ -14,16 +11,12 @@
 
 #import "ContactRequestsTableViewCell.h"
 
-@interface ContactRequestsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
+@interface ContactRequestsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) NSMutableArray *outgoingContactRequestArray;
 @property (nonatomic, strong) NSMutableArray *incomingContactRequestArray;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *contactRequestsBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UISegmentedControl *contactRequestsSegmentedControl;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) NSUInteger remainingOperations;
@@ -40,16 +33,11 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    NSArray *buttonsItems = @[self.addBarButtonItem];
-    self.navigationItem.rightBarButtonItems = buttonsItems;
-    
-    [self internetConnectionChanged];
+    self.navigationItem.titleView = self.contactRequestsSegmentedControl;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
@@ -64,8 +52,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -123,26 +109,7 @@
     }
 }
 
-- (void)internetConnectionChanged {
-    [_addBarButtonItem setEnabled:[MEGAReachabilityManager isReachable]];
-}
-
 #pragma mark - IBActions
-
-- (IBAction)addContact:(UIBarButtonItem *)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
-    [actionSheet setTag:0];
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
-    } else {
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
-    }
-}
 
 - (IBAction)contactsSegmentedControlValueChanged:(UISegmentedControl *)sender {
     [self reloadUI];
@@ -163,6 +130,10 @@
     }
 }
 
+- (IBAction)doneTouchUpInside:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+    
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -248,126 +219,6 @@
     
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        UIAlertView *emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
-        [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
-        emailAlertView.tag = 0;
-        [emailAlertView show];
-    } else if (buttonIndex == 1) {
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
-            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-            if ([contactsPickerNC respondsToSelector:@selector(predicateForSelectionOfProperty)]) {
-                contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-                contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            }
-            contactsPickerNC.peoplePickerDelegate = self;
-            [self presentViewController:contactsPickerNC animated:YES completion:nil];
-        } else {
-            CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
-            contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-            contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-            contactsPickerViewController.delegate = self;
-            [self presentViewController:contactsPickerViewController animated:YES completion:nil];
-        }
-    }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
-        }
-    }
-}
-
-#pragma mark - ABPeoplePickerNavigationControllerDelegate
-
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
-    [self dismissViewControllerAnimated:YES completion:nil];    // iOS 7
-}
-
-// iOS 7
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
-    
-    NSString *email = nil;
-    ABMultiValueRef emails = ABRecordCopyValue(person,
-                                               kABPersonEmailProperty);
-    if (ABMultiValueGetCount(emails) > 0) {
-        email = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(emails, 0);
-    }
-    
-    if (email) {
-        self.remainingOperations = 1;
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
-    } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-        noEmailAlertView.tag = 2;
-        [noEmailAlertView show];
-    }
-    
-    if (emails) {
-        CFRelease(emails);
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    return NO;
-}
-
-- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-                         didSelectPerson:(ABRecordRef)person {
-    
-    NSString *email = nil;
-    ABMultiValueRef emails = ABRecordCopyValue(person,
-                                               kABPersonEmailProperty);
-    if (ABMultiValueGetCount(emails) > 0) {
-        email = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(emails, 0);
-    }
-    
-    if (email) {
-        self.remainingOperations = 1;
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
-    } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-        noEmailAlertView.tag = 2;
-        [noEmailAlertView show];
-    }
-    
-    if (emails) {
-        CFRelease(emails);
-    }
-}
-
-#pragma mark - CNContactPickerDelegate
-
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
-    self.remainingOperations = contactProperties.count;
-    for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
-    }
-}
-
-#pragma mark - UIAlertDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[[alertView textFieldAtIndex:0] text] message:@"" action:MEGAInviteActionAdd delegate:self];
-            }
-        }
-    }
-}
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
@@ -392,36 +243,12 @@
     }
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"addContacts", nil);
-    }
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"buttonBorder"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate Methods
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addContact:_addBarButtonItem];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -455,14 +282,7 @@
         }
             
         case MEGARequestTypeInviteContact:
-            switch (request.number.integerValue) {
-                case 0:
-                    self.remainingOperations--;
-                    if (self.remainingOperations == 0) {
-                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"requestSent", nil)];
-                    }
-                    break;
-                    
+            switch (request.number.integerValue) {                    
                 case 1:
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:AMLocalizedString(@"requestCancelled", nil)];
                     break;
