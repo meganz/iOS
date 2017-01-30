@@ -1654,8 +1654,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         if (showTabBarAfterChatConnect) {
-            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-            [launchVC.activityIndicatorView stopAnimating];
+            if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
+                LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+                [launchVC.activityIndicatorView stopAnimating];
+            }
             [self showMainTabBar];
         }
     } else if (request.type == MEGAChatRequestTypeLogout) {
