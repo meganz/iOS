@@ -658,8 +658,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (isIncomingPendingContactsLink) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-            UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-            [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
             [self presentLinkViewController:navigationController];
         } else {
