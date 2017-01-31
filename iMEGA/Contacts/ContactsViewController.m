@@ -87,7 +87,7 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
+            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             
             [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
@@ -273,10 +273,11 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
-    [self.tableView reloadData];
+    boolValue ? [self reloadUI] : [self.tableView reloadData];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.contactRequestsBarButtonItem setEnabled:boolValue];
     [self.addBarButtonItem setEnabled:boolValue];
     [self.editBarButtonItem setEnabled:boolValue];
 }
