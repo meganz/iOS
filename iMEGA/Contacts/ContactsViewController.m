@@ -273,10 +273,11 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
-    [self.tableView reloadData];
+    boolValue ? [self reloadUI] : [self.tableView reloadData];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    [self.contactRequestsBarButtonItem setEnabled:boolValue];
     [self.addBarButtonItem setEnabled:boolValue];
     [self.editBarButtonItem setEnabled:boolValue];
 }
