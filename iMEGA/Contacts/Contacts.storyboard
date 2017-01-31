@@ -322,16 +322,16 @@
                     <navigationItem key="navigationItem" title="Contacts" id="vJy-vO-UwT">
                         <barButtonItem key="backBarButtonItem" title=" " id="St3-x7-f8D"/>
                         <rightBarButtonItems>
-                            <barButtonItem image="add" id="JdI-ia-m0c" userLabel="Add Bar Button Item">
+                            <barButtonItem image="addContact" id="JdI-ia-m0c" userLabel="Add Bar Button Item">
                                 <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="addContact:" destination="4jb-uN-Eto" id="6Te-gU-dkA"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="contact_requests_inactive" width="21" id="GvZ-OT-HaA">
+                            <barButtonItem image="contactRequest" width="21" id="GvZ-OT-HaA">
                                 <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="AXH-XU-TIq" kind="show" id="7eb-Tp-Wpw"/>
+                                    <segue destination="rnW-Cn-V2s" kind="presentation" id="7eb-Tp-Wpw"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -439,7 +439,7 @@
             </objects>
             <point key="canvasLocation" x="1831" y="-1592"/>
         </scene>
-        <!--Contact requests-->
+        <!--Contact Requests View Controller-->
         <scene sceneID="feu-eq-CSf">
             <objects>
                 <viewController storyboardIdentifier="ContactsRequestsViewControllerID" id="AXH-XU-TIq" customClass="ContactRequestsViewController" sceneMemberID="viewController">
@@ -448,46 +448,23 @@
                         <viewControllerLayoutGuide type="bottom" id="4gp-fT-Fx8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Dmy-uk-j45">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jj5-vd-M4x">
-                                <rect key="frame" x="-4" y="0.0" width="383" height="44"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fys-Yc-m5M">
-                                        <rect key="frame" x="8" y="7" width="367" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="7ea-QJ-iIB"/>
-                                        </constraints>
-                                        <segments>
-                                            <segment title="Received"/>
-                                            <segment title="Sent"/>
-                                        </segments>
-                                        <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <action selector="contactsSegmentedControlValueChanged:" destination="AXH-XU-TIq" eventType="valueChanged" id="svS-3K-gb3"/>
-                                        </connections>
-                                    </segmentedControl>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="fys-Yc-m5M" firstAttribute="leading" secondItem="jj5-vd-M4x" secondAttribute="leading" constant="8" id="Pdc-rb-rzR"/>
-                                    <constraint firstAttribute="trailing" secondItem="fys-Yc-m5M" secondAttribute="trailing" constant="8" id="SeZ-Oc-dMO"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="fys-Yc-m5M" secondAttribute="trailing" constant="8" id="occ-c2-XBv"/>
-                                    <constraint firstAttribute="height" constant="44" id="opu-h5-cR6"/>
-                                    <constraint firstAttribute="centerX" secondItem="fys-Yc-m5M" secondAttribute="centerX" id="qbk-y1-b84"/>
-                                    <constraint firstAttribute="centerY" secondItem="fys-Yc-m5M" secondAttribute="centerY" id="rey-rU-sCd"/>
-                                    <constraint firstItem="fys-Yc-m5M" firstAttribute="leading" secondItem="jj5-vd-M4x" secondAttribute="leadingMargin" constant="8" id="zEe-5m-V05"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="occ-c2-XBv"/>
-                                        <exclude reference="zEe-5m-V05"/>
-                                    </mask>
-                                </variation>
-                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fys-Yc-m5M">
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Received" width="98"/>
+                                    <segment title="Sent" width="98"/>
+                                </segments>
+                                <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="contactsSegmentedControlValueChanged:" destination="AXH-XU-TIq" eventType="valueChanged" id="svS-3K-gb3"/>
+                                </connections>
+                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hii-Zn-IYr">
-                                <rect key="frame" x="-4" y="44" width="383" height="510"/>
+                                <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingContactRequestsCell" id="RdV-I9-QYo" customClass="ContactRequestsTableViewCell">
@@ -567,38 +544,27 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="jj5-vd-M4x" firstAttribute="leading" secondItem="Dmy-uk-j45" secondAttribute="leadingMargin" constant="-20" id="EvF-Zq-ZHH"/>
-                            <constraint firstItem="jj5-vd-M4x" firstAttribute="top" secondItem="ioO-i7-TTv" secondAttribute="bottom" id="SZs-Xh-6ZD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jj5-vd-M4x" secondAttribute="trailing" constant="-20" id="TXk-4Y-nnH"/>
-                            <constraint firstItem="hii-Zn-IYr" firstAttribute="top" secondItem="jj5-vd-M4x" secondAttribute="bottom" id="VyI-9h-oba"/>
-                            <constraint firstItem="hii-Zn-IYr" firstAttribute="top" secondItem="jj5-vd-M4x" secondAttribute="bottom" constant="8" id="WcA-Rb-bup"/>
                             <constraint firstItem="hii-Zn-IYr" firstAttribute="leading" secondItem="Dmy-uk-j45" secondAttribute="leadingMargin" constant="-20" id="bcQ-xN-rxj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hii-Zn-IYr" secondAttribute="trailing" constant="-20" id="cWB-sv-G9k"/>
+                            <constraint firstItem="hii-Zn-IYr" firstAttribute="top" secondItem="ioO-i7-TTv" secondAttribute="bottom" constant="-64" id="tSE-o3-tsl"/>
                             <constraint firstItem="4gp-fT-Fx8" firstAttribute="top" secondItem="hii-Zn-IYr" secondAttribute="bottom" id="vCi-3G-mj8"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="WcA-Rb-bup"/>
-                            </mask>
-                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Contact requests" id="9Ln-R8-SmM">
-                        <barButtonItem key="backBarButtonItem" title=" " id="lhX-Ne-ZKA"/>
+                    <navigationItem key="navigationItem" id="9Ln-R8-SmM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="oyt-Q7-G2A">
+                            <connections>
+                                <action selector="doneTouchUpInside:" destination="AXH-XU-TIq" id="k9Z-pJ-fAa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addBarButtonItem" destination="UYr-Ph-dPZ" id="Evl-5c-dUX"/>
                         <outlet property="contactRequestsSegmentedControl" destination="fys-Yc-m5M" id="G5e-w3-Q58"/>
                         <outlet property="tableView" destination="hii-Zn-IYr" id="EpD-dB-aKf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vID-S8-jlw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="add" width="22" id="UYr-Ph-dPZ" userLabel="Add Bar Button Item">
-                    <connections>
-                        <action selector="addContact:" destination="AXH-XU-TIq" id="sRC-vW-gV7"/>
-                    </connections>
-                </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="3258" y="-1592"/>
+            <point key="canvasLocation" x="4138" y="-1593"/>
         </scene>
         <!--Contact Details View Controller-->
         <scene sceneID="YvO-dv-0Xi">
@@ -616,27 +582,27 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="180"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zaL-ex-F72">
-                                        <rect key="frame" x="144.5" y="21" width="86" height="86"/>
+                                        <rect key="frame" x="145" y="21" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="86" id="ArG-jN-R7D"/>
                                             <constraint firstAttribute="width" constant="86" id="rqU-rM-e5R"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DUY-Qz-ows">
-                                        <rect key="frame" x="212.5" y="27" width="12" height="12"/>
+                                        <rect key="frame" x="213" y="27" width="12" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="12" id="Fzj-SB-QE7"/>
                                             <constraint firstAttribute="width" constant="12" id="kDP-w5-kyg"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-l2-3NH">
-                                        <rect key="frame" x="167.5" y="113" width="40" height="18"/>
+                                        <rect key="frame" x="168" y="113" width="40" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgN-dK-iZJ">
-                                        <rect key="frame" x="172.5" y="135" width="30" height="15"/>
+                                        <rect key="frame" x="173" y="135" width="30" height="15"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                         <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1453,14 +1419,32 @@
             </objects>
             <point key="canvasLocation" x="3258" y="-858"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="05u-8m-AM2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rnW-Cn-V2s" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="MAk-Sm-Fza">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AXH-XU-TIq" kind="relationship" relationship="rootViewController" id="gis-XA-BQm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aS7-pb-krh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3324" y="-1593"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="add" width="22" height="22"/>
+        <image name="addContact" width="44" height="44"/>
         <image name="backArrow" width="22" height="22"/>
         <image name="check_mark" width="29" height="29"/>
+        <image name="contactRequest" width="44" height="44"/>
         <image name="contact_request_accept" width="46" height="44"/>
         <image name="contact_request_deny" width="46" height="44"/>
-        <image name="contact_requests_inactive" width="22" height="22"/>
         <image name="contactsIcon" width="32" height="24"/>
         <image name="edit" width="22" height="22"/>
         <image name="nodeInfo" width="46" height="44"/>
