@@ -11,7 +11,7 @@
 
 #import "ContactRequestsTableViewCell.h"
 
-@interface ContactRequestsViewController () <UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
+@interface ContactRequestsViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) NSMutableArray *outgoingContactRequestArray;
 @property (nonatomic, strong) NSMutableArray *incomingContactRequestArray;
@@ -39,6 +39,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
     [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"requests", nil) forSegmentAtIndex:0];
@@ -52,6 +54,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
@@ -71,6 +75,10 @@
 }
 
 #pragma mark - Private
+
+- (void)internetConnectionChanged {
+    [self.tableView reloadData];
+}
 
 - (void)reloadUI {
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
@@ -142,17 +150,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-        case 0:
-            numberOfRows = [self.incomingContactRequestArray count];
-            break;
-            
-        case 1:
-            numberOfRows = [self.outgoingContactRequestArray count];
-            break;
-            
-        default:
-            break;
+    if ([MEGAReachabilityManager isReachable]) {
+        switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
+            case 0:
+                numberOfRows = [self.incomingContactRequestArray count];
+                break;
+                
+            case 1:
+                numberOfRows = [self.outgoingContactRequestArray count];
+                break;
+                
+            default:
+                break;
+        }
     }
     
     if (numberOfRows == 0) {
