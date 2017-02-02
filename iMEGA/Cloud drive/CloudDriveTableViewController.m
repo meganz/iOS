@@ -892,11 +892,11 @@
     }
     
     if ([[self.nodes size] unsignedIntegerValue] == 0) {
-        [_editBarButtonItem setEnabled:NO];
+        [self setNavigationBarButtonItemsEnabled:NO];
         
         [self.tableView setTableHeaderView:nil];
     } else {
-        [_editBarButtonItem setEnabled:YES];
+        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         if (!self.tableView.tableHeaderView) {
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
@@ -1058,8 +1058,7 @@
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
-            [self.sortByBarButtonItem setEnabled:boolValue];
-            [self.editBarButtonItem setEnabled:boolValue];
+            self.moreBarButtonItem.enabled = boolValue;
             break;
         }
             

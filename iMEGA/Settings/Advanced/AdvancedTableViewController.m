@@ -1,6 +1,8 @@
 #import "AdvancedTableViewController.h"
 
 #import "NSString+MNZCategory.h"
+
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "Helper.h"
@@ -258,24 +260,20 @@
         }
             
         case 2: { //Rubbish Bin
-            UIAlertView *emptyRubbishBinAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil)
-                                                                          message:nil
-                                                                         delegate:self
-                                                                cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                                otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-            emptyRubbishBinAlertView.tag = 0;
-            [emptyRubbishBinAlertView show];
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UIAlertView *emptyRubbishBinAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                emptyRubbishBinAlertView.tag = 0;
+                [emptyRubbishBinAlertView show];
+            }
             break;
         }
             
         case 4: { //Cancel account
-            UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.")
-                                                                               message:nil
-                                                                              delegate:self
-                                                                     cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                                     otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-            cancelAccountAlertView.tag = 1;
-            [cancelAccountAlertView show];
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UIAlertView *cancelAccountAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                cancelAccountAlertView.tag = 1;
+                [cancelAccountAlertView show];
+            }
             break;
         }
             

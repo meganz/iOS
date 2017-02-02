@@ -42,7 +42,8 @@
         self.navigationItem.title = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
         
         self.currentPasswordImageView.image = [UIImage imageNamed:@"emailExisting"];
-        self.currentPasswordTextField.text = [[MEGASdkManager sharedMEGASdk] myEmail];
+        NSString *myEmail = [[MEGASdkManager sharedMEGASdk] myEmail];
+        myEmail ? (self.currentPasswordTextField.text = myEmail) : (self.currentPasswordTextField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email"));
         self.currentPasswordTextField.secureTextEntry = NO;
         self.currentPasswordTextField.userInteractionEnabled = NO;
         

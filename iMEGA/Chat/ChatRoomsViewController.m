@@ -82,7 +82,7 @@
             [self.chatListItemArray addObject:chatListItem];
         }
         
-        self.addBarButtonItem.enabled = YES;
+        self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
         if (!self.tableView.tableHeaderView) {
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
@@ -131,7 +131,11 @@
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
+            if ([MEGAReachabilityManager isReachable]) {
+                text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
+            } else {
+                text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            }
         } else {
             return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"noConversations", @"Empty Conversations section") sectionTitle:AMLocalizedString(@"conversations", @"Conversations section")];
         }

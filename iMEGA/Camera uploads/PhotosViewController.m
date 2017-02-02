@@ -374,7 +374,7 @@
     if ([self.photosByMonthYearArray count] == 0) {
         [self setNavigationBarButtonItemsEnabled:NO];
     } else {
-        [self setNavigationBarButtonItemsEnabled:YES];
+        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     }
     
     return [self.photosByMonthYearArray count];
