@@ -127,10 +127,17 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)presentEasterEggTODOAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
-    
+    //TODO: Enable/disable notifications
+    [self presentEasterEggTODOAlert];
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
@@ -305,6 +312,7 @@
                     
                 case 3: //Close Chat
                     //TODO: Close chat
+                    [self presentEasterEggTODOAlert];
                     break;
                     
                 case 4: //Remove Contact

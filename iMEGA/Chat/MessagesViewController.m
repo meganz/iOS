@@ -87,8 +87,6 @@
     self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFont size:14.0f];
     
-    self.tabBarController.tabBar.hidden = YES;
-    
     [self customToolbarContentView];
     
     self.areAllMessagesSeen = NO;
@@ -99,6 +97,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self customNavigationBarLabel];
+    
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,6 +107,7 @@
     }
     [super viewWillDisappear:animated];
     
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - Private methods
