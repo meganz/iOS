@@ -380,9 +380,11 @@ static NSString *kisDirectory = @"kisDirectory";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.offlineSortedItems.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.sortByBarButtonItem.enabled = NO;
         [self.editBarButtonItem setEnabled:NO];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.sortByBarButtonItem.enabled = YES;
         [self.editBarButtonItem setEnabled:YES];
     }
     return self.offlineSortedItems.count;
