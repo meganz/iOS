@@ -4,14 +4,17 @@
 
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGANavigationController.h"
 #import "MEGAUser+MNZCategory.h"
 
+#import "ChatRoomsViewController.h"
 #import "ContactTableViewCell.h"
 #import "DetailsNodeInfoViewController.h"
+#import "MessagesViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <MEGARequestDelegate>
+@interface ContactDetailsViewController () <MEGARequestDelegate, MEGAChatRequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -98,6 +101,30 @@
 - (void)pushVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
     [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
+}
+
+- (void)changeToChatTabAndOpenChatId:(uint64_t)chatId {
+    NSInteger chatTabPosition;
+    for (chatTabPosition = 0 ; chatTabPosition < self.tabBarController.viewControllers.count ; chatTabPosition++) {
+        if ([[[self.tabBarController.viewControllers objectAtIndex:chatTabPosition] tabBarItem] tag] == 2) {
+            break;
+        }
+    }
+    
+    MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom                = chatRoom;
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+    messagesVC.navigationItem.leftBarButtonItem = backBarButtonItem;
+    
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+    [self presentViewController:navigationController animated:YES completion:^{
+        [Helper changeToViewController:[ChatRoomsViewController class] onTabBarController:self.tabBarController];
+    }];
+}
+
+- (void)dismissChatRoom {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -244,10 +271,14 @@
                     break;
                     
                 case 1: { //Send Message
-                    //TODO: If there's a chat with this contact, open it. If not, start conversation.
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [self presentViewController:alertController animated:YES completion:nil];
+                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+                    if (chatRoom) {
+                        [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                    } else {
+                        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                        [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
+                        [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                    }
                     break;
                 }
                     
@@ -292,6 +323,22 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - MEGAChatRequestDelegate
+
+- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    MEGALogInfo(@"onChatRequestFinish request: %@ \nerror: %@", request, error);
+    if (error.type) return;
+    
+    switch (request.type) {
+        case MEGAChatRequestTypeCreateChatRoom: {
+            [self changeToChatTabAndOpenChatId:request.chatHandle];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 #pragma mark - MEGARequestDelegate
 
