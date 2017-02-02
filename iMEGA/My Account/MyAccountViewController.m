@@ -87,7 +87,6 @@
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
-    self.editBarButtonItem.enabled = NO;
     
     [self.usageLabel setText:AMLocalizedString(@"usage", nil)];
     [self.settingsLabel setText:AMLocalizedString(@"settingsTitle", nil)];
@@ -190,6 +189,9 @@
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
     //TODO: Change Name / Change Avatar / Remove Avatar
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
