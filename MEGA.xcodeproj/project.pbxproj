@@ -289,8 +289,6 @@
 		E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519221AC9CD8000BB7324 /* TransfersViewController.m */; };
 		E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B519241AC9CD8000BB7324 /* TransferTableViewCell.m */; };
 		E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */; };
-		E8C0F6E81E1587A600BF87E1 /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8C0F6E71E1587A600BF87E1 /* SelectableTableViewCell.xib */; };
-		E8C0F6EB1E158B8600BF87E1 /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C0F6EA1E158B8600BF87E1 /* SelectableTableViewCell.m */; };
 		E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */; };
 		E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */; };
 		E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */; };
@@ -912,9 +910,6 @@
 		E8BB73811D773AC30067D89C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterKeyViewController.h; sourceTree = "<group>"; };
 		E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterKeyViewController.m; sourceTree = "<group>"; };
-		E8C0F6E71E1587A600BF87E1 /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectableTableViewCell.xib; path = ../../Settings/Chat/SelectableTableViewCell.xib; sourceTree = "<group>"; };
-		E8C0F6E91E158B8600BF87E1 /* SelectableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectableTableViewCell.h; path = ../../Settings/Chat/SelectableTableViewCell.h; sourceTree = "<group>"; };
-		E8C0F6EA1E158B8600BF87E1 /* SelectableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectableTableViewCell.m; path = ../../Settings/Chat/SelectableTableViewCell.m; sourceTree = "<group>"; };
 		E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Light.otf"; path = "Fonts/SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
 		E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Light.otf"; path = "Fonts/SF-UI-Text-Light.otf"; sourceTree = "<group>"; };
 		E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Regular.otf"; path = "Fonts/SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -1295,7 +1290,6 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E8C0F6EC1E166AD300BF87E1 /* Cells */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
@@ -2055,16 +2049,6 @@
 			path = Transfers;
 			sourceTree = "<group>";
 		};
-		E8C0F6EC1E166AD300BF87E1 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				E8C0F6E71E1587A600BF87E1 /* SelectableTableViewCell.xib */,
-				E8C0F6E91E158B8600BF87E1 /* SelectableTableViewCell.h */,
-				E8C0F6EA1E158B8600BF87E1 /* SelectableTableViewCell.m */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		E8C289F01BF5F81300F7A034 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2278,7 +2262,6 @@
 				411504331CEB07C700BF38E3 /* ImageSelectedOn@3x.png in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
-				E8C0F6E81E1587A600BF87E1 /* SelectableTableViewCell.xib in Resources */,
 				411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				411504401CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png in Resources */,
@@ -2446,7 +2429,6 @@
 				417279381DB663FA001AC818 /* UIView+JSQMessages.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
-				E8C0F6EB1E158B8600BF87E1 /* SelectableTableViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				4152268D1A692ECC00EC7BB6 /* DetailsNodeInfoViewController.m in Sources */,
