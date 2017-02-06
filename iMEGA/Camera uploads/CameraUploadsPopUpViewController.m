@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
+#import "UIDevice+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
@@ -13,6 +14,9 @@
 
 @interface CameraUploadsPopUpViewController () <UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidthLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
@@ -36,10 +40,19 @@
         [_useCellularConnectionLabel setHidden:YES];
         [_useCellularConnectionSwitch setHidden:YES];
     }
+    
+    if ([[UIDevice currentDevice] iPhone5X]) {
+        self.imageWidthLayoutConstraint.constant = 190.0f;
+        self.imageHeightLayoutConstraint.constant = 208.0f;
+    }
+    
+    //TODO: iPhone 4X
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.topLabel.text = AMLocalizedString(@"automaticallyBackupYouPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
     
     [self.navigationItem setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
@@ -47,17 +60,13 @@
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
-    [_skipButton.layer setBorderWidth:2.0f];
     [_skipButton.layer setCornerRadius:4.0f];
-    [_skipButton.layer setBorderColor:[[UIColor mnz_gray999999] CGColor]];
     [_skipButton.layer setMasksToBounds:YES];
     [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
-    [_enableButton.layer setBorderWidth:2.0f];
     [_enableButton.layer setCornerRadius:4.0f];
-    [_enableButton.layer setBorderColor:[[UIColor mnz_redD90007] CGColor]];
     [_enableButton.layer setMasksToBounds:YES];
-    [_enableButton setTitle:AMLocalizedString(@"ok", nil) forState:UIControlStateNormal];
+    [self.enableButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA") forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
