@@ -289,7 +289,7 @@
         }
         
         if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
-            participantsNames = [participantsNames stringByAppendingString:peerName];
+            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
         } else {
             participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
         }

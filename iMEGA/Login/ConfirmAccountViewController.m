@@ -3,8 +3,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "MainTabBarController.h"
-
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
