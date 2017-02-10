@@ -1134,8 +1134,9 @@ static BOOL copyToPasteboard;
         }
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:NSTemporaryDirectory() error:&error]) {
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
+        error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
