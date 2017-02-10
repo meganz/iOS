@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12072"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -331,13 +331,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatically backup your photos to the Cloud Drive" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnD-OB-rty">
-                                <rect key="frame" x="26" y="24" width="323" height="14.5"/>
+                                <rect key="frame" x="26" y="24" width="323" height="14"/>
                                 <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="12"/>
                                 <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="237" placeholderIntrinsicHeight="260" image="emptyCameraUploads" translatesAutoresizingMaskIntoConstraints="NO" id="djp-QD-Fzh">
-                                <rect key="frame" x="69" y="62.5" width="237" height="260"/>
+                                <rect key="frame" x="69" y="62" width="237" height="260"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                 </accessibility>
@@ -357,7 +357,7 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Upload videos" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh4-9k-L1x">
-                                <rect key="frame" x="16" y="342.5" width="286" height="31"/>
+                                <rect key="frame" x="26" y="342" width="266" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="KXc-aj-6lW"/>
                                 </constraints>
@@ -366,14 +366,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fUE-j7-GEh">
-                                <rect key="frame" x="310" y="342.5" width="51" height="31"/>
+                                <rect key="frame" x="300" y="342" width="51" height="31"/>
                                 <color key="onTintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="uploadVideosValueChanged:" destination="liW-Oa-2YP" eventType="valueChanged" id="yz1-3p-9OA"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Use Mobile Data" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAH-PT-gIC">
-                                <rect key="frame" x="16" y="381.5" width="286" height="31"/>
+                                <rect key="frame" x="26" y="381" width="266" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="rqJ-dn-490"/>
                                 </constraints>
@@ -382,14 +382,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CuB-uo-3df">
-                                <rect key="frame" x="310" y="381.5" width="51" height="31"/>
+                                <rect key="frame" x="300" y="381" width="51" height="31"/>
                                 <color key="onTintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="useCellularConnectionValueChanged:" destination="liW-Oa-2YP" eventType="valueChanged" id="oqx-xB-Jhe"/>
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inc-er-uaq">
-                                <rect key="frame" x="66.5" y="442.5" width="242" height="42"/>
+                                <rect key="frame" x="66.5" y="442" width="242" height="42"/>
                                 <color key="backgroundColor" red="1" green="0.30196079611778259" blue="0.32156863808631897" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="242" id="yGR-5u-SCg"/>
@@ -404,7 +404,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAc-18-aEo">
-                                <rect key="frame" x="66.5" y="500.5" width="242" height="46"/>
+                                <rect key="frame" x="66.5" y="500" width="242" height="46"/>
                                 <color key="backgroundColor" red="0.93333333730697632" green="0.93333333730697632" blue="0.93333333730697632" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="ABa-Vz-QDl"/>
@@ -423,8 +423,8 @@
                         <constraints>
                             <constraint firstItem="djp-QD-Fzh" firstAttribute="centerX" secondItem="Rf7-1t-7Zq" secondAttribute="centerX" id="0wx-hl-XAG"/>
                             <constraint firstItem="inc-er-uaq" firstAttribute="centerX" secondItem="Rf7-1t-7Zq" secondAttribute="centerX" id="1BX-zh-zko"/>
-                            <constraint firstItem="fAH-PT-gIC" firstAttribute="leading" secondItem="Rf7-1t-7Zq" secondAttribute="leadingMargin" id="2bN-re-Be7"/>
-                            <constraint firstItem="CuB-uo-3df" firstAttribute="trailing" secondItem="Rf7-1t-7Zq" secondAttribute="trailingMargin" id="3aL-DQ-AHr"/>
+                            <constraint firstItem="fAH-PT-gIC" firstAttribute="leading" secondItem="Rf7-1t-7Zq" secondAttribute="leadingMargin" constant="10" id="2bN-re-Be7"/>
+                            <constraint firstItem="CuB-uo-3df" firstAttribute="trailing" secondItem="Rf7-1t-7Zq" secondAttribute="trailingMargin" constant="-10" id="3aL-DQ-AHr"/>
                             <constraint firstItem="vnD-OB-rty" firstAttribute="leading" secondItem="Rf7-1t-7Zq" secondAttribute="leadingMargin" constant="10" id="8sX-pS-S9Y"/>
                             <constraint firstItem="fAH-PT-gIC" firstAttribute="top" secondItem="lh4-9k-L1x" secondAttribute="bottom" constant="8" symbolic="YES" id="9my-cI-nqi"/>
                             <constraint firstItem="fUE-j7-GEh" firstAttribute="top" secondItem="djp-QD-Fzh" secondAttribute="bottom" constant="20" id="Bhn-0p-jn3"/>
@@ -435,8 +435,8 @@
                             <constraint firstItem="vAc-18-aEo" firstAttribute="centerX" secondItem="inc-er-uaq" secondAttribute="centerX" id="RIn-wc-vd4"/>
                             <constraint firstItem="lh4-9k-L1x" firstAttribute="top" secondItem="djp-QD-Fzh" secondAttribute="bottom" constant="20" id="YBc-Im-TYo"/>
                             <constraint firstItem="vnD-OB-rty" firstAttribute="top" secondItem="F2G-49-a52" secondAttribute="bottom" constant="24" id="YMi-Er-6KH"/>
-                            <constraint firstItem="lh4-9k-L1x" firstAttribute="leading" secondItem="Rf7-1t-7Zq" secondAttribute="leadingMargin" id="ikK-aq-Mb8"/>
-                            <constraint firstItem="fUE-j7-GEh" firstAttribute="trailing" secondItem="Rf7-1t-7Zq" secondAttribute="trailingMargin" id="mQL-Cn-Vp4"/>
+                            <constraint firstItem="lh4-9k-L1x" firstAttribute="leading" secondItem="Rf7-1t-7Zq" secondAttribute="leadingMargin" constant="10" id="ikK-aq-Mb8"/>
+                            <constraint firstItem="fUE-j7-GEh" firstAttribute="trailing" secondItem="Rf7-1t-7Zq" secondAttribute="trailingMargin" constant="-10" id="mQL-Cn-Vp4"/>
                             <constraint firstItem="vAc-18-aEo" firstAttribute="width" secondItem="inc-er-uaq" secondAttribute="width" id="r8J-i8-Od0"/>
                             <constraint firstItem="CuB-uo-3df" firstAttribute="leading" secondItem="fAH-PT-gIC" secondAttribute="trailing" constant="8" id="ssS-gw-xLU"/>
                             <constraint firstItem="djp-QD-Fzh" firstAttribute="top" secondItem="vnD-OB-rty" secondAttribute="bottom" constant="24" id="uUj-He-pA7"/>
