@@ -391,6 +391,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
+        if (self.urlType == URLTypeConfirmationLink) {
+            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+            [self presentLinkViewController:navigationController];
+            self.urlType = URLTypeDefault;
+        }
+     
         if ([Helper selectedOptionOnLink] != 0) {
             [self processSelectedOptionOnLink];
         }

@@ -1,6 +1,10 @@
 
 #import "ProductDetailViewController.h"
+
+#import "CameraUploadsPopUpViewController.h"
 #import "ProductDetailTableViewCell.h"
+
+#import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
@@ -156,8 +160,16 @@
             [updatedAlert setTag:0];
             [updatedAlert show];
         } else {
-            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
-                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
+            if ([self.presentingViewController isKindOfClass:[MEGANavigationController class]]) {
+                MEGANavigationController *presentingNavigationController = (MEGANavigationController *)self.presentingViewController;
+                if ([presentingNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
+                    MEGANavigationController *presentedNavigationController = (MEGANavigationController *)presentingNavigationController.topViewController.presentedViewController;
+                    if ([presentedNavigationController.topViewController isKindOfClass:[ProductDetailViewController class]]) {
+                        [presentedNavigationController dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [presentingNavigationController dismissViewControllerAnimated:YES completion:nil];
+                    }
+                }
             }
         }
     }
