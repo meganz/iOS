@@ -8,4 +8,26 @@
             [self class], self.base64userHandle, self.firstname, self.lastname, self.email];
 }
 
+- (NSString *)fullName {
+    NSString *fullName = nil;
+    if (self) {
+        if (self.firstname) {
+            fullName = self.firstname;
+            if (self.lastname) {
+                fullName = [[fullName stringByAppendingString:@" "] stringByAppendingString:self.lastname];
+            }
+        } else {
+            if (self.lastname) {
+                fullName = self.lastname;
+            }
+        }
+    }
+    
+    if(![[fullName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]) {
+        fullName = nil;
+    }
+    
+    return fullName;
+}
+
 @end
