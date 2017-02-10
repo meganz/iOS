@@ -396,8 +396,8 @@
 "photoPerMonth"="%lu elemento";
 /* Button title that skips the current action */
 "skipButton"="Saltar";
-/* Text shown to explain what means 'Enable Camera Uploads'. */
-"automaticallyBackupYouPhotos"="Guarda automáticamente tus fotos en tu Disco";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Guarda automáticamente tus fotos en tu Disco";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */

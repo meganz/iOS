@@ -52,9 +52,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.topLabel.text = AMLocalizedString(@"automaticallyBackupYouPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+    self.topLabel.text = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
     
-    [self.navigationItem setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
+    self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
     
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
@@ -66,7 +66,7 @@
     
     [_enableButton.layer setCornerRadius:4.0f];
     [_enableButton.layer setMasksToBounds:YES];
-    [self.enableButton setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA") forState:UIControlStateNormal];
+    [self.enableButton setTitle:AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled") forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {

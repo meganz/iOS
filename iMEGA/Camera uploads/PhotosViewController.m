@@ -614,7 +614,7 @@
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            text = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+            text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     }
     
