@@ -794,6 +794,8 @@
 "available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Hazte PRO";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="Puedes hacerte PRO más tarde en mi cuenta";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
