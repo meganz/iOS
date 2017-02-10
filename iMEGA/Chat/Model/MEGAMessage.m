@@ -1,5 +1,6 @@
 #import "MEGAMessage.h"
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 
 @implementation MEGAMessage
 
@@ -31,9 +32,14 @@
                 fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
             } else {
                 fullNameDidAction = [chatRoom peerFullnameByHandle:message.userHandle];
-                if (fullNameDidAction.length == 0) {
-                    //TODO: Use the app Core Data users cache
-                    fullNameDidAction = @"Unknown user";
+                if (fullNameDidAction.length == 0) {                    
+                    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:message.userHandle];
+                    if (moUser) {
+                        fullNameDidAction = moUser.fullName;
+                    } else {
+                        // TODO: request firstname and lastname
+                        fullNameDidAction = @"Unknown user";
+                    }
                 }
             }
             
@@ -51,8 +57,13 @@
             } else {
                 fullNameReceiveAction = [chatRoom peerFullnameByHandle:tempHandle];
                 if (fullNameReceiveAction.length == 0) {
-                    //TODO: Use the app Core Data users cache
-                    fullNameReceiveAction = @"Unknown user";
+                    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:tempHandle];
+                    if (moUser) {
+                        fullNameReceiveAction = moUser.fullName;
+                    } else {                        
+                        // TODO: request firstname and lastname
+                        fullNameReceiveAction = @"Unknown user";
+                    }
                 }
             }
             

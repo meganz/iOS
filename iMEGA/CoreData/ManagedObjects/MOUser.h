@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MOUser : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
+@property (nonatomic, copy) NSString *fullName;
 
 @end
 
