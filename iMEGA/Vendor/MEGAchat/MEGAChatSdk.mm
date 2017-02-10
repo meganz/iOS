@@ -295,6 +295,22 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     self.megaChatApi->getUserEmail(userHandle);
 }
 
+- (void)userFirstnameByUserHandle:(uint64_t)userHandle delegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->getUserFirstname(userHandle, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)userFirstnameByUserHandle:(uint64_t)userHandle {
+    self.megaChatApi->getUserFirstname(userHandle);
+}
+
+- (void)userLastnameByUserHandle:(uint64_t)userHandle delegate:(id<MEGAChatRequestDelegate>)delegate {
+    self.megaChatApi->getUserLastname(userHandle, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
+}
+
+- (void)userLastnameByUserHandle:(uint64_t)userHandle {
+    self.megaChatApi->getUserLastname(userHandle);
+}
+
 - (NSString *)contacEmailByHandle:(uint64_t)userHandle {
     const char *val = self.megaChatApi->getContactEmail(userHandle);
     if (!val) return nil;
