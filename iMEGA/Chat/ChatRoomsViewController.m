@@ -282,6 +282,28 @@
     }
 }
 
+- (void)updateCell:(ChatRoomCell *)cell forUnreadCountChange:(NSInteger)unreadCount {
+    if (unreadCount != 0) {
+        if (cell.unreadView.hidden) {
+            cell.chatTitle.textColor = [UIColor mnz_black333333];
+            cell.chatLastMessage.textColor = [UIColor mnz_black333333];
+            cell.chatLastTime.textColor = [UIColor mnz_black333333];
+            
+            cell.unreadView.hidden = NO;
+            cell.unreadView.clipsToBounds = YES;
+        }
+        
+        cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
+    } else {
+        cell.chatTitle.textColor = [UIColor mnz_gray666666];
+        cell.chatLastMessage.textColor = [UIColor mnz_gray999999];
+        cell.chatLastTime.textColor = [UIColor mnz_gray999999];
+        
+        cell.unreadView.hidden = YES;
+        cell.unreadCount.text = nil;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -400,13 +422,9 @@
         cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
     }
     
-    if (chatListItem.unreadCount != 0) {
-        cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(chatListItem.unreadCount)];
-        cell.unreadView.hidden = NO;
-        cell.unreadView.clipsToBounds = NO;
-    } else {
-        cell.unreadView.hidden = YES;
-    }
+    [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];
+    
+    cell.separatorInset = UIEdgeInsetsMake(0.0, 57.0, 0.0, 0.0);
     
     return cell;
 }
@@ -592,11 +610,7 @@
                     break;
                     
                 case MEGAChatListItemChangeTypeUnreadCount:
-                    if (cell.unreadView.hidden && item.unreadCount != 0) {
-                        cell.unreadView.hidden             = NO;
-                        cell.unreadView.clipsToBounds      = YES;
-                    }
-                    cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(item.unreadCount)];
+                    [self updateCell:cell forUnreadCountChange:item.unreadCount];
                     break;
                     
                 case MEGAChatListItemChangeTypeParticipants:
