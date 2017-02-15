@@ -71,7 +71,9 @@
     self.participantsMutableArray = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
         uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:i];
-        [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:peerHandle]];
+        if ([self.chatRoom peerPrivilegeByHandle:peerHandle] > MEGAChatRoomPrivilegeRm) {
+            [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:peerHandle]];
+        }
     }
     
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
@@ -126,6 +128,15 @@
         popoverPresentationController.sourceView = self.tableView;
     }
     [self presentViewController:leaveAlertController animated:YES completion:nil];
+}
+
+#pragma mark - IBActions
+
+- (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
+    //TODO: Enable/disable notifications
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -366,10 +377,48 @@
                 break;
         }
     } else if (indexPath.section == 1) {
-        //TODO: Push contact details / Manage chat permissions on the row button
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
+        if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && (indexPath.row != (self.participantsMutableArray.count - 1))) {
+            uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
+            
+            UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [cancelAlertAction setValue:[UIColor mnz_redD90007] forKey:@"titleTextColor"];
+            [permissionsAlertController addAction:cancelAlertAction];
+            
+            UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
+            }];
+            [moderatorAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [permissionsAlertController addAction:moderatorAlertAction];
+            
+            UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
+            }];
+            [standartAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [permissionsAlertController addAction:standartAlertAction];
+            
+            UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
+            }];
+            [readOnlyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [permissionsAlertController addAction:readOnlyAlertAction];
+            
+            UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
+            }];
+            [permissionsAlertController addAction:removeParticipantAlertAction];
+            
+            if ([[UIDevice currentDevice] iPadDevice]) {
+                permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
+                UIPopoverPresentationController *popoverPresentationController = [permissionsAlertController popoverPresentationController];
+                GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                popoverPresentationController.sourceRect = cell.contentView.frame;
+                popoverPresentationController.sourceView = cell.contentView;
+            }
+            [self presentViewController:permissionsAlertController animated:YES completion:nil];
+        }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -378,13 +427,23 @@
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if (error.type) {
-        return;
-    }
-    
     switch (request.type) {
         case MEGAChatRequestTypeRemoveFromChatRoom: {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            if (error.type) {
+                return;
+            } else {
+                if (request.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
+            }
+            break;
+        }
+            
+        case MEGAChatRequestTypeUpdatePeerPermissions: {
+            if (error.type) {
+                //TODO: Manage errors of update peer permissions request 
+                return;
+            }
             break;
         }
             
