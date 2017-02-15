@@ -291,6 +291,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRb-Mp-dNj" userLabel="Notifications Switch">
                                                     <rect key="frame" x="312" y="7" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="notificationsSwitchValueChanged:" destination="0sZ-aU-4Bm" eventType="valueChanged" id="8xZ-fs-A2I"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
