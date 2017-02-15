@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu 張照片";
 /* Button title that skips the current action */
 "skipButton"="跳過";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
@@ -792,6 +794,8 @@
 "available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="儲存空間";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -857,7 +861,7 @@
 /* Empty Conversations section */
 "noConversations"="無對話(已清空)";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="啟用";
 /* Conversations section */
@@ -956,6 +960,8 @@
 "moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準模式";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="移除此位成員";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="與%@的對話";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */

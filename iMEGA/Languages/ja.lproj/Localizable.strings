@@ -53,7 +53,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。";
 /* Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in */
-"serversTooBusy"="Servers are too busy. Please wait...";
+"serversTooBusy"="サーバーがビジーです。少々お待ちください。";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
@@ -103,7 +103,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="このメールアドレスはすでにMEGAでアカウントを登録しています。";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"awaitingEmailConfirmation"="Awaiting email confirmation.";
+"awaitingEmailConfirmation"="少々お待ちください。メール確認が届きます。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="アカウント確認のため、パスワードを入力して下さい。";
 /* Button title that triggers the confirm account action */
@@ -275,7 +275,7 @@
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="リンク作成中";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="Generating links...";
+"generatingLinks"="リンクを作成中";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="リンクコピー完了";
 /* Message shown when some links have been copied to the pasteboard */
@@ -329,7 +329,7 @@
 /* Success message shown when you have copied {1+} files and 1 folder */
 "copyFilesFolderMessage"="ファイル%dこ、フォルダ１こコピー完了";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] files and [B] folders copied";
+"copyFilesFoldersMessage"="[A]ファイルと[B]フォルダコピー完了";
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="名前を変更";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
@@ -396,6 +396,8 @@
 "photoPerMonth"="フォト%lu こ";
 /* Button title that skips the current action */
 "skipButton"="省く";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="写真アップロード有効";
 /* Success message shown when Camera Uploads has been enabled */
@@ -429,9 +431,9 @@
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="送信";
 /* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Shared with 1 contact";
+"sharedWithOneContact"="1人の知り合いと共有しています";
 /* Text shown to explain with how many contacts you have shared a folder */
-"sharedWithXContacts"="Shared with %d contacts";
+"sharedWithXContacts"="%d人の知り合いと共有しました";
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="許可を変更しました。";
 /* Message shown when a share has been left */
@@ -529,7 +531,7 @@
 /* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Please write your feedback here:";
+"pleaseWriteYourFeedback"="ここに手ごたえを書いて下さい";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="デバイス上にメールアカウントなし";
 /* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
@@ -559,7 +561,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="どうしてリカバリーキーがいりますか";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="あなたのデータは、あなたの持つ親鍵が複合することによって読み取り可能となり、その親鍵はあなたのパスワードにより暗号化されて、保存されています。ですからあなたのパスワードがないと、親鍵は暗号化されたまま、すなわちデータも暗号化されたままということになります。";
 /* Advising the user to keep the user's recovery key safe. */
@@ -573,9 +575,9 @@
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
-"onYourDevice"="On your device";
+"onYourDevice"="ご自分のデバイス";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Clear Offline Files";
+"clearOfflineFiles"="オフラインのファイルをクリア";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="キャッシュ消去";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -711,7 +713,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="The new and the old email must not match";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Emails do not match";
+"emailsDoNotMatch"="メールアドレスが一致していません";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -747,7 +749,7 @@
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="アップロード";
 /* Success message shown when one transfer has been cancelled */
-"transferCancelled"="Transfer cancelled";
+"transferCancelled"="転送キャンセルしました。";
 /* Success message shown when all the transfers have been cancelled */
 "transfersCancelled"="転送キャンセルしました";
 /* Title of the alert shown when you try to cancel transfers */
@@ -792,6 +794,8 @@
 "available of %@"="利用可能枠%@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="アカウントをアップグレードする";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -841,11 +845,11 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="リクエストがキャンセルされたか、支払いが復活できませんでした。後で再度トライするか、ios@mega.nzまでご連絡下さい。";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Enable DEBUG mode";
+"enableDebugMode_title"="デバッグモードを有効にする";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Disable DEBUG mode";
+"disableDebugMode_title"="デバッグモードを無効にする";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -865,7 +869,7 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="招待";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="This message has been deleted";
+"thisMessageHasBeenDeleted"="このメッセージは削除されました。";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="自分";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
@@ -879,7 +883,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+"changedGroupChatNameTo"="[A]はグループチャット名前を[B]に編集しました。";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="ステータス";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -901,9 +905,9 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="メッセージを送信";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verify Credentials";
+"verifyCredentials"="本人確認証明";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Clear Chat History";
+"clearChatHistory"="チャット履歴をクリア";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
 /* 'Next' button in a dialog */
@@ -917,7 +921,7 @@
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="実際に顔を合わせるのが一番いい方法です。すでに認証済みのOTRやPGRがあれば、それを使うのも良いでしょう。";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Your Credentials";
+"yourCredentials"="本人確認";
 /* Button to reset the password */
 "reset"="リセット";
 /* Button title */
@@ -953,9 +957,11 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="参加者";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Moderator";
+"moderator"="モデレーター";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Remove Participant";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -965,7 +971,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
 /* Alert message shown when a chat does not exist */
-"chatNotFound"="Chat not found";
+"chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="%1が入力中です...";
 /* Message box label which shows that user can type message text in this textview */
