@@ -15,7 +15,7 @@
 /* Caption of a button to edit the files that are selected */
 "edit"="编辑";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="保存";
 /*  */
 "passcode"="密码";
 /* "Size" of the file or folder you are sharing */
@@ -265,13 +265,13 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="收件箱标签由苹果公司保留使用.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Save Image";
+"saveImage"="保存图像";
 /* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="Save Images";
+"saveImages"="保存照片";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="获取链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Get links";
+"getLinks"="获取链接";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="正在生成链接...";
 /* Message shown when some links to files and/or folders are being generated */
@@ -279,17 +279,17 @@
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="已拷贝链接";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Links copied";
+"linksCopied"="链接已复制";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="打开在...";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="移除连接";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Remove links";
+"removeLinks"="删除链接";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link removed";
+"linkRemoved"="链接已删除";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links removed";
+"linksRemoved"="链接已删除";
 /* Title show when a file is being downloaded */
 "downloading"="正在下载...";
 /* Message shown when you tap on the cancel button of an active transfer */
@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu 张图片";
 /* Button title that skips the current action */
 "skipButton"="跳过";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="开启相机上传";
 /* Success message shown when Camera Uploads has been enabled */
@@ -553,7 +555,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感激";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Recovery Key";
+"masterKey"="解锁账号";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="修改密码";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
@@ -579,7 +581,7 @@
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除缓存";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="On MEGA";
+"onMEGA"="在Mega端";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="清空垃圾箱";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
@@ -665,7 +667,7 @@
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
 "pleaseWriteYourRecoveryKey"="Please enter your Recovery Key";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Recovery Key";
+"recoveryKey"="解锁账号";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="不可用的主密钥";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -701,7 +703,7 @@
 /*  */
 "yourAccounHasBeenParked"="您的旧帐户已成功封存。您现在可以登录到新的帐户。";
 /* Hint text to suggest that the user have to write the new email on it */
-"newEmail"="New email";
+"newEmail"="新邮件";
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="确认电子邮件地址";
 /* Hint text where the user have to re-write the new email to confirm it */
@@ -792,6 +794,8 @@
 "available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升级账户";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="存储";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -859,7 +863,7 @@
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
-"enable"="Enable";
+"enable"="激活";
 /* Conversations section */
 "conversations"="通话";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -899,7 +903,7 @@
 /*  */
 "notifications"="通知";
 /* Title to perform the action of sending a message to a contact. */
-"sendMessage"="Send Message";
+"sendMessage"="发送信息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verify Credentials";
 /* A button title to delete the history of a chat. */
@@ -909,7 +913,7 @@
 /* 'Next' button in a dialog */
 "continue"="继续";
 /* Button title that allows the user to close a chat. */
-"closeChat"="Close Chat";
+"closeChat"="关闭聊天";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="共享文件";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -925,13 +929,13 @@
 /* start a chat/conversation */
 "startConversation"="Start Conversation";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Group";
+"group"="群";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Group Info";
+"groupInfo"="群信息";
 /* Label title for a group chat */
-"groupChat"="Group Chat";
+"groupChat"="群聊";
 /* The title of a menu button which allows users to rename a group chat. */
-"renameGroup"="Rename Group";
+"renameGroup"="重命名群";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Change Group Avatar";
 /* A button label. The button allows the user to leave the group conversation. */
@@ -939,7 +943,7 @@
 /* Top menu option which opens more menu options in a context menu. */
 "more"="更多";
 /* A button label. The button allows the user to mute a conversation. */
-"mute"="Mute";
+"mute"="静音";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="信息";
 /* A button label. The button allows the user to close the conversation. */
@@ -949,13 +953,15 @@
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="离开对话";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Leave Group";
+"leaveGroup"="退出群";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="Participants";
+"participants"="群聊成员";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Moderator";
+"moderator"="主持人";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
-"standard"="Standard";
+"standard"="标准";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Remove Participant";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */

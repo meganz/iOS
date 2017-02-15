@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu개의 사진";
 /* Button title that skips the current action */
 "skipButton"="넘기기";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 설정";
 /* Success message shown when Camera Uploads has been enabled */
@@ -792,6 +794,8 @@
 "available of %@"="사용가능함. 전체 공간: %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -857,7 +861,7 @@
 /* Empty Conversations section */
 "noConversations"="대화 없음";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="대화가 비활성화됨";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="활성화";
 /* Conversations section */
@@ -956,6 +960,8 @@
 "moderator"="중재자";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="기본";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="참가자 제거";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="%@님과 대화";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */

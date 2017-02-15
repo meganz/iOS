@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu imahe";
 /* Button title that skips the current action */
 "skipButton"="Mag-skip";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Gamitin ang Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -792,6 +794,8 @@
 "available of %@"="available na %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Ina-upgrade ang account";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lagayan";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -857,7 +861,7 @@
 /* Empty Conversations section */
 "noConversations"="Walang Conversations";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="Ihinihinto muna ang Chat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Paganahin";
 /* Conversations section */
@@ -885,7 +889,7 @@
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Use Mobile Data";
+"useMobileData"="Gamitin ang Mobile Data";
 /* Footer text to explain the meaning of the chat 'Online' status. */
 "chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
 /* Footer text to explain the meaning of the chat 'Offline' status. */
@@ -901,7 +905,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Magpadala ng mensahe";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verify Credentials";
+"verifyCredentials"="I-verify ang Credentials";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Burahin ang Chat History";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -917,13 +921,13 @@
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Ito ay magandang gawin ng harapan at personal. Kung meron kang ibang verified channel gaya ng verified OTR at PGP, pwede mo itong gamitin.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Your Credentials";
+"yourCredentials"="Ang iyong Credentials";
 /* Button to reset the password */
 "reset"="I-reset";
 /* Button title */
 "approve"="Payagan";
 /* start a chat/conversation */
-"startConversation"="Start Conversation";
+"startConversation"="Simulan ang Conversation";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Group";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
@@ -933,7 +937,7 @@
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Baguhin ang pangalan ng Grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Change Group Avatar";
+"changeGroupAvatar"="Baguhin ang Group Avatar";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Lumisan";
 /* Top menu option which opens more menu options in a context menu. */
@@ -956,6 +960,8 @@
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Remove Participant";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -967,6 +973,6 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Hindi nakita ang chat";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ is typing ...";
+"isTyping"="Nagtatype si %@  ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Magsulat ng mensahe...";

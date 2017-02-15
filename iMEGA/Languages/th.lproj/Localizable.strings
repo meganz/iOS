@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu รูปถ่าย";
 /* Button title that skips the current action */
 "skipButton"="ข้าม";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="เปิดใช้งานอัปโหลดจากกล้องถ่ายรูป";
 /* Success message shown when Camera Uploads has been enabled */
@@ -792,6 +794,8 @@
 "available of %@"="ใช้ได้อีก %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="พื้นที่จัดเก็บ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -956,6 +960,8 @@
 "moderator"="ผู้ดูแล";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="มาตรฐาน";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="เอาผู้เข้าร่วมออก";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */

@@ -396,6 +396,8 @@
 "photoPerMonth"="%lu hình";
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Bật Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -792,6 +794,8 @@
 "available of %@"="còn lại trong tổng %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Nâng cấp tài khoản";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lưu trữ";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -909,7 +913,7 @@
 /* 'Next' button in a dialog */
 "continue"="Tiếp tục";
 /* Button title that allows the user to close a chat. */
-"closeChat"="Close Chat";
+"closeChat"="Đóng Cuộc Chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Thư mục được chia sẻ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -927,7 +931,7 @@
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Group";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Group Info";
+"groupInfo"="Thông Tin Nhóm";
 /* Label title for a group chat */
 "groupChat"="Nhóm Chat";
 /* The title of a menu button which allows users to rename a group chat. */
@@ -939,7 +943,7 @@
 /* Top menu option which opens more menu options in a context menu. */
 "more"="Thêm nữa";
 /* A button label. The button allows the user to mute a conversation. */
-"mute"="Mute";
+"mute"="Tắt tiếng";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Thông tin";
 /* A button label. The button allows the user to close the conversation. */
@@ -951,11 +955,13 @@
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Rời Nhóm Chat";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="Participants";
+"participants"="Các Thành Viên";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Người quản lý";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Cơ bản";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Xóa người này khỏi nhóm";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Cuộc trò chuyện với %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
