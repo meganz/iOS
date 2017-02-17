@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sdkVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sdkVersionSHALabel;
 @property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
@@ -35,6 +36,8 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
+    self.sdkVersionSHALabel.text = @"36ea8cb";
+    
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
 
