@@ -746,7 +746,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)setBadgeValueForIncomingContactRequests {
     NSInteger contactsTabPosition;
     for (contactsTabPosition = 0 ; contactsTabPosition < self.mainTBC.viewControllers.count ; contactsTabPosition++) {
-        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 4) {
+        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 5) {
             break;
         }
     }
@@ -760,7 +760,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         badgeValue = nil;
     }
     
-    if ((contactsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
+    if ((contactsTabPosition >= 4) && [[UIDevice currentDevice] iPhoneDevice]) {
         [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
     }
     [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;

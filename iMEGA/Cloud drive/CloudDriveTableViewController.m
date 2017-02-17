@@ -892,7 +892,7 @@
     }
     
     if ([[self.nodes size] unsignedIntegerValue] == 0) {
-        [self setNavigationBarButtonItemsEnabled:NO];
+        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         
         [self.tableView setTableHeaderView:nil];
     } else {
