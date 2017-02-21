@@ -65,6 +65,10 @@
     }
 }
 
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+
 #pragma mark - Private
 
 - (void)setParticipants {

@@ -97,8 +97,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self customNavigationBarLabel];
-    
-    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -106,8 +104,10 @@
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [super viewWillDisappear:animated];
-    
-    self.tabBarController.tabBar.hidden = NO;
+}
+
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
 
 #pragma mark - Private methods
