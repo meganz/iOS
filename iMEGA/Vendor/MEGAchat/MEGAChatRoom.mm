@@ -111,6 +111,10 @@ using namespace megachat;
     return ret;
 }
 
+- (NSString *)peerEmailByHandle:(uint64_t)userHande {
+    return self.megaChatRoom->getPeerEmailByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerEmailByHandle(userHande)] : nil;
+}
+
 - (uint64_t)peerHandleAtIndex:(NSUInteger)index {
     return self.megaChatRoom->getPeerHandle((int)index);
 }
