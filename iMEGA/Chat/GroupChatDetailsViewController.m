@@ -252,7 +252,7 @@
             privilege = self.chatRoom.ownPrivilege;
         } else {
             peerFullname = [self.chatRoom peerFullnameByHandle:handle];
-            peerEmail = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:handle];
+            peerEmail = [self.chatRoom peerEmailByHandle:handle];
             privilege = [self.chatRoom peerPrivilegeAtIndex:indexPath.row];
         }
         BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
