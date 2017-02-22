@@ -133,20 +133,24 @@
     }
 }
 
-- (void)customNavigationBarLabel {
+- (void)customNavigationBarLabel {    
+    if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+        self.inputToolbar.hidden = YES;
+    } else {
+        self.inputToolbar.hidden = NO;
+    }
+    
     UILabel *label = [[UILabel alloc] init];
     if (self.chatRoom.isGroup) {
         NSString *title = self.chatRoom.title;
         if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
             label = [Helper customNavigationBarLabelWithTitle:title subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
-            self.inputToolbar.hidden = YES;
         } else {
             NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
             [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:18.0f] range:[title rangeOfString:title]];
             [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
             label.textAlignment = NSTextAlignmentCenter;
             label.attributedText = titleMutableAttributedString;
-            self.inputToolbar.hidden = NO;
         }
     } else {
         NSString *chatRoomState;
