@@ -43,9 +43,10 @@ using namespace megachat;
     NSString *changes      = [MEGAChatListItem stringForChangeType:self.changes];
     NSString *active       = self.isActive ? @"YES" : @"NO";
     NSString *group        = self.isGroup ? @"YES" : @"NO";
+    NSString *visibility   = [MEGAChatListItem stringForVisibility:self.visibility];
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%ld, unread=%ld, group=%@, active=%@>",
-            [self class], self.chatId, self.title, onlineStatus, changes, self.visibility, (long)self.unreadCount, group, active];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
+            [self class], self.chatId, self.title, onlineStatus, changes, visibility, (long)self.unreadCount, group, active];
 }
 
 - (uint64_t)chatId {
@@ -146,6 +147,33 @@ using namespace megachat;
     }
     return result;
 
+}
+
++ (NSString *)stringForVisibility:(NSInteger)visibility {
+    NSString *result;
+    
+    switch (visibility) {
+        case -1:
+            result = @"Unknown";
+            break;
+        case 0:
+            result = @"Hidden";
+            break;
+        case 1:
+            result = @"Visible";
+            break;
+        case 2:
+            result = @"Inactive";
+            break;
+        case 3:
+            result = @"Blocked";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
 }
 
 @end
