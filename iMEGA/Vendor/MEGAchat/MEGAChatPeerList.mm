@@ -54,19 +54,20 @@ using namespace megachat;
 }
 
 - (NSInteger)size {
-    return self.megaChatPeerList->size();
+    return self.megaChatPeerList ? self.megaChatPeerList->size() : -1;
 }
 
 - (void)addPeerWithHandle:(uint64_t)handle privilege:(NSInteger)privilege {
+    if (!self.megaChatPeerList) return;
     self.megaChatPeerList->addPeer(handle, (int)privilege);
 }
 
 - (uint64_t)peerHandleAtIndex:(NSInteger)index {
-    return self.megaChatPeerList->getPeerHandle((int)index);
+    return self.megaChatPeerList ? self.megaChatPeerList->getPeerHandle((int)index) : MEGACHAT_INVALID_HANDLE;
 }
 
 - (NSInteger)peerPrivilegeAtIndex:(NSInteger)index {
-    return self.megaChatPeerList->getPeerPrivilege((int)index);
+    return self.megaChatPeerList ? self.megaChatPeerList->getPeerPrivilege((int)index) : -2;
 }
 
 @end

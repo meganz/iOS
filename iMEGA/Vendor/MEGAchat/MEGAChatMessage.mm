@@ -44,71 +44,73 @@ using namespace megachat;
 }
 
 - (MEGAChatMessageStatus)status {
-    return (MEGAChatMessageStatus) self.megaChatMessage->getStatus();
+    return (MEGAChatMessageStatus) (self.megaChatMessage ? self.megaChatMessage->getStatus() : 0);
 }
 
 - (uint64_t)messageId {
-    return self.megaChatMessage->getMsgId();
+    return self.megaChatMessage ? self.megaChatMessage->getMsgId() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (uint64_t)temporalId {
-    return self.megaChatMessage->getTempId();
+    return self.megaChatMessage ? self.megaChatMessage->getTempId() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (NSInteger)messageIndex {
-    return self.megaChatMessage->getMsgIndex();
+    return self.megaChatMessage ? self.megaChatMessage->getMsgIndex() : 0;
 }
 
 - (uint64_t)userHandle {
-    return self.megaChatMessage->getUserHandle();
+    return self.megaChatMessage ? self.megaChatMessage->getUserHandle() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (MEGAChatMessageType)type {
-    return (MEGAChatMessageType) self.megaChatMessage->getType();
+    return (MEGAChatMessageType) (self.megaChatMessage ? self.megaChatMessage->getType() : -2);
 }
 
 - (NSDate *)timestamp {
-    return [[NSDate alloc] initWithTimeIntervalSince1970:self.megaChatMessage->getTimestamp()];
+    return self.megaChatMessage ? [[NSDate alloc] initWithTimeIntervalSince1970:self.megaChatMessage->getTimestamp()] : nil;
 }
 
 - (NSString *)content {
-    return self.megaChatMessage->getContent() ? [[NSString alloc] initWithUTF8String:self.megaChatMessage->getContent()] : nil;
+    if (!self.megaChatMessage) return nil;
+    const char *ret = self.megaChatMessage->getContent();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (BOOL)isEdited {
-    return self.megaChatMessage->isEdited();
+    return self.megaChatMessage ? self.megaChatMessage->isEdited() : NO;
 }
 
 - (BOOL)isDeleted {
-    return self.megaChatMessage->isDeleted();
+    return self.megaChatMessage ? self.megaChatMessage->isDeleted() : NO;
 }
 
 - (BOOL)isEditable {
-    return self.megaChatMessage->isEditable();
+    return self.megaChatMessage ? self.megaChatMessage->isEditable() : NO;
 }
 
 - (BOOL)isManagementMessage {
-    return self.megaChatMessage->isManagementMessage();
+    return self.megaChatMessage ? self.megaChatMessage->isManagementMessage() : NO;
 }
 
 - (uint64_t)userHandleOfAction {
-    return self.megaChatMessage->getUserHandleOfAction();
+    return self.megaChatMessage ? self.megaChatMessage->getUserHandleOfAction() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (NSInteger)privilege {
-    return self.megaChatMessage->getPrivilege();
+    return self.megaChatMessage ? self.megaChatMessage->getPrivilege() : -2;
 }
 
 - (NSInteger)changes {
-    return self.megaChatMessage->getChanges();
+    return self.megaChatMessage ? self.megaChatMessage->getChanges() : 0x00;
 }
 
 - (NSInteger)code {
-    return self.megaChatMessage->getCode();
+    return self.megaChatMessage ? self.megaChatMessage->getCode() : 0;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatMessageChangeType)changeType {
-    return self.megaChatMessage->hasChanged((int)changeType);
+    return self.megaChatMessage ? self.megaChatMessage->hasChanged((int)changeType) : NO;
 }
 
 @end

@@ -48,19 +48,21 @@ using namespace megachat;
 }
 
 - (NSString *)requestString {
-    return self.megaChatRequest->getRequestString() ? [[NSString alloc] initWithUTF8String:self.megaChatRequest->getRequestString()] : nil;
+    if (!self.megaChatRequest) return nil;
+    const char *ret = self.megaChatRequest->getRequestString();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (NSInteger)tag {
-    return self.megaChatRequest->getTag();
+    return self.megaChatRequest ? self.megaChatRequest->getTag() : 0;
 }
 
 - (long long)number {
-    return self.megaChatRequest->getNumber();
+    return self.megaChatRequest ? self.megaChatRequest->getNumber() : 0;
 }
 
 - (BOOL)isFlag {
-    return self.megaChatRequest->getFlag();
+    return self.megaChatRequest ? self.megaChatRequest->getFlag() : NO;
 }
 
 - (MEGAChatPeerList *)megaChatPeerList {
@@ -68,19 +70,21 @@ using namespace megachat;
 }
 
 - (uint64_t)chatHandle {
-    return self.megaChatRequest->getChatHandle();
+    return self.megaChatRequest ? self.megaChatRequest->getChatHandle() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (uint64_t)userHandle {
-    return self.megaChatRequest->getUserHandle();
+    return self.megaChatRequest ? self.megaChatRequest->getUserHandle() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (NSInteger)privilege {
-    return self.megaChatRequest->getPrivilege();
+    return self.megaChatRequest ? self.megaChatRequest->getPrivilege() : 0;
 }
 
 - (NSString *)text {
-    return self.megaChatRequest ? [[NSString alloc] initWithUTF8String:self.megaChatRequest->getText()] : nil;
+    if (!self.megaChatRequest) return nil;
+    const char *ret = self.megaChatRequest->getText();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 @end

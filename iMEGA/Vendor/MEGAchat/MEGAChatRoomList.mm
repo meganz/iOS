@@ -44,7 +44,7 @@ using namespace megachat;
 }
 
 - (NSInteger)size {
-    return self.megaChatRoomList->size();
+    return self.megaChatRoomList ? self.megaChatRoomList->size() : -1;
 }
 
 - (MEGAChatRoom *)chatRoomAtIndex:(NSUInteger)index {

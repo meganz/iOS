@@ -50,27 +50,29 @@ using namespace megachat;
 }
 
 - (uint64_t)chatId {
-    return self.megaChatListItem->getChatId();
+    return self.megaChatListItem ? self.megaChatListItem->getChatId() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (NSString *)title {
-    return self.megaChatListItem->getTitle() ? [[NSString alloc] initWithUTF8String:self.megaChatListItem->getTitle()] : nil;
+    if (!self.megaChatListItem) return nil;
+    const char *ret = self.megaChatListItem->getTitle();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (MEGAChatListItemChangeType)changes {
-    return (MEGAChatListItemChangeType) self.megaChatListItem->getChanges();
+    return (MEGAChatListItemChangeType) (self.megaChatListItem ? self.megaChatListItem->getChanges() : 0x00);
 }
 
 - (MEGAChatStatus)onlineStatus {
-    return (MEGAChatStatus) self.megaChatListItem->getOnlineStatus();
+    return (MEGAChatStatus) (self.megaChatListItem ? self.megaChatListItem->getOnlineStatus() : 0);
 }
 
 - (NSInteger)visibility {
-    return self.megaChatListItem->getVisibility();
+    return self.megaChatListItem ? self.megaChatListItem->getVisibility() : -1;
 }
 
 - (NSInteger)unreadCount {
-    return self.megaChatListItem->getUnreadCount();
+    return self.megaChatListItem ? self.megaChatListItem->getUnreadCount() : 0;
 }
 
 - (MEGAChatMessage *)lastMessage {
@@ -78,19 +80,19 @@ using namespace megachat;
 }
 
 - (BOOL)isGroup {
-    return self.megaChatListItem->isGroup();
+    return self.megaChatListItem ? self.megaChatListItem->isGroup() : NO;
 }
 
 - (uint64_t)peerHandle {
-    return self.megaChatListItem->getPeerHandle();
+    return self.megaChatListItem ? self.megaChatListItem->getPeerHandle() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (BOOL)isActive {
-    return self.megaChatListItem->isActive();
+    return self.megaChatListItem ? self.megaChatListItem->isActive() : NO;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
-    return self.megaChatListItem->hasChanged((int) changeType);
+    return self.megaChatListItem ? self.megaChatListItem->hasChanged((int) changeType) : NO;
 }
 
 + (NSString *)stringForChangeType:(MEGAChatListItemChangeType)changeType {
