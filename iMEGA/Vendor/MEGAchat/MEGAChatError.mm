@@ -43,11 +43,13 @@ using namespace megachat;
 }
 
 - (MEGAChatErrorType)type {
-    return (MEGAChatErrorType) (self.megaChatError ? self.megaChatError->getErrorCode() : 0);
+    return (MEGAChatErrorType) (self.megaChatError ? self.megaChatError->getErrorCode() : 1);
 }
 
 - (NSString *)name {
-    return self.megaChatError->getErrorString() ? [[NSString alloc] initWithUTF8String:self.megaChatError->getErrorString()] : nil;
+    if (!self.megaChatError) return nil;
+    const char *ret = self.megaChatError->getErrorString();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 @end

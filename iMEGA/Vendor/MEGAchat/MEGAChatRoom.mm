@@ -50,55 +50,61 @@ using namespace megachat;
 }
 
 - (uint64_t)chatId {
-    return self.megaChatRoom->getChatId();
+    return self.megaChatRoom ? self.megaChatRoom->getChatId() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (MEGAChatRoomPrivilege)ownPrivilege {
-    return (MEGAChatRoomPrivilege) self.megaChatRoom->getOwnPrivilege();
+    return (MEGAChatRoomPrivilege) (self.megaChatRoom ?  self.megaChatRoom->getOwnPrivilege() : -2);
 }
 
 - (NSUInteger)peerCount {
-    return self.megaChatRoom->getPeerCount();
+    return self.megaChatRoom ? self.megaChatRoom->getPeerCount() : 0;
 }
 
 - (BOOL)isGroup {
-    return self.megaChatRoom->isGroup();
+    return self.megaChatRoom ? self.megaChatRoom->isGroup() : NO;
 }
 
 - (NSString *)title {
-    return self.megaChatRoom->getTitle() ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getTitle()] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getTitle();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (MEGAChatRoomChangeType)changes {
-    return (MEGAChatRoomChangeType) self.megaChatRoom->getChanges();
+    return (MEGAChatRoomChangeType) ( self.megaChatRoom ? self.megaChatRoom->getChanges() : 0x00);
 }
 
 - (NSInteger)unreadCount {
-    return self.megaChatRoom->getUnreadCount();
+    return self.megaChatRoom ? self.megaChatRoom->getUnreadCount() : 0;
 }
 
 - (MEGAChatStatus)onlineStatus {
-    return (MEGAChatStatus) self.megaChatRoom->getOnlineStatus();
+    return (MEGAChatStatus) (self.megaChatRoom ? self.megaChatRoom->getOnlineStatus() : 0);
 }
 
 - (uint64_t)userTypingHandle {
-    return self.megaChatRoom->getUserTyping();
+    return self.megaChatRoom ? self.megaChatRoom->getUserTyping() : MEGACHAT_INVALID_HANDLE;
 }
 
 - (BOOL)isActive {
-    return self.megaChatRoom->isActive();
+    return self.megaChatRoom ? self.megaChatRoom->isActive() : NO;
 }
 
 - (NSInteger)peerPrivilegeByHandle:(uint64_t)userHande {
-    return self.megaChatRoom->getPeerPrivilegeByHandle(userHande);
+    return self.megaChatRoom ? self.megaChatRoom->getPeerPrivilegeByHandle(userHande) : -2;
 }
 
 - (NSString *)peerFirstnameByHandle:(uint64_t)userHande {
-    return self.megaChatRoom->getPeerFirstnameByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstnameByHandle(userHande)] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getPeerFirstnameByHandle(userHande);
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (NSString *)peerLastnameByHandle:(uint64_t)userHande {
-    return self.megaChatRoom->getPeerLastnameByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastnameByHandle(userHande)] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getPeerLastnameByHandle(userHande);
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (NSString *)peerFullnameByHandle:(uint64_t)userHande {
@@ -112,23 +118,29 @@ using namespace megachat;
 }
 
 - (NSString *)peerEmailByHandle:(uint64_t)userHande {
-    return self.megaChatRoom->getPeerEmailByHandle(userHande) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerEmailByHandle(userHande)] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getPeerEmailByHandle(userHande);
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (uint64_t)peerHandleAtIndex:(NSUInteger)index {
-    return self.megaChatRoom->getPeerHandle((int)index);
+    return self.megaChatRoom ? self.megaChatRoom->getPeerHandle((int)index) : MEGACHAT_INVALID_HANDLE;
 }
 
 - (MEGAChatRoomPrivilege)peerPrivilegeAtIndex:(NSUInteger)index {
-    return (MEGAChatRoomPrivilege) self.megaChatRoom->getPeerPrivilege((int)index);
+    return (MEGAChatRoomPrivilege) (self.megaChatRoom ? self.megaChatRoom->getPeerPrivilege((int)index) : -2);
 }
 
 - (NSString *)peerFirstnameAtIndex:(NSUInteger)index {
-    return self.megaChatRoom->getPeerFirstname((unsigned int)index) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerFirstname((unsigned int)index)] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getPeerFirstname((unsigned int)index);
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (NSString *)peerLastnameAtIndex:(NSUInteger)index {
-    return self.megaChatRoom->getPeerLastname((unsigned int)index) ? [[NSString alloc] initWithUTF8String:self.megaChatRoom->getPeerLastname((unsigned int)index)] : nil;
+    if (!self.megaChatRoom) return nil;
+    const char *ret = self.megaChatRoom->getPeerLastname((unsigned int)index);
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
 }
 
 - (NSString *)peerFullnameAtIndex:(NSUInteger)index {
@@ -142,7 +154,7 @@ using namespace megachat;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatRoomChangeType)changeType {
-    return self.megaChatRoom->hasChanged((int)changeType);
+    return self.megaChatRoom ? self.megaChatRoom->hasChanged((int)changeType) : NO;
 }
 
 + (NSString *)stringForPrivilege:(MEGAChatRoomPrivilege)privilege {
