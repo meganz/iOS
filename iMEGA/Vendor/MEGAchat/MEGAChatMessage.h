@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageReason) {
     MEGAChatMessageReasonPeersChanged  = 1,
     MEGAChatMessageReasonTooOld        = 2,
     MEGAChatMessageReasonGeneralReject = 3,
-    MEGAChatMessageReasonNoWriteAcess  = 4
+    MEGAChatMessageReasonNoWriteAccess  = 4
 };
 
 @interface MEGAChatMessage : NSObject
@@ -50,11 +50,16 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageReason) {
 @property (readonly, nonatomic, getter=isManagementMessage) BOOL managementMessage;
 @property (readonly, nonatomic) uint64_t userHandleOfAction;
 @property (readonly, nonatomic) NSInteger privilege;
-@property (readonly, nonatomic) NSInteger changes;
-@property (readonly, nonatomic) NSInteger code;
+@property (readonly, nonatomic) MEGAChatMessageChangeType changes;
+@property (readonly, nonatomic) MEGAChatMessageReason code;
 
 - (instancetype)clone;
 
 - (BOOL)hasChangedForType:(MEGAChatMessageChangeType)changeType;
+
++ (NSString *)stringForChangeType:(MEGAChatMessageChangeType)changeType;
++ (NSString *)stringForStatus:(MEGAChatMessageStatus)status;
++ (NSString *)stringForType:(MEGAChatMessageType)type;
++ (NSString *)stringForCode:(MEGAChatMessageReason)code;
 
 @end

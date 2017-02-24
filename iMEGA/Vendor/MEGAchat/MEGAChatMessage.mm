@@ -39,8 +39,13 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%ld, index=%ld, user handle=%llu, type=%@, timestamp=%@, content=%@, edited=%@, deleted=%@, editable=%@, management message=%@, userHandleOfAction=%lld, privilege=%ld, changes=%ld>",
-            [self class], self.messageId, self.temporalId, self.status,  self.messageIndex, self.userHandle, @(self.type), self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), @(self.managementMessage), self.userHandleOfAction, (long)self.privilege, self.changes];
+    NSString *status = [MEGAChatMessage stringForStatus:self.status];
+    NSString *type = [MEGAChatMessage stringForType:self.type];
+    NSString *changes = [MEGAChatMessage stringForChangeType:self.changes];
+    NSString *code = [MEGAChatMessage stringForCode:self.code];
+    
+    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, status=%@, index=%ld, user handle=%llu, type=%@, timestamp=%@, content=%@, edited=%@, deleted=%@, editable=%@, management message=%@, userHandleOfAction=%lld, privilege=%ld, changes=%@, code=%@>",
+            [self class], self.messageId, self.temporalId, status,  self.messageIndex, self.userHandle, type, self.timestamp, self.content, @(self.edited), @(self.deleted), @(self.editable), @(self.managementMessage), self.userHandleOfAction, (long)self.privilege, changes, code];
 }
 
 - (MEGAChatMessageStatus)status {
@@ -101,16 +106,121 @@ using namespace megachat;
     return self.megaChatMessage ? self.megaChatMessage->getPrivilege() : -2;
 }
 
-- (NSInteger)changes {
-    return self.megaChatMessage ? self.megaChatMessage->getChanges() : 0x00;
+- (MEGAChatMessageChangeType)changes {
+    return (MEGAChatMessageChangeType) (self.megaChatMessage ? self.megaChatMessage->getChanges() : 0x00);
 }
 
-- (NSInteger)code {
-    return self.megaChatMessage ? self.megaChatMessage->getCode() : 0;
+- (MEGAChatMessageReason)code {
+    return (MEGAChatMessageReason) (self.megaChatMessage ? self.megaChatMessage->getCode() : 0);
 }
 
 - (BOOL)hasChangedForType:(MEGAChatMessageChangeType)changeType {
     return self.megaChatMessage ? self.megaChatMessage->hasChanged((int)changeType) : NO;
+}
+
++ (NSString *)stringForChangeType:(MEGAChatMessageChangeType)changeType {
+    NSString *result;
+    switch (changeType) {
+        case MEGAChatMessageChangeTypeStatus:
+            result = @"Status";
+            break;
+        case MEGAChatMessageChangeTypeContent:
+            result = @"Content";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+}
++ (NSString *)stringForStatus:(MEGAChatMessageStatus)status {
+    NSString *result;
+    switch (status) {
+        case MEGAChatMessageStatusUnknown:
+            result = @"Unknown";
+            break;
+        case MEGAChatMessageStatusSending:
+            result = @"Sending";
+            break;
+        case MEGAChatMessageStatusSendingManual:
+            result = @"Sending manual";
+            break;
+        case MEGAChatMessageStatusServerReceived:
+            result = @"Server received";
+            break;
+        case MEGAChatMessageStatusServerRejected:
+            result = @"Server rejected";
+            break;
+        case MEGAChatMessageStatusDelivered:
+            result = @"Delivered";
+            break;
+        case MEGAChatMessageStatusNotSeen:
+            result = @"Not seen";
+            break;
+        case MEGAChatMessageStatusSeen:
+            result = @"Seen";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+    
+}
+
++ (NSString *)stringForType:(MEGAChatMessageType)type {
+    NSString *result;
+    switch (type) {
+        case MEGAChatMessageTypeUnknown:
+            result = @"Unknown";
+            break;
+        case MEGAChatMessageTypeNormal:
+            result = @"Normal";
+            break;
+        case MEGAChatMessageTypeAlterParticipants:
+            result = @"Alter participants";
+            break;
+        case MEGAChatMessageTypeTruncate:
+            result = @"Truncate";
+            break;
+        case MEGAChatMessageTypePrivilegeChange:
+            result = @"Privilege change";
+            break;
+        case MEGAChatMessageTypeChatTitle:
+            result = @"Chat title";
+            break;
+        case MEGAChatMessageTypeUserMessage:
+            result = @"User message";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+}
+
++ (NSString *)stringForCode:(MEGAChatMessageReason)code {
+    NSString *result;
+    switch (code) {
+        case MEGAChatMessageReasonPeersChanged:
+            result = @"Peers changed";
+            break;
+        case MEGAChatMessageReasonTooOld:
+            result = @"Too old";
+            break;
+        case MEGAChatMessageReasonGeneralReject:
+            result = @"General reject";
+            break;
+        case MEGAChatMessageReasonNoWriteAccess:
+            result = @"No write access";
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
 }
 
 @end
