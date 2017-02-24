@@ -389,11 +389,11 @@
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return [NSString stringWithFormat:@"%llu", [[[MEGASdkManager sharedMEGASdk] myUser] handle]];
+    return [NSString stringWithFormat:@"%llu", [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]];
 }
 
 - (NSString *)senderDisplayName {
-    return [[[MEGASdkManager sharedMEGASdk] myUser] email];
+    return [[MEGASdkManager sharedMEGAChatSdk] myEmail];
 }
 
 - (BOOL)isOutgoingMessage:(MEGAMessage *)messageItem {
@@ -740,7 +740,7 @@
         [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
         [self.indexesMessages insertObject:[NSNumber numberWithInteger:message.messageIndex] atIndex:0];
         
-        if (!self.areAllMessagesSeen && message.userHandle != [[[MEGASdkManager sharedMEGASdk] myUser] handle]) {
+        if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
                     self.areAllMessagesSeen = YES;
@@ -776,7 +776,6 @@
     [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
-        MEGALogInfo(@"Message update: change status");
         if (message.status == MEGAChatMessageStatusServerReceived) {
             [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
             [self finishSendingMessageAnimated:YES];
@@ -785,10 +784,8 @@
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeContent]) {
         if (message.isDeleted) {
-            MEGALogInfo(@"Message update (delete): change content.");
             [self.collectionView reloadData];
         } else if (message.isEdited) {
-            MEGALogInfo(@"Message update (edit): change content: %@", message.content);
             [self.collectionView reloadData];
             [self scrollToBottomAnimated:YES];
         }
