@@ -12,13 +12,15 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageStatus) {
 };
 
 typedef NS_ENUM(NSInteger, MEGAChatMessageType) {
-    MEGAChatMessageTypeUnknown           = -1,
+    MEGAChatMessageTypeInvalid           = 0,
     MEGAChatMessageTypeNormal            = 1,
     MEGAChatMessageTypeAlterParticipants = 2,
     MEGAChatMessageTypeTruncate          = 3,
     MEGAChatMessageTypePrivilegeChange   = 4,
     MEGAChatMessageTypeChatTitle         = 5,
-    MEGAChatMessageTypeUserMessage       = 16
+    MEGAChatMessageTypeAttachment        = 16,
+    MEGAChatMessageTypeRevoke            = 17,
+    MEGAChatMessageTypeContact           = 18
 };
 
 typedef NS_ENUM(NSInteger, MEGAChatMessageChangeType) {

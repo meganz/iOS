@@ -75,10 +75,6 @@ using namespace megachat;
     return self.megaChatListItem ? self.megaChatListItem->getUnreadCount() : 0;
 }
 
-- (MEGAChatMessage *)lastMessage {
-    return self.megaChatListItem->getLastMessage() ? [[MEGAChatMessage alloc] initWithMegaChatMessage:self.megaChatListItem->getLastMessage()->copy() cMemoryOwn:YES] : nil;
-}
-
 - (BOOL)isGroup {
     return self.megaChatListItem ? self.megaChatListItem->isGroup() : NO;
 }
@@ -89,6 +85,24 @@ using namespace megachat;
 
 - (BOOL)isActive {
     return self.megaChatListItem ? self.megaChatListItem->isActive() : NO;
+}
+
+- (NSString *)lastMessage {
+    if (!self.megaChatListItem) return nil;
+    const char *ret = self.megaChatListItem->getLastMessage();
+    return ret ? [[NSString alloc] initWithUTF8String:ret] : nil;
+}
+
+- (MEGAChatMessageType)lastMessageType {
+    return (MEGAChatMessageType) (self.megaChatListItem ? self.megaChatListItem->getLastMessageType() : 0);
+}
+
+- (uint64_t)lastMessageSender {
+    return self.megaChatListItem ? self.megaChatListItem->getLastMessageSender() : MEGACHAT_INVALID_HANDLE;
+}
+
+- (NSDate *)lastMessageDate {
+    return self.megaChatListItem ? [[NSDate alloc] initWithTimeIntervalSince1970:self.megaChatListItem->getLastTimestamp()] : nil;
 }
 
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType {
