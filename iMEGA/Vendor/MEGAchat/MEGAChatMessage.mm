@@ -69,7 +69,7 @@ using namespace megachat;
 }
 
 - (MEGAChatMessageType)type {
-    return (MEGAChatMessageType) (self.megaChatMessage ? self.megaChatMessage->getType() : -2);
+    return (MEGAChatMessageType) (self.megaChatMessage ? self.megaChatMessage->getType() : 0);
 }
 
 - (NSDate *)timestamp {
@@ -173,8 +173,8 @@ using namespace megachat;
 + (NSString *)stringForType:(MEGAChatMessageType)type {
     NSString *result;
     switch (type) {
-        case MEGAChatMessageTypeUnknown:
-            result = @"Unknown";
+        case MEGAChatMessageTypeInvalid:
+            result = @"Invalid";
             break;
         case MEGAChatMessageTypeNormal:
             result = @"Normal";
@@ -191,8 +191,14 @@ using namespace megachat;
         case MEGAChatMessageTypeChatTitle:
             result = @"Chat title";
             break;
-        case MEGAChatMessageTypeUserMessage:
-            result = @"User message";
+        case MEGAChatMessageTypeAttachment:
+            result = @"Attachment";
+            break;
+        case MEGAChatMessageTypeRevoke:
+            result = @"Revoke";
+            break;
+        case MEGAChatMessageTypeContact:
+            result = @"Contact";
             break;
             
         default:
