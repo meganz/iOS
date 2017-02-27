@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "MEGAChatMessage.h"
 
 typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeStatus       = 0x01,

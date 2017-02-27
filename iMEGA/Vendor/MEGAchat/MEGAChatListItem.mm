@@ -133,6 +133,9 @@ using namespace megachat;
         case MEGAChatListItemChangeTypeLastMsg:
             result = @"Last message";
             break;
+        case MEGAChatListItemChangeTypeLastTs:
+            result = @"Last timestamp";
+            break;
             
         default:
             result = @"Default";
