@@ -44,9 +44,10 @@ using namespace megachat;
     NSString *active       = self.isActive ? @"YES" : @"NO";
     NSString *group        = self.isGroup ? @"YES" : @"NO";
     NSString *visibility   = [MEGAChatListItem stringForVisibility:self.visibility];
+    NSString *type         = [MEGAChatListItem stringForMessageType:self.lastMessageType];
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@ changes=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
-            [self class], self.chatId, self.title, onlineStatus, changes, visibility, (long)self.unreadCount, group, active];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@, changes=%@, last message=%@, last date=%@, last type=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
+            [self class], self.chatId, self.title, onlineStatus, changes, self.lastMessage, self.lastMessageDate, type, visibility, (long)self.unreadCount, group, active];
 }
 
 - (uint64_t)chatId {
@@ -193,6 +194,46 @@ using namespace megachat;
             break;
     }
     return result;
+}
+
++ (NSString *)stringForMessageType:(MEGAChatMessageType)type {
+    NSString *result;
+    
+    switch (type) {
+        case MEGAChatMessageTypeInvalid:
+            result = @"Invalid";
+            break;
+        case MEGAChatMessageTypeNormal:
+            result = @"Normal";
+            break;
+        case MEGAChatMessageTypeAlterParticipants:
+            result = @"Alter participants";
+            break;
+        case MEGAChatMessageTypeTruncate:
+            result = @"Truncate";
+            break;
+        case MEGAChatMessageTypePrivilegeChange:
+            result = @"Privilege change";
+            break;
+        case MEGAChatMessageTypeChatTitle:
+            result = @"Chat title";
+            break;
+        case MEGAChatMessageTypeAttachment:
+            result = @"Attachment";
+            break;
+        case MEGAChatMessageTypeRevoke:
+            result = @"Revoke";
+            break;
+        case MEGAChatMessageTypeContact:
+            result = @"Contact";
+            break;
+            
+        default:
+            result = @"Default";
+            break;
+    }
+    return result;
+
 }
 
 @end
