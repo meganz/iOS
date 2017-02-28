@@ -91,11 +91,11 @@
     return [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0];
 }
 
-#pragma mark - Pink
-
 + (UIColor *)mnz_redFF333A {
     return [UIColor colorWithRed:255.0f / 255.0f green:51.0f / 255.0f blue:58.0f / 255.0f alpha:1.0f];
 }
+
+#pragma mark - Pink
 
 + (UIColor *)mnz_pinkFF1A53 {
     return [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0];
