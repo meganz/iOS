@@ -88,8 +88,8 @@
         }
         
         self.chatListItemArray = [[self.chatListItemArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSDate *first  = [[(MEGAChatListItem *)a lastMessage] timestamp];
-            NSDate *second = [[(MEGAChatListItem *)b lastMessage] timestamp];
+            NSDate *first  = [(MEGAChatListItem *)a lastMessageDate];
+            NSDate *second = [(MEGAChatListItem *)b lastMessageDate];
             
             if (!first) {
                 first = [NSDate dateWithTimeIntervalSince1970:0];
@@ -304,6 +304,17 @@
     }
 }
 
+- (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
+    if (item.lastMessageType == MEGAChatMessageTypeInvalid) {
+        cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+        cell.chatLastTime.hidden = YES;
+    } else {
+        cell.chatLastMessage.text = item.lastMessage;
+        cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
+        cell.chatLastTime.hidden = NO;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -398,14 +409,8 @@
     MEGALogInfo(@"%@", chatListItem);
     
     cell.chatTitle.text = chatListItem.title;
+    [self updateCell:cell forChatListItem:chatListItem];
     
-    if (chatListItem.lastMessage.isManagementMessage) {
-        //TODO: After #5744 is resolved, show the last text message content
-        cell.chatLastMessage.text = @"Management Message";
-    } else {
-        cell.chatLastMessage.text = chatListItem.lastMessage.content;
-    }
-    cell.chatLastTime.text = chatListItem.lastMessage.timestamp.shortTimeAgoSinceNow;
     if (chatListItem.isGroup) {
         cell.onlineStatusView.hidden = YES;
         UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont fontWithName:@"SFUIText-Light" size:(cell.avatarImageView.frame.size.width/2)]];
@@ -620,28 +625,21 @@
                     cell.chatTitle.text = item.title;
                     break;
                     
-                case MEGAChatListItemChangeTypeClosed: {
+                case MEGAChatListItemChangeTypeClosed:
                     [self deleteRowByChatId:item.chatId];
                     break;
-                }
                     
-                case MEGAChatListItemChangeTypeLastMsg: {
-                    if (item.lastMessage.isManagementMessage) {
-                        //TODO: After #5744 is resolved, show the last text message content
-                        cell.chatLastMessage.text = @"Management Message";
-                    } else {
-                        cell.chatLastMessage.text = item.lastMessage.content;
-                    }
-                    cell.chatLastTime.text = item.lastMessage.timestamp.shortTimeAgoSinceNow;
+                case MEGAChatListItemChangeTypeLastMsg:
+                case MEGAChatListItemChangeTypeLastTs:
+                    [self updateCell:cell forChatListItem:item];
                     break;
-                }
                     
                 default:
                     break;
             }
         }
         
-        if (item.changes == MEGAChatListItemChangeTypeLastMsg) {
+        if (item.changes == MEGAChatListItemChangeTypeLastTs) {
             if ([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]] != NSOrderedSame) {
                 [self moveRowByChatListItem:item];
             }

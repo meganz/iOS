@@ -140,8 +140,16 @@
                     break;
                 }
                     
-                case MEGAChatMessageTypeUserMessage:
-                    _text = [NSString stringWithFormat:@"%llu, %ld", message.userHandleOfAction, message.privilege];
+                case MEGAChatMessageTypeAttachment:
+                    _text = @"MEGAChatMessageTypeAttachment";
+                    break;
+                    
+                case MEGAChatMessageTypeRevoke:
+                    _text = @"MEGAChatMessageTypeRevoke";
+                    break;
+                    
+                case MEGAChatMessageTypeContact:
+                    _text = @"MEGAChatMessageTypeContact";
                     break;
                     
                 default:

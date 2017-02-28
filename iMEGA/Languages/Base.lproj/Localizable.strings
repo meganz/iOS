@@ -976,3 +976,5 @@
 "isTyping"="%@ is typing ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Write a message...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="No conversation history";
