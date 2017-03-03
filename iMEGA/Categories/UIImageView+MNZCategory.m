@@ -14,7 +14,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
         self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
-        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForBase64UserHandle:base64Handle];
+        NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
         NSString *initialsForAvatar = nil;
         if (user) {
