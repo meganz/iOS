@@ -38,7 +38,7 @@
     self.nameLabel.text = self.chatRoom.title;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
-    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont fontWithName:@"SFUIText-Light" size:(avatarSize.width/2)]];
+    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUILightWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     self.emailLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
     
@@ -196,7 +196,7 @@
                     cell.nameLabel.text = AMLocalizedString(@"notifications", nil);
                 } else if (indexPath.row == 1) {
                     cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
+                    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
                     cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"leaveGroup", @"") attributes:attributes];
                 }
                 break;
@@ -232,7 +232,7 @@
                         } else if (indexPath.row == 4) {
                             text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         }
-                        NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
+                        NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
                         cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
                         break;
                     }

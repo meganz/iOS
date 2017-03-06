@@ -191,7 +191,7 @@
             
             NSInteger redRowsFrom = 2;
             if (indexPath.row > redRowsFrom) {
-                cell.nameLabel.font = [UIFont fontWithName:@"SFUIText-Regular" size:17.0];
+                cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
                 cell.nameLabel.textColor = [UIColor mnz_redD90007];
             }
         }

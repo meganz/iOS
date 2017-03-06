@@ -280,7 +280,7 @@
     NSString *languageID = [Helper languageID:row];
     NSString *titleForRow = [languagesDictionary objectForKey:languageID];
     NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(titleForRow, nil)];
-    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:20.0] range:[titleForRow rangeOfString:titleForRow]];
+    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUILightWithSize:20.0f] range:[titleForRow rangeOfString:titleForRow]];
     return mutableAttributedString;
 }
 

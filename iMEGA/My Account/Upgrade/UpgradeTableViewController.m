@@ -29,8 +29,8 @@
     self.title = AMLocalizedString(@"upgradeAccount", @"Upgrade account");
     [_choosePlanLabel setText:AMLocalizedString(@"choosePlan", nil)];
     
-    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:12.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
-    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money") attributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:12.0], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
+    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown under the yearly plan to explain that if you select this kind of membership you will save two months money") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     
@@ -111,17 +111,17 @@
             break;
     }
     
-    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *storageSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
-    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Space")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [storageSizeString appendAttributedString:storageString];
     
     [cell.productStorageLabel setAttributedText:storageSizeString];
     
-    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *bandwidthSizeString = [[NSMutableAttributedString alloc] initWithString:[NSByteCountFormatter stringFromByteCount:((long long)[[MEGAPurchase sharedInstance].pricing transferGBAtProductIndex:indexPath.row * 2] * TOBYTES) countStyle:NSByteCountFormatterCountStyleMemory] attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
-    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwidth")] attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:12.0], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productBandwidth", @"Bandwich related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [bandwidthSizeString appendAttributedString:bandwidthString];
     

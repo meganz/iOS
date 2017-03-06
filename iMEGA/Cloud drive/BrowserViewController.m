@@ -61,10 +61,10 @@
     }
     
     [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     
     [_toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"newFolder", @"New Folder")];
-    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0]} forState:UIControlStateNormal];
+    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:17.0f]} forState:UIControlStateNormal];
     
     [self setupBrowser];
 }
@@ -112,7 +112,7 @@
     switch (self.browserAction) {
         case BrowserActionCopy: {
             [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"copy", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarCopyBarButtonItem];
@@ -122,7 +122,7 @@
             
         case BrowserActionMove: {
             [_toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
-            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarMoveBarButtonItem];
@@ -133,7 +133,7 @@
         case BrowserActionImport:
         case BrowserActionImportFromFolderLink: {
             [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]}  forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}  forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarCopyBarButtonItem];
@@ -148,7 +148,7 @@
             
         case BrowserActionSelectFolderToShare: {
             [_toolBarShareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
-            [self.toolBarShareFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarShareFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarShareFolderBarButtonItem];
@@ -158,7 +158,7 @@
             
         case BrowserActionOpenIn: {
             [_toolBarSaveInMegaBarButtonItem setTitle:AMLocalizedString(@"upload", nil)];
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarSaveInMegaBarButtonItem];
@@ -639,7 +639,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

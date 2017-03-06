@@ -85,7 +85,7 @@
     self.managementBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayF5F5F5]];
 
     self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
-    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont fontWithName:kFont size:14.0f];
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUILightWithSize:14.0f];
     
     [self customToolbarContentView];
     
@@ -147,7 +147,7 @@
             label = [Helper customNavigationBarLabelWithTitle:title subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
         } else {
             NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
-            [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFont size:18.0f] range:[title rangeOfString:title]];
+            [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUILightWithSize:18.0f] range:[title rangeOfString:title]];
             [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
             label.textAlignment = NSTextAlignmentCenter;
             label.attributedText = titleMutableAttributedString;
@@ -442,7 +442,7 @@
     
     if (showDayMonthYear) {
         NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
         return dateAttributedString;
     }
     
@@ -489,7 +489,7 @@
             topCellString = hour;
         }
         
-        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
+        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
     }
     
     return nil;
@@ -499,7 +499,7 @@
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     if (megaMessage.isEdited) {
         NSString *editedString = AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.");
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:editedString attributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:editedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}];
         return dateAttributedString;
     }
     
@@ -521,10 +521,10 @@
     MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
     
     if (megaMessage.isDeleted) {
-        cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0f];
+        cell.textView.font = [UIFont mnz_SFUILightWithSize:14.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (megaMessage.isManagementMessage) {
-        cell.textView.font = [UIFont fontWithName:@"SFUIText-Light" size:11.0f];
+        cell.textView.font = [UIFont mnz_SFUILightWithSize:11.0f];
         cell.textView.textColor = [UIColor mnz_black333333];
     } else if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
