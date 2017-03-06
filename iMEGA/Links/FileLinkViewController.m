@@ -55,9 +55,7 @@
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     if (self.fileLinkMode == FileLinkModeDefault) {
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-        [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-        [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+        [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:17.0f]} forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
         
         [self setUIItemsHidden:YES];

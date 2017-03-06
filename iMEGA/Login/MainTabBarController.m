@@ -139,7 +139,7 @@
             [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
             [cell setSelectedBackgroundView:view];
             
-            [cell.textLabel setFont:[UIFont fontWithName:@"SFUIText-Regular" size:18.0]];
+            cell.textLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
         }
     }
     

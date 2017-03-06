@@ -53,7 +53,7 @@
     [self.searchController.searchBar sizeToFit];
     
     UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont fontWithName:@"SFUIText-Light" size:14.0];
+    searchTextField.font = [UIFont mnz_SFUILightWithSize:14.0f];
     searchTextField.textColor = [UIColor mnz_gray999999];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -141,7 +141,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -174,7 +174,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Light" size:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:20.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -413,7 +413,7 @@
     
     if (chatListItem.isGroup) {
         cell.onlineStatusView.hidden = YES;
-        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont fontWithName:@"SFUIText-Light" size:(cell.avatarImageView.frame.size.width/2)]];
+        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUILightWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
         
         cell.avatarImageView.image = avatar;
     } else {

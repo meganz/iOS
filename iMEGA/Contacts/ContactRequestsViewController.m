@@ -190,7 +190,7 @@
             
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(cell.avatarImageView.frame.size.width/2)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUILightWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
@@ -202,7 +202,7 @@
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(cell.avatarImageView.frame.size.width/2)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUILightWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;
@@ -242,7 +242,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

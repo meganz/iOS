@@ -173,11 +173,11 @@
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:kFont size:20.0]
+                                             value:[UIFont mnz_SFUILightWithSize:20.0f]
                                              range:firstPartRange];
     
     [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont fontWithName:kFont size:12.0]
+                                              value:[UIFont mnz_SFUILightWithSize:12.0f]
                                               range:secondPartRange];
     
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];

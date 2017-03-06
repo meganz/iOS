@@ -17,8 +17,6 @@
 #define kLastUploadVideoDate @"LastUploadVideoDate"
 #define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
-#define kFont @"SFUIText-Light"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,

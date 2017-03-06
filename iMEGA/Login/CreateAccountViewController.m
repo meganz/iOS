@@ -45,7 +45,7 @@
     
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
+        self.termsOfServiceButton.titleLabel.font = [UIFont mnz_SFUILightWithSize:11.0f];
     }
     
     self.createAccountButton.layer.cornerRadius = 4.0f;
