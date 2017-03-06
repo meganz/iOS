@@ -317,6 +317,8 @@
     if (tableView.isEditing) {
         [self.selectedNodesArray addObject:node];
         
+        [self updateNavigationBarTitle];
+        
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
         
         [self setToolbarActionsEnabled:YES];
@@ -497,6 +499,8 @@
                 [self.selectedNodesArray removeObject:n];
             }
         }
+        
+        [self updateNavigationBarTitle];
         
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
         
@@ -852,15 +856,7 @@
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             }
             
-            if ([self.parentNode type] == MEGANodeTypeRoot) {
-                [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
-            } else {
-                if (!self.parentNode) {
-                    [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Cloud drive")];
-                } else {
-                    [self.navigationItem setTitle:[self.parentNode name]];
-                }
-            }
+            [self updateNavigationBarTitle];
             
             //Sort configuration by default is "default ascending"
             if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
@@ -876,11 +872,7 @@
         }
             
         case DisplayModeRubbishBin: {
-            if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                [self.navigationItem setTitle:AMLocalizedString(@"rubbishBinLabel", @"Rubbish bin")];
-            } else {
-                [self.navigationItem setTitle:[self.parentNode name]];
-            }
+            [self updateNavigationBarTitle];
             
             self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
             
@@ -1172,6 +1164,47 @@
     [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
 }
 
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.tableView.isEditing) {
+        NSNumber *selectedNodesCount = [NSNumber numberWithUnsignedInteger:self.selectedNodesArray.count];
+        if (selectedNodesCount.unsignedIntegerValue == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (selectedNodesCount.integerValue <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount.unsignedIntegerValue] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount.unsignedIntegerValue];
+        }
+    } else {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                if ([self.parentNode type] == MEGANodeTypeRoot) {
+                    navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                } else {
+                    if (!self.parentNode) {
+                        navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                    } else {
+                        navigationTitle = [self.parentNode name];
+                    }
+                }
+                break;
+            }
+                
+            case DisplayModeRubbishBin: {
+                if ([self.parentNode type] == MEGANodeTypeRubbish) {
+                    navigationTitle = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+                } else {
+                    navigationTitle = [self.parentNode name];
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1191,6 +1224,10 @@
         [self toolbarActionsForNodeArray:self.selectedNodesArray];
     } else {
         allNodesSelected = NO;
+    }
+    
+    if (self.displayMode == DisplayModeCloudDrive) {
+        [self updateNavigationBarTitle];
     }
     
     if (self.selectedNodesArray.count == 0) {
@@ -1273,11 +1310,13 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    [self updateNavigationBarTitle];
+    
     if (editing) {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
         self.navigationItem.rightBarButtonItems = @[self.negativeSpaceBarButtonItem, self.editBarButtonItem];
         if (!isSwipeEditing) {
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+            self.navigationItem.leftBarButtonItems = @[self.negativeSpaceBarButtonItem, self.selectAllBarButtonItem];
         }
     } else {
         [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
