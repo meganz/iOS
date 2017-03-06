@@ -984,3 +984,7 @@
 "isTyping"="%@ está escribiendo ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escribir un mensaje...";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Reintentar";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Eliminar mensaje";
