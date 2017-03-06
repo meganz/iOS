@@ -498,6 +498,14 @@
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder left";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Share";
+/* Select all items/elements on the list */
+"selectAll"="Select All";
+/*  */
+"oneContact"="1 contact";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Share folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
