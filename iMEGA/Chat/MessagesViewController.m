@@ -15,8 +15,7 @@
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
 
-@property (nonatomic, strong) NSMutableArray *indexesMessages;
-@property (nonatomic, strong) NSMutableDictionary *messagesDictionary;
+@property (nonatomic, strong) NSMutableArray *messages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -25,7 +24,6 @@
 @property (nonatomic, strong) MEGAMessage *editMessage;
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
-@property (nonatomic, assign) BOOL areMessagesLoaded;
 @property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
@@ -41,8 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.indexesMessages = [[NSMutableArray alloc] init];
-    self.messagesDictionary = [[NSMutableDictionary alloc] init];
+    _messages = [[NSMutableArray alloc] init];
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -113,7 +110,6 @@
 #pragma mark - Private methods
 
 - (void)loadMessages {
-    self.areMessagesLoaded = NO;
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:16];
     switch (loadMessage) {
         case 0:
@@ -202,17 +198,17 @@
 
 - (BOOL)showHourForMessage:(MEGAMessage *)message withIndexPath:(NSIndexPath *)indexPath {
     BOOL showHour = NO;
-    MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item - 1)]];
+    MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
     if ([message.senderId isEqualToString:previousMessage.senderId]) {
         if ([self showHourBetweenDate:message.date previousDate:previousMessage.date]) {
             showHour = YES;
         } else {
             //TODO: Improve algorithm it has some issues when going back on the messages history
-            NSUInteger count = self.indexesMessages.count;
+            NSUInteger count = self.messages.count;
             for (NSUInteger i = 1; i < count; i++) {
                 NSInteger index = (indexPath.item - (i + 1));
                 if (index > 0) {
-                    MEGAMessage *messagePriorToThePreviousOne = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:index]];
+                    MEGAMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
                     if (messagePriorToThePreviousOne.index < 0) {
                         break;
                     }
@@ -347,18 +343,17 @@
     
     // [JSQSystemSoundPlayer jsq_playMessageSentSound];
 
-    //TODO: Add the message here instead in the callback. Problem we have not the index of the message
-//    MEGAMessage *message = [[MEGAMessage alloc] initWithSenderId:senderId
-//                                              senderDisplayName:senderDisplayName
-//                                                           date:date
-//                                                           text:text];
     if (!self.editMessage) {
-        [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
+        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
+        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        [self.messages addObject:megaMessage];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        NSUInteger index = [self.messages indexOfObject:self.editMessage];
+        [self.messages replaceObjectAtIndex:index withObject:megaMessage];
+        self.editMessage = nil;
     }
-    self.editMessage = nil;
-//    [self.indexesMessages addObject:message];
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -404,16 +399,16 @@
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
     return megaMessage;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath {
-    [self.indexesMessages removeObjectAtIndex:indexPath.item];
+    [self.messages removeObjectAtIndex:indexPath.item];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.isManagementMessage || message.isDeleted) {
         return self.managementBubbleImageData;
     }
@@ -431,12 +426,12 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
     } else if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item -1)]];
+        MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item -1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }
     
@@ -451,7 +446,7 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
@@ -496,7 +491,7 @@
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
     if (megaMessage.isEdited) {
         NSString *editedString = AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.");
         NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:editedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}];
@@ -509,16 +504,18 @@
 #pragma mark - UICollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.indexesMessages count];
+    return self.messages.count;
 }
 
-- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {    
+- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 8 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
         [self loadMessages];
     }
     
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
+    
+    cell.accessoryButton.hidden = YES;
     
     if (megaMessage.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUILightWithSize:14.0f];
@@ -529,12 +526,20 @@
     } else if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
-        cell.textView.textColor = [UIColor mnz_black333333];
+        
+        if (megaMessage.status == MEGAChatMessageStatusSending || megaMessage.status == MEGAChatMessageStatusSendingManual) {
+            cell.textView.textColor = [UIColor mnz_black333333_02];
+            if (megaMessage.status == MEGAChatMessageStatusSendingManual) {
+                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
+                cell.accessoryButton.hidden = NO;
+            }
+        } else {
+            cell.textView.textColor = [UIColor mnz_black333333];
+        }
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     }
     
-    cell.accessoryButton.hidden = YES;
     return cell;
 }
 
@@ -579,13 +584,13 @@
 #pragma mark - Custom menu items
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
     
     if (action == @selector(copy:)) {
         return YES;
     }
     
-    if (!megaMessage.isEditable) {
+    if (!megaMessage.isEditable || megaMessage.status == MEGAChatMessageStatusSending || megaMessage.status == MEGAChatMessageStatusSendingManual) {
         return NO;
     }
     
@@ -600,14 +605,16 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
     if (action == @selector(editAction:megaMessage:)) {
         [self editAction:sender megaMessage:megaMessage];
         return;
     }
     
     if (action == @selector(delete:)) {
-        [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
+        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
+        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        [self.messages replaceObjectAtIndex:indexPath.item withObject:megaMessage];
     }
     
     if (action != @selector(delete:)) {
@@ -627,12 +634,12 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
     } else if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:(indexPath.item - 1)]];
+        MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }
     
@@ -649,7 +656,7 @@
     if (indexPath.item == 0) {
         showMessageBubleTopLabel = YES;
     } else {
-        MEGAMessage *message = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+        MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
         if (message.isManagementMessage) {
             showMessageBubleTopLabel = YES;
         } else {
@@ -666,7 +673,7 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messagesDictionary objectForKey:[self.indexesMessages objectAtIndex:indexPath.item]];
+    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
     if (megaMessage.isEdited) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
@@ -706,7 +713,26 @@
 #pragma mark - JSQMessagesViewAccessoryDelegate methods
 
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
-    NSLog(@"Tapped accessory button!");
+    __block MEGAMessage *megaMessage = [self.messages objectAtIndex:path.item];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"retry tapped"); // sent message + discard || delete
+        [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
+        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:megaMessage.text];
+        megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        [self.messages replaceObjectAtIndex:path.item withObject:megaMessage];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
+        [self.messages removeObjectAtIndex:path.item];
+        [self.collectionView deleteItemsAtIndexPaths:@[path]];
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITextViewDelegate
@@ -726,8 +752,7 @@
     MEGALogInfo(@"onMessageReceived %@", message);
     MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
     
-    [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
-    [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
+    [self.messages addObject:megaMessage];
     [self finishReceivingMessage];
     [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
 }
@@ -737,8 +762,7 @@
     
     if (message) {
         MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-        [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
-        [self.indexesMessages insertObject:[NSNumber numberWithInteger:message.messageIndex] atIndex:0];
+        [self.messages insertObject:megaMessage atIndex:0];
         
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
@@ -751,8 +775,6 @@
                 self.areAllMessagesSeen = YES;
             }
         }
-
-        
     } else {
         if (self.isFirstLoad) {
             [self.collectionView reloadData];
@@ -765,7 +787,6 @@
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentSize.height - oldContentOffsetFromBottomY);
             self.collectionView.contentOffset = newContentOffset;
         }
-        self.areMessagesLoaded = YES;
     }
 }
 
@@ -773,12 +794,35 @@
     MEGALogInfo(@"onMessageUpdate %@", message);
     
     MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-    [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
-        if (message.status == MEGAChatMessageStatusServerReceived) {
-            [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
-            [self finishSendingMessageAnimated:YES];
+        switch (message.status) {
+            case MEGAChatMessageStatusUnknown:
+                break;
+            case MEGAChatMessageStatusSending:
+                break;
+            case MEGAChatMessageStatusSendingManual:
+                break;
+            case MEGAChatMessageStatusServerReceived: {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
+                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                [self.messages replaceObjectAtIndex:index withObject:megaMessage];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                break;
+            }
+            case MEGAChatMessageStatusServerRejected:
+                break;
+            case MEGAChatMessageStatusDelivered:
+                break;
+            case MEGAChatMessageStatusNotSeen:
+                break;
+            case MEGAChatMessageStatusSeen:
+                break;
+                
+            default:
+                break;
         }
     }
     
@@ -791,10 +835,8 @@
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {
-            [self.messagesDictionary removeAllObjects];
-            [self.indexesMessages removeAllObjects];
-            [self.indexesMessages addObject:[NSNumber numberWithInteger:message.messageIndex]];
-            [self.messagesDictionary setObject:megaMessage forKey:[NSNumber numberWithInteger:message.messageIndex]];
+            [self.messages removeAllObjects];
+            [self.messages addObject:megaMessage];
             [self.collectionView reloadData];
         }
     }

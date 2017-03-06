@@ -6,7 +6,6 @@
 @interface MEGAMessage : NSObject <JSQMessageData>
 
 NS_ASSUME_NONNULL_BEGIN
-@property (nonatomic, readonly) uint64_t messageId;
 @property (copy, nonatomic, readonly) NSString *senderId;
 @property (copy, nonatomic, readonly) NSString *senderDisplayName;
 @property (copy, nonatomic, readonly) NSDate *date;
@@ -16,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Mega additions
 
+@property (nonatomic, readonly) uint64_t messageId;
+@property (nonatomic, readonly) uint64_t temporalId;
 @property (nonatomic, readonly) uint64_t userHandle;
 @property (nonatomic, readonly) NSInteger index;
 @property (assign, nonatomic, readonly, getter=isEditable) BOOL editable;
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic, readonly, getter=isDeleted) BOOL deleted;
 @property (assign, nonatomic, readonly, getter=isManagementMessage) BOOL managementMessage;
 @property (nonatomic, readonly) MEGAChatMessageType type;
+@property (nonatomic, readonly) MEGAChatMessageStatus status;
 
 #pragma mark - Initialization
 

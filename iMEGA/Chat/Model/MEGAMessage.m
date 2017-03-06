@@ -12,6 +12,7 @@
     if (self) {
         _userHandle = message.userHandle;
         _messageId  = message.messageId;
+        _temporalId = message.temporalId;
         _senderId   = [NSString stringWithFormat:@"%llu", message.userHandle];
         _date       = message.timestamp;
         _index      = message.messageIndex;
@@ -19,6 +20,7 @@
         _edited     = message.isEdited;
         _deleted    = message.isDeleted;
         _type       = message.type;
+        _status     = message.status;
         
         if (message.isDeleted) {
             _text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
@@ -199,8 +201,8 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: senderId=%@, date=%@, isMediaMessage=%@, text=%@, media=%@, index=%ld>",
-            [self class], self.senderId, self.date, @(self.isMediaMessage), self.text, self.media, (long)self.index];
+    return [NSString stringWithFormat:@"<%@: messageId=%llu, temporalId=%llu, senderId=%@, date=%@, isMediaMessage=%@, text=%@, media=%@, index=%ld>",
+            [self class], self.messageId, self.temporalId, self.senderId, self.date, @(self.isMediaMessage), self.text, self.media, (long)self.index];
 }
 
 - (id)debugQuickLookObject {

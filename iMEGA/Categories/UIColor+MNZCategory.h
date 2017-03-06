@@ -6,6 +6,7 @@
 #pragma mark - Black
 
 + (UIColor *)mnz_black333333;
++ (UIColor *)mnz_black333333_02;
 
 #pragma mark - Blue
 
