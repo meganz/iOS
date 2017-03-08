@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) MEGAChatMessageType type;
 @property (nonatomic, readonly) MEGAChatMessageStatus status;
 
+@property (copy, nonatomic, null_unspecified) NSAttributedString *attributedText;
+
 #pragma mark - Initialization
 
 // Not a valid initializer.
