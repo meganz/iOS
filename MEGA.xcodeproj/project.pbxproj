@@ -948,9 +948,9 @@
 		E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsTableViewCell.m; sourceTree = "<group>"; };
 		E8E1BD431BA98F5B00AB689D /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAOpenMessageHeaderView.h; path = Chat/MEGAOpenMessageHeaderView.h; sourceTree = "<group>"; };
-		E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAOpenMessageHeaderView.m; path = Chat/MEGAOpenMessageHeaderView.m; sourceTree = "<group>"; };
-		E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MEGAOpenMessageHeaderView.xib; path = Chat/MEGAOpenMessageHeaderView.xib; sourceTree = "<group>"; };
+		E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAOpenMessageHeaderView.h; path = ../MEGAOpenMessageHeaderView.h; sourceTree = "<group>"; };
+		E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAOpenMessageHeaderView.m; path = ../MEGAOpenMessageHeaderView.m; sourceTree = "<group>"; };
+		E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MEGAOpenMessageHeaderView.xib; path = ../MEGAOpenMessageHeaderView.xib; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 		E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsPopUpViewController.h; sourceTree = "<group>"; };
@@ -1064,6 +1064,9 @@
 				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */,
 				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */,
 				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */,
+				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
+				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
+				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -1899,9 +1902,6 @@
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
-				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
-				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
-				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,

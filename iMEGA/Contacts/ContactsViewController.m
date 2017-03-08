@@ -369,7 +369,6 @@
 }
 
 - (void)updateNavigationBarTitle {
-    NSUInteger visibleUsersCount = self.visibleUsersArray.count;
     NSNumber *selectedUsersCount = [NSNumber numberWithUnsignedInteger:self.selectedUsersArray.count];
     
     NSString *navigationTitle;
