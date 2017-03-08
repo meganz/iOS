@@ -870,24 +870,7 @@ static BOOL copyToPasteboard;
     
     activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    
-    if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-        [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
-    }
-    
-    //'Open in...' for iOS 7
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [activityVC setCompletionHandler:^(NSString *activityType, BOOL completed){
-            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:[nodesArray objectAtIndex:0]]];
-                UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
-                BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:shareBarButtonItem animated:YES];
-                if (canOpenIn) {
-                    [documentInteractionController presentPreviewAnimated:YES];
-                }
-            }
-        }];
-    }
+    [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
     
     return activityVC;
 }
