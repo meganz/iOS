@@ -48,10 +48,6 @@
                 [[MEGASdkManager sharedMEGASdk] exportNode:n];
             }
         }
-        
-        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-            [self activityDidFinish:YES];
-        }
     }
 }
 

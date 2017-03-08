@@ -40,9 +40,6 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.tableView.estimatedRowHeight = 64.0;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
     // No search results controller to display the search results in the current view
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -432,10 +429,6 @@
     cell.separatorInset = UIEdgeInsetsMake(0.0, 57.0, 0.0, 0.0);
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
 }
 
 #pragma mark - UITableViewDelegate

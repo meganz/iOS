@@ -12,7 +12,6 @@
 }
 
 @property (nonatomic, strong) PHAsset *phasset;
-@property (nonatomic, strong) ALAsset *alasset;
 @property (nonatomic, strong) MEGANode *cameraUploadNode;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, assign) BOOL automatically;
@@ -26,23 +25,11 @@
 - (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)cameraUploadNode automatically:(BOOL)automatically {
     if (self = [super init]) {
         _phasset = asset;
-        _alasset = nil;
         _cameraUploadNode = cameraUploadNode;
         executing = NO;
         finished = NO;
         _automatically = automatically;
         _retries = 0;
-    }
-    return self;
-}
-
-- (instancetype)initWithALAsset:(ALAsset *)asset cameraUploadNode:(MEGANode *)cameraUploadNode {
-    if (self = [super init]) {
-        _phasset = nil;
-        _alasset = asset;
-        _cameraUploadNode = cameraUploadNode;
-        executing = NO;
-        finished = NO;
     }
     return self;
 }
@@ -100,18 +87,6 @@
 }
 
 - (void)main {
-    if (_phasset) {
-        [self checkiOS8AndiOS9PHAsset];
-    }
-    
-    if (_alasset) {
-        [self checkiOS7ALAsset];
-    }
-}
-
-#pragma mark - Private
-
-- (void)checkiOS8AndiOS9PHAsset {
     if (_phasset.mediaType == PHAssetMediaTypeImage) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         if (_retries < 10) {
@@ -133,7 +108,7 @@
              NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:_phasset.creationDate];
              MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
              
-             [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:imageData alassetRepresentation:nil];
+             [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:imageData];
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
@@ -159,7 +134,7 @@
                  NSString *filePath = [self filePathWithInfo:info];
                  NSError *error = nil;
                  BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-                 if (fileExists) {                                          
+                 if (fileExists) {
                      if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
                          MEGALogError(@"Remove item at path failed with error: %@", error);
                      }
@@ -181,25 +156,14 @@
                  NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                  MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
                  
-                 [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:nil alassetRepresentation:nil];
+                 [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:nil];
              }
          }];
-        
     }
+    
 }
 
-- (void)checkiOS7ALAsset {
-    NSDate *creationDate = [_alasset valueForProperty:ALAssetPropertyDate];
-    NSString *extension = [[[[[_alasset defaultRepresentation] url] absoluteString] mnz_stringBetweenString:@"&ext=" andString:@"\n"] lowercaseString];
-    NSString *name = [[_dateFormatter stringFromDate:creationDate] stringByAppendingPathExtension:extension];
-    NSString *filePath = [_uploadsDirectory stringByAppendingPathComponent:name];
-    
-    ALAssetRepresentation *assetRepresentation = [_alasset defaultRepresentation];
-    NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForAssetRepresentation:assetRepresentation modificationTime:creationDate];
-    
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
-    [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:nil alassetRepresentation:assetRepresentation];
-}
+#pragma mark - Private
 
 - (NSString *)newNameForName:(NSString *)name {
     NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
@@ -236,16 +200,6 @@
             
             if (_phasset.mediaType == PHAssetMediaTypeVideo) {
                 [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadVideoDate];
-            }
-        }
-        
-        if (_alasset) {
-            if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
-                [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadPhotoDate];
-            }
-            
-            if ([[_alasset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
-                [[NSUserDefaults standardUserDefaults] setObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:kLastUploadVideoDate];
             }
         }
     }
@@ -362,7 +316,7 @@
     }
 }
 
-- (void)actionForNode:(MEGANode *)node fingerPrint:(NSString *)fingerprint filePath:(NSString *)filePath imageData:(NSData *)imageData alassetRepresentation:(ALAssetRepresentation *)assetRepresentation {
+- (void)actionForNode:(MEGANode *)node fingerPrint:(NSString *)fingerprint filePath:(NSString *)filePath imageData:(NSData *)imageData {
     NSString *name = [filePath lastPathComponent];
     if (node == nil) {
         NSString *crc = [[MEGASdkManager sharedMEGASdk] CRCForFingerprint:fingerprint];
@@ -378,36 +332,8 @@
             [imageData writeToFile:filePath atomically:YES];
         }
         
-        if (assetRepresentation) {
-            long long fileSize = assetRepresentation.size;
-            if (![self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
-                return;
-            }
-            
-            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
-            NSFileHandle *handle = [NSFileHandle fileHandleForWritingAtPath:filePath];
-            
-            static const NSUInteger kBufferSize = 10 * 1024;
-            uint8_t *buffer = calloc(kBufferSize, sizeof(*buffer));
-            NSUInteger offset = 0, bytesRead = 0;
-            
-            do {
-                bytesRead = [assetRepresentation getBytes:buffer fromOffset:offset length:kBufferSize error:nil];
-                [handle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
-                offset += bytesRead;
-            } while (bytesRead > 0);
-            
-            free(buffer);
-            [handle closeFile];
-        }
-        
         NSError *error = nil;
-        NSDictionary *attributesDictionary;
-        if (_alasset) {
-            attributesDictionary = [NSDictionary dictionaryWithObject:[_alasset valueForProperty:ALAssetPropertyDate] forKey:NSFileModificationDate];
-        } else {
-            attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
-        }
+        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
         
         if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
             MEGALogError(@"Set attributes failed with error: %@", error);
@@ -443,7 +369,7 @@
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         }
     } else {
-        if (!imageData && !assetRepresentation) {
+        if (!imageData) {
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         }
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] != _cameraUploadNode.handle) {
