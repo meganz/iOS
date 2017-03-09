@@ -356,7 +356,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:13.0f]} forState:UIControlStateNormal];
     
