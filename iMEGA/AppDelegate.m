@@ -15,6 +15,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSFileManager+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
@@ -354,6 +355,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+    [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:13.0f]} forState:UIControlStateNormal];
     
