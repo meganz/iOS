@@ -36,6 +36,9 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) IBOutlet UIView *contactsHeaderView;
+@property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
+
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
@@ -561,6 +564,16 @@
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
+    } else if (self.contactsMode == ContactsChatStartConversation) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        
+        cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+        cell.nameLabel.textColor = [UIColor mnz_black333333];
+        cell.nameLabel.text = userName ? userName : user.email;
+        
+        cell.shareLabel.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
+        cell.shareLabel.textColor = [UIColor mnz_gray999999];
+        cell.shareLabel.text = user.email;
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         cell.nameLabel.text = userName ? userName : user.email;
@@ -592,6 +605,24 @@
     [cell setSeparatorInset:UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0)];
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0 && self.contactsMode == ContactsChatStartConversation) {
+        self.contactsHeaderViewLabel.text = [AMLocalizedString(@"contactsTitle", @"Title of the Contacts section") uppercaseString];
+        return self.contactsHeaderView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    CGFloat heightForHeader = 0.0f;
+    if (section == 0 && self.contactsMode == ContactsChatStartConversation) {
+        heightForHeader = 23.0f;
+    }
+    
+    return heightForHeader;
 }
 
 #pragma mark - UITableViewDelegate
@@ -957,7 +988,7 @@
     
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"myContacts", @"Title of My Contacts section")];
+        return [NSMutableAttributedString mnz_darkenSectionTitleInString:AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.") sectionTitle:AMLocalizedString(@"contactsTitle", @"Title of My Contacts section")];
         
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
