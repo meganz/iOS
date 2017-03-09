@@ -1,6 +1,5 @@
 #import "CloudDriveTableViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
@@ -588,9 +587,6 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0;
-}
 
 #pragma mark - DZNEmptyDataSetSource
 
@@ -787,10 +783,7 @@
     
     [self dismissViewControllerAnimated:YES completion:^{
         NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-        if ([operationQueue respondsToSelector:@selector(qualityOfService)]) {
-            operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-        }
-        
+        operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
         operationQueue.maxConcurrentOperationCount = 1;
         
         for (PHAsset *asset in assets) {
@@ -1120,7 +1113,7 @@
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
                 if (permissionGranted) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1150,11 +1143,7 @@
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
-        if ([documentMenuViewController respondsToSelector:@selector(popoverPresentationController)]) {
-            documentMenuViewController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
-        } else {
-            documentMenuViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
+        documentMenuViewController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
         
         [self presentViewController:documentMenuViewController animated:YES completion:nil];
     }];

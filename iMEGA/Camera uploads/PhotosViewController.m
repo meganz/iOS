@@ -1,7 +1,5 @@
 #import "PhotosViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 

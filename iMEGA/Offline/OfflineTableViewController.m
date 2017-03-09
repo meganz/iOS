@@ -717,38 +717,12 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.selectedItems.count > 5) {
         activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
     }
-    
-    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
-        activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
-    }
-    
-    if ([activityViewController respondsToSelector:@selector(setCompletionWithItemsHandler:)]) {
-        [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
-            [self setEditing:NO animated:YES];
-        }];
-    } else {
-        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-            [self setEditing:NO animated:YES];
-        }];
-    }
+    activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
+        [self setEditing:NO animated:YES];
+    }];
     
     [self presentViewController:activityViewController animated:YES completion:nil];
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed){
-            
-            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
-                _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[self.selectedItems objectAtIndex:0]];
-                [_documentInteractionController setDelegate:self];
-            }
-            
-            BOOL canOpenIn = [_documentInteractionController presentOpenInMenuFromBarButtonItem:sender animated:YES];
-            
-            if (canOpenIn) {
-                [_documentInteractionController presentPreviewAnimated:YES];
-            }
-        }];
-    }
 }
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {

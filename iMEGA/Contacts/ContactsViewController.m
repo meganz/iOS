@@ -326,29 +326,13 @@
     if ([[UIDevice currentDevice] iPadDevice]) {
         [actionSheet showInView:self.view];
     } else {
-        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-            UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-            if ([window.subviews containsObject:self.view]) {
-                [actionSheet showInView:self.view];
-            } else {
-                [actionSheet showInView:window];
-            }
-        } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
-        }
+        [actionSheet showFromTabBar:self.tabBarController.tabBar];
     }
 }
 
 - (void)shareFolder {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-            if (self.shareFolderActivity != nil) {
-                [self.shareFolderActivity activityDidFinish:YES];
-            }
-        }
-        
         [self selectPermissions];
-        
     }
 }
 
@@ -772,10 +756,8 @@
             
                 if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
                     ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-                    if ([contactsPickerNC respondsToSelector:@selector(predicateForSelectionOfProperty)]) {
-                        contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-                        contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-                    }
+                    contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+                    contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
                     contactsPickerNC.peoplePickerDelegate = self;
                     [self presentViewController:contactsPickerNC animated:YES completion:nil];
                 } else {
@@ -853,51 +835,7 @@
     }
 }
 
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
-        }
-    }
-}
-
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
-
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
-    [self dismissViewControllerAnimated:YES completion:nil];    // iOS 7
-}
-
-// iOS 7
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
-    
-    NSString *email = nil;
-    ABMultiValueRef emails = ABRecordCopyValue(person,
-                                               kABPersonEmailProperty);
-    if (ABMultiValueGetCount(emails) > 0) {
-        email = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(emails, 0);
-    }
-    
-    if (email) {
-        remainingOperations = 1;
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
-    } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-        noEmailAlertView.tag = 2;
-        [noEmailAlertView show];
-    }
-    
-    if (emails) {
-        CFRelease(emails);
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    return NO;
-}
 
 - (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
                          didSelectPerson:(ABRecordRef)person {
