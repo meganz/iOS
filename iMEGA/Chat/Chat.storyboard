@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12072"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <array key="SF-UI-Text-Light.otf">
             <string>SFUIText-Light</string>
+        </array>
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
         </array>
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
@@ -50,7 +53,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PO-mE-tsu">
-                                                    <rect key="frame" x="57" y="14" width="38.5" height="18"/>
+                                                    <rect key="frame" x="57" y="14" width="39" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="RVg-bm-9hG"/>
                                                     </constraints>
@@ -64,11 +67,11 @@
                                                         <constraint firstAttribute="height" constant="14" id="iGr-wS-hxg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRT-kC-JWt">
-                                                    <rect key="frame" x="99.5" y="20" width="6" height="6"/>
+                                                    <rect key="frame" x="100" y="20" width="6" height="6"/>
                                                     <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="6" id="2b8-Mc-Zyu"/>
@@ -81,30 +84,27 @@
                                                         <constraint firstAttribute="height" constant="12" id="SeZ-yc-RTT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
-                                                    <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-zc-lgI" userLabel="Unread View">
-                                                    <rect key="frame" x="354" y="36" width="12" height="12"/>
+                                                    <rect key="frame" x="353" y="35.5" width="14" height="14"/>
                                                     <subviews>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
-                                                            <rect key="frame" x="2" y="2" width="8" height="8"/>
+                                                            <rect key="frame" x="2" y="1.5" width="10" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="8" id="Grq-30-Hr3"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="8"/>
-                                                            <color key="textColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="10"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="top" secondItem="bKm-zc-lgI" secondAttribute="top" constant="2" id="7cp-lM-ho8"/>
-                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="leading" secondItem="bKm-zc-lgI" secondAttribute="leading" constant="2" id="8UO-nH-USw"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="12" id="Z2t-Dx-ciU"/>
-                                                        <constraint firstAttribute="trailing" secondItem="RGB-uG-ZWn" secondAttribute="trailing" constant="2" id="iMD-Hx-JsU"/>
-                                                        <constraint firstAttribute="height" constant="12" id="pRq-4l-t97"/>
+                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerY" secondItem="bKm-zc-lgI" secondAttribute="centerY" id="1Fc-7f-g8R"/>
+                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerX" secondItem="bKm-zc-lgI" secondAttribute="centerX" id="Rvk-RU-tGG"/>
+                                                        <constraint firstItem="RGB-uG-ZWn" firstAttribute="leading" secondItem="bKm-zc-lgI" secondAttribute="leading" constant="2" id="TML-Mf-g7s"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="14" id="Z2t-Dx-ciU"/>
+                                                        <constraint firstAttribute="height" constant="14" id="pRq-4l-t97"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -114,7 +114,7 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="bKm-zc-lgI" secondAttribute="trailing" constant="1" id="84k-RF-2Bj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bKm-zc-lgI" secondAttribute="trailing" id="84k-RF-2Bj"/>
                                                 <constraint firstItem="bKm-zc-lgI" firstAttribute="centerY" secondItem="lpz-9f-lNv" secondAttribute="centerY" id="95z-AZ-muL"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="dTo-eS-oy4" secondAttribute="leading" id="GBv-la-OnZ"/>
                                                 <constraint firstItem="dTo-eS-oy4" firstAttribute="centerY" secondItem="jai-hc-4uV" secondAttribute="centerY" id="KQe-BO-vET"/>
@@ -127,7 +127,6 @@
                                                 <constraint firstItem="bKm-zc-lgI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lpz-9f-lNv" secondAttribute="trailing" priority="999" constant="8" id="f3Y-MS-cHb"/>
                                                 <constraint firstItem="7PO-mE-tsu" firstAttribute="top" secondItem="jai-hc-4uV" secondAttribute="topMargin" constant="6" id="rx3-bn-oXV"/>
                                                 <constraint firstItem="lpz-9f-lNv" firstAttribute="leading" secondItem="dTo-eS-oy4" secondAttribute="trailing" constant="9" id="vB2-pG-Z2Q"/>
-                                                <constraint firstItem="bKm-zc-lgI" firstAttribute="top" secondItem="6xG-n6-aut" secondAttribute="bottom" constant="12" id="xDp-rp-csW"/>
                                                 <constraint firstItem="lRT-kC-JWt" firstAttribute="leading" secondItem="7PO-mE-tsu" secondAttribute="trailing" constant="4" id="xzD-nn-hux"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -172,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1E4-wi-Cl0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1459" y="451"/>
+            <point key="canvasLocation" x="1458.4000000000001" y="450.22488755622192"/>
         </scene>
         <!--Messages View Controller-->
         <scene sceneID="fKY-cL-N96">
@@ -654,7 +653,7 @@
                     <tabBarItem key="tabBarItem" tag="2" title="Chat" image="chatIcon" selectedImage="chatSelectedIcon" id="r2P-G2-kER"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xdP-Yj-Pwq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="xdP-Yj-Pwq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
