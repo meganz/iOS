@@ -48,6 +48,7 @@
 		4115044A1CEB07C700BF38E3 /* VideoOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504111CEB07C700BF38E3 /* VideoOverlay@2x.png */; };
 		4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
+		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C4C5E1BBEAFB3006FE451 /* CTAssetsPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
 		411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */; };
@@ -382,6 +383,8 @@
 		411504121CEB07C700BF38E3 /* VideoOverlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoOverlay@3x.png"; sourceTree = "<group>"; };
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
+		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
+		4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MNZCategory.m"; sourceTree = "<group>"; };
 		411C4C5D1BBEAFB3006FE451 /* CTAssetsPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CTAssetsPicker.xcassets; path = iMEGA/Vendor/CTAssetsPickerController/Resources/CTAssetsPicker.xcassets; sourceTree = SOURCE_ROOT; };
 		411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAUser+MNZCategory.h"; sourceTree = "<group>"; };
 		411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAUser+MNZCategory.m"; sourceTree = "<group>"; };
@@ -1731,6 +1734,8 @@
 				5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */,
 				41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */,
 				41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */,
+				4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */,
+				4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2420,6 +2425,7 @@
 				417279441DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				41B979211DAC110D00DF8D92 /* MEGAChatPeerList.mm in Sources */,
 				41D21E731D01AEC3002E6296 /* CTAssetThumbnailView.m in Sources */,
+				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41D21E5B1D01AEC3002E6296 /* CTAssetCheckmark.m in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
 				419A02791DACF778000B9DC9 /* MEGAChatMessage.mm in Sources */,
