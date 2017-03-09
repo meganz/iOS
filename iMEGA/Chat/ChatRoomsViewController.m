@@ -285,8 +285,11 @@
 - (void)updateCell:(ChatRoomCell *)cell forUnreadCountChange:(NSInteger)unreadCount {
     if (unreadCount != 0) {
         if (cell.unreadView.hidden) {
+            cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
             cell.chatTitle.textColor = [UIColor mnz_black333333];
+            cell.chatLastMessage.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
             cell.chatLastMessage.textColor = [UIColor mnz_black333333];
+            cell.chatLastTime.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
             cell.chatLastTime.textColor = [UIColor mnz_black333333];
             
             cell.unreadView.hidden = NO;
@@ -295,9 +298,12 @@
         
         cell.unreadCount.text = [NSString stringWithFormat:@"%ld", ABS(unreadCount)];
     } else {
+        cell.chatTitle.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         cell.chatTitle.textColor = [UIColor mnz_gray666666];
-        cell.chatLastMessage.textColor = [UIColor mnz_gray999999];
-        cell.chatLastTime.textColor = [UIColor mnz_gray999999];
+        cell.chatLastMessage.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
+        cell.chatLastMessage.textColor = [UIColor mnz_gray666666];
+        cell.chatLastTime.font = [UIFont mnz_SFUIRegularWithSize:10.0f];
+        cell.chatLastTime.textColor = [UIColor mnz_gray666666];
         
         cell.unreadView.hidden = YES;
         cell.unreadCount.text = nil;
