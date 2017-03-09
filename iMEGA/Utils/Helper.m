@@ -1029,7 +1029,7 @@ static BOOL copyToPasteboard;
                                             value:[UIColor mnz_gray666666]
                                             range:[subtitle rangeOfString:subtitle]];
     [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont mnz_SFUILightWithSize:12.0f]
+                                            value:[UIFont mnz_SFUIRegularWithSize:12.0f]
                                             range:[subtitle rangeOfString:subtitle]];
     
     [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];

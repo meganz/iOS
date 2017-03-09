@@ -19,7 +19,6 @@
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
-@property (strong, nonatomic) JSQMessagesBubbleImage *managementBubbleImageData;
 
 @property (nonatomic, strong) MEGAMessage *editMessage;
 
@@ -56,8 +55,7 @@
     
     self.inputToolbar.contentView.textView.pasteDelegate = self;
     
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+    [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
     
@@ -67,7 +65,6 @@
     self.collectionView.accessoryDelegate = self;
     
     self.showLoadEarlierMessagesHeader = YES;
-    
     
      //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(editAction:megaMessage:)];
@@ -79,16 +76,13 @@
     
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_grayE3E3E3]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor whiteColor]];
-    self.managementBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayF5F5F5]];
 
     self.collectionView.backgroundColor = [UIColor mnz_grayF5F5F5];
-    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUILightWithSize:14.0f];
     
     [self customToolbarContentView];
     
     self.areAllMessagesSeen = NO;
     
-    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -170,7 +164,23 @@
     label.gestureRecognizers = @[titleTapRecognizer];
 }
 
+- (void)customiseCollectionViewLayout {
+    self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(9.0f, 9.0f, 9.0f, 9.0f);
+    
+    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero;
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
+    
+    self.collectionView.collectionViewLayout.minimumLineSpacing = 2.0f;
+}
+
 - (void)customToolbarContentView {
+    self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
+    self.inputToolbar.contentView.textView.placeHolder = AMLocalizedString(@"writeAMessage", @"Message box label which shows that user can type message text in this textview");
+    self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+    self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
+    self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_redD90007];
+    
     UIImage *image = [UIImage imageNamed:@"add"];
     UIButton *attachButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [attachButton setImage:image forState:UIControlStateNormal];
@@ -182,6 +192,7 @@
     [sendButton setImage:image forState:UIControlStateNormal];
     [sendButton setFrame:CGRectMake(0, 0, 22, 22)];
     self.inputToolbar.contentView.rightBarButtonItem = sendButton;
+    self.inputToolbar.contentView.leftContentPadding = self.inputToolbar.contentView.rightContentPadding = 10.0f;
 }
 
 - (BOOL)showDateBetweenMessage:(MEGAMessage *)message previousMessage:(MEGAMessage *)previousMessage {
@@ -410,7 +421,7 @@
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.isManagementMessage || message.isDeleted) {
-        return self.managementBubbleImageData;
+        return nil;
     }
     
     if ([message.senderId isEqualToString:self.senderId]) {
@@ -437,7 +448,7 @@
     
     if (showDayMonthYear) {
         NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
         return dateAttributedString;
     }
     
@@ -484,18 +495,7 @@
             topCellString = hour;
         }
         
-        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
-    }
-    
-    return nil;
-}
-
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
-    if (megaMessage.isEdited) {
-        NSString *editedString = AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.");
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:editedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}];
-        return dateAttributedString;
+        return [[NSAttributedString alloc] initWithString:topCellString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]}];
     }
     
     return nil;
@@ -517,16 +517,22 @@
     
     cell.accessoryButton.hidden = YES;
     
-    if (megaMessage.isDeleted) {
-        cell.textView.font = [UIFont mnz_SFUILightWithSize:14.0f];
+    if (megaMessage.isEdited) {
+        [cell.accessoryButton setImage:nil forState:UIControlStateNormal];
+        [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
+        cell.accessoryButton.hidden = NO;
+        
+        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
+        cell.textView.textColor = [UIColor mnz_black333333];
+    } else if (megaMessage.isDeleted) {
+        cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:14.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
     } else if (megaMessage.isManagementMessage) {
-        cell.textView.font = [UIFont mnz_SFUILightWithSize:11.0f];
-        cell.textView.textColor = [UIColor mnz_black333333];
+        cell.textView.attributedText = megaMessage.attributedText;
     } else if (!megaMessage.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
-        
+        cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
         if (megaMessage.status == MEGAChatMessageStatusSending || megaMessage.status == MEGAChatMessageStatusSendingManual) {
             cell.textView.textColor = [UIColor mnz_black333333_02];
             if (megaMessage.status == MEGAChatMessageStatusSendingManual) {
@@ -574,6 +580,8 @@
     self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                                                                                  withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
                                                                                                         forIndexPath:indexPath];
+    self.footerView.typingLabel.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
+    self.footerView.typingLabel.textColor = [UIColor mnz_gray999999];
     self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
     
     return self.footerView;
@@ -665,16 +673,6 @@
     }
     
     if (showMessageBubleTopLabel) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
-    }
-    
-    return 0.0f;
-}
-
-- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
-    if (megaMessage.isEdited) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
     

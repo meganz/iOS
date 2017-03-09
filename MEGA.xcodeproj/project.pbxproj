@@ -250,6 +250,9 @@
 		41FC83A81AA732ED008FA551 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
 		41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */; };
 		41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
+		5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */; };
+		5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
 		947E55A01DA2D8A00025B551 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55951DA2D8A00025B551 /* libevent_core.a */; };
@@ -790,6 +793,9 @@
 		41FC83B01AA853CC008FA551 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsTableViewController.h; sourceTree = "<group>"; };
 		41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CameraUploadsTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Medium.otf"; path = "Fonts/SF-UI-Display-Medium.otf"; sourceTree = "<group>"; };
+		5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-Medium.otf"; path = "Fonts/SF-UI-Text-Medium.otf"; sourceTree = "<group>"; };
+		5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Text-RegularItalic.otf"; path = "Fonts/SF-UI-Text-RegularItalic.otf"; sourceTree = "<group>"; };
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Regular.otf"; path = "Fonts/SF-UI-Display-Regular.otf"; sourceTree = "<group>"; };
@@ -942,9 +948,9 @@
 		E8D5BF6B1BF3B28500955550 /* SharedItemsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedItemsTableViewCell.m; sourceTree = "<group>"; };
 		E8E1BD431BA98F5B00AB689D /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAOpenMessageHeaderView.h; path = Chat/MEGAOpenMessageHeaderView.h; sourceTree = "<group>"; };
-		E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAOpenMessageHeaderView.m; path = Chat/MEGAOpenMessageHeaderView.m; sourceTree = "<group>"; };
-		E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MEGAOpenMessageHeaderView.xib; path = Chat/MEGAOpenMessageHeaderView.xib; sourceTree = "<group>"; };
+		E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAOpenMessageHeaderView.h; path = ../MEGAOpenMessageHeaderView.h; sourceTree = "<group>"; };
+		E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAOpenMessageHeaderView.m; path = ../MEGAOpenMessageHeaderView.m; sourceTree = "<group>"; };
+		E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MEGAOpenMessageHeaderView.xib; path = ../MEGAOpenMessageHeaderView.xib; sourceTree = "<group>"; };
 		E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewCell.h; sourceTree = "<group>"; };
 		E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewCell.m; sourceTree = "<group>"; };
 		E8ED84D91B010BDF008FCDDC /* CameraUploadsPopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadsPopUpViewController.h; sourceTree = "<group>"; };
@@ -1058,6 +1064,9 @@
 				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */,
 				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */,
 				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */,
+				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
+				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
+				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -1893,9 +1902,6 @@
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
-				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
-				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
-				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
@@ -2059,10 +2065,13 @@
 		E8C289F01BF5F81300F7A034 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */,
+				5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */,
 				5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */,
 				E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */,
-				E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */,
+				5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */,
 				E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */,
+				E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -2223,6 +2232,7 @@
 			files = (
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */,
+				5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
@@ -2252,6 +2262,7 @@
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				411504361CEB07C700BF38E3 /* ImageSelectedSmallOff@3x.png in Resources */,
 				411504301CEB07C700BF38E3 /* ImageSelectedOff@3x.png in Resources */,
+				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				4115043F1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				417279521DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
@@ -2274,6 +2285,7 @@
 				411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				411504401CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png in Resources */,
+				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				4115043C1CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */,
