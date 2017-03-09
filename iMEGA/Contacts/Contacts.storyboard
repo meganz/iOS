@@ -14,6 +14,9 @@
         <array key="SF-UI-Text-Light.otf">
             <string>SFUIText-Light</string>
         </array>
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
         </array>
@@ -341,6 +344,8 @@
                         <outlet property="backBarButtonItem" destination="GTy-dq-ErY" id="8Fm-6h-apb"/>
                         <outlet property="cancelBarButtonItem" destination="Zqr-qV-bMs" id="jRX-zv-vU1"/>
                         <outlet property="contactRequestsBarButtonItem" destination="GvZ-OT-HaA" id="wh8-yW-HiY"/>
+                        <outlet property="contactsHeaderView" destination="x2b-8m-1ll" id="d33-aF-cTo"/>
+                        <outlet property="contactsHeaderViewLabel" destination="Wgy-Fa-zRi" id="Axm-Vi-QSl"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
                         <outlet property="groupBarButtonItem" destination="xDU-jr-HFu" id="7hV-ad-49c"/>
@@ -412,6 +417,23 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
+                <view contentMode="scaleToFill" id="x2b-8m-1ll" userLabel="CONTACTS Header View">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SHARED FOLDERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgy-Fa-zRi" userLabel="CONTACTS Header View Label">
+                            <rect key="frame" x="7" y="2" width="42" height="21"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="9"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.93333333730697632" green="0.93333333730697632" blue="0.93333333730697632" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Wgy-Fa-zRi" firstAttribute="centerY" secondItem="x2b-8m-1ll" secondAttribute="centerY" id="SIj-3N-y1Z"/>
+                        <constraint firstItem="Wgy-Fa-zRi" firstAttribute="leading" secondItem="x2b-8m-1ll" secondAttribute="leading" constant="12" id="hdS-hq-hba"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="2543" y="-1592"/>
         </scene>
@@ -1024,7 +1046,7 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SHARED FOLDERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmw-Y8-kWi" userLabel="SHARED FOLDERS Header View Label">
                             <rect key="frame" x="7" y="2" width="42" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="9"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -1036,7 +1058,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2543" y="-858"/>
+            <point key="canvasLocation" x="2334" y="-858"/>
         </scene>
         <!--Verify Credentials View Controller-->
         <scene sceneID="XMA-q0-YdU">
