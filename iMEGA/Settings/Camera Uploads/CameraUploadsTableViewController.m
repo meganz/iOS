@@ -1,6 +1,5 @@
 #import "CameraUploadsTableViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 
 #import "MEGAReachabilityManager.h"

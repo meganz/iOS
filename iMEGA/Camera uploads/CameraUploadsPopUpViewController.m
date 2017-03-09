@@ -1,6 +1,5 @@
 #import "CameraUploadsPopUpViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"

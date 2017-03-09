@@ -444,16 +444,7 @@
         if ([[UIDevice currentDevice] iPadDevice]) {
             [actionSheet showInView:self.view];
         } else {
-            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-                if ([window.subviews containsObject:self.view]) {
-                    [actionSheet showInView:self.view];
-                } else {
-                    [actionSheet showInView:window];
-                }
-            } else {
-                [actionSheet showFromTabBar:self.tabBarController.tabBar];
-            }
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }
     }
 }
@@ -501,16 +492,6 @@
     
     for (MEGAUser *u in self.selectedUsersArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:u level:level];
-    }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
-        }
     }
 }
 
