@@ -148,6 +148,7 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     for (int i = 0; i < listenersToRemove.size(); i++)
     {
         self.megaChatApi->removeChatRoomListener(listenersToRemove[i]);
+        delete listenersToRemove[i];
     }
 }
 
@@ -175,6 +176,7 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     for (int i = 0; i < listenersToRemove.size(); i++)
     {
         self.megaChatApi->removeChatRequestListener(listenersToRemove[i]);
+        delete listenersToRemove[i];
     }
 }
 
@@ -202,6 +204,7 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     for (int i = 0; i < listenersToRemove.size(); i++)
     {
         self.megaChatApi->removeChatListener(listenersToRemove[i]);
+        delete listenersToRemove[i];
     }
 }
 
