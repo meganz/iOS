@@ -17,24 +17,30 @@ id<MEGAChatDelegate>DelegateMEGAChatListener::getUserListener() {
 void DelegateMEGAChatListener::onChatListItemUpdate(megachat::MegaChatApi *api, megachat::MegaChatListItem *item) {
     if (listener != nil && [listener respondsToSelector:@selector(onChatListItemUpdate:item:)]) {
         MegaChatListItem *tempItem = item->copy();
+        MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
+        id<MEGAChatDelegate> tempListener = this->listener;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [listener onChatListItemUpdate:this->megaChatSDK item:[[MEGAChatListItem alloc]initWithMegaChatListItem:tempItem cMemoryOwn:YES]];
+            [tempListener onChatListItemUpdate:tempMegaChatSDK item:[[MEGAChatListItem alloc]initWithMegaChatListItem:tempItem cMemoryOwn:YES]];
         });
     }
 }
 
 void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api, int newState) {
     if (listener != nil && [listener respondsToSelector:@selector(onChatInitStateUpdate:newState:)]) {
+        MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
+        id<MEGAChatDelegate> tempListener = this->listener;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [listener onChatInitStateUpdate:this->megaChatSDK newState:(MEGAChatInit)newState];
+            [tempListener onChatInitStateUpdate:tempMegaChatSDK newState:(MEGAChatInit)newState];
         });
     }
 }
 
 void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status) {
     if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:)]) {
+        MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
+        id<MEGAChatDelegate> tempListener = this->listener;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [listener onChatOnlineStatusUpdate:this->megaChatSDK status:(MEGAChatStatus)status];
+            [tempListener onChatOnlineStatusUpdate:tempMegaChatSDK status:(MEGAChatStatus)status];
         });
     }
 }
