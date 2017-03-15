@@ -181,6 +181,7 @@
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
 		41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDB51A8E2E92008408B3 /* PhotosViewController.m */; };
+		41C330F41E37DA41004C4B86 /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41C330F31E37DA41004C4B86 /* PushKit.framework */; };
 		41C736C01DBE6CCE00F1F38A /* MEGAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */; };
 		41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD146F1DB150F600E545BC /* MessagesViewController.m */; };
 		41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F6D1B85F6D40005A27A /* ProductDetailViewController.m */; };
@@ -648,6 +649,7 @@
 		41BADDAE1A8E28FD008408B3 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		41BADDB41A8E2E92008408B3 /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		41BADDB51A8E2E92008408B3 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PhotosViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		41C330F31E37DA41004C4B86 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
 		41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessage.h; sourceTree = "<group>"; };
 		41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessage.m; sourceTree = "<group>"; };
 		41CD146E1DB150F600E545BC /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessagesViewController.h; path = Chat/MessagesViewController.h; sourceTree = "<group>"; };
@@ -975,6 +977,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C330F41E37DA41004C4B86 /* PushKit.framework in Frameworks */,
 				94BB90171DA587D9008182BB /* VideoToolbox.framework in Frameworks */,
 				94BB90131DA58719008182BB /* libxml2.tbd in Frameworks */,
 				94BB90111DA5870C008182BB /* libicucore.tbd in Frameworks */,
@@ -1527,6 +1530,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41C330F31E37DA41004C4B86 /* PushKit.framework */,
 				94BB90161DA587D9008182BB /* VideoToolbox.framework */,
 				94BB90141DA5877C008182BB /* CoreVideo.framework */,
 				94BB90121DA58719008182BB /* libxml2.tbd */,
@@ -2170,6 +2174,9 @@
 								enabled = 1;
 							};
 							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {

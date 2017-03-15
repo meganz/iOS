@@ -2,6 +2,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
+#import <PushKit/PushKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
@@ -53,7 +55,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeRecoverLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     BOOL showTabBarAfterChatConnect;
@@ -86,7 +88,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
@@ -118,6 +119,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self languageCompatibility];
     
+    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     // Delete username and password if exists - V1
     if ([SAMKeychain passwordForService:@"MEGA" account:@"username"] && [SAMKeychain passwordForService:@"MEGA" account:@"password"]) {
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"username"];
@@ -197,6 +199,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        [self registerForVoIPNotifications];
+        [self registerForLocalNotifications];
         isAccountFirstLogin = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
@@ -930,6 +934,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     [[CameraUploads syncManager] setTabBarController:_mainTBC];
+    if (isAccountFirstLogin) {
+        [self registerForVoIPNotifications];
+        [self registerForLocalNotifications];
+    }
+}
+
+- (void)registerForVoIPNotifications {
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
+    voipRegistry.delegate = self;
+    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+}
+
+
+
+- (void)registerForLocalNotifications {
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
+                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                  if (!error) {
+                                      NSLog(@"request authorization succeeded!");
+                                  }
+                              }];
+    } else {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
+                                                                             settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
+                                                                             UIUserNotificationTypeSound categories:nil]];
+    }
 }
 
 #pragma mark - Battery changed
@@ -1130,6 +1164,75 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)setDefaultLanguage {
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
+}
+
+#pragma mark - PKPushRegistryDelegate
+
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
+    if([credentials.token length] == 0) {
+        MEGALogError(@"VoIP token length is 0");
+        return;
+    }
+    
+    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
+    
+    NSUInteger dataLength = credentials.token.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"Device token %@", deviceTokenString);
+    [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    MEGALogDebug(@"didReceiveIncomingPushWithPayload: %@", [payload dictionaryPayload]);
+    
+    NSInteger megatype = [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue];
+    NSString *body = nil;
+    
+    switch (megatype) {
+        case 1:
+            body = @"A folder has been shared with you";
+            break;
+        case 2:
+            body = @"You have received a message";
+            break;
+        case 3:
+            body = @"You have a new contact request";
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (NSClassFromString(@"UNMutableNotificationContent")) {
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        
+        content.body = body;
+        content.sound = [UNNotificationSound defaultSound];
+        
+        NSString *identifier = [NSString stringWithFormat:@"%@", [payload dictionaryPayload]];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                              content:content
+                                                                              trigger:nil];
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+            }
+        }];
+    } else if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = body;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -1618,6 +1721,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeGetUserEmail: {
+            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:request.nodeHandle];
+            if (moUser) {
+                [[MEGAStore shareInstance] updateUserWithUserHandle:request.nodeHandle email:request.email];
+            } else {
+                [[MEGAStore shareInstance] insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil email:request.email];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1678,6 +1791,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
 }
 
+#pragma mark - MEGAChatDelegate
+
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
     if (newState == MEGAChatInitError) {
@@ -1688,7 +1803,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
-
 
 #pragma mark - MEGATransferDelegate
 
