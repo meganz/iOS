@@ -22,7 +22,6 @@
 + (UIColor *)mnz_grayE3E3E3;
 + (UIColor *)mnz_grayF5F5F5;
 + (UIColor *)mnz_grayCCCCCC;
-+ (UIColor *)mnz_grayFFFFFF;
 + (UIColor *)mnz_grayF7F7F7;
 + (UIColor *)mnz_grayF9F9F9;
 
@@ -40,6 +39,7 @@
 + (UIColor *)mnz_redE13339;
 + (UIColor *)mnz_redDC191F;
 + (UIColor *)mnz_redFF4C52;
++ (UIColor *)mnz_redFF4D52;
 + (UIColor *)mnz_redD90007;
 + (UIColor *)mnz_redFF333A;
 

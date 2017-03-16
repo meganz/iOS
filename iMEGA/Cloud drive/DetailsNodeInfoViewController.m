@@ -132,8 +132,6 @@
             if (!thumbnailExists) {
                 [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
             } else {
-                [_thumbnailImageView.layer setCornerRadius:4];
-                [_thumbnailImageView.layer setMasksToBounds:YES];
                 [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
             }
         } else {

@@ -992,45 +992,10 @@ static BOOL copyToPasteboard;
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont mnz_SFUILightWithSize:18.0f]
-                                         range:[title rangeOfString:title]];
-    
-    subtitle = [NSString stringWithFormat:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? @"\n%@" : @" %@"), subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont mnz_SFUILightWithSize:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? 12.0f : 14.0f)]
-                                            range:[subtitle rangeOfString:subtitle]];
-    
-    [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
-    
-    UILabel *label = [[UILabel alloc] init];
-    [label setNumberOfLines:2];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setAttributedText:titleMutableAttributedString];
-    
-    return label;
-}
-
-+ (UILabel *)customChatNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont mnz_SFUILightWithSize:15.0f]
-                                         range:[title rangeOfString:title]];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
     subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_gray666666]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont mnz_SFUIRegularWithSize:12.0f]
-                                            range:[subtitle rangeOfString:subtitle]];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     

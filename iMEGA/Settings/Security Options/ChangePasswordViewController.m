@@ -79,8 +79,6 @@
         
         [self.theNewPasswordTextField becomeFirstResponder];
     }
-    
-    [self.changePasswordButton.layer setCornerRadius:4];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

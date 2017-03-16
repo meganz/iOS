@@ -80,7 +80,7 @@
     [self.searchController.searchBar sizeToFit];
     
     UITextField *searchTextField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUILightWithSize:14.0f];
+    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
     searchTextField.textColor = [UIColor mnz_gray999999];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -546,9 +546,6 @@
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
     
-    [cell.thumbnailImageView.layer setCornerRadius:4];
-    [cell.thumbnailImageView.layer setMasksToBounds:YES];
-    
     cell.nameLabel.text = [node name];
     
     cell.nodeHandle = [node handle];
@@ -799,7 +796,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

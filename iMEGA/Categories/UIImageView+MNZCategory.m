@@ -26,7 +26,7 @@
         } else {
             initialsForAvatar = @"?";
         }
-        UIImage *avatar = [UIImage imageForName:initialsForAvatar size:self.frame.size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUILightWithSize:(self.frame.size.width/2.0f)]];
+        UIImage *avatar = [UIImage imageForName:initialsForAvatar size:self.frame.size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(self.frame.size.width/2.0f)]];
         self.image = avatar;
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:self];

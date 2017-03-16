@@ -136,9 +136,7 @@
         if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
             label = [Helper customNavigationBarLabelWithTitle:title subtitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with")];
         } else {
-            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title];
-            [titleMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUILightWithSize:18.0f] range:[title rangeOfString:title]];
-            [titleMutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_black333333] range:[title rangeOfString:title]];
+            NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:self.chatRoom.title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
             label.textAlignment = NSTextAlignmentCenter;
             label.attributedText = titleMutableAttributedString;
         }
@@ -150,7 +148,7 @@
             chatRoomState = AMLocalizedString(@"offline", @"Title of the Offline section");
         }
         
-        label = [Helper customChatNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
+        label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
     }
     
     label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);

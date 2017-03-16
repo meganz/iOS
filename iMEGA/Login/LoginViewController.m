@@ -36,9 +36,6 @@
     tapGestureRecognizer.numberOfTapsRequired = 5;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
     
-    self.loginButton.layer.cornerRadius = 4.0f;
-    self.loginButton.layer.masksToBounds = YES;
-    
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
     
@@ -205,7 +202,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4D52]];
     
     return YES;
 }

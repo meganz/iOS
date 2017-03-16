@@ -82,8 +82,6 @@
     self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
     self.userAvatarImageView.layer.masksToBounds = YES;
     
-    self.upgradeToProButton.layer.cornerRadius = 4;
-    
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
@@ -173,11 +171,11 @@
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont mnz_SFUILightWithSize:20.0f]
+                                             value:[UIFont mnz_SFUIRegularWithSize:20.0f]
                                              range:firstPartRange];
     
     [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont mnz_SFUILightWithSize:12.0f]
+                                              value:[UIFont mnz_SFUIRegularWithSize:12.0f]
                                               range:secondPartRange];
     
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];

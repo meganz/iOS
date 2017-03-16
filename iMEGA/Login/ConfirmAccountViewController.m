@@ -35,12 +35,6 @@
         [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
     }
     
-    self.confirmAccountButton.layer.cornerRadius = 4.0f;
-    self.confirmAccountButton.layer.masksToBounds = YES;
-    [self.confirmAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
-    
-    self.cancelButton.layer.cornerRadius = 4.0f;
-    self.cancelButton.layer.masksToBounds = YES;
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
