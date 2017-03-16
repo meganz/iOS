@@ -65,10 +65,8 @@
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
     
-    self.resetButton.layer.cornerRadius = 4.0f;
     [self.resetButton setTitle:AMLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
     
-    self.approveButton.layer.cornerRadius = 4.0f;
     [self.approveButton setTitle:AMLocalizedString(@"approve", @"Button title") forState:UIControlStateNormal];
 }
 

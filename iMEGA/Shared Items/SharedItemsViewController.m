@@ -695,9 +695,6 @@
         }
     }
     
-    [cell.thumbnailImageView.layer setCornerRadius:4];
-    [cell.thumbnailImageView.layer setMasksToBounds:YES];
-    
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
@@ -899,7 +896,7 @@
         text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

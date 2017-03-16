@@ -59,12 +59,8 @@
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
-    [_skipButton.layer setCornerRadius:4.0f];
-    [_skipButton.layer setMasksToBounds:YES];
     [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
-    [_enableButton.layer setCornerRadius:4.0f];
-    [_enableButton.layer setMasksToBounds:YES];
     [self.enableButton setTitle:AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled") forState:UIControlStateNormal];
 }
 

@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
-/* Title of My Contacts section */
-"myContacts"="Contacts";
 /* Title of Contacts requests section */
 "contactRequests"="Contact requests";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -536,7 +534,7 @@
 "language"="Language";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Send Feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Please write your feedback here:";
@@ -742,10 +740,10 @@
 "eraseAllLocalDataLabel"="Erase local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Support";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help centre";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Get support or read popular topics.";
 /* Title to rate the app */
 "rateUsLabel"="Rate us";
 /* Title of the Transfers section */

@@ -450,9 +450,6 @@ static NSString *kisDirectory = @"kisDirectory";
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            [cell.thumbnailImageView.layer setCornerRadius:4];
-            [cell.thumbnailImageView.layer setMasksToBounds:YES];
-            
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
@@ -774,7 +771,7 @@ static NSString *kisDirectory = @"kisDirectory";
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUILightWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

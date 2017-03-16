@@ -276,12 +276,19 @@
 
 #pragma mark - UIPickerViewDelegate
 
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *labelView = (UILabel *)view;
+    if (!labelView) {
+        labelView = [[UILabel alloc] init];
+        labelView.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+        labelView.textColor = [UIColor mnz_black333333];
+        labelView.textAlignment = NSTextAlignmentCenter;
+    }
+    
     NSString *languageID = [Helper languageID:row];
-    NSString *titleForRow = [languagesDictionary objectForKey:languageID];
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:AMLocalizedString(titleForRow, nil)];
-    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUILightWithSize:20.0f] range:[titleForRow rangeOfString:titleForRow]];
-    return mutableAttributedString;
+    labelView.text = [languagesDictionary objectForKey:languageID];
+    
+    return labelView;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
