@@ -29,6 +29,9 @@
 @property (nonatomic, strong) NSTimer *receiveTypingTimer;
 @property (nonatomic, strong) NSString *peerTyping;
 
+@property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
+@property (nonatomic, strong) UILabel *unreadLabel;
+
 @end
 
 @implementation MessagesViewController
@@ -83,11 +86,29 @@
     
     self.areAllMessagesSeen = NO;
     
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
+    UITapGestureRecognizer *singleTa2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
+    
+    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
+    self.unreadLabel.textColor = [UIColor mnz_redD90007];
+    self.unreadLabel.userInteractionEnabled = YES;
+    [self.unreadLabel addGestureRecognizer:singleTap];
+    _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
+    imageView.frame = CGRectMake(0, 0, 22, 22);
+    [imageView addGestureRecognizer:singleTa2];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
+    self.navigationItem.leftBarButtonItems = @[backButtonItem, self.unreadBarButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self customNavigationBarLabel];
+    [self updateUnreadLabel];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,6 +120,10 @@
 
 - (BOOL)hidesBottomBarWhenPushed {
     return YES;
+}
+
+- (void)popViewController {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Private methods
@@ -160,6 +185,12 @@
     UITapGestureRecognizer *titleTapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
     label.gestureRecognizers = @[titleTapRecognizer];
+}
+
+- (void)updateUnreadLabel {
+    NSInteger unreadChats = [[MEGASdkManager sharedMEGAChatSdk] unreadChats];
+    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%ld)", unreadChats] : nil;
+    self.unreadLabel.text = unreadChatsString;
 }
 
 - (void)customiseCollectionViewLayout {
@@ -763,6 +794,7 @@
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
+                    [self updateUnreadLabel];
                     self.areAllMessagesSeen = YES;
                 } else {
                     MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");

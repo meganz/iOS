@@ -1010,6 +1010,7 @@ static BOOL copyToPasteboard;
 #pragma mark - Logout
 
 + (void)logout {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
