@@ -752,29 +752,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
-- (void)setBadgeValueForIncomingContactRequests {
-    NSInteger contactsTabPosition;
-    for (contactsTabPosition = 0 ; contactsTabPosition < self.mainTBC.viewControllers.count ; contactsTabPosition++) {
-        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 5) {
-            break;
-        }
-    }
-    
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    long incomingContacts = [[incomingContactsLists size] longValue];
-    NSString *badgeValue;
-    if (incomingContacts) {
-        badgeValue = [NSString stringWithFormat:@"%ld", incomingContacts];
-    } else {
-        badgeValue = nil;
-    }
-    
-    if ((contactsTabPosition >= 4) && [[UIDevice currentDevice] iPhoneDevice]) {
-        [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
-    }
-    [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
-}
-
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     for (NSString *item in directoryContents) {
@@ -940,8 +917,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self registerForVoIPNotifications];
         [self registerForLocalNotifications];
     }
-    
-    [self setBadgeValueForIncomingContactRequests];
 }
 
 - (void)registerForVoIPNotifications {
@@ -1318,10 +1293,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
-}
-
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForIncomingContactRequests];
 }
 
 #pragma mark - MEGARequestDelegate
