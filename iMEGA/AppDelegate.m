@@ -940,6 +940,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self registerForVoIPNotifications];
         [self registerForLocalNotifications];
     }
+    
+    [self setBadgeValueForIncomingContactRequests];
 }
 
 - (void)registerForVoIPNotifications {
@@ -1318,6 +1320,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
+    [self setBadgeValueForIncomingContactRequests];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1555,7 +1561,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [self requestUserName];
             [self requestContactsFullname];
-            [self setBadgeValueForIncomingContactRequests];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
@@ -1951,12 +1956,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
     }
-}
-
-#pragma mark - MEGAContactRequest
-
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForIncomingContactRequests];
 }
 
 @end
