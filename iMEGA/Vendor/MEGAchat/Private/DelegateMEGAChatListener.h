@@ -11,7 +11,8 @@ public:
     
     void onChatListItemUpdate(megachat::MegaChatApi *api, megachat::MegaChatListItem *item);
     void onChatInitStateUpdate(megachat::MegaChatApi *api, int newState);
-    void onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status);
+    void onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status, bool inProgress);
+    void onChatPresenceConfigUpdate(megachat::MegaChatApi *api, megachat::MegaChatPresenceConfig *config);
     
 private:
     MEGAChatSdk *megaChatSDK;
