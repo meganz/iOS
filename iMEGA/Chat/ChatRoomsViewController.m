@@ -17,6 +17,7 @@
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
 
@@ -56,7 +57,8 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
-    self.title = AMLocalizedString(@"chat", @"Chat section header");
+    [self customNavigationBarLabel];
+    
     _chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
     _chatListItemArray = [[NSMutableArray alloc] init];
     
@@ -72,6 +74,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     self.tabBarController.tabBar.hidden = NO;
+    
+    [self customNavigationBarLabel];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -321,6 +325,17 @@
     }
 }
 
+- (void)customNavigationBarLabel {
+    NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
+    if (onlineStatusString) {
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        [self.navigationItem setTitleView:label];
+    } else {
+        self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -424,11 +439,7 @@
         cell.avatarImageView.image = avatar;
     } else {
         [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
-        if (chatListItem.onlineStatus > MEGAChatStatusOffline) {
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_green13E03C];
-        } else  {
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_gray666666];
-        }
+        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:chatListItem.onlineStatus];
         cell.onlineStatusView.hidden             = NO;
         cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
     }
@@ -606,11 +617,7 @@
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
                 case MEGAChatListItemChangeTypeStatus:
-                    if (item.onlineStatus == 0) {
-                        cell.onlineStatusView.backgroundColor = [UIColor mnz_gray666666];
-                    } else if (item.onlineStatus == 3) {
-                        cell.onlineStatusView.backgroundColor = [UIColor mnz_green13E03C];
-                    }
+                    cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:item.onlineStatus];
                     break;
                     
                 case MEGAChatListItemChangeTypeVisibility:
@@ -647,6 +654,14 @@
             }
         }
     }
+}
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+    
+    [self customNavigationBarLabel];
 }
 
 @end
