@@ -264,6 +264,8 @@
         }
         
         [cell.leftImageView mnz_setImageForUserHandle:handle];
+        cell.onlineStatusView.layer.cornerRadius = (cell.onlineStatusView.frame.size.width / 2);
+        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:handle]];
         
         cell.emailLabel.text = peerEmail;
         

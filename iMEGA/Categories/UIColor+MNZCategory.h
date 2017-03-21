@@ -1,6 +1,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM (NSInteger, MEGAChatStatus);
+
 @interface UIColor (MNZCategory)
 
 #pragma mark - Black
@@ -48,5 +50,7 @@
 + (UIColor *)mnz_pinkFF1A53;
 
 + (UIColor *)colorFromHexString:(NSString *)hexString;
+
++ (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus;
 
 @end

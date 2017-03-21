@@ -6,6 +6,7 @@
 #import "MEGAChatRoomList.h"
 #import "MEGAChatPeerList.h"
 #import "MEGAChatListItemList.h"
+#import "MEGAChatPresenceConfig.h"
 #import "MEGAChatRequestDelegate.h"
 #import "MEGAChatLoggerDelegate.h"
 #import "MEGAChatRoomDelegate.h"
@@ -77,9 +78,19 @@ typedef NS_ENUM (NSInteger, MEGAChatInit) {
 - (void)localLogoutWithDelegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)localLogout;
 
+#pragma mark - Presence
+
 - (void)setOnlineStatus:(MEGAChatStatus)status delegate:(id<MEGAChatRequestDelegate>)delegate;
 - (void)setOnlineStatus:(MEGAChatStatus)status;
 - (MEGAChatStatus)onlineStatus;
+
+- (void)setPresenceAutoaway:(BOOL)enable timeout:(NSInteger)timeout;
+- (void)setPresencePersist:(BOOL)enable;
+- (BOOL)isSignalActivityRequired;
+- (void)signalPresenceActivity;
+- (MEGAChatPresenceConfig *)presenceConfig;
+
+- (MEGAChatStatus)userOnlineStatus:(uint64_t)userHandle;
 
 #pragma mark - Add and remove delegates
 
