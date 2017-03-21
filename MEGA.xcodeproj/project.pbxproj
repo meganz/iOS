@@ -142,6 +142,7 @@
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */; };
+		41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 41840EE91E811CD600D8308D /* MEGAApplication.m */; };
 		418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FA1A668E2700FDBA15 /* ImageIO.framework */; };
 		418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */; };
 		418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852001A668E4400FDBA15 /* libc++.dylib */; };
@@ -257,6 +258,9 @@
 		5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
 		5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
+		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
+		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
+		5B82814D1E7BEDC20079C1BB /* MEGAChatPresenceConfig.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B82814C1E7BEDC20079C1BB /* MEGAChatPresenceConfig.mm */; };
 		947E55A01DA2D8A00025B551 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55951DA2D8A00025B551 /* libevent_core.a */; };
 		947E55A11DA2D8A00025B551 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55961DA2D8A00025B551 /* libevent_extra.a */; };
 		947E55A21DA2D8A00025B551 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 947E55971DA2D8A00025B551 /* libevent_openssl.a */; };
@@ -572,6 +576,8 @@
 		4180A0CB1B5D6034007E3DE2 /* MEGA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = MEGA.entitlements; path = ../MEGA.entitlements; sourceTree = "<group>"; };
 		4182B4ED1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestsTableViewCell.h; sourceTree = "<group>"; };
 		4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactRequestsTableViewCell.m; sourceTree = "<group>"; };
+		41840EE81E811CD600D8308D /* MEGAApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAApplication.h; sourceTree = "<group>"; };
+		41840EE91E811CD600D8308D /* MEGAApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAApplication.m; sourceTree = "<group>"; };
 		418851FA1A668E2700FDBA15 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		418852001A668E4400FDBA15 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -804,6 +810,12 @@
 		5B5B4FFD1E681BAC00DBEB3B /* UIFont+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+MNZCategory.h"; sourceTree = "<group>"; };
 		5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+MNZCategory.m"; sourceTree = "<group>"; };
 		5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-UI-Display-Regular.otf"; path = "Fonts/SF-UI-Display-Regular.otf"; sourceTree = "<group>"; };
+		5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableTableViewCell.h; sourceTree = "<group>"; };
+		5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableTableViewCell.m; sourceTree = "<group>"; };
+		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
+		5B82814B1E7BEDC20079C1BB /* MEGAChatPresenceConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAChatPresenceConfig.h; sourceTree = "<group>"; };
+		5B82814C1E7BEDC20079C1BB /* MEGAChatPresenceConfig.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MEGAChatPresenceConfig.mm; sourceTree = "<group>"; };
+		5B82814E1E7BFB0F0079C1BB /* MEGAChatPresenceConfig+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatPresenceConfig+init.h"; sourceTree = "<group>"; };
 		947E55951DA2D8A00025B551 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
 		947E55961DA2D8A00025B551 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
 		947E55971DA2D8A00025B551 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_openssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_openssl.a; sourceTree = "<group>"; };
@@ -1028,6 +1040,8 @@
 			children = (
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
+				41840EE81E811CD600D8308D /* MEGAApplication.h */,
+				41840EE91E811CD600D8308D /* MEGAApplication.m */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
@@ -1310,6 +1324,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B8281451E7BE7FA0079C1BB /* Cells */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
@@ -1956,6 +1971,16 @@
 			path = "Camera Uploads";
 			sourceTree = "<group>";
 		};
+		5B8281451E7BE7FA0079C1BB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */,
+				5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */,
+				5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		94BB901B1DA66050008182BB /* Private */ = {
 			isa = PBXGroup;
 			children = (
@@ -1968,6 +1993,7 @@
 				419A027A1DACFB53000B9DC9 /* MEGAChatMessage+init.h */,
 				41D6DB491DCB7E3D00EFD0FF /* MEGAChatListItem+init.h */,
 				4155D1D81DE375B700F56DD4 /* MEGAChatListItemList+init.h */,
+				5B82814E1E7BFB0F0079C1BB /* MEGAChatPresenceConfig+init.h */,
 				94BB901C1DA66050008182BB /* DelegateMEGAChatLoggerListener.h */,
 				94BB901D1DA66050008182BB /* DelegateMEGAChatLoggerListener.mm */,
 				94BB901E1DA66050008182BB /* DelegateMEGAChatRequestListener.h */,
@@ -2006,6 +2032,8 @@
 				41D6DB471DCB7DE700EFD0FF /* MEGAChatListItem.mm */,
 				4155D1D51DE36F3900F56DD4 /* MEGAChatListItemList.h */,
 				4155D1D61DE36F3900F56DD4 /* MEGAChatListItemList.mm */,
+				5B82814B1E7BEDC20079C1BB /* MEGAChatPresenceConfig.h */,
+				5B82814C1E7BEDC20079C1BB /* MEGAChatPresenceConfig.mm */,
 			);
 			name = MEGAchat;
 			path = Vendor/MEGAchat;
@@ -2245,6 +2273,7 @@
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */,
 				5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */,
+				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
@@ -2403,6 +2432,7 @@
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,
+				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
 				41ADAA1F1ADE8B8800641BB4 /* SVWebViewControllerActivity.m in Sources */,
@@ -2418,6 +2448,7 @@
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
+				5B82814D1E7BEDC20079C1BB /* MEGAChatPresenceConfig.mm in Sources */,
 				E8C8D7851B219C5B00BCDBA4 /* MEGAQLPreviewControllerTransitionAnimator.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
@@ -2457,6 +2488,7 @@
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
+				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				94BB90201DA66050008182BB /* DelegateMEGAChatLoggerListener.mm in Sources */,

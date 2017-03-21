@@ -1,5 +1,6 @@
 #import "DelegateMEGAChatListener.h"
 #import "MEGAChatListItem+init.h"
+#import "MEGAChatPresenceConfig+init.h"
 #import "MEGAChatSdk+init.h"
 
 using namespace megachat;
@@ -35,12 +36,23 @@ void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api,
     }
 }
 
-void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status) {
-    if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:)]) {
+void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status, BOOL inProgress) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:inProgress:)]) {
         MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
         id<MEGAChatDelegate> tempListener = this->listener;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [tempListener onChatOnlineStatusUpdate:tempMegaChatSDK status:(MEGAChatStatus)status];
+            [tempListener onChatOnlineStatusUpdate:tempMegaChatSDK status:(MEGAChatStatus)status inProgress:inProgress];
+        });
+    }
+}
+
+void DelegateMEGAChatListener::onChatPresenceConfigUpdate(megachat::MegaChatApi *api, megachat::MegaChatPresenceConfig *config) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatPresenceConfigUpdate:presenceConfig:)]) {
+        MegaChatPresenceConfig *tempConfig = config->copy();
+        MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
+        id<MEGAChatDelegate> tempListener = this->listener;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [tempListener onChatPresenceConfigUpdate:tempMegaChatSDK presenceConfig:[[MEGAChatPresenceConfig alloc] initWithMegaChatPresenceConfig:tempConfig cMemoryOwn:YES]];
         });
     }
 }
