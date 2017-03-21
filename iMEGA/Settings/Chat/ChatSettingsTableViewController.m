@@ -7,16 +7,18 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
 
-@interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatRequestDelegate>
+@interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *chatSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusRightDetailLabel;
+@property (nonatomic, getter=isInvalidStatus) BOOL invalidStatus;
 
 @property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
@@ -58,13 +60,19 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    
     [self onlineStatus];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 #pragma mark - IBActions
@@ -92,20 +100,20 @@
 }
 
 - (void)onlineStatus {
-    NSString *onlineStatus;
-    switch ([[MEGASdkManager sharedMEGAChatSdk] onlineStatus]) {
-        case MEGAChatStatusOffline:
-            onlineStatus = AMLocalizedString(@"offline", @"Title of the Offline section");
-            break;
-            
-        case MEGAChatStatusOnline:
-            onlineStatus = AMLocalizedString(@"online", nil);
-            break;
-            
-        default:
-            break;
+    MEGAChatPresenceConfig *presenceConfig = [[MEGASdkManager sharedMEGAChatSdk] presenceConfig];
+    NSString *onlineStatus = [NSString chatStatusString:presenceConfig.onlineStatus];
+    if (onlineStatus) {
+        self.invalidStatus = NO;
+        self.statusLabel.enabled = self.statusRightDetailLabel.enabled = YES;
+    } else {
+        self.invalidStatus = YES;
+        self.statusLabel.enabled = self.statusRightDetailLabel.enabled = NO;
     }
+    
     self.statusRightDetailLabel.text = onlineStatus;
+    if ([MEGAReachabilityManager isReachable]) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (void)enableChatWithSession {
@@ -144,8 +152,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 1;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        //TODO: Enable "Status" and "Use Mobile Data" sections when possible
-        numberOfSections = 1;
+        //TODO: Enable "Use Mobile Data" section when possible
+        numberOfSections = 2;
     }
     
     return numberOfSections;
@@ -171,7 +179,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]]) {
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]] && !self.isInvalidStatus) {
         ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
     }
@@ -219,8 +227,12 @@
 
 #pragma mark - MEGAChatDelegate
 
-- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api status:(MEGAChatStatus)status {
-    //TODO: Update onlineStatus when it changes from Offline to Online
+- (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
+    if (presenceConfig.isPending) {
+        return;
+    }
+    
+    [self onlineStatus];
 }
 
 #pragma mark - MEGAChatRequestDelegate

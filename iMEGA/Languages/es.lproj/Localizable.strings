@@ -898,14 +898,22 @@
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usar datos móviles";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Puedes chatear con tus contactos, compartir ficheros y hacer llamadas y videollamadas.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Aparecerás como 'Desconectado' a tus Contactos y no podrás chatear con ellos.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Ausente tras...";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Bloquear estado";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Mantener el estado elegido aunque no tenga ningún dispositivo conectado.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editado)";
 /*  */
 "online"="Conectado";
+/*  */
+"away"="Ausente";
+/*  */
+"busy"="Ocupado";
 /* title of the contact properties screen */
 "contactInfo"="Información del contacto";
 /*  */
