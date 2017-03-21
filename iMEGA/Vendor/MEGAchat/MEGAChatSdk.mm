@@ -9,6 +9,7 @@
 #import "MEGAChatMessage+init.h"
 #import "MEGAChatListItem+init.h"
 #import "MEGAChatListItemList+init.h"
+#import "MEGAChatPresenceConfig+init.h"
 #import "DelegateMEGAChatRequestListener.h"
 #import "DelegateMEGAChatLoggerListener.h"
 #import "DelegateMEGAChatRoomListener.h"
@@ -110,6 +111,8 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
     self.megaChatApi->localLogout();
 }
 
+#pragma mark - Presence
+
 - (void)setOnlineStatus:(MEGAChatStatus)status delegate:(id<MEGAChatRequestDelegate>)delegate {
     self.megaChatApi->setOnlineStatus((int)status, [self createDelegateMEGAChatRequestListener:delegate singleListener:YES]);
 }
@@ -120,6 +123,30 @@ static DelegateMEGAChatLoggerListener *externalLogger = NULL;
 
 - (MEGAChatStatus)onlineStatus {
     return (MEGAChatStatus)self.megaChatApi->getOnlineStatus();
+}
+
+- (void)setPresenceAutoaway:(BOOL)enable timeout:(NSInteger)timeout {
+    self.megaChatApi->setPresenceAutoaway(enable, (int)timeout);
+}
+
+- (void)setPresencePersist:(BOOL)enable {
+    self.megaChatApi->setPresencePersist(enable);
+}
+
+- (BOOL)isSignalActivityRequired {
+    return self.megaChatApi->isSignalActivityRequired();
+}
+
+- (void)signalPresenceActivity {
+    self.megaChatApi->signalPresenceActivity();
+}
+
+- (MEGAChatPresenceConfig *)presenceConfig {
+    return self.megaChatApi ? [[MEGAChatPresenceConfig alloc] initWithMegaChatPresenceConfig:self.megaChatApi->getPresenceConfig() cMemoryOwn:YES] : nil;
+}
+
+- (MEGAChatStatus)userOnlineStatus:(uint64_t)userHandle {
+    return (MEGAChatStatus)self.megaChatApi->getUserOnlineStatus(userHandle);
 }
 
 #pragma mark - Add and remove delegates
