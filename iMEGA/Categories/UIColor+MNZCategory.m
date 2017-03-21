@@ -1,6 +1,8 @@
 
 #import "UIColor+MNZCategory.h"
 
+#import "MEGAChatSdk.h"
+
 @implementation UIColor (MNZCategory)
 
 #pragma mark - Black
@@ -126,6 +128,33 @@
     CGFloat b = (rgbValue & 0xFF);
     
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus {
+    UIColor *colorForStatusChange;
+    switch (onlineStatus) {
+        case MEGAChatStatusOffline:
+            colorForStatusChange = [self mnz_gray666666];
+            break;
+            
+        case MEGAChatStatusAway:
+            colorForStatusChange = [self mnz_orangeFFA500];
+            break;
+            
+        case MEGAChatStatusOnline:
+            colorForStatusChange = [self mnz_green13E03C];
+            break;
+            
+        case MEGAChatStatusBusy:
+            colorForStatusChange = [self colorFromHexString:@"EB4444"];
+            break;
+            
+        default:
+            colorForStatusChange = nil;
+            break;
+    }
+    
+    return colorForStatusChange;
 }
 
 @end
