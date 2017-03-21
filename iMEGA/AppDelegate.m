@@ -82,12 +82,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *exportedLinks;
 
+@property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
+
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    _signalActivityRequired = NO;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
@@ -1756,6 +1759,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showMainTabBar];
         }
+        self.signalActivityRequired = [api isSignalActivityRequired];
     } else if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
             [[MEGALogger sharedLogger] useSDKLogger];
@@ -1780,6 +1784,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }
+}
+
+- (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
+    self.signalActivityRequired = [api isSignalActivityRequired];
 }
 
 #pragma mark - MEGATransferDelegate
@@ -1926,6 +1934,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
         }
+    }
+}
+
+#pragma mark - MEGAApplicationDelegate
+
+- (void)application:(MEGAApplication *)application willSendTouchEvent:(UIEvent *)event {
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
 }
 

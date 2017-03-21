@@ -142,6 +142,7 @@
 		418072761AA5B9F30078D950 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418072751AA5B9F30078D950 /* SystemConfiguration.framework */; };
 		4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */; };
+		41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 41840EE91E811CD600D8308D /* MEGAApplication.m */; };
 		418851FB1A668E2700FDBA15 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FA1A668E2700FDBA15 /* ImageIO.framework */; };
 		418851FD1A668E3100FDBA15 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */; };
 		418852011A668E4400FDBA15 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 418852001A668E4400FDBA15 /* libc++.dylib */; };
@@ -575,6 +576,8 @@
 		4180A0CB1B5D6034007E3DE2 /* MEGA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = MEGA.entitlements; path = ../MEGA.entitlements; sourceTree = "<group>"; };
 		4182B4ED1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestsTableViewCell.h; sourceTree = "<group>"; };
 		4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactRequestsTableViewCell.m; sourceTree = "<group>"; };
+		41840EE81E811CD600D8308D /* MEGAApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAApplication.h; sourceTree = "<group>"; };
+		41840EE91E811CD600D8308D /* MEGAApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAApplication.m; sourceTree = "<group>"; };
 		418851FA1A668E2700FDBA15 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		418851FC1A668E3100FDBA15 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		418852001A668E4400FDBA15 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -1037,6 +1040,8 @@
 			children = (
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
+				41840EE81E811CD600D8308D /* MEGAApplication.h */,
+				41840EE91E811CD600D8308D /* MEGAApplication.m */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
@@ -2483,6 +2488,7 @@
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
+				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				94BB90201DA66050008182BB /* DelegateMEGAChatLoggerListener.mm in Sources */,
