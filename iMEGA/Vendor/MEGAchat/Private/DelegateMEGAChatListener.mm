@@ -36,7 +36,7 @@ void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api,
     }
 }
 
-void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status, BOOL inProgress) {
+void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status, bool inProgress) {
     if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:inProgress:)]) {
         MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
         id<MEGAChatDelegate> tempListener = this->listener;
