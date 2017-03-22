@@ -741,25 +741,38 @@
 
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
     __block MEGAMessage *megaMessage = [self.messages objectAtIndex:path.item];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSLog(@"retry tapped"); // sent message + discard || delete
-        [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:megaMessage.text];
-        megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-        [self.messages replaceObjectAtIndex:path.item withObject:megaMessage];
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
-        [self.messages removeObjectAtIndex:path.item];
-        [self.collectionView deleteItemsAtIndexPaths:@[path]];
-    }]];
-    [self presentViewController:alertController animated:YES completion:nil];
+    if (megaMessage.status == MEGAChatMessageStatusSendingManual) {
+        if ([[UIDevice currentDevice] iPhoneDevice]) {
+            [self.inputToolbar.contentView.textView resignFirstResponder];
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSLog(@"retry tapped"); // sent message + discard || delete
+            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
+            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:megaMessage.text];
+            megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+            [self.messages replaceObjectAtIndex:path.item withObject:megaMessage];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
+            [self.messages removeObjectAtIndex:path.item];
+            [self.collectionView deleteItemsAtIndexPaths:@[path]];
+        }]];
+        
+        alertController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+        CGRect deleteRect = [[view cellForItemAtIndexPath:path] bounds];
+        popoverPresentationController.sourceRect = deleteRect;
+        popoverPresentationController.sourceView = [view cellForItemAtIndexPath:path];
+        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - UITextViewDelegate
