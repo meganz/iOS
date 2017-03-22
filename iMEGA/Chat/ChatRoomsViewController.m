@@ -528,7 +528,7 @@
             }]];
             
             [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId delegate:self];
+                [[MEGASdkManager sharedMEGAChatSdk] leaveChat:chatListItem.chatId];
                 [self.tableView setEditing:NO];
             }]];
             
@@ -590,11 +590,6 @@
             
             [self.navigationController pushViewController:messagesVC animated:YES];
             
-            break;
-        }
-            
-        case MEGAChatRequestTypeRemoveFromChatRoom: {
-            [self deleteRowByChatId:request.chatHandle];
             break;
         }
             

@@ -121,7 +121,7 @@
     }]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId delegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
     }]];
     
     if ([[UIDevice currentDevice] iPadDevice]) {
@@ -433,18 +433,7 @@
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    switch (request.type) {
-        case MEGAChatRequestTypeRemoveFromChatRoom: {
-            if (error.type) {
-                return;
-            } else {
-                if (request.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
-            }
-            break;
-        }
-            
+    switch (request.type) {            
         case MEGAChatRequestTypeUpdatePeerPermissions: {
             if (error.type) {
                 //TODO: Manage errors of update peer permissions request 
