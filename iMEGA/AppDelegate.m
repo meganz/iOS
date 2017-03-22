@@ -1759,7 +1759,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showMainTabBar];
         }
-        self.signalActivityRequired = [api isSignalActivityRequired];
     } else if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
             [[MEGALogger sharedLogger] useSDKLogger];
@@ -1787,7 +1786,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
-    self.signalActivityRequired = [api isSignalActivityRequired];
+    if (!presenceConfig.isPending) {
+        self.signalActivityRequired = presenceConfig.isSignalActivityRequired;
+    }
 }
 
 #pragma mark - MEGATransferDelegate
