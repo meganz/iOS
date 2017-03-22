@@ -10,6 +10,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) NSDate *autoAwayTimeout;
 @property (readonly, nonatomic, getter=isPersist) BOOL persist;
 @property (readonly, nonatomic, getter=isPending) BOOL pending;
+@property (readonly, nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
 
 - (instancetype)clone;
 
