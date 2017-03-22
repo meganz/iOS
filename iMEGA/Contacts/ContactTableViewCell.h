@@ -4,6 +4,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet UILabel *shareLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;

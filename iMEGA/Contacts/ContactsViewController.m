@@ -562,6 +562,9 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         cell.nameLabel.text = userName ? userName : user.email;
         
+        cell.onlineStatusView.layer.cornerRadius = (cell.onlineStatusView.frame.size.width / 2);
+        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+        
         int numFilesShares = [[[[MEGASdkManager sharedMEGASdk] inSharesForUser:user] size] intValue];
         if (numFilesShares == 0) {
             cell.shareLabel.text = AMLocalizedString(@"noFoldersShared", @"No folders shared");
