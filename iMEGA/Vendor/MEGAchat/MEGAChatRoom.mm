@@ -40,13 +40,12 @@ using namespace megachat;
 
 - (NSString *)description {
     NSString *ownPrivilege = [MEGAChatRoom stringForPrivilege:self.ownPrivilege];
-    NSString *onlineStatus = [MEGAChatRoom stringForStatus:self.onlineStatus];
     NSString *changes      = [MEGAChatRoom stringForChangeType:self.changes];
     NSString *active       = self.isActive ? @"YES" : @"NO";
     NSString *group        = self.isGroup ? @"YES" : @"NO";
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@, own privilege=%@, peer count=%lu, group=%@, changes=%@, unread=%ld, user typing=%llu, active=%@>",
-            [self class], self.chatId, self.title, onlineStatus, ownPrivilege, (unsigned long)self.peerCount, group, changes, (long)self.unreadCount, self.userTypingHandle, active];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, own privilege=%@, peer count=%lu, group=%@, changes=%@, unread=%ld, user typing=%llu, active=%@>",
+            [self class], self.chatId, self.title, ownPrivilege, (unsigned long)self.peerCount, group, changes, (long)self.unreadCount, self.userTypingHandle, active];
 }
 
 - (uint64_t)chatId {
@@ -77,10 +76,6 @@ using namespace megachat;
 
 - (NSInteger)unreadCount {
     return self.megaChatRoom ? self.megaChatRoom->getUnreadCount() : 0;
-}
-
-- (MEGAChatStatus)onlineStatus {
-    return (MEGAChatStatus) (self.megaChatRoom ? self.megaChatRoom->getOnlineStatus() : 0);
 }
 
 - (uint64_t)userTypingHandle {
@@ -188,10 +183,6 @@ using namespace megachat;
             break;
     }
     return result;
-}
-
-+ (NSString *)stringForStatus:(MEGAChatStatus)status {
-    return [[NSString alloc] initWithUTF8String:MegaChatRoom::statusToString((int)status)];
 }
 
 @end

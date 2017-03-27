@@ -39,15 +39,14 @@ using namespace megachat;
 }
 
 - (NSString *)description {
-    NSString *onlineStatus = [MEGAChatListItem stringForStatus:self.onlineStatus];
     NSString *changes      = [MEGAChatListItem stringForChangeType:self.changes];
     NSString *active       = self.isActive ? @"YES" : @"NO";
     NSString *group        = self.isGroup ? @"YES" : @"NO";
     NSString *visibility   = [MEGAChatListItem stringForVisibility:self.visibility];
     NSString *type         = [MEGAChatListItem stringForMessageType:self.lastMessageType];
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, online status=%@, changes=%@, last message=%@, last date=%@, last type=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
-            [self class], self.chatId, self.title, onlineStatus, changes, self.lastMessage, self.lastMessageDate, type, visibility, (long)self.unreadCount, group, active];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, changes=%@, last message=%@, last date=%@, last type=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
+            [self class], self.chatId, self.title, changes, self.lastMessage, self.lastMessageDate, type, visibility, (long)self.unreadCount, group, active];
 }
 
 - (uint64_t)chatId {
@@ -62,10 +61,6 @@ using namespace megachat;
 
 - (MEGAChatListItemChangeType)changes {
     return (MEGAChatListItemChangeType) (self.megaChatListItem ? self.megaChatListItem->getChanges() : 0x00);
-}
-
-- (MEGAChatStatus)onlineStatus {
-    return (MEGAChatStatus) (self.megaChatListItem ? self.megaChatListItem->getOnlineStatus() : 0);
 }
 
 - (NSInteger)visibility {
@@ -143,30 +138,6 @@ using namespace megachat;
             break;
     }
     return result;
-}
-
-+ (NSString *)stringForStatus:(MEGAChatStatus)status {
-    NSString *result;
-    switch ((NSInteger)status) {
-        case 1:
-            result = @"Offline";
-            break;
-        case 2:
-            result = @"Away";
-            break;
-        case 3:
-            result = @"Online";
-            break;
-        case 4:
-            result = @"Bussy";
-            break;
-            
-        default:
-            result = @"Default";
-            break;
-    }
-    return result;
-
 }
 
 + (NSString *)stringForVisibility:(NSInteger)visibility {

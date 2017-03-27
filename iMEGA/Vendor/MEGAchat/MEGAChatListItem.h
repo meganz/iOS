@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
-    MEGAChatListItemChangeTypeStatus       = 0x01,
+    MEGAChatListItemChangeTypeStatus       = 0x01,  // Obsolete
     MEGAChatListItemChangeTypeVisibility   = 0x02,
     MEGAChatListItemChangeTypeUnreadCount  = 0x04,
     MEGAChatListItemChangeTypeParticipants = 0x08,
@@ -11,7 +11,6 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeLastTs       = 0x80
 };
 
-typedef NS_ENUM (NSInteger, MEGAChatStatus);
 typedef NS_ENUM (NSInteger, MEGAChatMessageType);
 
 @interface MEGAChatListItem : NSObject
@@ -19,7 +18,6 @@ typedef NS_ENUM (NSInteger, MEGAChatMessageType);
 @property (readonly, nonatomic) uint64_t chatId;
 @property (readonly, nonatomic) NSString *title;
 @property (readonly, nonatomic) MEGAChatListItemChangeType changes;
-@property (readonly, nonatomic) MEGAChatStatus onlineStatus;
 @property (readonly, nonatomic) NSInteger visibility;
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
@@ -36,7 +34,6 @@ typedef NS_ENUM (NSInteger, MEGAChatMessageType);
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType;
 
 + (NSString *)stringForChangeType:(MEGAChatListItemChangeType)changeType;
-+ (NSString *)stringForStatus:(MEGAChatStatus)status;
 + (NSString *)stringForVisibility:(NSInteger)visibility;
 + (NSString *)stringForMessageType:(MEGAChatMessageType)type;
 

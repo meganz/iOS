@@ -36,12 +36,12 @@ void DelegateMEGAChatListener::onChatInitStateUpdate(megachat::MegaChatApi *api,
     }
 }
 
-void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, int status, bool inProgress) {
-    if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:status:inProgress:)]) {
+void DelegateMEGAChatListener::onChatOnlineStatusUpdate(megachat::MegaChatApi *api, megachat::MegaChatHandle userHandle, int status, bool inProgress) {
+    if (listener != nil && [listener respondsToSelector:@selector(onChatOnlineStatusUpdate:userHandle:status:inProgress:)]) {
         MEGAChatSdk *tempMegaChatSDK = this->megaChatSDK;
         id<MEGAChatDelegate> tempListener = this->listener;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [tempListener onChatOnlineStatusUpdate:tempMegaChatSDK status:(MEGAChatStatus)status inProgress:inProgress];
+            [tempListener onChatOnlineStatusUpdate:tempMegaChatSDK userHandle:userHandle status:(MEGAChatStatus)status inProgress:inProgress];
         });
     }
 }
