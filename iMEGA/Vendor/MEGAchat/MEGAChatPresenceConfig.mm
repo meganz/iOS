@@ -15,7 +15,6 @@ using namespace megachat;
 @implementation MEGAChatPresenceConfig
 
 - (instancetype)initWithMegaChatPresenceConfig:(megachat::MegaChatPresenceConfig *)megaChatPresenceConfig cMemoryOwn:(BOOL)cMemoryOwn {
-    NSParameterAssert(megaChatPresenceConfig);
     self = [super init];
     
     if (self != nil) {
