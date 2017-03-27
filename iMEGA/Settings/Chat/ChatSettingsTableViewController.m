@@ -111,7 +111,7 @@
     }
     
     self.statusRightDetailLabel.text = onlineStatus;
-    if ([MEGAReachabilityManager isReachable]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] && [MEGAReachabilityManager isReachable]) {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
