@@ -17,8 +17,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege) {
     MEGAChatRoomPrivilegeModerator = 3
 };
 
-typedef NS_ENUM (NSInteger, MEGAChatStatus);
-
 @interface MEGAChatRoom : NSObject
 
 /**
@@ -35,7 +33,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 @property (readonly, nonatomic) NSString *title;
 @property (readonly, nonatomic) MEGAChatRoomChangeType changes;
 @property (readonly, nonatomic) NSInteger unreadCount;
-@property (readonly, nonatomic) MEGAChatStatus onlineStatus;
 @property (readonly, nonatomic) uint64_t userTypingHandle;
 @property (readonly, nonatomic, getter=isActive) BOOL active;
 
@@ -56,6 +53,5 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (NSString *)stringForPrivilege:(MEGAChatRoomPrivilege)privilege;
 + (NSString *)stringForChangeType:(MEGAChatRoomChangeType)changeType;
-+ (NSString *)stringForStatus:(MEGAChatStatus)status;
 
 @end
