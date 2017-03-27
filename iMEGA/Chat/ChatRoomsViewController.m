@@ -439,7 +439,7 @@
         cell.avatarImageView.image = avatar;
     } else {
         [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
-        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:chatListItem.onlineStatus];
+        cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
         cell.onlineStatusView.hidden             = NO;
         cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
     }
@@ -611,10 +611,6 @@
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
-                case MEGAChatListItemChangeTypeStatus:
-                    cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:item.onlineStatus];
-                    break;
-                    
                 case MEGAChatListItemChangeTypeVisibility:
                     break;
                     
@@ -651,12 +647,21 @@
     }
 }
 
-- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
     if (inProgress) {
         return;
     }
     
-    [self customNavigationBarLabel];
+    if (userHandle == api.myUserHandle) {
+        [self customNavigationBarLabel];
+    } else {
+        uint64_t chatId = [api chatIdByUserHandle:userHandle];
+        NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle]];
+        }
+    }
 }
 
 @end

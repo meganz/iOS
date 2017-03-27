@@ -10,7 +10,7 @@
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGAMessage.h"
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate>
+@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -107,6 +107,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [self customNavigationBarLabel];
     [self updateUnreadLabel];
 }
@@ -115,6 +116,7 @@
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [super viewWillDisappear:animated];
 }
 
@@ -166,13 +168,7 @@
             label.attributedText = titleMutableAttributedString;
         }
     } else {
-        NSString *chatRoomState;
-        if (self.chatRoom.onlineStatus > MEGAChatStatusOffline) {
-            chatRoomState = AMLocalizedString(@"online", nil);
-        } else {
-            chatRoomState = AMLocalizedString(@"offline", @"Title of the Offline section");
-        }
-        
+        NSString *chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
         label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:chatRoomState];
     }
     
@@ -887,10 +883,6 @@
     MEGALogInfo(@"onChatRoomUpdate %@", chat);
     self.chatRoom = chat;
     switch (chat.changes) {
-        case MEGAChatRoomChangeTypeStatus:
-            [self customNavigationBarLabel];
-            break;
-            
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
@@ -933,6 +925,14 @@
         default:
             break;
     }
+}
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress || userHandle == api.myUserHandle) {
+        return;
+    }
+    
+    [self customNavigationBarLabel];
 }
 
 @end
