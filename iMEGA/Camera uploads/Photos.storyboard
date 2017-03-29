@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -304,7 +304,7 @@
                     <tabBarItem key="tabBarItem" tag="1" title="Camera Uploads" image="cameraUploadsIcon" id="9PP-sR-Gh2"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="o0V-gx-grO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="o0V-gx-grO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -389,7 +389,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inc-er-uaq">
-                                <rect key="frame" x="66.5" y="442" width="242" height="42"/>
+                                <rect key="frame" x="66.5" y="442" width="242" height="41"/>
                                 <color key="backgroundColor" red="1" green="0.30196079611778259" blue="0.32156863808631897" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="242" id="yGR-5u-SCg"/>
@@ -409,7 +409,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAc-18-aEo">
-                                <rect key="frame" x="66.5" y="500" width="242" height="46"/>
+                                <rect key="frame" x="66.5" y="499" width="242" height="46"/>
                                 <color key="backgroundColor" red="0.93333333730697632" green="0.93333333730697632" blue="0.93333333730697632" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="ABa-Vz-QDl"/>
@@ -456,13 +456,19 @@
                     <navigationItem key="navigationItem" id="8Ex-Gd-tHN"/>
                     <connections>
                         <outlet property="enableButton" destination="inc-er-uaq" id="BBZ-M8-5Jo"/>
+                        <outlet property="enableButtonTopLayoutConstraint" destination="O88-GP-yxG" id="aXK-xq-cRv"/>
                         <outlet property="imageHeightLayoutConstraint" destination="tpc-hH-5EX" id="sln-8b-QsC"/>
+                        <outlet property="imageTopLayoutConstraint" destination="uUj-He-pA7" id="xKW-qz-yvu"/>
                         <outlet property="imageView" destination="djp-QD-Fzh" id="U82-pk-K0S"/>
                         <outlet property="imageWidthLayoutConstraint" destination="MOF-zJ-fdZ" id="YUQ-aP-7xu"/>
                         <outlet property="skipButton" destination="vAc-18-aEo" id="Xqh-YJ-NlD"/>
+                        <outlet property="skipButtonTopLayoutConstraint" destination="EZY-ap-j4K" id="56y-lw-aW4"/>
                         <outlet property="topLabel" destination="vnD-OB-rty" id="Fua-vV-hph"/>
+                        <outlet property="topLabelTopLayoutConstraint" destination="YMi-Er-6KH" id="yEW-1j-LIG"/>
                         <outlet property="uploadVideosLabel" destination="lh4-9k-L1x" id="YLu-ab-8GA"/>
+                        <outlet property="uploadVideosLabelTopLayoutConstraint" destination="YBc-Im-TYo" id="Uhi-jX-vGd"/>
                         <outlet property="uploadVideosSwitch" destination="fUE-j7-GEh" id="2Pd-a5-htu"/>
+                        <outlet property="uploadVideosSwitchTopLayoutConstraint" destination="Bhn-0p-jn3" id="960-HN-2Gn"/>
                         <outlet property="useCellularConnectionLabel" destination="fAH-PT-gIC" id="9TQ-SQ-i4T"/>
                         <outlet property="useCellularConnectionSwitch" destination="CuB-uo-3df" id="rff-ny-ddN"/>
                     </connections>
@@ -476,7 +482,7 @@
             <objects>
                 <navigationController storyboardIdentifier="CameraUploadsPopUpNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="37X-KQ-TGF" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="e0Q-gH-Idh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e0Q-gH-Idh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
