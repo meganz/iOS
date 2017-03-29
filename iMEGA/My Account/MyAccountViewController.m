@@ -60,15 +60,18 @@
 @property (weak, nonatomic) IBOutlet UILabel *proStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *proExpiryDateLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *logoutButtonTopImageView;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UIImageView *logoutButtonBottomImageView;
 
 @property (nonatomic) MEGAAccountType megaAccountType;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usedLabelTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *accountTypeLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *freeViewTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *proViewTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutButtonTopLayoutConstraint;
 
 @end
 
@@ -107,10 +110,13 @@
     
     if ([[UIDevice currentDevice] iPhone4X]) {
         self.usedLabelTopLayoutConstraint.constant = 8.0f;
+        self.accountTypeLabelTopLayoutConstraint.constant = 9.0f;
         self.freeViewTopLayoutConstraint.constant = 8.0f;
         self.upgradeAccountTopLayoutConstraint.constant = 8.0f;
         self.proViewTopLayoutConstraint.constant = 8.0f;
-        self.logoutTopLayoutConstraint.constant = 105.0f;
+        self.logoutButtonTopLayoutConstraint.constant = 0.0f;
+        self.logoutButtonTopImageView.backgroundColor = nil;
+        self.logoutButtonBottomImageView.backgroundColor = nil;
     }
 }
 
