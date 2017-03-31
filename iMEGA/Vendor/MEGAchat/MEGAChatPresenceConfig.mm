@@ -47,8 +47,8 @@ using namespace megachat;
     return self.megaChatPresenceConfig ? self.megaChatPresenceConfig->isAutoawayEnabled() : NO;
 }
 
-- (NSDate *)autoAwayTimeout {
-    return self.megaChatPresenceConfig ? [[NSDate alloc] initWithTimeIntervalSince1970:self.megaChatPresenceConfig->getAutoawayTimeout()] : nil;
+- (int64_t)autoAwayTimeout {
+    return self.megaChatPresenceConfig ? self.megaChatPresenceConfig->getAutoawayTimeout() : 0;
 }
 
 - (BOOL)isPersist {
