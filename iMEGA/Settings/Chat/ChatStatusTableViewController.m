@@ -10,7 +10,7 @@
 
 #import "SelectableTableViewCell.h"
 
-@interface ChatStatusTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
+@interface ChatStatusTableViewController () <UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (nonatomic) MEGAChatPresenceConfig *presenceConfig;
 @property (weak, nonatomic) NSIndexPath *currentStatusIndexPath;
@@ -26,7 +26,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *autoAwayLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *autoAwaySwitch;
-@property (weak, nonatomic) IBOutlet UILabel *autoAwayTimeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *autoAwayTimeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *autoAwayTimeSaveButton;
+@property (nonatomic) NSInteger autoAwayTimeoutInMinutes;
 
 @property (weak, nonatomic) IBOutlet UILabel *statusPersistenceLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *statusPersistenceSwitch;
@@ -66,6 +68,8 @@
     
     self.presenceConfig = [[MEGASdkManager sharedMEGAChatSdk] presenceConfig];
     [self updateUIWithPresenceConfig];
+    
+    self.autoAwayTimeoutInMinutes = (self.presenceConfig.autoAwayTimeout / 60);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -88,7 +92,7 @@
     [self updateCurrentIndexPathForOnlineStatus];
     
     self.autoAwaySwitch.on = self.presenceConfig.isAutoAwayEnabled;
-    self.autoAwayTimeLabel.text = [NSString stringWithFormat:@"%ld", (long)[self.presenceConfig.autoAwayTimeout minute]];
+    [self updateAutoAwayTimeLabel];
     
     self.statusPersistenceSwitch.on = self.presenceConfig.isPersist;
     
@@ -127,6 +131,43 @@
     cell.redCheckmarkImageView.hidden = NO;
 }
 
+- (void)setPresenceAutoAway:(BOOL)boolValue {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setPresenceAutoaway:boolValue timeout:(self.autoAwayTimeoutInMinutes * 60)];
+}
+
+- (void)updateAutoAwayTimeLabel {
+    NSString *xMinutes = AMLocalizedString(@"xMinutes", nil);
+    self.autoAwayTimeTextField.text = [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+    
+    self.autoAwayTimeSaveButton.hidden = YES;
+}
+
+#pragma mark - IBActions
+
+- (IBAction)autoAwayValueChanged:(UISwitch *)sender {
+    [self setPresenceAutoAway:sender.on];
+}
+
+- (IBAction)autoAwayTimeSaveButtonTouchUpInside:(UIButton *)sender {
+    [self.autoAwayTimeTextField resignFirstResponder];
+    self.autoAwayTimeSaveButton.enabled = NO;
+    self.autoAwayTimeSaveButton.hidden = YES;
+    
+    self.autoAwayTimeoutInMinutes = self.autoAwayTimeTextField.text.intValue;
+    
+    [self setPresenceAutoAway:self.autoAwaySwitch.isOn];
+}
+
+- (IBAction)statusPersistenceValueChanged:(UISwitch *)sender {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setPresencePersist:sender.on];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -162,7 +203,7 @@
             
         case 2:
             titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-            titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%ld", (long)[self.presenceConfig.autoAwayTimeout minute]]];
+            titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
             break;
     }
     
@@ -173,6 +214,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.autoAwayTimeTextField.isEditing) {
+        [self.autoAwayTimeTextField resignFirstResponder];
+    }
     
     if (self.currentStatusIndexPath == indexPath) {
         return;
@@ -200,27 +245,36 @@
                 break;
         }
     } else if (indexPath.section == 2 && indexPath.row == 1) { //Auto-away - Number of minutes for Auto-away
-        //TODO: Show date picker to select how many minutes do you want for enabling auto-away
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
+        [self.autoAwayTimeTextField becomeFirstResponder];
     }
 }
 
-#pragma mark - IBActions
+#pragma mark - UITextFieldDelegate
 
-- (IBAction)autoAwayValueChanged:(UISwitch *)sender {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    textField.text = [NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setPresenceAutoaway:sender.on timeout:(10*60)];
+    self.autoAwayTimeSaveButton.enabled = NO;
+    self.autoAwayTimeSaveButton.hidden = NO;
+    
+    return YES;
 }
 
-- (IBAction)statusPersistenceValueChanged:(UISwitch *)sender {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    [[MEGASdkManager sharedMEGAChatSdk] setPresencePersist:sender.on];
+    NSString *textFieldString = [textField text];
+    NSString *currentText = [textFieldString stringByReplacingCharactersInRange:range withString:string];
+    
+    if ([currentText isEqualToString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]]) {
+        self.autoAwayTimeSaveButton.enabled = NO;
+        return NO;
+    } else if ([currentText isEqualToString:@"0"] || [currentText isEqualToString:@""]) {
+        self.autoAwayTimeSaveButton.enabled = NO;
+    } else {
+        self.autoAwayTimeSaveButton.enabled = YES;
+    }
+    
+    return YES;
 }
 
 #pragma mark - DZNEmptyDataSetSource

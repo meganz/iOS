@@ -27,6 +27,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Languages
 
++ (NSArray *)languagesSupportedIDs;
 + (BOOL)isLanguageSupported:(NSString *)languageID;
 + (NSString *)languageID:(NSUInteger)index;
 
