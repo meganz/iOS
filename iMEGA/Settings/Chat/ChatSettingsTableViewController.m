@@ -82,6 +82,7 @@
     if (sender.isOn) {
         [self enableChatWithSession];
     } else {
+        self.invalidStatus = YES;
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
     }
 }
