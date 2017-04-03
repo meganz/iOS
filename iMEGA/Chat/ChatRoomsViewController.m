@@ -13,6 +13,7 @@
 #import "DateTools.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "SVProgressHUD.h"
 
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
@@ -330,9 +331,72 @@
     if (onlineStatusString) {
         UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"chat", @"Chat section header") subtitle:onlineStatusString];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        label.userInteractionEnabled = YES;
+        label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
         [self.navigationItem setTitleView:label];
     } else {
         self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
+    }
+}
+
+- (void)chatRoomTitleDidTap {
+    if ([[MEGASdkManager sharedMEGAChatSdk] presenceConfig] != nil) {
+        [self presentChangeOnlineStatusAlertController];
+    }
+}
+
+- (void)presentChangeOnlineStatusAlertController {
+    UIAlertController *changeOnlineStatusAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [changeOnlineStatusAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    MEGAChatStatus onlineStatus = [[MEGASdkManager sharedMEGAChatSdk] onlineStatus];
+    if (MEGAChatStatusOnline != onlineStatus) {
+        UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeToOnlineStatus:MEGAChatStatusOnline];
+        }];
+        [onlineAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [changeOnlineStatusAlertController addAction:onlineAlertAction];
+    }
+    
+    if (MEGAChatStatusAway != onlineStatus) {
+        UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeToOnlineStatus:MEGAChatStatusAway];
+        }];
+        [awayAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [changeOnlineStatusAlertController addAction:awayAlertAction];
+    }
+    
+    if (MEGAChatStatusBusy != onlineStatus) {
+        UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeToOnlineStatus:MEGAChatStatusBusy];
+        }];
+        [busyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [changeOnlineStatusAlertController addAction:busyAlertAction];
+    }
+    
+    if (MEGAChatStatusOffline != onlineStatus) {
+        UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeToOnlineStatus:MEGAChatStatusOffline];
+        }];
+        [offlineAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [changeOnlineStatusAlertController addAction:offlineAlertAction];
+    }
+    
+    changeOnlineStatusAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    changeOnlineStatusAlertController.popoverPresentationController.sourceView = self.view;
+    changeOnlineStatusAlertController.popoverPresentationController.sourceRect = self.navigationController.navigationBar.frame;
+    
+    [self presentViewController:changeOnlineStatusAlertController animated:YES completion:nil];
+}
+
+- (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    if (chatStatus != [[MEGASdkManager sharedMEGAChatSdk] onlineStatus]) {
+        [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:chatStatus];
     }
 }
 
@@ -651,6 +715,9 @@
     if (inProgress) {
         return;
     }
+    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD dismiss];
     
     if (userHandle == api.myUserHandle) {
         [self customNavigationBarLabel];
