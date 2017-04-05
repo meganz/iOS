@@ -234,56 +234,38 @@
     if ([error type]) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD dismiss];
+        NSString *alertMessage;
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs:
-            case MEGAErrorTypeApiENoent: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"invalidMailOrPassword", nil)
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-                [alert show];
-                
+            case MEGAErrorTypeApiENoent:
+                alertMessage = AMLocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
                 [self.emailTextField becomeFirstResponder];
                 break;
-            }
                 
-            case MEGAErrorTypeApiETooMany: {
-                NSString *message = [NSString stringWithFormat:AMLocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-                [alert show];
-            
+            case MEGAErrorTypeApiETooMany:
+                alertMessage = [NSString stringWithFormat:AMLocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
                 break;
-            }
                 
-            case MEGAErrorTypeApiEIncomplete: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-                [alert show];
-            
+            case MEGAErrorTypeApiEIncomplete:
+                alertMessage = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
                 break;
-            }
                 
-            case MEGAErrorTypeApiEBlocked: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                                message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended")
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-                [alert show];
+            case MEGAErrorTypeApiEBlocked:
+                alertMessage = AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended");
                 break;
-            }
                 
             default:
+                alertMessage = error.name;
                 break;
         }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+        
         return;
     }
     
