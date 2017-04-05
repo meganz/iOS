@@ -222,6 +222,7 @@ using namespace megachat;
             break;
         case MEGAChatMessageReasonNoWriteAccess:
             result = @"No write access";
+            break;
         default:
             result = @"Default";
             break;
