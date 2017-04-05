@@ -675,7 +675,7 @@
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
-                case MEGAChatListItemChangeTypeVisibility:
+                case MEGAChatListItemChangeTypeOwnPrivilege:
                     break;
                     
                 case MEGAChatListItemChangeTypeUnreadCount:

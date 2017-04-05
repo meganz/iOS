@@ -1,6 +1,7 @@
 #import "MEGAChatListItem.h"
 #import "megachatapi.h"
-#import "MEGAChatMessage+init.h"
+#import "MEGAChatMessage.h"
+#import "MEGAChatRoom.h"
 
 using namespace megachat;
 
@@ -42,11 +43,11 @@ using namespace megachat;
     NSString *changes      = [MEGAChatListItem stringForChangeType:self.changes];
     NSString *active       = self.isActive ? @"YES" : @"NO";
     NSString *group        = self.isGroup ? @"YES" : @"NO";
-    NSString *visibility   = [MEGAChatListItem stringForVisibility:self.visibility];
+    NSString *ownPrivilege = [MEGAChatListItem stringForOwnPrivilege:self.ownPrivilege];
     NSString *type         = [MEGAChatListItem stringForMessageType:self.lastMessageType];
     
-    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, changes=%@, last message=%@, last date=%@, last type=%@, visibility=%@, unread=%ld, group=%@, active=%@>",
-            [self class], self.chatId, self.title, changes, self.lastMessage, self.lastMessageDate, type, visibility, (long)self.unreadCount, group, active];
+    return [NSString stringWithFormat:@"<%@: chatId=%llu, title=%@, changes=%@, last message=%@, last date=%@, last type=%@, own privilege=%@, unread=%ld, group=%@, active=%@>",
+            [self class], self.chatId, self.title, changes, self.lastMessage, self.lastMessageDate, type, ownPrivilege, (long)self.unreadCount, group, active];
 }
 
 - (uint64_t)chatId {
@@ -63,8 +64,8 @@ using namespace megachat;
     return (MEGAChatListItemChangeType) (self.megaChatListItem ? self.megaChatListItem->getChanges() : 0x00);
 }
 
-- (NSInteger)visibility {
-    return self.megaChatListItem ? self.megaChatListItem->getVisibility() : -1;
+- (MEGAChatRoomPrivilege)ownPrivilege {
+    return self.megaChatListItem ? (MEGAChatRoomPrivilege)self.megaChatListItem->getOwnPrivilege() : MEGAChatRoomPrivilegeUnknown;
 }
 
 - (NSInteger)unreadCount {
@@ -111,8 +112,8 @@ using namespace megachat;
         case MEGAChatListItemChangeTypeStatus:
             result = @"Status";
             break;
-        case MEGAChatListItemChangeTypeVisibility:
-            result = @"Visibility";
+        case MEGAChatListItemChangeTypeOwnPrivilege:
+            result = @"Own Privilege";
             break;
         case MEGAChatListItemChangeTypeUnreadCount:
             result = @"Unread count";
@@ -140,24 +141,24 @@ using namespace megachat;
     return result;
 }
 
-+ (NSString *)stringForVisibility:(NSInteger)visibility {
++ (NSString *)stringForOwnPrivilege:(MEGAChatRoomPrivilege)ownPrivilege {
     NSString *result;
     
-    switch (visibility) {
-        case -1:
+    switch (ownPrivilege) {
+        case MEGAChatRoomPrivilegeUnknown:
             result = @"Unknown";
             break;
-        case 0:
-            result = @"Hidden";
+        case MEGAChatRoomPrivilegeRm:
+            result = @"Removed";
             break;
-        case 1:
-            result = @"Visible";
+        case MEGAChatRoomPrivilegeRo:
+            result = @"Read only";
             break;
-        case 2:
-            result = @"Inactive";
+        case MEGAChatRoomPrivilegeStandard:
+            result = @"Standard";
             break;
-        case 3:
-            result = @"Blocked";
+        case MEGAChatRoomPrivilegeModerator:
+            result = @"Moderator";
             break;
             
         default:

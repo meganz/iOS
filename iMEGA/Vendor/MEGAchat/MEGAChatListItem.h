@@ -2,7 +2,7 @@
 
 typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
     MEGAChatListItemChangeTypeStatus       = 0x01,  // Obsolete
-    MEGAChatListItemChangeTypeVisibility   = 0x02,
+    MEGAChatListItemChangeTypeOwnPrivilege = 0x02,
     MEGAChatListItemChangeTypeUnreadCount  = 0x04,
     MEGAChatListItemChangeTypeParticipants = 0x08,
     MEGAChatListItemChangeTypeTitle        = 0x10,
@@ -12,13 +12,14 @@ typedef NS_ENUM (NSInteger, MEGAChatListItemChangeType) {
 };
 
 typedef NS_ENUM (NSInteger, MEGAChatMessageType);
+typedef NS_ENUM (NSInteger, MEGAChatRoomPrivilege);
 
 @interface MEGAChatListItem : NSObject
 
 @property (readonly, nonatomic) uint64_t chatId;
 @property (readonly, nonatomic) NSString *title;
 @property (readonly, nonatomic) MEGAChatListItemChangeType changes;
-@property (readonly, nonatomic) NSInteger visibility;
+@property (readonly, nonatomic) MEGAChatRoomPrivilege ownPrivilige;
 @property (readonly, nonatomic) NSInteger unreadCount;
 @property (readonly, nonatomic, getter=isGroup) BOOL group;
 @property (readonly, nonatomic) uint64_t peerHandle;
@@ -34,7 +35,7 @@ typedef NS_ENUM (NSInteger, MEGAChatMessageType);
 - (BOOL)hasChangedForType:(MEGAChatListItemChangeType)changeType;
 
 + (NSString *)stringForChangeType:(MEGAChatListItemChangeType)changeType;
-+ (NSString *)stringForVisibility:(NSInteger)visibility;
++ (NSString *)stringForOwnPrivilege:(MEGAChatRoomPrivilege)ownPrivilege;
 + (NSString *)stringForMessageType:(MEGAChatMessageType)type;
 
 @end
