@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageType) {
     MEGAChatMessageTypePrivilegeChange   = 4,
     MEGAChatMessageTypeChatTitle         = 5,
     MEGAChatMessageTypeAttachment        = 16,
-    MEGAChatMessageTypeRevoke            = 17,
+    MEGAChatMessageTypeRevokeAttachment  = 17,
     MEGAChatMessageTypeContact           = 18
 };
 
@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageReason) {
     MEGAChatMessageReasonPeersChanged  = 1,
     MEGAChatMessageReasonTooOld        = 2,
     MEGAChatMessageReasonGeneralReject = 3,
-    MEGAChatMessageReasonNoWriteAccess  = 4
+    MEGAChatMessageReasonNoWriteAccess = 4,
+    MEGAChatMessageReasonNoChanges     = 6
 };
 
 @interface MEGAChatMessage : NSObject

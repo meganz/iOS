@@ -193,8 +193,8 @@ using namespace megachat;
         case MEGAChatMessageTypeAttachment:
             result = @"Attachment";
             break;
-        case MEGAChatMessageTypeRevoke:
-            result = @"Revoke";
+        case MEGAChatMessageTypeRevokeAttachment:
+            result = @"Revoke attachment";
             break;
         case MEGAChatMessageTypeContact:
             result = @"Contact";
