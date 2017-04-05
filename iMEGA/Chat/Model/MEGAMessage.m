@@ -175,8 +175,8 @@
                     _text = @"MEGAChatMessageTypeAttachment";
                     break;
                     
-                case MEGAChatMessageTypeRevoke:
-                    _text = @"MEGAChatMessageTypeRevoke";
+                case MEGAChatMessageTypeRevokeAttachment:
+                    _text = @"MEGAChatMessageTypeRevokeAttachment";
                     break;
                     
                 case MEGAChatMessageTypeContact:
