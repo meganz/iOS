@@ -236,26 +236,35 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    [SVProgressHUD dismiss];
+    
     if ([error type]) {
+        NSString *alertMessage;
         switch ([error type]) {
                 
-            case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"emailAlreadyRegistered", nil)];
+            case MEGAErrorTypeApiEExist:
+                alertMessage = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 [self.emailTextField becomeFirstResponder];
-                
                 [self.createAccountButton setEnabled:YES];
                 break;
-            }
                 
             default:
+                alertMessage = error.name;
                 break;
         }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+        
         return;
     }
     
     switch ([request type]) {
         case MEGARequestTypeCreateAccount: {
-            [SVProgressHUD dismiss];
             
             [self.nameTextField setEnabled:NO];
             [self.emailTextField setEnabled:NO];
