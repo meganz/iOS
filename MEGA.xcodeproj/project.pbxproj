@@ -1191,7 +1191,7 @@
 				413199751BD7BD5D002CD6EA /* NSDate+DateTools.m */,
 			);
 			name = DateTools;
-			path = Vendor/DateTools/DateTools;
+			path = Vendor/DateTools/DateTools/DateTools;
 			sourceTree = "<group>";
 		};
 		4147C2CE1B4EE8A400A37044 /* CoreData */ = {
@@ -2744,6 +2744,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
@@ -2784,6 +2785,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

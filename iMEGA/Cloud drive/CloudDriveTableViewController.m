@@ -533,12 +533,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node;
     if (self.searchController.isActive) {
-        if (indexPath.row > self.searchNodesArray.count) {
+        if (indexPath.row > self.searchNodesArray.count || indexPath.row < 0) {
             return @"";
         }
         node = [self.searchNodesArray objectAtIndex:indexPath.row];
     } else {
-        if (indexPath.row > self.nodes.size.integerValue) {
+        if (indexPath.row > self.nodes.size.integerValue || indexPath.row < 0) {
             return @"";
         }
         node = [self.nodes nodeAtIndex:indexPath.row];
