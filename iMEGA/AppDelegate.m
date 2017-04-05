@@ -280,6 +280,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         self.privacyView = privacyVC.view;
     }
     [self.window addSubview:self.privacyView];
+    
+    /* Hide all windows except the keyWindow */
+    for (UIWindow *window in application.windows) {
+        if (window != self.window) {
+            window.frame = CGRectMake(0, 0, 0, 0);
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -290,6 +297,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
+    for (UIWindow *window in application.windows) {
+        if (window != self.window) {
+            window.frame = [[UIScreen mainScreen] bounds];
+        }
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
