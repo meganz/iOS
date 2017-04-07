@@ -403,63 +403,46 @@
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"startConversation", @"start a chat/conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-        ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contactsMode = ContactsModeChatStartConversation;
-        contactsVC.userSelected =^void(NSArray *users) {
-            if (users.count == 1) {
-                MEGAUser *user = [users objectAtIndex:0];
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
-                if (chatRoom) {
-                    MEGALogInfo(@"%@", chatRoom);
-                    NSInteger i = 0;
-                    for (i = 0; i < self.chatListItemArray.count; i++){
-                        if (chatRoom.chatId == [[self.chatListItemArray objectAtIndex:i] chatId]) {
-                            break;
-                        }
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatStartConversation;
+    contactsVC.userSelected =^void(NSArray *users) {
+        if (users.count == 1) {
+            MEGAUser *user = [users objectAtIndex:0];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+            if (chatRoom) {
+                MEGALogInfo(@"%@", chatRoom);
+                NSInteger i = 0;
+                for (i = 0; i < self.chatListItemArray.count; i++){
+                    if (chatRoom.chatId == [[self.chatListItemArray objectAtIndex:i] chatId]) {
+                        break;
                     }
-                    
-                    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-                    messagesVC.chatRoom                = chatRoom;
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                        [self.navigationController pushViewController:messagesVC animated:YES];
-                    });
-                } else {
-                    MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                    [peerList addPeerWithHandle:user.handle privilege:2];
-                    
-                    [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
                 }
+                
+                MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+                messagesVC.chatRoom                = chatRoom;
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self.navigationController pushViewController:messagesVC animated:YES];
+                });
             } else {
                 MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                [peerList addPeerWithHandle:user.handle privilege:2];
                 
-                for (NSInteger i = 0; i < users.count; i++) {
-                    MEGAUser *user = [users objectAtIndex:i];
-                    [peerList addPeerWithHandle:user.handle privilege:2];
-                }
-                
-                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:self];
+                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
             }
-        };
-        
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-    }]];
+        } else {
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            
+            for (NSInteger i = 0; i < users.count; i++) {
+                MEGAUser *user = [users objectAtIndex:i];
+                [peerList addPeerWithHandle:user.handle privilege:2];
+            }
+            
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:self];
+        }
+    };
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        alertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
-        popoverPresentationController.barButtonItem = self.addBarButtonItem;
-        popoverPresentationController.sourceView = self.view;
-    }
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
