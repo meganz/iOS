@@ -1,5 +1,8 @@
 #import "MessagesViewController.h"
 
+#import "SVProgressHUD.h"
+
+#import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
 
@@ -9,8 +12,9 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGAMessage.h"
+#import "MEGANavigationController.h"
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate>
+@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -31,6 +35,11 @@
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
+
+@property (nonatomic, strong) UIBarButtonItem *moreBarButtonItem;
+@property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
+
+@property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 
 @end
 
@@ -86,7 +95,6 @@
     
     self.areAllMessagesSeen = NO;
     
-    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
     UITapGestureRecognizer *singleTa2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
     
@@ -103,12 +111,15 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.navigationItem.leftBarButtonItems = @[backButtonItem, self.unreadBarButtonItem];
+    
+    self.stopInvitingContacts = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [self customNavigationBarLabel];
+    [self rightBarButtonItems];
     [self updateUnreadLabel];
 }
 
@@ -181,6 +192,40 @@
     UITapGestureRecognizer *titleTapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
     label.gestureRecognizers = @[titleTapRecognizer];
+}
+
+- (void)rightBarButtonItems {
+    if (self.chatRoom.isGroup && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddParticipantToGroup)];
+        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+    }
+}
+
+- (void)presentAddParticipantToGroup {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatAddParticipant;
+    self.participantsMutableDictionary = [[NSMutableDictionary alloc] init];
+    NSUInteger peerCount = self.chatRoom.peerCount;
+    for (NSUInteger i = 0; i < peerCount; i++) {
+        uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:i];
+        if ([self.chatRoom peerPrivilegeByHandle:peerHandle] > MEGAChatRoomPrivilegeRm) {
+            [self.participantsMutableDictionary setObject:[NSNumber numberWithUnsignedLongLong:peerHandle] forKey:[NSNumber numberWithUnsignedLongLong:peerHandle]];
+        }
+    }
+    contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
+    
+    contactsVC.userSelected = ^void(NSArray *users) {
+        for (NSInteger i = 0; i < users.count; i++) {
+            if (self.shouldStopInvitingContacts) {
+                break;
+            }
+            MEGAUser *user = [users objectAtIndex:i];
+            [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
+        }
+    };
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)updateUnreadLabel {
@@ -933,6 +978,31 @@
     }
     
     [self customNavigationBarLabel];
+}
+
+#pragma mark - MEGAChatRequest
+
+- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    switch (request.type) {
+        case MEGAChatRequestTypeInviteToChatRoom: {
+            switch (error.type) {
+                case MEGAChatErrorTypeArgs: //If the chat is not a group chat (cannot invite peers)
+                case MEGAChatErrorTypeAccess: //If the logged in user doesn't have privileges to invite peers.
+                case MEGAChatErrorTypeNoEnt: //If there isn't any chat with the specified chatid.
+                    self.stopInvitingContacts = YES;
+                    [SVProgressHUD showErrorWithStatus:error.name];
+                    break;
+                    
+                default:
+                    [SVProgressHUD showErrorWithStatus:error.name];
+                    break;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 @end

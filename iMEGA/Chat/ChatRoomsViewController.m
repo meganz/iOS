@@ -412,7 +412,7 @@
         
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contactsMode = ContactsChatStartConversation;
+        contactsVC.contactsMode = ContactsModeChatStartConversation;
         contactsVC.userSelected =^void(NSArray *users) {
             if (users.count == 1) {
                 MEGAUser *user = [users objectAtIndex:0];

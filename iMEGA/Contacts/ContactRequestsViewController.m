@@ -285,7 +285,6 @@
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {
                         [icrtvc.avatarImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-                        icrtvc.avatarImageView.layer.cornerRadius = icrtvc.avatarImageView.frame.size.width/2;
                         icrtvc.avatarImageView.layer.masksToBounds = YES;
                     }
                 }
