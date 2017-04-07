@@ -46,3 +46,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/JSQMessagesViewController"]
 	path = iMEGA/Vendor/JSQMessagesViewController
 	url = https://github.com/meganz/JSQMessagesViewController.git
+[submodule "iMEGA/Vendor/Karere"]
+	path = iMEGA/Vendor/Karere
+	url = https://code.developers.mega.co.nz/messenger/karere-native.git
