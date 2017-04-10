@@ -36,7 +36,7 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
-    self.sdkVersionSHALabel.text = @"4144b6c";
+    self.sdkVersionSHALabel.text = @"ed20d75";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
