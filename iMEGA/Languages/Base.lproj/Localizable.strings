@@ -890,6 +890,8 @@
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Add Participant...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */

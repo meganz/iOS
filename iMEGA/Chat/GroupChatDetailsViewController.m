@@ -41,8 +41,6 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     self.emailLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
-    
-    [self setParticipants];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,6 +52,8 @@
         [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self];
         self.openChatRoom = YES;
     }
+    
+    [self setParticipants];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

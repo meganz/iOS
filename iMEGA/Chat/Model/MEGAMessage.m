@@ -37,7 +37,7 @@
                 if (fullNameDidAction.length == 0) {                    
                     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:message.userHandle];
                     if (moUser) {
-                        fullNameDidAction = moUser.fullName;
+                        fullNameDidAction = moUser.fullName ? moUser.fullName : moUser.email;
                     } else {
                         // TODO: request firstname and lastname
                         fullNameDidAction = @"Unknown user";
@@ -61,7 +61,7 @@
                 if (fullNameReceiveAction.length == 0) {
                     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:tempHandle];
                     if (moUser) {
-                        fullNameReceiveAction = moUser.fullName;
+                        fullNameReceiveAction = moUser.fullName ? moUser.fullName : moUser.email;
                     } else {                        
                         // TODO: request firstname and lastname
                         fullNameReceiveAction = @"Unknown user";
