@@ -360,7 +360,7 @@
     if (fileExists) {
         avatar = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
-        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
+        NSString *colorString = [MEGASdk avatarColorForUser:user];
         avatar = [UIImage imageForName:[user email].uppercaseString size:avatarSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(avatarSize.width/2)]];
         
         [self requestAvatarForUser:user destinationFilePath:avatarFilePath];
