@@ -568,12 +568,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node;
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (indexPath.row > matchSearchNodes.count) {
+        if (indexPath.row > matchSearchNodes.count || indexPath.row < 0) {
             return @"";
         }
         node = [matchSearchNodes objectAtIndex:indexPath.row];
     } else {
-        if (indexPath.row > self.nodes.size.integerValue) {
+        if (indexPath.row > self.nodes.size.integerValue || indexPath.row < 0) {
             return @"";
         }
         node = [self.nodes nodeAtIndex:indexPath.row];

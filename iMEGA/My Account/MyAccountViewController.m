@@ -137,7 +137,7 @@
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
     
     if (!fileExists) {
-        NSString *colorString = [[MEGASdkManager sharedMEGASdk] avatarColorForUser:user];
+        NSString *colorString = [MEGASdk avatarColorForUser:user];
         CGSize avatarSize = self.userAvatarImageView.frame.size;
         UIImage *avatarImage = [UIImage imageForName:[user email].uppercaseString size:avatarSize backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont fontWithName:kFont size:(avatarSize.width/2)]];
         self.userAvatarImageView.image = avatarImage;
