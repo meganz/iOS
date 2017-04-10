@@ -994,7 +994,9 @@
                     break;
                     
                 default:
-                    [SVProgressHUD showErrorWithStatus:error.name];
+                    if (error.type) {
+                        [SVProgressHUD showErrorWithStatus:error.name];
+                    }
                     break;
             }
             break;
