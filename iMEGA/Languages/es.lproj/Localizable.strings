@@ -855,7 +855,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activar el modo depuración";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Se creará un log en la sección disponible sin conexión (MEGAiOS.log)";
+"enableDebugMode_message"="Se creará un log en la sección disponible sin conexión (MEGAiOS.log). Los logs pueden conterner información relativa a tu cuenta.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Desactivar el modo depuración";
 /* Alert message shown when the DEBUG mode is disabled */
