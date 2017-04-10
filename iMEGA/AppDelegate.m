@@ -1757,6 +1757,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if ([error type] != MEGAChatErrorTypeOk) {
+        if (request.type == MEGAChatRequestTypeConnect) {            
+            [self showMainTabBar];
+        }
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
     }
