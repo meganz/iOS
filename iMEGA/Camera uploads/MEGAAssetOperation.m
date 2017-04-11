@@ -321,7 +321,9 @@
     NSError *error = [info objectForKey:@"PHImageErrorKey"];
     switch (error.code) {
         case 0:
+        case 27:
         case 28:
+        case 80:
         case 81:
         case 150:
         case 1000: {
