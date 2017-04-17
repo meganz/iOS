@@ -59,7 +59,7 @@
 
 @property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) NSArray *nodesArray;
-@property (nonatomic, strong) NSArray *searchNodesArray;
+@property (nonatomic, strong) NSMutableArray *searchNodesArray;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
@@ -1481,11 +1481,16 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
+    [self.searchNodesArray removeAllObjects];
     if ([searchString isEqualToString:@""]) {
-        self.searchNodesArray = self.nodesArray;
+        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
     } else {
-        NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
-        self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
+        MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
+        
+        for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
+            MEGANode *n = [allNodeList nodeAtIndex:i];
+            [self.searchNodesArray addObject:n];
+        }
     }
     [self.tableView reloadData];
 }
