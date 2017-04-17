@@ -112,9 +112,6 @@
     }
     
     self.statusRightDetailLabel.text = onlineStatus;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] && [MEGAReachabilityManager isReachable]) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    }
 }
 
 - (void)enableChatWithSession {
