@@ -247,6 +247,9 @@
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
 		A838B23A1E968DE200875D96 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A838B2391E968DE200875D96 /* libKarere.a */; };
+		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
+		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
+		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -752,6 +755,11 @@
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A838B2391E968DE200875D96 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
+		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
+		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
+		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
+		A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageAttachmentView.m; sourceTree = "<group>"; };
+		A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessageAttachmentView.xib; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -975,6 +983,9 @@
 				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
 				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
 				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
+				A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */,
+				A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */,
+				A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -1631,6 +1642,8 @@
 			children = (
 				41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */,
 				41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */,
+				A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */,
+				A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -2107,6 +2120,7 @@
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
 				4115044A1CEB07C700BF38E3 /* VideoOverlay@2x.png in Resources */,
+				A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				411504441CEB07C700BF38E3 /* UIBarButtonItemArrowRight@2x.png in Resources */,
@@ -2292,6 +2306,7 @@
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				417279381DB663FA001AC818 /* UIView+JSQMessages.m in Sources */,
+				A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
@@ -2376,6 +2391,7 @@
 				41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */,
 				4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */,
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,
+				A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
