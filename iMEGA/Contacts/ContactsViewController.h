@@ -6,7 +6,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeShareFoldersWithEmail,
     ContactsModeFolderSharedWith,
     ContactsModeChatStartConversation,
-    ContactsModeChatAddParticipant
+    ContactsModeChatAddParticipant,
+    ContactsModeChatAttachParticipant
 };
 
 @class ShareFolderActivity;
