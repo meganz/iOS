@@ -1000,3 +1000,11 @@
 "retry"="Reintentar";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Eliminar mensaje";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"= "Enviar contacto";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Enviar desde mi Disco";
+/* */
+"done"="Aceptar";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Enviar archivos";

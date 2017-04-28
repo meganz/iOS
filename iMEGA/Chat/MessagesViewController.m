@@ -2,6 +2,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
@@ -458,14 +459,26 @@
     }]];
     
     UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SelectableBrowserNavigationControllerID"];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.browserAction = BrowserActionSendFromCloudDrive;
+        browserVC.selectedNodes = ^void(NSArray *selectedNodes) {            
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:selectedNodes delegate:self];
+        };
     }];
     [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
     
     UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentAddOrAttachParticipantToGroup:nil];
-        
     }];
     [selectOptionAlertController addAction:sendContactAlertAction];
+    
+    selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    selectOptionAlertController.popoverPresentationController.sourceView = self.view;
+    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
     
     [self presentViewController:selectOptionAlertController animated:YES completion:nil];
 }
@@ -475,13 +488,6 @@
     UIEdgeInsets insets = UIEdgeInsetsMake(topInset, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        [self.inputToolbar.contentView.textView becomeFirstResponder];
-        return;
-    }
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
@@ -1022,6 +1028,18 @@
                     }
                     break;
             }
+            break;
+        }
+            
+        case MEGAChatRequestTypeNodeMessage: {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:error.name];
+                return;
+            }
+            
+            MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:request.chatMessage megaChatRoom:self.chatRoom];
+            [self.messages addObject:megaMessage];
+            [self finishSendingMessageAnimated:YES];
             break;
         }
             

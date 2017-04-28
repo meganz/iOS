@@ -8,7 +8,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionImport,
     BrowserActionImportFromFolderLink,
     BrowserActionSelectFolderToShare,
-    BrowserActionOpenIn
+    BrowserActionOpenIn,
+    BrowserActionSendFromCloudDrive
 };
 
 @interface BrowserViewController : UIViewController
@@ -21,5 +22,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, getter=isChildBrowser) BOOL childBrowser;
 
 @property (nonatomic, strong) NSString *localpath;
+
+@property (nonatomic, copy) void(^selectedNodes)(NSArray *);
+@property (nonatomic, strong) NSMutableDictionary *selectedNodesMutableDictionary;
 
 @end
