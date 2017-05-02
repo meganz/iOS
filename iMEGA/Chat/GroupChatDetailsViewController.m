@@ -138,9 +138,6 @@
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
     //TODO: Enable/disable notifications
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -169,11 +166,13 @@
             case MEGAChatRoomPrivilegeRm:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard:
-                numberOfRows = 2;
+                //TODO: When possible, re-add the row "Notifications".
+                numberOfRows = 1;
                 break;
                 
             case MEGAChatRoomPrivilegeModerator:
-                numberOfRows = 5;
+                //TODO: When possible, re-add the rows "Notifications" and "Change Group Avatar".
+                numberOfRows = 3;
                 break;
         }
     } else if (section == 1) {
@@ -191,30 +190,18 @@
             case MEGAChatRoomPrivilegeRm:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard: {
-                if (indexPath.row == 0) {
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsNotificationsTypeID" forIndexPath:indexPath];
-                    cell.nameLabel.text = AMLocalizedString(@"notifications", nil);
-                } else if (indexPath.row == 1) {
-                    cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
-                    cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"leaveGroup", @"") attributes:attributes];
-                }
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
+                cell.nameLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.") attributes:attributes];
                 break;
             }
                 
             case MEGAChatRoomPrivilegeModerator: {
                 switch (indexPath.row) {
                     case 0: {
-                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsNotificationsTypeID" forIndexPath:indexPath];
-                        cell.nameLabel.text = AMLocalizedString(@"notifications", nil);
-                        break;
-                    }
-                        
-                    case 1:
-                    case 2: {
                         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
                         NSString *text;
-                        if (indexPath.row == 1) {
+                        if (indexPath.row == 0) {
                             text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
                         } else if (indexPath.row == 2) {
                             text = AMLocalizedString(@"changeGroupAvatar", @"Title of the action that allows you to change the avatar of a group chat.");
@@ -223,13 +210,13 @@
                         break;
                     }
                         
-                    case 3:
-                    case 4: {
+                    case 1:
+                    case 2: {
                         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
                         NSString *text;
-                        if (indexPath.row == 3) {
+                        if (indexPath.row == 1) {
                             text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
-                        } else if (indexPath.row == 4) {
+                        } else if (indexPath.row == 2) {
                             text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         }
                         NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]};
@@ -319,12 +306,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-            case 0: //Notifications
-                //TODO: Enable/disable notifications for this chat
-                break;
-                
-            case 1: { //Rename Group
-                
+            case 0: { //Rename Group
                 switch (self.chatRoom.ownPrivilege) {
                     case MEGAChatRoomPrivilegeUnknown:
                     case MEGAChatRoomPrivilegeRm:
@@ -366,19 +348,11 @@
                 break;
             }
                 
-            case 2: { //Change Group Avatar
-                //TODO: Change Group Avatar
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-                break;
-            }
-        
-            case 3: //Clear Chat History
+            case 1: //Clear Chat History
                 [self showClearChatHistoryAlert];
                 break;
                 
-            case 4: //Leave chat
+            case 2: //Leave chat
                 [self showLeaveChatAlertAtIndexPath:indexPath];
                 break;
         }
