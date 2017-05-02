@@ -400,6 +400,30 @@
     }
 }
 
+- (void)presentGroupOrContactDetailsForChatListItem:(MEGAChatListItem *)chatListItem {
+    if (chatListItem.isGroup) {
+        GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        groupChatDetailsVC.chatRoom = chatRoom;
+        [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
+    } else {
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[chatRoom peerHandleAtIndex:0]];
+        NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:0];
+        NSString *peerLastname  = [chatRoom peerLastnameAtIndex:0];
+        NSString *peerName      = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
+        uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
+        
+        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
+        contactDetailsVC.chatId             = chatRoom.chatId;
+        contactDetailsVC.userEmail          = peerEmail;
+        contactDetailsVC.userName           = peerName;
+        contactDetailsVC.userHandle         = peerHandle;
+        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -513,59 +537,13 @@
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {    
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     
-    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.tableView setEditing:NO];
-        }]];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];
-        }]];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if (chatListItem.isGroup) {
-                GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-                groupChatDetailsVC.chatRoom = chatRoom;
-                
-                [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
-            } else {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-                NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contacEmailByHandle:[chatRoom peerHandleAtIndex:0]];
-                NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:0];
-                NSString *peerLastname  = [chatRoom peerLastnameAtIndex:0];
-                NSString *peerName      = [NSString stringWithFormat:@"%@ %@", peerFirstname, peerLastname];
-                uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
-                
-                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
-                contactDetailsVC.chatId             = chatRoom.chatId;
-                contactDetailsVC.userEmail          = peerEmail;
-                contactDetailsVC.userName           = peerName;
-                contactDetailsVC.userHandle         = peerHandle;
-                [self.navigationController pushViewController:contactDetailsVC animated:YES];
-            }
-            
-        }]];
-        
-        if ([[UIDevice currentDevice] iPadDevice]) {
-            alertController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
-            CGRect moreRect = [self.tableView rectForRowAtIndexPath:indexPath];
-            popoverPresentationController.sourceRect = moreRect;
-            popoverPresentationController.sourceView = self.tableView;
-        }
-        [self presentViewController:alertController animated:YES completion:nil];
+    //TODO: While the "More" action only shows "Info" on a UIAlertController with UIAlertControllerStyleActionSheet style, it will replaced by the "Info" action itself
+    UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        [self presentGroupOrContactDetailsForChatListItem:chatListItem];
     }];
-    moreAction.backgroundColor = [UIColor mnz_grayCCCCCC];
+    infoAction.backgroundColor = [UIColor mnz_grayCCCCCC];
     
     UITableViewRowAction *deleteAction = nil;
-    
     if (chatListItem.isGroup) {
         deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"leave", @"A button label. The button allows the user to leave the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
             UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -579,24 +557,21 @@
                 [self.tableView setEditing:NO];
             }]];
             
-            if ([[UIDevice currentDevice] iPadDevice]) {
-                leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverPresentationController = [leaveAlertController popoverPresentationController];
-                CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-                popoverPresentationController.sourceRect = deleteRect;
-                popoverPresentationController.sourceView = self.view;
-            }
+            leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
+            CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            leaveAlertController.popoverPresentationController.sourceRect = deleteRect;
+            leaveAlertController.popoverPresentationController.sourceView = self.view;
+            
             [self presentViewController:leaveAlertController animated:YES completion:nil];
         }];
     } else {
         deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];        }];
+            //TODO: When possible, allow deleting a 1on1 conversation.
+        }];
     }
     deleteAction.backgroundColor = [UIColor mnz_redFF333A];
     
-    return @[deleteAction, moreAction];
+    return chatListItem.isGroup ? @[deleteAction, infoAction] : @[infoAction];
 }
 
 #pragma mark - UISearchBarDelegate

@@ -127,17 +127,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)presentEasterEggTODOAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
     //TODO: Enable/disable notifications
-    [self presentEasterEggTODOAlert];
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
@@ -170,9 +163,11 @@
     NSInteger numberOfRows = 0;
     if (section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            numberOfRows = 4;
+            //TODO: When possible, re-add the rows "Notifications" and "Verify Credentials".
+            numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-            numberOfRows = 5;
+            //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
+            numberOfRows = 2;
         }
     } else if (section == 1) { //SHARED FOLDERS
         numberOfRows = self.incomingNodeListForUser.size.integerValue;
@@ -184,58 +179,32 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID" forIndexPath:indexPath];
-        } else {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-            
-            NSInteger redRowsFrom = 2;
-            if (indexPath.row > redRowsFrom) {
-                cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-                cell.nameLabel.textColor = [UIColor mnz_redD90007];
-            }
-        }
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
         
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             switch (indexPath.row) {
-                case 0: //Notifications
-                    cell.nameLabel.text = AMLocalizedString(@"notifications", nil);
-                    break;
-                    
-                case 1: //Send Message
+                case 0: //Send Message
                     cell.nameLabel.text = AMLocalizedString(@"sendMessage", @"Title to perform the action of sending a message to a contact.");
                     break;
                     
-                case 2: //Verify Credentials
-                    cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
-                    break;
-                    
-                case 3: //Remove User
+                case 1: //Remove Contact
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
+                    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+                    cell.nameLabel.textColor = [UIColor mnz_redD90007];
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             switch (indexPath.row) {
-                case 0: //Notifications
-                    cell.nameLabel.text = AMLocalizedString(@"notifications", nil);
-                    break;
-                    
-                case 1: //Verify Credentials
-                    cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
-                    break;
-                    
-                case 2: //Clear Chat History
+                case 0: //Clear Chat History
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                     break;
-                
-                case 3: //Close Chat
-                    cell.nameLabel.text = AMLocalizedString(@"closeChat", @"Button title that allows the user to close a chat.");
-                    break;
                     
-                case 4: //Remove Contact
+                case 1: //Remove Contact
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     break;
             }
+            cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
+            cell.nameLabel.textColor = [UIColor mnz_redD90007];
         }
     } else if (indexPath.section == 1) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
@@ -274,10 +243,7 @@
     if (indexPath.section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             switch (indexPath.row) {
-                case 0: //Notifications
-                    break;
-                    
-                case 1: { //Send Message
+                case 0: { //Send Message
                     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
                     if (chatRoom) {
                         [self changeToChatTabAndOpenChatId:chatRoom.chatId];
@@ -289,33 +255,17 @@
                     break;
                 }
                     
-                case 2: //Verify Credentials
-                    [self pushVerifyCredentialsViewController];
-                    break;
-                    
-                case 3: //Remove Contact
+                case 1: //Remove Contact
                     [self showRemoveContactAlert];
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
             switch (indexPath.row) {
-                case 0: //Notifications
-                    break;
-                    
-                case 1: //Verify Credentials
-                    [self pushVerifyCredentialsViewController];
-                    break;
-                    
-                case 2: //Clear Chat History
+                case 0: //Clear Chat History
                     [self showClearChatHistoryAlert];
                     break;
                     
-                case 3: //Close Chat
-                    //TODO: Close chat
-                    [self presentEasterEggTODOAlert];
-                    break;
-                    
-                case 4: //Remove Contact
+                case 1: //Remove Contact
                     [self showRemoveContactAlert];
                     break;
             }
