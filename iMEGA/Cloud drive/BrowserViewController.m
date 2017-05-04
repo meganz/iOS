@@ -188,57 +188,49 @@
 }
 
 - (void)reloadUI {
-    switch (self.browserAction) {
-        case BrowserActionCopy:
-        case BrowserActionMove:
-        case BrowserActionSelectFolderToShare:
-        case BrowserActionOpenIn: {
-            switch (self.browserSegmentedControl.selectedSegmentIndex) {
-                case 0: { //Cloud Drive
-                    if (self.isChildBrowser) {
-                        [self.navigationItem setTitle:[self.parentNode name]];
-                        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-                    } else {
-                        self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                        self.navigationItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-                        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-                    }
-
-                    self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-                    if (self.parentShareType == MEGAShareTypeAccessOwner) {
-                        [self setToolbarItemsEnabled:YES];
-                    } else {
-                        [self setNavigationBarTitleLabel];
-                        (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
-                    }
-                    break;
-                }
-
-                case 1: { //Incoming
-                    [self.navigationItem setTitle:AMLocalizedString(@"sharedItems", @"Title of Shared Items section")];
-                    self.parentNode = nil;
-                    self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
-                    self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
-
-                    [self setToolbarItemsEnabled:NO];
-                    break;
-                }
+    switch (self.browserSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Cloud Drive
+            if (!self.isChildBrowser) {
+                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+            }
+            
+            if ([self.parentNode.name isEqualToString:[[[MEGASdkManager sharedMEGASdk] rootNode] name]]) {
+                [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
+                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
+            } else {
+                [self.navigationItem setTitle:[self.parentNode name]];
+                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            }
+            
+            self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+            if (self.parentShareType == MEGAShareTypeAccessOwner) {
+                [self setToolbarItemsEnabled:YES];
+            } else {
+                [self setNavigationBarTitleLabel];
+                (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
             }
             break;
         }
             
-        case BrowserActionImport:
-        case BrowserActionImportFromFolderLink: {
-            NSString *importTitle = AMLocalizedString(@"importTitle", nil);
-            importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
-            [self.navigationItem setTitle:importTitle];
-            break;
-        }
+        case 1: { //Incoming
+            [self.navigationItem setTitle:AMLocalizedString(@"sharedItems", @"Title of Shared Items section")];
+            self.parentNode = nil;
+            self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
+            self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
             
-        case BrowserActionSendFromCloudDrive: {
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            [self setToolbarItemsEnabled:NO];
             break;
         }
+    }
+    
+    if ((self.browserAction == BrowserActionImport) || (self.browserAction == BrowserActionImportFromFolderLink)) {
+        NSString *importTitle = AMLocalizedString(@"importTitle", nil);
+        importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
+        [self.navigationItem setTitle:importTitle];
+    }
+    
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
     }
     
     [self.tableView reloadData];
