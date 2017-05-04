@@ -643,7 +643,11 @@ static BOOL copyToPasteboard;
     
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
+            MOOfflineNode *offlineNodeExist = nil;
+            NSString *fingerprint = [api fingerprintForNode:node];
+            if (fingerprint) {
+                offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
+            }
             
             if (offlineNodeExist) {
                 NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
