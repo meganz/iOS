@@ -1,6 +1,7 @@
 #import "MEGAMessage.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAAttachmentMediaItem.h"
 
 @implementation MEGAMessage
 
@@ -171,22 +172,16 @@
                     break;
                 }
                     
-                case MEGAChatMessageTypeAttachment:
-                    _text = @"MEGAChatMessageTypeAttachment";
-                    break;
-                    
-                case MEGAChatMessageTypeRevokeAttachment:
-                    _text = @"MEGAChatMessageTypeRevokeAttachment";
-                    break;
-                    
-                case MEGAChatMessageTypeContact:
-                    _text = @"MEGAChatMessageTypeContact";
-                    break;
-                    
                 default:
                     _text = @"default";
                     break;
             }
+        } else if (message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment) {
+                MEGAAttachmentMediaItem *contactItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:message];
+                _media = contactItem;
+                _isMediaMessage = YES;
+        } else if (message.type == MEGAChatMessageTypeRevokeAttachment){
+            _text = @"MEGAChatMessageTypeRevokeAttachment";
         } else {
             _text = message.content;
         }

@@ -138,7 +138,8 @@
             break;
         }
             
-        case ContactsModeChatAddParticipant: {
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant: {
             self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
             
             [self setTableViewEditing:YES animated:NO];
@@ -167,6 +168,8 @@
         [self.navigationItem setTitle:AMLocalizedString(@"startConversation", @"start a chat/conversation")];
     } else if (self.contactsMode == ContactsModeChatAddParticipant) {
         self.navigationItem.title = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+    } else if (self.contactsMode == ContactsModeChatAttachParticipant) {
+        self.navigationItem.title = AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.");
     } else {
         [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
     }
@@ -574,7 +577,7 @@
         }
         MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
-    } else if (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatAddParticipant) {
+    } else if (self.contactsMode >= ContactsModeChatStartConversation) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         
         cell.nameLabel.text = userName ? userName : user.email;
@@ -618,7 +621,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0 && (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatAddParticipant)) {
+    if (section == 0 && (self.contactsMode >= ContactsModeChatStartConversation)) {
         if (self.visibleUsersArray.count == 0) {
             return nil;
         }
@@ -632,7 +635,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0f;
-    if (section == 0 && (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatAddParticipant)) {
+    if (section == 0 && (self.contactsMode >= ContactsModeChatStartConversation)) {
         if (self.visibleUsersArray.count == 0) {
             return heightForHeader;
         }
@@ -980,7 +983,7 @@
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    if (self.contactsMode == ContactsModeChatAddParticipant) {
+    if (self.contactsMode >= ContactsModeChatAddParticipant) {
         return nil;
     }
     

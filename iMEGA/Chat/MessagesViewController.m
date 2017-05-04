@@ -2,6 +2,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
@@ -196,15 +197,16 @@
 
 - (void)rightBarButtonItems {
     if (self.chatRoom.isGroup && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
-        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddParticipantToGroup)];
+        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     }
 }
 
-- (void)presentAddParticipantToGroup {
+- (void)presentAddOrAttachParticipantToGroup:(UIBarButtonItem *)sender {
+    BOOL addParticipant = sender ? YES : NO;
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.contactsMode = ContactsModeChatAddParticipant;
+    contactsVC.contactsMode = addParticipant ? ContactsModeChatAddParticipant : ContactsModeChatAttachParticipant;
     self.participantsMutableDictionary = [[NSMutableDictionary alloc] init];
     NSUInteger peerCount = self.chatRoom.peerCount;
     for (NSUInteger i = 0; i < peerCount; i++) {
@@ -216,12 +218,19 @@
     contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
     
     contactsVC.userSelected = ^void(NSArray *users) {
-        for (NSInteger i = 0; i < users.count; i++) {
-            if (self.shouldStopInvitingContacts) {
-                break;
+        if (addParticipant) {
+            for (NSInteger i = 0; i < users.count; i++) {
+                if (self.shouldStopInvitingContacts) {
+                    break;
+                }
+                MEGAUser *user = [users objectAtIndex:i];
+                [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
             }
-            MEGAUser *user = [users objectAtIndex:i];
-            [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
+        } else {
+            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
+            MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+            [self.messages addObject:megaMessage];
+            [self finishSendingMessageAnimated:YES];
         }
     };
     
@@ -442,10 +451,36 @@
 - (void)didPressAccessoryButton:(UIButton *)sender {
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
-    //TODO: Show bottom menu with "Send Media", "Send from Cloud Drive" and "Send Contact" options
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"TO-DO" message:@"🔜🤓💻📱" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
+    UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        [self.inputToolbar.contentView.textView becomeFirstResponder];
+    }]];
+    
+    UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SelectableBrowserNavigationControllerID"];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+        browserVC.browserAction = BrowserActionSendFromCloudDrive;
+        browserVC.selectedNodes = ^void(NSArray *selectedNodes) {            
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:selectedNodes delegate:self];
+        };
+    }];
+    [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
+    
+    UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentAddOrAttachParticipantToGroup:nil];
+    }];
+    [selectOptionAlertController addAction:sendContactAlertAction];
+    
+    selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    selectOptionAlertController.popoverPresentationController.sourceView = self.view;
+    selectOptionAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    
+    [self presentViewController:selectOptionAlertController animated:YES completion:nil];
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
@@ -453,13 +488,6 @@
     UIEdgeInsets insets = UIEdgeInsetsMake(topInset, 0.0f, bottom, 0.0f);
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        [self.inputToolbar.contentView.textView becomeFirstResponder];
-        return;
-    }
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
@@ -843,8 +871,10 @@
     
     if (message) {
         MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-        [self.messages insertObject:megaMessage atIndex:0];
-        
+        if (message.type != MEGAChatMessageTypeRevokeAttachment) {
+            [self.messages insertObject:megaMessage atIndex:0];
+        }
+    
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
@@ -932,7 +962,6 @@
             break;
             
         case MEGAChatRoomChangeTypeParticipans:
-            // TODO: Test when the megachat-native (#6108) bug will be fixed
             [self customNavigationBarLabel];
             break;
             
@@ -999,6 +1028,18 @@
                     }
                     break;
             }
+            break;
+        }
+            
+        case MEGAChatRequestTypeNodeMessage: {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:error.name];
+                return;
+            }
+            
+            MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:request.chatMessage megaChatRoom:self.chatRoom];
+            [self.messages addObject:megaMessage];
+            [self finishSendingMessageAnimated:YES];
             break;
         }
             

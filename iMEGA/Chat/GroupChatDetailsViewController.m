@@ -433,8 +433,7 @@
         case MEGAChatRoomChangeTypeUnreadCount:
             break;
             
-        case MEGAChatRoomChangeTypeParticipans:
-            // TODO: Test when the megachat-native (#6108) bug will be fixed
+        case MEGAChatRoomChangeTypeParticipans:            
             [self setParticipants];
             [self.tableView reloadData];
             break;
