@@ -169,7 +169,6 @@
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
 		41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDB51A8E2E92008408B3 /* PhotosViewController.m */; };
-		41C736C01DBE6CCE00F1F38A /* MEGAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */; };
 		41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD146F1DB150F600E545BC /* MessagesViewController.m */; };
 		41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F6D1B85F6D40005A27A /* ProductDetailViewController.m */; };
 		41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */; };
@@ -246,6 +245,7 @@
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A838B23A1E968DE200875D96 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A838B2391E968DE200875D96 /* libKarere.a */; };
 		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
 		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
@@ -601,8 +601,6 @@
 		41BADDAE1A8E28FD008408B3 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		41BADDB41A8E2E92008408B3 /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		41BADDB51A8E2E92008408B3 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PhotosViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessage.h; sourceTree = "<group>"; };
-		41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessage.m; sourceTree = "<group>"; };
 		41CD146E1DB150F600E545BC /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessagesViewController.h; path = Chat/MessagesViewController.h; sourceTree = "<group>"; };
 		41CD146F1DB150F600E545BC /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MessagesViewController.m; path = Chat/MessagesViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41D14F6C1B85F6D40005A27A /* ProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailViewController.h; sourceTree = "<group>"; };
@@ -754,6 +752,8 @@
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
+		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A838B2391E968DE200875D96 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
 		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
@@ -1640,10 +1640,10 @@
 		41C736BD1DBE6CCE00F1F38A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				41C736BE1DBE6CCE00F1F38A /* MEGAMessage.h */,
-				41C736BF1DBE6CCE00F1F38A /* MEGAMessage.m */,
 				A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */,
 				A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */,
+				A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */,
+				A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -2299,6 +2299,7 @@
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				417279561DB663FA001AC818 /* JSQMessagesInputToolbar.m in Sources */,
 				E8B3FE781DDB379C008A9C82 /* WhyDoINeedARecoveryKeyViewController.m in Sources */,
+				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
@@ -2376,7 +2377,6 @@
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
 				4172795A1DB663FA001AC818 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
-				41C736C01DBE6CCE00F1F38A /* MEGAMessage.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				417279451DB663FA001AC818 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
