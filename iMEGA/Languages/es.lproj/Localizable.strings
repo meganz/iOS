@@ -212,7 +212,7 @@
 "documentOpening_alertMessage"="Inténtalo más tarde o cancela las descargas.";
 /* Section title of the 'Sort by' */
 "sortTitle"="Ordenar por";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Guardar";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Nombre (ascendente)";
@@ -776,6 +776,18 @@
 "logoutLabel"="Desconectar";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Cerrando sesión";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Eliminar avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Cambiar avatar";
+/* Button title that allows the user change his name */
+"changeName"="Cambiar nombre";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Has modificado tu perfil con éxito.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Nombre";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Apellidos";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Uso";
 /* Title for "Local" used space. */
@@ -905,7 +917,7 @@
 /* */
 "xMinutes"="[X] minutos";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+"showMeAwayAfterXMinutesOfInactivity"="Cambiar estado a ausente después de [X] minutos de inactividad";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bloquear estado";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
