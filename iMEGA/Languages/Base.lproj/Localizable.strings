@@ -210,7 +210,7 @@
 "documentOpening_alertMessage"="Try again later or cancel";
 /* Section title of the 'Sort by' */
 "sortTitle"="Sort by";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Save";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Name (ascending)";
@@ -774,6 +774,18 @@
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Remove avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Change Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="You have successfully changed your profile.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="First Name";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Last Name";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Usage";
 /* Title for "Local" used space. */
