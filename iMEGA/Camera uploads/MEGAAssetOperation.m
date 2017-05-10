@@ -192,7 +192,9 @@
     finished = YES;
     
     if (_automatically) {
-        [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]]];
+        NSUInteger newBadgeValue = [[[CameraUploads syncManager] assetsOperationQueue] operationCount];
+        newBadgeValue = newBadgeValue > 1 ? newBadgeValue - 1 : 0;
+        [[CameraUploads syncManager] setBadgeValue:[NSString stringWithFormat:@"%ld", newBadgeValue]];
         if (_phasset) {
             if (_phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:_phasset.creationDate forKey:kLastUploadPhotoDate];
