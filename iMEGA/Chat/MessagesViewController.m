@@ -81,6 +81,9 @@
     
      //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
+
     
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
@@ -412,7 +415,10 @@
      //Display custom menu actions for cells.
     UIMenuController *menu = [notification object];
     UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
-    menu.menuItems = @[editMenuItem];
+    UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
+    UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
+    menu.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem];
+
     
     [super didReceiveMenuWillShowNotification:notification];
 }
@@ -693,8 +699,17 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
+    if ((action == @selector(import:message:) || action == @selector(download:message:))) {
+        if (message.type == MEGAChatMessageTypeAttachment && ![message.senderId isEqualToString:self.senderId]) {
+            return YES;
+        }
+    }
+    
+
     if (action == @selector(copy:)) {
-        return YES;
+        if (message.type < MEGAChatMessageTypeAttachment) {
+            return YES;
+        }
     }
     
     if (!message.isEditable || message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
@@ -718,6 +733,15 @@
         [self edit:sender message:message];
         return;
     }
+    if (action == @selector(import:message:)) {
+        
+        [self import:sender message:message];
+        return;
+    }
+    if (action == @selector(download:message:)) {
+        [self download:sender message:message];
+        return;
+    }
     
     if (action == @selector(delete:)) {
         MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
@@ -734,6 +758,27 @@
     [self.inputToolbar.contentView.textView becomeFirstResponder];
     self.inputToolbar.contentView.textView.text = message.text;
     self.editMessage = message;
+}
+
+- (void)import:(id)sender message:(MEGAChatMessage *)message {
+    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [message.nodeList nodeAtIndex:i];
+        [nodesArray addObject:node];
+    }
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    browserVC.selectedNodesArray = nodesArray;
+    browserVC.browserAction = BrowserActionImport;
+}
+
+- (void)download:(id)sender message:(MEGAChatMessage *)message {
+    for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [message.nodeList nodeAtIndex:i];
+        [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+    }
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
