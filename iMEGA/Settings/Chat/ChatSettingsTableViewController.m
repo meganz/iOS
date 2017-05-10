@@ -80,10 +80,40 @@
 - (IBAction)chatValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"Chat: %@", (sender.isOn ? @"ON" : @"OFF"));
     if (sender.isOn) {
-        [self enableChatWithSession];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] useChatSDKLogger];
+        }
+        
+        if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+            [MEGASdkManager createSharedMEGAChatSdk];
+        }
+        
+        NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
+        switch (chatInit) {
+            case MEGAChatInitNoCache: {
+                [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                break;
+            }
+                
+            default: {
+                MEGALogError(@"Init Karere with session failed");
+                NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                }]];
+                [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
+                [self presentViewController:alertController animated:YES completion:nil];
+                sender.on = NO;
+                break;
+            }
+        }
     } else {
         self.invalidStatus = YES;
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
     }
 }
 
@@ -112,38 +142,6 @@
     }
     
     self.statusRightDetailLabel.text = onlineStatus;
-}
-
-- (void)enableChatWithSession {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] useChatSDKLogger];
-    }
-    
-    if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
-    
-    NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:session];
-    switch (chatInit) {
-        case MEGAChatInitNoCache: {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
-            break;
-        }
-        
-        default: {
-            MEGALogError(@"Init Karere with session failed");
-            NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            }]];
-            [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
-            [self presentViewController:alertController animated:YES completion:nil];
-            break;
-        }
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -213,17 +211,6 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) return;
-    
-    if ([request type] == MEGARequestTypeFetchNodes) {
-        [[MEGASdkManager sharedMEGAChatSdk] connectWithDelegate:self];
-    }
-}
-
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
@@ -239,8 +226,6 @@
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     switch (request.type) {
         case MEGAChatRequestTypeConnect: {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
             
             if (error.type) return;
             

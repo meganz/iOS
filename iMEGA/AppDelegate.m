@@ -58,7 +58,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @interface AppDelegate () <UIAlertViewDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
-    BOOL showTabBarAfterChatConnect;
     
     UIAlertView *overquotaAlertView;
     BOOL isOverquota;
@@ -205,6 +204,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [self registerForVoIPNotifications];
         [self registerForLocalNotifications];
         isAccountFirstLogin = NO;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
                 [MEGASdkManager createSharedMEGAChatSdk];
@@ -1551,11 +1555,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
-                showTabBarAfterChatConnect = YES;
-            } else {
-                showTabBarAfterChatConnect = NO;
-                [self showMainTabBar];
+                if (isAccountFirstLogin) {
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];                    
+                }
             }
+            [self showMainTabBar];
             break;
         }
             
@@ -1749,7 +1753,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - MEGAChatRequestDelegate
 
 - (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
-    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect && showTabBarAfterChatConnect) {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect) {
         LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
         [launchVC.activityIndicatorView setHidden:NO];
         [launchVC.activityIndicatorView startAnimating];
@@ -1758,31 +1762,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if ([error type] != MEGAChatErrorTypeOk) {
-        if (request.type == MEGAChatRequestTypeConnect) {            
-            [self showMainTabBar];
-        }
         MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
         return;
     }
     
-    if (request.type == MEGAChatRequestTypeConnect) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        if (showTabBarAfterChatConnect) {
-            if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-                LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-                [launchVC.activityIndicatorView stopAnimating];
-            }
-            [self showMainTabBar];
-        }
-    } else if (request.type == MEGAChatRequestTypeLogout) {
+    if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
             [[MEGALogger sharedLogger] useSDKLogger];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);

@@ -104,7 +104,6 @@
     NSUInteger languageIndex = [[Helper languagesSupportedIDs] indexOfObject:self.selectedLanguage];
     [self.languagePickerView selectRow:languageIndex inComponent:0 animated:NO];
     
-    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -154,6 +153,7 @@
                 break;
         }
     }
+    [self updateUI];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
