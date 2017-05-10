@@ -203,6 +203,19 @@
     return [Helper spaceHeightForEmptyState];
 }
 
+- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([MEGAReachabilityManager isReachable]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
+                UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [indicator startAnimating];
+                return indicator;
+            }
+        }
+    }
+    return nil;
+}
+
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
@@ -335,6 +348,7 @@
         label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
         [self.navigationItem setTitleView:label];
     } else {
+        self.navigationItem.titleView = nil;
         self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
     }
 }
