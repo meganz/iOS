@@ -145,8 +145,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    if (self.presentedViewController == nil) {
+        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+            [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+        }
     }
 }
 
