@@ -8,11 +8,11 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "NSString+MNZCategory.h"
+#import "MEGAChatMessage+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
-#import "MEGAMessage.h"
 #import "MEGANavigationController.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
@@ -25,7 +25,7 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
-@property (nonatomic, strong) MEGAMessage *editMessage;
+@property (nonatomic, strong) MEGAChatMessage *editMessage;
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
 @property (nonatomic, assign) BOOL isFirstLoad;
@@ -80,7 +80,7 @@
     self.showLoadEarlierMessagesHeader = YES;
     
      //Register custom menu actions for cells.
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(editAction:megaMessage:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
     
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
@@ -228,8 +228,8 @@
             }
         } else {
             MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
-            MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-            [self.messages addObject:megaMessage];
+            message.chatRoom = self.chatRoom;
+            [self.messages addObject:message];
             [self finishSendingMessageAnimated:YES];
         }
     };
@@ -274,7 +274,7 @@
     self.inputToolbar.contentView.leftContentPadding = self.inputToolbar.contentView.rightContentPadding = 10.0f;
 }
 
-- (BOOL)showDateBetweenMessage:(MEGAMessage *)message previousMessage:(MEGAMessage *)previousMessage {
+- (BOOL)showDateBetweenMessage:(MEGAChatMessage *)message previousMessage:(MEGAChatMessage *)previousMessage {
     if ((previousMessage.senderId != message.senderId) || (previousMessage.date != message.date)) {
         NSDateComponents *previousDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:previousMessage.date];
         NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:message.date];
@@ -286,9 +286,9 @@
     return NO;
 }
 
-- (BOOL)showHourForMessage:(MEGAMessage *)message withIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)showHourForMessage:(MEGAChatMessage *)message withIndexPath:(NSIndexPath *)indexPath {
     BOOL showHour = NO;
-    MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
+    MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
     if ([message.senderId isEqualToString:previousMessage.senderId]) {
         if ([self showHourBetweenDate:message.date previousDate:previousMessage.date]) {
             showHour = YES;
@@ -298,8 +298,8 @@
             for (NSUInteger i = 1; i < count; i++) {
                 NSInteger index = (indexPath.item - (i + 1));
                 if (index > 0) {
-                    MEGAMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
-                    if (messagePriorToThePreviousOne.index < 0) {
+                    MEGAChatMessage *messagePriorToThePreviousOne = [self.messages objectAtIndex:index];
+                    if (messagePriorToThePreviousOne.messageIndex < 0) {
                         break;
                     }
                     
@@ -411,7 +411,8 @@
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
      //Display custom menu actions for cells.
     UIMenuController *menu = [notification object];
-    menu.menuItems = @[[[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(editAction:megaMessage:)]];
+    UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
+    menu.menuItems = @[editMenuItem];
     
     [super didReceiveMenuWillShowNotification:notification];
 }
@@ -435,13 +436,13 @@
 
     if (!self.editMessage) {
         MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
-        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-        [self.messages addObject:megaMessage];
+        message.chatRoom = self.chatRoom;
+        [self.messages addObject:message];
     } else {
         MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
-        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        [self.messages replaceObjectAtIndex:index withObject:megaMessage];
+        [self.messages replaceObjectAtIndex:index withObject:message];
         self.editMessage = nil;
     }
     
@@ -500,7 +501,7 @@
     return [[MEGASdkManager sharedMEGAChatSdk] myEmail];
 }
 
-- (BOOL)isOutgoingMessage:(MEGAMessage *)messageItem {
+- (BOOL)isOutgoingMessage:(MEGAChatMessage *)messageItem {
     if (messageItem.isManagementMessage) {
         return NO;
     }
@@ -508,8 +509,8 @@
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
-    return megaMessage;
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    return message;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didDeleteMessageAtIndexPath:(NSIndexPath *)indexPath {
@@ -517,7 +518,7 @@
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.isManagementMessage || message.isDeleted) {
         return nil;
     }
@@ -535,12 +536,12 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
     } else if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item -1)];
+        MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item -1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }
     
@@ -555,7 +556,7 @@
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     BOOL showMessageBubleTopLabel = NO;
     if (indexPath.item == 0) {
@@ -611,29 +612,29 @@
     }
     
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     cell.accessoryButton.hidden = YES;
     
-    if (megaMessage.isEdited) {
+    if (message.isEdited) {
         [cell.accessoryButton setImage:nil forState:UIControlStateNormal];
         [cell.accessoryButton setAttributedTitle:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:9.0f], NSForegroundColorAttributeName:[UIColor mnz_blue2BA6DE]}] forState:UIControlStateNormal];
         cell.accessoryButton.hidden = NO;
         
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
         cell.textView.textColor = [UIColor mnz_black333333];
-    } else if (megaMessage.isDeleted) {
+    } else if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:14.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
-    } else if (megaMessage.isManagementMessage) {
-        cell.textView.attributedText = megaMessage.attributedText;
-    } else if (!megaMessage.isMediaMessage) {
+    } else if (message.isManagementMessage) {
+        cell.textView.attributedText = message.attributedText;
+    } else if (!message.isMediaMessage) {
         cell.textView.selectable = NO;
         cell.textView.userInteractionEnabled = NO;
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-        if (megaMessage.status == MEGAChatMessageStatusSending || megaMessage.status == MEGAChatMessageStatusSendingManual) {
+        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
             cell.textView.textColor = [UIColor mnz_black333333_02];
-            if (megaMessage.status == MEGAChatMessageStatusSendingManual) {
+            if (message.status == MEGAChatMessageStatusSendingManual) {
                 [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
                 cell.accessoryButton.hidden = NO;
             }
@@ -690,20 +691,21 @@
 #pragma mark - Custom menu items
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
     if (action == @selector(copy:)) {
         return YES;
     }
     
-    if (!megaMessage.isEditable || megaMessage.status == MEGAChatMessageStatusSending || megaMessage.status == MEGAChatMessageStatusSendingManual) {
+    if (!message.isEditable || message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
         return NO;
     }
     
-    if (![megaMessage.senderId isEqualToString:self.senderId]) {
+    if (![message.senderId isEqualToString:self.senderId]) {
         return NO;
     }
-    if (action == @selector(editAction:megaMessage:)) {
+    
+    if (action == @selector(edit:message:)) {
         return YES;
     }
     
@@ -711,16 +713,16 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-    MEGAMessage *megaMessage = [self.messages objectAtIndex:indexPath.item];
-    if (action == @selector(editAction:megaMessage:)) {
-        [self editAction:sender megaMessage:megaMessage];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if (action == @selector(edit:message:)) {
+        [self edit:sender message:message];
         return;
     }
     
     if (action == @selector(delete:)) {
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
-        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-        [self.messages replaceObjectAtIndex:indexPath.item withObject:megaMessage];
+        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+        deleteMessage.chatRoom = self.chatRoom;
+        [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
     }
     
     if (action != @selector(delete:)) {
@@ -728,10 +730,10 @@
     }
 }
 
-- (void)editAction:(id)sender megaMessage:(MEGAMessage *)megaMessage; {
+- (void)edit:(id)sender message:(MEGAChatMessage *)message {
     [self.inputToolbar.contentView.textView becomeFirstResponder];
-    self.inputToolbar.contentView.textView.text = megaMessage.text;
-    self.editMessage = megaMessage;
+    self.inputToolbar.contentView.textView.text = message.text;
+    self.editMessage = message;
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
@@ -740,12 +742,12 @@
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
     } else if (indexPath.item - 1 > 0) {
-        MEGAMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
+        MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }
     
@@ -762,7 +764,7 @@
     if (indexPath.item == 0) {
         showMessageBubleTopLabel = YES;
     } else {
-        MEGAMessage *message = [self.messages objectAtIndex:indexPath.item];
+        MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
         if (message.isManagementMessage) {
             showMessageBubleTopLabel = YES;
         } else {
@@ -809,8 +811,8 @@
 #pragma mark - JSQMessagesViewAccessoryDelegate methods
 
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
-    __block MEGAMessage *megaMessage = [self.messages objectAtIndex:path.item];
-    if (megaMessage.status == MEGAChatMessageStatusSendingManual) {
+    __block MEGAChatMessage *message = [self.messages objectAtIndex:path.item];
+    if (message.status == MEGAChatMessageStatusSendingManual) {
         if ([[UIDevice currentDevice] iPhoneDevice]) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
@@ -822,13 +824,13 @@
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSLog(@"retry tapped"); // sent message + discard || delete
-            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
-            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:megaMessage.text];
-            megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-            [self.messages replaceObjectAtIndex:path.item withObject:megaMessage];
+            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:message.temporalId];
+            MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
+            retryMessage.chatRoom = self.chatRoom;
+            [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:megaMessage.temporalId];
+            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId temporalId:message.temporalId];
             [self.messages removeObjectAtIndex:path.item];
             [self.collectionView deleteItemsAtIndexPaths:@[path]];
         }]];
@@ -859,20 +861,19 @@
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
-    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-    
-    [self.messages addObject:megaMessage];
+    message.chatRoom = self.chatRoom;
+    [self.messages addObject:message];
     [self finishReceivingMessage];
-    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:megaMessage.messageId];
+    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageLoaded %@", message);
     
     if (message) {
-        MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
+        message.chatRoom = self.chatRoom;
         if (message.type != MEGAChatMessageTypeRevokeAttachment) {
-            [self.messages insertObject:megaMessage atIndex:0];
+            [self.messages insertObject:message atIndex:0];
         }
     
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
@@ -905,8 +906,7 @@
 - (void)onMessageUpdate:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageUpdate %@", message);
     
-    MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:message megaChatRoom:self.chatRoom];
-    
+    message.chatRoom = self.chatRoom;
     if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
         switch (message.status) {
             case MEGAChatMessageStatusUnknown:
@@ -919,7 +919,7 @@
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                 NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
                 NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-                [self.messages replaceObjectAtIndex:index withObject:megaMessage];
+                [self.messages replaceObjectAtIndex:index withObject:message];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                 break;
@@ -948,7 +948,7 @@
         
         if (message.type == MEGAChatMessageTypeTruncate) {
             [self.messages removeAllObjects];
-            [self.messages addObject:megaMessage];
+            [self.messages addObject:message];
             [self.collectionView reloadData];
         }
     }
@@ -1037,8 +1037,8 @@
                 return;
             }
             
-            MEGAMessage *megaMessage = [[MEGAMessage alloc] initWithMEGAChatMessage:request.chatMessage megaChatRoom:self.chatRoom];
-            [self.messages addObject:megaMessage];
+            request.chatMessage.chatRoom = self.chatRoom;
+            [self.messages addObject:request.chatMessage];
             [self finishSendingMessageAnimated:YES];
             break;
         }
