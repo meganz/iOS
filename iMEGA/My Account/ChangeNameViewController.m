@@ -178,6 +178,12 @@
 
 #pragma mark - MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    if ([request type] == MEGARequestTypeSetAttrUser) {
+        [SVProgressHUD show];
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch (request.type) {
         case MEGARequestTypeSetAttrUser: {
