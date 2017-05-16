@@ -25,10 +25,15 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
-    if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment) {
-        mediaMessage = YES;
+    
+    if (self.isDeleted) {
+        mediaMessage = NO;
+    } else {
+        if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment) {
+            mediaMessage = YES;
+        }
     }
-        
+    
     return mediaMessage;
 }
 
@@ -199,11 +204,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    if (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment) {
-        MEGAAttachmentMediaItem *contactItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
-        return contactItem;
-    }
-    return nil;
+    return [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
 }
 
 - (NSUInteger)messageHash {
