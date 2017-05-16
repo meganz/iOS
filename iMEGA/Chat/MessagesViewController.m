@@ -81,6 +81,10 @@
     
      //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
+
+    [self setupMenuController:[UIMenuController sharedMenuController]];
     
      //Allow cells to be deleted
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
@@ -406,13 +410,18 @@
 
 - (void)doNothing {}
 
+- (void)setupMenuController:(UIMenuController *)menuController {
+    UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
+    UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
+    UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
+    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem];
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
      //Display custom menu actions for cells.
-    UIMenuController *menu = [notification object];
-    UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
-    menu.menuItems = @[editMenuItem];
+    [self setupMenuController:[notification object]];
     
     [super didReceiveMenuWillShowNotification:notification];
 }
@@ -622,7 +631,15 @@
         cell.accessoryButton.hidden = NO;
         
         cell.textView.font = [UIFont mnz_SFUIRegularWithSize:14.0f];
-        cell.textView.textColor = [UIColor mnz_black333333];
+        if (message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+            cell.textView.textColor = [UIColor mnz_black333333_02];
+            if (message.status == MEGAChatMessageStatusSendingManual) {
+                [cell.accessoryButton setImage:[UIImage imageNamed:@"sending_manual"] forState:UIControlStateNormal];
+                cell.accessoryButton.hidden = NO;
+            }
+        } else {
+            cell.textView.textColor = [UIColor mnz_black333333];
+        }
     } else if (message.isDeleted) {
         cell.textView.font = [UIFont mnz_SFUIRegularItalicWithSize:14.0f];
         cell.textView.textColor = [UIColor mnz_blue2BA6DE];
@@ -692,30 +709,79 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    
-    if (action == @selector(copy:)) {
-        return YES;
+    switch (message.type) {
+        case MEGAChatMessageTypeInvalid:
+        case MEGAChatMessageTypeRevokeAttachment:
+            break;
+            
+        case MEGAChatMessageTypeNormal: {
+            //All messages
+            if (action == @selector(copy:)) return YES;
+            
+            //Your messages
+            if ([message.senderId isEqualToString:self.senderId]) {
+                if (action == @selector(delete:)) {
+                    if (message.isDeleted) return NO;
+                    if (message.isManagementMessage) return NO;
+                    return YES;
+                }
+                
+                if (action == @selector(edit:message:)) {
+                    if (message.isEditable) return YES;
+                }
+            }
+            break;
+        }
+            
+        case MEGAChatMessageTypeAlterParticipants:
+        case MEGAChatMessageTypeTruncate:
+        case MEGAChatMessageTypePrivilegeChange:
+        case MEGAChatMessageTypeChatTitle: {
+            if (action == @selector(copy:)) return YES;
+            break;
+        }
+            
+        case MEGAChatMessageTypeAttachment: {
+            if (action == @selector(download:message:)) return YES;
+            
+            if ([message.senderId isEqualToString:self.senderId]) {
+                //TODO: Revoke attachments
+            } else {
+                if (action == @selector(import:message:)) return YES;
+            }
+            break;
+        }
+            
+        case MEGAChatMessageTypeContact: {
+            if ([message.senderId isEqualToString:self.senderId]) {
+                if (action == @selector(delete:)) return YES;
+                //TODO: View profile / Start new chat
+            } else {
+                //TODO: Add contacts
+            }
+            break;
+        }
+            
+        default:
+            return NO;
+            break;
     }
     
-    if (!message.isEditable || message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
-        return NO;
-    }
-    
-    if (![message.senderId isEqualToString:self.senderId]) {
-        return NO;
-    }
-    
-    if (action == @selector(edit:message:)) {
-        return YES;
-    }
-    
-    return [super collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
+    return NO;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (action == @selector(edit:message:)) {
         [self edit:sender message:message];
+        return;
+    }
+    if (action == @selector(import:message:)) {
+        [self import:sender message:message];
+        return;
+    }
+    if (action == @selector(download:message:)) {
+        [self download:sender message:message];
         return;
     }
     
@@ -734,6 +800,27 @@
     [self.inputToolbar.contentView.textView becomeFirstResponder];
     self.inputToolbar.contentView.textView.text = message.text;
     self.editMessage = message;
+}
+
+- (void)import:(id)sender message:(MEGAChatMessage *)message {
+    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [message.nodeList nodeAtIndex:i];
+        [nodesArray addObject:node];
+    }
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+    browserVC.selectedNodesArray = nodesArray;
+    browserVC.browserAction = BrowserActionImport;
+}
+
+- (void)download:(id)sender message:(MEGAChatMessage *)message {
+    for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [message.nodeList nodeAtIndex:i];
+        [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+    }
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
@@ -939,11 +1026,8 @@
     }
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeContent]) {
-        if (message.isDeleted) {
+        if (message.isDeleted || message.isEdited) {
             [self.collectionView reloadData];
-        } else if (message.isEdited) {
-            [self.collectionView reloadData];
-            [self scrollToBottomAnimated:YES];
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {

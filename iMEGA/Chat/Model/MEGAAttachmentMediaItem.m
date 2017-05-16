@@ -134,6 +134,10 @@
             [self class], self.message, @(self.appliesMediaViewMaskAsOutgoing)];
 }
 
+- (NSString *)mediaDataType {
+    return @"MEGAAttachment";
+}
+
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
