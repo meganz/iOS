@@ -721,9 +721,7 @@
             //Your messages
             if ([message.senderId isEqualToString:self.senderId]) {
                 if (action == @selector(delete:)) {
-                    if (message.isDeleted) return NO;
-                    if (message.isManagementMessage) return NO;
-                    return YES;
+                    if (message.isDeletable) return YES;
                 }
                 
                 if (action == @selector(edit:message:)) {
@@ -754,7 +752,9 @@
             
         case MEGAChatMessageTypeContact: {
             if ([message.senderId isEqualToString:self.senderId]) {
-                if (action == @selector(delete:)) return YES;
+                if (action == @selector(delete:)) {
+                    if (message.isDeletable) return YES;
+                }
                 //TODO: View profile / Start new chat
             } else {
                 //TODO: Add contacts
