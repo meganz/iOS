@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="들어오는 공유된 폴더 없음";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="나가는 공유된 폴더 없음";
-/* Title of My Contacts section */
-"myContacts"="연락처";
 /* Title of Contacts requests section */
 "contactRequests"="연락처 요청";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="다시 시도하거나 취소하세요";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="저장";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="이름 (오름차순)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="넘기기";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="자동으로 클라우드 드라이브에 사진 백업";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 설정";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="이 공유들에서 나가시겠습니까?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="폴더 떠남";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="공유";
+/* Select all items/elements on the list */
+"selectAll"="모두 선택";
+/*  */
+"oneContact"="1개의 연락처";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X]개의 연락처";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="폴더 공유";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="고급";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="보안 옵션";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="대하여";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="언어";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="어플리케이션 언어";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="여기에 피드백을 쓰세요:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="개인 정보 보호 정책";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="이용 약관";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="끔";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10번의 실패한 비밀번호 시도 후 로그아웃하고 로컬 데이터를 지움";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="지원";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="도움 센터";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="지원을 받거나 인기있는 주제를 읽으세요";
 /* Title to rate the app */
 "rateUsLabel"="평가";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
 "loggingOut"="로그아웃중";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="아바타 제거";
+/* button that allows the user the change his avatar */
+"changeAvatar"="아바타 변경";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="성공적으로 프로필을 변경하였습니다.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="이름";
+/* Hint text for the last name (Placeholder) */
+"lastName"="성";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="사용량";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="나중에 내 계정에서 업그레이드할 수 있습니다";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A]가 [C]님에 의해 [B]로 변경되었습니다.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]님이 단체 대화 이름을 '[B]'로 변경하였습니다.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="참가자 추가";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="모바일 데이터 사용";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="당신의 연락처와 대화하고, 파일을 공유하거나 음성과 영상 통화를 할 수 있습니다.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="당신의 연락처들에게 오프라인으로 나타나며 그들과 대화할 수 없습니다.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="자동 부재중";
+/* */
+"xMinutes"="[X]분";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="[X]분 이상 활동이 없으면 부재중으로 표시";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="상태 유지";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="연결된 장치가 없어도 내가 선택한 상태를 유지합니다.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="수정됨";
 /*  */
 "online"="온라인";
+/*  */
+"away"="자리 비움";
+/*  */
+"busy"="바쁨";
 /* title of the contact properties screen */
 "contactInfo"="연락처 정보";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@님이 입력중 ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="메시지 쓰기...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="대화 기록 없음";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="재시도";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="메시지 삭제";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="연락처 보내기";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="내 클라우드 드라이브에 추가";
+/* */
+"done"="완료";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="파일 보내기";

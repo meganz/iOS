@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas entrantes";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="No hay carpetas compartidas salientes";
-/* Title of My Contacts section */
-"myContacts"="Contactos";
 /* Title of Contacts requests section */
 "contactRequests"="Solicitudes de contacto";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -741,11 +739,11 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Borrar los datos locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Cerrar sesión y borrar los datos locales después de 10 intentos fallidos";
+"failedAttempstSectionTitle"="Cerrar sesión y borrar los datos locales tras 10 intentos fallidos";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Soporte";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centro de ayuda";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Obtén asistencia técnica o lee los temas más populares.";
 /* Title to rate the app */
 "rateUsLabel"="Vótanos";
 /* Title of the Transfers section */
@@ -1008,6 +1006,8 @@
 "isTyping"="%@ está escribiendo ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escribir un mensaje...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="No hay historial de conversaciones";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Reintentar";
 /* Button which allows to delete message in chat conversation. */
