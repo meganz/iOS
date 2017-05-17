@@ -12,8 +12,10 @@
 "error"="Грешка";
 /*  */
 "name"="Назив";
+/* Caption of a button to edit the files that are selected */
+"edit"="Уреди";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Снимљено";
 /*  */
 "passcode"="Код за лозинку";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="Неисправна е-маил адреса или лозинка. Покушајте поново";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Превише пута сте пробали да се пријавите. Молимо сачекајте до %@ и покушајте поново.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Молимо проверите свој е-маил и кликните на линк да потврдите свој налог.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ваш налог је блокиран. Молимо контактирајте support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Нема долазећих Подељених Фолдера";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Нема одлазећих Подељених Фолдера";
-/* Title of My Contacts section */
-"myContacts"="Контакти";
 /* Title of Contacts requests section */
 "contactRequests"="Контакт захтеви";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Постоје активна скидања";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Покушај касније или откажи";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="СОРТИРАЈ ПО";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Сачувајте";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="име (растуће)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Изаберите";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Ухвати слику или видео";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Нови директоријум";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Име за нови фолдер";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu слика";
 /* Button title that skips the current action */
 "skipButton"="Прескочите";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Омогућите отпремање фотографија";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Додај";
 /* Success message shown when a contact has been invited */
 "requestSent"="Захтев послат";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Нема потребе да додате Вашу е-маил адресу";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Већ имате контакт са том е-маил адресом";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Корисник је [X] позван и појавиће се у вашој листи контаката чим прихвати захтев.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Корисник је позван и појавиће се у вашој листи контаката чим прихвати захтев.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Грешка приликом додавања контакта";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Да ли сте сигурни да желите да напустите ова дељења?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Директоријум остављен";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Дели";
+/* Select all items/elements on the list */
+"selectAll"="Изаберите све";
+/*  */
+"oneContact"="1 контакт";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] контакти";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Подели фасциклу";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Напредно";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Сигурносне опције";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="О нама";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Језик";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Језик апликације";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Пошаљите фидбек";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Молимо Вас унесите ваш коментар овде:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Е-маил није присутан на вашем уређају";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Правила приватности";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Услови коришћења";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Искључено";
@@ -534,8 +552,6 @@
 "options"="Опције";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Отпремање видео садржаја";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Користите жичану конекцију";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Само током пуњења";
 /* Footer text to explain the Camera Uploads functionality */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Тренутна искоришћеност %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Затворите свој налог";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Укините свој налог";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Изгубићете све податке везане за овај налог. Да ли сте сигурни да желите да наставите?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -673,7 +689,7 @@
 /* Headline when the user chose YES */
 "great"="Сјајно!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Молимо унесите своју е-маил адресу испод. Добићете линк за повраћај који Вам омогућава да унесете свој Кључ за повраћај и ресетујете своју лозинку.";
+"recoveryLinkToResetYourPassword"="Молимо унесите своју е-маил адресу испод. Добићете линк за повраћај који Вам омогућава да унесете свој Кључ за повраћај и ресетујете своју лозинку. ";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Пошаљи";
 /* The title of the screen to park an account. */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Обриши локалне податке";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Одјави се и обриши локалне податке након 10 неуспешних уноса лозинке";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Подршка";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центар за помоћ";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Подршка или читање популарних садржаја.";
 /* Title to rate the app */
 "rateUsLabel"="Оцени нас";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Излаз";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Одјављивљање";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Уклони аватар";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Промените аватар";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Успешно сте изменили свој профил.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Име";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Презиме";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Промет";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Искоришћено";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Доступно";
+/* title of the My Account screen */
+"accountType"="Тип налога";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="БЕСПЛАТНО";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="слободно од %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Надоградња";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Простора";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,157 @@
 "removeItemFromOffline"="Да ли сте сигурни да желите да обришете ову ставку из офлајна?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Да ли сте сигурни да желите да обришете ове ставке из офлајна?";
+/* Chat section header */
+"chat"="Чет";
+/* Empty Conversations section */
+"noConversations"="Нема конверзација";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Укључи";
+/* Conversations section */
+"conversations"="Разговори";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Позови";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="This message has been deleted";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Ја";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] left the group chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] cleared the chat history.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] was changed to [B] by [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Додај учесника...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Статус";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Voice and Video Calls";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] минута";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(измењено)";
+/*  */
+"online"="Онлине";
+/*  */
+"away"="Далеко";
+/*  */
+"busy"="Заузет";
+/* title of the contact properties screen */
+"contactInfo"="Контакт инфо";
+/*  */
+"notifications"="Обавештења";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Send Message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Обриши историју чета";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Да ли сте сигурно да желите да обришете историју ове конверзације?";
+/* 'Next' button in a dialog */
+"continue"="Настави";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Дељене фасцикле";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Contact Credentials";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Ово је најбоље урадити у стварном животу састајући се лицем у лице. Ако имате други већ верификовани канал што су верификовани OTR или PGP, можете такође користити и то.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Your Credentials";
+/* Button to reset the password */
+"reset"="Ресетуј";
+/* Button title */
+"approve"="Одобри";
+/* start a chat/conversation */
+"startConversation"="Start Conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Group Info";
+/* Label title for a group chat */
+"groupChat"="Group Chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Преименуј групу";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Change Group Avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Остави";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Више";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Инфо";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Затворите";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Напусти чет";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Leave Group";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Модератор";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Стандардно";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Уклони Учесника";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversation with %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA штити Ваш чет са end-to-end (контролисаној од стране корисника) шифровањем које омогућује следеће:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Поверљивост.[/S] Само аутор и намењени примаоци су у стању да дешифрују и читају садржај.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Аутентичност.[/S] Систем осигурава да су подаци примљени од приказаног пошиљаоца, и да није било манипулације садржаја током трансфера.+### 1915 - Web Client ###-ORIGINAL:--------------------------Warning: only click the above button if you trust the [A]Chrome Web Store[/A]. Alternatively, you can manually download & install the extension below.-TRANSLATION:-----------------------Упозорење: Кликни дугме изнад само ако верујеш на [A]Chrome Веб Продавница[/A]. Алтернативно, можеш ручно преузети и инсталирати наставак испод.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ is typing ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Напиши поруку...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Нема претходне конверзације";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Покушај поново";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Обриши поруку";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Пошаљи контакт";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Додајте из Вашег облака";
+/* */
+"done"="готово";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Пошаљи фајлове";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";

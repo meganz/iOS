@@ -13,8 +13,6 @@
     NSByteCountFormatter *byteCountFormatter;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *logoutBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pieChartTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UILabel *pieChartMainLabel;
@@ -49,8 +47,6 @@
     if ([[UIDevice currentDevice] iPhone4X]) {
         self.pieChartTopLayoutConstraint.constant = 22.0;
     }
-    
-    [self.logoutBarButtonItem setTitle:AMLocalizedString(@"logoutLabel", nil)];
     
     [self.cloudDriveLabel setText:AMLocalizedString(@"cloudDrive", @"")];
     [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
@@ -144,7 +140,8 @@
         }
             
         case 2: {
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:([[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue])];
+            long long availableStorage = [[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue];
+            stringFromByteCount = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             break;
         }
     }
@@ -169,11 +166,11 @@
     }
     
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:kFont size:60.0]
+                                             value:[UIFont mnz_SFUILightWithSize:60.0f]
                                              range:firstPartRange];
     
     [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont fontWithName:kFont size:30.0]
+                                              value:[UIFont mnz_SFUILightWithSize:30.0f]
                                               range:secondPartRange];
 
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
@@ -203,7 +200,7 @@
         firstFractionalPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:fractionalPartString];
         NSRange firstFractionalPartRange = [fractionalPartString rangeOfString:fractionalPartString];
         [firstFractionalPartMutableAttributedString addAttribute:NSFontAttributeName
-                                                           value:[UIFont fontWithName:kFont size:12.0]
+                                                           value:[UIFont mnz_SFUILightWithSize:12.0f]
                                                            range:firstFractionalPartRange];
         [firstPartMutableAttributedString appendAttributedString:firstFractionalPartMutableAttributedString];
         
@@ -217,11 +214,11 @@
     secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
     [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont fontWithName:kFont size:18.0]
+                                             value:[UIFont mnz_SFUILightWithSize:18.0f]
                                              range:firstPartRange];
     
     [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont fontWithName:kFont size:12.0]
+                                              value:[UIFont mnz_SFUILightWithSize:12.0f]
                                               range:secondPartRange];
     [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
                                               value:[UIColor mnz_gray777777]
@@ -233,13 +230,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)logoutTouchUpInside:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
-}
-
 
 - (IBAction)leftSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
     NSInteger page = _usagePageControl.currentPage;

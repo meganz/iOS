@@ -1,11 +1,11 @@
 #import "CameraUploadsPopUpViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
+#import "UIDevice+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
@@ -13,15 +13,24 @@
 
 @interface CameraUploadsPopUpViewController () <UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLabelTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidthLayoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadVideosLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadVideosSwitchTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *skipButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *enableButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *enableButtonTopLayoutConstraint;
 
 @end
 
@@ -36,28 +45,36 @@
         [_useCellularConnectionLabel setHidden:YES];
         [_useCellularConnectionSwitch setHidden:YES];
     }
+    
+    if ([[UIDevice currentDevice] iPhone5X]) {
+        self.imageWidthLayoutConstraint.constant = 190.0f;
+        self.imageHeightLayoutConstraint.constant = 208.0f;
+    } else if ([[UIDevice currentDevice] iPhone4X]) {
+        self.topLabelTopLayoutConstraint.constant = 12.0f;
+        self.imageTopLayoutConstraint.constant = 12.0f;
+        self.imageWidthLayoutConstraint.constant = 150.0f;
+        self.imageHeightLayoutConstraint.constant = 165.0f;
+        self.uploadVideosLabelTopLayoutConstraint.constant = 10.0f;
+        self.uploadVideosSwitchTopLayoutConstraint.constant = 10.0f;
+        self.enableButtonTopLayoutConstraint.constant = 10.0f;
+        self.skipButtonTopLayoutConstraint.constant = 8.0f;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads")];
+    self.topLabel.text = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+    
+    self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     [_imageView setImage:[UIImage imageNamed:@"emptyCameraUploads"]];
     
     [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
-    [_useCellularConnectionLabel setText:AMLocalizedString(@"useCellularConnectionLabel", @"Use cellular connection")];
+    self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
-    [_skipButton.layer setBorderWidth:2.0f];
-    [_skipButton.layer setCornerRadius:4.0f];
-    [_skipButton.layer setBorderColor:[[UIColor mnz_gray999999] CGColor]];
-    [_skipButton.layer setMasksToBounds:YES];
     [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
     
-    [_enableButton.layer setBorderWidth:2.0f];
-    [_enableButton.layer setCornerRadius:4.0f];
-    [_enableButton.layer setBorderColor:[[UIColor mnz_redD90007] CGColor]];
-    [_enableButton.layer setMasksToBounds:YES];
-    [_enableButton setTitle:AMLocalizedString(@"ok", nil) forState:UIControlStateNormal];
+    [self.enableButton setTitle:AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled") forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,7 +122,7 @@
                 case PHAuthorizationStatusDenied:{
                     [self dismissViewControllerAnimated:YES completion:nil];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
                         [alert show];
                     });
                     break;
@@ -116,7 +133,7 @@
         }];
         
     } else if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
         [alert show];
     } else {
         MEGALogInfo(@"Enable Camera Uploads");

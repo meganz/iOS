@@ -17,8 +17,6 @@
 #define kLastUploadVideoDate @"LastUploadVideoDate"
 #define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
 
-#define kFont @"SFUIText-Light"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,
@@ -29,6 +27,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Languages
 
++ (NSArray *)languagesSupportedIDs;
 + (BOOL)isLanguageSupported:(NSString *)languageID;
 + (NSString *)languageID:(NSUInteger)index;
 
@@ -130,6 +129,5 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Log
 
 + (UIAlertView *)logAlertView:(BOOL)enableLog;
-+ (void)enableLog:(BOOL)enableLog;
 
 @end

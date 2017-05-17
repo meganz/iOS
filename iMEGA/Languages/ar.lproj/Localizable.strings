@@ -12,8 +12,10 @@
 "error"="خطأ";
 /*  */
 "name"="الاسم";
+/* Caption of a button to edit the files that are selected */
+"edit"="تعديل";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="تم الحفظ";
 /*  */
 "passcode"="رمز المرور";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="البريد الإلكتروني و/أو كلمة المرور غير صالح. حاول مرة اخرى";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="لقد حاولت تسجيل الدخول مرات كثيرة جدا، الرجاء الانتظار حتى  %@  والمحاولة مرة أخرى.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="يرجى التحقق من البريد الإلكتروني الخاص بك وانقر على الرابط لتأكيد حسابك.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="الرجاء تفقد بريدك الالكتروني والضغط على رابط تأكيد الحساب";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="لا توجد مجلدات مشاركة واردة";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="لاتوجد مجلدات مشاركة مرسلة";
-/* Title of My Contacts section */
-"myContacts"="جهات الاتصال";
 /* Title of Contacts requests section */
 "contactRequests"="طلبات جهة الاتصال";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="هناك تحميلات قيد الانتظار";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="يرجي المحاولة مرة اخري لاحقا أو الإلغاء";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="ترتيب حسب";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="حفظ";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="الاسم (تصاعدي)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="اختر";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="التقاط";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="مجلد جديد";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="اسم للمجلد الجديد";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu صورة";
 /* Button title that skips the current action */
 "skipButton"="تخطى";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="انسخ احتياطيا صورك إلى السحابة";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="تفعيل رفع البوم الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="إضافة";
 /* Success message shown when a contact has been invited */
 "requestSent"="تم إرسال الطلب";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني ";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="لقد تمت دعوة المستخدمين وسوف تجدهم في جهات الاتصال عند موافقتهم.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="خطأ إضافة جهة اتصال";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركات؟";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="تم إلغاء مشاركة المجلد";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="مشاركة";
+/* Select all items/elements on the list */
+"selectAll"="تحديد الكل";
+/*  */
+"oneContact"="اتصال 1";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] جهات الاتصال";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="شارك مجلد";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="متقدم";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="خيارات الأمان";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="معلومات عن";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="اللغة";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="لغة التطبيق";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="أرسل ملاحظات";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="يرجي كتابة ملاحظاتك هنا:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="ليس لديك حساب بريد إلكتروني مربوط على جهازك ";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="سياسة الخصوصية";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="شروط الخدمة";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="ايقاف";
@@ -534,8 +552,6 @@
 "options"="الخيارات";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="رفع مقاطع الفيديو";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="أستخدم اتصالك الخلوي";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="فقط عند الشحن";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="تصدير مفتاح الاستعادة والحفاظ عليه في مكان آمن تمكنك من استرداد حسابك في حالة فقدان كلمة السر دون فقدان البيانات.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="لماذا أحتاج لمفتاح استعادة؟";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="بياناتك يمكن قرائتها فقط من خلال سلسلة عمليات فك التشفير التي تبدأ مع مفتاح التشفير الرئيسي (مفتاح الإستعادة)، والذي نقوم بالتخزين المشفر مع كلمة المرور الخاصة بك. وهذا يعني أنه إذا فقدت كلمة السر الخاصة بك، مفتاح الإستعادة لن يعد من الممكن فك تشفيره، ولم تعد أنت قادرا على فك تشفير البيانات الخاصة بك.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="المستخدمة حاليا %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="إغلاق حسابك";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="إلغاء حسابك";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="سوف تفقد جميع البيانات المرتبطة بهذا الحساب. هل أنت متأكد أنك تريد المتابعة؟";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="نسيت كلمة المرور؟";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="سيصلك رابط الاستعادة والذي سيسمح لك لإعادة تعيين كلمة المرور الخاصة بك. يرجى التحقق من البريد الإلكتروني الخاص بك والاستمرار.";
+"youCanResetYourPasswordByFollowing"="يمكنك إعادة تعيين كلمة المرور الخاصة بك عن طريق رابط الاسترداد الذي سيتم إرساله إلى بريدك الإلكتروني.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="لقد انتهت صلاحية هذا الرابط ، يرجى المحاولة مرة أخرى.";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="مسح البيانت";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="الدعم";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="احصل على الدعم أو اقرأ الموضوعات الشائعة.";
 /* Title to rate the app */
 "rateUsLabel"="قيمنا";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="تسجيل الخروج";
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="إزالة الصورة الرمزية";
+/* button that allows the user the change his avatar */
+"changeAvatar"="تغيير الصورة الرمزية";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="لقد غيرت بنجاح ملفك الشخصي.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="الاسم الأول";
+/* Hint text for the last name (Placeholder) */
+"lastName"="اسم العائلة";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="الاستخدام";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="المستخدمة";
 /* Title for MEGA "Available" space. */
 "availableLabel"="متواجد";
+/* title of the My Account screen */
+"accountType"="نوع الحساب:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="مجانًا";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="المساحة المتوفرة %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="ترقية الحساب";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="تستطيع الترقية لاحقا عبر حسابك";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,157 @@
 "removeItemFromOffline"="هل أنت متأكد من حذف الملفات من دون اتصال؟";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="هل أنت متأكد من حذف العناصر من دون اتصال؟";
+/* Chat section header */
+"chat"="المحادثة";
+/* Empty Conversations section */
+"noConversations"="لا توجد محادثات";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="المحادثة معطلة";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="تمكين";
+/* Conversations section */
+"conversations"="المحادثات";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="دعوة";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="هذه الرسالة قد تم حذفها ";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="أنا";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] تم حذفه من المجموعة عن طريق [B] ";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] غادر مجموعة المحادثة.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] انضم لمجموعة المحادثات عن طريق [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] حذف سجلات المحادثة";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] تم تغييره إلى [B]  عن طريق [C] ";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A]  غير اسم المجموعة إلى \"[B]\"";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="إضافة مشارك...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="الحالة";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="اتصالات فيديو وصوت ";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="استخدم شبكة المحمول";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="تشغيل \"بعيد\" تلقائيا ";
+/* */
+"xMinutes"="[X] دقائق";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="غير الحالة إلى بعيد بعد [X] دقيقة/دقائق من عدم النشاط";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="استمرار الحالة";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="البقاء على نفس الحالة المختارة حتى عندما لا يكون لدي أي جهاز متصل.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(عُدِّّلَت)";
+/*  */
+"online"="متاح";
+/*  */
+"away"="في الخارج";
+/*  */
+"busy"="مشغول";
+/* title of the contact properties screen */
+"contactInfo"="معلومات جهة الاتصال";
+/*  */
+"notifications"="التنبيهات";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="أرسل رسالة";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="توثيق البيانات";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="امسح تاريخ المحادثة.";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
+/* 'Next' button in a dialog */
+"continue"="استمرار";
+/* Button title that allows the user to close a chat. */
+"closeChat"="أغلق المحادثة";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="مجلدات مشتركة";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="بيانات جهة الاتصال";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="من الأفضل القيام بذلك في واقع الحياة من خلال اللقاء وجها لوجه. إذا كان لديك قناة أخرى موثوقة بالفعل، مثل OTR اوPGP، يمكنك أيضا استخدام ذلك.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="بياناتك";
+/* Button to reset the password */
+"reset"="إعادة تعيين";
+/* Button title */
+"approve"="موافق";
+/* start a chat/conversation */
+"startConversation"="ابدأ محادثة";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="مجموعة";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="معلومات المجموعة";
+/* Label title for a group chat */
+"groupChat"="محادثة جماعية";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="إعادة تسمية المجموعة";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="تغيير صورة المجموعة";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="ترك";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="المزيد";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="كتم";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="معلومات";
+/* A button label. The button allows the user to close the conversation. */
+"close"="إغلاق";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="لم يعد لديك القدرة بالدخول إلى هذه المحادثة";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="مغادرة المحادثة";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="مغادرة المجموعة ";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="المشاركون";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="وسيط";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="معيار";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="إزالة مشارك";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="المحادثة مع %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA تحمي دردشاتك بتشفير من البداية إلى النهاية (بتحكم المستخدم نفسه) وبضمانات السلامة الأساسية:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]الخصوصية.[/S] فقط المؤلف و المستلمين المعينين قادرين على فك تشفير وقراءة المحتوى.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]المصداقية.[/S] يضمن النظام أن البيانات الواردة هي من المرسل المعروض، وأنه لم يتم التلاعب بالمحتوى أثناء التحويل.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="لا توجد محادثة";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ يكتب ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="اكتب رسالة...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="لا توجد محادثات سابقة";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="اعادة المحاولة";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="مسح الرسالة";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="أرسل لجهة الاتصال";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="أضف من سحابتي";
+/* */
+"done"="تمت العملية";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="ارسال ملفات";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";

@@ -21,12 +21,15 @@
 @property (nonatomic) MEGAShareType parentShareType;
 
 @property (weak, nonatomic) IBOutlet UIView *browserSegmentedControlView;
+@property (weak, nonatomic) IBOutlet UIButton *extendedNavigationBar_backButton;
+@property (weak, nonatomic) IBOutlet UILabel *extendedNavigationBar_label;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *browserSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
@@ -52,40 +55,26 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    if (self.isChildBrowser || self.browserAction == BrowserActionSelectFolderToShare) {
-        self.browserSegmentedControlView.hidden = YES;
-        self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
-    } else {
-        [self.browserSegmentedControl setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forSegmentAtIndex:0];
-        [self.browserSegmentedControl setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forSegmentAtIndex:1];
-    }
-    
-    [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-    
-    [_toolBarNewFolderBarButtonItem setTitle:AMLocalizedString(@"newFolder", @"New Folder")];
-    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:17.0]} forState:UIControlStateNormal];
-    
     [self setupBrowser];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -109,10 +98,26 @@
 #pragma mark - Private
 
 - (void)setupBrowser {
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+    [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    
+    if (self.browserAction != BrowserActionSendFromCloudDrive ) {
+        if (self.isChildBrowser || self.browserAction == BrowserActionSelectFolderToShare) {
+            self.browserSegmentedControlView.hidden = YES;
+            self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
+        } else {
+            [self.browserSegmentedControl setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forSegmentAtIndex:0];
+            [self.browserSegmentedControl setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forSegmentAtIndex:1];
+        }
+        
+        self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"New Folder");
+        [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    }
+    
     switch (self.browserAction) {
         case BrowserActionCopy: {
             [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"copy", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarCopyBarButtonItem];
@@ -122,7 +127,7 @@
             
         case BrowserActionMove: {
             [_toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
-            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarMoveBarButtonItem];
@@ -133,7 +138,7 @@
         case BrowserActionImport:
         case BrowserActionImportFromFolderLink: {
             [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]}  forState:UIControlStateNormal];
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}  forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarCopyBarButtonItem];
@@ -148,7 +153,7 @@
             
         case BrowserActionSelectFolderToShare: {
             [_toolBarShareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
-            [self.toolBarShareFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarShareFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarShareFolderBarButtonItem];
@@ -158,11 +163,25 @@
             
         case BrowserActionOpenIn: {
             [_toolBarSaveInMegaBarButtonItem setTitle:AMLocalizedString(@"upload", nil)];
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0]} forState:UIControlStateNormal];
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
             
             NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
             [toolbarButtons addObject:_toolBarSaveInMegaBarButtonItem];
             [self.toolbar setItems:toolbarButtons];
+            break;
+        }
+
+        case BrowserActionSendFromCloudDrive: {
+            if (self.isChildBrowser) {
+                self.extendedNavigationBar_backButton.hidden = NO;
+                self.extendedNavigationBar_backButton.enabled = YES;
+            } else {
+                self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
+            }
+
+            self.doneBarButtonItem.title = AMLocalizedString(@"done", nil);
+            self.navigationItem.title = AMLocalizedString(@"sendFiles", @"Button label for sending file attachments through the chat to another user.");
+            self.extendedNavigationBar_label.text = self.parentNode.name;
             break;
         }
     }
@@ -210,7 +229,15 @@
         [self.navigationItem setTitle:importTitle];
     }
     
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+    }
+    
     [self.tableView reloadData];
+}
+
+- (void)internetConnectionChanged {
+    [self reloadUI];
 }
 
 - (void)importFolderFromLink:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
@@ -349,6 +376,11 @@
     boolValue ? (cell.thumbnailImageView.alpha = 1.0) : (cell.thumbnailImageView.alpha = 0.5);
 }
 
+- (void)setNodeTableViewCell:(NodeTableViewCell *)cell selected:(BOOL)boolValue {
+    cell.checkImageView.hidden = boolValue ? NO : YES;
+    cell.backgroundColor = boolValue ? [UIColor mnz_grayF9F9F9] : nil;
+}
+
 - (void)setNavigationBarTitleLabel {
     NSString *accessTypeString;
     switch (self.parentShareType) {
@@ -376,6 +408,32 @@
     } else {
         [self.navigationItem setTitle:[NSString stringWithFormat:@"(%@)", accessTypeString]];
     }
+}
+
+- (BrowserViewController *)instantiateBrowserWithIdentifier:(NSString *)identifier {
+    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+    
+    if (self.selectedNodesArray) {
+        browserVC.selectedNodesArray = self.selectedNodesArray;
+    }
+    
+    if (self.selectedUsersArray) {
+        browserVC.selectedUsersArray = self.selectedUsersArray;
+    }
+    
+    if (self.localpath) {
+        browserVC.localpath = self.localpath;
+    }
+    
+    browserVC.browserAction = self.browserAction;
+    browserVC.childBrowser = YES;
+    
+    return browserVC;
+}
+
+- (void)attachNodes {
+    self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -444,16 +502,7 @@
         if ([[UIDevice currentDevice] iPadDevice]) {
             [actionSheet showInView:self.view];
         } else {
-            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-                UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-                if ([window.subviews containsObject:self.view]) {
-                    [actionSheet showInView:self.view];
-                } else {
-                    [actionSheet showInView:window];
-                }
-            } else {
-                [actionSheet showFromTabBar:self.tabBarController.tabBar];
-            }
+            [actionSheet showFromTabBar:self.tabBarController.tabBar];
         }
     }
 }
@@ -473,6 +522,23 @@
         }
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (IBAction)extendedNavigationBar_backButtonTapped:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)doneToSendFiles:(UIBarButtonItem *)sender {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        if (self.selectedNodesMutableDictionary.count > 0) {
+            if (self.isChildBrowser) {
+                BrowserViewController *browserVC = self.navigationController.viewControllers.firstObject;
+                [browserVC attachNodes];
+            } else {
+                [self attachNodes];
+            }
+        }
     }
 }
 
@@ -501,16 +567,6 @@
     
     for (MEGAUser *u in self.selectedUsersArray) {
         [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:u level:level];
-    }
-}
-
-//For iOS 7 UIActionSheet color
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    for (UIView *subview in actionSheet.subviews) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton *button = (UIButton *)subview;
-            [button setTitleColor:[UIColor mnz_redD90007] forState:UIControlStateNormal];
-        }
     }
 }
 
@@ -564,19 +620,24 @@
     MEGANode *node = [self.nodes nodeAtIndex:indexPath.row];
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
-    cell.thumbnailImageView.layer.cornerRadius = 4.0f;
-    cell.thumbnailImageView.layer.masksToBounds = YES;
-    
-    if (node.isFile) {
-        if ([node hasThumbnail]) {
-            cell.nodeHandle = [node handle];
-            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        if (node.isFolder) {
+            [self setNodeTableViewCell:cell selected:NO];
         } else {
-            [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
+            ([self.selectedNodesMutableDictionary objectForKey:node.base64Handle] != nil) ? [self setNodeTableViewCell:cell selected:YES] : [self setNodeTableViewCell:cell selected:NO];
         }
-        [self setNodeTableViewCell:cell enabled:NO];
     } else {
-        (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
+        if (node.isFile) {
+            [self setNodeTableViewCell:cell enabled:NO];
+        } else {
+            (shareType == MEGAShareTypeAccessRead) ? [self setNodeTableViewCell:cell enabled:NO] : [self setNodeTableViewCell:cell enabled:YES];
+        }
+    }
+    
+    if ([node hasThumbnail]) {
+        cell.nodeHandle = [node handle];
+        [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
+    } else {
         [cell.thumbnailImageView setImage:[Helper imageForNode:node]];
     }
     
@@ -607,22 +668,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *newParent = [self.nodes nodeAtIndex:indexPath.row];
     
-    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
-    [browserVC setParentNode:newParent];
-    [browserVC setSelectedNodesArray:self.selectedNodesArray];
-    
-    if (self.selectedUsersArray) {
-        [browserVC setSelectedUsersArray:self.selectedUsersArray];
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        if (newParent.isFolder) {
+            BrowserViewController *browserVC = [self instantiateBrowserWithIdentifier:@"SelectableBrowserViewControllerID"];
+            browserVC.parentNode = newParent;
+            browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
+            
+            [self.navigationController pushViewController:browserVC animated:YES];
+        } else {
+            NodeTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if (cell.checkImageView.hidden) {
+                [self.selectedNodesMutableDictionary setObject:newParent forKey:newParent.base64Handle];
+                [self setNodeTableViewCell:cell selected:YES];
+            } else {
+                [self.selectedNodesMutableDictionary removeObjectForKey:newParent.base64Handle];
+                [self setNodeTableViewCell:cell selected:NO];
+            }
+            
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }
+    } else {
+        BrowserViewController *browserVC = [self instantiateBrowserWithIdentifier:@"BrowserViewControllerID"];
+        browserVC.parentNode = newParent;
+        
+        [self.navigationController pushViewController:browserVC animated:YES];
     }
-    
-    if (self.localpath) {
-        [browserVC setLocalpath:self.localpath];
-    }
-    
-    [browserVC setBrowserAction:self.browserAction];
-    browserVC.childBrowser = YES;
-
-    [self.navigationController pushViewController:browserVC animated:YES];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -639,7 +709,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -664,7 +734,7 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {

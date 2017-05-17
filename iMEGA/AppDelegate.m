@@ -2,6 +2,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
+#import <PushKit/PushKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
@@ -9,11 +11,13 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSFileManager+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
@@ -31,7 +35,7 @@
 #import "SettingsTableViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
-
+#import "WarningTransferQuotaViewController.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -52,7 +56,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeRecoverLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -78,16 +82,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 @property (strong, nonatomic) NSString *exportedLinks;
 
+@property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
+
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    _signalActivityRequired = NO;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+        [[MEGALogger sharedLogger] startLogging];
     }
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -101,7 +106,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-
+    
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
 #else
@@ -117,6 +122,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self languageCompatibility];
     
+    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     // Delete username and password if exists - V1
     if ([SAMKeychain passwordForService:@"MEGA" account:@"username"] && [SAMKeychain passwordForService:@"MEGA" account:@"password"]) {
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"username"];
@@ -192,13 +198,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self setupAppearance];
     
-    [MEGAStore shareInstance];
-    
     self.link = nil;
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        [self registerForVoIPNotifications];
+        [self registerForLocalNotifications];
         isAccountFirstLogin = NO;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+                [MEGASdkManager createSharedMEGAChatSdk];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+            }
+            
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+            if (chatInit == MEGAChatInitNoCache) {
+                [[MEGASdkManager sharedMEGASdk] invalidateCache];
+            } else if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere with session failed");
+                NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                }]];
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+            }
+        }
+        
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
         
         if ([MEGAReachabilityManager isReachable]) {
@@ -254,6 +286,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
         self.privacyView = privacyVC.view;
     }
     [self.window addSubview:self.privacyView];
+    
+    /* Hide all windows except the keyWindow */
+    for (UIWindow *window in application.windows) {
+        if (window != self.window) {
+            window.frame = CGRectMake(0, 0, 0, 0);
+        }
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -264,6 +303,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;
+    for (UIWindow *window in application.windows) {
+        if (window != self.window) {
+            window.frame = [[UIScreen mainScreen] bounds];
+        }
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -333,24 +377,28 @@ typedef NS_ENUM(NSUInteger, URLType) {
 #pragma mark - Private
 
 - (void)setupAppearance {    
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:20.0]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
+    [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
     
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:13.0]} forState:UIControlStateNormal];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearance] setTintColor:[UIColor mnz_redD90007]];
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0]} forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+    UIImage *backButtonImage = [[UIImage imageNamed:@"backArrow"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 0)];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:8.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:8.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateSelected];
     
     [[UITextField appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     
     [[UIView appearanceWhenContainedIn:[UIAlertController class], nil] setTintColor:[UIColor mnz_redD90007]];
     
-    [SVProgressHUD setFont:[UIFont fontWithName:kFont size:12.0]];
+    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
@@ -372,6 +420,14 @@ typedef NS_ENUM(NSUInteger, URLType) {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
     [self.window.rootViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+        isAccountFirstLogin = NO;
+        if (self.urlType == URLTypeConfirmationLink) {
+            UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+            [self presentLinkViewController:navigationController];
+            self.urlType = URLTypeDefault;
+        }
+     
         if ([Helper selectedOptionOnLink] != 0) {
             [self processSelectedOptionOnLink];
         }
@@ -639,8 +695,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (isIncomingPendingContactsLink) {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-            UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancelIcon"] style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-            [contactsRequestsVC.navigationItem setLeftBarButtonItem:cancelBarButtonItem];
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:contactsRequestsVC];
             [self presentLinkViewController:navigationController];
         } else {
@@ -719,29 +773,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
-- (void)setBadgeValueForIncomingContactRequests {
-    NSInteger contactsTabPosition;
-    for (contactsTabPosition = 0 ; contactsTabPosition < self.mainTBC.viewControllers.count ; contactsTabPosition++) {
-        if ([[[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem] tag] == 4) {
-            break;
-        }
-    }
-    
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    long incomingContacts = [[incomingContactsLists size] longValue];
-    NSString *badgeValue;
-    if (incomingContacts) {
-        badgeValue = [NSString stringWithFormat:@"%ld", incomingContacts];
-    } else {
-        badgeValue = nil;
-    }
-    
-    if ((contactsTabPosition >= 4) && ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
-        [[[self.mainTBC moreNavigationController] tabBarItem] setBadgeValue:badgeValue];
-    }
-    [[self.mainTBC.viewControllers objectAtIndex:contactsTabPosition] tabBarItem].badgeValue = badgeValue;
-}
-
 - (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     for (NSString *item in directoryContents) {
@@ -811,10 +842,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissPresentedViews)];
-    NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-    [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-    [titleTextAttributesDictionary setObject:[UIColor mnz_redD90007] forKey:NSForegroundColorAttributeName];
-    [cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+    [cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     return cancelBarButtonItem;
 }
 
@@ -855,6 +883,87 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
     [self presentLinkViewController:navigationController];
+}
+
+- (void)requestUserName {
+    if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]]) {
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+    }
+}
+
+- (void)requestContactsFullname {
+    MEGAUserList *userList = [[MEGASdkManager sharedMEGASdk] contacts];
+    for (NSInteger i = 0; i < userList.size.integerValue; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        if (![[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+        }
+    }
+}
+
+- (void)showMainTabBar {
+    if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
+        
+        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+            _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
+            [self.window setRootViewController:_mainTBC];
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            
+            if ([LTHPasscodeViewController doesPasscodeExist]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                    [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+                }
+                
+                [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
+                                                                         withLogout:YES
+                                                                     andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+            }
+        }
+        
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if (isAccountFirstLogin) {
+                [self showCameraUploadsPopUp];
+            }
+            
+            if (self.link != nil) {
+                [self processLink:self.link];
+            }
+        }
+    }
+    
+    [[CameraUploads syncManager] setTabBarController:_mainTBC];
+    if (isAccountFirstLogin) {
+        [self registerForVoIPNotifications];
+        [self registerForLocalNotifications];
+    }
+}
+
+- (void)registerForVoIPNotifications {
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
+    voipRegistry.delegate = self;
+    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+}
+
+
+
+- (void)registerForLocalNotifications {
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
+                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                  if (!error) {
+                                      NSLog(@"request authorization succeeded!");
+                                  }
+                              }];
+    } else {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
+                                                                             settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
+                                                                             UIUserNotificationTypeSound categories:nil]];
+    }
 }
 
 #pragma mark - Battery changed
@@ -1057,20 +1166,120 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
+#pragma mark - PKPushRegistryDelegate
+
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
+    if([credentials.token length] == 0) {
+        MEGALogError(@"VoIP token length is 0");
+        return;
+    }
+    
+    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
+    
+    NSUInteger dataLength = credentials.token.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"Device token %@", deviceTokenString);
+    [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    MEGALogDebug(@"didReceiveIncomingPushWithPayload: %@", [payload dictionaryPayload]);
+    
+    NSInteger megatype = [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue];
+    NSString *body = nil;
+    
+    switch (megatype) {
+        case 1:
+            body = @"A folder has been shared with you";
+            break;
+        case 2:
+            body = @"You have received a message";
+            break;
+        case 3:
+            body = @"You have a new contact request";
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (NSClassFromString(@"UNMutableNotificationContent")) {
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        
+        content.body = body;
+        content.sound = [UNNotificationSound defaultSound];
+        
+        NSString *identifier = [NSString stringWithFormat:@"%@", [payload dictionaryPayload]];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                              content:content
+                                                                              trigger:nil];
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+            }
+        }];
+    } else if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = body;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    }
+}
+
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     NSInteger userListCount = userList.size.integerValue;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange == 0)) { //If the change is external
-            if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one 
-                NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-                BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-                if (fileExists) {
-                    [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+        
+        if ([user hasChangedType:MEGAUserChangeTypeEmail]) {
+            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+            if (moUser) {
+                [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
+            } else {
+                [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+            }
+        }
+        
+        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
+            if (user.isOwnChange == 0) { //If the change is external
+                if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
+                    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
+                    if (fileExists) {
+                        [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
+                    }
+                    [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                 }
-                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
+            }
+            
+            if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
+            }
+            if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+            }
+        } else {
+            if (user.changes) {
+                if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                }
+                if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
+                    [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+                }
+            } else if (user.visibility == MEGAUserVisibilityVisible) {
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
+                [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
             }
         }
     }
@@ -1105,6 +1314,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
+}
+
+- (void)onAccountUpdate:(MEGASdk *)api {
+    [api getAccountDetails];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -1228,6 +1441,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
                 
             case MEGAErrorTypeApiESid: {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                    [[MEGASdkManager sharedMEGAChatSdk] logout];
+                }
+                
                 if (self.urlType == URLTypeCancelAccountLink) {
                     self.urlType = URLTypeDefault;
                     [Helper logout];
@@ -1327,37 +1544,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [timerAPI_EAGAIN invalidate];
             
-            if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
-                
-                if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
-                    _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                    [self.window setRootViewController:_mainTBC];
-                    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-                    
-                    if ([LTHPasscodeViewController doesPasscodeExist]) {
-                        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
-                            [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-                        }
-                        
-                        [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
-                                                                                 withLogout:YES
-                                                                             andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
-                    }
-                }
-                
-                if (![LTHPasscodeViewController doesPasscodeExist]) {
-                    if (isAccountFirstLogin) {
-                        [self showCameraUploadsPopUp];
-                    }
-                    
-                    if (self.link != nil) {
-                        [self processLink:self.link];
-                    }
-                }
-            }
-            
-            [[CameraUploads syncManager] setTabBarController:_mainTBC];
-            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
                 [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
@@ -1369,7 +1555,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
             
-            [self setBadgeValueForIncomingContactRequests];
+            [self requestUserName];
+            [self requestContactsFullname];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if (isAccountFirstLogin) {
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];                    
+                }
+            }
+            [self showMainTabBar];
             break;
         }
             
@@ -1436,6 +1631,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeLogout: {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
+            
             [Helper logout];
             [SVProgressHUD dismiss];
             
@@ -1500,6 +1699,41 @@ typedef NS_ENUM(NSUInteger, URLType) {
             break;
         }
             
+        case MEGARequestTypeGetAttrUser: {
+            MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
+            if (user) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+                if (moUser) {
+                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle firstname:request.text];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle lastname:request.text];
+                    }
+                } else {
+                    if (request.paramType == MEGAUserAttributeFirstname) {
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:request.text lastname:nil email:user.email];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname) {
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
+                    }
+                }
+            }
+            break;
+        }
+            
+        case MEGARequestTypeGetUserEmail: {
+            MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:request.nodeHandle];
+            if (moUser) {
+                [[MEGAStore shareInstance] updateUserWithUserHandle:request.nodeHandle email:request.email];
+            } else {
+                [[MEGAStore shareInstance] insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil email:request.email];
+            }
+            break;
+        }
+            
         default:
             break;
     }
@@ -1521,6 +1755,51 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+#pragma mark - MEGAChatRequestDelegate
+
+- (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
+    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect) {
+        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
+        [launchVC.activityIndicatorView setHidden:NO];
+        [launchVC.activityIndicatorView startAnimating];
+    }
+}
+
+- (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    if ([error type] != MEGAChatErrorTypeOk) {
+        MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
+        return;
+    }
+    
+    if (request.type == MEGAChatRequestTypeLogout) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+            [[MEGALogger sharedLogger] useSDKLogger];
+        }
+        [MEGASdkManager destroySharedMEGAChatSdk];
+    }
+    
+    MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
+    MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
+    if (newState == MEGAChatInitError) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"The status of the initialization has changed to error." preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        [[MEGASdkManager sharedMEGAChatSdk] logout];
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
+    if (!presenceConfig.isPending) {
+        self.signalActivityRequired = presenceConfig.isSignalActivityRequired;
+    }
+}
+
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -1533,6 +1812,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
         [api cancelTransfer:transfer];
+    }
+}
+
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type == MEGAErrorTypeApiEOverQuota) {
+        [SVProgressHUD dismiss];
+        WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
+        warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        [self.mainTBC presentViewController:warningTransferQuotaVC animated:YES completion:nil];
+        warningTransferQuotaVC.imageView.image = [UIImage imageNamed:@"transfer-quota-empty"];
+        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");;
+        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+        [warningTransferQuotaVC.seePlansButton setTitle:AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA") forState:UIControlStateNormal];
+        [warningTransferQuotaVC.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     }
 }
 
@@ -1668,10 +1961,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
-#pragma mark - MEGAContactRequest
+#pragma mark - MEGAApplicationDelegate
 
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForIncomingContactRequests];
+- (void)application:(MEGAApplication *)application willSendTouchEvent:(UIEvent *)event {
+    if (self.isSignalActivityRequired) {
+        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    }
 }
 
 @end

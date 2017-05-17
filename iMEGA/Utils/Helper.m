@@ -874,24 +874,7 @@ static BOOL copyToPasteboard;
     
     activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
     [activityVC setExcludedActivityTypes:excludedActivityTypesMutableArray];
-    
-    if ([activityVC respondsToSelector:@selector(popoverPresentationController)]) {
-        [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
-    }
-    
-    //'Open in...' for iOS 7
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [activityVC setCompletionHandler:^(NSString *activityType, BOOL completed){
-            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:[nodesArray objectAtIndex:0]]];
-                UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
-                BOOL canOpenIn = [documentInteractionController presentOpenInMenuFromBarButtonItem:shareBarButtonItem animated:YES];
-                if (canOpenIn) {
-                    [documentInteractionController presentPreviewAnimated:YES];
-                }
-            }
-        }];
-    }
+    [activityVC.popoverPresentationController setBarButtonItem:shareBarButtonItem];
     
     return activityVC;
 }
@@ -1013,20 +996,10 @@ static BOOL copyToPasteboard;
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    [titleMutableAttributedString addAttribute:NSFontAttributeName
-                                         value:[UIFont fontWithName:kFont size:18.0f]
-                                         range:[title rangeOfString:title]];
+    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     
-    subtitle = [NSString stringWithFormat:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? @"\n(%@)" : @" (%@)"), subtitle];
-    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [subtitleMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                            value:[UIColor mnz_redD90007]
-                                            range:[subtitle rangeOfString:subtitle]];
-    [subtitleMutableAttributedString addAttribute:NSFontAttributeName
-                                            value:[UIFont fontWithName:kFont size:(UIInterfaceOrientationIsPortrait(interfaceOrientation) ? 12.0f : 14.0f)]
-                                            range:[subtitle rangeOfString:subtitle]];
+    subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
+    NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     
@@ -1041,6 +1014,7 @@ static BOOL copyToPasteboard;
 #pragma mark - Logout
 
 + (void)logout {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1168,6 +1142,7 @@ static BOOL copyToPasteboard;
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
     [[MEGAStore shareInstance] removeAllOfflineNodes];
+    [[MEGAStore shareInstance] removeAllUsers];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
@@ -1214,24 +1189,6 @@ static BOOL copyToPasteboard;
     logAlertView.tag = enableLog ? 1 : 0;
     
     return logAlertView;
-}
-
-+ (void)enableLog:(BOOL)enableLog {
-    NSString *logPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-    if (enableLog) {
-        [MEGASdk setLogLevel:MEGALogLevelMax];
-        
-        freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-    } else {
-        [MEGASdk setLogLevel:MEGALogLevelFatal];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
-            [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
-        }
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setBool:enableLog forKey:@"logging"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
