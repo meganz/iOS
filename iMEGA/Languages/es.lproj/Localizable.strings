@@ -1020,3 +1020,11 @@
 "done"="Aceptar";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Cuota de transferencia agotada";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Las descargas en cola exceden la cuota de transferencia disponible actualmente para tu cuenta y por lo tanto podrán interrumpirse.";
+/* Button title to see the available PRO plans in MEGA */
+"seePlans"="Ver planes";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Descartar";
