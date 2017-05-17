@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Нет входящих общих папок";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Нет исходящих общих папок";
-/* Title of My Contacts section */
-"myContacts"="Контакты";
 /* Title of Contacts requests section */
 "contactRequests"="Запросы добавления в контакты";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Попробуйте позже или отмените их";
 /* Section title of the 'Sort by' */
 "sortTitle"="СОРТИРОВАТЬ ПО";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Сохранить";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Имя (по возрастанию)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="Пропустить";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Автоматически копировать фото на облачный диск";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Разрешить загрузки с камеры";
 /* Success message shown when Camera Uploads has been enabled */
@@ -497,7 +495,15 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Действительно покинуть?";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Папка оставлена";
+"shareFolderLeaved"="Папка оставлена!";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Общий доступ";
+/* Select all items/elements on the list */
+"selectAll"="Выбрать все";
+/*  */
+"oneContact"="1 контакт";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] контакта/ов: ";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Общая папка";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Продвинутый";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Параметры Безопасности";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="О нас";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Язык";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Язык приложения";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Отправить отзыв";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Пожалуйста, напишите свой отзыв здесь:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Не найдено ни одного email аккаунта на Вашем устройстве.";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Условия предоставления услуг";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Выкл";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Удалить локальные данные";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Выход из системы и удаление локальных данных после 10 неудачных попыток ввода пароля.";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Поддержка";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центр помощи";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Получить поддержку или читать популярные темы.";
 /* Title to rate the app */
 "rateUsLabel"="Оценить нас";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Выход";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Выход";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Удалить аватар";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Изменить аватар";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Профиль успешно изменён.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Имя";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Фамилия";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Использование";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Улучшить аккаунт";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Учётную запись можно улучшить позже в разделе «Моя учётная запись»";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="свободного места";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="Изменение статуса пользователя [A] на [B] пользователем [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="Название группового чата изменено на '[B]' пользователем [A].";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Добавить участника…";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Статус";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и Видео Звонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Использовать данные мобильного устройства";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Вы можете общаться со своими контактами, делиться файлами, совершать аудио и видео звонки.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Ваш статус станет \"Не в сети\" для ваших контактов и вы не сможете общаться с ними.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Отсутствие";
+/* */
+"xMinutes"="[X] минут(ы)";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Сохранение статуса";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Поддерживать выбранный статус, даже когда я не в сети.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(изменено)";
 /*  */
 "online"="В сети";
+/*  */
+"away"="Отсутствует";
+/*  */
+"busy"="Занят";
 /* title of the contact properties screen */
 "contactInfo"="Информация контакта";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@ печатает ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Напишите сообщение…";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Нет истории разговора";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Повторить попытку";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Удалить сообщение";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Отправить контакт";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Добавить из облачного диска";
+/* */
+"done"="готово";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Послать файлы";

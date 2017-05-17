@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="沒有傳出的共享資料夾";
-/* Title of My Contacts section */
-"myContacts"="聯絡人";
 /* Title of Contacts requests section */
 "contactRequests"="聯絡人邀請";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="稍後再試或取消";
 /* Section title of the 'Sort by' */
 "sortTitle"="排序";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="儲存";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名字（升序）";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="跳過";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="自動將相片備份到雲端硬碟";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="您確定要保留這些分享嗎？";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="已離開該資料夾";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="共享";
+/* Select all items/elements on the list */
+"selectAll"="全選";
+/*  */
+"oneContact"="一位聯絡人";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X]位聯絡人";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="分享資料夾";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="進階";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="安全選項";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="關於";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="語言";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="應用程式語言選項";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="寄發反饋";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="請於此處寫下您的意見";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您在該設備中尚未登錄";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隱私政策";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="刪除本地數據";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="支援";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="協助中心";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="獲得幫助或閱讀熱門主題";
 /* Title to rate the app */
 "rateUsLabel"="請幫我們評分！";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="移除頭像";
+/* button that allows the user the change his avatar */
+"changeAvatar"="變更頭像";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人檔案";
+/* Hint text for the first name (Placeholder) */
+"firstName"="名";
+/* Hint text for the last name (Placeholder) */
+"lastName"="姓";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="用量";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="您稍後可在\"我的帳戶\"中進行升級";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="儲存空間";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A]的權限已被[C]變更為[B]。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]將群組名稱更改為'[B]'。";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="增加與會者...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="狀態";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="視訊與通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="使用行動數據";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="您可以與聯絡人聊天、分享檔案並進行語音和視訊通話。";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="您將對您的聯絡人顯示為離線狀態，且您將無法與他們聊天。";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="自動顯示為離開";
+/* */
+"xMinutes"="[X] 分鐘";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="閒置[X]分鐘後，將我顯示為離開";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="狀態持續設置";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="即使我沒有連上，也一直維持在我所選擇的這個狀態。";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(已編輯)";
 /*  */
 "online"="在線";
+/*  */
+"away"="離開";
+/*  */
+"busy"="忙碌";
 /* title of the contact properties screen */
 "contactInfo"="聯絡資訊";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@正在打字...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="書寫訊息...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="沒有對話歷史記錄";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="重試";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="刪除訊息";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="傳送聯絡資訊";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="從我的雲端硬碟選擇";
+/* */
+"done"="完成";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="寄送檔案";

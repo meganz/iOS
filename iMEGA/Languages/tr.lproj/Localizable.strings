@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Gelen Klasör Paylaşımı yok";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Giden Klasör Paylaşımı yok";
-/* Title of My Contacts section */
-"myContacts"="Kişiler";
 /* Title of Contacts requests section */
 "contactRequests"="İrtibat talepleri";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Daha sonra tekrar deneyin veya iptal edin";
 /* Section title of the 'Sort by' */
 "sortTitle"="SIRALA";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Kaydet";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="isim (artan)";
@@ -379,7 +377,7 @@
 /* Button title that triggers the importing link action */
 "import"="Hesaba Ekle";
 /* Message shown when a file has been imported */
-"fileImported"="Dosya içe aktarıldı!";
+"fileImported"="Dosya içe aktarıldı";
 /* Message shown when some files have been imported */
 "filesImported"="Dosyalar içe aktarıldı";
 /* Error message shown when you have used more MEGA storage than you can */
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="Atla";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Fotoğraflarınızı otomatik olarak Bulut Sürücüsü'ne yedekleyin";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Kamera Yüklemelerini Etkinleştir";
 /* Success message shown when Camera Uploads has been enabled */
@@ -421,7 +419,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d klasör";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="E-posta ekleyin";
+"addFromEmail"="Eposta ekleyin";
 /* Title of Shared Items section */
 "sharedItems"="Paylaşılan Öğeler";
 /* Title of the tab bar item for the Shared Items section */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="Bu paylaşımlardan ayrılmak istediğine emin misin?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Klasör kaldı";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Paylaş";
+/* Select all items/elements on the list */
+"selectAll"="Tümünü Seç";
+/*  */
+"oneContact"="1 kişi";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] kişi";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Klasörü Paylaş";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Gelişmiş";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Güvenlik Seçenekleri";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Hakkında";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Dil";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Uygulama dili";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Görüş Gönder";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Buraya görüşlerinizi yazınız:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Cihazınızda ayarlı e-posta hesabı yok";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Gizlilik İlkeleri";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Hizmet Koşulları";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Kapalı";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Yerel verileri silin";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="10 kez hatalı girişte yerel veriyi sil ve çıkış yap.";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Destek";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Destek Merkezi";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Destek alın veya popüler konuları okuyun.";
 /* Title to rate the app */
 "rateUsLabel"="Bizi değerlendirin";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Oturumu Kapat";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Çıkış yapılıyor";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Profil resmini kaldır";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Profil Resmini Değiştir";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Profil bilgilerinizi başarıyla değiştirdiniz.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Adınız";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Soyadınız";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Kullanım";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Hesabı yükselt";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Daha sonra Hesabım sekmesinden yükseltebilirsiniz";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Saklama alanı";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -817,7 +835,7 @@
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="%@ ürünü bulunamadı, lütfen ios@mega.nz ile irtibata geçin";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Satınalmalara izin ver";
+"allowPurchase_title"="Satın almalara izin ver";
 /* Alert message to remenber the user that needs to enable purchases before continue */
 "allowPurchase_message"="Bir satınalmayı geri yüklemeden önce iOS Ayarlarında Uygulama İçi Satınalmaları etkinleştirmeniz gerekir.";
 /* Button title to restore failed purchases */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A], [C] tarafından [B] yapıldı.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] grup sohbeti adını [B] yaptı.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Katılımcı ekle...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Durum";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Sesli ve görüntülü arama";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Mobil Veriyi Kullan";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Kişilerinizle sohbet edebilir, dosya paylaşabilir ve sesli ve görüntülü görüşme yapabilirsiniz.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Kişilerinize çevrimdışı görüneceksiniz ve onlarla sohbet edemeyeceksiniz. ";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Oto-dışarda";
+/* */
+"xMinutes"="[X] dakika";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="[X] dakika işlem yapılmadığında beni 'Dışarıda' olarak göster.";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Tekrarlayan Durum";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Bağlı cihaz olmadığında bile seçilen durumda göster.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(düzenlendi)";
 /*  */
 "online"="Çevrim içi";
+/*  */
+"away"="Uzakta";
+/*  */
+"busy"="Meşgul";
 /* title of the contact properties screen */
 "contactInfo"="Kişi bilgileri";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@ yazıyor ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Bir mesaj yaz...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Konuşma geçmişi yok";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Yeniden Dene";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Mesajı sil";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Kişiyi gönder";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Bulut Sürücümden Ekle";
+/* */
+"done"="tamam";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Dosyaları gönder";

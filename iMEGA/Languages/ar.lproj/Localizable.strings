@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="لا توجد مجلدات مشاركة واردة";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="لاتوجد مجلدات مشاركة مرسلة";
-/* Title of My Contacts section */
-"myContacts"="جهات الاتصال";
 /* Title of Contacts requests section */
 "contactRequests"="طلبات جهة الاتصال";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="يرجي المحاولة مرة اخري لاحقا أو الإلغاء";
 /* Section title of the 'Sort by' */
 "sortTitle"="ترتيب حسب";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="حفظ";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="الاسم (تصاعدي)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="تخطى";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="انسخ احتياطيا صورك إلى السحابة";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="تفعيل رفع البوم الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="هل أنت متأكد من مغادرة هذه المشاركات؟";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="تم إلغاء مشاركة المجلد";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="مشاركة";
+/* Select all items/elements on the list */
+"selectAll"="تحديد الكل";
+/*  */
+"oneContact"="اتصال 1";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] جهات الاتصال";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="شارك مجلد";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="متقدم";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="خيارات الأمان";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="معلومات عن";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="اللغة";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="لغة التطبيق";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="أرسل ملاحظات";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="يرجي كتابة ملاحظاتك هنا:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="ليس لديك حساب بريد إلكتروني مربوط على جهازك ";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="سياسة الخصوصية";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="شروط الخدمة";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="ايقاف";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="مسح البيانت";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="سجل الخروج وامسح البيانات المحلية بعد عشر محاولات فاشلة لادخال كلمة المرور.";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="الدعم";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="احصل على الدعم أو اقرأ الموضوعات الشائعة.";
 /* Title to rate the app */
 "rateUsLabel"="قيمنا";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="تسجيل الخروج";
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="إزالة الصورة الرمزية";
+/* button that allows the user the change his avatar */
+"changeAvatar"="تغيير الصورة الرمزية";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="لقد غيرت بنجاح ملفك الشخصي.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="الاسم الأول";
+/* Hint text for the last name (Placeholder) */
+"lastName"="اسم العائلة";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="الاستخدام";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="ترقية الحساب";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="تستطيع الترقية لاحقا عبر حسابك";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A] تم تغييره إلى [B]  عن طريق [C] ";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]  غير اسم المجموعة إلى \"[B]\"";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="إضافة مشارك...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="الحالة";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="استخدم شبكة المحمول";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="يمكنك الدردشة مع جهات الاتصال الخاصة بك، وتبادل الملفات وإجراء مكالمات الصوت والفيديو.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="سوف تظهر كغير متصل إلى جهات الاتصال الخاصة بك، ولن تكون قادرا على التحدث معهم.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="تشغيل \"بعيد\" تلقائيا ";
+/* */
+"xMinutes"="[X] دقائق";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="غير الحالة إلى بعيد بعد [X] دقيقة/دقائق من عدم النشاط";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="استمرار الحالة";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="البقاء على نفس الحالة المختارة حتى عندما لا يكون لدي أي جهاز متصل.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(عُدِّّلَت)";
 /*  */
 "online"="متاح";
+/*  */
+"away"="في الخارج";
+/*  */
+"busy"="مشغول";
 /* title of the contact properties screen */
 "contactInfo"="معلومات جهة الاتصال";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@ يكتب ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="اكتب رسالة...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="لا توجد محادثات سابقة";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="اعادة المحاولة";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="مسح الرسالة";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="أرسل لجهة الاتصال";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="أضف من سحابتي";
+/* */
+"done"="تمت العملية";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="ارسال ملفات";

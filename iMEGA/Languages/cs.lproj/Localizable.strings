@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Žádné příchozí sdílené složky";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Žádné odchozí sdílené složky";
-/* Title of My Contacts section */
-"myContacts"="Kontakty";
 /* Title of Contacts requests section */
 "contactRequests"="Požadavky kontaktů";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Zkuste to později nebo je zrušte";
 /* Section title of the 'Sort by' */
 "sortTitle"="SEŘADIT PODLE";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Uložit";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="název (vzestupně)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="Přeskočit";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Automatická záloha vašich fotek do Cloudové jednotky";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Povolit Nahrávání z fotoaparátu";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="Opravdu chcete opustit tato sdílení?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Složka opuštěna";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Sdílet";
+/* Select all items/elements on the list */
+"selectAll"="Vybrat vše";
+/*  */
+"oneContact"="1 kontakt";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] kontaktů";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Sdílet složku";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Rozšířené";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Možnosti zabezpečení";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="O nás";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Jazyk";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Jazyk aplikace";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Pošlete zpětnou vazbu";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Sem napište svou zpětnou vazbu:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Ve vašem zařízení není nastaven žádný e-mailový účet";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Zásady ochrany osobních údajů";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Podmínky užívání";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Vypnuto";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Smazat místní data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásit a vymazat místní data po 10 neúspěšných pokusech o zadání hesla";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Podpora";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum nápovědy";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Získejte podporu nebo čtěte oblíbená témata.";
 /* Title to rate the app */
 "rateUsLabel"="Ohodnoťte nás";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Odhlásit se";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Odhlašování";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Odebrat obrázek";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Změnit profilový obrázek";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Úspěšně jste změnili svůj profil.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Jméno";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Příjmení";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Využití";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradujte účet";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Můžete upgradovat později v Můj účet";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložiště";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="Uživateli [A] bylo změněnenovoprávnění na [B] uživatelem [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="Uživatel [A] změnil název skupinového chatu na '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Přidat účastníka...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stav";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Audiovizuální hovory";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Používat mobilní data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Se svými kontakty můžete chatovat, sdílet soubory a provádět audiovizuální hovory.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Vašim kontaktům se zobrazíte jako offline a nebudete s nimi moci chatovat.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Automaticky pryč";
+/* */
+"xMinutes"="[X] minut";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Zobrazit mě jako Pryč po [X] minutách neaktivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Platnost stavu";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Udržovat můj zvolený zobrazovaný stav, i když nemám žádná připojená zařízení.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(upraveno)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Pryč";
+/*  */
+"busy"="Zaneprázdněn";
 /* title of the contact properties screen */
 "contactInfo"="Informace o kontaktu";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@ píše...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Napsat zprávu...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Žádná historie konverzací";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Opakovat";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Odstranit zprávu";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Odeslat kontakt";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Přidat z mé Cloudové jednotky";
+/* */
+"done"="hotovo";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Odeslat soubory";

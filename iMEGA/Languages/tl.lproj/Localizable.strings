@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Walang padating na Binahaging Folder";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Walang paalis na Binahaging Folder";
-/* Title of My Contacts section */
-"myContacts"="Contacts";
 /* Title of Contacts requests section */
 "contactRequests"="Mga request ng contact";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Subukang muli o itigil na";
 /* Section title of the 'Sort by' */
 "sortTitle"="I-sort batay sa";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="I-save";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="pangalan (paitaas)";
@@ -485,7 +483,7 @@
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d tinaggal ang contacts";
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
-"removedContact"="Tinanggal si %@!";
+"removedContact"="Tinanggal si %@";
 /* Label shown when a contact request is pending */
 "pending"="Pending";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="Gusto mo bang iwan ang mga binahaging ito sa'yo?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Iniwan ang folder!";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Ibahagi";
+/* Select all items/elements on the list */
+"selectAll"="Piliin Lahat";
+/*  */
+"oneContact"="1 contact";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Ibahagi ang Folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Advanced";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Security Options";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Tungkol sa";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Lenggwahe";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Application language";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Magbigay ng Tugon";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Isulat ang feedback mo dito:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Walang email na naka set up sa inyong device";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Pribadong Patakaran";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Terms of Service";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
@@ -641,7 +647,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %d folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Pahiin ang local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Mag-logout at burahin ang local data matapos ang 10 maling pagsubok sa passcode";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Suporta";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tulong";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Makakuha ng suporta o basahin ang mga popular na topics.";
 /* Title to rate the app */
 "rateUsLabel"="I-rate kami";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Mag-logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Alisin ang avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Baguhin ang Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Matagumpay mong nabago ang iyong profile.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Pangalan";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Apelyedo";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Nagamit na";
 /* Title for "Local" used space. */
@@ -869,35 +887,47 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Imbitahan";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="This message has been deleted";
+"thisMessageHasBeenDeleted"="Binura na ang mensahe";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Ako";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
 "wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat.";
+"leftTheGroupChat"="Umalis si [A] sa group chat.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] cleared the chat history.";
+"clearedTheChatHistory"="Binura ni [A] ang chat history.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Magdagdag ng kasali...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Katayuan";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Voice and Video Calls";
+"voiceAndVideoCalls"="Voice at Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gamitin ang Mobile Data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] minuto";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Alisin mo ako pagkatapos ng [X] na minuto ng walang aktibidad";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Panatilihin ang napili kong status kahit na walang naka-connect na device.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(binago)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Wala";
+/*  */
+"busy"="Abala";
 /* title of the contact properties screen */
 "contactInfo"="Contact info";
 /*  */
@@ -917,7 +947,7 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Folders na Shared";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Contact Credentials";
+"contactCredentials"="Credentials ng Contact";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Ito ay magandang gawin ng harapan at personal. Kung meron kang ibang verified channel gaya ng verified OTR at PGP, pwede mo itong gamitin.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
@@ -963,7 +993,7 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Remove Participant";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversation with %@";
+"conversationWith"="Pag-uusap kay %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="Inaalagan ng MEGA ang inyong end-to-end (kontrolado ng gumagamit) encryption sa pamamagitan ng mga mahahalagang kasiguruhang pangkaligtasan:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -976,3 +1006,17 @@
 "isTyping"="Nagtatype si %@  ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Magsulat ng mensahe...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Walang naitalang pag-uusap";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Subukang muli";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Burahin ang mensahe";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Ipadala ang contact";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Idagdag galing sa aking Cloud Drive";
+/* */
+"done"="tapos na";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Magpadala ng files";

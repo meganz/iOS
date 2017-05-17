@@ -81,7 +81,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
+"accountNotConfirmed"="アカウントを確認するためにMEGAからのメール内のリンクをアクセスしてください。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="あなたのアカウントはブロックされています。support@mega.nzへ連絡して下さい。";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -125,7 +125,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="開けようとしているファイルは、メモリーの空き容量を超えています。";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Unavailable link";
+"linkUnavailable"="利用できないリンク";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
 "fileLinkUnavailableText"="これには次の理由が考えられます。- Tos/AUP 違反のためファイルが除外された。- URL が無効。アクセスしようとするリンクが存在しない。- ユーザーによりファイルが削除された。";
 /* Message shown when a download starts */
@@ -157,11 +157,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="知り合いなし";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
+"noIncomingSharedItemsEmptyState_text"="共有フォルダ送信なし";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="現在共有フォルダの送信なし";
-/* Title of My Contacts section */
-"myContacts"="知り合い";
 /* Title of Contacts requests section */
 "contactRequests"="知り合いリクエスト";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="再度トライするか、キャンセルして下さい。";
 /* Section title of the 'Sort by' */
 "sortTitle"="ソートする";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="保存する";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名前（上り）";
@@ -239,7 +237,7 @@
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="インポート...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
-"fileExistAlertController_Message"="[A] already uploaded with the name [B]";
+"fileExistAlertController_Message"="[A]はもう[B]としてアップロードされました";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="このファイルは %@としてアップロードされました。";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
@@ -271,7 +269,7 @@
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="リンクを取得";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Get links";
+"getLinks"="リンクを取得する";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="リンク作成中";
 /* Message shown when some links to files and/or folders are being generated */
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="省く";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="自動的にクラウド・ドライブに写真をバックアップします";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="写真アップロード有効";
 /* Success message shown when Camera Uploads has been enabled */
@@ -407,7 +405,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="アイテム%luこ選択";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Camera Uploads will be disabled";
+"cameraUploadsWillBeDisabled"="カメラアップロードは無効にします";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="あなたのデバイスには十分なスペースがないので、カメラアップロードは無効となりました。";
 /* Title of the Offline section */
@@ -437,7 +435,7 @@
 /* Message shown when you have changed the permissions of a shared folder */
 "permissionsChanged"="許可を変更しました。";
 /* Message shown when a share has been left */
-"shareLeft"="Share left";
+"shareLeft"="共有から出ました";
 /* Message shown when some shares have been left */
 "sharesLeft"="残り共有";
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
@@ -447,7 +445,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Are you sure you want to remove these shares? (Shared with %d contacts)";
+"removeMultipleSharesMultipleContactsMessage"="この共有を削除してもよろしいですか。（共有相手は%d人）";
 /* Message shown when a share have been removed */
 "shareRemoved"="共有は解除されました。";
 /* Message shown when some shares have been removed */
@@ -498,10 +496,18 @@
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="フォルダは残っています。";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="共有する";
+/* Select all items/elements on the list */
+"selectAll"="すべてを選択する";
+/*  */
+"oneContact"="知り合い１人";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X]人の知り合い";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
-"shareFolder"="フォルダ共有";
+"shareFolder"="フォルダを共有する";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="フォルダ共有";
+"shareFolders"="フォルダを共有する";
 /* Button that allows you to select a given folder */
 "select"="選択";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -522,21 +528,21 @@
 "advanced"="高度";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="セキュリティオプション";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="について";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="言語";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="アプリケーション言語";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="フィードバックを送る";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="ここに手ごたえを書いて下さい";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="デバイス上にメールアカウントなし";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="プライバシーポリシー";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="利用規約";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="オフ";
@@ -595,7 +601,7 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="Currently using %@";
+"currentlyUsing"="利用している領域 %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="アカウントをキャンセルする";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
@@ -711,7 +717,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="メールを変更する";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email must not match";
+"oldAndNewEmailMatch"="新しいEメールは現在のEメールと違う必要があります";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="メールアドレスが一致していません";
 /* Error message when a use wants to validate the same email twice */
@@ -725,7 +731,7 @@
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="他のセッションを閉じる";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="Sessions closed";
+"sessionsClosed"="セッションを閉じました";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="パスコードを変更する";
 /* Title to describe a simple (four digit) passcode */
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="サポート";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="質問するか、自分で読む";
 /* Title to rate the app */
 "rateUsLabel"="評価してください";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="ログアウト";
 /* String shown when you are logging out of your account. */
 "loggingOut"="ログアウトします";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="アバターをはずす";
+/* button that allows the user the change his avatar */
+"changeAvatar"="アバターを替える";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="プロフィールを変更成功。";
+/* Hint text for the first name (Placeholder) */
+"firstName"="名前";
+/* Hint text for the last name (Placeholder) */
+"lastName"="姓（苗字）";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="ご利用内容";
 /* Title for "Local" used space. */
@@ -813,7 +831,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="購入エラー%@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="In-App Purchases is disabled, please enable it in the iOS Settings";
+"appPurchaseDisabled"="アプリ内の購入は今無効です。iOS設定で有効にしてください。";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="%@ が見つかりません。ios@mega.nzまでご連絡下さい。";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -845,23 +863,23 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="リクエストがキャンセルされたか、支払いが復活できませんでした。後で再度トライするか、ios@mega.nzまでご連絡下さい。";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="デバッグモードを有効にする";
+"enableDebugMode_title"="デバッグモードを有効にします";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="オフライン・セクションで(MEGAiOS.log)と言うログファイルが作成されます。";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="デバッグモードを無効にする";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Are you sure you want to delete this item from Offline?";
+"removeItemFromOffline"="オフラインからこのアイテムを削除してもよろしいですか";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Are you sure you want to delete these items from Offline?";
+"removeItemsFromOffline"="オフラインからこのアイテムを削除してもよろしいですか";
 /* Chat section header */
 "chat"="チャット";
 /* Empty Conversations section */
 "noConversations"="会話なし";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="オンにする";
 /* Conversations section */
@@ -879,25 +897,37 @@
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
 "joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] cleared the chat history.";
+"clearedTheChatHistory"="[A]が履歴をクリアしました。";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A]はグループチャット名前を[B]に編集しました。";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="参加者を追加...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="ステータス";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Use Mobile Data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+"useMobileData"="モバイルデータを利用します";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="自動退席";
+/* */
+"xMinutes"="[X]分";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="編集された";
 /*  */
 "online"="オンライン";
+/*  */
+"away"="不在";
+/*  */
+"busy"="通信中";
 /* title of the contact properties screen */
 "contactInfo"="知り合いに関する情報";
 /*  */
@@ -961,7 +991,7 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="Remove Participant";
+"removeParticipant"="参加者を削除する";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -976,3 +1006,17 @@
 "isTyping"="%1が入力中です...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="メッセージを入力...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="会話履歴なし";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="もう一度やる";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="メッセージを削除";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="知り合いを送信";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="クラウド・ドライブから追加する";
+/* */
+"done"="できました。";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="ファイルを送る";

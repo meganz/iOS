@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="אין תיקיות משותפות נכנסות";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="אין תיקיות משותפות יוצאות";
-/* Title of My Contacts section */
-"myContacts"="אנשי קשר";
 /* Title of Contacts requests section */
 "contactRequests"="בקשות חברי קשר";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="נסה שוב מאוחר יותר או בטל";
 /* Section title of the 'Sort by' */
 "sortTitle"="מיין לפי";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="שמור";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="שם (עולה)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="דלג";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="גבה בצורה אוטומטית את התמונות שלך לאחסון בענן";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="אפשר העלאת תמונות מצלמה";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="האם אתה בטוח שברצונך לעזוב שיתופים אלו?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="עזבת את התיקייה";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="שתף";
+/* Select all items/elements on the list */
+"selectAll"="בחר הכל";
+/*  */
+"oneContact"="איש קשר";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] אנשי קשר";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="שתף תיקייה";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="מתקדם";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="אפשרויות אבטחה";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="אודות";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="שפה";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="שפת האפליקציה";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="שלח משוב";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="אנא כתוב את חוות דעתך כאן:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="לא הוגדרה כתובת מייל במכשיר זה";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="מדיניות הפרטיות";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="תנאי השימוש";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="כבוי";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="מחק מידע מקומי";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="תמיכה";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="מרכז שירות";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="קבל תמיכה או קרא מאמרים פופולריים.";
 /* Title to rate the app */
 "rateUsLabel"="דרג אותנו";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="התנתק";
 /* String shown when you are logging out of your account. */
 "loggingOut"="מתנתק";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="מחק תמונה";
+/* button that allows the user the change his avatar */
+"changeAvatar"="החלף תמונת פרופיל";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="הפרופיל שלך עודכן בהצלחה.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="שם פרטי";
+/* Hint text for the last name (Placeholder) */
+"lastName"="שם משפחה";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="שימוש";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="שדרג חשבון";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="תוכל לשדרג מאוחר יותר ב\"חשבון שלי\"";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="אחסון";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -861,7 +879,7 @@
 /* Empty Conversations section */
 "noConversations"="אין שיחות";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="צ'ט בוטל";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="אפשר";
 /* Conversations section */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A] שונה ל-[B] על ידי [C]";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] שינה את שם הקבוצה ל'[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="הוסף משתתף...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="מצב";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="שיחות וידאו ואודיו";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="השתמש בנתונים סלולאריים";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="אתה יכול לדבר עם אנשי הקשר שלך, לשתף קבצים ולבצע שיחות וידאו ואודיו.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="תופיע כלא מקוון אצל אנשי הקשר שלך ולא תוכל לפתוח שיחה איתם.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="הפוך ללא זמין באופן אוטומטי";
+/* */
+"xMinutes"="[X] דקות";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="הצג אותי כלא נמצא לאחר [X] דקות בלי שימוש";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="סטאטוס קבוע";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="שמור על הסטאטוס שלי קבוע אפילו אם אין לי מכשירים מחוברים.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(נערך)";
 /*  */
 "online"="מחובר";
+/*  */
+"away"="מרוחק";
+/*  */
+"busy"="עסוק";
 /* title of the contact properties screen */
 "contactInfo"="מידע הודות איש קשר";
 /*  */
@@ -976,3 +1006,17 @@
 "isTyping"="%@ מקליד...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="כתוב הודעה...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="אין היסטוריית שיחה";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="נסה שנית";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="מחק הודעה";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="שלח איש קשר";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="הוסף מהכונן בענן שלי";
+/* */
+"done"="הסתיים";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="שלח קבצים";
