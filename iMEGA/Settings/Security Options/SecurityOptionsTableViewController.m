@@ -2,6 +2,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
 #import "CloudDriveTableViewController.h"
@@ -121,9 +122,11 @@
             if (indexPath.row == 0) {
                 [self pushChangeViewControllerType:ChangeTypePassword];
             } else if (indexPath.row == 1) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youCanResetYourPasswordByFollowing", @"Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-                [alertView setTag:2];
-                [alertView show];
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"youCanResetYourPasswordByFollowing", @"Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
+                    alertView.tag = 2;
+                    [alertView show];
+                }
             }
             break;
         }
@@ -134,7 +137,9 @@
         }
             
         case 3: { //Close other sessions
-            [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:self];
+            }
         }
             
         default:

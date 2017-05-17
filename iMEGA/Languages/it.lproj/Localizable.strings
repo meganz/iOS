@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Annulla";
 /* Button title to accept something */
-"ok"="Ok";
+"ok"="OK";
 /* */
 "upload"="Carica";
 /*  */
@@ -12,8 +12,10 @@
 "error"="Errore";
 /*  */
 "name"="Nome";
+/* Caption of a button to edit the files that are selected */
+"edit"="Modifica";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Salvato";
 /*  */
 "passcode"="Codice di accesso";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="E-mail e/o password non validi. Riprova, per favore";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Hai provato ad accedere troppe colte. Per favore, attendi fino alle %@ e riprova.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Per favore, controlla la tua email e clicca sul link per confermare il tuo account.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Per favore, controlla la tua email e clicca sul link per confermare l'account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Il tuo account è stato bloccato. Si prega di contattare support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Nessuna cartella condivisa in arrivo";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Nessuna cartella condivisa in uscita";
-/* Title of My Contacts section */
-"myContacts"="Contatti";
 /* Title of Contacts requests section */
 "contactRequests"="Richieste di contatto";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Ci sono downloads in sospeso";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Prova dopo o annulla";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="Ordina per";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Salva";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Nome (ascendente)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Scegli";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Scatta";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nuova cartella";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nome della nuova cartella";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Salta";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Fai un backup automatico delle tue foto nel Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Attiva Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Aggiungi";
 /* Success message shown when a contact has been invited */
 "requestSent"="Richiesta inviata";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Non c'è bisogno di aggiungere il tuo indirizzo email";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Hai già un contatto con quella e-mail";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="L'utente [X] è stato invitato e apparirà nell'elenco dei contatti una volta accettato l'invito.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Gli utenti sono stati invitati e appariranno nell'elenco dei contatti una volta accettati gli inviti.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Errore aggiunta contatto";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Sei sicuro di voler abbandonare queste condivisioni?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Uscito dalla cartella";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Condividi";
+/* Select all items/elements on the list */
+"selectAll"="Seleziona tutto";
+/*  */
+"oneContact"="1 contatto";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contatti";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Condividi cartella";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Avanzato";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opzioni di Sicurezza";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Riguardo";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Lingua";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Lingua dell'applicazione";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Invia un commento";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Per favore, inserisci il tuo feedback qui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Non hai un account e-mail configurato sul dispositivo";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Informativa sulla privacy";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termini di Servizio";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
@@ -534,8 +552,6 @@
 "options"="Opzioni";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Carica video";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Utilizza dati cellulare";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Solo mentre è in carica";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Esportare la Chiave di recupero e mantenerla in uno spazio sicuro ti permette di recuperare il tuo account in caso di perdita della password senza perdite di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Perché ho bisogno di una Chiave di Recupero?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="I tuoi dati sono solo leggibili attraverso una catena di decriptazione che inizia con la tua chiave mastra di criptazione (Chiave di Recupero), che immagazziniamo in modo criptato insieme alla tua password. Questo significa che se tu perdi la tua password, la tua Chiave di Recupero non potrà più essere decriptata, e che non potrai più decriptare i tuoi dati.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Attualmente %@ usati";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Chiudi il tuo account";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Cancella il tuo account";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Perderai tutti i dati associati a questo account. Sei sicuro di voler procedere?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Password dimenticata?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Riceverai un link di recupero che ti permetterà di resettare la tua password. Per favore, controlla la tua email per procedere.";
+"youCanResetYourPasswordByFollowing"="Puoi resettare la password usando il link di recupero che ti sarà inviato per email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Questo link di recupero è scaduto, si prega di riprovare.";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Esci e cancella i dati locali dopo 10 tentativi falliti";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Supporto";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Assistenza";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Richiedi assistenza o leggi gli argomenti popolari.";
 /* Title to rate the app */
 "rateUsLabel"="Votaci";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Esci";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Sto uscendo";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Rimuovi avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Cambia Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Hai aggiornato con successo il tuo profilo.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Nome";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Cognome";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilizzo";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Usato";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponibile";
+/* title of the My Account screen */
+"accountType"="Tipo conto:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Aggiorna l'account";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="Puoi aggiornare più tardi in Il Mio Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spazio";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,157 @@
 "removeItemFromOffline"="Sei sicuro di volere rimuovere questo elemento da Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sei sicuro di voler rimuovere questi elementi da Offline?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Nessuna Conversazione";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat disattivata";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Attiva";
+/* Conversations section */
+"conversations"="Conversazioni";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Invita";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Questo messaggio è stato eliminato";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Io";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] è stato rimosso dal gruppo da [B]";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] ha abbandonato la chat di gruppo";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] è stato invitato da [B] ad unirsi al gruppo";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] ha pulito la conversazione";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] è stato cambiato da [B] a [C]";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] ha cambiato il nome del gruppo in \"[B]\"";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Aggiungi partecipante...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Stato";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Chiamate vocali e video";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Usa dati mobili";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Automaticamente lontano";
+/* */
+"xMinutes"="[X] minuti";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Mostrami come occupato dopo [X] minuti di inattività";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Persistenza dello status";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Mantieni il mio status anche quando non ho dispositivi connessi";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(modificato)";
+/*  */
+"online"="Online";
+/*  */
+"away"="Via";
+/*  */
+"busy"="Occupato";
+/* title of the contact properties screen */
+"contactInfo"="Info contatto";
+/*  */
+"notifications"="Notifiche";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Invia messaggio";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verifica credenziali";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Pulisci la chat";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Sei sicuro di voler cancellare tutta la chat?";
+/* 'Next' button in a dialog */
+"continue"="Continua";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Chiudi chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Cartelle Condivise";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Credenziali del contatto";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Sarebbe meglio farlo faccia a faccia nella vita reale. Se hai un altro canale di comunicazione verificato come OTR o PGP, puoi utilizzarlo.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Le tue credenziali";
+/* Button to reset the password */
+"reset"="Reset";
+/* Button title */
+"approve"="Approva";
+/* start a chat/conversation */
+"startConversation"="Inizia conversazione";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Gruppo";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Info del gruppo";
+/* Label title for a group chat */
+"groupChat"="Chat di gruppo";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Rinomina gruppo";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Cambia immagine del gruppo";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Lascia";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Altro";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Muta";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Info";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Chiudi";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Non avrai più accesso a questa conversazione";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Abbandona Chat";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Esci dal gruppo";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Partecipanti";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderatore";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Rimuovi partecipante";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversazione con %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA protegge la tua chat con una criptazione end-to-end (controllata dall'utente) provvedendo un'assicurazione di sicurezza essenziale:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Confidenzialità.[/S] Solo l'autore e i destinatari possono decifrare e leggere il contenuto.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Autenticità.[/S] Il sistema assicura che i dati mostrati provengono direttamente dal mittente, e che i contenuti non sono stati manipolati durante la trasmissione.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat non trovata";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ sta scrivendo...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Scrivi un messaggio...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Nessuna conversazione";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Riprova";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Cancella messaggio";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Invia contatto";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Aggiungi dal mio Cloud Drive";
+/* */
+"done"="fatto";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Invia files";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";

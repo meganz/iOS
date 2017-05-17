@@ -1,36 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aAh-l2-z5Q">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="SF-UI-Text-Light.otf">
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-            <string>SFUIText-Light</string>
-        </mutableArray>
-        <mutableArray key="SF-UI-Text-Regular.otf">
+        <array key="SF-UI-Display-Regular.otf">
+            <string>SFUIDisplay-Regular</string>
+        </array>
+        <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-            <string>SFUIText-Regular</string>
-        </mutableArray>
+        </array>
     </customFonts>
     <scenes>
         <!--Main Tab Bar Controller-->
@@ -40,8 +25,9 @@
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="P2C-N3-EeA">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X4x-UV-bs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -53,11 +39,11 @@
             <objects>
                 <navigationController storyboardIdentifier="initialViewControllerID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="aAh-l2-z5Q" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0CH-fW-Exe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0CH-fW-Exe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.12941177189350128" green="0.13333334028720856" blue="0.12941177189350128" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.12941177189350128" green="0.13333334028720856" blue="0.12941177189350128" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -74,7 +60,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ConfirmAccountNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="YJs-s6-GAA" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mD2-yS-dr8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="mD2-yS-dr8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -96,11 +82,11 @@
                         <viewControllerLayoutGuide type="bottom" id="TAR-ES-kr1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HNb-vZ-9Rz">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
-                                <rect key="frame" x="215" y="76" width="170" height="54"/>
+                                <rect key="frame" x="102.5" y="76" width="170" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="8H0-L2-rCb"/>
                                     <constraint firstAttribute="width" constant="170" id="UE5-Wy-5zX"/>
@@ -122,15 +108,15 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sOe-JK-Yli" userLabel="Email Text Field">
-                                <rect key="frame" x="80" y="176" width="490" height="30"/>
+                                <rect key="frame" x="80" y="176" width="265" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="690" id="LGf-X5-aiq">
                                         <variation key="heightClass=regular-widthClass=regular" constant="274"/>
                                     </constraint>
                                     <constraint firstAttribute="height" constant="30" id="LN4-af-Dww"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -147,8 +133,8 @@
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-hX-zEf" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="220" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="220" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="740" id="5FA-nw-9s3">
                                         <variation key="heightClass=regular-widthClass=regular" constant="324"/>
@@ -174,8 +160,8 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWC-os-01i" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="285" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="285" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="6a9-tX-tw5"/>
                                     <constraint firstAttribute="width" constant="740" id="PCv-i9-ux4"/>
@@ -192,19 +178,23 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
-                                <rect key="frame" x="30" y="353" width="540" height="64"/>
-                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="353" width="315" height="64"/>
+                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="3Bn-dF-dHQ"/>
                                     <constraint firstAttribute="width" constant="740" id="zKs-JQ-i6l">
                                         <variation key="heightClass=regular-widthClass=regular" constant="580"/>
                                     </constraint>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="20"/>
                                 <state key="normal" title="Login">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="zKs-JQ-i6l"/>
@@ -220,14 +210,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb">
-                                <rect key="frame" x="443" y="295" width="107" height="30"/>
+                                <rect key="frame" x="215" y="295" width="110" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="UyB-1I-oqp"/>
                                     <constraint firstAttribute="width" constant="200" id="ol0-C2-rII"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <state key="normal" title="Forgot password?">
-                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -239,40 +229,40 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forgotPasswordQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
-                                <rect key="frame" x="558" y="304" width="12" height="12"/>
+                                <rect key="frame" x="333" y="304" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="Xbh-qH-Dye"/>
                                     <constraint firstAttribute="width" constant="12" id="vOE-pp-Epx"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZiB-Wx-xJc">
-                                <rect key="frame" x="80" y="240" width="490" height="31"/>
+                                <rect key="frame" x="80" y="240" width="265" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="235-Ch-c0K"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="y7g-EC-7mD" id="PJ0-ak-k3M"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ety-kE-DRx">
-                                <rect key="frame" x="200" y="447" width="200" height="30"/>
+                                <rect key="frame" x="87.5" y="447" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="cM2-AJ-Mis"/>
                                     <constraint firstAttribute="width" constant="200" id="hrJ-KR-Lod"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Create account">
-                                    <color key="titleColor" red="1" green="0.20000000000000001" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.20000000000000001" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="iCg-Wh-kpi" kind="show" identifier="CreateAccountStoryboardSegueID" id="Gun-Pw-xHC"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="EcF-LZ-UjW" secondAttribute="trailing" constant="30" id="1Ng-s1-Otr"/>
                             <constraint firstItem="yWC-os-01i" firstAttribute="top" secondItem="1ap-A2-BES" secondAttribute="bottom" constant="14" id="1x7-St-Kfc"/>
@@ -343,9 +333,6 @@
                                 <exclude reference="o7A-Yp-H1S"/>
                                 <exclude reference="zgR-GF-NCp"/>
                                 <exclude reference="aXk-sI-9L3"/>
-                                <exclude reference="aKk-gf-QgS"/>
-                                <exclude reference="jA9-Ha-K9f"/>
-                                <exclude reference="nXQ-Dz-Lbd"/>
                                 <exclude reference="4rT-EH-n5F"/>
                                 <exclude reference="8E8-4v-p2A"/>
                                 <exclude reference="QEf-0d-7iJ"/>
@@ -354,6 +341,9 @@
                                 <exclude reference="hJu-xc-Vwr"/>
                                 <exclude reference="mcK-FL-I2H"/>
                                 <exclude reference="uto-fV-96l"/>
+                                <exclude reference="aKk-gf-QgS"/>
+                                <exclude reference="jA9-Ha-K9f"/>
+                                <exclude reference="nXQ-Dz-Lbd"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -405,7 +395,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Q6i-01-JXF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AWH-xe-qAi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name" translatesAutoresizingMaskIntoConstraints="NO" id="rQN-gj-bK3" userLabel="Name Image View">
@@ -416,20 +406,20 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bVu-yv-OMn">
-                                <rect key="frame" x="72" y="68" width="498" height="30"/>
+                                <rect key="frame" x="72" y="68" width="273" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="v6u-LJ-BJA"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="Gay-aT-gQQ"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJK-uV-V7Y" userLabel="Name Line View">
-                                <rect key="frame" x="30" y="112" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="112" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="T7P-Qt-dJb"/>
                                 </constraints>
@@ -442,20 +432,20 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZUP-K7-qha">
-                                <rect key="frame" x="72" y="133" width="498" height="30"/>
+                                <rect key="frame" x="72" y="133" width="273" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="epk-1c-1d7"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="aCM-f4-KOc"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx8-ts-Qmp" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="177" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="177" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="MMx-cR-RU4"/>
                                 </constraints>
@@ -468,20 +458,20 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dFO-ce-qPx">
-                                <rect key="frame" x="72" y="198" width="498" height="30"/>
+                                <rect key="frame" x="72" y="198" width="273" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="pcv-83-n4I"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="hB7-kL-Mvl"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vc4-im-wz7" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="242" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="242" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HJ0-fc-oNX"/>
                                 </constraints>
@@ -494,20 +484,20 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eu0-lv-GeT">
-                                <rect key="frame" x="72" y="263" width="498" height="30"/>
+                                <rect key="frame" x="72" y="263" width="273" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="1Qh-FZ-IyX"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="iCg-Wh-kpi" id="iJO-04-Aui"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T9-ef-E6L" userLabel="Confirm Password Line View">
-                                <rect key="frame" x="30" y="307" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="307" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="eUD-4l-rhS"/>
                                 </constraints>
@@ -520,7 +510,7 @@
                                     <constraint firstAttribute="height" constant="22" id="vaM-QT-Mbg"/>
                                 </constraints>
                                 <state key="normal" image="checkBoxOff">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="selected" image="checkBoxOn"/>
                                 <connections>
@@ -528,22 +518,22 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
-                                <rect key="frame" x="74" y="331" width="496" height="21"/>
+                                <rect key="frame" x="74" y="331" width="271" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="zn0-Q3-HDE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                 <state key="normal" title="I agree with the MEGA Terms of Service">
-                                    <color key="titleColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="termOfServiceTouchUpInside:" destination="iCg-Wh-kpi" eventType="touchUpInside" id="XAl-df-HJN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU">
-                                <rect key="frame" x="30" y="374" width="540" height="64"/>
-                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="374" width="315" height="64"/>
+                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="QY2-jL-B7y"/>
                                     <constraint firstAttribute="width" constant="740" id="sP4-2z-jLv">
@@ -552,8 +542,13 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
                                 <state key="normal" title="Create Account">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="sP4-2z-jLv"/>
@@ -569,21 +564,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-eK-8Sh">
-                                <rect key="frame" x="225" y="452" width="150" height="30"/>
+                                <rect key="frame" x="112.5" y="452" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="JEj-yA-z6A"/>
                                     <constraint firstAttribute="height" constant="30" id="Wrk-Et-1fi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Login">
-                                    <color key="titleColor" red="1" green="0.20000000000000001" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.20000000300000001" blue="0.2274509817" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="y7g-EC-7mD" kind="show" identifier="LoginStoryboardSegueID" id="esl-T8-v2D"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dFO-ce-qPx" firstAttribute="leading" secondItem="Kxh-Ev-1cq" secondAttribute="trailing" constant="10" id="0Y7-KA-jII"/>
                             <constraint firstAttribute="trailing" secondItem="jJK-uV-V7Y" secondAttribute="trailing" constant="30" id="1Ad-Gw-Kqp"/>
@@ -747,8 +742,8 @@
                                 <constraint firstAttribute="width" constant="200" id="2gl-wK-DTb"/>
                                 <constraint firstAttribute="height" constant="48" id="LMq-N0-frV"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
-                            <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                            <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -763,8 +758,8 @@
                                 <constraint firstAttribute="height" constant="42" id="QdW-mQ-tF4"/>
                                 <constraint firstAttribute="height" constant="42" id="wcT-ED-Lx9"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
-                            <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                            <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -781,7 +776,7 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="MQS-YI-mUh" firstAttribute="centerY" secondItem="l0h-b9-ygd" secondAttribute="centerY" constant="-66" id="0qz-V7-lpo"/>
                         <constraint firstItem="3hZ-hv-g3O" firstAttribute="centerX" secondItem="MQS-YI-mUh" secondAttribute="centerX" id="3FU-DR-9L9"/>
@@ -812,16 +807,16 @@
                         <viewControllerLayoutGuide type="bottom" id="pYI-fY-6Pe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tEv-K7-MM9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your password to confirm your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2P-8s-Lnf">
-                                <rect key="frame" x="30" y="62" width="540" height="66"/>
+                                <rect key="frame" x="30" y="62" width="315" height="66"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="66" id="NdV-JL-koH"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="NBL-tg-L4l" userLabel="Email">
@@ -832,20 +827,20 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Tl-b0-o2N">
-                                <rect key="frame" x="84" y="170" width="486" height="30"/>
+                                <rect key="frame" x="84" y="170" width="261" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="EZq-rW-2Sg"/>
                                 </constraints>
-                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Q0l-3c-nfd" id="tL4-5v-aug"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3J-fg-Bnu" userLabel="Email Line View">
-                                <rect key="frame" x="30" y="214" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="214" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="WtU-mL-kZw"/>
                                 </constraints>
@@ -858,38 +853,43 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BWU-XT-F9r">
-                                <rect key="frame" x="84" y="238" width="486" height="30"/>
+                                <rect key="frame" x="84" y="238" width="261" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="oMB-xU-ekt"/>
                                 </constraints>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="Q0l-3c-nfd" id="sh9-73-nwE"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kzq-lX-XwP" userLabel="Password Line View">
-                                <rect key="frame" x="30" y="279" width="540" height="1"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="279" width="315" height="1"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="mk0-Lb-o33"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urs-kB-QJB" userLabel="Confirm">
-                                <rect key="frame" x="30" y="324" width="540" height="64"/>
-                                <color key="backgroundColor" red="1" green="0.30196078430000001" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="30" y="324" width="315" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.30196079609999998" blue="0.32156863810000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="740" id="2Mr-vL-wNd">
                                         <variation key="heightClass=regular-widthClass=regular" constant="580"/>
                                     </constraint>
                                     <constraint firstAttribute="height" constant="64" id="b8I-94-bDk"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
                                 <state key="normal" title="Confirm your account">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="2Mr-vL-wNd"/>
@@ -905,22 +905,22 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-CD-LZg">
-                                <rect key="frame" x="200" y="423" width="200" height="30"/>
+                                <rect key="frame" x="87.5" y="423" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="B3N-lY-hn6"/>
                                     <constraint firstAttribute="width" constant="200" id="nCF-zm-ZMh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="0.20000000300000001" blue="0.2274509817" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="cancelTouchUpInside:" destination="Q0l-3c-nfd" eventType="touchUpInside" id="DRM-d7-IKI"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="1Tl-b0-o2N" firstAttribute="leading" secondItem="NBL-tg-L4l" secondAttribute="trailing" constant="22" id="4kv-ob-Zen"/>
                             <constraint firstItem="BWU-XT-F9r" firstAttribute="centerY" secondItem="qIA-Nt-gfX" secondAttribute="centerY" constant="3" id="5mK-cD-miQ"/>
@@ -1015,19 +1015,19 @@
                         <viewControllerLayoutGuide type="bottom" id="IGL-MB-mXQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ozX-mh-sWi">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have a backup of your master crypto key, you can reset your password by selecting YES. No data will be lost." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHE-oi-efL">
-                                <rect key="frame" x="35" y="30" width="530" height="39"/>
+                                <rect key="frame" x="31" y="30" width="313" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="700" id="5au-Pp-U26">
                                         <variation key="heightClass=regular-widthClass=regular" constant="580"/>
                                     </constraint>
                                     <constraint firstAttribute="height" constant="100" id="mY2-no-h7k"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1042,13 +1042,13 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiA-UF-Krc">
-                                <rect key="frame" x="35" y="84" width="530" height="76"/>
+                                <rect key="frame" x="31" y="99" width="313" height="125.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="z9g-ti-NQt"/>
                                 </constraints>
                                 <string key="text">You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.</string>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1057,14 +1057,14 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have a backup of your Recovery Key?" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2q-1T-y0O">
-                                <rect key="frame" x="35" y="175" width="530" height="20"/>
+                                <rect key="frame" x="31" y="239.5" width="313" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="ZQJ-65-Pon"/>
                                     <constraint firstAttribute="height" constant="42" id="lm8-qd-F9P"/>
                                     <constraint firstAttribute="height" constant="40" id="nXT-Dl-uTS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="1" green="0.20000000298023224" blue="0.22745098173618317" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.20000000300000001" blue="0.2274509817" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1075,28 +1075,42 @@
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Su-XS-eEy">
-                                <rect key="frame" x="170" y="225" width="120" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.29803922772407532" blue="0.32156863808631897" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="57.5" y="312.5" width="120" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.30196079609999998" blue="0.32156863810000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="MKS-hL-6aI"/>
                                     <constraint firstAttribute="width" constant="120" id="gFt-PP-fJq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="12"/>
-                                <state key="normal" title="Yes"/>
+                                <state key="normal" title="Yes">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="yesButtonTouchUpInside:" destination="Myu-sr-EFY" eventType="touchUpInside" id="EQr-sv-oG0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8OL-qv-vwb">
-                                <rect key="frame" x="310" y="225" width="120" height="44"/>
-                                <color key="backgroundColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="197.5" y="312.5" width="120" height="44"/>
+                                <color key="backgroundColor" red="0.93333333730000001" green="0.93333333730000001" blue="0.93333333730000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="8Eh-IA-Sw5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="12"/>
-                                <state key="normal" title="No"/>
+                                <state key="normal" title="No">
+                                    <color key="titleColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="8Eh-IA-Sw5"/>
@@ -1107,7 +1121,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="P2q-1T-y0O" firstAttribute="trailing" secondItem="yiA-UF-Krc" secondAttribute="trailing" id="3ly-TE-Sya"/>
                             <constraint firstItem="8Su-XS-eEy" firstAttribute="centerX" secondItem="lHE-oi-efL" secondAttribute="centerX" constant="-70" id="5Zw-8j-4AW"/>
@@ -1167,7 +1181,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92e-Pm-DAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem image="cancelIcon" width="22" id="Gyt-yl-enE" userLabel="Cancel Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="cancelAction:" destination="Myu-sr-EFY" id="s5i-fB-R17"/>
                     </connections>
@@ -1184,11 +1198,11 @@
                         <viewControllerLayoutGuide type="bottom" id="NRA-ot-PyX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KYJ-CU-BE2">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzN-GF-tVJ">
-                                <rect key="frame" x="50" y="60" width="500" height="58"/>
+                                <rect key="frame" x="46" y="60" width="283" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="700" id="Peo-5p-Gh7">
                                         <variation key="heightClass=regular-widthClass=regular" constant="580"/>
@@ -1196,8 +1210,8 @@
                                     <constraint firstAttribute="height" constant="100" id="gzl-na-uwr"/>
                                 </constraints>
                                 <string key="text">Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.</string>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1212,13 +1226,13 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsJ-eN-C0J">
-                                <rect key="frame" x="50" y="133" width="500" height="76"/>
+                                <rect key="frame" x="46" y="165" width="283" height="107.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="Thd-Hw-N6A"/>
                                 </constraints>
                                 <string key="text">You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz</string>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1227,19 +1241,24 @@
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8q-Tv-xBn" userLabel="Confirm">
-                                <rect key="frame" x="50" y="249" width="500" height="64"/>
-                                <color key="backgroundColor" red="1" green="0.30196078430000001" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="46" y="312.5" width="283" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.30196079609999998" blue="0.32156863810000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="740" id="Gj0-1c-P1X">
                                         <variation key="heightClass=regular-widthClass=regular" constant="580"/>
                                     </constraint>
                                     <constraint firstAttribute="height" constant="64" id="j0Z-rO-Vjj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="20"/>
                                 <state key="normal" title="Park account">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="Gj0-1c-P1X"/>
@@ -1256,7 +1275,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qzN-GF-tVJ" firstAttribute="centerX" secondItem="KYJ-CU-BE2" secondAttribute="centerX" id="1sV-J6-VOs"/>
                             <constraint firstItem="qzN-GF-tVJ" firstAttribute="leading" secondItem="KYJ-CU-BE2" secondAttribute="leadingMargin" constant="30" id="4N5-AP-xMu"/>
@@ -1295,7 +1314,7 @@
                 </navigationItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dtk-7s-BZX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem image="cancelIcon" width="22" id="cWv-yE-JDh" userLabel="Cancel Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </barButtonItem>
             </objects>
             <point key="canvasLocation" x="2610" y="-1801"/>
@@ -1306,7 +1325,7 @@
                 <navigationController storyboardIdentifier="ForgotPasswordNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="8Yt-bP-uUX" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ofm-dV-q7Y">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="ofm-dV-q7Y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

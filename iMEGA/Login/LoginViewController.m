@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGANavigationController.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 
 #import "CreateAccountViewController.h"
@@ -34,9 +35,6 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
-    
-    self.loginButton.layer.cornerRadius = 4.0f;
-    self.loginButton.layer.masksToBounds = YES;
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     [self.passwordTextField setPlaceholder:AMLocalizedString(@"passwordPlaceholder", @"Password")];
@@ -68,6 +66,18 @@
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
+    if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    
+    if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitWaitingNewSession) {
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+        if (chatInit != MEGAChatInitWaitingNewSession) {
+            MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+        }
+    }
+    
     [self.emailTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
     
@@ -177,7 +187,8 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
+        [[MEGALogger sharedLogger] useChatSDKLogger];
     }
 }
 
@@ -192,7 +203,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    shoulBeLoginButtonGray ? [self.loginButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.loginButton setBackgroundColor:[UIColor mnz_redFF4D52]];
     
     return YES;
 }

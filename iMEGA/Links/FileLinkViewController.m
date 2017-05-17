@@ -55,9 +55,7 @@
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     if (self.fileLinkMode == FileLinkModeDefault) {
         [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-        NSMutableDictionary *titleTextAttributesDictionary = [[NSMutableDictionary alloc] init];
-        [titleTextAttributesDictionary setValue:[UIFont fontWithName:kFont size:17.0] forKey:NSFontAttributeName];
-        [_cancelBarButtonItem setTitleTextAttributes:titleTextAttributesDictionary forState:UIControlStateNormal];
+        [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:_cancelBarButtonItem];
         
         [self setUIItemsHidden:YES];
@@ -422,14 +420,6 @@
     }
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0;
 }
 
 #pragma mark - UITableViewDelegate

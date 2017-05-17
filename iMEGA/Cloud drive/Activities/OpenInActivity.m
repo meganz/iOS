@@ -33,22 +33,14 @@
 }
 
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
-
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
-        [self.documentInteractionController setDelegate:self];
-    }
+    self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
+    [self.documentInteractionController setDelegate:self];
 }
 
 - (void)performActivity {
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)) {
-        BOOL canOpenIn = [self.documentInteractionController presentOpenInMenuFromBarButtonItem:self.shareBarButtonItem animated:YES];
-        if (canOpenIn) {
-            [self.documentInteractionController presentPreviewAnimated:YES];
-        }
-    } else {
-        [self activityDidFinish:YES];
+    BOOL canOpenIn = [self.documentInteractionController presentOpenInMenuFromBarButtonItem:self.shareBarButtonItem animated:YES];
+    if (canOpenIn) {
+        [self.documentInteractionController presentPreviewAnimated:YES];
     }
 }
 

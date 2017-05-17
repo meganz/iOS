@@ -27,7 +27,7 @@
 	url = https://github.com/tagyro/AMLocalizedString.git
 [submodule "iMEGA/Vendor/CTAssetsPickerController"]
 	path = iMEGA/Vendor/CTAssetsPickerController
-	url = https://github.com/chiunam/CTAssetsPickerController.git
+url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/DateTools"]
 	path = iMEGA/Vendor/DateTools
 	url = https://github.com/MatthewYork/DateTools.git
@@ -43,3 +43,9 @@
 [submodule "iMEGA/Vendor/SAMKeychain"]
 	path = iMEGA/Vendor/SAMKeychain
 	url = https://github.com/soffes/SAMKeychain.git
+[submodule "iMEGA/Vendor/JSQMessagesViewController"]
+	path = iMEGA/Vendor/JSQMessagesViewController
+	url = https://github.com/meganz/JSQMessagesViewController.git
+[submodule "iMEGA/Vendor/Karere"]
+	path = iMEGA/Vendor/Karere
+	url = https://code.developers.mega.co.nz/messenger/karere-native.git

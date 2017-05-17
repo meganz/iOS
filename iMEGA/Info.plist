@@ -36,7 +36,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.4.3</string>
+	<string>3.4.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>53</string>
+	<string>55</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -69,13 +69,20 @@
 	<string>NSPhotoLibraryUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-UI-Display-Medium.otf</string>
 		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Text-Medium.otf</string>
 		<string>SF-UI-Text-Light.otf</string>
 		<string>SF-UI-Text-Regular.otf</string>
+		<string>SF-UI-Text-RegularItalic.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
@@ -106,7 +113,5 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>

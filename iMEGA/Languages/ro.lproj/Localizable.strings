@@ -12,8 +12,10 @@
 "error"="Eroare";
 /*  */
 "name"="Nume";
+/* Caption of a button to edit the files that are selected */
+"edit"="Editează";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Salvat";
 /*  */
 "passcode"="Cod de trecere";
 /* "Size" of the file or folder you are sharing */
@@ -77,9 +79,9 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mailul şi/sau parola invalide. Te rugăm să reîncerci";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Te rugăm să verifici e-mailul şi să dai clic pe link pentru a confirma contul.";
+"tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aştepţi până la %@ şi să încerci din nou.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Te rugăm să verifici e-mailul şi să urmăreşti linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Niciun folder partajat primit";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Niciun folder partajat trimis";
-/* Title of My Contacts section */
-"myContacts"="Contacte";
 /* Title of Contacts requests section */
 "contactRequests"="Cereri de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Există descărcări în aşteptare";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Reîncearcă mai târziu sau anulează";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="SORTEAZĂ DUPĂ";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Salvează";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Nume (ascendent)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Alege";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturează";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder nou";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nume pentru folderul nou";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu fotografie";
 /* Button title that skips the current action */
 "skipButton"="Omite";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activează încărcări cameră";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Adaugă";
 /* Success message shown when a contact has been invited */
 "requestSent"="Cerere trimisă";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Ai deja un contact cu acea adresă de e-mail";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Utilizatorul [X] a fost invitat şi va apărea în lista de contacte odată ce a acceptat.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Utilizatorii au fost invitaţi şi vor apărea în lista de contacte odată ce au acceptat.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Eroare la adăugarea contactului";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Sigur doreşti să părăseşti aceste partajări?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder părăsit";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Partajează";
+/* Select all items/elements on the list */
+"selectAll"="Selectează toate";
+/*  */
+"oneContact"="1 contact";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contacte";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partajează folderul";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Avansat";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opţiuni de securitate";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Despre";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Limbă";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Română";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul tău aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politica de confidenţialitate";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii serviciului";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Dezactivat";
@@ -534,8 +552,6 @@
 "options"="Opţiuni";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Încarcă videoclipuri";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Foloseşte conexiune celulară";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,11 +567,11 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Datele tale pot fi citite doar printr-un lanţ de operaţii de decriptare, lanţ care începe cu cheia principală de criptare, pe care o stocăm criptată cu parola ta. Acest lucru înseamnă că dacă pierzi parola, cheia principală nu mai poate fi decriptată şi nu mai poţi să-ţi decriptezi datele.";
+"masterKey_firstParagraph"="Datele tale pot fi citite doar printr-un lanţ de operaţii de decriptare, lanţ care începe cu cheia principală de criptare (cheia de recuperare), pe care o stocăm criptată cu parola ta. Acest lucru înseamnă că dacă pierzi parola, cheia de recuperare nu mai poate fi decriptată şi nu mai poţi să-ţi decriptezi datele.";
 /* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
+"masterKey_secondParagraph"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.";
 /*  */
 "masterKey_thirdParagraph"="Un atacator extern nu poate obţine acces la contul tău doar cu cheia ta. Resetarea parolei necesită atât cheia, cât şi acces la adresa ta de e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -587,9 +603,9 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="În prezent folosind %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Închide contul";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
+"cancelYourAccount"="Anulează contul";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
+"youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur doreşti să continui?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Ai uitat parola?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
+"youCanResetYourPasswordByFollowing"="Poţi reseta parola urmărind linkul de recuperare care va fi trimis către e-mailul tău.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Acest link de recuperare a expirat, te rugăm să încerci din nou.";
 /* Headline of the password reset recovery procedure */
@@ -661,11 +677,11 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Cheie de recuperare invalidă";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ţi reseta parola. Te rugăm să introduci parola nouă.";
 /*  */
 "yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes.  Te rugăm să te autentifici în contul tău acum.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
+"forgotPassword_firstParagraph"="Dacă ai un backup al cheii tale de recuperare, îţi poţi reseta parola selectând DA. Niciuna dintre date nu va fi pierdută.";
 /* Second paragraph of the screen when the password has been forgotten */
 "forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
@@ -673,7 +689,7 @@
 /* Headline when the user chose YES */
 "great"="Minunat!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Te rugăm să introduci adresa ta de e-mail mai jos. Vei primi un link de recuperare care îţi va permite să trimiţi cheia ta principală şi să resetezi parola.";
+"recoveryLinkToResetYourPassword"="Te rugăm să introduci adresa ta de e-mail mai jos. Vei primi un link de recuperare care îţi va permite să trimiţi cheia de recuperare şi să îţi resetezi parola.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* The title of the screen to park an account. */
@@ -687,7 +703,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Cont parcat";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Recunosc că încep un cont nou, gol şi că voi pierde toate datele contului meu prezent, cu excepţia cazului în care îmi aduc aminte de parolă sau găsesc cheia principală exportată.";
+"startingFreshAccount"="Recunosc că încep un cont nou, gol şi că voi pierde toate datele în contul meu prezent, cu excepţia cazului în care îmi aduc aminte de parolă sau găsesc o cheie de recuperare exportată.";
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Şterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Asistenţă";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrul de ajutor";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Obţine suport sau citeşte subiecte populare.";
 /* Title to rate the app */
 "rateUsLabel"="Evaluează-ne";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Deconectare";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Deconectare";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Elimină avatarul";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Schimbă avatarul";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Ai schimbat cu succes profilul.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Prenume";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Nume";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilizare";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Folosit";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Disponibil";
+/* title of the My Account screen */
+"accountType"="Tipul contului:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATUIT";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="disponibil din %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradează contul";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spaţiu de stocare";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,157 @@
 "removeItemFromOffline"="Sigur doreşti să ştergi acest element din offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur doreşti să ştergi aceste elemente din offline?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Nicio conversaţie";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Enable";
+/* Conversations section */
+"conversations"="Conversaţii";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Invită";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="This message has been deleted";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Eu";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] left the group chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] cleared the chat history.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] was changed to [B] by [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Adaugă participant...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Stare";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Voice and Video Calls";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] minute";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(editat)";
+/*  */
+"online"="Online";
+/*  */
+"away"="Plecat";
+/*  */
+"busy"="Ocupat";
+/* title of the contact properties screen */
+"contactInfo"="Informaţii de contact";
+/*  */
+"notifications"="Notificări";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Send Message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Goleşte istoricul chatului";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Sigur doreşti să goleşti istoricul complet al mesajelor din această conversaţie?";
+/* 'Next' button in a dialog */
+"continue"="Continuă";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Foldere partajate";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Contact Credentials";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă faţă în faţă. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi şi pe acela.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Your Credentials";
+/* Button to reset the password */
+"reset"="Resetează";
+/* Button title */
+"approve"="Aprobă";
+/* start a chat/conversation */
+"startConversation"="Start Conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Group Info";
+/* Label title for a group chat */
+"groupChat"="Group Chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Redenumeşte grupul";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Change Group Avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Părăseşte";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Mai multe";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Informaţii";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Închide";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Părăseşte chatul";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Leave Group";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderator";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Elimină participantul";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversation with %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA îţi protejează conversaţiile cu criptare (controlată de utilizator) capăt-la-capăt oferind asigurări de siguranţă:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Confidenţialitate.[/S] Doar autorul şi destinatarii vizaţi sunt capabili să descifreze şi să citească conţinutul.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Autenticitate.[/S] Sistemul se asigură că datele primite sunt de la expeditor afişate, iar conţinutul său nu a fost manipulat în timpul tranzitului.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ is typing ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Scrie un mesaj...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Niciun istoric al conversaţiilor";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Reîncearcă";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Şterge mesajul";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Trimite contactul";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Adaugă din unitatea mea cloud";
+/* */
+"done"="gata";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Trimite fişiere";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
