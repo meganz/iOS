@@ -1822,8 +1822,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         [self.mainTBC presentViewController:warningTransferQuotaVC animated:YES completion:nil];
         warningTransferQuotaVC.imageView.image = [UIImage imageNamed:@"transfer-quota-empty"];
-        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"An information title about limited transfer quota.");;
-        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.");        
+        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");;
+        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
         [warningTransferQuotaVC.seePlansButton setTitle:AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA") forState:UIControlStateNormal];
         [warningTransferQuotaVC.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     }
