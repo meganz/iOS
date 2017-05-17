@@ -35,6 +35,7 @@
 #import "SettingsTableViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
+#import "WarningTransferQuotaViewController.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -1315,6 +1316,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)onAccountUpdate:(MEGASdk *)api {
+    [api getAccountDetails];
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
@@ -1807,6 +1812,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
         [api cancelTransfer:transfer];
+    }
+}
+
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type == MEGAErrorTypeApiEOverQuota) {
+        [SVProgressHUD dismiss];
+        WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
+        warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        [self.mainTBC presentViewController:warningTransferQuotaVC animated:YES completion:nil];
+        warningTransferQuotaVC.imageView.image = [UIImage imageNamed:@"transfer-quota-empty"];
+        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"An information title about limited transfer quota.");;
+        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.");        
+        [warningTransferQuotaVC.seePlansButton setTitle:AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA") forState:UIControlStateNormal];
+        [warningTransferQuotaVC.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     }
 }
 
