@@ -114,17 +114,11 @@
     MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-    messagesVC.navigationItem.leftBarButtonItem = backBarButtonItem;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
     [self presentViewController:navigationController animated:YES completion:^{
         [Helper changeToViewController:[ChatRoomsViewController class] onTabBarController:self.tabBarController];
     }];
-}
-
-- (void)dismissChatRoom {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -244,13 +238,17 @@
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             switch (indexPath.row) {
                 case 0: { //Send Message
-                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
-                    if (chatRoom) {
-                        [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+                        if (chatRoom) {
+                            [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                        } else {
+                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                            [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                        }
                     } else {
-                        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                        [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                        [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:self];
+                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
                     }
                     break;
                 }
