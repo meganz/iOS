@@ -15,7 +15,7 @@
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
+@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -41,6 +41,9 @@
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
+
+@property (nonatomic) NSUInteger remainingOperations;
+@property (nonatomic) BOOL addingMoreThanOneContact;
 
 @end
 
@@ -83,6 +86,7 @@
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
 
     [self setupMenuController:[UIMenuController sharedMenuController]];
     
@@ -211,7 +215,7 @@
 
 - (void)rightBarButtonItems {
     if (self.chatRoom.isGroup && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
-        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+        self.moreBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     }
 }
@@ -424,7 +428,8 @@
     UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
     UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
-    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem];
+    UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
+    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem];
 }
 
 #pragma mark - Custom menu actions for cells
@@ -767,7 +772,7 @@
                 }
                 //TODO: View profile / Start new chat
             } else {
-                //TODO: Add contacts
+                if (action == @selector(addContact:message:)) return YES;
             }
             break;
         }
@@ -792,6 +797,10 @@
     }
     if (action == @selector(download:message:)) {
         [self download:sender message:message];
+        return;
+    }
+    if (action == @selector(addContact:message:)) {
+        [self addContact:sender message:message];
         return;
     }
     
@@ -830,6 +839,17 @@
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
         [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO];
+    }
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+}
+
+- (void)addContact:(id)sender message:(MEGAChatMessage *)message {
+    NSUInteger usersCount = message.usersCount;
+    self.remainingOperations = usersCount;
+    self.addingMoreThanOneContact = (usersCount > 1) ? YES : NO;
+    for (NSUInteger i = 0; i < usersCount; i++) {
+        NSString *email = [message userEmailAtIndex:i];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
     }
 }
 
@@ -1139,6 +1159,55 @@
             request.chatMessage.chatRoom = self.chatRoom;
             [self.messages addObject:request.chatMessage];
             [self finishSendingMessageAnimated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeInviteContact: {
+            self.remainingOperations--;
+            
+            if ([error type]) {
+                switch (error.type) {
+                    case MEGAErrorTypeApiEArgs:
+                        if ([request.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
+                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
+                        }
+                        break;
+                        
+                    case MEGAErrorTypeApiEExist: {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
+                        break;
+                    }
+                        
+                    default:
+                        [SVProgressHUD showErrorWithStatus:error.name];
+                        break;
+                }
+                
+                return;
+            }
+            
+            if (self.remainingOperations == 0) {
+                NSString *alertTitle;
+                if (self.addingMoreThanOneContact) {
+                    alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
+                } else {
+                    alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
+                    alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                }
+                
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
             break;
         }
             
