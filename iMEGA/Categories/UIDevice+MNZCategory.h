@@ -44,4 +44,7 @@
 
 - (NSString *)deviceName;
 
+- (BOOL)systemVersionLessThanVersion:(NSString *)version;
+- (BOOL)systemVersionGreaterThanOrEqualVersion:(NSString *)version;
+
 @end
