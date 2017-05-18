@@ -123,6 +123,8 @@
     }
     
     self.stopInvitingContacts = NO;
+    
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
