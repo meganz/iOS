@@ -110,12 +110,17 @@
     [self.unreadLabel addGestureRecognizer:singleTap];
     _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
-    imageView.frame = CGRectMake(0, 0, 22, 22);
-    [imageView addGestureRecognizer:singleTa2];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
-    self.navigationItem.leftBarButtonItems = @[backButtonItem, self.unreadBarButtonItem];
+    if (self.presentingViewController) {
+        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+        self.navigationItem.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
+    } else {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
+        imageView.frame = CGRectMake(0, 0, 22, 22);
+        [imageView addGestureRecognizer:singleTa2];
+        
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
+        self.navigationItem.leftBarButtonItems = @[backBarButtonItem, self.unreadBarButtonItem];
+    }
     
     self.stopInvitingContacts = NO;
 }
@@ -142,6 +147,10 @@
 
 - (void)popViewController {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)dismissChatRoom {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private methods
