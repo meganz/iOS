@@ -101,7 +101,7 @@
     self.areAllMessagesSeen = NO;
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
-    UITapGestureRecognizer *singleTa2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
+    UITapGestureRecognizer *singleTap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
     
     _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
@@ -116,12 +116,11 @@
     } else {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backArrow"]];
         imageView.frame = CGRectMake(0, 0, 22, 22);
-        [imageView addGestureRecognizer:singleTa2];
+        [imageView addGestureRecognizer:singleTap2];
         
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
         self.navigationItem.leftBarButtonItems = @[backBarButtonItem, self.unreadBarButtonItem];
     }
-    
     self.stopInvitingContacts = NO;
     
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
@@ -1038,7 +1037,12 @@
     
     if ([message hasChangedForType:MEGAChatMessageChangeTypeContent]) {
         if (message.isDeleted || message.isEdited) {
-            [self.collectionView reloadData];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
+            NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+            NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+            [self.messages replaceObjectAtIndex:index withObject:message];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {
