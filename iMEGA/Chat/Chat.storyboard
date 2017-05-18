@@ -673,7 +673,7 @@
                     <tabBarItem key="tabBarItem" tag="2" title="Chat" image="chatIcon" selectedImage="chatSelectedIcon" id="r2P-G2-kER"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="xdP-Yj-Pwq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="xdP-Yj-Pwq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
