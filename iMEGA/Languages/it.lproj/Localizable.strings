@@ -1028,3 +1028,9 @@
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "Nuovo messaggio";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Richiesta contatto";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "Nuova cartella condivisa";
