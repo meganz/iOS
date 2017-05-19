@@ -1199,13 +1199,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     switch (megatype) {
         case 1:
-            body = @"A folder has been shared with you";
+            body = AMLocalizedString(@"newSharedFolder", @"Notification text body shown when you have received a new shared folder");
             break;
         case 2:
-            body = @"You have received a message";
+            body = AMLocalizedString(@"newMessage", @"Notification text body shown when you have received a new chat message");
             break;
         case 3:
-            body = @"You have a new contact request";
+            body = AMLocalizedString(@"contactRequest", @"Notification text body shown when you have received a contact request");
             break;
             
         default:
