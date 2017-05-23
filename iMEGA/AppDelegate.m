@@ -12,6 +12,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGALogger.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -231,7 +232,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
         
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
+        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
@@ -1542,32 +1544,35 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
-            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
-            [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-            [timerAPI_EAGAIN invalidate];
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-                [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
-                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
-            } else {
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
-            }
-            isFetchNodesDone = YES;
-            
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
-            
-            [self requestUserName];
-            [self requestContactsFullname];
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
-                [[MEGASdkManager sharedMEGAChatSdk] connect];
-                if (isAccountFirstLogin) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];                    
+            // Do not show the main tab bar when receive a fetch_nodes that is not launch by the app. For example the intermediate layer  sends fetch_nodes when create account.
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
+                [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
+                [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
+                [timerAPI_EAGAIN invalidate];
+                
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+                    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
+                    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+                } else {
+                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
                 }
+                isFetchNodesDone = YES;
+                
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD dismiss];
+                
+                [self requestUserName];
+                [self requestContactsFullname];
+                
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                    [[MEGASdkManager sharedMEGAChatSdk] connect];
+                    if (isAccountFirstLogin) {
+                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                    }
+                }
+                [self showMainTabBar];
             }
-            [self showMainTabBar];
             break;
         }
             

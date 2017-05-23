@@ -2,10 +2,14 @@
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
+
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "SVModalWebViewController.h"
 
-@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
+#import "MEGALoginRequestDelegate.h"
+
+@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -22,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
+@property (nonatomic, copy) NSString *password;
+
 
 @end
 
@@ -61,7 +68,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", @"Create Account")];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -183,6 +196,8 @@
             [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
             [self.createAccountButton setEnabled:NO];
         }
+        self.emailString = self.emailTextField.text;
+        self.password = self.passwordTextField.text;
     }
 }
 
@@ -231,6 +246,15 @@
     }
     
     return YES;
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onAccountUpdate:(MEGASdk *)api {
+    if ([api isLoggedIn] == 1) {
+        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        [api loginWithEmail:self.emailString password:self.password delegate:loginRequestDelegate];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
