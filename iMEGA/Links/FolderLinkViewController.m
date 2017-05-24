@@ -426,7 +426,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             if ([_tableView isEditing]) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];

@@ -16,7 +16,6 @@
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "BrowserViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
 
@@ -54,7 +53,6 @@
 
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -93,8 +91,6 @@
         case ContactsModeDefault: {
             NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
-            
-            [self.shareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
             break;
         }
         
@@ -256,7 +252,6 @@
         if (!self.selectedUsersArray) {
             self.selectedUsersArray = [NSMutableArray new];
             [self.deleteBarButtonItem setEnabled:NO];
-            [self.shareFolderBarButtonItem setEnabled:NO];
         }
         
         [self.tabBarController.tabBar addSubview:self.toolbar];
@@ -414,14 +409,7 @@
         [self updateNavigationBarTitle];
     }
     
-    if (self.selectedUsersArray.count == 0) {
-        [self.deleteBarButtonItem setEnabled:NO];
-        [self.shareFolderBarButtonItem setEnabled:NO];
-        
-    } else {
-        [self.deleteBarButtonItem setEnabled:YES];
-        [self.shareFolderBarButtonItem setEnabled:YES];
-    }
+    self.deleteBarButtonItem.enabled = (self.selectedUsersArray.count == 0) ? NO : YES;
     
     [self.tableView reloadData];
     
@@ -457,19 +445,6 @@
         removeAlertView.tag = 1;
         [removeAlertView show];
     }
-}
-
-- (IBAction)shareFolderAction:(UIBarButtonItem *)sender {
-    UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-    [self presentViewController:navigationController animated:YES completion:nil];
-    
-    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    [browserVC setSelectedUsersArray:self.selectedUsersArray];
-    [browserVC setBrowserAction:BrowserActionSelectFolderToShare];
-    
-    [self setTableViewEditing:NO animated:YES];
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -654,7 +629,6 @@
     if (tableView.isEditing) {
         [self.selectedUsersArray addObject:user];
         [self.deleteBarButtonItem setEnabled:YES];
-        [self.shareFolderBarButtonItem setEnabled:YES];
         
         if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
             allUsersSelected = YES;
@@ -715,7 +689,6 @@
         if (self.selectedUsersArray.count == 0) {
             if (self.contactsMode != ContactsModeChatStartConversation) {
                 [self.deleteBarButtonItem setEnabled:NO];
-                [self.shareFolderBarButtonItem setEnabled:NO];
             } else {
                 self.groupBarButtonItem.enabled = NO;
             }
@@ -742,7 +715,6 @@
     [self.selectedUsersArray addObject:user];
     
     [self.deleteBarButtonItem setEnabled:YES];
-    [self.shareFolderBarButtonItem setEnabled:YES];
     
     isSwipeEditing = YES;
     
