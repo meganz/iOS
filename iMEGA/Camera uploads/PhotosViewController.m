@@ -341,17 +341,15 @@
     MEGANavigationController *mcnc = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:mcnc animated:YES completion:nil];
     
-    BrowserViewController *mcnvc = mcnc.viewControllers.firstObject;
-    mcnvc.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-    mcnvc.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
-    [mcnvc setBrowserAction:BrowserActionMove];
+    BrowserViewController *browserVC = mcnc.viewControllers.firstObject;
+    browserVC.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
+    browserVC.browserAction = BrowserActionMove;
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = [NSArray arrayWithArray:[self.selectedItemsDictionary allValues]];
         [browserVC setBrowserAction:BrowserActionCopy];
         [self presentViewController:navigationController animated:YES completion:nil];
