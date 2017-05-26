@@ -461,7 +461,8 @@
                 [self importFolderFromLink:node inParent:self.parentNode];
             } else {
                 remainingOperations++;
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
+                MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
+                [[MEGASdkManager sharedMEGASdk] copyNode:tempNode newParent:self.parentNode];
             }
         }
     }

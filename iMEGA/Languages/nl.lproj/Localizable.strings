@@ -69,7 +69,7 @@
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
 "megaSpeedText"="Uploads zijn snel.Deel snel bestanden met iedereen.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Bewaar al je bestanden veilig met MEGA's end-to-end versleuteling.";
+"megaPrivacyText"="Bewaar al uw bestanden veilig met MEGA's eind-naar-eind versleuteling.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="Krijg overal en altijd volledig versleutelde toegang.";
 /* Button title which triggers the action to login in your MEGA account */
@@ -145,7 +145,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Lege map";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Geen bestanden in uw Cloud drive";
+"cloudDriveEmptyState_title"="Geen bestanden in uw Cloud schijf";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Bestanden toevoegen";
 /* Title shown when you make a search and there is 'No Results' */
@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Geen inkomende Gedeelde mappen";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Geen uitgaande Gedeelde mappen";
-/* Title of My Contacts section */
-"myContacts"="Contacten";
 /* Title of Contacts requests section */
 "contactRequests"="Contact aanvragen";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -187,7 +185,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No Uploads";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cloud Drive";
+"cloudDrive"="Cloud Schijf";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d bestand";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -205,27 +203,27 @@
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
 "folderAndFiles"="1 map • %d bestanden";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="wachtrij";
+"queued"="Wachtrij";
 /* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertTitle"="Er zijn  wachtende downloads";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Probeer later opnieuw of annuleer";
 /* Section title of the 'Sort by' */
-"sortTitle"="SORTEER OP";
-/* Button title to "Save" the selected option */
+"sortTitle"="Sorteer op";
+/* Button title to 'Save' the selected option */
 "save"="Opslaan";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Naam (oplopend)";
 /* Sort by option (2/6). This one arranges the files on reverse alphabethical order */
 "nameDescending"="Naam (aflopend)";
 /* Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size */
-"largest"="grootste";
+"largest"="Grootste";
 /* Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size */
 "smallest"="kleinste";
 /* Sort by option (5/6). This one order the files by its modification date, newer first */
-"newest"="nieuwste";
+"newest"="Nieuwste";
 /* Sort by option (6/6). This one order the files by its modification date, older first */
-"oldest"="oudste";
+"oldest"="Oudste";
 /* Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA. */
 "choosePhotoVideo"="Kies";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
@@ -293,7 +291,7 @@
 /* Title show when a file is being downloaded */
 "downloading"="Aan het downloaden...";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Wil je de download afbreken?";
+"cancelDownloadAlertViewText"="Wilt u de download afbreken?";
 /* Title for the action that allows you to move a file or folder */
 "move"="Verplaatsen";
 /* Success message shown when you have moved 1 file */
@@ -383,9 +381,9 @@
 /* Message shown when some files have been imported */
 "filesImported"="Bestanden geïmporteerd";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Quotum overschreden";
+"quotaExceeded"="Tegoed overschreden";
 /* Alert title shown when the user is overquota */
-"overquotaAlert_title"="Overquota Alert!";
+"overquotaAlert_title"="Over tegoed Waarschuwing!";
 /* Alert message shown when the user is overquota */
 "overquotaAlert_message"="Handeling niet toegestaan, u zult het opslag limiet van van uw rekening overschrijden. Wilt u uw account upgraden?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="Overslaan";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Maak een automatische back-up van uw foto's naar de Cloud Schijf";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Schakel Camera Uploads in";
 /* Success message shown when Camera Uploads has been enabled */
@@ -407,7 +405,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items geselecteerd";
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Camera uploads wordt uitgeschakeld";
+"cameraUploadsWillBeDisabled"="Camera uploads worden uitgeschakeld";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
 "cameraUploadsDisabled_alertView_message"="Camera Uploads zullen worden uitgeschakeld, want u heeft niet genoeg ruimte op uw apparaat.";
 /* Title of the Offline section */
@@ -487,7 +485,7 @@
 /* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
 "removedContact"="Contact %@ verwijderd";
 /* Label shown when a contact request is pending */
-"pending"="in afwachting van";
+"pending"="In afwachting van";
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Dit contactpersoon heeft geen email adres";
 /* Button title of the action that allows to leave a shared folder */
@@ -498,14 +496,22 @@
 "leaveSharesAlertMessage"="Weet u zeker dat u deze gedeelde mappen wilt verlaten?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Map verlaten";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Delen";
+/* Select all items/elements on the list */
+"selectAll"="Selecteer Alles";
+/*  */
+"oneContact"="1 contact";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contacten";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Deel Map";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="deel mappen";
+"shareFolders"="Deel mappen";
 /* Button that allows you to select a given folder */
 "select"="Selecteer";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="Permissies";
+"permissions"="Toestemmingen";
 /* Permissions given to the user you share your folder with */
 "readOnly"="Alleen lezen";
 /* Permissions given to the user you share your folder with */
@@ -522,21 +528,21 @@
 "advanced"="Geavanceerd";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Beveiligingsopties";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Over ons";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Taal";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="App taal";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+"applicationLanguage"="Nederlands";
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Feedback versturen";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Schrijf uw feedback alstublieft hier:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Geen email account ingesteld op uw device";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Privacy Policy";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Gebruikersvoorwaarden";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Uit";
@@ -555,7 +561,7 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Dankwoord";
 /* Title for the MEGA Recovery Key */
-"masterKey"="Herstel sleutel";
+"masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Wijzig wachtwoord";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
@@ -569,11 +575,11 @@
 /*  */
 "masterKey_thirdParagraph"="Een externe aanvaller kan geen toegang krijgen tot uw account met alleen de master sleutel. Om het wachtwoord te wijzigen is toegang tot de master sleutel én uw e-mail vereist.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Herstelsleutel is gekopieerd naar het klembord";
+"recoveryKeyCopiedToClipboard"="Herstel Sleutel is gekopieerd naar het klembord";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Herstel sleutel geëxporteerd";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="De coderingssleutel is geëxporteerd naar het Offline gedeelte als RecoveryKey.txt. Opmerking: het zal worden verwijderd als u uitlogt, bewaar het alstublieft op een veilige plaats.";
+"masterKeyExported_alertMessage"="De Herstel Sleutel is geëxporteerd naar het Offline gedeelte als RecoveryKey.txt. Opmerking: het zal worden verwijderd als u uitlogt, bewaar het alstublieft op een veilige plaats.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Op uw apparaat";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -629,7 +635,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="U staat op het punt om %d bestanden en 1 map definitief te verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Je gaat [A] bestanden en [B] mappen permanent verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken.)";
+"removeFilesFoldersToRubbishBinMessage"="U gaat [A] bestanden en [B] mappen permanent verwijderen. Wilt u doorgaan? (U kunt deze actie niet ongedaan maken.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 bestand verwijderd van MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -667,7 +673,7 @@
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
 "pleaseWriteYourRecoveryKey"="Voer alsjeblieft je herstelcode in";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Herstel sleutel";
+"recoveryKey"="Herstel Sleutel";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Ongeldige herstel sleutel";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -675,9 +681,9 @@
 /*  */
 "yourPasswordHasBeenReset"="Uw wachtwoord is succesvol gewijzigd. Log nu aub in met uw account.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Als u een back-up heeft van uw coderingssleutel, kunt u uw wachtwoord opnieuw instellen door het selecteren van YES. Er zullen geen gegevens verloren gaan.";
+"forgotPassword_firstParagraph"="Als u een back-up heeft van uw Herstel Sleutel, kunt u uw wachtwoord opnieuw instellen door het selecteren van JA. Er zullen geen gegevens verloren gaan.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="U kunt uw coderingssleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer decoderen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
+"forgotPassword_secondParagraph"="U kunt uw Herstel Sleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer ontsleutelen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey"="Heeft u een back-up van uw coderingssleutel?";
 /* Headline when the user chose YES */
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Verwijder lokale data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Afmelden en lokale gegevens worden gewist na 10 mislukte inlogpogingen ";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Ondersteuning";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help Center";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Krijg ondersteuning of lees populaire onderwerpen.";
 /* Title to rate the app */
 "rateUsLabel"="Beoordeel ons";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Uitloggen";
 /* String shown when you are logging out of your account. */
 "loggingOut"="UItloggen...";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Verwijder avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Profielfoto Wijzigen";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="U heeft uw profiel met succes veranderd.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Voornaam";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Achternaam";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Gebruik";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Upgrade later in Mijn Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Opslagruimte";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -819,7 +837,7 @@
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Aankopen toestaan";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="U zult eerst In-App aankopen moeten inschakelen in uw iOS instellingen voordat u een aankoop kan herstellen.";
+"allowPurchase_message"="U zult eerst In-Applicatie aankopen moeten inschakelen in uw iOS instellingen voordat u een aankoop kan herstellen.";
 /* Button title to restore failed purchases */
 "restore"="Herstellen";
 /* "Monthly" subscriptions */
@@ -827,7 +845,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Dit In-App aankoop item is op dit moment niet beschikbaar in de App Store. Probeer alstublieft later opnieuw.";
+"productNotAvailable"="Dit In-Applicatie aankoop item is op dit moment niet beschikbaar in de Applicatie Winkel. Probeer alstublieft later opnieuw.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Dank u";
 /* Alert message shown when a purchase was restored succesfully */
@@ -861,7 +879,7 @@
 /* Empty Conversations section */
 "noConversations"="Geen Gesprekken";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="Chat is uitgeschakeld";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Inschakelen";
 /* Conversations section */
@@ -869,101 +887,113 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Uitnodigen";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="This message has been deleted";
+"thisMessageHasBeenDeleted"="Dit bericht is verwijderd";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Mij";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+"wasRemovedFromTheGroupChatBy"="[A] is verwijderd uit het groepsgesprek door [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat.";
+"leftTheGroupChat"="[A] heeft de groep verlaten.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] is toegevoegd aan het groepsgesprek op uitnodiging van [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] cleared the chat history.";
+"clearedTheChatHistory"="[A] heeft de gespreksgeschiedenis verwijderd.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] was changed to [B] by [C].";
+"wasChangedToBy"="[A] is veranderd naar [B] door [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+"changedGroupChatNameTo"="[A] heeft het onderwerp gewijzigd naar '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Deelnemer toevoegen...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Voice and Video Calls";
+"voiceAndVideoCalls"="Spraak en Video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Use Mobile Data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+"useMobileData"="Gebruik Mobiele Data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Automatisch op afwezig";
+/* */
+"xMinutes"="[X] minutes";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Zet mijn status op afwezig na [X] minuten van inactiviteit";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Volharding";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Houd mijn gekozen statusweergave in stand ook als ik geen verbonden apparaten heb.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(bewerkt)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Weg";
+/*  */
+"busy"="Bezig";
 /* title of the contact properties screen */
 "contactInfo"="Contact Info";
 /*  */
 "notifications"="Meldingen";
 /* Title to perform the action of sending a message to a contact. */
-"sendMessage"="Send Message";
+"sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verify Credentials";
+"verifyCredentials"="Bevestig identiteit";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Verwijder chatgeschiedenis";
+"clearChatHistory"="Verwijder Chatgeschiedenis";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* 'Next' button in a dialog */
 "continue"="Vervolgen";
 /* Button title that allows the user to close a chat. */
-"closeChat"="Close Chat";
+"closeChat"="Sluit Chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Gedeelde Mappen";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Contact Credentials";
+"contactCredentials"="Contact identiteit";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Dit kan het beste gebeuren door elkaar in het echte leven, face to face te ontmoeten. Als u een andere al geverifieerde kanaal heeft, zoals geverifieerd OTR of PGP, dan kunt u deze ook gebruiken.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Your Credentials";
+"yourCredentials"="Uw Identiteit";
 /* Button to reset the password */
 "reset"="Reset";
 /* Button title */
 "approve"="Goedkeuren";
 /* start a chat/conversation */
-"startConversation"="Start Conversation";
+"startConversation"="Start een gesprek";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Group";
+"group"="Groep";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Group Info";
+"groupInfo"="Groep Informatie";
 /* Label title for a group chat */
-"groupChat"="Group Chat";
+"groupChat"="Groepschat";
 /* The title of a menu button which allows users to rename a group chat. */
-"renameGroup"="Hernoem groep";
+"renameGroup"="Hernoem Groep";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Change Group Avatar";
+"changeGroupAvatar"="Verander Groepsafbeelding";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Verlaten";
 /* Top menu option which opens more menu options in a context menu. */
 "more"="Meer";
 /* A button label. The button allows the user to mute a conversation. */
-"mute"="Mute";
+"mute"="Dempen";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
 "close"="Sluit";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+"youWillNoLongerHaveAccessToThisConversation"="U heeft niet langer toegang tot dit gesprek";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Verlaat de chat";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Leave Group";
+"leaveGroup"="Verlaat Groep";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="Participants";
+"participants"="Deelnemers";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Gespreksleider";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standaard";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="Verwijder deelnemer";
+"removeParticipant"="Verwijder Deelnemer";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversation with %@";
+"conversationWith"="Gesprek met %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA beschermt uw chat met end-to-end codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -971,8 +1001,36 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Authenticiteit.[/ S] Het systeem zorgt ervoor dat de ontvangen gegevens van de weergegeven zender zijn en dat de inhoud ervan tijdens het transport niet is gemanipuleerd.";
 /* Alert message shown when a chat does not exist */
-"chatNotFound"="Chat not found";
+"chatNotFound"="Chat niet gevonden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ is typing ...";
+"isTyping"="%@ is aan het typen..";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Schrijf een bericht...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Geen gespreksgeschiedenis";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Opnieuw proberen";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Verwijder bericht";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Zend contactgegevens";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Voeg toe vanuit mijn Cloud Schijf";
+/* */
+"done"="klaar";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Verzend bestanden";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";

@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Sem Pastas Partilhadas recebidas";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Sem Pastas Partilhadas enviadas";
-/* Title of My Contacts section */
-"myContacts"="Contactos";
 /* Title of Contacts requests section */
 "contactRequests"="Pedidos de contactos";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Tente novamente mais tarde ou cancele";
 /* Section title of the 'Sort by' */
 "sortTitle"="SORTEAR POR";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Guardar";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="nome (ascendente)";
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="Tem a certeza que quer sair destas partilhas?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Esta pasta já não se encontra partilhada";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Partilhar";
+/* Select all items/elements on the list */
+"selectAll"="Escolher Todos";
+/*  */
+"oneContact"="1 contacto";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] Contactos";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partilhar Pasta";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Avançado";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opções de segurança";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Sobre";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Língua";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Inglês - Linguagem da aplicação";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Envie-nos comentários";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Por favor escreva a sua opinião aqui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não tem conta de e-mail configurada no seu dispositivo";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Política de Privacidade";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termos de Serviço";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Desligado";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Se \"apagar dados locais\" estiver activado, os dados locais são apagados após 10 tentativas falhadas de introduzir a palavra-passe";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Suporte";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centro de ajuda";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Obtenha ajuda ou leia os tópicos mais populares.";
 /* Title to rate the app */
 "rateUsLabel"="Avalie-nos";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Sair";
 /* String shown when you are logging out of your account. */
 "loggingOut"="A sair";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Remover avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Mudar Imagem de Perfil";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Você mudou com sucesso o seu perfil.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Primeiro Nome";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Último Nome";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilização";
 /* Title for "Local" used space. */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Adicionar participante...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Use Mobile Data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] minutos";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editado)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Ausente";
+/*  */
+"busy"="Ocupado";
 /* title of the contact properties screen */
 "contactInfo"="Informações do contacto";
 /*  */
@@ -976,3 +1006,31 @@
 "isTyping"="%@ is typing ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Escrever uma mensagem...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Sem histórico da conversação";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Tente novamente";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Apagar mensagem";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Enviar contacto";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Adicionar da sua Cloud Drive";
+/* */
+"done"="feito";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Enviar ficheiros";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "Nova Mensagem";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Pedido de Contacto";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "Nova Pasta Partilhada";

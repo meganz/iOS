@@ -3,9 +3,9 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="Yes";
+"yes" = "Yes";
 /* */
-"no"="No";
+"no" = "No";
 /* */
 "upload"="Upload";
 /*  */
@@ -13,7 +13,7 @@
 /*  */
 "name"="Name";
 /* Caption of a button to edit the files that are selected */
-"edit"="Edit";
+"edit" = "Edit";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Saved";
 /*  */
@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Unavailable link";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="This could be due to the following reasons:- The file has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The file has been deleted by the user.";
+"fileLinkUnavailableText"="This could be due to the following reasons:\n- The file has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The file has been deleted by the user.";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
 /* Title for the folder link view */
@@ -139,7 +139,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="The folder '%@' can't be created";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="This could be due to the following reasons:- The folder link has been removed because of a ToS/AUP violation.- Invalid URL – the link you are trying to access does not exist.- The folder link has been deleted by the user.";
+"folderLinkUnavailableText"="This could be due to the following reasons:\n- The folder link has been removed because of a ToS/AUP violation.\n- Invalid URL – the link you are trying to access does not exist.\n- The folder link has been deleted by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -151,7 +151,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="No Results";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Empty rubbish bin";
+"cloudDriveEmptyState_titleRubbishBin"="Empty Rubbish Bin";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="No files Saved for Offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="No incoming Shared Folders";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="No outgoing Shared Folders";
-/* Title of My Contacts section */
-"myContacts"="Contacts";
 /* Title of Contacts requests section */
 "contactRequests"="Contact requests";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Try again later or cancel";
 /* Section title of the 'Sort by' */
 "sortTitle"="Sort by";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Save";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Name (ascending)";
@@ -259,7 +257,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="You no longer have access to this folder";
 /* List option shown on the details of a file or folder */
-"saveForOffline"="Save for offline";
+"saveForOffline"="Save for Offline";
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Saved for Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -498,16 +496,24 @@
 "leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder left";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Share";
+/* Select all items/elements on the list */
+"selectAll"="Select All";
+/*  */
+"oneContact"="1 contact";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contacts";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Share folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Share folders";
 /* Button that allows you to select a given folder */
-"select"="Select";
+"select"="Select ";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissions";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Read only";
+"readOnly"="Read-only";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Read & Write";
 /* Permissions given to the user you share your folder with */
@@ -522,21 +528,21 @@
 "advanced"="Advanced";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Security Options";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="About";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Language";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="English";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Send Feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Please write your feedback here:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="No email account set up on your device";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Privacy Policy";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Terms of Service";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
@@ -559,7 +565,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Change password";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="Saving the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -577,13 +583,13 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="On your device";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Clear Offline Files";
+"clearOfflineFiles" = "Clear Offline Files";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Clear Cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="On MEGA";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Empty the rubbish bin";
+"emptyRubbishBin" = "Empty Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -595,21 +601,21 @@
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="Currently using %@";
+"currentlyUsing" = "Currently using %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"cancelYourAccount"="Cancel your account";
+"cancelYourAccount" = "Cancel your account";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
-"youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
+"youWillLooseAllData" = "You will loose all data associated with this account. Are you sure you want to proceed?";
 /*  */
-"pleaseCheckYourEmail"="Please check your email.";
+"pleaseCheckYourEmail" = "Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="If you can't access your email, please contact support@mega.nz.";
+"ifYouCantAccessYourEmailAccount" = "If you can't access your email, please contact support@mega.nz.";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Cancellation link has expired.";
+"cancellationLinkHasExpired" = "Cancellation link has expired.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to Cancel your account.";
+"enterYourPasswordToConfirmThatYouWanToClose" = "Please enter your password to confirm that you want to Cancel your account.";
 /* Account closure, password check dialog when user click on closure email. */
-"closeAccount"="Close account";
+"closeAccount" = "Close account";
 /* Title for the action that allows to remove a file or folder */
 "remove"="Remove";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
@@ -657,51 +663,51 @@
 /* Error message shown when the users tryes to change his/her password and writes the current one as the new one. */
 "oldAndNewPasswordMatch"="The new and the old password must not match.";
 /* An option to reset the password. */
-"forgotPassword"="Forgot password?";
+"forgotPassword" = "Forgot password?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
 "youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="This recovery link has expired, please try again.";
+"recoveryLinkHasExpired" = "This recovery link has expired, please try again.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Password reset";
+"passwordReset" = "Password reset";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Please enter your Recovery Key";
+"pleaseWriteYourRecoveryKey" = "Please, write your Recovery Key";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="Recovery Key";
+"recoveryKey" = "Recovery Key";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="Invalid Recovery Key";
+"invalidRecoveryKey" = "Invalid Recovery Key";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+"youRecoveryKeyIsGoingTo" = "Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
 /*  */
-"yourPasswordHasBeenReset"="Your password has been reset successfully. Please log into your account now.";
+"yourPasswordHasBeenReset" = "Your password has been reset successfully. Please log into your account now.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
+"forgotPassword_firstParagraph" = "If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
+"forgotPassword_secondParagraph" = "You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Do you have a backup of your Recovery Key?";
+"doYouHaveABackupOfYourRecoveryKey" = "Do you have a backup of your Recovery Key?";
 /* Headline when the user chose YES */
-"great"="Great!";
+"great" = "Great!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
 "recoveryLinkToResetYourPassword"="Please enter your e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
-"send"="Send";
+"send" = "Send";
 /* The title of the screen to park an account. */
-"noMasterKey_title"="Oops!";
+"noMasterKey_title" = "Oops!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
+"noMasterKey_firstParagraph" = "Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
+"noMasterKey_secondParagraph" = "You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Please enter you e-mail address below. You will receive a recovery link that will allow you to park your account.";
+"recoveryLinkToParkYourAccount" = "Please enter you e-mail address below. You will receive a recovery link that will allow you to park your account.";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="Park account";
+"parkAccount" = "Park account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery Key.";
+"startingFreshAccount" = "I acknowledge that I am starting a fresh, empty account and that I will lose all data in my present account unless I recall my password or locate an exported Recovery Key.";
 /* Caption of the button to proceed */
-"startNewAccount"="Start new account";
+"startNewAccount" = "Start new account";
 /*  */
-"yourAccounHasBeenParked"="Your old account has been parked successfully. You can now log into your new account.";
+"yourAccounHasBeenParked" = "Your old account has been parked successfully. You can now log into your new account.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email";
 /* Button text for the user to confirm their change of email address. */
@@ -723,9 +729,9 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Congratulations, your new e-mail address for this MEGA account is: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="Close other sessions";
+"closeOtherSessions" = "Close other sessions";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="Sessions closed";
+"sessionsClosed" = "Sessions closed";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Change passcode";
 /* Title to describe a simple (four digit) passcode */
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Erase local data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Support";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help centre";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Get support or read popular topics.";
 /* Title to rate the app */
 "rateUsLabel"="Rate us";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logging out";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Remove avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Change Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="You have successfully changed your profile.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="First Name";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Last Name";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Usage";
 /* Title for "Local" used space. */
@@ -847,7 +865,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Enable DEBUG mode";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Disable DEBUG mode";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -869,7 +887,7 @@
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Invite";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="This message has been deleted";
+"thisMessageHasBeenDeleted"="This message has been deleted.";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Me";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A] was changed to [B] by [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Add Participant...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Use Mobile Data";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="You can chat with your contacts, share files and make voice and video calls.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="You will appear offline to your contacts and you will not be able to chat with them.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] minutes";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(edited)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Away";
+/*  */
+"busy"="Busy";
 /* title of the contact properties screen */
 "contactInfo"="Contact Info";
 /*  */
@@ -976,3 +1006,31 @@
 "isTyping"="%@ is typing ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Write a message...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="No conversation history";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Retry";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Delete message";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"= "Send contact";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Add from my Cloud Drive";
+/* */
+"done"="Done";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Send Files";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
