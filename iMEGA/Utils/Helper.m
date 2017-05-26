@@ -764,11 +764,11 @@ static BOOL copyToPasteboard;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        isVideo(node.name.pathExtension) ? (nodeTableViewCell.thumbnailPlayImageView.hidden = YES) : (nodeTableViewCell.thumbnailPlayImageView.hidden = YES);
+        nodeTableViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        isVideo(node.name.pathExtension) ? (photoCollectionViewCell.thumbnailPlayImageView.hidden = YES) : (photoCollectionViewCell.thumbnailPlayImageView.hidden = YES);
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     }
 }
 
