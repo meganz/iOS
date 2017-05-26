@@ -160,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Nessuna cartella condivisa in arrivo";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Nessuna cartella condivisa in uscita";
-/* Title of My Contacts section */
-"myContacts"="Contatti";
 /* Title of Contacts requests section */
 "contactRequests"="Richieste di contatto";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -212,7 +210,7 @@
 "documentOpening_alertMessage"="Prova dopo o annulla";
 /* Section title of the 'Sort by' */
 "sortTitle"="Ordina per";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Salva";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="Nome (ascendente)";
@@ -397,7 +395,7 @@
 /* Button title that skips the current action */
 "skipButton"="Salta";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Fai un backup automatico delle tue foto nel Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Attiva Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -498,6 +496,14 @@
 "leaveSharesAlertMessage"="Sei sicuro di voler abbandonare queste condivisioni?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Uscito dalla cartella";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Condividi";
+/* Select all items/elements on the list */
+"selectAll"="Seleziona tutto";
+/*  */
+"oneContact"="1 contatto";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] contatti";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Condividi cartella";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -522,21 +528,21 @@
 "advanced"="Avanzato";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opzioni di Sicurezza";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Riguardo";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Lingua";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Lingua dell'applicazione";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Invia un commento";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Per favore, inserisci il tuo feedback qui:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Non hai un account e-mail configurato sul dispositivo";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Informativa sulla privacy";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termini di Servizio";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
@@ -734,10 +740,10 @@
 "eraseAllLocalDataLabel"="Cancella dati locali";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Esci e cancella i dati locali dopo 10 tentativi falliti";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Supporto";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Assistenza";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Richiedi assistenza o leggi gli argomenti popolari.";
 /* Title to rate the app */
 "rateUsLabel"="Votaci";
 /* Title of the Transfers section */
@@ -768,6 +774,18 @@
 "logoutLabel"="Esci";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Sto uscendo";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Rimuovi avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Cambia Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Hai aggiornato con successo il tuo profilo.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Nome";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Cognome";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Utilizzo";
 /* Title for "Local" used space. */
@@ -795,7 +813,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Aggiorna l'account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Puoi aggiornare più tardi in Il Mio Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spazio";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -884,20 +902,32 @@
 "wasChangedToBy"="[A] è stato cambiato da [B] a [C]";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] ha cambiato il nome del gruppo in \"[B]\"";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Aggiungi partecipante...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stato";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chiamate vocali e video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usa dati mobili";
-/* Footer text to explain the meaning of the chat 'Online' status. */
-"chatStatus_OnlineFooter"="Puoi chattare con i tuoi contatti, condividere file e fare chiamate audio e video.";
-/* Footer text to explain the meaning of the chat 'Offline' status. */
-"chatStatus_OfflineFooter"="Apparirai offline ai tuoi contatti e non potrai chattare con loro.";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Automaticamente lontano";
+/* */
+"xMinutes"="[X] minuti";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Mostrami come occupato dopo [X] minuti di inattività";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Persistenza dello status";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Mantieni il mio status anche quando non ho dispositivi connessi";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(modificato)";
 /*  */
 "online"="Online";
+/*  */
+"away"="Via";
+/*  */
+"busy"="Occupato";
 /* title of the contact properties screen */
 "contactInfo"="Info contatto";
 /*  */
@@ -976,3 +1006,31 @@
 "isTyping"="%@ sta scrivendo...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Scrivi un messaggio...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Nessuna conversazione";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Riprova";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Cancella messaggio";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Invia contatto";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Aggiungi dal mio Cloud Drive";
+/* */
+"done"="fatto";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Invia files";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "Nuovo messaggio";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Richiesta contatto";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "Nuova cartella condivisa";

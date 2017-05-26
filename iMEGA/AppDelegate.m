@@ -35,6 +35,7 @@
 #import "SettingsTableViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
+#import "WarningTransferQuotaViewController.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -379,8 +380,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}];
     [[UINavigationBar appearance] setTintColor:[UIColor mnz_redD90007]];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor mnz_grayF9F9F9]];
-    [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
+    
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+        [[UINavigationBar appearance] setShadowImage:[UIImage mnz_navigationBarShadow]];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage mnz_navigationBarBackground] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
+    }
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
@@ -1195,13 +1199,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     switch (megatype) {
         case 1:
-            body = @"A folder has been shared with you";
+            body = AMLocalizedString(@"newSharedFolder", @"Notification text body shown when you have received a new shared folder");
             break;
         case 2:
-            body = @"You have received a message";
+            body = AMLocalizedString(@"newMessage", @"Notification text body shown when you have received a new chat message");
             break;
         case 3:
-            body = @"You have a new contact request";
+            body = AMLocalizedString(@"contactRequest", @"Notification text body shown when you have received a contact request");
             break;
             
         default:
@@ -1313,6 +1317,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     }
+}
+
+- (void)onAccountUpdate:(MEGASdk *)api {
+    [api getAccountDetails];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -1807,6 +1815,20 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     if (transfer.type == MEGATransferTypeUpload && transfer.appData && ![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
         [api cancelTransfer:transfer];
+    }
+}
+
+- (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type == MEGAErrorTypeApiEOverQuota) {
+        [SVProgressHUD dismiss];
+        WarningTransferQuotaViewController *warningTransferQuotaVC = [[WarningTransferQuotaViewController alloc] init];
+        warningTransferQuotaVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        [self.mainTBC presentViewController:warningTransferQuotaVC animated:YES completion:nil];
+        warningTransferQuotaVC.imageView.image = [UIImage imageNamed:@"transfer-quota-empty"];
+        warningTransferQuotaVC.titleLabel.text = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");;
+        warningTransferQuotaVC.detailLabel.text = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+        [warningTransferQuotaVC.seePlansButton setTitle:AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA") forState:UIControlStateNormal];
+        [warningTransferQuotaVC.dismissButton setTitle:AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
     }
 }
 

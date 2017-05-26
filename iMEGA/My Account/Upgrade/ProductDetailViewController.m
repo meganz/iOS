@@ -160,16 +160,8 @@
             [updatedAlert setTag:0];
             [updatedAlert show];
         } else {
-            if ([self.presentingViewController isKindOfClass:[MEGANavigationController class]]) {
-                MEGANavigationController *presentingNavigationController = (MEGANavigationController *)self.presentingViewController;
-                if ([presentingNavigationController.topViewController isKindOfClass:[CameraUploadsPopUpViewController class]]) {
-                    MEGANavigationController *presentedNavigationController = (MEGANavigationController *)presentingNavigationController.topViewController.presentedViewController;
-                    if ([presentedNavigationController.topViewController isKindOfClass:[ProductDetailViewController class]]) {
-                        [presentedNavigationController dismissViewControllerAnimated:YES completion:nil];
-                    } else {
-                        [presentingNavigationController dismissViewControllerAnimated:YES completion:nil];
-                    }
-                }
+            if (self.presentingViewController) {
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
         }
     }

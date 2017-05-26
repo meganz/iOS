@@ -913,9 +913,9 @@
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     BOOL shouldEnable = YES;
-    if ([alertView tag] == 3) {
+    if ([alertView tag] == 0 || [alertView tag] == 3) {
         NSString *email = [[alertView textFieldAtIndex:0] text];
-        shouldEnable = [Helper validateEmail:email];
+        shouldEnable = (email.length > 0) ? [Helper validateEmail:email] : NO;
     }
     
     return shouldEnable;
@@ -938,6 +938,7 @@
     if (alertView.tag == 0) {
         if (buttonIndex == 1) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                remainingOperations = 1;
                 [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[[alertView textFieldAtIndex:0] text] message:@"" action:MEGAInviteActionAdd delegate:self];
             }
         }
