@@ -237,7 +237,23 @@
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        NSError *error;
+        NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+        if (error) {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+        
+        if (directoryContent.count > 0) {            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGASdk] logout];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }
     }
 }
 
