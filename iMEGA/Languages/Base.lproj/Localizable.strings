@@ -1020,6 +1020,10 @@
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Send Files";
+/* */
+"warning"="Warning";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
