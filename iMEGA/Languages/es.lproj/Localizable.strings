@@ -292,6 +292,10 @@
 "downloading"="Descargando...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination" = "Seleccionar destino";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles" = "Seleccionar archivos";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mover";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,6 @@
 "permissionMessage"="Comprueba tus permisos sobre esta carpeta";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importar a ";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
@@ -460,7 +462,7 @@
 "addContact"="Añadir contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Correo electrónico del contacto";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Añadir";
 /* Success message shown when a contact has been invited */
 "requestSent"="Solicitud enviada";

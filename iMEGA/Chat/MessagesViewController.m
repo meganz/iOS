@@ -484,11 +484,10 @@
     }]];
     
     UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SelectableBrowserNavigationControllerID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.browserAction = BrowserActionSendFromCloudDrive;
         browserVC.selectedNodes = ^void(NSArray *selectedNodes) {            
             [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:selectedNodes delegate:self];
@@ -830,7 +829,6 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:navigationController animated:YES completion:nil];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     browserVC.selectedNodesArray = nodesArray;
     browserVC.browserAction = BrowserActionImport;
 }
