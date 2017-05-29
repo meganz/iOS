@@ -292,6 +292,10 @@
 "downloading"="Downloading...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Do you want to cancel the download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination" = "Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles" = "Select files";
 /* Title for the action that allows you to move a file or folder */
 "move"="Move";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,6 @@
 "permissionMessage"="Check your permissions on this folder";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder shared";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Import to";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file has been imported */
@@ -460,7 +462,7 @@
 "addContact"="Add contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Add";
 /* Success message shown when a contact has been invited */
 "requestSent"="Request sent";
@@ -1020,6 +1022,10 @@
 "done"="Done";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Send Files";
+/* */
+"warning"="Warning";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */

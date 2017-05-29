@@ -460,7 +460,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
             
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
             [browserVC setBrowserAction:BrowserActionImport];
             break;
@@ -480,7 +479,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case 3: { //Import folder or nodes from link
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
             [self presentLinkViewController:navigationController];
@@ -781,7 +779,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         

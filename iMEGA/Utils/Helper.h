@@ -43,7 +43,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
-+ (UIImage *)folderSharedImage;
 + (UIImage *)incomingFolderImage;
 + (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;

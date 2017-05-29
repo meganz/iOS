@@ -82,9 +82,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
-    self.userAvatarImageView.layer.masksToBounds = YES;
-    
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
@@ -237,7 +234,23 @@
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        NSError *error;
+        NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+        if (error) {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+        
+        if (directoryContent.count > 0) {            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGASdk] logout];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }
     }
 }
 

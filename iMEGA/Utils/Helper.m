@@ -291,15 +291,6 @@ static BOOL copyToPasteboard;
     return folderImage;
 }
 
-+ (UIImage *)folderSharedImage {
-    static UIImage *folderSharedImage = nil;
-    
-    if (folderSharedImage == nil) {
-        folderSharedImage = [UIImage imageNamed:@"folder_outgoing"];
-    }
-    return folderSharedImage;
-}
-
 + (UIImage *)incomingFolderImage {
     static UIImage *incomingFolderImage = nil;
     
@@ -343,8 +334,10 @@ static BOOL copyToPasteboard;
             if ([node.name isEqualToString:@"Camera Uploads"]) {
                 return [self folderCameraUploadsImage];
             } else {
-                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [self folderSharedImage];
+                if (node.isInShare) {
+                    return [self incomingFolderImage];
+                } else if (node.isOutShare) {
+                    return [self outgoingFolderImage];
                 } else {
                     return [self folderImage];
                 }
@@ -755,15 +748,11 @@ static BOOL copyToPasteboard;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        if (isVideo(node.name.pathExtension)) {
-            [nodeTableViewCell.thumbnailPlayImageView setHidden:NO];
-        }
+        nodeTableViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        if (isVideo(node.name.pathExtension)) {
-            [photoCollectionViewCell.thumbnailPlayImageView setHidden:NO];
-        }
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     }
 }
 
