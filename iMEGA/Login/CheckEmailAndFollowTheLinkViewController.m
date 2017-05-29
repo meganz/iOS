@@ -16,6 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UILabel *checkYourEmailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *misspelledLabel;
 
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *name;
@@ -43,6 +46,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+    self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
+    [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 }
 

@@ -39,7 +39,7 @@
             <objects>
                 <navigationController storyboardIdentifier="initialViewControllerID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="aAh-l2-z5Q" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0CH-fW-Exe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0CH-fW-Exe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
@@ -60,7 +60,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ConfirmAccountNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="YJs-s6-GAA" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mD2-yS-dr8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="mD2-yS-dr8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1349,7 +1349,10 @@
                         <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="gCw-HK-PQg" id="SNP-Ty-rUK"/>
+                        <outlet property="checkYourEmailLabel" destination="JVh-eC-WKS" id="KGW-SL-XDa"/>
                         <outlet property="emailTextField" destination="24C-4c-48h" id="709-f5-m6o"/>
+                        <outlet property="misspelledLabel" destination="ey0-Yn-d6F" id="5FI-a3-rIt"/>
                         <outlet property="resendButton" destination="fZ6-Pg-W1e" id="I8B-kn-cBk"/>
                     </connections>
                 </viewController>
@@ -1363,7 +1366,7 @@
                 <navigationController storyboardIdentifier="ForgotPasswordNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="8Yt-bP-uUX" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ofm-dV-q7Y">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="ofm-dV-q7Y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
