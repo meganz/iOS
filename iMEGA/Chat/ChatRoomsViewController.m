@@ -526,7 +526,6 @@
         [cell.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle];
         cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
         cell.onlineStatusView.hidden             = NO;
-        cell.onlineStatusView.layer.cornerRadius = cell.onlineStatusView.frame.size.width / 2;
     }
     
     [self updateCell:cell forUnreadCountChange:chatListItem.unreadCount];

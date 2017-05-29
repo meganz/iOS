@@ -82,9 +82,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
-    self.userAvatarImageView.layer.masksToBounds = YES;
-    
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
