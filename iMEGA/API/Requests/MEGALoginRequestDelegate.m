@@ -54,6 +54,13 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
+        
+    if (self.confirmAccountInOtherClient) {
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
+    }
     
     if (error.type) {
         NSString *message;
@@ -98,6 +105,7 @@
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
             [window setRootViewController:launchVC];
         } completion:nil];
+        
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }

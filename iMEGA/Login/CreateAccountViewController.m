@@ -1,15 +1,15 @@
 #import "CreateAccountViewController.h"
 
-#import "Helper.h"
+#import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "SVModalWebViewController.h"
 
-#import "MEGALoginRequestDelegate.h"
+#import "CheckEmailAndFollowTheLinkViewController.h"
 
-@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
+@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -21,13 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
-@property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-
-@property (nonatomic, copy) NSString *password;
 
 
 @end
@@ -58,23 +52,13 @@
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
-    [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
-    self.accountCreatedLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess.");
-    
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", @"Create Account")];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -92,7 +76,7 @@
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.nameTextField becomeFirstResponder];
         return NO;
-    } else if (![Helper validateEmail:self.emailTextField.text]) {
+    } else if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -196,8 +180,6 @@
             [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
             [self.createAccountButton setEnabled:NO];
         }
-        self.emailString = self.emailTextField.text;
-        self.password = self.passwordTextField.text;
     }
 }
 
@@ -206,7 +188,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -248,15 +230,6 @@
     return YES;
 }
 
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onAccountUpdate:(MEGASdk *)api {
-    if ([api isLoggedIn] == 1) {
-        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-        [api loginWithEmail:self.emailString password:self.password delegate:loginRequestDelegate];
-    }
-}
-
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -289,15 +262,14 @@
     
     switch ([request type]) {
         case MEGARequestTypeCreateAccount: {
-            
-            [self.nameTextField setEnabled:NO];
-            [self.emailTextField setEnabled:NO];
-            [self.passwordTextField setEnabled:NO];
-            [self.retypePasswordTextField setEnabled:NO];
-            [self.termsCheckboxButton setUserInteractionEnabled:NO];
-            [self.createAccountButton setEnabled:NO];
-            
-            self.view = self.accountCreatedView;
+            CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];            
+            [SAMKeychain setPassword:request.sessionKey forService:@"MEGA" account:@"sessionId"];
+            [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
+            [SAMKeychain setPassword:request.name forService:@"MEGA" account:@"name"];
+            [SAMKeychain setPassword:request.password forService:@"MEGA" account:@"password"];
+            [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
         }
             
         default:
