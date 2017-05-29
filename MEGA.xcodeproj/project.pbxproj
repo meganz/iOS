@@ -242,6 +242,11 @@
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
+		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942255041EDC04080074C51A /* FileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255021EDC04060074C51A /* FileProvider.m */; };
+		942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255071EDC04BA0074C51A /* DocumentPickerViewController.m */; };
+		9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9422550A1EDC04DC0074C51A /* MainInterface.storyboard */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
@@ -302,6 +307,38 @@
 		E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */; };
 		E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		942254F31EDC03150074C51A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 942254EA1EDC03140074C51A;
+			remoteInfo = MEGAPickerFileProvider;
+		};
+		942254F61EDC03150074C51A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 942254DB1EDC03130074C51A;
+			remoteInfo = MEGAPicker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		942254FF1EDC03150074C51A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */,
+				942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -753,6 +790,17 @@
 		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
+		942254DC1EDC03130074C51A /* MEGAPicker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPicker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		942255001EDC03E90074C51A /* MEGAPickerFileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAPickerFileProvider.entitlements; path = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements; sourceTree = SOURCE_ROOT; };
+		942255011EDC04060074C51A /* FileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileProvider.h; path = iMEGA/Extensions/MEGAPickerFileProvider/FileProvider.h; sourceTree = SOURCE_ROOT; };
+		942255021EDC04060074C51A /* FileProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FileProvider.m; path = iMEGA/Extensions/MEGAPickerFileProvider/FileProvider.m; sourceTree = SOURCE_ROOT; };
+		942255031EDC04060074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist; sourceTree = SOURCE_ROOT; };
+		942255051EDC04AD0074C51A /* MEGAPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAPicker.entitlements; path = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements; sourceTree = SOURCE_ROOT; };
+		942255061EDC04BA0074C51A /* DocumentPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DocumentPickerViewController.h; path = iMEGA/Extensions/MEGAPicker/DocumentPickerViewController.h; sourceTree = SOURCE_ROOT; };
+		942255071EDC04BA0074C51A /* DocumentPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentPickerViewController.m; path = iMEGA/Extensions/MEGAPicker/DocumentPickerViewController.m; sourceTree = SOURCE_ROOT; };
+		942255081EDC04BA0074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPicker/Info.plist; sourceTree = SOURCE_ROOT; };
+		9422550B1EDC04DC0074C51A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iMEGA/Extensions/MEGAPicker/Base.lproj/MainInterface.storyboard; sourceTree = SOURCE_ROOT; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WarningTransferQuotaViewController.m; path = ViewControllers/WarningTransferQuotaViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WarningTransferQuotaViewController.xib; path = ViewControllers/WarningTransferQuotaViewController.xib; sourceTree = "<group>"; };
@@ -919,6 +967,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		942254D91EDC03130074C51A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E81EDC03140074C51A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -926,6 +988,7 @@
 			isa = PBXGroup;
 			children = (
 				1373618C1A6664C300B740E8 /* iMEGA */,
+				942254D71EDC02CB0074C51A /* Extensions */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 			);
@@ -935,6 +998,8 @@
 			isa = PBXGroup;
 			children = (
 				1373618A1A6664C300B740E8 /* MEGA.app */,
+				942254DC1EDC03130074C51A /* MEGAPicker.appex */,
+				942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1870,6 +1935,54 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		942254D71EDC02CB0074C51A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				942254DD1EDC03140074C51A /* MEGAPicker */,
+				942254EC1EDC03150074C51A /* MEGAPickerFileProvider */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		942254DD1EDC03140074C51A /* MEGAPicker */ = {
+			isa = PBXGroup;
+			children = (
+				942255061EDC04BA0074C51A /* DocumentPickerViewController.h */,
+				942255071EDC04BA0074C51A /* DocumentPickerViewController.m */,
+				9422550A1EDC04DC0074C51A /* MainInterface.storyboard */,
+				942255081EDC04BA0074C51A /* Info.plist */,
+				942254DE1EDC03140074C51A /* Supporting Files */,
+			);
+			path = MEGAPicker;
+			sourceTree = "<group>";
+		};
+		942254DE1EDC03140074C51A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				942255051EDC04AD0074C51A /* MEGAPicker.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		942254EC1EDC03150074C51A /* MEGAPickerFileProvider */ = {
+			isa = PBXGroup;
+			children = (
+				942255011EDC04060074C51A /* FileProvider.h */,
+				942255021EDC04060074C51A /* FileProvider.m */,
+				942255031EDC04060074C51A /* Info.plist */,
+				942254ED1EDC03150074C51A /* Supporting Files */,
+			);
+			path = MEGAPickerFileProvider;
+			sourceTree = "<group>";
+		};
+		942254ED1EDC03150074C51A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				942255001EDC03E90074C51A /* MEGAPickerFileProvider.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2018,15 +2131,52 @@
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
+				942254FF1EDC03150074C51A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				942254F41EDC03150074C51A /* PBXTargetDependency */,
+				942254F71EDC03150074C51A /* PBXTargetDependency */,
 			);
 			name = MEGA;
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
 			productType = "com.apple.product-type.application";
+		};
+		942254DB1EDC03130074C51A /* MEGAPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */;
+			buildPhases = (
+				942254D81EDC03130074C51A /* Sources */,
+				942254D91EDC03130074C51A /* Frameworks */,
+				942254DA1EDC03130074C51A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAPicker;
+			productName = MEGAPicker;
+			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		942254EA1EDC03140074C51A /* MEGAPickerFileProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */;
+			buildPhases = (
+				942254E71EDC03140074C51A /* Sources */,
+				942254E81EDC03140074C51A /* Frameworks */,
+				942254E91EDC03140074C51A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAPickerFileProvider;
+			productName = MEGAPickerFileProvider;
+			productReference = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -2042,6 +2192,9 @@
 						DevelopmentTeam = T9RH74Y7L9;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -2055,6 +2208,16 @@
 								enabled = 1;
 							};
 						};
+					};
+					942254DB1EDC03130074C51A = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
+					};
+					942254EA1EDC03140074C51A = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2105,6 +2268,8 @@
 			projectRoot = "";
 			targets = (
 				137361891A6664C300B740E8 /* MEGA */,
+				942254DB1EDC03130074C51A /* MEGAPicker */,
+				942254EA1EDC03140074C51A /* MEGAPickerFileProvider */,
 			);
 		};
 /* End PBXProject section */
@@ -2196,6 +2361,21 @@
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 				411504491CEB07C700BF38E3 /* VideoOverlay.png in Resources */,
 				411504421CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254DA1EDC03130074C51A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E91EDC03140074C51A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2432,7 +2612,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		942254D81EDC03130074C51A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E71EDC03140074C51A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				942255041EDC04080074C51A /* FileProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		942254F41EDC03150074C51A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 942254EA1EDC03140074C51A /* MEGAPickerFileProvider */;
+			targetProxy = 942254F31EDC03150074C51A /* PBXContainerItemProxy */;
+		};
+		942254F71EDC03150074C51A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 942254DB1EDC03130074C51A /* MEGAPicker */;
+			targetProxy = 942254F61EDC03150074C51A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		415227411A692F8D00EC7BB6 /* Localizable.strings */ = {
@@ -2491,6 +2700,14 @@
 				41ADAA121ADE8B8800641BB4 /* zh-Hant */,
 			);
 			name = SVWebViewController.strings;
+			sourceTree = "<group>";
+		};
+		9422550A1EDC04DC0074C51A /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9422550B1EDC04DC0074C51A /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		E803CB661D5336F100F81A36 /* InfoPlist.strings */ = {
@@ -2728,6 +2945,88 @@
 			};
 			name = Release;
 		};
+		942254FA1EDC03150074C51A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		942254FB1EDC03150074C51A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		942254FD1EDC03150074C51A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		942254FE1EDC03150074C51A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2748,6 +3047,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				942254FA1EDC03150074C51A /* Debug */,
+				942254FB1EDC03150074C51A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				942254FD1EDC03150074C51A /* Debug */,
+				942254FE1EDC03150074C51A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
