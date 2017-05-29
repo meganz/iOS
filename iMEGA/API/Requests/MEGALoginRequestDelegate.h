@@ -5,4 +5,6 @@
 
 @interface MEGALoginRequestDelegate : MEGABaseRequestDelegate
 
+@property (nonatomic) BOOL confirmAccountInOtherClient;
+
 @end

@@ -72,7 +72,20 @@
 
 - (IBAction)cancelTouchUpInside:(UIButton *)sender {
     [self.passwordTextField resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSString *message = AMLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[MEGASdkManager sharedMEGASdk] logout];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Private

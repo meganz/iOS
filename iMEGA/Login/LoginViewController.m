@@ -8,6 +8,7 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGALoginRequestDelegate.h"
+#import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
 #import "LaunchViewController.h"
@@ -114,7 +115,7 @@
 }
 
 - (BOOL)validateForm {
-    if (![Helper validateEmail:self.emailTextField.text]) {
+    if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -199,7 +200,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeLoginButtonGray = NO;
-    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
         shoulBeLoginButtonGray = YES;
     } else {
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];

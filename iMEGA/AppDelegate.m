@@ -37,6 +37,8 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
+#import "CheckEmailAndFollowTheLinkViewController.h"
+#import "MEGACreateAccountRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -256,6 +258,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self.window setRootViewController:_mainTBC];
                 [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
+        }
+    } else {
+        // Resume ephemeral account
+        NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
+        if (sessionId) {
+            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^{
+                CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                [self.window.rootViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+            }];
+            createAccountRequestDelegate.resumeCreateAccount = YES;
+            [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         }
     }
     
@@ -1544,35 +1557,32 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
             
         case MEGARequestTypeFetchNodes: {
-            // Do not show the main tab bar when receive a fetch_nodes that is not launch by the app. For example the intermediate layer  sends fetch_nodes when create account.
-            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
-                [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-                [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-                [timerAPI_EAGAIN invalidate];
-                
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-                    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
-                    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
-                } else {
-                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
-                }
-                isFetchNodesDone = YES;
-                
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD dismiss];
-                
-                [self requestUserName];
-                [self requestContactsFullname];
-                
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
-                    [[MEGASdkManager sharedMEGAChatSdk] connect];
-                    if (isAccountFirstLogin) {
-                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                    }
-                }
-                [self showMainTabBar];
+            [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
+            [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
+            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
+            [timerAPI_EAGAIN invalidate];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+                [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
+                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+            } else {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
+            isFetchNodesDone = YES;
+            
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD dismiss];
+            
+            [self requestUserName];
+            [self requestContactsFullname];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
+                if (isAccountFirstLogin) {
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
+                }
+            }
+            [self showMainTabBar];
             break;
         }
             
