@@ -1040,3 +1040,9 @@
 "contactRequest" = "Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Are you sure you want to abort the registration?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click 'Resend'.";
+/* A button to resend the email confirmation. */
+"resend"="Resend";

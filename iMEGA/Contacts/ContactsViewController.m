@@ -14,6 +14,7 @@
 #import "MEGANavigationController.h"
 #import "Helper.h"
 #import "NSMutableAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
@@ -887,7 +888,7 @@
     BOOL shouldEnable = YES;
     if ([alertView tag] == 0 || [alertView tag] == 3) {
         NSString *email = [[alertView textFieldAtIndex:0] text];
-        shouldEnable = (email.length > 0) ? [Helper validateEmail:email] : NO;
+        shouldEnable = (email.length > 0) ? [email mnz_isValidEmail] : NO;
     }
     
     return shouldEnable;
