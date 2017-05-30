@@ -12,6 +12,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGALogger.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -36,6 +37,8 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
+#import "CheckEmailAndFollowTheLinkViewController.h"
+#import "MEGACreateAccountRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -231,7 +234,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
         
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
+        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
@@ -254,6 +258,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self.window setRootViewController:_mainTBC];
                 [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
+        }
+    } else {
+        // Resume ephemeral account
+        NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
+        if (sessionId) {
+            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^{
+                CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                [self.window.rootViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+            }];
+            createAccountRequestDelegate.resumeCreateAccount = YES;
+            [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         }
     }
     
@@ -1564,7 +1579,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
                 if (isAccountFirstLogin) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];                    
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             [self showMainTabBar];

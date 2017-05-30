@@ -242,6 +242,7 @@
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
+		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
@@ -253,6 +254,10 @@
 		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
 		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
 		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
+		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
+		A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
+		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
+		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80620AB1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -753,6 +758,8 @@
 		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
+		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
+		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WarningTransferQuotaViewController.m; path = ViewControllers/WarningTransferQuotaViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WarningTransferQuotaViewController.xib; path = ViewControllers/WarningTransferQuotaViewController.xib; sourceTree = "<group>"; };
@@ -768,6 +775,14 @@
 		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
 		A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageAttachmentView.m; sourceTree = "<group>"; };
 		A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessageAttachmentView.xib; sourceTree = "<group>"; };
+		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
+		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
+		A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGABaseRequestDelegate.h; path = API/Requests/MEGABaseRequestDelegate.h; sourceTree = "<group>"; };
+		A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGABaseRequestDelegate.m; path = API/Requests/MEGABaseRequestDelegate.m; sourceTree = "<group>"; };
+		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
+		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
+		A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGASendSignupLinkRequestDelegate.h; path = API/Requests/MEGASendSignupLinkRequestDelegate.h; sourceTree = "<group>"; };
+		A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGASendSignupLinkRequestDelegate.m; path = API/Requests/MEGASendSignupLinkRequestDelegate.m; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB691D54AB6A00F81A36 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -964,6 +979,7 @@
 				415226671A692EBD00EC7BB6 /* Vendor */,
 				1373619D1A6664C300B740E8 /* Images.xcassets */,
 				1373618D1A6664C300B740E8 /* Supporting Files */,
+				A8AA4F6D1ED4295800E7BA23 /* API */,
 			);
 			path = iMEGA;
 			sourceTree = "<group>";
@@ -1194,6 +1210,8 @@
 				E8404E141D9BBFD100B196FA /* ForgotPasswordViewController.m */,
 				E8130A3A1DA64E1500B1AD67 /* ParkAccountViewController.h */,
 				E8130A3B1DA64E1500B1AD67 /* ParkAccountViewController.m */,
+				A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */,
+				A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1880,6 +1898,29 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		A8AA4F6D1ED4295800E7BA23 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A8AA4F6E1ED4296700E7BA23 /* Requests */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		A8AA4F6E1ED4296700E7BA23 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */,
+				A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */,
+				A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */,
+				A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */,
+				A8F5D67B1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.h */,
+				A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */,
+				A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */,
+				A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */,
+			);
+			name = Requests;
+			sourceTree = "<group>";
+		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
@@ -2249,6 +2290,7 @@
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
 				41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */,
+				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
@@ -2262,6 +2304,7 @@
 				4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */,
 				4172793E1DB663FA001AC818 /* JSQMessagesTimestampFormatter.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
+				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				41D21E5D1D01AEC3002E6296 /* CTAssetCollectionViewController.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
@@ -2283,6 +2326,7 @@
 				412EB2661C6E52AA001EA6D6 /* MEGAAssetOperation.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* FeedbackTableViewController.m in Sources */,
 				41E88F101CF451B000BD3B79 /* MWTapDetectingImageView.m in Sources */,
+				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
@@ -2317,6 +2361,7 @@
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
+				A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
@@ -2422,6 +2467,7 @@
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
 				41EAAE4C1D06B49400622FAF /* PHImageManager+CTAssetsPickerController.m in Sources */,
+				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
 				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
