@@ -247,6 +247,13 @@
 		942255041EDC04080074C51A /* FileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255021EDC04060074C51A /* FileProvider.m */; };
 		942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255071EDC04BA0074C51A /* DocumentPickerViewController.m */; };
 		9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9422550A1EDC04DC0074C51A /* MainInterface.storyboard */; };
+		945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
+		945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
+		9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
+		9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
+		9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
+		9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
+		9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
@@ -2201,6 +2208,9 @@
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -2213,6 +2223,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = T9RH74Y7L9;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					942254EA1EDC03140074C51A = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -2369,6 +2384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
+				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2617,6 +2633,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
+				9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */,
+				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
+				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
+				945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */,
+				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
+				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2997,6 +3019,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"SV_APP_EXTENSIONS=1",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3018,6 +3046,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3055,6 +3084,7 @@
 				942254FB1EDC03150074C51A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */ = {
 			isa = XCConfigurationList;
@@ -3063,6 +3093,7 @@
 				942254FE1EDC03150074C51A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
