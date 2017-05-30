@@ -11,7 +11,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
-#import "LaunchViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 

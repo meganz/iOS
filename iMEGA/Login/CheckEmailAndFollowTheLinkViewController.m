@@ -85,6 +85,7 @@
 - (IBAction)resendTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([self.emailTextField.text mnz_isValidEmail]) {
+            [self.emailTextField resignFirstResponder];
             MEGASendSignupLinkRequestDelegate *sendSignupLinkRequestDelegate = [[MEGASendSignupLinkRequestDelegate alloc] init];
             [[MEGASdkManager sharedMEGASdk] sendSignupLinkWithEmail:self.emailTextField.text name:self.name password:self.password delegate:sendSignupLinkRequestDelegate];
         } else {
