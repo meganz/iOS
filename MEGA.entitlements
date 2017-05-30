@@ -22,5 +22,9 @@
 	<array>
 		<string>group.mega.ios</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)group.mega.ios</string>
+	</array>
 </dict>
 </plist>
