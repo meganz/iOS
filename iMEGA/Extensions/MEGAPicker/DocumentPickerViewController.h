@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MEGARequestDelegate.h"
+#import "BrowserViewController.h"
 
-@interface DocumentPickerViewController : UIDocumentPickerExtensionViewController
+@interface DocumentPickerViewController : UIDocumentPickerExtensionViewController <MEGARequestDelegate, MEGATransferDelegate, BrowserViewControllerDelegate>
 
 @end
