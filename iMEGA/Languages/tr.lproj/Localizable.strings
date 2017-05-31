@@ -1034,3 +1034,5 @@
 "contactRequest" = "Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
