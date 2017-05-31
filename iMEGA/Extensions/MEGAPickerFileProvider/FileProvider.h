@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MEGATransferDelegate.h"
+#import "MEGARequestDelegate.h"
 
-@interface FileProvider : NSFileProviderExtension
+@interface FileProvider : NSFileProviderExtension <MEGATransferDelegate, MEGARequestDelegate>
+
+@property (nonatomic) MEGANode *oldNode;
+@property (nonatomic) NSURL *url;
+@property (nonatomic) dispatch_semaphore_t semaphore;
 
 @end
