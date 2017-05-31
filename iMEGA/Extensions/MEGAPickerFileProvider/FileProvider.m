@@ -9,6 +9,13 @@
 #import "FileProvider.h"
 #import <UIKit/UIKit.h>
 
+#import "MEGASdk.h"
+#import "MEGASdkManager.h"
+#import "SAMKeychain.h"
+
+#define kUserAgent @"MEGAiOS"
+#define kAppKey @"EVtjzb7R"
+
 @interface FileProvider ()
 
 @end
@@ -39,8 +46,7 @@
     
     NSURL *placeholderURL = [NSFileProviderExtension placeholderURLForURL:[self.documentStorageURL URLByAppendingPathComponent:fileName]];
     
-    // TODO: get file size for file at <url> from model
-    NSUInteger fileSize = 0;
+    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[url path] error:nil][NSFileSize] longLongValue];
     NSDictionary* metadata = @{ NSURLFileSizeKey : @(fileSize)};
     [NSFileProviderExtension writePlaceholderAtURL:placeholderURL withMetadata:metadata error:NULL];
     
@@ -53,8 +59,7 @@
     // Should ensure that the actual file is in the position returned by URLForItemWithIdentifier:, then call the completion handler
     NSError *fileError = nil;
     
-    // TODO: get the contents of file at <url> from model
-    NSData *fileData = [NSData data];
+    NSData *fileData = [NSData dataWithContentsOfURL:url];
     
     [fileData writeToURL:url options:0 error:&fileError];
     
@@ -66,9 +71,25 @@
 
 - (void)itemChangedAtURL:(NSURL *)url {
     // Called at some point after the file has changed; the provider may then trigger an upload
+    self.url = url;
+    self.semaphore = dispatch_semaphore_create(0);
     
-    // TODO: mark file at <url> as needing an update in the model; kick off update process
-    NSLog(@"Item changed at URL %@", url);
+    [MEGASdkManager setAppKey:kAppKey];
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    [MEGASdkManager setUserAgent:userAgent];
+    
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
+    
+    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    
+    if(session) {
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
+        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    }
 }
 
 - (void)stopProvidingItemAtURL:(NSURL *)url {
@@ -79,6 +100,47 @@
     [self providePlaceholderAtURL:url completionHandler:^(NSError * __nullable error) {
         // TODO: handle any error, do any necessary cleanup
     }];
+}
+
+#pragma mark - MEGATransferDelegate
+
+- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    uint64_t handle = [transfer nodeHandle];
+    if (handle == [self.oldNode handle]) {
+        // This is the transferFinish for the deletion of the old node. The File provider is done now.
+        dispatch_semaphore_signal(self.semaphore);
+    } else {
+        // This is the transferFinish for the upload of the new node. The old is to be removed.
+        [[MEGASdkManager sharedMEGASdk] removeNode:self.oldNode delegate:self];
+    }
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch ([request type]) {
+        case MEGARequestTypeLogin: {
+            [api fetchNodesWithDelegate:self];
+            
+            break;
+        }
+            
+        case MEGARequestTypeFetchNodes: {
+            // Given that the remote file cannot be modified, the new version of the file must be uploaded. Then, it is
+            // safe to remove the old file. The file to be uploaded goes to the folder pointed by the parentHandle.
+            NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: @"group.mega.ios"];
+            NSString *base64Handle = [mySharedDefaults objectForKey:[self.url absoluteString]];
+            uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
+            self.oldNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+            MEGANode *parent = [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.oldNode];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[self.url path] parent:parent delegate:self];
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 @end

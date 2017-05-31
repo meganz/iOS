@@ -17,8 +17,6 @@
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
 
-#define kFirstRun @"FirstRun"
-
 @interface DocumentPickerViewController ()
 
 @end
@@ -41,7 +39,7 @@
 #endif
     
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    NSLog(@"Sesión: %@", session);
+
     if(session) {
         // Common scenario, present the browser.
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
