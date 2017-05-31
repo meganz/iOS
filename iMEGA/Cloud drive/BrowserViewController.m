@@ -370,6 +370,7 @@
     browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
     browserVC.selectedNodesArray = self.selectedNodesArray;
     browserVC.selectedUsersArray = self.selectedUsersArray;
+    browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
     
     [self.navigationController pushViewController:browserVC animated:YES];
 }
@@ -644,7 +645,10 @@
             }
                 
             case BrowserActionDocumentProvider: {
-                //TODO: Document Provider
+                [SVProgressHUD setViewForExtension:self.view];
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+                [SVProgressHUD showProgress:0 status:@"0 %%"];
+                [self.browserViewControllerDelegate didSelectNode:selectedNode];
                 break;
             }
                 
