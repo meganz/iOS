@@ -1034,3 +1034,5 @@
 "contactRequest" = "Richiesta contatto";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "Nuova cartella condivisa";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, accedere con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su Visualizza ID Apple. Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
