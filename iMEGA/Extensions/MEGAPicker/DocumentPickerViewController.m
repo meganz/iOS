@@ -19,14 +19,15 @@
 
 @interface DocumentPickerViewController ()
 
+@property (nonatomic) BOOL sessionLoaded;
+
 @end
 
 @implementation DocumentPickerViewController
 
--(void)viewDidLoad {
-    [SVProgressHUD setViewForExtension:self.view];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
+
+- (void)viewDidLoad {
+    self.sessionLoaded = NO;
     
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -38,9 +39,22 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    // Add a observer to get notified when the extension come back to the foreground:
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
+                                                 name:NSExtensionHostWillEnterForegroundNotification
+                                               object:nil];
+    
+    [self configureUI];
+}
 
+- (void)configureUI {
+    [SVProgressHUD setViewForExtension:self.view];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    
     if(session) {
+        self.sessionLoaded = YES;
         // Common scenario, present the browser.
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
         
@@ -57,11 +71,25 @@
         [self.view addSubview:browserVC.view];
         [browserVC didMoveToParentViewController:self];
         browserVC.browserViewControllerDelegate = self;
-
+        
     } else {
         // The user either needs to login or logged in before the current version of the MEGA app, so there is
         // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
-        // TODO: Empty state to go to MEGA app.
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD dismiss];
+        [self.openMega setTitle:AMLocalizedString(@"openButton", @"Open MEGA button from the Document Provider") forState:UIControlStateNormal];
+        self.megaLogo.hidden = NO;
+        self.loginText.hidden= NO;
+        self.openMega.hidden = NO;
+    }
+}
+
+- (void)willEnterForeground {
+    if(!self.sessionLoaded) {
+        self.megaLogo.hidden = YES;
+        self.loginText.hidden= YES;
+        self.openMega.hidden = YES;
+        [self configureUI];
     }
 }
 
@@ -81,6 +109,10 @@
     [mySharedDefaults setObject:base64Handle forKey:key];
     
     [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
+}
+
+- (IBAction)goToMega:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
 #pragma mark BrowserViewControllerDelegate

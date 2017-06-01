@@ -2381,6 +2381,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = T9RH74Y7L9;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
