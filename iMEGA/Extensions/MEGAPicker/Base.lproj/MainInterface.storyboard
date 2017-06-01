@@ -1,14 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="J6p-g8-CHO">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="J6p-g8-CHO">
+    <device id="ipad12_9" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Document Picker View Controller-->
         <scene sceneID="Q8I-MS-tKG">
             <objects>
-                <viewController id="J6p-g8-CHO" customClass="DocumentPickerViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="J6p-g8-CHO" customClass="DocumentPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hST-wJ-eYy"/>
                         <viewControllerLayoutGuide type="bottom" id="UQD-kz-Mfv"/>
@@ -17,24 +26,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mym-YX-cEY">
-                                <frame key="frameInset" minX="133" minY="185" width="84" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Untitled.txt">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-5n-s33">
+                                <rect key="frame" x="156" y="250" width="38" height="30"/>
+                                <state key="normal" title="Open">
+                                    <color key="titleColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="openDocument:" destination="J6p-g8-CHO" eventType="touchUpInside" id="HtB-86-uWI"/>
+                                    <action selector="goToMega:" destination="J6p-g8-CHO" eventType="touchUpInside" id="b4Z-K8-s1E"/>
                                 </connections>
                             </button>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Open MEGA and sign in to continue" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Alk-GQ-PDV">
+                                <rect key="frame" x="89.5" y="170" width="170" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="C9T-2s-GUI"/>
+                                    <constraint firstAttribute="height" constant="60" id="ZJl-3M-7Hk"/>
+                                    <constraint firstAttribute="width" constant="170" id="eER-yK-jmJ"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="p33-QW-01Y"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o3h-jK-Dvh">
+                                <rect key="frame" x="90" y="28" width="170" height="54"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="UF4-5n-s33" firstAttribute="top" secondItem="Alk-GQ-PDV" secondAttribute="bottom" constant="20" id="Ixj-YW-Pbi"/>
+                            <constraint firstItem="Alk-GQ-PDV" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="OuZ-Dg-kEz"/>
+                            <constraint firstItem="UF4-5n-s33" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="S0B-Xz-jeW"/>
+                            <constraint firstItem="o3h-jK-Dvh" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="nsG-Kb-jej"/>
+                            <constraint firstItem="Alk-GQ-PDV" firstAttribute="centerY" secondItem="Vdh-Gp-eV6" secondAttribute="centerY" id="onI-Z1-4a1"/>
+                            <constraint firstItem="o3h-jK-Dvh" firstAttribute="top" secondItem="hST-wJ-eYy" secondAttribute="bottom" constant="8" id="s2h-2G-qtH"/>
+                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="350" height="400"/>
+                    <connections>
+                        <outlet property="loginText" destination="Alk-GQ-PDV" id="iJc-MF-ash"/>
+                        <outlet property="megaLogo" destination="o3h-jK-Dvh" id="zF0-Ko-ma1"/>
+                        <outlet property="openMega" destination="UF4-5n-s33" id="afA-rK-UHg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UoZ-ya-W3e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.597364568081989" y="40.4296875"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
+    </resources>
 </document>

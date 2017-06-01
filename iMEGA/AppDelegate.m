@@ -53,7 +53,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeIncomingPendingContactsLink,
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
-    URLTypeRecoverLink
+    URLTypeRecoverLink,
+    URLTypeLoginRequiredLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
@@ -555,6 +556,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         return;
     }
     
+    if ([self isLoginRequiredLink:afterSlashesString]) {
+        self.urlType = URLTypeLoginRequiredLink;
+        return;
+    }
+    
     [self showLinkNotValid];
 }
 
@@ -758,6 +764,30 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     return NO;
+}
+
+- (BOOL)isLoginRequiredLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 13) {
+        return NO;
+    }
+    
+    BOOL isLoginRequiredLink = [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]; //mega://"#loginrequired"
+    if (isLoginRequiredLink) {
+        NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+        if (session) {
+            // The user logged in with a previous version of the MEGA app, so the session is stored in the standard
+            // keychain. The session must be stored again so that it will be available for the shared keychain.
+            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loginRequiredTitle", @"Title for the login required alert.")
+                                                                                     message:AMLocalizedString(@"loginRequiredText", @"Text for the login required alert.")
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        } else {
+            // The user is not logged in, so the standard login will be presented (there is nothing to do in this case)
+        }
+    }
+    return isLoginRequiredLink;
 }
 
 - (void)openIn {

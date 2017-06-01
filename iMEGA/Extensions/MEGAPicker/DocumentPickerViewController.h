@@ -12,4 +12,8 @@
 
 @interface DocumentPickerViewController : UIDocumentPickerExtensionViewController <MEGARequestDelegate, MEGATransferDelegate, BrowserViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *megaLogo;
+@property (weak, nonatomic) IBOutlet UITextView *loginText;
+@property (weak, nonatomic) IBOutlet UIButton *openMega;
+
 @end
