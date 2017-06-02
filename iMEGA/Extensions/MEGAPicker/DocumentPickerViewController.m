@@ -40,9 +40,11 @@
 #endif
     
     // Add a observer to get notified when the extension come back to the foreground:
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
                                                  name:NSExtensionHostWillEnterForegroundNotification
                                                object:nil];
+    }
     
     [self configureUI];
 }
@@ -145,13 +147,13 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [[MEGASdkManager sharedMEGASdk] fetchNodes];
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
+            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD dismiss];
             break;
         }
             

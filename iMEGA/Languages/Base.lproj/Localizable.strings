@@ -1040,3 +1040,7 @@
 "contactRequest" = "Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "New Shared Folder";
+/* Title for the login required alert. */
+"loginRequiredTitle" = "Login successful";
+/* Text for the login required alert. */
+"loginRequiredText" = "Now you can go back to the previous app and use the document picker";

@@ -1036,3 +1036,7 @@
 "contactRequest" = "Solicitud de contacto";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "Nueva carpeta compartida";
+/* Title for the login required alert. */
+"loginRequiredTitle" = "Ha iniciado sesión correctamente";
+/* Text for the login required alert. */
+"loginRequiredText" = "Ahora puede volver a la aplicación anterior para utilizar el selector de documentos";
