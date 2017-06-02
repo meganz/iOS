@@ -777,6 +777,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (session) {
             // The user logged in with a previous version of the MEGA app, so the session is stored in the standard
             // keychain. The session must be stored again so that it will be available for the shared keychain.
+            [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
             [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loginRequiredTitle", @"Title for the login required alert.")
                                                                                      message:AMLocalizedString(@"loginRequiredText", @"Text for the login required alert.")
