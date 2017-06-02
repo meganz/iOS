@@ -1106,7 +1106,7 @@
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [uploadAlertController addAction:fromPhotosAlertAction];
@@ -1136,7 +1136,7 @@
             }];
         }
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [uploadAlertController addAction:captureAlertAction];
@@ -1148,7 +1148,7 @@
         
         [self presentViewController:documentMenuViewController animated:YES completion:nil];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [uploadAlertController addAction:importFromAlertAction];
@@ -1240,7 +1240,7 @@
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [uploadAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [moreAlertController addAction:uploadAlertAction];
@@ -1267,7 +1267,7 @@
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [newFolderAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [moreAlertController addAction:newFolderAlertAction];
@@ -1275,7 +1275,7 @@
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [moreAlertController addAction:sortByAlertAction];
@@ -1284,7 +1284,7 @@
         BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
         [self setEditing:value animated:YES];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [moreAlertController addAction:selectAlertAction];
@@ -1296,7 +1296,7 @@
         cloudDriveTVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [self.navigationController pushViewController:cloudDriveTVC animated:YES];
     }];
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
         [rubbishBinAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     }
     [moreAlertController addAction:rubbishBinAlertAction];
