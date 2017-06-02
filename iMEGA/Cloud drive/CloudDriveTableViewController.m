@@ -662,7 +662,7 @@
             }
         }
     } else {
-         image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
     
     return image;
@@ -1106,7 +1106,9 @@
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1134,7 +1136,9 @@
             }];
         }
     }];
-    [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [uploadAlertController addAction:captureAlertAction];
     
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1144,7 +1148,9 @@
         
         [self presentViewController:documentMenuViewController animated:YES completion:nil];
     }];
-    [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [uploadAlertController addAction:importFromAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
@@ -1234,7 +1240,9 @@
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
     }];
-    [uploadAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [uploadAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [moreAlertController addAction:uploadAlertAction];
     
     UIAlertAction *newFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1259,20 +1267,26 @@
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];
-    [newFolderAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [newFolderAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [moreAlertController addAction:newFolderAlertAction];
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
-    [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [moreAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
         [self setEditing:value animated:YES];
     }];
-    [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [moreAlertController addAction:selectAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1282,7 +1296,9 @@
         cloudDriveTVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [self.navigationController pushViewController:cloudDriveTVC animated:YES];
     }];
-    [rubbishBinAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.3"]) {
+        [rubbishBinAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    }
     [moreAlertController addAction:rubbishBinAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
