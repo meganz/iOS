@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="J6p-g8-CHO">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -26,12 +26,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-5n-s33">
-                                <rect key="frame" x="156" y="250" width="38" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="38" id="otx-hY-N3D"/>
-                                    <constraint firstAttribute="height" constant="30" id="xuF-cL-AbX"/>
-                                </constraints>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-5n-s33">
+                                <rect key="frame" x="156" y="296" width="38" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Open">
                                     <color key="titleColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -39,33 +36,19 @@
                                     <action selector="goToMega:" destination="J6p-g8-CHO" eventType="touchUpInside" id="b4Z-K8-s1E"/>
                                 </connections>
                             </button>
-                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Open MEGA and sign in to continue" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Alk-GQ-PDV">
-                                <rect key="frame" x="90" y="170" width="170" height="60"/>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Open MEGA and sign in to continue" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Alk-GQ-PDV">
+                                <rect key="frame" x="90" y="216" width="170" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="170" id="LvG-27-Lzr"/>
-                                    <constraint firstAttribute="height" constant="60" id="OUM-s8-92y"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o3h-jK-Dvh">
-                                <rect key="frame" x="90" y="28" width="170" height="54"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="170" id="FIg-3V-5cv"/>
-                                    <constraint firstAttribute="height" constant="54" id="Wt0-sY-jgf"/>
-                                </constraints>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o3h-jK-Dvh">
+                                <rect key="frame" x="90" y="74" width="170" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Alk-GQ-PDV" firstAttribute="centerY" secondItem="Vdh-Gp-eV6" secondAttribute="centerY" id="JdV-FC-pOd"/>
-                            <constraint firstItem="UF4-5n-s33" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="YiB-6p-4BB"/>
-                            <constraint firstItem="UF4-5n-s33" firstAttribute="top" secondItem="Alk-GQ-PDV" secondAttribute="bottom" constant="20" id="bge-52-zpv"/>
-                            <constraint firstItem="Alk-GQ-PDV" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="e9g-qU-DKY"/>
-                            <constraint firstItem="o3h-jK-Dvh" firstAttribute="top" secondItem="hST-wJ-eYy" secondAttribute="bottom" constant="8" id="h10-mB-HtP"/>
-                            <constraint firstItem="o3h-jK-Dvh" firstAttribute="centerX" secondItem="Vdh-Gp-eV6" secondAttribute="centerX" id="seg-oe-vqZ"/>
-                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="350" height="400"/>
