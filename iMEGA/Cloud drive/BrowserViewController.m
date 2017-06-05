@@ -1,12 +1,12 @@
 #import "BrowserViewController.h"
 
-#import "UIScrollView+EmptyDataSet.h"
 #import "SVProgressHUD.h"
-
-#import "NSFileManager+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -477,19 +477,19 @@
         UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self shareNodesWithLevel:MEGAShareTypeAccessFull];
         }];
-        [fullAccessAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [shareFolderAlertController addAction:fullAccessAlertAction];
         
         UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
         }];
-        [readAndWritetAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [shareFolderAlertController addAction:readAndWritetAlertAction];
         
         UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self shareNodesWithLevel:MEGAShareTypeAccessRead];
         }];
-        [readOnlyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [shareFolderAlertController addAction:readOnlyAlertAction];
         
         shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
