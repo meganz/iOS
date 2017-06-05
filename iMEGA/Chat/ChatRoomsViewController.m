@@ -1,24 +1,25 @@
 #import "ChatRoomsViewController.h"
 
-#import "MEGASdkManager.h"
-#import "ChatRoomCell.h"
-#import "MessagesViewController.h"
-#import "ContactsViewController.h"
-#import "MEGANavigationController.h"
-#import "ContactDetailsViewController.h"
-#import "ChatSettingsTableViewController.h"
-#import "MEGAReachabilityManager.h"
-#import "GroupChatDetailsViewController.h"
-
 #import "DateTools.h"
+#import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
-#import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "UIImageView+MNZCategory.h"
+#import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
+
+#import "ChatRoomCell.h"
+#import "ChatSettingsTableViewController.h"
+#import "ContactDetailsViewController.h"
+#import "ContactsViewController.h"
+#import "GroupChatDetailsViewController.h"
+#import "MessagesViewController.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatRequestDelegate, MEGAChatDelegate>
 
@@ -370,7 +371,7 @@
         UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOnline];
         }];
-        [onlineAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [onlineAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [changeOnlineStatusAlertController addAction:onlineAlertAction];
     }
     
@@ -378,7 +379,7 @@
         UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusAway];
         }];
-        [awayAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [awayAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [changeOnlineStatusAlertController addAction:awayAlertAction];
     }
     
@@ -386,7 +387,7 @@
         UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusBusy];
         }];
-        [busyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [busyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [changeOnlineStatusAlertController addAction:busyAlertAction];
     }
     
@@ -394,7 +395,7 @@
         UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOffline];
         }];
-        [offlineAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [offlineAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [changeOnlineStatusAlertController addAction:offlineAlertAction];
     }
     
