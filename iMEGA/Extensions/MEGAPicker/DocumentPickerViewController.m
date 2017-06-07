@@ -1,25 +1,22 @@
-//
-//  DocumentPickerViewController.m
-//  MEGAPicker
-//
-//  Created by Javier Trujillo on 29/5/17.
-//  Copyright © 2017 MEGA. All rights reserved.
-//
 
 #import "DocumentPickerViewController.h"
 
-#import "SVProgressHUD.h"
 #import "SAMKeychain.h"
+#import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "Helper.h"
+#import "LaunchViewController.h"
 #import "MEGANavigationController.h"
 
-#define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
+#define kUserAgent @"MEGAiOS"
 
 @interface DocumentPickerViewController ()
 
 @property (nonatomic) BOOL sessionLoaded;
+@property (nonatomic) BOOL pickerPresented;
+@property (nonatomic) BOOL passcodePresented;
 
 @end
 
@@ -28,6 +25,8 @@
 
 - (void)viewDidLoad {
     self.sessionLoaded = NO;
+    self.pickerPresented = NO;
+    self.passcodePresented = NO;
     
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -41,38 +40,40 @@
     
     // Add a observer to get notified when the extension come back to the foreground:
     if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
-                                                 name:NSExtensionHostWillEnterForegroundNotification
-                                               object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
+                                                     name:NSExtensionHostWillEnterForegroundNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
+                                                     name:NSExtensionHostWillResignActiveNotification
+                                                   object:nil];
     }
-    
-    [self configureUI];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!self.pickerPresented) {
+        [self configureUI];
+    }
 }
 
 - (void)configureUI {
     [SVProgressHUD setViewForExtension:self.view];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
-    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
-    if(session) {
+    if(self.session) {
         self.sessionLoaded = YES;
-        // Common scenario, present the browser.
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
-        
-        UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud"
-                                                                  bundle:[NSBundle bundleForClass:BrowserViewController.class]];
-        MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        
-        browserVC.selectedNodesArray = @[];
-        [browserVC setBrowserAction:BrowserActionDocumentProvider];
-        
-        [self addChildViewController:browserVC];
-        [browserVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-        [self.view addSubview:browserVC.view];
-        [browserVC didMoveToParentViewController:self];
-        browserVC.browserViewControllerDelegate = self;
+        // Common scenario, present the browser after passcode.
+        [[LTHPasscodeViewController sharedUser] setDelegate:self];
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+            }
+            [self presentPasscode];
+        } else {
+            [self presentDocumentPicker];
+        }
         
     } else {
         // The user either needs to login or logged in before the current version of the MEGA app, so there is
@@ -92,7 +93,22 @@
         self.loginText.hidden= YES;
         self.openMega.hidden = YES;
         [self configureUI];
+    } else {
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
+            [self presentPasscode];
+        }
+        if (self.privacyView) {
+            [self.privacyView removeFromSuperview];
+            self.privacyView = nil;
+        }
     }
+}
+
+- (void)willResignActive {
+    UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+    [privacyVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    self.privacyView = privacyVC.view;
+    [self.view addSubview:self.privacyView];
 }
 
 - (NSString *)appGroupContainerURL {
@@ -115,6 +131,41 @@
 
 - (IBAction)goToMega:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+}
+
+- (void)presentDocumentPicker {
+    self.navigationItem.title = @"MEGA";
+    if (!self.pickerPresented) {
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
+        
+        UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud"
+                                                                  bundle:[NSBundle bundleForClass:BrowserViewController.class]];
+        MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        
+        browserVC.selectedNodesArray = @[];
+        [browserVC setBrowserAction:BrowserActionDocumentProvider];
+        
+        [self addChildViewController:navigationController];
+        [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.view addSubview:navigationController.view];
+        browserVC.browserViewControllerDelegate = self;
+        self.pickerPresented = YES;
+    }
+}
+
+- (void)presentPasscode {
+    if (!self.passcodePresented) {
+        LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+        [passcodeVC showLockScreenIntoSuperview:self.view.superview
+                                  WithAnimation:YES
+                                     withLogout:YES
+                                 andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+        
+        [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+        [self presentViewController:passcodeVC animated:NO completion:nil];
+        self.passcodePresented = YES;
+    }
 }
 
 #pragma mark BrowserViewControllerDelegate
@@ -176,6 +227,25 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
     [self documentReadyAtPath:transfer.path withBase64Handle:[MEGASdk base64HandleForHandle:transfer.nodeHandle]];
+}
+
+#pragma mark - LTHPasscodeViewControllerDelegate
+
+- (void)passcodeWasEnteredSuccessfully {
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.passcodePresented = NO;
+        [self presentDocumentPicker];
+    }];
+}
+
+- (void)maxNumberOfFailedAttemptsReached {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        [[MEGASdkManager sharedMEGASdk] logout];
+    }
+}
+
+- (void)logoutButtonWasPressed {
+    [[MEGASdkManager sharedMEGASdk] logout];
 }
 
 @end

@@ -308,6 +308,8 @@
 		9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		943229511EDD9D02007DB542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
+		944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
+		944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
 		945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
 		945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
 		9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
@@ -2547,6 +2549,7 @@
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
 				943229451EDD97D2007DB542 /* SF-UI-Display-Regular.otf in Resources */,
+				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
 				943229471EDD97D2007DB542 /* SF-UI-Text-Medium.otf in Resources */,
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
 			);
@@ -2799,6 +2802,7 @@
 				9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
+				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				9432293C1EDD88F5007DB542 /* MWCaptionView.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
@@ -3259,6 +3263,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"SV_APP_EXTENSIONS=1",
+					"LTH_APP_EXTENSIONS=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
