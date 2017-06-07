@@ -1,20 +1,13 @@
-//
-//  FileProvider.m
-//  MEGAPickerFileProvider
-//
-//  Created by Javier Trujillo on 29/5/17.
-//  Copyright © 2017 MEGA. All rights reserved.
-//
 
 #import "FileProvider.h"
-#import <UIKit/UIKit.h>
+
+#import "SAMKeychain.h"
 
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
-#import "SAMKeychain.h"
 
-#define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
+#define kUserAgent @"MEGAiOS"
 
 @interface FileProvider ()
 
@@ -46,7 +39,7 @@
     
     NSURL *placeholderURL = [NSFileProviderExtension placeholderURLForURL:[self.documentStorageURL URLByAppendingPathComponent:fileName]];
     
-    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[url path] error:nil][NSFileSize] longLongValue];
+    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[url path] error:nil][NSFileSize] unsignedIntegerValue];
     NSDictionary* metadata = @{ NSURLFileSizeKey : @(fileSize)};
     [NSFileProviderExtension writePlaceholderAtURL:placeholderURL withMetadata:metadata error:NULL];
     
