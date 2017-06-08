@@ -28,10 +28,6 @@
     self.firstParagraphLabel.text = AMLocalizedString(@"noMasterKey_firstParagraph", @"First paragraph of the screen to park an account");
     self.secondParagraphLabel.text = AMLocalizedString(@"noMasterKey_secondParagraph", @"Second paragraph of the screen to park an account");
     
-    self.parkAccountButton.layer.borderWidth = 2.0f;
-    self.parkAccountButton.layer.cornerRadius = 4.0f;
-    self.parkAccountButton.layer.borderColor = [[UIColor mnz_redFF4C52] CGColor];
-    
     [self.parkAccountButton setTitle:AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)") forState:UIControlStateNormal];
 }
 

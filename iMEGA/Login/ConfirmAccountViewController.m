@@ -3,8 +3,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "MainTabBarController.h"
-
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 
@@ -37,12 +35,6 @@
         [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
     }
     
-    self.confirmAccountButton.layer.cornerRadius = 4.0f;
-    self.confirmAccountButton.layer.masksToBounds = YES;
-    [self.confirmAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
-    
-    self.cancelButton.layer.cornerRadius = 4.0f;
-    self.cancelButton.layer.masksToBounds = YES;
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
@@ -163,6 +155,16 @@
     switch ([request type]) {
             
         case MEGARequestTypeConfirmAccount: {
+            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+                [MEGASdkManager createSharedMEGAChatSdk];
+            }
+            
+            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+            if (chatInit != MEGAChatInitWaitingNewSession) {
+                MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+            }
+            
             if (![[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                 [[MEGASdkManager sharedMEGASdk] loginWithEmail:[self.emailTextField text] password:[self.passwordTextField text] delegate:self];
             }

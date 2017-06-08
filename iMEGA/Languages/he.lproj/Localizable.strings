@@ -12,8 +12,10 @@
 "error"="שגיאה";
 /*  */
 "name"="שם";
+/* Caption of a button to edit the files that are selected */
+"edit"="ערוך";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="נשמר";
 /*  */
 "passcode"="קוד";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="כתובת מייל ו\או סיסמא לא תקינים. אנא נסה שוב";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="ניסית להתחבר יותר מדי פעמים. אנא חכה עד %@ ונסה שוב.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="אנא בדוק את המייל שלך ואשר את חשבונך.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="אנא בדוק את תיבת הדואר שלך על מנת לאשר את חשבונך.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="החשבון שלך נחסם. אנא צור קשר עם support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="אין תיקיות משותפות נכנסות";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="אין תיקיות משותפות יוצאות";
-/* Title of My Contacts section */
-"myContacts"="אנשי קשר";
 /* Title of Contacts requests section */
 "contactRequests"="בקשות חברי קשר";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="ישנן הורדות בהמתנה";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="נסה שוב מאוחר יותר או בטל";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="מיין לפי";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="שמור";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="שם (עולה)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="בחר";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="צלם";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="תיקייה חדשה";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="שם לתיקייה החדשה";
@@ -394,6 +394,8 @@
 "photoPerMonth"="תמונה %lu";
 /* Button title that skips the current action */
 "skipButton"="דלג";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="גבה בצורה אוטומטית את התמונות שלך לאחסון בענן";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="אפשר העלאת תמונות מצלמה";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="הוסף";
 /* Success message shown when a contact has been invited */
 "requestSent"="בקשה נשלחה";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="אין צורך להוסיף את כתובת המייל שלך";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="קיים איש קשר עם כתובת מייל זו";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="[X] הוזמן ויופיע ברשימת אנשי הקשר שלך לאחר שההזמנה תאושר.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="המשתמש הוזמן ויופיע ברשימת אנשי הקשר שלך לאחר שההזמנה תאושר";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="שגיאה בהוספת איש קשר";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="האם אתה בטוח שברצונך לעזוב שיתופים אלו?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="עזבת את התיקייה";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="שתף";
+/* Select all items/elements on the list */
+"selectAll"="בחר הכל";
+/*  */
+"oneContact"="איש קשר";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] אנשי קשר";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="שתף תיקייה";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="מתקדם";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="אפשרויות אבטחה";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="אודות";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="שפה";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="שפת האפליקציה";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="שלח משוב";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="אנא כתוב את חוות דעתך כאן:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="לא הוגדרה כתובת מייל במכשיר זה";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="מדיניות הפרטיות";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="תנאי השימוש";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="כבוי";
@@ -534,8 +552,6 @@
 "options"="אפשרויות";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="העלה סרטים";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="השתמש בתקשורת נתונים";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="רק בעת טעינה";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="ייצוא מפתח השחזור ושמירתו במקום מוגן מאפשר לך לשחזר את החשבון שלך במקרה ושכחת את הסיסמא ללא איבוד מידע.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="למה אני צריך מפתח שחזור?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="המידע שלך קריא רק דרך סדרת פעולות פענוח אשר מתחילה במפתח המסטר שלך (מפתח השחזור), אשר נשמר אצלנו מוצפן עם סיסמתך. כלומר, אם תאבד את סיסמתך, מפתח השחזור שלך לא יוכל להיות מפוענח, ולא תוכל לפענח את המידע שלך.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="כרגע משתמש ב%@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="סגור את חשבונך";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="בטל את חשבונך";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="תאבד את כל המידע המקושר לחשבון זה. האם להמשיך?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="שכחת סיסמא?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="תקבל קישור אשר יכוון אותך לאיפוס הסיסמא. אנא בדוק את המייל שלך.";
+"youCanResetYourPasswordByFollowing"="תוכל לשנות את סיסמתך בקישור שנשלח אליך למייל.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="קישור זה פג תוקף, אנא נסה שנית.";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="מחק מידע מקומי";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="התנתק ומחק מידע מקומי לאחר 10 ניסיונות כושלות של סיסמא";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="תמיכה";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="מרכז שירות";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="קבל תמיכה או קרא מאמרים פופולריים.";
 /* Title to rate the app */
 "rateUsLabel"="דרג אותנו";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="התנתק";
 /* String shown when you are logging out of your account. */
 "loggingOut"="מתנתק";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="מחק תמונה";
+/* button that allows the user the change his avatar */
+"changeAvatar"="החלף תמונת פרופיל";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="הפרופיל שלך עודכן בהצלחה.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="שם פרטי";
+/* Hint text for the last name (Placeholder) */
+"lastName"="שם משפחה";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="שימוש";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="שומש";
 /* Title for MEGA "Available" space. */
 "availableLabel"="זמין";
+/* title of the My Account screen */
+"accountType"="סוג חשבון:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="חינם";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="פנוי מתוך %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="שדרג חשבון";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="תוכל לשדרג מאוחר יותר ב\"חשבון שלי\"";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="אחסון";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,165 @@
 "removeItemFromOffline"="האם אתה בטוח שברצונך למחוק את הפריט הזה מגישה לא מקוונת?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="האם אתה בטוח שברצונך למחוק את הפריטים האלו מגישה לא מקוונת?";
+/* Chat section header */
+"chat"="צ'ט";
+/* Empty Conversations section */
+"noConversations"="אין שיחות";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="צ'ט בוטל";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="אפשר";
+/* Conversations section */
+"conversations"="שיחות";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="הזמן";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="הודעה זו נמחקה";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="אני";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] הוסר מהשיחה על ידי [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] עזב את השיחה.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] הצטרף לשיחה על ידי הזמנה מ-[B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] ניקה את היסטוריית השיחה.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] שונה ל-[B] על ידי [C]";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] שינה את שם הקבוצה ל'[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="הוסף משתתף...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="מצב";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="שיחות וידאו ואודיו";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="השתמש בנתונים סלולאריים";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="הפוך ללא זמין באופן אוטומטי";
+/* */
+"xMinutes"="[X] דקות";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="הצג אותי כלא נמצא לאחר [X] דקות בלי שימוש";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="סטאטוס קבוע";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="שמור על הסטאטוס שלי קבוע אפילו אם אין לי מכשירים מחוברים.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(נערך)";
+/*  */
+"online"="מחובר";
+/*  */
+"away"="מרוחק";
+/*  */
+"busy"="עסוק";
+/* title of the contact properties screen */
+"contactInfo"="מידע הודות איש קשר";
+/*  */
+"notifications"="הודעות";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="שלח הודעה";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="וודא פרטים אישיים";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="מחק היסטוריית צ'אט";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="האם אתה בטוח שברצונך למחוק את כל ההיסטוריה של השיחה הזאת?";
+/* 'Next' button in a dialog */
+"continue"="המשך";
+/* Button title that allows the user to close a chat. */
+"closeChat"="סגור שיחה";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="תיקיות משותפות";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="פרטי איש קשר";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="זה נעשה בצורה הטובה ביותר פנים מול פנים. אם יש לך ערוץ אחר שכבר מאושר כמו OTR או PGP, תוכל להשתמש בו.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="המידע שלך";
+/* Button to reset the password */
+"reset"="אפס";
+/* Button title */
+"approve"="אשר";
+/* start a chat/conversation */
+"startConversation"="התחל שיחה";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="קבוצה";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="מידע על הקבוצה";
+/* Label title for a group chat */
+"groupChat"="שיחה בקבוצה";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="שנה שם קבוצה";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="שנה תמונת קבוצה";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="עזוב";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="עוד";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="השתק";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="מידע";
+/* A button label. The button allows the user to close the conversation. */
+"close"="סגור";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="לא תוכל עוד לגשת לשיחה זו";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="צא מהשיחה";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="עזוב קבוצה";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="משתתפים";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="ממתן";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="רגיל";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="הסר משתתף";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="שיחה עם %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA מאבטחת את השיחה שלך עם הצפנת קצה-אל-קצה (ניהול בידי המשתמש) ובכך מאפשר אבטחה מקסימלית. ";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]סודיות.[/S] רק היוצר ואלו שיש להם הרשאות יכולים לפענח ולקרוא את התוכן.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]אמינות.[/S] המערכת מוודא כי המידע שמועבר הוא מהשולח שרשום וכן התוכן לא השתנה במהלך המעבר.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="השיחה לא נמצאה";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ מקליד...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="כתוב הודעה...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="אין היסטוריית שיחה";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="נסה שנית";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="מחק הודעה";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="שלח איש קשר";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="הוסף מהכונן בענן שלי";
+/* */
+"done"="הסתיים";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="שלח קבצים";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";

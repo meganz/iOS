@@ -1,46 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="SF-UI-Text-Light.otf">
-            <string>SFUIText-Light</string>
-        </mutableArray>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="tbQ-LB-Do7" customClass="UnavailableLinkView">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
-                    <rect key="frame" x="200" y="215" width="200" height="170"/>
+                    <rect key="frame" x="87.5" y="248.5" width="200" height="170"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="7hi-wX-zCa"/>
                         <constraint firstAttribute="height" constant="170" id="a2b-EF-YS0"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                    <rect key="frame" x="277" y="425" width="46" height="22"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
-                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="164.5" y="458.5" width="46" height="22"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                    <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIz-Fn-kCu">
-                    <rect key="frame" x="80" y="487" width="440.5" height="76.5"/>
+                    <rect key="frame" x="30.5" y="520.5" width="314.5" height="134"/>
                     <string key="text">This could be due to the following reasons:
 - The file has been removed because of a ToS/AUP violation.
 - Invalid URL – the link you are trying to access does not exist.
 - The file has been deleted by the user.</string>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
+                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="GIz-Fn-kCu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="30" id="0Xm-v2-5Iq"/>
                 <constraint firstItem="GIz-Fn-kCu" firstAttribute="top" secondItem="Bur-Bl-fx0" secondAttribute="bottom" constant="40" id="3Dg-w6-ZBD"/>

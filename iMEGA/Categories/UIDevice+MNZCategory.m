@@ -90,14 +90,6 @@ static NSString *deviceName;
     return machine;
 }
 
-- (NSString *)deviceName {
-    if (deviceName == nil) {
-        NSString *deviceNameTemp = [[UIDevice devicesDictionary] objectForKey:[[UIDevice currentDevice] hardwareType]];
-        deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
-    }
-    return deviceName;
-}
-
 - (NSString *)unknownDevice {
     NSString *unknownDeviceName;
     if ([self iPhoneDevice]) {
@@ -175,6 +167,22 @@ static NSString *deviceName;
     }
     
     return NO;
+}
+
+- (NSString *)deviceName {
+    if (deviceName == nil) {
+        NSString *deviceNameTemp = [[UIDevice devicesDictionary] objectForKey:[[UIDevice currentDevice] hardwareType]];
+        deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
+    }
+    return deviceName;
+}
+
+- (BOOL)systemVersionLessThanVersion:(NSString *)version {
+    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] == NSOrderedAscending;
+}
+
+- (BOOL)systemVersionGreaterThanOrEqualVersion:(NSString *)version {
+    return [[[UIDevice currentDevice] systemVersion] compare:version options:NSNumericSearch] != NSOrderedAscending;
 }
 
 @end

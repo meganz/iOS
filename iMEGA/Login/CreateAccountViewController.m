@@ -45,11 +45,9 @@
     
     [self.termsOfServiceButton setTitle:AMLocalizedString(@"termsOfServiceButton", @"I agree with the MEGA Terms of Service") forState:UIControlStateNormal];
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        [self.termsOfServiceButton.titleLabel setFont:[UIFont fontWithName:kFont size:11.0]];
+        self.termsOfServiceButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:11.0f];
     }
     
-    self.createAccountButton.layer.cornerRadius = 4.0f;
-    self.createAccountButton.layer.masksToBounds = YES;
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
@@ -199,7 +197,7 @@
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4C52]];
+    shoulBeCreateAccountButtonGray ? [self.createAccountButton setBackgroundColor:[UIColor mnz_grayCCCCCC]] : [self.createAccountButton setBackgroundColor:[UIColor mnz_redFF4D52]];
     
     return YES;
 }
@@ -238,26 +236,35 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    [SVProgressHUD dismiss];
+    
     if ([error type]) {
+        NSString *alertMessage;
         switch ([error type]) {
                 
-            case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"emailAlreadyRegistered", nil)];
+            case MEGAErrorTypeApiEExist:
+                alertMessage = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 [self.emailTextField becomeFirstResponder];
-                
                 [self.createAccountButton setEnabled:YES];
                 break;
-            }
                 
             default:
+                alertMessage = error.name;
                 break;
         }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+        
         return;
     }
     
     switch ([request type]) {
         case MEGARequestTypeCreateAccount: {
-            [SVProgressHUD dismiss];
             
             [self.nameTextField setEnabled:NO];
             [self.emailTextField setEnabled:NO];

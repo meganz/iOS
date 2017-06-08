@@ -12,8 +12,10 @@
 "error"="錯誤";
 /*  */
 "name"="名稱";
+/* Caption of a button to edit the files that are selected */
+"edit"="編輯";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="已儲存";
 /*  */
 "passcode"="密碼";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="您於短時間內嘗試登入的次數過多。請等待至 %@ 後再重試。";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="請檢查您的電子郵件，並點擊連結以確認啟用您的帳戶。";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="請檢查您的電子信箱，並點擊信中的連結以確認啟用您的帳戶。";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="您的帳號已被鎖定。請連繫support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="沒有傳出的共享資料夾";
-/* Title of My Contacts section */
-"myContacts"="聯絡人";
 /* Title of Contacts requests section */
 "contactRequests"="聯絡人邀請";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="該文件有待處理的下載";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="稍後再試或取消";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="排序";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="儲存";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="名字（升序）";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="選取";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍攝";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增資料夾";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="新資料夾的名字";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu 張照片";
 /* Button title that skips the current action */
 "skipButton"="跳過";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="自動將相片備份到雲端硬碟";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="啟用相機上傳";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="新增";
 /* Success message shown when a contact has been invited */
 "requestSent"="已寄出聯絡人邀請";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="您無須增加個人的電子郵件";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="您已有一個使用該電子郵件的連絡人";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="用戶[X]已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="該用戶已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="新增聯絡人錯誤";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="您確定要保留這些分享嗎？";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="已離開該資料夾";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="共享";
+/* Select all items/elements on the list */
+"selectAll"="全選";
+/*  */
+"oneContact"="一位聯絡人";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X]位聯絡人";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="分享資料夾";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="進階";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="安全選項";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="關於";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="語言";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="應用程式語言選項";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="寄發反饋";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="請於此處寫下您的意見";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您在該設備中尚未登錄";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隱私政策";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
@@ -534,8 +552,6 @@
 "options"="選擇";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上傳影片";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="使用蜂窩連接";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="匯出還原金鑰並將其保存於安全的位置。使您因遺失密碼而需還原您的帳戶時，不會有資料遺失。";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="為什麼我會需要還原金鑰？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="您的資料只有在經過一連串的解密操作後才能讀取，此操作屬於嚴謹加密方式，需使用您的主加密密鑰（還原金鑰）才能解密，我們已使用您的密碼加密儲存該金鑰。也就是說，如果您遺失了您的密碼，還原金鑰將無法再被解密匯出，您也無法再解密您的資料。";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="目前已使用 %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="刪除您的帳戶";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="註銷帳戶";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料，確定要繼續嗎？";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="忘記密碼了？";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="您將收到一個復原連結，讓您可以重設您的密碼。請至您的電子信箱收信以繼續進行。";
+"youCanResetYourPasswordByFollowing"="您可以重新設定密碼，請依稍後會寄至您的電子信箱的還原連結操作。";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="這個復原連結已失效，請再試一次。";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="刪除本地數據";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="於10次密碼輸入錯誤後，自動登出並刪除本機資料";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="支援";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="協助中心";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="獲得幫助或閱讀熱門主題";
 /* Title to rate the app */
 "rateUsLabel"="請幫我們評分！";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="移除頭像";
+/* button that allows the user the change his avatar */
+"changeAvatar"="變更頭像";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人檔案";
+/* Hint text for the first name (Placeholder) */
+"firstName"="名";
+/* Hint text for the last name (Placeholder) */
+"lastName"="姓";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="用量";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="已用";
 /* Title for MEGA "Available" space. */
 "availableLabel"="可使用的";
+/* title of the My Account screen */
+"accountType"="帳號類型:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="免費";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="您稍後可在\"我的帳戶\"中進行升級";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="儲存空間";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,165 @@
 "removeItemFromOffline"="您確定要從離線部份中刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="您確定要從離線模式中刪除這些項目？";
+/* Chat section header */
+"chat"="交談";
+/* Empty Conversations section */
+"noConversations"="無對話(已清空)";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="聊天功能已停用";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="啟用";
+/* Conversations section */
+"conversations"="通話";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="邀請";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="已刪除此訊息";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="我";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[B]已將[A]從此群組中踢除。";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A]已離開此群組。";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A]接受[B]的邀請，已加入此群聊。";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A]清除了聊天記錄。";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A]的權限已被[C]變更為[B]。";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A]將群組名稱更改為'[B]'。";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="增加與會者...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="狀態";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="視訊與通話";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="使用行動數據";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="自動顯示為離開";
+/* */
+"xMinutes"="[X] 分鐘";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="閒置[X]分鐘後，將我顯示為離開";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="狀態持續設置";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="即使我沒有連上，也一直維持在我所選擇的這個狀態。";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(已編輯)";
+/*  */
+"online"="在線";
+/*  */
+"away"="離開";
+/*  */
+"busy"="忙碌";
+/* title of the contact properties screen */
+"contactInfo"="聯絡資訊";
+/*  */
+"notifications"="通知訊息";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="發送訊息";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="確認憑證";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="清空對話記錄";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
+/* 'Next' button in a dialog */
+"continue"="繼續";
+/* Button title that allows the user to close a chat. */
+"closeChat"="關閉對話";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="已共享的資料夾";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="聯絡人憑證";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="這最好由實際面對面來完成。如您有其他已驗證管道，如已驗證的OTR或PGP，也可以使採用。";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="您的憑證";
+/* Button to reset the password */
+"reset"="重置密碼";
+/* Button title */
+"approve"="允許";
+/* start a chat/conversation */
+"startConversation"="建立對話";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="群組";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="群組資訊";
+/* Label title for a group chat */
+"groupChat"="群組聊天";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="重新命名此群組";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="變更群組頭像";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="離開";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="更多";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="靜音";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="資訊";
+/* A button label. The button allows the user to close the conversation. */
+"close"="關閉";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="您將無法再進入存取此對話";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="離開對話";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="離開群組";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="成員";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="共同管理";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="標準模式";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="移除此位成員";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="與%@的對話";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA提供安全加密保障，完全保護您的聊天隱私（保障使用者終端到終端，用戶控制之隱私）：";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]保密性。[/S] 只有作者和預設收件人能夠解譯和閱讀交談內容。";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]真實性。[/S] 此系統能確保接收到的資料是由您看到的發送者傳送，且其內容在傳輸過程中不會被修改。";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="未找到此對話";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@正在打字...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="書寫訊息...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="沒有對話歷史記錄";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="重試";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="刪除訊息";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="傳送聯絡資訊";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="從我的雲端硬碟選擇";
+/* */
+"done"="完成";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="寄送檔案";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";

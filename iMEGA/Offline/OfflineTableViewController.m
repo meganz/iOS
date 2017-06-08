@@ -380,9 +380,11 @@ static NSString *kisDirectory = @"kisDirectory";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.offlineSortedItems.count == 0) {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.sortByBarButtonItem.enabled = NO;
         [self.editBarButtonItem setEnabled:NO];
     } else {
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        self.sortByBarButtonItem.enabled = YES;
         [self.editBarButtonItem setEnabled:YES];
     }
     return self.offlineSortedItems.count;
@@ -448,9 +450,6 @@ static NSString *kisDirectory = @"kisDirectory";
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            [cell.thumbnailImageView.layer setCornerRadius:4];
-            [cell.thumbnailImageView.layer setMasksToBounds:YES];
-            
             NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
             thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
@@ -715,38 +714,12 @@ static NSString *kisDirectory = @"kisDirectory";
     if (self.selectedItems.count > 5) {
         activityViewController.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll];
     }
-    
-    if ([activityViewController respondsToSelector:@selector(popoverPresentationController)]) {
-        activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
-    }
-    
-    if ([activityViewController respondsToSelector:@selector(setCompletionWithItemsHandler:)]) {
-        [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
-            [self setEditing:NO animated:YES];
-        }];
-    } else {
-        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-            [self setEditing:NO animated:YES];
-        }];
-    }
+    activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
+    [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
+        [self setEditing:NO animated:YES];
+    }];
     
     [self presentViewController:activityViewController animated:YES completion:nil];
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedDescending)) {
-        [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed){
-            
-            if (([activityType isEqualToString:@"OpenInActivity"]) && completed) {
-                _documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[self.selectedItems objectAtIndex:0]];
-                [_documentInteractionController setDelegate:self];
-            }
-            
-            BOOL canOpenIn = [_documentInteractionController presentOpenInMenuFromBarButtonItem:sender animated:YES];
-            
-            if (canOpenIn) {
-                [_documentInteractionController presentPreviewAnimated:YES];
-            }
-        }];
-    }
 }
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {
@@ -798,7 +771,7 @@ static NSString *kisDirectory = @"kisDirectory";
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }

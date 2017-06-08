@@ -1,7 +1,6 @@
 #import "CameraUploads.h"
 
 #import <Photos/Photos.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "MEGAAssetOperation.h"
 
 #import "MEGASdkManager.h"
@@ -16,8 +15,6 @@
     MEGANode *cameraUploadsNode;
     int64_t cameraUploadHandle;
 }
-
-@property (nonatomic, strong) ALAssetsLibrary *library;
 
 @end
 
@@ -37,8 +34,6 @@ static CameraUploads *instance = nil;
 }
 
 - (void)prepare {
-    self.library = [[ALAssetsLibrary alloc] init];
-    
     self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
     if (!self.lastUploadPhotoDate) {
         self.lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
@@ -59,9 +54,7 @@ static CameraUploads *instance = nil;
     self.isOnlyWhenChargingEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsOnlyWhenChargingEnabled] boolValue];
     
     self.assetsOperationQueue = [[NSOperationQueue alloc] init];
-    if ([self.assetsOperationQueue respondsToSelector:@selector(qualityOfService)]) {
-        self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-    }    
+    self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
 }
 
@@ -69,9 +62,7 @@ static CameraUploads *instance = nil;
     [self.assetsOperationQueue cancelAllOperations];
     
     self.assetsOperationQueue = [[NSOperationQueue alloc] init];
-    if ([self.assetsOperationQueue respondsToSelector:@selector(qualityOfService)]) {
-        self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-    }
+    self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
     self.assetsOperationQueue.maxConcurrentOperationCount = 1;
     
     [self setBadgeValue:nil];
@@ -164,79 +155,32 @@ static CameraUploads *instance = nil;
         [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        PHFetchResult *assetsFetchResult = nil;
-        
-        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-        fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-        
-        if (self.isUploadVideosEnabled) {
-            assetsFetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
-        } else {
-            assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-        }
-        
-        MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
-        
-        [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
-            if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
-                [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
-                [_assetsOperationQueue addOperation:uploadAssetsOperation];
-            }            
-        }];
-        
-        MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
-        
-        [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
+    PHFetchResult *assetsFetchResult = nil;
+    
+    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+    fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    if (self.isUploadVideosEnabled) {
+        assetsFetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
     } else {
-        __block NSInteger totalAssets = 0;
-        
-        void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if(result != nil) {
-                NSURL *url = [[result defaultRepresentation]url];
-                [self.library assetForURL:url
-                              resultBlock:^(ALAsset *asset) {
-                                  NSDate *assetCreationTime = [asset valueForProperty:ALAssetPropertyDate];
-                                  
-                                  if (asset != nil && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo] && self.isUploadVideosEnabled && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
-                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
-                                      [_assetsOperationQueue addOperation:uploadAssetsOperation];
-                                  } else if (asset != nil  && [[asset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto] && ([assetCreationTime timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
-                                      MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithALAsset:asset cameraUploadNode:cameraUploadsNode];
-                                      [_assetsOperationQueue addOperation:uploadAssetsOperation];
-                                  }
-                              }
-                             failureBlock:^(NSError *error) {
-                                 MEGALogError(@"Asset for url failed with error: %@", error);
-                             } ];
-                
-            }
-        };
-        
-        NSMutableArray *assetGroups = [[NSMutableArray alloc] init];
-        
-        void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop) {
-            if(group != nil) {
-                if ([[group valueForProperty:@"ALAssetsGroupPropertyType"] intValue] == ALAssetsGroupSavedPhotos) {
-                    [group enumerateAssetsUsingBlock:assetEnumerator];
-                    [assetGroups addObject:group];
-                    totalAssets = [group numberOfAssets];
-                }
-            }
-        };
-        
-        [self.library enumerateGroupsWithTypes:ALAssetsGroupAll
-                                    usingBlock:assetGroupEnumerator
-                                  failureBlock:^(NSError *error) {
-                                      MEGALogInfo(@"Disable Camera Uploads");
-                                      [self setIsCameraUploadsEnabled:NO];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDeniedPhotoAccess" object:nil];
-                                      MEGALogError(@"Enumerate groups with types failed with error: %@", error);
-                                  }];
+        assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     }
+    
+    MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
+    
+    [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
+        if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
+            MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
+            [_assetsOperationQueue addOperation:uploadAssetsOperation];
+        } else if (asset.mediaType == PHAssetMediaTypeImage && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadPhotoDate timeIntervalSince1970])) {
+            MEGAAssetOperation *uploadAssetsOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:cameraUploadsNode automatically:YES];
+            [_assetsOperationQueue addOperation:uploadAssetsOperation];
+        }
+    }];
+    
+    MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
+    
+    [self setBadgeValue:[NSString stringWithFormat:@"%ld", [self.assetsOperationQueue operationCount]]];
 }
 
 #pragma mark - Utils

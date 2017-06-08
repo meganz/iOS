@@ -5,6 +5,7 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
@@ -131,8 +132,6 @@
             if (!thumbnailExists) {
                 [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
             } else {
-                [_thumbnailImageView.layer setCornerRadius:4];
-                [_thumbnailImageView.layer setMasksToBounds:YES];
                 [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
             }
         } else {
@@ -583,16 +582,7 @@
     if ((self.displayMode == DisplayModeSharedItem) && (indexPath.section == 0)) {
         if ([self.node isInShare]) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.email];
-            NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
-            BOOL avatarExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-            if (avatarExists) {
-                [cell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:avatarFilePath]];
-                cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width/2;
-                cell.thumbnailImageView.layer.masksToBounds = YES;
-            } else {
-                [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath delegate:self];
-                [cell.thumbnailImageView setImage:[UIImage imageForName:[user email].uppercaseString size:CGSizeMake(30, 30)]];
-            }
+            [cell.thumbnailImageView mnz_setImageForUserHandle:user.handle];
             
             NSString *owner = [NSString stringWithFormat:@" (%@)", AMLocalizedString(@"owner", nil)];
             NSMutableAttributedString *ownerMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:owner];
@@ -803,7 +793,7 @@
     if ((self.displayMode == DisplayModeSharedItem) && (accessType == MEGAShareTypeAccessOwner)) {
         if (indexPath.section == 0) {
             ContactsViewController *contactsVC =  [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-            [contactsVC setContactsMode:ContactsFolderSharedWith];
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
             [contactsVC setNode:self.node];
             [self.navigationController pushViewController:contactsVC animated:YES];
         } else {

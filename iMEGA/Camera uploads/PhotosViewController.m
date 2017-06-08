@@ -1,13 +1,10 @@
 #import "PhotosViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "MEGAAVViewController.h"
-#import "MEGACollectionViewFlowLayout.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
@@ -245,18 +242,7 @@
 - (void)enableCameraUploadsAndShowItsSettings {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
-    
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
-    
-    if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized && [ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusNotDetermined) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"attention", @"Attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Please give MEGA app permission to access your photo library in your settings app!") delegate:self cancelButtonTitle:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"cancel", nil) : AMLocalizedString(@"ok", nil)) otherButtonTitles:(&UIApplicationOpenSettingsURLString ? AMLocalizedString(@"ok", nil) : nil), nil];
-        [alert show];
-    } else {
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        [self reloadUI];
-    }
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -386,7 +372,7 @@
     if ([self.photosByMonthYearArray count] == 0) {
         [self setNavigationBarButtonItemsEnabled:NO];
     } else {
-        [self setNavigationBarButtonItemsEnabled:YES];
+        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     }
     
     return [self.photosByMonthYearArray count];
@@ -600,7 +586,7 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray999999]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -626,11 +612,11 @@
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            text = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+            text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kFont size:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -651,7 +637,7 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:[self.searchDisplayController isActive]];
+    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {

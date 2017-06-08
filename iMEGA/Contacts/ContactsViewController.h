@@ -1,12 +1,13 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, ContactsMode) {
-    Contacts = 0,
-    ContactsShareFolderWith,
-    ContactsShareFolderWithEmail,
-    ContactsShareFoldersWith,
-    ContactsShareFoldersWithEmail,
-    ContactsFolderSharedWith
+    ContactsModeDefault = 0,
+    ContactsModeShareFoldersWith,
+    ContactsModeShareFoldersWithEmail,
+    ContactsModeFolderSharedWith,
+    ContactsModeChatStartConversation,
+    ContactsModeChatAddParticipant,
+    ContactsModeChatAttachParticipant
 };
 
 @class ShareFolderActivity;
@@ -15,11 +16,13 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic) ContactsMode contactsMode;
 
-@property (nonatomic, strong) NSMutableDictionary *namesMutableDictionary;
-
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
 
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
+
+@property (nonatomic, copy) void(^userSelected)(NSArray *);
+
+@property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 
 @end
