@@ -12,11 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *choosePlanLabel;
 @property (weak, nonatomic) IBOutlet UILabel *twoMonthsFreeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *autorenewableDescriptionLabel;
 
-@property (strong, nonatomic) IBOutlet UIView *skipView;
-@property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *underSkipButtonLabel;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *skipBarButtonItem;
 @end
 
 @implementation UpgradeTableViewController
@@ -34,11 +32,11 @@
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     
+    _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
+    
     if (self.presentingViewController) {
-        [self.skipButton setTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
-        self.underSkipButtonLabel.text = AMLocalizedString(@"youCanUpgradeLaterInMyAccount", @"Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'.");
-        self.skipView.frame = CGRectMake(self.tableView.frame.origin.x, (self.tableView.frame.size.height - self.skipView.frame.size.height), CGRectGetWidth(self.tableView.frame), self.skipView.frame.size.height);
-        [self.navigationController.view addSubview:self.skipView];
+        [self.navigationItem setRightBarButtonItem:self.skipBarButtonItem];
+        self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     }
 }
 
@@ -46,18 +44,10 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        self.skipView.frame = CGRectMake(self.tableView.frame.origin.x, (self.tableView.frame.size.height - self.skipView.frame.size.height), CGRectGetWidth(self.tableView.frame), self.skipView.frame.size.height);
-    } completion:nil];
-}
-
 #pragma mark - IBActions
-
-- (IBAction)skipTouchUpInside:(UIButton *)sender {
+- (IBAction)skipTouchUpInside:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 #pragma mark - UITableViewDataSource
