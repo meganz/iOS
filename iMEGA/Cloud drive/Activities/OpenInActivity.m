@@ -11,8 +11,10 @@
 @implementation OpenInActivity
 
 - (instancetype)initOnBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    _shareBarButtonItem = barButtonItem;
-    
+    self = [super init];
+    if (self) {
+        _shareBarButtonItem = barButtonItem;
+    }
     return self;
 }
 
