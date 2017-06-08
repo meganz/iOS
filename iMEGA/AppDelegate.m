@@ -1170,7 +1170,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
-- (void)setDefaultLanguage {
+- (void)setDefaultLanguage {    
+    [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
