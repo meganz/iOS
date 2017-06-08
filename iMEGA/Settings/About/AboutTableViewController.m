@@ -4,6 +4,7 @@
 #import "SVWebViewController.h"
 
 #import "Helper.h"
+#import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 
@@ -12,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sdkVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sdkVersionSHALabel;
 @property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
@@ -34,6 +36,8 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
     
     [self.sdkVersionLabel setText:[NSString stringWithFormat:@"MEGA SDK %@", AMLocalizedString(@"version", nil)]];
+    self.sdkVersionSHALabel.text = @"e8eeea7";
+    
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
 
@@ -76,7 +80,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        (alertView.tag == 0) ? [Helper enableLog:NO] : [Helper enableLog:YES];
+        (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
     }
 }
 

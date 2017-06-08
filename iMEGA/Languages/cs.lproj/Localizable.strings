@@ -12,8 +12,10 @@
 "error"="Chyba";
 /*  */
 "name"="Název";
+/* Caption of a button to edit the files that are selected */
+"edit"="Upravit";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Uloženo";
 /*  */
 "passcode"="Heslo";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="Neplatný e-mail a/nebo heslo. Zkuste to znovu";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Pokusili jste se přihlásit příliš mnohokrát. Čekejte do %@ a zkuste to znovu.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Zkontrolujte svůj e-mail a klikněte na odkaz pro potvrzení vašeho účtu.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Zkontrolujte svůj e-mail a následujte odkaz pro potvrzení vašeho účtu.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Váš účet byl zablokován. Obraťte se na support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Žádné příchozí sdílené složky";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Žádné odchozí sdílené složky";
-/* Title of My Contacts section */
-"myContacts"="Kontakty";
 /* Title of Contacts requests section */
 "contactRequests"="Požadavky kontaktů";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Jsou zde čekající stahování";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Zkuste to později nebo je zrušte";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="SEŘADIT PODLE";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Uložit";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="název (vzestupně)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Zvolte";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Zachytit";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nová složka";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Název nové složky";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu fotka";
 /* Button title that skips the current action */
 "skipButton"="Přeskočit";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatická záloha vašich fotek do Cloudové jednotky";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Povolit Nahrávání z fotoaparátu";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Přidat";
 /* Success message shown when a contact has been invited */
 "requestSent"="Požadavek odeslán";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Není třeba přidávat vaši e-mailovou adresu";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Již máte kontakt s tímto e-mailem";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Uživatel [X] byl pozván a objeví se ve vašem seznamu kontaktů, jakmile to přijme.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Uživatel byl pozván a objeví se ve vašem seznamu kontaktů, jakmile to přijme.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Přidání kontaktu selhalo";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Opravdu chcete opustit tato sdílení?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Složka opuštěna";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Sdílet";
+/* Select all items/elements on the list */
+"selectAll"="Vybrat vše";
+/*  */
+"oneContact"="1 kontakt";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] kontaktů";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Sdílet složku";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Rozšířené";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Možnosti zabezpečení";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="O nás";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Jazyk";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Jazyk aplikace";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Pošlete zpětnou vazbu";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Sem napište svou zpětnou vazbu:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Ve vašem zařízení není nastaven žádný e-mailový účet";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Zásady ochrany osobních údajů";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Podmínky užívání";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Vypnuto";
@@ -534,8 +552,6 @@
 "options"="Možnosti";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Nahrát videa";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Použít mobilní připojení";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Pouze při nabíjení";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Export obnovovacího klíče a jeho ponechání na bezpečném místě vám umožní obnovení vašeho účtu v případě ztraceného hesla bez ztráty dat.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Proč potřebuji Obnovovací klíč?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Vaše data jsou čitelná pouze prostřednictvím řetězce dešifrovacích operací, který začíná vaším hlavním šifrovacím klíčem(Obnovovací klíč), který ukládáme šifrovaný vaším heslem. To znamená, že pokud ztratíte své heslo, váš Obnovovací klíč nemůže již být dešifrován a vy nemůžete dešifrovat svá data.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Aktuálně využívá %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Zavřete svůj účet";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Zrušit můj účet";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Přijdete o všechna data přidružená k tomuto účtu. Opravdu chcete pokračovat?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Zapomenuté heslo?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Obdržíte odkaz pro obnovení, který vám umožní obnovit vaše heslo. Zkontrolujte svůj e-mail pro pokračování.";
+"youCanResetYourPasswordByFollowing"="Své heslo můžete obnovit následováním odkazu pro obnovení, který bude odeslán na váš e-mail.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Tento odkaz pro obnovení vypršel, zkuste to znovu.";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Smazat místní data";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Odhlásit a vymazat místní data po 10 neúspěšných pokusech o zadání hesla";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Podpora";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum nápovědy";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Získejte podporu nebo čtěte oblíbená témata.";
 /* Title to rate the app */
 "rateUsLabel"="Ohodnoťte nás";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Odhlásit se";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Odhlašování";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Odebrat obrázek";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Změnit profilový obrázek";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Úspěšně jste změnili svůj profil.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Jméno";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Příjmení";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Využití";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Využito";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Dostupné";
+/* title of the My Account screen */
+"accountType"="Typ účtu:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="ZDARMA";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="dostupné z %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradujte účet";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="Můžete upgradovat později v Můj účet";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Úložiště";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,165 @@
 "removeItemFromOffline"="Opravdu chcete odsranit tuto položku z offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Opravdu chcete odsranit tyto položky z offline?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Žádné konverzace";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat je zakázán";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Povolit";
+/* Conversations section */
+"conversations"="Konverzace";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Pozvat";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Tato zpráva byla odstraněna";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Já";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="Uživatel [A] byl odebrán ze skupinového chatu uživatelem [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="Uživatel [A] opustil skupinový chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="Uživatel [A] se připojil ke skupinovému chatu pozvánkou od uživatele [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="Uživatel [A] vyčistil historii chatu.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="Uživateli [A] bylo změněnenovoprávnění na [B] uživatelem [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="Uživatel [A] změnil název skupinového chatu na '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Přidat účastníka...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Stav";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Audiovizuální hovory";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Používat mobilní data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Automaticky pryč";
+/* */
+"xMinutes"="[X] minut";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Zobrazit mě jako Pryč po [X] minutách neaktivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Platnost stavu";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Udržovat můj zvolený zobrazovaný stav, i když nemám žádná připojená zařízení.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(upraveno)";
+/*  */
+"online"="Online";
+/*  */
+"away"="Pryč";
+/*  */
+"busy"="Zaneprázdněn";
+/* title of the contact properties screen */
+"contactInfo"="Informace o kontaktu";
+/*  */
+"notifications"="Oznámení";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Odeslat zprávu";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Ověřit přihlašovací údaje";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Vymazat historii chatu";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Opravdu chcete odstranit kompletní historii zpráv z této konverzace?";
+/* 'Next' button in a dialog */
+"continue"="Pokračovat";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Zavřít chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Sdílené složky";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Přihlašovací údaje kontaktu";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="To se v reálném životě nejlépe dělá setkáním tváří v tvář. Pokud máte jiný, již ověřený kanál, jako je ověřené OTR nebo PGP (zabezpečení zasílání zpráv), můžete ho také použít.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Vaše přihlašovací údaje";
+/* Button to reset the password */
+"reset"="Obnovit";
+/* Button title */
+"approve"="Schválit";
+/* start a chat/conversation */
+"startConversation"="Zahájit konverzaci";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Skupinový chat";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Informace o skupinovém chatu";
+/* Label title for a group chat */
+"groupChat"="Skupinový chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Přejmenovat skupinu";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Změnit ptofilový obrázek skupinového chatu";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Opustit";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Více";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Ztlumit";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Informace";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Zavřít";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Nemáte již přístup k této konverzaci";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Opustit Chat";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Opustit skupinový chat";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Účastníci";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderátor";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standardní";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Odebrat účastníka";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Konverzace s uživatelem %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA chrání váš chat koncovým šifrováním (řízeným uživatelem) poskytujícím nezbytnou záruku bezpečnosti.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Důvěrnost.[/S] Pouze autor a určení příjemci jsou schopni dešifrovat a číst obsah.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Pravost.[/S] Systém zajišťuje, že přijatá data jsou od zobrazeného odesílatele a že s jejich obsah nebylo během přenosu manipulováno.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat nenalezen";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ píše...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Napsat zprávu...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Žádná historie konverzací";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Opakovat";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Odstranit zprávu";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Odeslat kontakt";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Přidat z mé Cloudové jednotky";
+/* */
+"done"="hotovo";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Odeslat soubory";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";

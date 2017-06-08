@@ -12,6 +12,8 @@
 "error"="Virhe";
 /*  */
 "name"="Nimi";
+/* Caption of a button to edit the files that are selected */
+"edit"="Muokkaa";
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Saved";
 /*  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Ei saapuvia jaettuja kansioita";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Ei lähteviä jaettuja kansioita";
-/* Title of My Contacts section */
-"myContacts"="Kontaktit";
 /* Title of Contacts requests section */
 "contactRequests"="Kontaktipyynnöt";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Avoimia tiedostolatauksia";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Yritä myöhemmin uudelleen tai keskeytä";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="LAJITTELE";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Tallenna";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="nimi (nouseva)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Valitse";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Kaappaa";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Uusi kansio";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Uuden kansion nimi";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu valokuva(a)";
 /* Button title that skips the current action */
 "skipButton"="Ohita";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Ota kameralähetykset käyttöön";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Lisää";
 /* Success message shown when a contact has been invited */
 "requestSent"="Pyyntö lähetetty";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Omaa sähköpostiosoitetta ei tarvitse lisätä";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Sähköposti on jo yhdistetty kontaktiin";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Käyttäjä [X] on kutsuttu ja tulee näkymään kontaktilistassa hyväksymisen jälkeen.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Käyttäjät on kutsuttu ja he näkyvät kontakteissa hyväksymisen jälkeen.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Kontaktin lisääminen epäonnistui";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Haluatko varmasti jättää nämä jaot?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Poistuttu kansiosta";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Jaa";
+/* Select all items/elements on the list */
+"selectAll"="Valitse kaikki";
+/*  */
+"oneContact"="1 kontakti";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] kontaktia";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Jaa kansio";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Edistynyt";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Turvavaihtoehdot";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Tietoa";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Kieli";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Sovelluksen kieli";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Lähetä palautetta";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Ole hyvä ja kirjoita palautteesi tähän:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Laitteellesi ei ole asetettu sähköpostiosoitetta";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Tietosuojakäytäntö";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Käyttöehdot";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Ei";
@@ -534,8 +552,6 @@
 "options"="Valikko";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Lähetä videoita";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Käytä mobiilidataa";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Vain latautuessa";
 /* Footer text to explain the Camera Uploads functionality */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Tilaa käytettynä %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Poista käyttäjätilisi";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Sulje käyttäjätilisi";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="You will lose all data associated with this account. Are you sure you want to proceed?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -597,7 +613,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Sulkulinkki on vanhentunut.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to close your account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to Cancel your account.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Sulje käyttäjätili";
 /* Title for the action that allows to remove a file or folder */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Pyyhi paikalliset tiedot";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Kirjaa ulos ja poista paikalliset tiedot 10 epäonnistuneen pääsykoodiyrityksen jälkeen";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Tuki";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Tukikeskus";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Hanki tukea tai lue suosittuja aiheita.";
 /* Title to rate the app */
 "rateUsLabel"="Arvostele meidät";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Kirjaudu ulos";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Kirjaudutaan ulos";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Poista kuva";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Vaihda profiilikuva";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Olet onnistuneesti muuttanut profiiliasi.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Etunimi";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Sukunimi";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Käyttö";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Käytetty";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Vapaa";
+/* title of the My Account screen */
+"accountType"="Tilityyppi:";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="ILMAINEN";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="saatavilla %@ sta";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Päivitä tili";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Levytilaa";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,165 @@
 "removeItemFromOffline"="Haluatko varmasti poistaa kohteen offline-tilasta?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Haluatko varmasti poistaa kohteet offline-tilasta?";
+/* Chat section header */
+"chat"="Keskustelut";
+/* Empty Conversations section */
+"noConversations"="Ei keskusteluja";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Chat is disabled";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Enable";
+/* Conversations section */
+"conversations"="Keskustelut";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Kutsu";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="This message has been deleted";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Minä";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] left the group chat.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] cleared the chat history.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] was changed to [B] by [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Lisää osallistuja...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Tila";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Voice and Video Calls";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Use Mobile Data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] minuuttia";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(muokattu)";
+/*  */
+"online"="Paikalla";
+/*  */
+"away"="Poissa";
+/*  */
+"busy"="Kiireinen";
+/* title of the contact properties screen */
+"contactInfo"="Kontaktin tiedot";
+/*  */
+"notifications"="Ilmoituksia";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Send Message";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verify Credentials";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Tyhjennä viestihistoria";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Haluatko varmasti tyhjentää tämän keskustelun koko viestihistorian?";
+/* 'Next' button in a dialog */
+"continue"="Jatka";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Close Chat";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Jaetut kansiot";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Contact Credentials";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Tämä onnistuu parhaiten tapaamalla kasvotusten. Jos sinulla on pääsy toiseen jo-varmistettuun kanavaan, kuten varmennettu OTR tai PGP, voit käyttää myös sitä.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Your Credentials";
+/* Button to reset the password */
+"reset"="Palauta";
+/* Button title */
+"approve"="Hyväksy";
+/* start a chat/conversation */
+"startConversation"="Start Conversation";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Group";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Group Info";
+/* Label title for a group chat */
+"groupChat"="Group Chat";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Rename Group";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Change Group Avatar";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Poistu";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Lisää";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Mute";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Tiedot";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Sulje";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Poistu keskustelusta";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Leave Group";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Participants";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderaattori";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Tavallinen";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Poista osaanottaja";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Conversation with %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA suojaa keskustelusi (käyttäjän hallinnoimalla) päästä päähän -salauksella tarjoten keskeiset turvallisuustakeet:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Luottamuksellisuus.[/S] Vain viestin kirjoittaja ja tarkoitetut vastaanottajat voivat purkaa ja lukea sisältöä.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Oikeellisuus.[/S] Järjestelmä varmistaa, että vastaanotettu tieto on näytetyltä lähettäjältä, ja että sen sisältöä ei ole manipuloitu siirron aikana.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Chat not found";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ is typing ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Kirjoita viesti...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Ei keskusteluhistoriaa";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Yritä uudelleen";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Poista viesti";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Lähetä yhteystiedot";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Lisää pilvilevyltä";
+/* */
+"done"="valmis";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Lähetä tiedostoja";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Tilaukset uusitaan automaattisesti perätteisesti saman pituisina tilauksina ja valitun alkuperäisen tilauksen hintaan. Voit kytkeä automaattisen MEGA PRO-tilauksen uusiutumisen 24 tuntia ennen seuraavan tilauksen maksun erääntymistä iTunes-tilisi asetussivulta. Hallitaksesi tilauksiasi napauta App Store-kuvaketta laitteessasi, kirjaudu Apple ID:lläsi sivun alareunassa (ellet ole jo niin tehnyt) ja sitten paina Näytä ID. Sinut ohjataan tilisivullesi, jossa voit vierittää alaspäin hallinnoidaksesi sovellustilauksia. Sieltä voit valita MEGA PRO-tilauksesi ja tarkastaa uusimispäivän, valita eri tilauspaketin tai muuttaa automaattisen tilauksen uusiutumisen päälle tai pois.";

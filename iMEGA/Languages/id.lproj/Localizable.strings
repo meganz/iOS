@@ -12,8 +12,10 @@
 "error"="Error";
 /*  */
 "name"="Nama";
+/* Caption of a button to edit the files that are selected */
+"edit"="Edit";
 /* State shown if something is 'Saved' (String as short as possible). */
-"saved"="Saved";
+"saved"="Tersimpan";
 /*  */
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
@@ -78,8 +80,8 @@
 "invalidMailOrPassword"="E-mail atau password tidak sah. Harap coba kembali";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Anda berusaha masuk terlalu banyak. Harap tunggu sampai %@ dan coba kembali.";
-/* Error message when trying to login to an account not validated */
-"accountNotConfirmed"="Harap cek email anda dan klik link untuk mengkonfirmasi akun anda.";
+/* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
+"accountNotConfirmed"="Harap cek e-mail anda dan ikuti link untuk mengkonfirmasi akun anda.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Akun anda telah di-blok. Harap kontak support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -158,8 +160,6 @@
 "noIncomingSharedItemsEmptyState_text"="Tidak ada Folder Berbagi masuk";
 /* Title shown when there's no outgoing Shared Items */
 "noOutgoingSharedItemsEmptyState_text"="Tidak ada Folder Berbagi keluar";
-/* Title of My Contacts section */
-"myContacts"="Kontak";
 /* Title of Contacts requests section */
 "contactRequests"="Request kontak";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -208,9 +208,9 @@
 "documentOpening_alertTitle"="Terdapat pending download";
 /* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
 "documentOpening_alertMessage"="Coba kembali nanti atau batalkan";
-/* Section title of the "Sort by" */
+/* Section title of the 'Sort by' */
 "sortTitle"="URUTKAN BERDASAR";
-/* Button title to "Save" the selected option */
+/* Button title to 'Save' the selected option */
 "save"="Simpan";
 /* Sort by option (1/6). This one orders the files alphabethically*/
 "nameAscending"="nama (meningkat)";
@@ -228,7 +228,7 @@
 "choosePhotoVideo"="Pilih";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Ambil foto";
-/* Menu option from the `Add` section that allows you to create a "New Folder" */
+/* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nama folder baru";
@@ -394,6 +394,8 @@
 "photoPerMonth"="%lu foto";
 /* Button title that skips the current action */
 "skipButton"="Lewati";
+/* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
+"automaticallyBackupYourPhotos"="Backup foto anda ke Cloud Drive secara otomatis";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Aktifkan Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -462,6 +464,14 @@
 "addContactButton"="Tambah";
 /* Success message shown when a contact has been invited */
 "requestSent"="Request terkirim";
+/* Add contacts and share dialog error message when user try to add your own email address */
+"noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"alreadyHaveAContactWithThatEmailAddress"="Anda telah memiliki kontak dengan alamat email itu.";
+/* Success message shown when a contact has been invited */
+"theUserHasBeenInvited"="Nama pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
+/* Success message shown when some contacts have been invited */
+"theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Gagal menambahkan kontak";
 /* Alert title shown when you want to remove one or more contacts */
@@ -486,6 +496,14 @@
 "leaveSharesAlertMessage"="Anda yakin ingin meninggalkan berbagi ini?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Folder ditinggalkan";
+/* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
+"share"="Bagi";
+/* Select all items/elements on the list */
+"selectAll"="Pilih Semua";
+/*  */
+"oneContact"="1 kontak";
+/* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
+"XContactsSelected"="[X] kontak";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Folder Berbagi";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -510,21 +528,21 @@
 "advanced"="Lanjutan";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Pilihan keamanan";
-/* Title of one of the Settings sections where you can see things "About" the app */
+/* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Perihal";
-/* Title of one of the Settings sections where you can set up the "Language" of the app */
+/* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Bahasa";
 /* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
 "applicationLanguage"="Bahasa application";
-/* Title of one of the Settings sections where you can "Send Feedback" to MEGA */
+/* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Kirim saran";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Harap tulis feedback anda disini:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Tidak ada alamat email tersedia pada perangkat anda";
-/* Title of one of the Settings sections where you can see the MEGA's "Privacy Policy" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
-/* Title of one of the Settings sections where you can see the MEGA's "Terms of Service" */
+/* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Peraturan Pelayanan";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Off";
@@ -534,8 +552,6 @@
 "options"="Pilihan";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload video";
-/* Option title to enable using the device cellular connection with Camera Uploads */
-"useCellularConnectionLabel"="Gunakan koneksi selular";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Hanya saat sedang men-cas";
 /* Footer text to explain the Camera Uploads functionality */
@@ -551,7 +567,7 @@
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
 "exportMasterKeyFooter"="Mengekspor Recovery Key dan menyimpannya dalam lokasi yang aman membolehkan anda untuk mengembalikan akun anda jika kehilangan password tanpa harus kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */
-"whyDoINeedARecoveryKey"="Why do I need a Recovery Key?";
+"whyDoINeedARecoveryKey"="Mengapa saya butuh Recovery Key?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Data anda hanya dapat dibaca melalui serangkaian operasi dekripsi yang dimulai dengan master encryption key (Recovery Key) anda, yang mana kami simpan ter-enkripsi dengan password anda. Ini berarti jika anda kehilangan password anda, Recovery Key anda tidak dapat di dekripsi kembali, dan anda tidak dapat men-dekripsi data anda lagi.";
 /* Advising the user to keep the user's recovery key safe. */
@@ -587,8 +603,8 @@
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
-"closeYourAccount"="Tutup akun anda";
-/* Message that is shown when the user click on 'Close your account' to confirm that he's aware that his data will be deleted. */
+"cancelYourAccount"="Hapus akun anda";
+/* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Anda akan kehilangan seluruh data yang berhubungan dengan akun ini. Anda yakin ingin melanjutkan?";
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
@@ -649,7 +665,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Lupa password?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Anda akan menerima recovery link yang akan membolehkan anda me-reset password anda. Harap cek email anda untuk melanjutkan.";
+"youCanResetYourPasswordByFollowing"="Anda dapat me-reset password anda dengan mengikuti recovery link yang akan dikirim ke email anda.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Recovery link ini telah kadaluarsa, harap coba kembali.";
 /* Headline of the password reset recovery procedure */
@@ -724,10 +740,10 @@
 "eraseAllLocalDataLabel"="Hapus data lokal";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Keluar dan hapus data lokal setelah 10 kali gagal mencoba passcode";
+/* Title header for the bottom menu with various menu sections that suit the category support. */
+"support"="Dukungan";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
-/* Footer message that explain what you can do on the "Help centre" */
-"helpCentreFooter"="Dapatkan bantuan atau baca topik popular.";
 /* Title to rate the app */
 "rateUsLabel"="Rate kami";
 /* Title of the Transfers section */
@@ -758,6 +774,18 @@
 "logoutLabel"="Keluar";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Sedang keluar";
+/* Button to remove avatar. Try to keep the text short (as in English) */
+"removeAvatar"="Hapus avatar";
+/* button that allows the user the change his avatar */
+"changeAvatar"="Ganti Avatar";
+/* Button title that allows the user change his name */
+"changeName"="Change Name";
+/* Success message when changing profile information. */
+"youHaveSuccessfullyChangedYourProfile"="Anda telah berhasil mengganti profil anda.";
+/* Hint text for the first name (Placeholder) */
+"firstName"="Nama Depan";
+/* Hint text for the last name (Placeholder) */
+"lastName"="Nama Belakang";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Pemakaian";
 /* Title for "Local" used space. */
@@ -766,6 +794,8 @@
 "usedSpaceLabel"="Terpakai";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Tersedia";
+/* title of the My Account screen */
+"accountType"="Tipe Akun: ";
 /* Text relative to the MEGA account level. UPPER CASE */
 "free"="GRATIS";
 /* Text that shows the expiry date of the account PRO level */
@@ -782,6 +812,8 @@
 "available of %@"="tersedia dari %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade akun";
+/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
+"youCanUpgradeLaterInMyAccount"="Anda dapat upgrade nanti di Akun Saya";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Gudang";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -842,3 +874,165 @@
 "removeItemFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Anda yakin ingin menghapus item ini dari Offline?";
+/* Chat section header */
+"chat"="Chat";
+/* Empty Conversations section */
+"noConversations"="Tidak ada percakapan";
+/* Title show when the chat is disabled */
+"chatIsDisabled"="Percakapan dinonaktifkan";
+/* Text button shown when the chat is disabled and if tapped the chat will be enabled */
+"enable"="Aktifkan";
+/* Conversations section */
+"conversations"="Percakapan";
+/* A button on a dialog which invites a contact to join MEGA. */
+"invite"="Undang";
+/* A log message in a chat to indicate that the message has been deleted by the user. */
+"thisMessageHasBeenDeleted"="Pesan ini telah dihapus";
+/* The title for my message in a chat. The message was sent from yourself. */
+"me"="Saya";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
+"wasRemovedFromTheGroupChatBy"="[A] dihapus dari percakapan grup oleh [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
+"leftTheGroupChat"="[A] meninggalkan percakapan grup.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
+"joinedTheGroupChatByInvitationFrom"="[A] bergabung ke percakapan grup oleh undangan dari [B].";
+/* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
+"clearedTheChatHistory"="[A] menghapus riwayat percakapan.";
+/* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
+"wasChangedToBy"="[A] telah diganti menjadi [B] oleh [C].";
+/* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
+"changedGroupChatNameTo"="[A] mengganti nama percakapan grup menjadi '[B]'.";
+/* Button label. Allows to add contacts in current chat conversation. */
+"addParticipant"="Tambah participant...";
+/* Title that refers to the status of the chat (Either Online or Offline) */
+"status"="Status";
+/* Section title of a button where you can enable mobile data for voice and video calls. */
+"voiceAndVideoCalls"="Suara dan Panggilan Suara";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
+"useMobileData"="Gunakan Mobile Data";
+/* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
+"autoAway"="Auto-away";
+/* */
+"xMinutes"="[X] menit";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfterXMinutesOfInactivity"="Tunjukan saya sedang pergi setelah [X] menit tidak aktif";
+/* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
+"statusPersistence"="Status Persistence";
+/* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
+"maintainMyChosenStatusAppearance"="Tetapkan tampilan status yang saya pilih bahkan saat saya tidak mempunyai perangkat yang tersambung.";
+/* A log message in a chat to indicate that the message has been edited by the user. */
+"edited"="(di-edit)";
+/*  */
+"online"="Online";
+/*  */
+"away"="Sedang pergi";
+/*  */
+"busy"="Sibuk";
+/* title of the contact properties screen */
+"contactInfo"="Kontak info";
+/*  */
+"notifications"="Pemberitahuan";
+/* Title to perform the action of sending a message to a contact. */
+"sendMessage"="Kirim Pesan";
+/* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
+"verifyCredentials"="Verifikasi Kredensial";
+/* A button title to delete the history of a chat. */
+"clearChatHistory"="Hapus Riwayat Chat";
+/* A confirmation message for a user to confirm that they want to clear the history of a chat. */
+"clearTheFullMessageHistory"="Anda yakin ingin menghapus seluruh riwayat pesan dari percakapan ini?";
+/* 'Next' button in a dialog */
+"continue"="Lanjutkan";
+/* Button title that allows the user to close a chat. */
+"closeChat"="Tutup Percakapan";
+/* Title of the incoming shared folders of a user. */
+"sharedFolders"="Folder berbagi";
+/* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
+"contactCredentials"="Kredential Kontak";
+/* "Verify user" dialog description */
+"thisIsBestDoneInRealLife"="Ini dapat dilakukan pada kehidupan nyata melalui bertemu langsung. Jika ana memiliki channel lain yang sudah ter-verifikasi seperti OTR atau PGP, anda mungkin mau menggunakan itu.";
+/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
+"yourCredentials"="Kredensial Anda";
+/* Button to reset the password */
+"reset"="Ubah";
+/* Button title */
+"approve"="Setujui";
+/* start a chat/conversation */
+"startConversation"="Mulai Percakapan";
+/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
+"group"="Grup";
+/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
+"groupInfo"="Info Grup";
+/* Label title for a group chat */
+"groupChat"="Percakapan Grup";
+/* The title of a menu button which allows users to rename a group chat. */
+"renameGroup"="Namakan Grup";
+/* Title of the action that allows you to change the avatar of a group chat. */
+"changeGroupAvatar"="Ganti Avatar Grup";
+/* A button label. The button allows the user to leave the group conversation. */
+"leave"="Tinggalkan";
+/* Top menu option which opens more menu options in a context menu. */
+"more"="Selebihnya";
+/* A button label. The button allows the user to mute a conversation. */
+"mute"="Matikan Suara";
+/* A button label. The button allows the user to get more info of the current context. */
+"info"="Info";
+/* A button label. The button allows the user to close the conversation. */
+"close"="Tutup";
+/* Alert text that explains what means confirming the action 'Leave' */
+"youWillNoLongerHaveAccessToThisConversation"="Anda tidak akan mempunyai akses lagi ke percakapan ini";
+/* A button label. The button allows the user to leave the conversation. */
+"leaveChat"="Tinggalkan chat";
+/* Button title that allows the user to leave a group chat. */
+"leaveGroup"="Tinggalkan Grup";
+/* Label to describe the section where you can see the participants of a group chat */
+"participants"="Partisipan";
+/* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
+"moderator"="Moderator";
+/* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
+"standard"="Standar";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Hapus Partisipan";
+/* Chat conversation header with user %@. Please leave %@ as it is. */
+"conversationWith"="Percakapan dengan %@";
+/* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
+"chatIntroductionMessage"="MEGA melindungi chat anda dengan enkripsi menyeluruh (diatur oleh pengguna) yang memberikan jaminan keamanan:";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"confidentialityExplanation"="[S]Kerahasiaan.[/S] Hanya penulis dan penerima yang diinginkan dapat men-decipher dan membaca konten.";
+/* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
+"authenticityExplanation"="[S]Keaslian.[/S] Sistem memastikan bahwa data yang diterima benar-benar berasal dari pengirim, dan konten nya tidak di-manipulasi saat transit.";
+/* Alert message shown when a chat does not exist */
+"chatNotFound"="Percakapan tidak ditemukan";
+/* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
+"isTyping"="%@ sedang mengetik ...";
+/* Message box label which shows that user can type message text in this textview */
+"writeAMessage"="Tulis pesan...";
+/* Information if there are no history messages in current chat conversation */
+"noConversationHistory"="Tidak ada riwayat percakapan";
+/* Button which allows to retry send message in chat conversation. */
+"retry"="Ulangi";
+/* Button which allows to delete message in chat conversation. */
+"deleteMessage"="Hapus pesan";
+/* A button label. The button sends contact information to a user in the conversation. */
+"sendContact"="Kirim kontak";
+/* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
+"addFromMyCloudDrive"="Tambahkan ke Cloud Drive saya";
+/* */
+"done"="selesai";
+/* Button label for sending file attachments through the chat to another user. */
+"sendFiles"="Kirim file";
+/* Title shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_title"="Depleted transfer quota";
+/* Description shown when you almost had used your available transfer quota. */
+"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+/* Button title to see the available pro plans in MEGA */
+"seePlans"="See plans";
+/* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
+"dismiss"="Dismiss";
+/* Notification text body shown when you have received a new chat message */
+"newMessage" = "New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest" = "Contact Request";
+/* Notification text body shown when you have received a new shared folder */
+"newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";

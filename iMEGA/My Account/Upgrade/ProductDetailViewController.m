@@ -1,6 +1,10 @@
 
 #import "ProductDetailViewController.h"
+
+#import "CameraUploadsPopUpViewController.h"
 #import "ProductDetailTableViewCell.h"
+
+#import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate> {
@@ -58,8 +62,8 @@
     [_storageSizeLabel setText:_storageString];
     [_bandwidthSizeLabel setText:_bandwidthString];
     
-    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(restore)];
-    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"SFUIText-Regular" size:17.0], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+    UIBarButtonItem *restoreBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"restore", nil) style:UIBarButtonItemStylePlain target:self action:@selector(restore)];
+    [restoreBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     [self.navigationItem setRightBarButtonItem:restoreBarButtonItem];
     
     [[MEGAPurchase sharedInstance] setDelegate:self];
@@ -156,8 +160,8 @@
             [updatedAlert setTag:0];
             [updatedAlert show];
         } else {
-            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
-                [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
+            if (self.presentingViewController) {
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
         }
     }

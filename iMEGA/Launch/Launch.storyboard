@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rbD-Pz-VTU">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rbD-Pz-VTU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="SF-UI-Text-Light.otf">
-            <string>SFUIText-Light</string>
-        </mutableArray>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Navigation Controller-->
@@ -42,31 +46,31 @@
                         <viewControllerLayoutGuide type="bottom" id="Y0z-pV-f0e"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="F07-sj-jc4">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenMEGALogo" translatesAutoresizingMaskIntoConstraints="NO" id="RZs-sA-71b" userLabel="Logo Image">
-                                <rect key="frame" x="235" y="235" width="130" height="130"/>
+                                <rect key="frame" x="122.5" y="268.5" width="130" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="8vJ-RZ-XCq"/>
                                     <constraint firstAttribute="width" constant="130" id="Pqu-Tq-ceX"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4e-dJ-4Yg">
-                                <rect key="frame" x="40" y="494" width="520" height="46"/>
+                                <rect key="frame" x="36" y="561" width="303" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="R9b-oF-hj0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="18"/>
-                                <color key="textColor" red="0.96862745289999996" green="0.96862745289999996" blue="0.96862745289999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                <color key="textColor" red="0.96862745289999996" green="0.96862745289999996" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="63R-NA-Whg">
-                                <rect key="frame" x="290" y="560" width="20" height="20"/>
-                                <color key="color" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="177.5" y="627" width="20" height="20"/>
+                                <color key="color" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="63R-NA-Whg" firstAttribute="centerX" secondItem="F07-sj-jc4" secondAttribute="centerX" id="5KU-cU-bcF"/>
                             <constraint firstItem="J4e-dJ-4Yg" firstAttribute="leading" secondItem="F07-sj-jc4" secondAttribute="leadingMargin" constant="20" id="8HA-9q-6Kx"/>
@@ -108,18 +112,18 @@
                         <viewControllerLayoutGuide type="bottom" id="5vS-En-s3D"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bat-qs-IDA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenMEGALogo" translatesAutoresizingMaskIntoConstraints="NO" id="ngD-mU-eHw" userLabel="Logo Image">
-                                <rect key="frame" x="235" y="235" width="130" height="130"/>
+                                <rect key="frame" x="122.5" y="268.5" width="130" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="l5y-fQ-cng"/>
                                     <constraint firstAttribute="width" constant="130" id="quD-5y-Wdk"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ngD-mU-eHw" firstAttribute="centerX" secondItem="bat-qs-IDA" secondAttribute="centerX" id="Dbp-NP-vSb"/>
                             <constraint firstItem="ngD-mU-eHw" firstAttribute="leading" secondItem="bat-qs-IDA" secondAttribute="leadingMargin" constant="-40" id="T3R-hw-li8"/>
@@ -128,8 +132,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="wJn-nM-31z"/>
                                 <exclude reference="T3R-hw-li8"/>
+                                <exclude reference="wJn-nM-31z"/>
                             </mask>
                         </variation>
                     </view>

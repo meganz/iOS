@@ -1,6 +1,8 @@
 
 #import "NSString+MNZCategory.h"
 
+#import "MEGAChatSdk.h"
+
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
 
@@ -84,5 +86,31 @@ static NSString* const B = @"[B]";
     return AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
++ (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus {
+    NSString *onlineStatusString;
+    switch (onlineStatus) {
+        case MEGAChatStatusOffline:
+            onlineStatusString = AMLocalizedString(@"offline", @"Title of the Offline section");
+            break;
+            
+        case MEGAChatStatusAway:
+            onlineStatusString = AMLocalizedString(@"away", nil);
+            break;
+            
+        case MEGAChatStatusOnline:
+            onlineStatusString = AMLocalizedString(@"online", nil);
+            break;
+            
+        case MEGAChatStatusBusy:
+            onlineStatusString = AMLocalizedString(@"busy", nil);
+            break;
+            
+        default:
+            onlineStatusString = nil;
+            break;
+    }
+    
+    return onlineStatusString;
+}
 
 @end

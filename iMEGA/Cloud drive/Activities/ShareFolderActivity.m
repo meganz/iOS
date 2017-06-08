@@ -42,7 +42,7 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.nodesArray = self.nodes;
-    contactsVC.contactsMode = ContactsShareFoldersWith;
+    contactsVC.contactsMode = ContactsModeShareFoldersWith;
     [contactsVC setShareFolderActivity:self];
     
     return navigationController;

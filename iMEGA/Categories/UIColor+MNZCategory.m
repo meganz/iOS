@@ -1,19 +1,31 @@
 
 #import "UIColor+MNZCategory.h"
 
+#import "MEGAChatSdk.h"
+
 @implementation UIColor (MNZCategory)
+
+#pragma mark - Black
 
 + (UIColor *)mnz_black333333 {
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_black333333_02 {
+    return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:0.2];
+}
+
++ (UIColor *)mnz_black000000_01 {
+    return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
+}
+
+#pragma mark - Blue
+
 + (UIColor *)mnz_blue2BA6DE {
     return [UIColor colorWithRed:43.0/255.0 green:166.0/255.0 blue:222.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_green31B500 {
-    return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
-}
+#pragma mark - Gray
 
 + (UIColor *)mnz_gray666666 {
     return [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
@@ -31,12 +43,16 @@
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayCCCCCC {
-    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
++ (UIColor *)mnz_grayE3E3E3 {
+    return [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayFFFFFF {
-    return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
++ (UIColor *)mnz_grayF5F5F5 {
+    return [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayCCCCCC {
+    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayF7F7F7 {
@@ -47,9 +63,23 @@
     return [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
 }
 
+#pragma mark - Green
+
++ (UIColor *)mnz_green31B500 {
+    return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_green13E03C {
+    return [UIColor colorWithRed:19.0f / 255.0f green:224.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f];
+}
+
+#pragma mark - Orange
+
 + (UIColor *)mnz_orangeFFA500 {
     return [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0.0 alpha:1.0];
 }
+
+#pragma mark - Red
 
 + (UIColor *)mnz_redE13339 {
     return [UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0];
@@ -63,9 +93,19 @@
     return [UIColor colorWithRed:1.0 green:76.0/255.0 blue:82.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_redFF4D52 {
+    return [UIColor colorWithRed:1.0 green:77.0/255.0 blue:82.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_redD90007 {
     return [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0];
 }
+
++ (UIColor *)mnz_redFF333A {
+    return [UIColor colorWithRed:255.0f / 255.0f green:51.0f / 255.0f blue:58.0f / 255.0f alpha:1.0f];
+}
+
+#pragma mark - Pink
 
 + (UIColor *)mnz_pinkFF1A53 {
     return [UIColor colorWithRed:1.0 green:26.0/255.0 blue:83.0/255.0 alpha:1.0];
@@ -88,6 +128,33 @@
     CGFloat b = (rgbValue & 0xFF);
     
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus {
+    UIColor *colorForStatusChange;
+    switch (onlineStatus) {
+        case MEGAChatStatusOffline:
+            colorForStatusChange = [self mnz_gray666666];
+            break;
+            
+        case MEGAChatStatusAway:
+            colorForStatusChange = [self mnz_orangeFFA500];
+            break;
+            
+        case MEGAChatStatusOnline:
+            colorForStatusChange = [self mnz_green13E03C];
+            break;
+            
+        case MEGAChatStatusBusy:
+            colorForStatusChange = [self colorFromHexString:@"EB4444"];
+            break;
+            
+        default:
+            colorForStatusChange = nil;
+            break;
+    }
+    
+    return colorForStatusChange;
 }
 
 @end
