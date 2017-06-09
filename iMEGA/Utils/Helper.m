@@ -1111,6 +1111,14 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    // Delete files saved by extensions
+    NSString *extensionsDirectory = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:extensionsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:extensionsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
 }
 
 + (void)deleteMasterKey {
