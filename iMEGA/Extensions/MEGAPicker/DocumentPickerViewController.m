@@ -189,7 +189,9 @@
             [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
         }
     } else {
-        [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+        if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];;
+        }
     }
 }
 
