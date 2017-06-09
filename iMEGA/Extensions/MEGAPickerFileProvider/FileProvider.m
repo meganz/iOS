@@ -98,14 +98,8 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    uint64_t handle = [transfer nodeHandle];
-    if (handle == [self.oldNode handle]) {
-        // This is the transferFinish for the deletion of the old node. The File provider is done now.
-        dispatch_semaphore_signal(self.semaphore);
-    } else {
-        // This is the transferFinish for the upload of the new node. The old is to be removed.
-        [[MEGASdkManager sharedMEGASdk] removeNode:self.oldNode delegate:self];
-    }
+    // Currently the old file is not deleted from the cloud.
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 #pragma mark - MEGARequestDelegate
