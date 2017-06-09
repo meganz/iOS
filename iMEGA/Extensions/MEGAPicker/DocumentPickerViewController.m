@@ -88,6 +88,10 @@
 }
 
 - (void)willEnterForeground {
+    if (self.privacyView) {
+        [self.privacyView removeFromSuperview];
+        self.privacyView = nil;
+    }
     if(!self.sessionLoaded) {
         self.megaLogo.hidden = YES;
         self.loginText.hidden= YES;
@@ -96,10 +100,6 @@
     } else {
         if ([LTHPasscodeViewController doesPasscodeExist]) {
             [self presentPasscode];
-        }
-        if (self.privacyView) {
-            [self.privacyView removeFromSuperview];
-            self.privacyView = nil;
         }
     }
 }
