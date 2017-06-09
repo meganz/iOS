@@ -14,6 +14,7 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
+#import "MEGAInviteContactRequestDelegate.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
@@ -41,9 +42,6 @@
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
-
-@property (nonatomic) NSUInteger remainingOperations;
-@property (nonatomic) BOOL addingMoreThanOneContact;
 
 @end
 
@@ -843,11 +841,10 @@
 
 - (void)addContact:(id)sender message:(MEGAChatMessage *)message {
     NSUInteger usersCount = message.usersCount;
-    self.remainingOperations = usersCount;
-    self.addingMoreThanOneContact = (usersCount > 1) ? YES : NO;
+    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (NSUInteger i = 0; i < usersCount; i++) {
         NSString *email = [message userEmailAtIndex:i];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
 
@@ -1157,55 +1154,6 @@
             request.chatMessage.chatRoom = self.chatRoom;
             [self.messages addObject:request.chatMessage];
             [self finishSendingMessageAnimated:YES];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeInviteContact: {
-            self.remainingOperations--;
-            
-            if ([error type]) {
-                switch (error.type) {
-                    case MEGAErrorTypeApiEArgs:
-                        if ([request.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
-                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
-                        }
-                        break;
-                        
-                    case MEGAErrorTypeApiEExist: {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
-                        break;
-                    }
-                        
-                    default:
-                        [SVProgressHUD showErrorWithStatus:error.name];
-                        break;
-                }
-                
-                return;
-            }
-            
-            if (self.remainingOperations == 0) {
-                NSString *alertTitle;
-                if (self.addingMoreThanOneContact) {
-                    alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
-                } else {
-                    alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-                    alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                }
-                
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
             break;
         }
             

@@ -3,7 +3,6 @@
 typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeDefault = 0,
     ContactsModeShareFoldersWith,
-    ContactsModeShareFoldersWithEmail,
     ContactsModeFolderSharedWith,
     ContactsModeChatStartConversation,
     ContactsModeChatAddParticipant,
