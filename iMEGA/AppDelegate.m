@@ -779,11 +779,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             // keychain. The session must be stored again so that it will be available for the shared keychain.
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
             [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loginRequiredTitle", @"Title for the login required alert.")
-                                                                                     message:AMLocalizedString(@"loginRequiredText", @"Text for the login required alert.")
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
         } else {
             // The user is not logged in, so the standard login will be presented (there is nothing to do in this case)
         }
