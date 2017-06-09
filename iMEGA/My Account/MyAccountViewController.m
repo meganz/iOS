@@ -275,7 +275,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeSetAttrFile) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@: %@", [error nameWithErrorCode:error.type], error.name]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
         }
         
         return;

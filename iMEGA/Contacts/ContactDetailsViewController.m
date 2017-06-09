@@ -6,6 +6,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGARemoveContactRequestDelegate.h"
 
 #import "ChatRoomsViewController.h"
 #import "ContactTableViewCell.h"
@@ -14,7 +15,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <MEGARequestDelegate, MEGAChatRequestDelegate>
+@interface ContactDetailsViewController () <MEGAChatRequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -89,7 +90,12 @@
     }];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:self];
+        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+            //TODO: Close chat room because the contact was removed
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+        [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
     
     [removeContactAlertController addAction:cancelAction];
@@ -288,29 +294,6 @@
     switch (request.type) {
         case MEGAChatRequestTypeCreateChatRoom: {
             [self changeToChatTabAndOpenChatId:request.chatHandle];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeRemoveContact: {
-            NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removedContact", nil), [request email]];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
-            
-            //TODO: Close chat room because the contact was removed
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
             break;
         }
             
