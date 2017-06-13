@@ -1087,23 +1087,25 @@
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
-            self.showTypingIndicator = YES;
-            NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-            if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
-                [self scrollToBottomAnimated:YES];
+            if (chat.userTypingHandle != api.myUserHandle) {
+                self.showTypingIndicator = YES;
+                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                    [self scrollToBottomAnimated:YES];
+                }
+                
+                if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
+                    self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
+                }
+                self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+                
+                [self.receiveTypingTimer invalidate];
+                self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                                           target:self
+                                                                         selector:@selector(hideTypingIndicator)
+                                                                         userInfo:nil
+                                                                          repeats:YES];
             }
-            
-            if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
-                self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
-            }
-            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
-            
-            [self.receiveTypingTimer invalidate];
-            self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                                       target:self
-                                                                     selector:@selector(hideTypingIndicator)
-                                                                     userInfo:nil
-                                                                      repeats:YES];
             
             break;
         }
