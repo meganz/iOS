@@ -43,6 +43,10 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         NSString *message = (self.totalRequests <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"removedContact", @"Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed'"), request.email] : [NSString stringWithFormat:AMLocalizedString(@"removedContacts", @"Success message shown when the selected contacts have been removed"), self.totalRequests];
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
+        
+        if (self.completion) {
+            self.completion();
+        }
     }
 }
 
