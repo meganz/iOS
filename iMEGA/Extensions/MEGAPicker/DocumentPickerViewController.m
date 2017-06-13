@@ -157,8 +157,8 @@
 - (void)presentPasscode {
     if (!self.passcodePresented) {
         LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
-        [passcodeVC showLockScreenIntoSuperview:self.view.superview
-                                  WithAnimation:YES
+        [passcodeVC showLockScreenOver:self.view.superview
+                                  withAnimation:YES
                                      withLogout:YES
                                  andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
         
