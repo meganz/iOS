@@ -282,8 +282,12 @@
         [shareFolderAlertController addAction:readOnlyAlertAction];
         
         shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
-        shareFolderAlertController.popoverPresentationController.sourceView = self.view;
+        if ([[UIDevice currentDevice] iPad]) {
+            shareFolderAlertController.popoverPresentationController.barButtonItem = self.shareFolderWithBarButtonItem;
+        } else {
+            shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
+            shareFolderAlertController.popoverPresentationController.sourceView = self.view;
+        }
         
         [self presentViewController:shareFolderAlertController animated:YES completion:nil];
     }
