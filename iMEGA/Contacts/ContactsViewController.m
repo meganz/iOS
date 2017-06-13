@@ -193,6 +193,7 @@
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
+    [self.indexPathsMutableDictionary removeAllObjects];
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         self.outSharesForNodeMutableArray = [self outSharesForNode:self.node];
@@ -526,13 +527,12 @@
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
             if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 [self reloadUI];
             }
             
-            BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-            [self setTableViewEditing:value animated:YES];
+            [self setTableViewEditing:NO animated:YES];
         }];
         
         for (MEGAUser *user in self.selectedUsersArray) {
@@ -762,10 +762,6 @@
         return;
     }
     
-    if (tableView.isEditing) {
-        [self.selectedUsersArray addObject:user];
-    }
-    
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
@@ -780,14 +776,15 @@
         case ContactsModeShareFoldersWith:
             if (tableView.isEditing) {
                 [self.selectedUsersArray addObject:user];
-                
                 [self updatePromptTitle];
+                return;
             }
             break;
             
         case ContactsModeFolderSharedWith:
             if (tableView.isEditing) {
-                self.deleteBarButtonItem.enabled = YES;
+                [self.selectedUsersArray addObject:user];
+                self.deleteBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
                 return;
             }
             
@@ -798,7 +795,6 @@
         case ContactsModeChatStartConversation: {
             if (tableView.isEditing) {
                 [self.selectedUsersArray addObject:user];
-                
                 self.groupBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
                 return;
             }
@@ -811,6 +807,7 @@
         case ContactsModeChatAddParticipant:
         case ContactsModeChatAttachParticipant:
             if (tableView.isEditing) {
+                [self.selectedUsersArray addObject:user];
                 return;
             }
             break;

@@ -93,7 +93,7 @@
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
             //TODO: Close chat room because the contact was removed
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
