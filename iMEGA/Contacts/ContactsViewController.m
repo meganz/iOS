@@ -167,6 +167,8 @@
         }
             
         case ContactsModeChatStartConversation: {
+            self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
+            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.groupBarButtonItem];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             break;
