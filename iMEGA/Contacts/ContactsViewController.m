@@ -508,8 +508,12 @@
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
-    addContactAlertController.popoverPresentationController.sourceView = self.view;
+    if ([[UIDevice currentDevice] iPad]) {
+        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
+    } else {
+        addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
+        addContactAlertController.popoverPresentationController.sourceView = self.view;
+    }
     
     [self presentViewController:addContactAlertController animated:YES completion:nil];
 }
