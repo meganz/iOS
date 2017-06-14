@@ -18,6 +18,7 @@
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
 #import "MEGAActivityItemProvider.h"
+#import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
@@ -116,9 +117,7 @@
         if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
             [self setNavigationBarTitleLabel];
         }
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -274,8 +273,9 @@
 
 - (void)removeSharing {
     NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesOfNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesOfNodeMutableArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:[share user] level:MEGAShareTypeAccessUnkown];
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -959,28 +959,6 @@
             [self.tableView reloadData];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             break;
-            
-        case MEGARequestTypeShare: {
-            
-            remainingOperations--;
-            
-            if (remainingOperations == 0) {
-                switch ([request access]) {
-                    case MEGAShareTypeAccessUnkown:
-                        if (numberOfShares > 1) {
-                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"sharesRemoved", nil)];
-                        } else {
-                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
-                        }
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }
-            
-            break;
-        }
             
         case MEGARequestTypeMove:
         case MEGARequestTypeRemove: {

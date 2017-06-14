@@ -376,6 +376,8 @@
 "permissionMessage"="Check your permissions on this folder";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder shared";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d folders shared successfully.";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file has been imported */
@@ -484,7 +486,7 @@
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacts removed";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ removed";
 /* Label shown when a contact request is pending */
 "pending"="Pending";
