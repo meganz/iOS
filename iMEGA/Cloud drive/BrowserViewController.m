@@ -1,12 +1,12 @@
 #import "BrowserViewController.h"
 
-#import "UIScrollView+EmptyDataSet.h"
 #import "SVProgressHUD.h"
-
-#import "NSFileManager+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -20,8 +20,6 @@
 @property (nonatomic) MEGAShareType parentShareType;
 
 @property (nonatomic) NSUInteger remainingOperations;
-
-@property (nonatomic, strong) NSArray *selectedUsersArray;
 
 @property (weak, nonatomic) IBOutlet UIView *browserSegmentedControlView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *browserSegmentedControl;
@@ -39,7 +37,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarShareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarSendBarButtonItem;
 
@@ -343,7 +340,6 @@
     
     self.toolBarMoveBarButtonItem.enabled = boolValue;
     self.toolBarCopyBarButtonItem.enabled = boolValue;
-    self.toolBarShareFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
 }
@@ -369,26 +365,14 @@
     browserVC.parentNode = parentNode;
     browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
     browserVC.selectedNodesArray = self.selectedNodesArray;
-    browserVC.selectedUsersArray = self.selectedUsersArray;
     browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
-    
+
     [self.navigationController pushViewController:browserVC animated:YES];
 }
 
 - (void)attachNodes {
     self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)shareNodesWithLevel:(MEGAShareType)shareType {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    
-    self.remainingOperations = self.selectedUsersArray.count;
-    
-    for (MEGAUser *user in self.selectedUsersArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:user level:shareType];
-    }
 }
 
 - (void)alertControllerShouldEnableDefaultButtonForTextField:(UITextField *)sender {
@@ -468,39 +452,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)shareFolder:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
-        
-        UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessFull];
-        }];
-        [fullAccessAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [shareFolderAlertController addAction:fullAccessAlertAction];
-        
-        UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
-        }];
-        [readAndWritetAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [shareFolderAlertController addAction:readAndWritetAlertAction];
-        
-        UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessRead];
-        }];
-        [readOnlyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-        [shareFolderAlertController addAction:readOnlyAlertAction];
-        
-        shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
-        shareFolderAlertController.popoverPresentationController.sourceView = self.view;
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
-    }
-}
-
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSError *error = nil;
@@ -537,10 +488,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
@@ -802,17 +749,6 @@
                     [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeShare: {
-            self.remainingOperations--;
-            
-            if (self.remainingOperations == 0) {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
             break;

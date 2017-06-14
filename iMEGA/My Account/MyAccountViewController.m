@@ -3,14 +3,14 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
-#import "UIImageView+MNZCategory.h"
-#import "MEGAUser+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "UsageViewController.h"
 #import "SettingsTableViewController.h"
@@ -81,9 +81,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
-    self.userAvatarImageView.layer.masksToBounds = YES;
     
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
@@ -213,7 +210,7 @@
         MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
         [self presentViewController:changeNameNavigationController animated:YES completion:nil];
     }];
-    [changeNameAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [editAlertController addAction:changeNameAlertAction];
     
     //TODO: Change Avatar
@@ -224,7 +221,7 @@
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction setValue:[UIColor mnz_redD90007] forKey:@"titleTextColor"];
+        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
         [editAlertController addAction:removeAvatarAlertAction];
     }
     
@@ -278,7 +275,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeSetAttrFile) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@: %@", [error nameWithErrorCode:error.type], error.name]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
         }
         
         return;

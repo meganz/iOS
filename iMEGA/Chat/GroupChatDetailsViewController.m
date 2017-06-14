@@ -1,13 +1,14 @@
 #import "GroupChatDetailsViewController.h"
-#import "ChatRoomsViewController.h"
 
 #import "UIImage+GKContact.h"
 
-#import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
-#import "GroupChatDetailsViewTableViewCell.h"
+#import "ChatRoomsViewController.h"
 #import "ContactTableViewCell.h"
+#import "GroupChatDetailsViewTableViewCell.h"
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate>
 
@@ -251,7 +252,6 @@
         }
         
         [cell.leftImageView mnz_setImageForUserHandle:handle];
-        cell.onlineStatusView.layer.cornerRadius = (cell.onlineStatusView.frame.size.width / 2);
         cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:handle]];
         
         cell.emailLabel.text = peerEmail;
@@ -364,25 +364,25 @@
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
-            [cancelAlertAction setValue:[UIColor mnz_redD90007] forKey:@"titleTextColor"];
+            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
             [permissionsAlertController addAction:cancelAlertAction];
             
             UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
             }];
-            [moderatorAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
             [permissionsAlertController addAction:moderatorAlertAction];
             
             UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
             }];
-            [standartAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
             [permissionsAlertController addAction:standartAlertAction];
             
             UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
             }];
-            [readOnlyAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
             [permissionsAlertController addAction:readOnlyAlertAction];
             
             UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

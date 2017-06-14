@@ -16,8 +16,10 @@
 
 
 - (instancetype)initWithNode:(MEGANode *)node {
-    _node = node;
-    
+    self = [super init];
+    if (self) {
+        _node = node;
+    }
     return self;
 }
 

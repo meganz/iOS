@@ -13,7 +13,10 @@
 @implementation RemoveLinkActivity
 
 - (instancetype)initWithNodes:(NSArray *)nodesArray {
-    _nodes = nodesArray;
+    self = [super init];
+    if (self) {
+        _nodes = nodesArray;
+    }
     
     return self;
 }

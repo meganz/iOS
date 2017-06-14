@@ -1034,3 +1034,5 @@
 "contactRequest" = "Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "New Shared Folder";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="Tilaukset uusitaan automaattisesti perätteisesti saman pituisina tilauksina ja valitun alkuperäisen tilauksen hintaan. Voit kytkeä automaattisen MEGA PRO-tilauksen uusiutumisen 24 tuntia ennen seuraavan tilauksen maksun erääntymistä iTunes-tilisi asetussivulta. Hallitaksesi tilauksiasi napauta App Store-kuvaketta laitteessasi, kirjaudu Apple ID:lläsi sivun alareunassa (ellet ole jo niin tehnyt) ja sitten paina Näytä ID. Sinut ohjataan tilisivullesi, jossa voit vierittää alaspäin hallinnoidaksesi sovellustilauksia. Sieltä voit valita MEGA PRO-tilauksesi ja tarkastaa uusimispäivän, valita eri tilauspaketin tai muuttaa automaattisen tilauksen uusiutumisen päälle tai pois.";

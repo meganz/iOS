@@ -2,7 +2,7 @@
 
 #import "SVProgressHUD.h"
 
-#import "Helper.h"
+#import "NSString+MNZCategory.h"
 #import "MEGASdkManager.h"
 
 #import "ChangePasswordViewController.h"
@@ -95,7 +95,7 @@
             if (buttonIndex == 1) {
                 UITextField *textField = [alertView textFieldAtIndex:0];
                 NSString *email = [textField text];
-                if ([Helper validateEmail:email]) {
+                if ([email mnz_isValidEmail]) {
                     [[MEGASdkManager sharedMEGASdk] resetPasswordWithEmail:email hasMasterKey:YES delegate:self];
                 } else {
                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];

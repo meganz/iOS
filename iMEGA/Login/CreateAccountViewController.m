@@ -1,9 +1,13 @@
 #import "CreateAccountViewController.h"
 
-#import "Helper.h"
+#import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "SVModalWebViewController.h"
+
+#import "CheckEmailAndFollowTheLinkViewController.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -17,11 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
-@property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
 
 @end
 
@@ -51,10 +52,6 @@
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
-    [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
-    self.accountCreatedLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess.");
-    
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
@@ -79,7 +76,7 @@
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.nameTextField becomeFirstResponder];
         return NO;
-    } else if (![Helper validateEmail:self.emailTextField.text]) {
+    } else if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -191,7 +188,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -265,15 +262,14 @@
     
     switch ([request type]) {
         case MEGARequestTypeCreateAccount: {
-            
-            [self.nameTextField setEnabled:NO];
-            [self.emailTextField setEnabled:NO];
-            [self.passwordTextField setEnabled:NO];
-            [self.retypePasswordTextField setEnabled:NO];
-            [self.termsCheckboxButton setUserInteractionEnabled:NO];
-            [self.createAccountButton setEnabled:NO];
-            
-            self.view = self.accountCreatedView;
+            CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];            
+            [SAMKeychain setPassword:request.sessionKey forService:@"MEGA" account:@"sessionId"];
+            [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
+            [SAMKeychain setPassword:request.name forService:@"MEGA" account:@"name"];
+            [SAMKeychain setPassword:request.password forService:@"MEGA" account:@"password"];
+            [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
         }
             
         default:

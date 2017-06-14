@@ -1,3 +1,4 @@
+
 #import "ContactsViewController.h"
 
 #import <AddressBookUI/AddressBookUI.h>
@@ -7,31 +8,25 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
-#import "UIImageView+MNZCategory.h"
 
-#import "MEGASdkManager.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGANavigationController.h"
 #import "Helper.h"
-#import "NSMutableAttributedString+MNZCategory.h"
+#import "MEGAInviteContactRequestDelegate.h"
+#import "MEGANavigationController.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGARemoveContactRequestDelegate.h"
+#import "MEGASdkManager.h"
+#import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSMutableAttributedString+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
-
 #import "ShareFolderActivity.h"
 
-
-@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate> {
-    UIAlertView *removeAlertView;
-    
-    NSUInteger remainingOperations;
-    
-    BOOL allUsersSelected;
-    BOOL isSwipeEditing;
-    
-    MEGAUser *userTapped;
-}
+@interface ContactsViewController () <ABPeoplePickerNavigationControllerDelegate, CNContactPickerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -58,11 +53,11 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *insertAnEmailBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
-@property (strong, nonatomic) NSString *email;
+@property (strong, nonatomic) NSString *insertedEmail;
 
 @property (nonatomic, strong) NSMutableDictionary *indexPathsMutableDictionary;
 
-@property (nonatomic) BOOL addingMoreThanOneContact;
+@property (nonatomic, strong) MEGAUser *userTapped;
 
 @end
 
@@ -76,79 +71,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
-    
-    UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    if ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhone6XPlus]) {
-        [negativeSpaceBarButtonItem setWidth:-8.0];
-    } else {
-        [negativeSpaceBarButtonItem setWidth:-4.0];
-    }
-    
-    [self.deleteBarButtonItem setTitle:AMLocalizedString(@"remove", nil)];
-    
-    switch (self.contactsMode) {
-        case ContactsModeDefault: {
-            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.addBarButtonItem, self.contactRequestsBarButtonItem];
-            self.navigationItem.rightBarButtonItems = buttonsItems;
-            break;
-        }
-        
-        case ContactsModeShareFoldersWith: {
-            [_cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-            
-            self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
-            
-            self.shareFolderWithBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
-            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-            self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
-            
-            [_insertAnEmailBarButtonItem setTitle:AMLocalizedString(@"addFromEmail", nil)];
-            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-            
-            self.selectAllBarButtonItem.image =  nil;
-            self.selectAllBarButtonItem.title = AMLocalizedString(@"selectAll", @"Select all items/elements on the list");
-            [self.selectAllBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-            
-            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            self.navigationController.topViewController.toolbarItems = @[self.selectAllBarButtonItem, flexibleItem, self.insertAnEmailBarButtonItem];
-            [self.navigationController setToolbarHidden:NO];
-            
-            break;
-        }
-            
-        case ContactsModeFolderSharedWith: {
-            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
-            [self.navigationItem setRightBarButtonItems:buttonsItems];
-            
-            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            [_toolbar setItems:@[flexibleItem, _deleteBarButtonItem]];
-            
-            break;
-        }
-            
-        case ContactsModeChatStartConversation: {
-            self.navigationItem.rightBarButtonItems = @[self.groupBarButtonItem];
-            self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
-            break;
-        }
-            
-        case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant: {
-            self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
-            
-            [self setTableViewEditing:YES animated:NO];
-            self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
-            self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
-            break;
-        }
-            
-        default:
-            break;
-    }
-    
-    self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
+    [self setupContacts];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -156,38 +79,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    if (self.contactsMode == ContactsModeShareFoldersWith) {
-        self.navigationItem.title = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
-    } else if (self.contactsMode == ContactsModeFolderSharedWith) {
-        [self.navigationItem setTitle:AMLocalizedString(@"sharedWith", nil)];
-    } else if (self.contactsMode == ContactsModeChatStartConversation) {
-        [self.navigationItem setTitle:AMLocalizedString(@"startConversation", @"start a chat/conversation")];
-    } else if (self.contactsMode == ContactsModeChatAddParticipant) {
-        self.navigationItem.title = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
-    } else if (self.contactsMode == ContactsModeChatAttachParticipant) {
-        self.navigationItem.title = AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.");
-    } else {
-        [self.navigationItem setTitle:AMLocalizedString(@"contactsTitle", nil)];
-    }
-    
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    if (self.contactsMode == ContactsModeShareFoldersWith) {
-        [self editTapped:_editBarButtonItem];
-    }
     
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    if ([self.tableView isEditing]) {
-        [self setEditing:NO animated:NO];
-    }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -212,66 +111,93 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
-}
-
-- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
-    [self.tableView setEditing:editing animated:animated];
-    
-    if (self.contactsMode == ContactsModeChatStartConversation) {
-        if (editing) {
-        } else {
-            self.selectedUsersArray = [[NSMutableArray alloc] init];
-        }
-        
-        if (!self.selectedUsersArray) {
-            self.selectedUsersArray = [[NSMutableArray alloc] init];
-        }
-        
-    } else {
-        if (editing) {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
-            [self.addBarButtonItem setEnabled:NO];
-            if (!isSwipeEditing) {
-                if (self.contactsMode != ContactsModeShareFoldersWith) {
-                    self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-                }
-            }
-        } else {
-            [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
-            allUsersSelected = NO;
-            self.selectedUsersArray = nil;
-            [self.addBarButtonItem setEnabled:YES];
-            if (self.contactsMode != ContactsModeShareFoldersWith) {
-                self.navigationItem.leftBarButtonItems = @[];
-            }
-        }
-        
-        if (!self.selectedUsersArray) {
-            self.selectedUsersArray = [NSMutableArray new];
-            [self.deleteBarButtonItem setEnabled:NO];
-        }
-        
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        
-        [UIView animateWithDuration:animated ? .33 : 0 animations:^{
-            self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
-        }];
-    }
-    
-    isSwipeEditing = NO;
+    } completion:nil];
 }
 
 #pragma mark - Private
 
+- (void)setupContacts {
+    self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
+    
+    [self.toolbar setFrame:CGRectMake(0, 49, CGRectGetWidth(self.view.frame), 49)];
+    
+    switch (self.contactsMode) {
+        case ContactsModeDefault: {
+            NSArray *buttonsItems = @[self.addBarButtonItem, self.contactRequestsBarButtonItem];
+            self.navigationItem.rightBarButtonItems = buttonsItems;
+            break;
+        }
+            
+        case ContactsModeShareFoldersWith: {
+            [self updatePromptTitle];
+            
+            self.selectAllBarButtonItem.image =  nil;
+            self.selectAllBarButtonItem.title = AMLocalizedString(@"selectAll", @"Select all items/elements on the list");
+            [self.selectAllBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            self.navigationItem.leftBarButtonItem = self.selectAllBarButtonItem;
+            
+            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+            [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+            
+            self.insertAnEmailBarButtonItem.title = AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email");
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            
+            self.shareFolderWithBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
+            
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            self.navigationController.topViewController.toolbarItems = @[self.insertAnEmailBarButtonItem, flexibleItem, self.shareFolderWithBarButtonItem];
+            [self.navigationController setToolbarHidden:NO];
+            
+            [self editTapped:self.editBarButtonItem];
+            break;
+        }
+            
+        case ContactsModeFolderSharedWith: {
+            UIBarButtonItem *negativeSpaceBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+            negativeSpaceBarButtonItem.width = [[UIDevice currentDevice] iPadDevice] ? -8.0 : -4.0;
+            NSArray *buttonsItems = @[negativeSpaceBarButtonItem, self.editBarButtonItem];
+            [self.navigationItem setRightBarButtonItems:buttonsItems];
+            
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+            self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
+            break;
+        }
+            
+        case ContactsModeChatStartConversation: {
+            self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
+            self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+            self.navigationItem.rightBarButtonItems = @[self.groupBarButtonItem];
+            self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+            break;
+        }
+            
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant: {
+            self.addParticipantBarButtonItem.title = AMLocalizedString(@"ok", nil);
+            
+            [self setTableViewEditing:YES animated:NO];
+            self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+            self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
+            break;
+        }
+    }
+}
+
+
 - (void)reloadUI {
+    [self setNavigationBarTitle];
+    
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
     self.visibleUsersArray = [[NSMutableArray alloc] init];
+    [self.indexPathsMutableDictionary removeAllObjects];
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
-        _outSharesForNodeMutableArray = [self outSharesForNode:self.node];
-        for (MEGAShare *share in _outSharesForNodeMutableArray) {
+        self.outSharesForNodeMutableArray = [self outSharesForNode:self.node];
+        for (MEGAShare *share in self.outSharesForNodeMutableArray) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
             [self.visibleUsersArray addObject:user];
         }
@@ -293,10 +219,10 @@
     }
     
     if ([self.visibleUsersArray count] == 0) {
-        [_editBarButtonItem setEnabled:NO];
+        [self.editBarButtonItem setEnabled:NO];
         self.addParticipantBarButtonItem.enabled = NO;
     } else {
-        [_editBarButtonItem setEnabled:YES];
+        [self.editBarButtonItem setEnabled:YES];
         self.addParticipantBarButtonItem.enabled = YES;
     }
     
@@ -317,7 +243,6 @@
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
-    
     NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
     
     MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
@@ -332,24 +257,102 @@
     return outSharesForNodeMutableArray;
 }
 
-- (void)selectPermissions {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"permissions", nil)
-                                                             delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
-    [actionSheet setTag:1];
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        [actionSheet showInView:self.view];
-    } else {
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+- (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
+        
+        if ([[UIDevice currentDevice] iPad] && sourceButton) {
+            shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
+        } else {
+            shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
+            shareFolderAlertController.popoverPresentationController.sourceView = self.view;
+        }
+        
+        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
     }
 }
 
-- (void)shareFolder {
+- (void)selectPermissionsFromCellRect:(CGRect)cellRect {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self selectPermissions];
+        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
+        
+        shareFolderAlertController.popoverPresentationController.sourceRect = cellRect;
+        shareFolderAlertController.popoverPresentationController.sourceView = self.tableView;
+        
+        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+    }
+}
+
+- (UIAlertController *)prepareShareFolderAlertController {
+    UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessFull];
+    }];
+    [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:fullAccessAlertAction];
+    
+    UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+    }];
+    [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:readAndWritetAlertAction];
+    
+    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessRead];
+    }];
+    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:readOnlyAlertAction];
+    
+    shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    
+    return shareFolderAlertController;
+}
+
+- (void)shareNodesWithLevel:(MEGAShareType)shareType {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initWithNumberOfRequests:self.nodesArray.count completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        if (self.insertedEmail) {
+            for (MEGANode *node in self.nodesArray) {
+                [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:self.insertedEmail level:shareType delegate:shareRequestDelegate];
+            }
+            self.insertedEmail = nil;
+        } else {
+            for (MEGAUser *user in self.selectedUsersArray) {
+                for (MEGANode *node in self.nodesArray) {
+                    [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
+                }
+            }
+        }
+    } else if (self.contactsMode == ContactsModeFolderSharedWith) {
+        void (^completion)(void);
+        if (shareType == MEGAShareTypeAccessUnkown) {
+            completion = ^{
+                if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
+                
+                [self editTapped:self.editBarButtonItem];
+            };
+        } else {
+            completion = ^{
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:self.userTapped.handle];
+                NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+                if (indexPath != nil) {
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+            };
+        }
+        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:1 completion:completion];
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:self.userTapped level:shareType delegate:shareRequestDelegate];
     }
 }
 
@@ -372,78 +375,208 @@
     return  userHasChanged;
 }
 
-- (void)updateNavigationBarTitle {
-    NSNumber *selectedUsersCount = [NSNumber numberWithUnsignedInteger:self.selectedUsersArray.count];
+- (void)setNavigationBarTitle {
+    [self updatePromptTitle];
     
-    NSString *navigationTitle;
-    if (selectedUsersCount.unsignedIntegerValue == 0) {
-        navigationTitle = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
-    } else if (selectedUsersCount.unsignedIntegerValue == 1) {
-        navigationTitle = AMLocalizedString(@"oneContact", @"");
-    } else {
-        navigationTitle = AMLocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has");
-        navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"[X]" withString:selectedUsersCount.stringValue];
+    switch (self.contactsMode) {
+        case ContactsModeDefault:
+        case ContactsModeShareFoldersWith:
+            self.navigationItem.title = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
+            break;
+            
+        case ContactsModeFolderSharedWith:
+            self.navigationItem.title = AMLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder");
+            break;
+            
+        case ContactsModeChatStartConversation:
+            self.navigationItem.title = AMLocalizedString(@"startConversation", @"start a chat/conversation");
+            break;
+            
+        case ContactsModeChatAddParticipant:
+            self.navigationItem.title = AMLocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
+            break;
+            
+        case ContactsModeChatAttachParticipant:
+            self.navigationItem.title = AMLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.");
+            break;
     }
-    self.navigationItem.title = navigationTitle;
+}
+
+- (void)updatePromptTitle {
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+        NSString *promptString;
+        NSNumber *selectedUsersCount = [NSNumber numberWithUnsignedInteger:self.selectedUsersArray.count];
+        if (selectedUsersCount.unsignedIntegerValue == 0) {
+            promptString = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
+        } else if (selectedUsersCount.unsignedIntegerValue == 1) {
+            promptString = AMLocalizedString(@"oneContact", @"");
+        } else {
+            promptString = AMLocalizedString(@"XContactsSelected", @"[X] will be replaced by a plural number, indicating the total number of contacts the user has");
+            promptString = [promptString stringByReplacingOccurrencesOfString:@"[X]" withString:selectedUsersCount.stringValue];
+        }
+        self.navigationItem.prompt = promptString;
+    }
+}
+
+- (void)alertControllerShouldEnableDefaultButtonForEmailTextField:(UITextField *)sender {
+    UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
+    if (addContactFromEmailAlertController) {
+        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
+        NSString *email = textField.text;
+        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;;
+    }
+}
+
+- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
+    [self.tableView setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"done"]];
+        [self.addBarButtonItem setEnabled:NO];
+    } else {
+        [self.editBarButtonItem setImage:[UIImage imageNamed:@"edit"]];
+        self.selectedUsersArray = nil;
+        [self.addBarButtonItem setEnabled:YES];
+    }
+    
+    if (!self.selectedUsersArray) {
+        self.selectedUsersArray = [NSMutableArray new];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+    
+    [self.tabBarController.tabBar addSubview:self.toolbar];
+    
+    [UIView animateWithDuration:animated ? .33 : 0 animations:^{
+        self.toolbar.frame = CGRectMake(0, editing ? 0 : 49 , CGRectGetWidth(self.view.frame), 49);
+    }];
 }
 
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
-    [self.selectedUsersArray removeAllObjects];
-    
-    if (!allUsersSelected) {
-        MEGAUser *u = nil;
+    if (self.selectedUsersArray.count != self.visibleUsersArray.count) {
+        [self.selectedUsersArray removeAllObjects];
         
-        for (NSInteger i = 0; i < [self.visibleUsersArray count]; i++) {
-            u = [self.visibleUsersArray objectAtIndex:i];
-            [self.selectedUsersArray addObject:u];
+        MEGAUser *user = nil;
+        for (NSInteger i = 0; i < self.visibleUsersArray.count; i++) {
+            user = [self.visibleUsersArray objectAtIndex:i];
+            [self.selectedUsersArray addObject:user];
         }
-        
-        allUsersSelected = YES;
     } else {
-        allUsersSelected = NO;
+        [self.selectedUsersArray removeAllObjects];
     }
     
-    if (self.contactsMode == ContactsModeShareFoldersWith) {
-        [self updateNavigationBarTitle];
-    }
+    [self updatePromptTitle];
     
     self.deleteBarButtonItem.enabled = (self.selectedUsersArray.count == 0) ? NO : YES;
     
     [self.tableView reloadData];
-    
 }
 
 - (IBAction)addContact:(UIBarButtonItem *)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:AMLocalizedString(@"addFromEmail", nil), AMLocalizedString(@"addFromContacts", nil), nil];
-    [actionSheet setTag:0];
+    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        [actionSheet showFromBarButtonItem:self.addBarButtonItem animated:YES];
+    UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
+            [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+        }];
+        
+        [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UITextField *textField = [[addContactFromEmailAlertController textFields] firstObject];
+                MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
+                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+        addContactAlertAction.enabled = NO;
+        [addContactFromEmailAlertController addAction:addContactAlertAction];
+        
+        [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
+    }];
+    [addFromEmailAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addContactAlertController addAction:addFromEmailAlertAction];
+    
+    UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if (self.presentedViewController != nil) {
+            [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+        }
+        
+        if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
+            ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
+            contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+            contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            contactsPickerNC.peoplePickerDelegate = self;
+            [self presentViewController:contactsPickerNC animated:YES completion:nil];
+        } else {
+            CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+            contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+            contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
+            contactsPickerViewController.delegate = self;
+            [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+        }
+    }];
+    [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addContactAlertController addAction:addFromContactsAlertAction];
+    
+    addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    if ([[UIDevice currentDevice] iPad]) {
+        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
     } else {
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+        addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
+        addContactAlertController.popoverPresentationController.sourceView = self.view;
     }
+    
+    [self presentViewController:addContactAlertController animated:YES completion:nil];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    
     if (self.contactsMode == ContactsModeFolderSharedWith) {
-        remainingOperations = [self.selectedUsersArray count];
+        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+            if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                [self reloadUI];
+            }
+            
+            [self setTableViewEditing:NO animated:YES];
+        }];
+        
         for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:self];
+            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
         }
     } else {
         NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
+        UIAlertController *removeUserAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
         
-        removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"removeUserTitle", @"Remove user") message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-        [removeAlertView show];
-        removeAlertView.tag = 1;
-        [removeAlertView show];
+        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+                    [self setTableViewEditing:NO animated:NO];
+                }];
+                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:removeContactRequestDelegate];
+                }
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }]];
+        
+        [self presentViewController:removeUserAlertController animated:YES completion:nil];
     }
 }
 
@@ -460,47 +593,70 @@
     self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
     self.groupBarButtonItem.enabled = YES;
     
-    [self setTableViewEditing:NO animated:YES];
+    [self.tableView setEditing:NO animated:YES];
 }
 
 - (IBAction)shareFolderWithAction:(UIBarButtonItem *)sender {
-    if (_selectedUsersArray.count == 0) {
+    if (self.selectedUsersArray.count == 0) {
         return;
     }
     
-    [self shareFolder];
+    [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
 }
 
 - (IBAction)insertAnEmailAction:(UIBarButtonItem *)sender {
-    UIAlertView *insertAnEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"shareFolder", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    [insertAnEmailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [[insertAnEmailAlertView textFieldAtIndex:0] setPlaceholder:AMLocalizedString(@"contactEmail", nil)];
-    [insertAnEmailAlertView setTag:3];
-    [insertAnEmailAlertView show];
+    UIAlertController *insertAnEmailToShareWithAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [insertAnEmailToShareWithAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
+        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+        [self alertControllerShouldEnableDefaultButtonForEmailTextField:textField];
+    }];
+    
+    [insertAnEmailToShareWithAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [insertAnEmailToShareWithAlertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            UITextField *textField = [[insertAnEmailToShareWithAlertController textFields] firstObject];
+            self.insertedEmail = textField.text;
+            [self selectPermissionsFromButton:self.insertAnEmailBarButtonItem];
+            [insertAnEmailToShareWithAlertController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    [insertAnEmailToShareWithAlertController addAction:okAlertAction];
+    okAlertAction.enabled = NO;
+    
+    [self presentViewController:insertAnEmailToShareWithAlertController animated:YES completion:nil];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setTableViewEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    
+    if (self.contactsMode == ContactsModeFolderSharedWith) {
+        self.navigationItem.leftBarButtonItems = enableEditing ? @[self.selectAllBarButtonItem] : @[];
+    }
+    
+    [self setTableViewEditing:enableEditing animated:YES];
 }
 
 - (IBAction)groupAction:(UIBarButtonItem *)sender {
-    BOOL value = ![self.groupBarButtonItem.title isEqualToString:AMLocalizedString(@"ok", nil)];
-    if (value) {
-        self.groupBarButtonItem.title = AMLocalizedString(@"ok", nil);
-        if (self.selectedUsersArray.count == 0) {
-            self.groupBarButtonItem.enabled = NO;
-        }
+    BOOL enableGroupMode = [self.groupBarButtonItem.title isEqualToString:AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.")];
+    if (enableGroupMode) {
+        self.selectedUsersArray = [[NSMutableArray alloc] init];
         self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+        self.groupBarButtonItem.title = AMLocalizedString(@"ok", nil);
+        self.groupBarButtonItem.enabled = NO;
     } else {
+        //Start Group Conversation
         if (self.selectedUsersArray.count > 0) {
             self.userSelected(self.selectedUsersArray);
             [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            self.groupBarButtonItem.title = AMLocalizedString(@"group", @"Title of a menu button which allows users to start a conversation creating a 'Group' chat.");
         }
     }
-    [self setTableViewEditing:value animated:YES];
+    
+    [self.tableView setEditing:enableGroupMode animated:YES];
 }
 
 - (IBAction)addParticipantAction:(UIBarButtonItem *)sender {
@@ -511,10 +667,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
@@ -531,9 +683,7 @@
     return numberOfRows;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
@@ -550,7 +700,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
             cell.nameLabel.text = user.email;
         }
-        MEGAShare *share = [_outSharesForNodeMutableArray objectAtIndex:indexPath.row];
+        MEGAShare *share = [self.outSharesForNodeMutableArray objectAtIndex:indexPath.row];
         [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
     } else if (self.contactsMode >= ContactsModeChatStartConversation) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
@@ -590,7 +740,7 @@
     [view setBackgroundColor:[UIColor mnz_grayF7F7F7]];
     [cell setSelectedBackgroundView:view];
     
-    (self.tableView.isEditing) ? (cell.separatorInset = UIEdgeInsetsMake(0.0, 102.0, 0.0, 0.0)) : (cell.separatorInset = UIEdgeInsetsMake(0.0, 60.0, 0.0, 0.0));
+    cell.separatorInset = (self.tableView.isEditing) ? UIEdgeInsetsMake(0.0, 96.0, 0.0, 0.0) : UIEdgeInsetsMake(0.0, 58.0, 0.0, 0.0);
     
     return cell;
 }
@@ -625,55 +775,70 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-    
-    if (tableView.isEditing) {
-        [self.selectedUsersArray addObject:user];
-        [self.deleteBarButtonItem setEnabled:YES];
-        
-        if (self.selectedUsersArray.count == [self.visibleUsersArray count]) {
-            allUsersSelected = YES;
-        } else {
-            allUsersSelected = NO;
-        }
-        
-        if (self.contactsMode == ContactsModeShareFoldersWith) {
-            [self updateNavigationBarTitle];
-        } else if (self.contactsMode == ContactsModeChatStartConversation && self.selectedUsersArray.count > 0 ) {
-            self.groupBarButtonItem.enabled = YES;
-        }
-        
-        return;
-    }
-    
     if (!user) {
         [SVProgressHUD showErrorWithStatus:@"Invalid user"];
         return;
     }
     
-    if (self.contactsMode == ContactsModeFolderSharedWith) {
-        userTapped = user;
-        [self selectPermissions];
-    } else if (self.contactsMode == ContactsModeChatStartConversation) {
-        self.userSelected(@[user]);
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-        contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-        contactDetailsVC.userEmail = user.email;
-        contactDetailsVC.userName = user.mnz_fullName;
-        contactDetailsVC.userHandle = user.handle;
-        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+    switch (self.contactsMode) {
+        case ContactsModeDefault: {
+            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+            contactDetailsVC.userEmail = user.email;
+            contactDetailsVC.userName = user.mnz_fullName;
+            contactDetailsVC.userHandle = user.handle;
+            [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            break;
+        }
+            
+        case ContactsModeShareFoldersWith:
+            if (tableView.isEditing) {
+                [self.selectedUsersArray addObject:user];
+                [self updatePromptTitle];
+                return;
+            }
+            break;
+            
+        case ContactsModeFolderSharedWith:
+            if (tableView.isEditing) {
+                [self.selectedUsersArray addObject:user];
+                self.deleteBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
+                return;
+            }
+            
+            self.userTapped = user;
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            [self selectPermissionsFromCellRect:cellRect];
+            break;
+            
+        case ContactsModeChatStartConversation: {
+            if (tableView.isEditing) {
+                [self.selectedUsersArray addObject:user];
+                self.groupBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
+                return;
+            }
+            
+            self.userSelected(@[user]);
+            [self dismissViewControllerAnimated:YES completion:nil];
+            break;
+        }
+            
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant:
+            if (tableView.isEditing) {
+                [self.selectedUsersArray addObject:user];
+                return;
+            }
+            break;
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
-        
         //tempArray avoid crash: "was mutated while being enumerated."
         NSMutableArray *tempArray = [self.selectedUsersArray copy];
         for (MEGAUser *u in tempArray) {
@@ -682,9 +847,7 @@
             }
         }
         
-        if (self.contactsMode == ContactsModeShareFoldersWith) {
-            [self updateNavigationBarTitle];
-        }
+        [self updatePromptTitle];
         
         if (self.selectedUsersArray.count == 0) {
             if (self.contactsMode != ContactsModeChatStartConversation) {
@@ -694,13 +857,15 @@
             }
         }
         
-        allUsersSelected = NO;
-        
         return;
     }
 }
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.contactsMode == ContactsModeDefault || self.contactsMode == ContactsModeFolderSharedWith) {
+        return;
+    }
+    
     [self setTableViewEditing:YES animated:YES];
 }
 
@@ -709,6 +874,10 @@
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.contactsMode == ContactsModeChatStartConversation) {
+        return UITableViewCellEditingStyleNone;
+    }
+    
     MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
     
     self.selectedUsersArray = [NSMutableArray new];
@@ -716,132 +885,52 @@
     
     [self.deleteBarButtonItem setEnabled:YES];
     
-    isSwipeEditing = YES;
-    
     return (UITableViewCellEditingStyleDelete);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle==UITableViewCellEditingStyleDelete) {
-        remainingOperations = 1;
-        
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
+                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+                    [self setTableViewEditing:NO animated:NO];
+                }];
                 MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row];
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:self];
+                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
                 break;
             }
-            
+                
             case ContactsModeShareFoldersWith:
-            case ContactsModeShareFoldersWithEmail:
                 break;
                 
             case ContactsModeFolderSharedWith: {
                 [self deleteAction:self.deleteBarButtonItem];
                 break;
             }
-            
+                
             default:
                 break;
         }
     }
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (actionSheet.tag) {
-        case 0: {
-            if (buttonIndex == 0) {
-                UIAlertView *emailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"addContact", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"addContactButton", nil), nil];
-                [emailAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                [emailAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"contactEmail", nil);
-                emailAlertView.tag = 0;
-                [emailAlertView show];
-            } else if (buttonIndex == 1) {
-                if (self.presentedViewController != nil) {
-                    [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-                }
-            
-                if ([[[UIDevice currentDevice] systemVersion] floatValue] < 9.0) {
-                    ABPeoplePickerNavigationController *contactsPickerNC = [[ABPeoplePickerNavigationController alloc] init];
-                    contactsPickerNC.predicateForEnablingPerson = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-                    contactsPickerNC.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-                    contactsPickerNC.peoplePickerDelegate = self;
-                    [self presentViewController:contactsPickerNC animated:YES completion:nil];
-                } else {
-                    CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
-                    contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
-                    contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
-                    contactsPickerViewController.delegate = self;
-                    [self presentViewController:contactsPickerViewController animated:YES completion:nil];
-                }
-            }
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *titleForDeleteConfirmationButton;
+    switch (self.contactsMode) {
+        case ContactsModeShareFoldersWith:
+        case ContactsModeChatStartConversation:
+        case ContactsModeChatAddParticipant:
+        case ContactsModeChatAttachParticipant:
+            titleForDeleteConfirmationButton = @"";
             break;
-        }
         
-        case 1: {
-            NSInteger level;
-            switch (buttonIndex) {
-                case 0:
-                    level = MEGAShareTypeAccessRead;
-                    break;
-                    
-                case 1:
-                    level = MEGAShareTypeAccessReadWrite;
-                    break;
-                    
-                case 2:
-                    level = MEGANodeAccessLevelFull;
-                    break;
-                    
-                default:
-                    return;
-            }
-            
-            if (self.contactsMode == ContactsModeShareFoldersWith) {
-                remainingOperations = self.selectedUsersArray.count;
-            } else if (self.contactsMode == ContactsModeShareFoldersWithEmail) {
-                remainingOperations = [self.nodesArray count];
-            } else if (self.contactsMode == ContactsModeFolderSharedWith) {
-                remainingOperations = 1;
-            }
-            
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            
-            switch (self.contactsMode) {
-                case ContactsModeShareFoldersWith: {
-                    for (MEGAUser *u in self.selectedUsersArray) {
-                        for (MEGANode *node in self.nodesArray) {
-                            [[MEGASdkManager sharedMEGASdk] shareNode:node withUser:u level:level delegate:self];
-                        }
-                    }
-                    break;
-                }
-                    
-                case ContactsModeShareFoldersWithEmail: {
-                    for (MEGANode *node in self.nodesArray) {
-                        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:_email level:level delegate:self];
-                    }
-                    _email = nil;
-                    break;
-                }
-                    
-                case ContactsModeFolderSharedWith: {
-                    [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:userTapped level:level delegate:self];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-            
-        default:
+        case ContactsModeDefault:
+        case ContactsModeFolderSharedWith:
+            titleForDeleteConfirmationButton = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
             break;
     }
+    
+    return titleForDeleteConfirmationButton;
 }
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
@@ -858,12 +947,16 @@
     }
 
     if (email) {
-        remainingOperations = 1;
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
+        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     } else {
-        UIAlertView *noEmailAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"contactWithoutEmail", nil) message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"ok", nil) otherButtonTitles:nil, nil];
-        noEmailAlertView.tag = 2;
-        [noEmailAlertView show];
+        UIAlertController *contactHasNoEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"contactWithoutEmail", @"Alert title shown when you add a contact from your device and the selected one doesn't have an email.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
+        [contactHasNoEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        [self presentViewController:contactHasNoEmailAlertController animated:YES completion:nil];
     }
     
     if (emails) {
@@ -874,57 +967,10 @@
 #pragma mark - CNContactPickerDelegate
 
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
-    self.addingMoreThanOneContact = (contactProperties.count > 1) ? YES : NO;
-    remainingOperations = contactProperties.count;
+    NSUInteger usersCount = contactProperties.count;
+    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:self];
-    }
-}
-
-#pragma mark - UIAlertDelegate
-
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
-    BOOL shouldEnable = YES;
-    if ([alertView tag] == 0 || [alertView tag] == 3) {
-        NSString *email = [[alertView textFieldAtIndex:0] text];
-        shouldEnable = (email.length > 0) ? [Helper validateEmail:email] : NO;
-    }
-    
-    return shouldEnable;
-}
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 3) { //insertAnEmailAlertView
-        [[alertView textFieldAtIndex:0] resignFirstResponder];
-        
-        if (buttonIndex == 1) {
-            self.contactsMode = ContactsModeShareFoldersWithEmail;
-            
-            _email = [[alertView textFieldAtIndex:0] text];
-            [self shareFolder];
-        }
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 0) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                remainingOperations = 1;
-                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[[alertView textFieldAtIndex:0] text] message:@"" action:MEGAInviteActionAdd delegate:self];
-            }
-        }
-    } else if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                remainingOperations = self.selectedUsersArray.count;
-                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:self];
-                }
-            }
-        }
-    } else if (alertView.tag == 2) {
-    
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
 
@@ -988,94 +1034,7 @@
 #pragma mark - DZNEmptyDataSetDelegate Methods
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addContact:_addBarButtonItem];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        if ([request type] == MEGARequestTypeInviteContact) {
-            if (error.type == MEGAErrorTypeApiEArgs && [request.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
-            } else if (error.type == MEGAErrorTypeApiEExist) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
-            } else {
-                [SVProgressHUD showErrorWithStatus:error.name];
-            }
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.name];
-        }
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeInviteContact: {
-            remainingOperations--;
-            if (remainingOperations == 0) {
-                NSString *alertTitle;
-                if (self.addingMoreThanOneContact) {
-                    alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
-                } else {
-                    alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-                    alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                }
-                
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeRemoveContact: {
-            remainingOperations--;
-            if (remainingOperations == 0) {
-                NSString *message = (self.selectedUsersArray.count <= 1 ) ? [NSString stringWithFormat:AMLocalizedString(@"removedContact", nil), [request email]] : [NSString stringWithFormat:AMLocalizedString(@"removedContacts", nil), self.selectedUsersArray.count];
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
-                [self setTableViewEditing:NO animated:NO];
-            }
-            
-            break;
-        }
-            
-        case MEGARequestTypeShare: {
-            remainingOperations--;
-            if (remainingOperations == 0) {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                
-                if (self.contactsMode == ContactsModeFolderSharedWith) {
-                    if ([request access] == MEGAShareTypeAccessUnkown) {
-                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
-                        
-                        if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
-                            [self.navigationController popToRootViewControllerAnimated:YES];
-                        }
-                        
-                        [self editTapped:_editBarButtonItem];
-                        
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
-                        
-                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[request email]];
-                        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
-                        if (indexPath != nil) {
-                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                        }
-                    }
-                } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
+    [self addContact:self.addBarButtonItem];
 }
 
 #pragma mark - MEGAGlobalDelegate

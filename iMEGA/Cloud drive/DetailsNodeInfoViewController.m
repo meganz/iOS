@@ -18,6 +18,7 @@
 #import "OpenInActivity.h"
 #import "RemoveLinkActivity.h"
 #import "MEGAActivityItemProvider.h"
+#import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 
 @interface DetailsNodeInfoViewController () <UIAlertViewDelegate, UIDocumentInteractionControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MEGADelegate> {
@@ -116,9 +117,7 @@
         if ((self.displayMode == DisplayModeSharedItem) && (accessType != MEGAShareTypeAccessOwner)) {
             [self setNavigationBarTitleLabel];
         }
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -274,8 +273,9 @@
 
 - (void)removeSharing {
     NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:self.node];
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesOfNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesOfNodeMutableArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:[share user] level:MEGAShareTypeAccessUnkown];
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -390,26 +390,10 @@
     if ([alertView tag] == 0) {
         UITextField *textField = [alertView textFieldAtIndex:0];
         NSString *newName = [textField text];
-        NSString *newNameExtension = [newName pathExtension];
-        NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
-        
         NSString *nodeNameString = [self.node name];
-        NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
         
         switch ([self.node type]) {
-            case MEGANodeTypeFile: {
-                if ([newName isEqualToString:@""] ||
-                    [newName isEqualToString:nodeNameString] ||
-                    [newName isEqualToString:nodeNameExtension] ||
-                    ![[NSString stringWithFormat:@".%@", newNameExtension] isEqualToString:nodeNameExtension] || //Particular case, for example: (.jp == .jpg)
-                    [newNameWithoutExtension isEqualToString:nodeNameExtension]) {
-                    shouldEnable = NO;
-                } else {
-                    shouldEnable = YES;
-                }
-                break;
-            }
-                
+            case MEGANodeTypeFile:
             case MEGANodeTypeFolder: {
                 if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString]) {
                     shouldEnable = NO;
@@ -937,33 +921,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     BOOL shouldChangeCharacters = YES;
     switch ([self.node type]) {
-        case MEGANodeTypeFile: {
-            NSString *textFieldString = [textField text];
-            NSString *newName = [textFieldString stringByReplacingCharactersInRange:range withString:string];
-            NSString *newNameExtension = [newName pathExtension];
-            NSString *newNameWithoutExtension = [newName stringByDeletingPathExtension];
-            
-            NSString *nodeNameString = [self.node name];
-            NSString *nodeNameExtension = [NSString stringWithFormat:@".%@", [nodeNameString pathExtension]];
-            
-            NSRange nodeWithoutExtensionRange = [[textFieldString stringByDeletingPathExtension] rangeOfString:[textFieldString stringByDeletingPathExtension]];
-            NSRange nodeExtensionStartRange = [textFieldString rangeOfString:@"." options:NSBackwardsSearch];
-            
-            if ((range.location > nodeExtensionStartRange.location) ||
-                (range.length > nodeWithoutExtensionRange.length) ||
-                ([newName isEqualToString:newNameExtension] && [newNameWithoutExtension isEqualToString:nodeNameExtension]) ||
-                ((range.location == nodeExtensionStartRange.location) && [string isEqualToString:@""])) {
-                
-                UITextPosition *beginning = textField.beginningOfDocument;
-                UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:nodeExtensionStartRange.location];
-                [textField setSelectedTextRange:[textField textRangeFromPosition:beginning toPosition:beforeExtension]];
-                shouldChangeCharacters = NO;
-            } else if (range.location < nodeExtensionStartRange.location) {
-                shouldChangeCharacters = YES;
-            }
-            break;
-        }
-            
+        case MEGANodeTypeFile:
         case MEGANodeTypeFolder:
             shouldChangeCharacters = YES;
             break;
@@ -1001,28 +959,6 @@
             [self.tableView reloadData];
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             break;
-            
-        case MEGARequestTypeShare: {
-            
-            remainingOperations--;
-            
-            if (remainingOperations == 0) {
-                switch ([request access]) {
-                    case MEGAShareTypeAccessUnkown:
-                        if (numberOfShares > 1) {
-                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"sharesRemoved", nil)];
-                        } else {
-                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
-                        }
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }
-            
-            break;
-        }
             
         case MEGARequestTypeMove:
         case MEGARequestTypeRemove: {
