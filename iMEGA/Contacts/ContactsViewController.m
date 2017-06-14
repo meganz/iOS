@@ -257,34 +257,12 @@
     return outSharesForNodeMutableArray;
 }
 
-- (void)selectPermissions {
+- (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }]];
+        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
         
-        UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessFull];
-        }];
-        [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [shareFolderAlertController addAction:fullAccessAlertAction];
-        
-        UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
-        }];
-        [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [shareFolderAlertController addAction:readAndWritetAlertAction];
-        
-        UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self shareNodesWithLevel:MEGAShareTypeAccessRead];
-        }];
-        [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [shareFolderAlertController addAction:readOnlyAlertAction];
-        
-        shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        if ([[UIDevice currentDevice] iPad]) {
-            shareFolderAlertController.popoverPresentationController.barButtonItem = self.shareFolderWithBarButtonItem;
+        if ([[UIDevice currentDevice] iPad] && sourceButton) {
+            shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
         } else {
             shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
             shareFolderAlertController.popoverPresentationController.sourceView = self.view;
@@ -292,6 +270,46 @@
         
         [self presentViewController:shareFolderAlertController animated:YES completion:nil];
     }
+}
+
+- (void)selectPermissionsFromCellRect:(CGRect)cellRect {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
+        
+        shareFolderAlertController.popoverPresentationController.sourceRect = cellRect;
+        shareFolderAlertController.popoverPresentationController.sourceView = self.tableView;
+        
+        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+    }
+}
+
+- (UIAlertController *)prepareShareFolderAlertController {
+    UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessFull];
+    }];
+    [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:fullAccessAlertAction];
+    
+    UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+    }];
+    [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:readAndWritetAlertAction];
+    
+    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self shareNodesWithLevel:MEGAShareTypeAccessRead];
+    }];
+    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [shareFolderAlertController addAction:readOnlyAlertAction];
+    
+    shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    
+    return shareFolderAlertController;
 }
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
@@ -583,7 +601,7 @@
         return;
     }
     
-    [self selectPermissions];
+    [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
 }
 
 - (IBAction)insertAnEmailAction:(UIBarButtonItem *)sender {
@@ -603,7 +621,7 @@
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[insertAnEmailToShareWithAlertController textFields] firstObject];
             self.insertedEmail = textField.text;
-            [self selectPermissions];
+            [self selectPermissionsFromButton:self.insertAnEmailBarButtonItem];
             [insertAnEmailToShareWithAlertController dismissViewControllerAnimated:YES completion:nil];
         }
     }];
@@ -789,7 +807,8 @@
             }
             
             self.userTapped = user;
-            [self selectPermissions];
+            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
+            [self selectPermissionsFromCellRect:cellRect];
             break;
             
         case ContactsModeChatStartConversation: {
