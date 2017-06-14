@@ -376,6 +376,8 @@
 "permissionMessage"="Comprueba tus permisos sobre esta carpeta";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Carpeta compartida";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d carpetas fueron compartidas";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
