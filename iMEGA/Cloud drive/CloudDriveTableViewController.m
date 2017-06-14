@@ -1270,8 +1270,8 @@
     [moreAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-        [self setEditing:value animated:YES];
+        BOOL enableEditing = !self.tableView.isEditing;
+        [self setEditing:enableEditing animated:YES];
     }];
     [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:selectAlertAction];
@@ -1290,8 +1290,8 @@
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {

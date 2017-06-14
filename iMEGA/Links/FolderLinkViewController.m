@@ -310,8 +310,8 @@
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
