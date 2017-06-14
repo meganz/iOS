@@ -1034,3 +1034,5 @@
 "contactRequest" = "Pedido de Contacto";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "Nova Pasta Partilhada";
+/* Describe how works auto-renewable subscriptions on the Apple Store */
+"autorenewableDescription"="As subscrições são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Pode anular a renovação automática da sua subscrição MEGA  PRO até 24 horas antes do próximo pagamento da subscrição fazendo-o através da página de configurações da sua conta iTunes. Para gerir as suas subscrições basta clicar no ícone da App Store no seu dispositivo, entrar com seu ID da Apple na parte inferior da página (se ainda não o tiver feito) e, em seguida, clicar em Ver ID. Aí será direccionado à página da sua conta onde pode rolar para baixo para gerir as suas subscrições. A partir daqui, pode seleccionar a sua subscrição MEGA Pro e ver a sua data de renovação programada, escolher um pacote de subscrição diferente ou puxar o botão on-off para fora para desactivar a renovação automática da sua subscrição.";

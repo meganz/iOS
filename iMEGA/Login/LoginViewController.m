@@ -7,9 +7,10 @@
 #import "MEGANavigationController.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGALoginRequestDelegate.h"
+#import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
-#import "LaunchViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
@@ -108,11 +109,12 @@
     NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.passwordTextField.text];
     NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.emailTextField.text];
     
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.emailTextField.text stringHash:publicKey base64pwKey:privateKey delegate:self];
+    MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.emailTextField.text stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
 }
 
 - (BOOL)validateForm {
-    if (![Helper validateEmail:self.emailTextField.text]) {
+    if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -197,7 +199,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeLoginButtonGray = NO;
-    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
         shoulBeLoginButtonGray = YES;
     } else {
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -230,73 +232,6 @@
     }
     
     return YES;
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    if ([request type] == MEGARequestTypeLogin) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-    }
-}
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD dismiss];
-        NSString *alertMessage;
-        switch ([error type]) {
-            case MEGAErrorTypeApiEArgs:
-            case MEGAErrorTypeApiENoent:
-                alertMessage = AMLocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
-                [self.emailTextField becomeFirstResponder];
-                break;
-                
-            case MEGAErrorTypeApiETooMany:
-                alertMessage = [NSString stringWithFormat:AMLocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
-                break;
-                
-            case MEGAErrorTypeApiEIncomplete:
-                alertMessage = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
-                break;
-                
-            case MEGAErrorTypeApiEBlocked:
-                alertMessage = AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended");
-                break;
-                
-            default:
-                alertMessage = error.name;
-                break;
-        }
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeLogin: {
-            NSString *session = [[MEGASdkManager sharedMEGASdk] dumpSession];
-            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-            
-            LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-            UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-            [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-                [window setRootViewController:launchVC];
-            } completion:nil];
-            [[UIApplication sharedApplication] setStatusBarHidden:YES];
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end
