@@ -632,13 +632,13 @@
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
+    BOOL enableEditing = !self.tableView.isEditing;
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
-        self.navigationItem.leftBarButtonItems = value ? @[self.selectAllBarButtonItem] : @[];
+        self.navigationItem.leftBarButtonItems = enableEditing ? @[self.selectAllBarButtonItem] : @[];
     }
     
-    [self setTableViewEditing:value animated:YES];
+    [self setTableViewEditing:enableEditing animated:YES];
 }
 
 - (IBAction)groupAction:(UIBarButtonItem *)sender {

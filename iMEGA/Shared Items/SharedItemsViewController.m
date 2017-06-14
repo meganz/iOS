@@ -309,10 +309,10 @@
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
     
-    if (value) {
+    if (enableEditing) {
         _selectedNodesMutableArray = [[NSMutableArray alloc] init];
         _selectedSharesMutableArray = [[NSMutableArray alloc] init];
         
