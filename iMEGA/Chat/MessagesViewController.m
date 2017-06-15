@@ -455,18 +455,20 @@
      */
     
     // [JSQSystemSoundPlayer jsq_playMessageSentSound];
-
+    MEGAChatMessage *message;
     if (!self.editMessage) {
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
+        message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
     } else {
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+        message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
         message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
         [self.messages replaceObjectAtIndex:index withObject:message];
         self.editMessage = nil;
     }
+    
+    MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
 }

@@ -54,6 +54,8 @@
     [super viewWillAppear:animated];
     
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
+    
+    [[MEGALogger sharedLogger] enableChatlogs];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -190,7 +192,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         (alertView.tag == 0) ? [[MEGALogger sharedLogger] stopLogging] : [[MEGALogger sharedLogger] startLogging];
-        [[MEGALogger sharedLogger] useChatSDKLogger];
     }
 }
 
