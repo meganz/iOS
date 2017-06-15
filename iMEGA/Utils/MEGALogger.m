@@ -1,5 +1,6 @@
 
 #import "MEGALogger.h"
+#import "MEGASdkManager.h"
 
 @implementation MEGALogger
 
@@ -15,9 +16,8 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)startLogging {
-    [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:[MEGALogger sharedLogger]] : [MEGASdk setLogObject:[MEGALogger sharedLogger]];
-    
     NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stdout);
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
     
     [MEGASdk setLogLevel:MEGALogLevelMax];
@@ -28,8 +28,6 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)stopLogging {
-    [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:nil] : [MEGASdk setLogObject:nil];
-    
     NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
         [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
@@ -44,50 +42,14 @@ static MEGALogger *_megaLogger = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)useSDKLogger {
-    [MEGAChatSdk setLogObject:nil];
-    [MEGASdk setLogObject:_megaLogger];
+- (void)enableSDKlogs {
+    [MEGAChatSdk setLogToConsole:NO];
+    [MEGASdk setLogToConsole:YES];
 }
 
-- (void)useChatSDKLogger {
-    [MEGASdk setLogObject:nil];
-    [MEGAChatSdk setLogObject:_megaLogger];
-}
-
-- (void)logWithTime:(NSString *)time logLevel:(NSInteger)logLevel source:(NSString *)source message:(NSString *)message {
-    NSString *m = [[NSString alloc] init];
-    
-    switch (logLevel) {
-        case MEGALogLevelDebug:
-            m = [m stringByAppendingString:@" (debug) "];
-            break;
-        case MEGALogLevelError:
-            m = [m stringByAppendingString:@" (error) "];
-            break;
-        case MEGALogLevelFatal:
-            m = [m stringByAppendingString:@" (fatal) "];
-            break;
-        case MEGALogLevelInfo:
-            m = [m stringByAppendingString:@" (info) "];
-            break;
-        case MEGALogLevelMax:
-            m = [m stringByAppendingString:@" (verb) "];
-            break;
-        case MEGALogLevelWarning:
-            m = [m stringByAppendingString:@" (warn) "];
-            break;
-            
-        default:
-            break;
-    }
-    
-    m = [m stringByAppendingString:message];
-    m = [m stringByAppendingString:source];
-    NSLog(@"%@", m);
-}
-
-- (void)logWithLevel:(NSInteger)logLevel message:(NSString *)message {
-    fprintf(stderr, "%s", [message UTF8String]);
+- (void)enableChatlogs {
+    [MEGASdk setLogToConsole:NO];
+    [MEGAChatSdk setLogToConsole:YES];
 }
 
 @end

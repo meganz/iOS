@@ -3,14 +3,14 @@
 #import "MEGASdk.h"
 #import "MEGAChatSdk.h"
 
-@interface MEGALogger : NSObject <MEGALoggerDelegate, MEGAChatLoggerDelegate>
+@interface MEGALogger : NSObject
 
 + (MEGALogger *)sharedLogger;
 
 - (void)startLogging;
 - (void)stopLogging;
 
-- (void)useSDKLogger;
-- (void)useChatSDKLogger;
+- (void)enableSDKlogs;
+- (void)enableChatlogs;
 
 @end

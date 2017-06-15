@@ -220,6 +220,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
             
+            [[MEGALogger sharedLogger] enableChatlogs];
+            
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
             if (chatInit == MEGAChatInitNoCache) {
                 [[MEGASdkManager sharedMEGASdk] invalidateCache];
@@ -232,6 +234,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
+        } else {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -1792,7 +1796,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] useSDKLogger];
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
     }
