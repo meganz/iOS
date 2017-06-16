@@ -1267,7 +1267,6 @@
         [self presentSortByViewController];
     }];
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-
     [moreAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
