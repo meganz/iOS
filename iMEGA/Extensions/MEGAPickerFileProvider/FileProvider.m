@@ -3,13 +3,19 @@
 
 #import "SAMKeychain.h"
 
+#import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
+#import "MEGATransferDelegate.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
 
-@interface FileProvider ()
+@interface FileProvider () <MEGARequestDelegate, MEGATransferDelegate>
+
+@property (nonatomic) MEGANode *oldNode;
+@property (nonatomic) NSURL *url;
+@property (nonatomic) dispatch_semaphore_t semaphore;
 
 @end
 
@@ -24,7 +30,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self.fileCoordinator coordinateWritingItemAtURL:[self documentStorageURL] options:0 error:nil byAccessor:^(NSURL *newURL) {
+        [self.fileCoordinator coordinateWritingItemAtURL:self.documentStorageURL options:0 error:nil byAccessor:^(NSURL *newURL) {
             // ensure the documentStorageURL actually exists
             NSError *error = nil;
             [[NSFileManager defaultManager] createDirectoryAtURL:newURL withIntermediateDirectories:YES attributes:nil error:&error];
@@ -39,8 +45,8 @@
     
     NSURL *placeholderURL = [NSFileProviderExtension placeholderURLForURL:[self.documentStorageURL URLByAppendingPathComponent:fileName]];
     
-    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[url path] error:nil][NSFileSize] unsignedIntegerValue];
-    NSDictionary* metadata = @{ NSURLFileSizeKey : @(fileSize)};
+    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil][NSFileSize] unsignedIntegerValue];
+    NSDictionary *metadata = @{NSURLFileSizeKey : @(fileSize)};
     [NSFileProviderExtension writePlaceholderAtURL:placeholderURL withMetadata:metadata error:NULL];
     
     if (completionHandler) {
@@ -53,14 +59,12 @@
     NSError *fileError = nil;
     
     NSData *fileData = [NSData dataWithContentsOfURL:url];
-    
     [fileData writeToURL:url options:0 error:&fileError];
     
     if (completionHandler) {
         completionHandler(nil);
     }
 }
-
 
 - (void)itemChangedAtURL:(NSURL *)url {
     // Called at some point after the file has changed; the provider may then trigger an upload
@@ -78,7 +82,6 @@
 #endif
     
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    
     if(session) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
         dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
@@ -108,20 +111,18 @@
     switch ([request type]) {
         case MEGARequestTypeLogin: {
             [api fetchNodesWithDelegate:self];
-            
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
             // Given that the remote file cannot be modified, the new version of the file must be uploaded. Then, it is
             // safe to remove the old file. The file to be uploaded goes to the folder pointed by the parentHandle.
-            NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: @"group.mega.ios"];
-            NSString *base64Handle = [mySharedDefaults objectForKey:[self.url absoluteString]];
+            NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSString *base64Handle = [mySharedDefaults objectForKey:self.url.absoluteString];
             uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
-            self.oldNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-            MEGANode *parent = [[MEGASdkManager sharedMEGASdk] parentNodeForNode:self.oldNode];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[self.url path] parent:parent delegate:self];
-            
+            self.oldNode = [api nodeForHandle:handle];
+            MEGANode *parent = [api parentNodeForNode:self.oldNode];
+            [api startUploadWithLocalPath:self.url.path parent:parent];
             break;
         }
             

@@ -1,20 +1,28 @@
 
 #import "DocumentPickerViewController.h"
 
+#import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "BrowserViewController.h"
 #import "Helper.h"
 #import "LaunchViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGARequestDelegate.h"
+
+#import "BrowserViewController.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
 
-@interface DocumentPickerViewController ()
+@interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
-@property (nonatomic) BOOL sessionLoaded;
+@property (weak, nonatomic) IBOutlet UIImageView *megaLogoImageView;
+@property (weak, nonatomic) IBOutlet UITextView *loginTextView;
+@property (weak, nonatomic) IBOutlet UIButton *openButton;
+@property (nonatomic) NSString *session;
+@property (nonatomic) UIView *privacyView;
+
 @property (nonatomic) BOOL pickerPresented;
 @property (nonatomic) BOOL passcodePresented;
 
@@ -22,9 +30,9 @@
 
 @implementation DocumentPickerViewController
 
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
-    self.sessionLoaded = NO;
     self.pickerPresented = NO;
     self.passcodePresented = NO;
     
@@ -49,7 +57,7 @@
     }
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!self.pickerPresented) {
         [self configureUI];
@@ -62,8 +70,7 @@
     [SVProgressHUD show];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
-    if(self.session) {
-        self.sessionLoaded = YES;
+    if (self.session) {
         // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -80,10 +87,11 @@
         // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD dismiss];
-        [self.openMega setTitle:AMLocalizedString(@"openButton", @"Open MEGA button from the Document Provider") forState:UIControlStateNormal];
-        self.megaLogo.hidden = NO;
-        self.loginText.hidden= NO;
-        self.openMega.hidden = NO;
+        self.loginTextView.text = AMLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
+        [self.openButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+        self.megaLogoImageView.hidden = NO;
+        self.loginTextView.hidden = NO;
+        self.openButton.hidden = NO;
     }
 }
 
@@ -92,15 +100,16 @@
         [self.privacyView removeFromSuperview];
         self.privacyView = nil;
     }
-    if(!self.sessionLoaded) {
-        self.megaLogo.hidden = YES;
-        self.loginText.hidden= YES;
-        self.openMega.hidden = YES;
-        [self configureUI];
-    } else {
+    
+    if (self.session) {
         if ([LTHPasscodeViewController doesPasscodeExist]) {
             [self presentPasscode];
         }
+    } else {
+        self.megaLogoImageView.hidden = YES;
+        self.loginTextView.hidden = YES;
+        self.openButton.hidden = YES;
+        [self configureUI];
     }
 }
 
@@ -121,7 +130,7 @@
 }
 
 - (void)documentReadyAtPath:(NSString *)path withBase64Handle:(NSString *)base64Handle{
-    NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: @"group.mega.ios"];
+    NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
     // URLByResolvingSymlinksInPath avoids the /private
     NSString *key = [[NSURL fileURLWithPath:path].URLByResolvingSymlinksInPath absoluteString];
     [mySharedDefaults setObject:base64Handle forKey:key];
@@ -142,14 +151,12 @@
                                                                   bundle:[NSBundle bundleForClass:BrowserViewController.class]];
         MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        
-        browserVC.selectedNodesArray = @[];
-        [browserVC setBrowserAction:BrowserActionDocumentProvider];
+        browserVC.browserAction = BrowserActionDocumentProvider;
+        browserVC.browserViewControllerDelegate = self;
         
         [self addChildViewController:navigationController];
         [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
         [self.view addSubview:navigationController.view];
-        browserVC.browserViewControllerDelegate = self;
         self.pickerPresented = YES;
     }
 }
@@ -172,7 +179,7 @@
 
 - (void)didSelectNode:(MEGANode *)node {
     NSString *destinationPath = [self appGroupContainerURL];
-    NSString *fileName = [node name];
+    NSString *fileName = node.name;
     NSString *documentFilePath = [destinationPath stringByAppendingPathComponent:fileName];
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
@@ -183,7 +190,7 @@
         // With file versioning, we may add the local copy to the array of versions before deleting it.
         NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:documentFilePath];
         if ([localFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]]) {
-            [self documentReadyAtPath:documentFilePath withBase64Handle:[node base64Handle]];
+            [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
         } else {
             [[NSFileManager defaultManager] removeItemAtPath:documentFilePath error:nil];
             [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
@@ -220,7 +227,7 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    float percentage = [[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue];
+    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
     [SVProgressHUD showProgress:percentage status:percentageCompleted];
 }
