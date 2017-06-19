@@ -277,6 +277,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    
     BOOL pendingTransfers = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTransfers) {
         [self startBackgroundTask];
@@ -297,6 +299,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
+    
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
         MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
