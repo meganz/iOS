@@ -83,10 +83,12 @@
 }
 
 - (void)willResignActive {
-    UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-    [privacyVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    self.privacyView = privacyVC.view;
-    [self.view addSubview:self.privacyView];
+    if (self.session) {
+        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.privacyView = privacyVC.view;
+        [self.view addSubview:self.privacyView];
+    }
 }
 
 #pragma mark - Private
