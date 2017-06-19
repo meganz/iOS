@@ -20,6 +20,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *megaLogoImageView;
 @property (weak, nonatomic) IBOutlet UITextView *loginTextView;
 @property (weak, nonatomic) IBOutlet UIButton *openButton;
+
+@property (nonatomic) LaunchViewController *launchVC;
+@property (nonatomic, getter=isFirstFetchNodesRequestUpdate) BOOL firstFetchNodesRequestUpdate;
+@property (nonatomic, getter=isFirstAPI_EAGAIN) BOOL firstAPI_EAGAIN;
+@property (nonatomic) NSTimer *timerAPI_EAGAIN;
+
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
 
@@ -96,10 +102,7 @@
 - (void)configureUI {
     [self configureProgressHUD];
     [SVProgressHUD setViewForExtension:self.view];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    
     if (self.session) {
         // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
@@ -109,14 +112,11 @@
             }
             [self presentPasscode];
         } else {
-            [self presentDocumentPicker];
+            [self loginToMEGA];
         }
-        
     } else {
         // The user either needs to login or logged in before the current version of the MEGA app, so there is
         // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD dismiss];
         self.loginTextView.text = AMLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
         [self.openButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
         self.megaLogoImageView.hidden = NO;
@@ -159,13 +159,20 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
-- (void)presentDocumentPicker {
+- (void)loginToMEGA {
     self.navigationItem.title = @"MEGA";
+    
+    LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+    launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    self.launchVC = launchVC;
+    [self.view addSubview:launchVC.view];
+    
+    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
+}
+
+- (void)presentDocumentPicker {
     if (!self.pickerPresented) {
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
-        
-        UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud"
-                                                                  bundle:[NSBundle bundleForClass:BrowserViewController.class]];
+        UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
         MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
         browserVC.browserAction = BrowserActionDocumentProvider;
@@ -190,6 +197,14 @@
         [self presentViewController:passcodeVC animated:NO completion:nil];
         self.passcodePresented = YES;
     }
+}
+
+- (void)startTimerAPI_EAGAIN {
+    self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
+}
+
+- (void)showServersTooBusy {
+    [self.launchVC.label setText:AMLocalizedString(@"serversTooBusy", @"Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in")];
 }
 
 #pragma mark BrowserViewControllerDelegate
@@ -221,16 +236,50 @@
 
 #pragma mark MEGARequestDelegate
 
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            self.launchVC.activityIndicatorView.hidden = NO;
+            [self.launchVC.activityIndicatorView startAnimating];
+            
+            self.firstAPI_EAGAIN = YES;
+            self.firstFetchNodesRequestUpdate = YES;
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
+    if (request.type == MEGARequestTypeFetchNodes) {
+        float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
+        
+        if (self.isFirstFetchNodesRequestUpdate) {
+            [self.launchVC.activityIndicatorView stopAnimating];
+            self.launchVC.activityIndicatorView.hidden = YES;
+        
+            [self.launchVC.logoImageView.layer addSublayer:self.launchVC.circularShapeLayer];
+            self.launchVC.circularShapeLayer.strokeStart = 0.0f;
+        }
+        
+        if (progress > 0 && progress <= 1.0) {
+            self.launchVC.circularShapeLayer.strokeEnd = progress;
+        }
+    }
+}
+
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [[MEGASdkManager sharedMEGASdk] fetchNodesWithDelegate:self];
+            [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
+            [self presentDocumentPicker];
             break;
         }
             
@@ -238,7 +287,22 @@
             break;
         }
     }
+}
 
+- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            if (self.isFirstAPI_EAGAIN) {
+                [self startTimerAPI_EAGAIN];
+                self.firstAPI_EAGAIN = NO;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -260,7 +324,7 @@
 - (void)passcodeWasEnteredSuccessfully {
     [self dismissViewControllerAnimated:YES completion:^{
         self.passcodePresented = NO;
-        [self presentDocumentPicker];
+        [self loginToMEGA];
     }];
 }
 
