@@ -47,7 +47,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="goToMega:" destination="J6p-g8-CHO" eventType="touchUpInside" id="b4Z-K8-s1E"/>
+                                    <action selector="openMegaTouchUpInside:" destination="J6p-g8-CHO" eventType="touchUpInside" id="wr0-65-Chd"/>
                                 </connections>
                             </button>
                             <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Open MEGA and sign in to continue" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Alk-GQ-PDV">
