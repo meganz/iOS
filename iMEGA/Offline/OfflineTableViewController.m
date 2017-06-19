@@ -445,15 +445,10 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         
-        NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
-            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
-            
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage != nil) {
                 [cell.thumbnailImageView setImage:thumbnailImage];
