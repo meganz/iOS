@@ -64,7 +64,35 @@
     }
 }
 
+- (void)willEnterForeground {
+    if (self.privacyView) {
+        [self.privacyView removeFromSuperview];
+        self.privacyView = nil;
+    }
+    
+    if (self.session) {
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
+            [self presentPasscode];
+        }
+    } else {
+        self.megaLogoImageView.hidden = YES;
+        self.loginTextView.hidden = YES;
+        self.openButton.hidden = YES;
+        [self configureUI];
+    }
+}
+
+- (void)willResignActive {
+    UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+    [privacyVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    self.privacyView = privacyVC.view;
+    [self.view addSubview:self.privacyView];
+}
+
+#pragma mark - Private
+
 - (void)configureUI {
+    [self configureProgressHUD];
     [SVProgressHUD setViewForExtension:self.view];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
@@ -95,29 +123,16 @@
     }
 }
 
-- (void)willEnterForeground {
-    if (self.privacyView) {
-        [self.privacyView removeFromSuperview];
-        self.privacyView = nil;
-    }
+- (void)configureProgressHUD {
+    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
+    [SVProgressHUD setRingThickness:2.0];
+    [SVProgressHUD setRingNoTextRadius:18.0];
+    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     
-    if (self.session) {
-        if ([LTHPasscodeViewController doesPasscodeExist]) {
-            [self presentPasscode];
-        }
-    } else {
-        self.megaLogoImageView.hidden = YES;
-        self.loginTextView.hidden = YES;
-        self.openButton.hidden = YES;
-        [self configureUI];
-    }
-}
-
-- (void)willResignActive {
-    UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-    [privacyVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    self.privacyView = privacyVC.view;
-    [self.view addSubview:self.privacyView];
+    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
+    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
 - (NSString *)appGroupContainerURL {
@@ -165,9 +180,9 @@
     if (!self.passcodePresented) {
         LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
         [passcodeVC showLockScreenOver:self.view.superview
-                                  withAnimation:YES
-                                     withLogout:YES
-                                 andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+                         withAnimation:YES
+                            withLogout:YES
+                        andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
         
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
         [self presentViewController:passcodeVC animated:NO completion:nil];
