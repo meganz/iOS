@@ -169,7 +169,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Rename attributes (thumbnails and previews)- handle to base64Handle
     NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2ThumbsPath]) {
-        NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *v3ThumbsPath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -1299,7 +1299,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
             if (user.isOwnChange == 0) { //If the change is external
                 if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    NSString *avatarFilePath = [Helper pathForUser:user inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {
                         [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
@@ -1524,7 +1524,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             case MEGAErrorTypeApiEAccess: {
                 if ([request type] == MEGARequestTypeSetAttrFile) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (thumbnailExists) {
                         [[NSFileManager defaultManager] removeItemAtPath:thumbnailFilePath error:nil];
@@ -1892,7 +1892,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     if ([transfer type] == MEGATransferTypeUpload && isImage([transfer fileName].pathExtension)) {
-        NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
         if ([error type] == MEGAErrorTypeApiOk) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
@@ -1963,7 +1963,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (isImage([transfer fileName].pathExtension)) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
             if (!thumbnailExists) {
@@ -1993,7 +1993,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             CGImageRelease(imgRef);
             
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
             [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
             

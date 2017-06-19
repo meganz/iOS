@@ -126,7 +126,7 @@
     if ([self.node type] == MEGANodeTypeFile) {
         
         if ([self.node hasThumbnail]) {
-            NSString *thumbnailFilePath = [Helper pathForNode:self.node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            NSString *thumbnailFilePath = [Helper pathForNode:self.node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             if (!thumbnailExists) {
                 [self.thumbnailImageView setImage:[Helper infoImageForNode:self.node]];
@@ -946,7 +946,7 @@
         case MEGARequestTypeGetAttrFile: {
             if ([request nodeHandle] == [self.node handle]) {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[request nodeHandle]];
-                NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                 if (fileExists) {
                     [self.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
