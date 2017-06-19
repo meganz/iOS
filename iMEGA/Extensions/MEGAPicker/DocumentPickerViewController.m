@@ -48,11 +48,11 @@
     
     // Add a observer to get notified when the extension come back to the foreground:
     if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
-                                                     name:NSExtensionHostWillEnterForegroundNotification
-                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
                                                      name:NSExtensionHostWillResignActiveNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                     name:NSExtensionHostDidBecomeActiveNotification
                                                    object:nil];
     }
 }
@@ -64,7 +64,16 @@
     }
 }
 
-- (void)willEnterForeground {
+- (void)willResignActive {
+    if (self.session) {
+        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.privacyView = privacyVC.view;
+        [self.view addSubview:self.privacyView];
+    }
+}
+
+- (void)didBecomeActive {
     if (self.privacyView) {
         [self.privacyView removeFromSuperview];
         self.privacyView = nil;
@@ -79,15 +88,6 @@
         self.loginTextView.hidden = YES;
         self.openButton.hidden = YES;
         [self configureUI];
-    }
-}
-
-- (void)willResignActive {
-    if (self.session) {
-        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.privacyView = privacyVC.view;
-        [self.view addSubview:self.privacyView];
     }
 }
 
@@ -155,7 +155,7 @@
     [self dismissGrantingAccessToURL:[NSURL fileURLWithPath:path]];
 }
 
-- (IBAction)goToMega:(id)sender {
+- (IBAction)openMegaTouchUpInside:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
