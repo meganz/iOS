@@ -225,7 +225,9 @@
             [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
         } else {
             [[NSFileManager defaultManager] removeItemAtPath:documentFilePath error:nil];
-            [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+            if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];;
+            }
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
