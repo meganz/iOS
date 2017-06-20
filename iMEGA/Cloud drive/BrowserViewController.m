@@ -594,7 +594,7 @@
             case BrowserActionDocumentProvider: {
                 [SVProgressHUD setViewForExtension:self.view];
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-                [SVProgressHUD showProgress:0 status:@"0 %%"];
+                [SVProgressHUD show];
                 [self.browserViewControllerDelegate didSelectNode:selectedNode];
                 break;
             }

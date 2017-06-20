@@ -309,8 +309,10 @@
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
-    NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
-    [SVProgressHUD showProgress:percentage status:percentageCompleted];
+    if (percentage >= 0.01) {
+        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
+        [SVProgressHUD showProgress:percentage status:percentageCompleted];
+    }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
