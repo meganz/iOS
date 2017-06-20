@@ -3,6 +3,7 @@
 
 #import "SAMKeychain.h"
 
+#import "MEGALogger.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -55,6 +56,15 @@
 }
 
 - (void)startProvidingItemAtURL:(NSURL *)url completionHandler:(void (^)(NSError *))completionHandler {
+    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        if (![fileManager fileExistsAtPath:logsPath]) {
+            [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+        [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
+    }
+    
     // Should ensure that the actual file is in the position returned by URLForItemWithIdentifier:, then call the completion handler
     NSError *fileError = nil;
     

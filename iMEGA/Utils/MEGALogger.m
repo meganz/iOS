@@ -15,9 +15,13 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)startLogging {
+    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    [self startLoggingToFile:logFilePath];
+}
+
+- (void)startLoggingToFile:(NSString *)logFilePath {
     [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:[MEGALogger sharedLogger]] : [MEGASdk setLogObject:[MEGALogger sharedLogger]];
     
-    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
     
     [MEGASdk setLogLevel:MEGALogLevelMax];
@@ -25,12 +29,18 @@ static MEGALogger *_megaLogger = nil;
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"logging"];
 }
 
 - (void)stopLogging {
+    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    [self stopLoggingToFile:logFilePath];
+}
+
+- (void)stopLoggingToFile:(NSString *)logFilePath {
     [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:nil] : [MEGASdk setLogObject:nil];
     
-    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
         [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
     }
@@ -42,6 +52,8 @@ static MEGALogger *_megaLogger = nil;
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:NO forKey:@"logging"];
 }
 
 - (void)useSDKLogger {
