@@ -73,7 +73,11 @@ static BOOL copyToPasteboard;
 }
 
 + (BOOL)isLanguageSupported:(NSString *)languageID {
-    return [self.languagesSupportedIDs containsObject:languageID];
+    BOOL isLanguageSupported = [self.languagesSupportedIDs containsObject:languageID];
+    if (isLanguageSupported) {
+        [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageID];
+    }
+    return isLanguageSupported;
 }
 
 + (NSString *)languageID:(NSUInteger)index {
