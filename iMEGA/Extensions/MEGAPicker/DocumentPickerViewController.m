@@ -7,6 +7,7 @@
 
 #import "Helper.h"
 #import "LaunchViewController.h"
+#import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGARequestDelegate.h"
 
@@ -39,6 +40,15 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        if (![fileManager fileExistsAtPath:logsPath]) {
+            [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+        [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
+    }
+    
     self.pickerPresented = NO;
     self.passcodePresented = NO;
     
