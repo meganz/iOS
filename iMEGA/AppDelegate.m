@@ -998,15 +998,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)notificationsSettings {
-    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
-            MEGALogInfo(@"Notifications settings %@", settings);
-            if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-                [[UIApplication sharedApplication] registerForRemoteNotifications];
-            }
-        }];
-    }
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
+        MEGALogInfo(@"Notifications settings %@", settings);
+        if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        }
+    }];
 }
 
 #pragma mark - Battery changed
