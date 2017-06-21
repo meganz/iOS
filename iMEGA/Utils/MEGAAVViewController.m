@@ -113,7 +113,7 @@
     
     [UIImageJPEGRepresentation(image, 1) writeToFile:tmpImagePath atomically:YES];
     
-    NSString *thumbnailFilePath = [Helper pathForNode:_node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    NSString *thumbnailFilePath = [Helper pathForNode:_node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     [[MEGASdkManager sharedMEGASdk] createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
     [[MEGASdkManager sharedMEGASdk] setThumbnailNode:_node sourceFilePath:thumbnailFilePath];
     

@@ -17,6 +17,10 @@ static MEGALogger *_megaLogger = nil;
 
 - (void)startLogging {
     NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    [self startLoggingToFile:logFilePath];
+}
+
+- (void)startLoggingToFile:(NSString *)logFilePath {
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stdout);
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
     
@@ -25,10 +29,24 @@ static MEGALogger *_megaLogger = nil;
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"logging"];
 }
 
 - (void)stopLogging {
-    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"]];
+    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
+    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
+    // Also remove logs in the shared sandbox:
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+    if ([fileManager fileExistsAtPath:logsPath]) {
+        [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
+        [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
+    }
+}
+
+- (void)stopLoggingToFile:(NSString *)logFilePath {
     if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
         [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
     }
@@ -40,6 +58,8 @@ static MEGALogger *_megaLogger = nil;
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:NO forKey:@"logging"];
 }
 
 - (void)enableSDKlogs {

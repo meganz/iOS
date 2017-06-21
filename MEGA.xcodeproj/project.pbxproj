@@ -245,7 +245,103 @@
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
+		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		942255041EDC04080074C51A /* FileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255021EDC04060074C51A /* FileProvider.m */; };
+		942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255071EDC04BA0074C51A /* DocumentPickerViewController.m */; };
+		9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9422550A1EDC04DC0074C51A /* MainInterface.storyboard */; };
+		942ED2AD1EDEE50900C9908D /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
+		942ED2AE1EDEE50900C9908D /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
+		942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
+		942ED2B11EDEE5B700C9908D /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229211EDD8430007DB542 /* libKarere.a */; };
+		942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
+		942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
+		942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
+		942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
+		942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
+		942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
+		942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
+		9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
+		9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290C1EDD829F007DB542 /* CoreGraphics.framework */; };
+		9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290E1EDD82CF007DB542 /* Security.framework */; };
+		943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229101EDD82E2007DB542 /* UIKit.framework */; };
+		943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
+		943229161EDD836F007DB542 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
+		943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
+		9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
+		9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
+		9432291E1EDD83FF007DB542 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
+		943229221EDD8430007DB542 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229211EDD8430007DB542 /* libKarere.a */; };
+		943229231EDD845E007DB542 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
+		943229251EDD8479007DB542 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229241EDD8479007DB542 /* CoreData.framework */; };
+		943229261EDD8495007DB542 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
+		943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229281EDD84D9007DB542 /* CoreMedia.framework */; };
+		9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */; };
+		9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		9432292E1EDD85CE007DB542 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292D1EDD85CE007DB542 /* Photos.framework */; };
+		943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292F1EDD862F007DB542 /* LocalAuthentication.framework */; };
+		943229311EDD8696007DB542 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
+		943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229321EDD86C3007DB542 /* SystemConfiguration.framework */; };
+		943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
+		943229351EDD886B007DB542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		943229361EDD8898007DB542 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F001CF451B000BD3B79 /* MWPhotoBrowser.m */; };
+		943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
+		943229381EDD88BE007DB542 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFC1CF451B000BD3B79 /* MWGridViewController.m */; };
+		943229391EDD88CD007DB542 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EFA1CF451B000BD3B79 /* MWGridCell.m */; };
+		9432293B1EDD88E3007DB542 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432293A1EDD88E3007DB542 /* MediaPlayer.framework */; };
+		9432293C1EDD88F5007DB542 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88EF71CF451B000BD3B79 /* MWCaptionView.m */; };
+		9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F081CF451B000BD3B79 /* MWZoomingScrollView.m */; };
+		9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F041CF451B000BD3B79 /* MWTapDetectingImageView.m */; };
+		9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E88F061CF451B000BD3B79 /* MWTapDetectingView.m */; };
+		943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
+		943229431EDD97D2007DB542 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B4429421E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf */; };
+		943229441EDD97D2007DB542 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
+		943229451EDD97D2007DB542 /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B5B50001E684FDC00DBEB3B /* SF-UI-Display-Regular.otf */; };
+		943229461EDD97D2007DB542 /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F21BF5F8A200F7A034 /* SF-UI-Display-Light.otf */; };
+		943229471EDD97D2007DB542 /* SF-UI-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */; };
+		943229481EDD97D2007DB542 /* SF-UI-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F31BF5F8A200F7A034 /* SF-UI-Text-Light.otf */; };
+		943229491EDD97D2007DB542 /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */; };
+		9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
+		9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
+		9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
+		9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E80620AA1CC8E7F400AA63A3 /* NSMutableAttributedString+MNZCategory.m */; };
+		9432294E1EDD9CEE007DB542 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
+		9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
+		943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
+		943229511EDD9D02007DB542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */; };
+		944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
+		944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8C289FE1BF65BAB00F7A034 /* Launch.storyboard */; };
+		944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
+		944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
+		945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 415C6B911CE39D6100B13070 /* SVProgressAnimatedView.m */; };
+		945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDB1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m */; };
+		9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D8ECDD1BCEBD3200B8FA08 /* SVRadialGradientLayer.m */; };
+		9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 415227391A692EEF00EC7BB6 /* SVProgressHUD.m */; };
+		9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 415227371A692EEF00EC7BB6 /* SVProgressHUD.bundle */; };
+		9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
+		9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
+		945605401EDD65400094EF0F /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
+		945605411EDD65490094EF0F /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
+		945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
+		945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
+		945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
+		945605461EDD673D0094EF0F /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
+		945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
+		945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
+		945605491EDD6FAC0094EF0F /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
+		9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
+		9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
+		9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
+		9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */; };
+		9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791791BC5754A00C58676 /* OpenInActivity.m */; };
+		9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
+		945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */; };
+		945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
+		945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
+		945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
@@ -311,6 +407,38 @@
 		E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */; };
 		E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		942254F31EDC03150074C51A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 942254EA1EDC03140074C51A;
+			remoteInfo = MEGAPickerFileProvider;
+		};
+		942254F61EDC03150074C51A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 942254DB1EDC03130074C51A;
+			remoteInfo = MEGAPicker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		942254FF1EDC03150074C51A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */,
+				942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1373618A1A6664C300B740E8 /* MEGA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -694,7 +822,7 @@
 		41DFFB071B9A33A00003FB72 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41DFFB091B9A3C9E0003FB72 /* pt-br */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-br"; path = "pt-br.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MNZCategory.h"; sourceTree = "<group>"; };
-		41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MNZCategory.m"; sourceTree = "<group>"; };
+		41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIImageView+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		41E2500F1D79E9D400499A6C /* SAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychain.h; sourceTree = "<group>"; };
 		41E250101D79E9D400499A6C /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychain.m; sourceTree = "<group>"; };
 		41E250111D79E9D400499A6C /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
@@ -768,8 +896,39 @@
 		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
+		942254DC1EDC03130074C51A /* MEGAPicker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPicker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		942255001EDC03E90074C51A /* MEGAPickerFileProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAPickerFileProvider.entitlements; path = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements; sourceTree = SOURCE_ROOT; };
+		942255011EDC04060074C51A /* FileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileProvider.h; path = iMEGA/Extensions/MEGAPickerFileProvider/FileProvider.h; sourceTree = SOURCE_ROOT; };
+		942255021EDC04060074C51A /* FileProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FileProvider.m; path = iMEGA/Extensions/MEGAPickerFileProvider/FileProvider.m; sourceTree = SOURCE_ROOT; };
+		942255031EDC04060074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist; sourceTree = SOURCE_ROOT; };
+		942255051EDC04AD0074C51A /* MEGAPicker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAPicker.entitlements; path = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements; sourceTree = SOURCE_ROOT; };
+		942255061EDC04BA0074C51A /* DocumentPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DocumentPickerViewController.h; path = iMEGA/Extensions/MEGAPicker/DocumentPickerViewController.h; sourceTree = SOURCE_ROOT; };
+		942255071EDC04BA0074C51A /* DocumentPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentPickerViewController.m; path = iMEGA/Extensions/MEGAPicker/DocumentPickerViewController.m; sourceTree = SOURCE_ROOT; };
+		942255081EDC04BA0074C51A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MEGAPicker/Info.plist; sourceTree = SOURCE_ROOT; };
+		9422550B1EDC04DC0074C51A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iMEGA/Extensions/MEGAPicker/Base.lproj/MainInterface.storyboard; sourceTree = SOURCE_ROOT; };
+		942ED2B01EDEE58100C9908D /* MEGAPickerFileProvider-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPickerFileProvider-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		9432290A1EDD8271007DB542 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9432290C1EDD829F007DB542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9432290E1EDD82CF007DB542 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		943229101EDD82E2007DB542 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		943229121EDD832E007DB542 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
+		943229191EDD83B0007DB542 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9432291B1EDD83E9007DB542 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		9432291F1EDD840E007DB542 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-acyhkzwsqxezpocxgbnzctxspiip/Build/Products/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
+		943229211EDD8430007DB542 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-acyhkzwsqxezpocxgbnzctxspiip/Build/Products/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
+		943229241EDD8479007DB542 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		943229281EDD84D9007DB542 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		9432292D1EDD85CE007DB542 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		9432292F1EDD862F007DB542 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		943229321EDD86C3007DB542 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9432293A1EDD88E3007DB542 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		944B205B1EE5551C003C967B /* UIAlertAction+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAlertAction+MNZCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAlertAction+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
+		945605541EDD7EDF0094EF0F /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
@@ -946,6 +1105,48 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		942254D91EDC03130074C51A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9432293B1EDD88E3007DB542 /* MediaPlayer.framework in Frameworks */,
+				943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */,
+				943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */,
+				9432292E1EDD85CE007DB542 /* Photos.framework in Frameworks */,
+				9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */,
+				943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */,
+				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
+				943229221EDD8430007DB542 /* libKarere.a in Frameworks */,
+				9432291E1EDD83FF007DB542 /* MobileCoreServices.framework in Frameworks */,
+				9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */,
+				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
+				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
+				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
+				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
+				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
+				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
+				9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */,
+				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
+				9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E81EDC03140074C51A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */,
+				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
+				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
+				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
+				942ED2B11EDEE5B700C9908D /* libKarere.a in Frameworks */,
+				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
+				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
+				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
+				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -953,6 +1154,7 @@
 			isa = PBXGroup;
 			children = (
 				1373618C1A6664C300B740E8 /* iMEGA */,
+				942254D71EDC02CB0074C51A /* Extensions */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 			);
@@ -962,6 +1164,8 @@
 			isa = PBXGroup;
 			children = (
 				1373618A1A6664C300B740E8 /* MEGA.app */,
+				942254DC1EDC03130074C51A /* MEGAPicker.appex */,
+				942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1482,6 +1686,24 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9432293A1EDD88E3007DB542 /* MediaPlayer.framework */,
+				943229321EDD86C3007DB542 /* SystemConfiguration.framework */,
+				9432292F1EDD862F007DB542 /* LocalAuthentication.framework */,
+				9432292D1EDD85CE007DB542 /* Photos.framework */,
+				9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */,
+				943229281EDD84D9007DB542 /* CoreMedia.framework */,
+				943229241EDD8479007DB542 /* CoreData.framework */,
+				943229211EDD8430007DB542 /* libKarere.a */,
+				9432291F1EDD840E007DB542 /* libMEGASDK.a */,
+				9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */,
+				9432291B1EDD83E9007DB542 /* ImageIO.framework */,
+				943229191EDD83B0007DB542 /* AVFoundation.framework */,
+				943229121EDD832E007DB542 /* libKarere.a */,
+				943229101EDD82E2007DB542 /* UIKit.framework */,
+				9432290E1EDD82CF007DB542 /* Security.framework */,
+				9432290C1EDD829F007DB542 /* CoreGraphics.framework */,
+				9432290A1EDD8271007DB542 /* QuartzCore.framework */,
+				945605541EDD7EDF0094EF0F /* libKarere.a */,
 				A82751151E97AB88007CD9E2 /* libstdc++.tbd */,
 				A82751131E97AB79007CD9E2 /* libsqlite3.tbd */,
 				A82751111E97AB73007CD9E2 /* libresolv.tbd */,
@@ -1902,6 +2124,56 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		942254D71EDC02CB0074C51A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				942254DD1EDC03140074C51A /* MEGAPicker */,
+				942254EC1EDC03150074C51A /* MEGAPickerFileProvider */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		942254DD1EDC03140074C51A /* MEGAPicker */ = {
+			isa = PBXGroup;
+			children = (
+				942255061EDC04BA0074C51A /* DocumentPickerViewController.h */,
+				942255071EDC04BA0074C51A /* DocumentPickerViewController.m */,
+				9422550A1EDC04DC0074C51A /* MainInterface.storyboard */,
+				942255081EDC04BA0074C51A /* Info.plist */,
+				942254DE1EDC03140074C51A /* Supporting Files */,
+				945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */,
+			);
+			path = MEGAPicker;
+			sourceTree = "<group>";
+		};
+		942254DE1EDC03140074C51A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				942255051EDC04AD0074C51A /* MEGAPicker.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		942254EC1EDC03150074C51A /* MEGAPickerFileProvider */ = {
+			isa = PBXGroup;
+			children = (
+				942255011EDC04060074C51A /* FileProvider.h */,
+				942255021EDC04060074C51A /* FileProvider.m */,
+				942255031EDC04060074C51A /* Info.plist */,
+				942254ED1EDC03150074C51A /* Supporting Files */,
+				942ED2B01EDEE58100C9908D /* MEGAPickerFileProvider-PrefixHeader.pch */,
+			);
+			path = MEGAPickerFileProvider;
+			sourceTree = "<group>";
+		};
+		942254ED1EDC03150074C51A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				942255001EDC03E90074C51A /* MEGAPickerFileProvider.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2079,15 +2351,52 @@
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
+				942254FF1EDC03150074C51A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				942254F41EDC03150074C51A /* PBXTargetDependency */,
+				942254F71EDC03150074C51A /* PBXTargetDependency */,
 			);
 			name = MEGA;
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
 			productType = "com.apple.product-type.application";
+		};
+		942254DB1EDC03130074C51A /* MEGAPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */;
+			buildPhases = (
+				942254D81EDC03130074C51A /* Sources */,
+				942254D91EDC03130074C51A /* Frameworks */,
+				942254DA1EDC03130074C51A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAPicker;
+			productName = MEGAPicker;
+			productReference = 942254DC1EDC03130074C51A /* MEGAPicker.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		942254EA1EDC03140074C51A /* MEGAPickerFileProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */;
+			buildPhases = (
+				942254E71EDC03140074C51A /* Sources */,
+				942254E81EDC03140074C51A /* Frameworks */,
+				942254E91EDC03140074C51A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAPickerFileProvider;
+			productName = MEGAPickerFileProvider;
+			productReference = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -2103,16 +2412,42 @@
 						DevelopmentTeam = T9RH74Y7L9;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					942254DB1EDC03130074C51A = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					942254EA1EDC03140074C51A = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 						};
@@ -2166,6 +2501,8 @@
 			projectRoot = "";
 			targets = (
 				137361891A6664C300B740E8 /* MEGA */,
+				942254DB1EDC03130074C51A /* MEGAPicker */,
+				942254EA1EDC03140074C51A /* MEGAPickerFileProvider */,
 			);
 		};
 /* End PBXProject section */
@@ -2257,6 +2594,34 @@
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 				411504491CEB07C700BF38E3 /* VideoOverlay.png in Resources */,
 				411504421CEB07C700BF38E3 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254DA1EDC03130074C51A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				943229431EDD97D2007DB542 /* SF-UI-Text-RegularItalic.otf in Resources */,
+				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
+				943229491EDD97D2007DB542 /* SF-UI-Text-Regular.otf in Resources */,
+				943229441EDD97D2007DB542 /* SF-UI-Display-Medium.otf in Resources */,
+				943229481EDD97D2007DB542 /* SF-UI-Text-Light.otf in Resources */,
+				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
+				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
+				943229461EDD97D2007DB542 /* SF-UI-Display-Light.otf in Resources */,
+				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
+				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
+				943229451EDD97D2007DB542 /* SF-UI-Display-Regular.otf in Resources */,
+				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
+				943229471EDD97D2007DB542 /* SF-UI-Text-Medium.otf in Resources */,
+				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E91EDC03140074C51A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2502,7 +2867,86 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		942254D81EDC03130074C51A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9432294D1EDD9CEB007DB542 /* NSMutableAttributedString+MNZCategory.m in Sources */,
+				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
+				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
+				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
+				9432293C1EDD88F5007DB542 /* MWCaptionView.m in Sources */,
+				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
+				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
+				943229361EDD8898007DB542 /* MWPhotoBrowser.m in Sources */,
+				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
+				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
+				9456054F1EDD7DBD0094EF0F /* ShareFolderActivity.m in Sources */,
+				9432294F1EDD9CF6007DB542 /* UIImageView+MNZCategory.m in Sources */,
+				9456054A1EDD7AD70094EF0F /* LTHKeychainUtils.m in Sources */,
+				9432293D1EDD88F5007DB542 /* MWZoomingScrollView.m in Sources */,
+				945605481EDD6F9B0094EF0F /* MEGAReachabilityManager.m in Sources */,
+				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
+				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
+				9456053D1EDD54F10094EF0F /* SAMKeychain.m in Sources */,
+				9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */,
+				945605491EDD6FAC0094EF0F /* Helper.m in Sources */,
+				945605461EDD673D0094EF0F /* NodeTableViewCell.m in Sources */,
+				9432294E1EDD9CEE007DB542 /* NSString+MNZCategory.m in Sources */,
+				943229311EDD8696007DB542 /* Reachability.m in Sources */,
+				943229261EDD8495007DB542 /* MEGAAssetOperation.m in Sources */,
+				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
+				945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */,
+				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
+				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
+				945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */,
+				945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */,
+				945605501EDD7DD10094EF0F /* MEGAActivityItemProvider.m in Sources */,
+				943229391EDD88CD007DB542 /* MWGridCell.m in Sources */,
+				9456053B1EDD52C00094EF0F /* SVProgressHUD.m in Sources */,
+				945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */,
+				944DF2BD1EF9379E007798DD /* MEGALogger.m in Sources */,
+				9456054E1EDD7DBD0094EF0F /* OpenInActivity.m in Sources */,
+				945605391EDD52C00094EF0F /* SVIndefiniteAnimatedView.m in Sources */,
+				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
+				943229381EDD88BE007DB542 /* MWGridViewController.m in Sources */,
+				9432293E1EDD8903007DB542 /* MWTapDetectingImageView.m in Sources */,
+				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
+				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
+				9456053A1EDD52C00094EF0F /* SVRadialGradientLayer.m in Sources */,
+				943229231EDD845E007DB542 /* MEGAStore.m in Sources */,
+				945605421EDD65960094EF0F /* LocalizationSystem.m in Sources */,
+				9432293F1EDD8903007DB542 /* MWTapDetectingView.m in Sources */,
+				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		942254E71EDC03140074C51A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */,
+				942255041EDC04080074C51A /* FileProvider.m in Sources */,
+				942ED2AD1EDEE50900C9908D /* SAMKeychain.m in Sources */,
+				942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */,
+				942ED2AE1EDEE50900C9908D /* SAMKeychainQuery.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		942254F41EDC03150074C51A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 942254EA1EDC03140074C51A /* MEGAPickerFileProvider */;
+			targetProxy = 942254F31EDC03150074C51A /* PBXContainerItemProxy */;
+		};
+		942254F71EDC03150074C51A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 942254DB1EDC03130074C51A /* MEGAPicker */;
+			targetProxy = 942254F61EDC03150074C51A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		415227411A692F8D00EC7BB6 /* Localizable.strings */ = {
@@ -2561,6 +3005,14 @@
 				41ADAA121ADE8B8800641BB4 /* zh-Hant */,
 			);
 			name = SVWebViewController.strings;
+			sourceTree = "<group>";
+		};
+		9422550A1EDC04DC0074C51A /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9422550B1EDC04DC0074C51A /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		E803CB661D5336F100F81A36 /* InfoPlist.strings */ = {
@@ -2798,6 +3250,161 @@
 			};
 			name = Release;
 		};
+		942254FA1EDC03150074C51A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					iMEGA/Vendor/SSKeychain,
+					iMEGA/Vendor/PureLayout/PureLayout,
+					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
+				);
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Debug;
+		};
+		942254FB1EDC03150074C51A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					iMEGA/Vendor/SSKeychain,
+					iMEGA/Vendor/PureLayout/PureLayout,
+					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
+				);
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Release;
+		};
+		942254FD1EDC03150074C51A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"SV_APP_EXTENSIONS=1",
+					"LTH_APP_EXTENSIONS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					iMEGA/Vendor/SSKeychain,
+					iMEGA/Vendor/PureLayout/PureLayout,
+					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
+				);
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Debug;
+		};
+		942254FE1EDC03150074C51A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					iMEGA/Vendor/SSKeychain,
+					iMEGA/Vendor/PureLayout/PureLayout,
+					"iMEGA/Vendor/MWPhotoBrowser/**",
+					iMEGA/Vendor/Import,
+					iMEGA/Vendor/SDK/include,
+				);
+				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/SDK/include/** iMEGA/Vendor/Karere/bindings/Objective-C";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2815,6 +3422,24 @@
 			buildConfigurations = (
 				137361B11A6664C400B740E8 /* Debug */,
 				137361B21A6664C400B740E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		942254F91EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPickerFileProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				942254FA1EDC03150074C51A /* Debug */,
+				942254FB1EDC03150074C51A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		942254FC1EDC03150074C51A /* Build configuration list for PBXNativeTarget "MEGAPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				942254FD1EDC03150074C51A /* Debug */,
+				942254FE1EDC03150074C51A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
