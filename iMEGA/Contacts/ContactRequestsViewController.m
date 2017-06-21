@@ -277,8 +277,7 @@
             for (ContactRequestsTableViewCell *icrtvc in [self.tableView visibleCells]) {
                 if ([[request email] isEqualToString:[icrtvc.nameLabel text]]) {
                     NSString *fileName = [request email];
-                    NSString *cacheDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                    NSString *avatarFilePath = [cacheDirectory stringByAppendingPathComponent:@"thumbnailsV3"];
+                    NSString *avatarFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     avatarFilePath = [avatarFilePath stringByAppendingPathComponent:fileName];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {

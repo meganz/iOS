@@ -8,7 +8,9 @@
 + (MEGALogger *)sharedLogger;
 
 - (void)startLogging;
+- (void)startLoggingToFile:(NSString *)file;
 - (void)stopLogging;
+- (void)stopLoggingToFile:(NSString *)file;
 
 - (void)enableSDKlogs;
 - (void)enableChatlogs;

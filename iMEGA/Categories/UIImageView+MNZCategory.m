@@ -1,7 +1,10 @@
+
 #import "UIImageView+MNZCategory.h"
-#import "UIImage+GKContact.h"
+
+#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "UIImage+GKContact.h"
 
 @implementation UIImageView (MNZCategory)
 
@@ -10,7 +13,7 @@
     self.layer.masksToBounds = YES;
     
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
-    NSString *avatarFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
+    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
         self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
