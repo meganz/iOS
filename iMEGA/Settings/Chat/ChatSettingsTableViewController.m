@@ -80,9 +80,7 @@
 - (IBAction)chatValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"Chat: %@", (sender.isOn ? @"ON" : @"OFF"));
     if (sender.isOn) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] useChatSDKLogger];
-        }
+        [[MEGALogger sharedLogger] enableChatlogs];
         
         if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
             [MEGASdkManager createSharedMEGAChatSdk];
@@ -114,6 +112,7 @@
         self.invalidStatus = YES;
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
+        [[MEGALogger sharedLogger] enableSDKlogs];
     }
 }
 
