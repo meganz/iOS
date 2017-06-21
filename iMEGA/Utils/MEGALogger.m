@@ -21,8 +21,6 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)startLoggingToFile:(NSString *)logFilePath {
-    [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:[MEGALogger sharedLogger]] : [MEGASdk setLogObject:[MEGALogger sharedLogger]];
-    
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stdout);
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+", stderr);
     
@@ -40,9 +38,7 @@ static MEGALogger *_megaLogger = nil;
     [self stopLoggingToFile:logFilePath];
 }
 
-- (void)stopLoggingToFile:(NSString *)logFilePath {
-    [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? [MEGAChatSdk setLogObject:nil] : [MEGASdk setLogObject:nil];
-    
+- (void)stopLoggingToFile:(NSString *)logFilePath {    
     if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
         [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
     }
