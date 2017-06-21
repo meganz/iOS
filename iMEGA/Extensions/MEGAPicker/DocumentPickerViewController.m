@@ -100,9 +100,6 @@
             [self presentPasscode];
         }
     } else {
-        self.megaLogoImageView.hidden = YES;
-        self.loginTextView.hidden = YES;
-        self.openButton.hidden = YES;
         [self configureUI];
     }
 }
