@@ -2,7 +2,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
-#import <PushKit/PushKit.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -60,7 +59,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeLoginRequiredLink
 };
 
-@interface AppDelegate () <UIAlertViewDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
+@interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -206,8 +205,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
-        [self registerForVoIPNotifications];
-        [self registerForLocalNotifications];
+        [self registerForNotifications];
         isAccountFirstLogin = NO;
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
@@ -299,6 +297,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    
     BOOL pendingTransfers = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTransfers) {
         [self startBackgroundTask];
@@ -319,6 +319,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
+    
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
         MEGALogInfo(@"Enable Camera Uploads");
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
@@ -331,6 +333,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             window.frame = [[UIScreen mainScreen] bounds];
         }
     }
+    
+    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -395,6 +399,34 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 1) {
         [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES forDirection:0];
     }
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    if([deviceToken length] == 0) {
+        MEGALogError(@"Token length is 0");
+        return;
+    }
+    
+    const unsigned char *dataBuffer = (const unsigned char *)deviceToken.bytes;
+    
+    NSUInteger dataLength = deviceToken.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+    }
+    
+    NSString *deviceTokenString = [NSString stringWithString:hexString];
+    MEGALogDebug(@"Device token %@", deviceTokenString);
+    [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    MEGALogError(@"Failed to register for remote notifications %@", error);
 }
 
 #pragma mark - Private
@@ -983,28 +1015,21 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
-        [self registerForVoIPNotifications];
-        [self registerForLocalNotifications];
+        [self registerForNotifications];
     }
 }
 
-- (void)registerForVoIPNotifications {
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
-    PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
-    voipRegistry.delegate = self;
-    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
-}
-
-
-
-- (void)registerForLocalNotifications {
-    if (NSClassFromString(@"UNUserNotificationCenter")) {
+- (void)registerForNotifications {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         center.delegate = self;
         [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
                               completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                   if (!error) {
-                                      NSLog(@"request authorization succeeded!");
+                                      MEGALogInfo(@"Request notifications authorization succeeded");
+                                  }
+                                  if (granted) {
+                                      [self notificationsSettings];
                                   }
                               }];
     } else {
@@ -1012,6 +1037,16 @@ typedef NS_ENUM(NSUInteger, URLType) {
                                                                              settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
                                                                              UIUserNotificationTypeSound categories:nil]];
     }
+}
+
+- (void)notificationsSettings {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
+        MEGALogInfo(@"Notifications settings %@", settings);
+        if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        }
+    }];
 }
 
 #pragma mark - Battery changed
@@ -1213,75 +1248,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)setDefaultLanguage {    
     [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
     [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
-}
-
-#pragma mark - PKPushRegistryDelegate
-
-- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)credentials forType:(NSString *)type {
-    if([credentials.token length] == 0) {
-        MEGALogError(@"VoIP token length is 0");
-        return;
-    }
-    
-    const unsigned char *dataBuffer = (const unsigned char *)credentials.token.bytes;
-    
-    NSUInteger dataLength = credentials.token.length;
-    NSMutableString *hexString = [NSMutableString stringWithCapacity:(dataLength * 2)];
-    
-    for (int i = 0; i < dataLength; ++i) {
-        [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
-    }
-    
-    NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"Device token %@", deviceTokenString);
-    [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
-}
-
-- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
-    MEGALogDebug(@"didReceiveIncomingPushWithPayload: %@", [payload dictionaryPayload]);
-    
-    NSInteger megatype = [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue];
-    NSString *body = nil;
-    
-    switch (megatype) {
-        case 1:
-            body = AMLocalizedString(@"newSharedFolder", @"Notification text body shown when you have received a new shared folder");
-            break;
-        case 2:
-            body = AMLocalizedString(@"newMessage", @"Notification text body shown when you have received a new chat message");
-            break;
-        case 3:
-            body = AMLocalizedString(@"contactRequest", @"Notification text body shown when you have received a contact request");
-            break;
-            
-        default:
-            break;
-    }
-    
-    if (NSClassFromString(@"UNMutableNotificationContent")) {
-        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-        
-        content.body = body;
-        content.sound = [UNNotificationSound defaultSound];
-        
-        NSString *identifier = [NSString stringWithFormat:@"%@", [payload dictionaryPayload]];
-        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                              content:content
-                                                                              trigger:nil];
-        
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-            if (error) {
-                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
-            }
-        }];
-    } else if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertBody = body;
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    }
 }
 
 #pragma mark - MEGAGlobalDelegate
