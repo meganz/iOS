@@ -658,6 +658,7 @@
                     break;
                     
                 case MEGAChatListItemChangeTypeTitle:
+                    [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
                     cell.chatTitle.text = item.title;
                     break;
                     
@@ -667,6 +668,7 @@
                     
                 case MEGAChatListItemChangeTypeLastMsg:
                 case MEGAChatListItemChangeTypeLastTs:
+                    [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
                     [self updateCell:cell forChatListItem:item];
                     break;
                     

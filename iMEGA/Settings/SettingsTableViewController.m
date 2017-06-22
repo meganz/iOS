@@ -303,6 +303,7 @@
     
     self.selectedLanguage = [Helper languageID:row];
     [[LocalizationSystem sharedLocalSystem] setLanguage:self.selectedLanguage];
+    [[MEGASdkManager sharedMEGASdk] setLanguageCode:self.selectedLanguage];
     
     [self updateUI];
     [self.tableView reloadData];
