@@ -993,7 +993,7 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="删除成员";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="与%s的对话";
+"conversationWith"="与%@的对话";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="为提供安全保障MEGA使用端对端（用户控制的）加密保护你的聊天";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
