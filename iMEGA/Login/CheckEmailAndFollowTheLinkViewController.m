@@ -22,7 +22,7 @@
 
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy) NSString *base64pwkey;
 
 @end
 
@@ -35,7 +35,7 @@
     
     _email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     _name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
-    _password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
+    _base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
     
     _emailTextField.text = self.email;
     
@@ -76,7 +76,7 @@
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -87,7 +87,7 @@
         if ([self.emailTextField.text mnz_isValidEmail]) {
             [self.emailTextField resignFirstResponder];
             MEGASendSignupLinkRequestDelegate *sendSignupLinkRequestDelegate = [[MEGASendSignupLinkRequestDelegate alloc] init];
-            [[MEGASdkManager sharedMEGASdk] sendSignupLinkWithEmail:self.emailTextField.text name:self.name password:self.password delegate:sendSignupLinkRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] fastSendSignupLinkWithEmail:self.emailTextField.text base64pwkey:self.base64pwkey name:self.name delegate:sendSignupLinkRequestDelegate];
         } else {
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         }
@@ -119,10 +119,13 @@
 
 #pragma mark - MEGAGlobalDelegate
 
-- (void)onAccountUpdate:(MEGASdk *)api {
-    MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-    loginRequestDelegate.confirmAccountInOtherClient = YES;
-    [api loginWithEmail:self.email password:self.password delegate:loginRequestDelegate];
+- (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    if (event.type == EventAccountConfirmation) {
+        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        loginRequestDelegate.confirmAccountInOtherClient = YES;
+        NSString *stringHash = [api hashForBase64pwkey:self.base64pwkey email:event.text];
+        [api fastLoginWithEmail:event.text stringHash:stringHash base64pwKey:self.base64pwkey delegate:loginRequestDelegate];
+    }
 }
 
 @end
