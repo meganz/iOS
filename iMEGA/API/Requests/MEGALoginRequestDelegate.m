@@ -19,7 +19,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+        _session = [[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"] boolValue];
     }
     
     return self;
@@ -59,7 +59,7 @@
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
     }
     
     if (error.type) {

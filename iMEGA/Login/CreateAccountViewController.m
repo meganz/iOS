@@ -2,6 +2,7 @@
 
 #import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGACreateAccountRequestDelegate.h"
 
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -177,7 +178,21 @@
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
+            
+            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^(MEGAError *error) {
+                [SVProgressHUD dismiss];
+                if (error.type == MEGAErrorTypeApiOk) {
+                    CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                    [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }];
+                } else {
+                    [self.emailTextField becomeFirstResponder];
+                    [self.createAccountButton setEnabled:YES];
+                }
+            }];
+            createAccountRequestDelegate.resumeCreateAccount = NO;
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordTextField.text firstname:self.nameTextField.text lastname:NULL delegate:createAccountRequestDelegate];
             [self.createAccountButton setEnabled:NO];
         }
     }
@@ -228,53 +243,6 @@
     }
     
     return YES;
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [SVProgressHUD dismiss];
-    
-    if ([error type]) {
-        NSString *alertMessage;
-        switch ([error type]) {
-                
-            case MEGAErrorTypeApiEExist:
-                alertMessage = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
-                [self.emailTextField becomeFirstResponder];
-                [self.createAccountButton setEnabled:YES];
-                break;
-                
-            default:
-                alertMessage = error.name;
-                break;
-        }
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeCreateAccount: {
-            CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];            
-            [SAMKeychain setPassword:request.sessionKey forService:@"MEGA" account:@"sessionId"];
-            [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
-            [SAMKeychain setPassword:request.name forService:@"MEGA" account:@"name"];
-            [SAMKeychain setPassword:request.password forService:@"MEGA" account:@"password"];
-            [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end
