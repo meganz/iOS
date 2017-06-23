@@ -22,6 +22,7 @@
 @property (nonatomic) UIViewController *privacyVC;
 @property (nonatomic) unsigned long pendingAssets;
 @property (nonatomic) unsigned long totalAssets;
+@property (nonatomic) float progress;
 
 @end
 
@@ -56,10 +57,10 @@
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
     }
 
-    self.privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-    self.privacyVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
-    self.privacyVC.navigationItem.rightBarButtonItem.enabled = NO;
-    return [super initWithRootViewController:self.privacyVC];
+    _privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+    _privacyVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
+    _privacyVC.navigationItem.rightBarButtonItem.enabled = NO;
+    return [super initWithRootViewController:_privacyVC];
 }
 
 - (void)viewDidLoad {
@@ -82,6 +83,7 @@
     
     NSExtensionItem *content = self.extensionContext.inputItems[0];
     self.totalAssets = self.pendingAssets = content.attachments.count;
+    self.progress = 0;
     for (NSItemProvider *attachment in content.attachments) {
         NSString *typeId;
         
@@ -145,11 +147,10 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
-    percentage = (percentage/self.totalAssets) + (float)((self.totalAssets-self.pendingAssets)/self.totalAssets);
-    if (percentage >= 0.01) {
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
-        [SVProgressHUD showProgress:percentage status:percentageCompleted];
+    self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
+    if (self.progress >= 0.01) {
+        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", self.progress * 100];
+        [SVProgressHUD showProgress:self.progress status:progressCompleted];
     }
 }
 
