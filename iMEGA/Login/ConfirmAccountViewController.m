@@ -82,7 +82,7 @@
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
+        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];

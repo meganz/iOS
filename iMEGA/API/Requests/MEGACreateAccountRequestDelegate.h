@@ -3,7 +3,7 @@
 
 @interface MEGACreateAccountRequestDelegate : MEGABaseRequestDelegate
 
-- (instancetype)initWithCompletion:(void (^)(void))completion;
+- (instancetype)initWithCompletion:(void (^)(MEGAError *error))completion;
 
 @property (nonatomic) BOOL resumeCreateAccount;
 
