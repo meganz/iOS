@@ -40,6 +40,8 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] enableSDKlogs];
         NSFileManager *fileManager = [NSFileManager defaultManager];
