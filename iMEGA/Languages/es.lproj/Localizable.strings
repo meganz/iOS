@@ -918,8 +918,12 @@
 "autoAway"="Ausente tras...";
 /* */
 "xMinutes"="[X] minutos";
+/* */
+"1Minute"="1 minuto";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Cambiar estado a ausente después de [X] minutos de inactividad";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Cambiar estado a ausente después de 1 minuto de inactividad";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bloquear estado";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
