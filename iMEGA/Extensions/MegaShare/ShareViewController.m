@@ -5,8 +5,10 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "BrowserViewController.h"
 #import "LaunchViewController.h"
 #import "MEGALogger.h"
+#import "MEGANavigationController.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -19,7 +21,7 @@
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate>
 
-@property (nonatomic) UIViewController *privacyVC;
+@property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) unsigned long pendingAssets;
 @property (nonatomic) unsigned long totalAssets;
 @property (nonatomic) float progress;
@@ -57,13 +59,19 @@
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
     }
 
-    _privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-    _privacyVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
-    _privacyVC.navigationItem.rightBarButtonItem.enabled = NO;
-    return [super initWithRootViewController:_privacyVC];
+    return [super init];
 }
 
 - (void)viewDidLoad {
+    UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
+    MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.browserAction = BrowserActionShareExtension;
+    browserVC.browserViewControllerDelegate = self;
+    
+    [self addChildViewController:navigationController];
+    [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:navigationController.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,35 +83,6 @@
 }
 
 #pragma mark - Private
-
-- (void)save {
-    [self configureProgressHUD];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    
-    NSExtensionItem *content = self.extensionContext.inputItems[0];
-    self.totalAssets = self.pendingAssets = content.attachments.count;
-    self.progress = 0;
-    for (NSItemProvider *attachment in content.attachments) {
-        NSString *typeId;
-        
-        typeId = (NSString *)kUTTypeImage;
-        if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
-            [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
-                NSLog(@"Image > %@", (NSURL *)data);
-                [self importToSharedSandbox:(NSURL *)data];
-            }];
-        }
-        
-        typeId = (NSString *)kUTTypeMovie;
-        if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
-            [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
-                NSLog(@"Movie > %@", (NSURL *)data);
-                [self importToSharedSandbox:(NSURL *)data];
-            }];
-        }
-    }
-}
 
 - (void)dismissWithCompletionHandler:(void (^)(void))completion {
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
@@ -117,7 +96,7 @@
                      }];
 }
 
-- (void)importToSharedSandbox:(NSURL *)url {
+- (void)uploadData:(NSURL *)url toParentNode:parentNode {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
     if (![fileManager fileExistsAtPath:storagePath]) {
@@ -126,7 +105,7 @@
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
     [fileManager copyItemAtPath:path toPath:tempPath error:nil];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:self];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode delegate:self];
 
 }
 
@@ -142,6 +121,43 @@
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
+}
+
+#pragma mark - BrowserViewControllerDelegate
+
+- (void)uploadToParentNode:(MEGANode *)parentNode {
+    if (parentNode) {
+        // The user tapped "Upload":
+        [self configureProgressHUD];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        
+        NSExtensionItem *content = self.extensionContext.inputItems[0];
+        self.totalAssets = self.pendingAssets = content.attachments.count;
+        self.progress = 0;
+        for (NSItemProvider *attachment in content.attachments) {
+            NSString *typeId;
+            
+            typeId = (NSString *)kUTTypeImage;
+            if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
+                [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
+                    NSLog(@"Image > %@", (NSURL *)data);
+                    [self uploadData:(NSURL *)data toParentNode:parentNode];
+                }];
+            }
+            
+            typeId = (NSString *)kUTTypeMovie;
+            if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
+                [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
+                    NSLog(@"Movie > %@", (NSURL *)data);
+                    [self uploadData:(NSURL *)data toParentNode:parentNode];
+                }];
+            }
+        }
+    } else {
+        // The user tapped "Cancel":
+        [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -175,7 +191,6 @@
         }
             
         case MEGARequestTypeFetchNodes: {
-            self.privacyVC.navigationItem.rightBarButtonItem.enabled = YES;
             break;
         }
             

@@ -245,6 +245,30 @@
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
+		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
+		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
+		941135511F00FFC700D33428 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
+		941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
+		941135531F01000300D33428 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83A71AA732ED008FA551 /* Reachability.m */; };
+		941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791771BC5754A00C58676 /* MEGAActivityItemProvider.m */; };
+		941135551F01002E00D33428 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791791BC5754A00C58676 /* OpenInActivity.m */; };
+		941135561F01004000D33428 /* ShareFolderActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917D1BC5754A00C58676 /* ShareFolderActivity.m */; };
+		941135571F01004300D33428 /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
+		941135581F01005D00D33428 /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
+		941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
+		9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
+		9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A72F1E1C22EA1600516603 /* LTHPasscodeViewController.bundle */; };
+		9411355C1F01008400D33428 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
+		9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */; };
+		9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F7917B1BC5754A00C58676 /* RemoveLinkActivity.m */; };
+		9411355F1F0100F600D33428 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
+		941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
+		941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226711A692ECC00EC7BB6 /* NodeTableViewCell.m */; };
+		941135621F01015700D33428 /* LocalizationSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122C0E51B274E8C001CE833 /* LocalizationSystem.m */; };
+		941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC2ABF1AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m */; };
+		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
+		941135651F011C8400D33428 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
+		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		942255041EDC04080074C51A /* FileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 942255021EDC04060074C51A /* FileProvider.m */; };
@@ -2741,20 +2765,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				943229431EDD97D2007DB542 /* SF-UI-Text-RegularItalic.otf in Resources */,
-				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
-				943229491EDD97D2007DB542 /* SF-UI-Text-Regular.otf in Resources */,
-				943229441EDD97D2007DB542 /* SF-UI-Display-Medium.otf in Resources */,
-				943229481EDD97D2007DB542 /* SF-UI-Text-Light.otf in Resources */,
-				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
-				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
-				943229461EDD97D2007DB542 /* SF-UI-Display-Light.otf in Resources */,
-				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
-				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
-				943229451EDD97D2007DB542 /* SF-UI-Display-Regular.otf in Resources */,
-				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
-				943229471EDD97D2007DB542 /* SF-UI-Text-Medium.otf in Resources */,
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
+				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
+				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
+				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
+				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
+				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
+				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
+				943229461EDD97D2007DB542 /* SF-UI-Display-Light.otf in Resources */,
+				943229441EDD97D2007DB542 /* SF-UI-Display-Medium.otf in Resources */,
+				943229451EDD97D2007DB542 /* SF-UI-Display-Regular.otf in Resources */,
+				943229481EDD97D2007DB542 /* SF-UI-Text-Light.otf in Resources */,
+				943229471EDD97D2007DB542 /* SF-UI-Text-Medium.otf in Resources */,
+				943229491EDD97D2007DB542 /* SF-UI-Text-Regular.otf in Resources */,
+				943229431EDD97D2007DB542 /* SF-UI-Text-RegularItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2769,16 +2793,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94892C9E1EFBF0C900AEAC25 /* SF-UI-Text-Light.otf in Resources */,
-				94892C9B1EFBF0C900AEAC25 /* SF-UI-Display-Regular.otf in Resources */,
-				94892C9A1EFBF0C900AEAC25 /* SF-UI-Display-Medium.otf in Resources */,
-				94892C9F1EFBF0C900AEAC25 /* SF-UI-Text-Regular.otf in Resources */,
+				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
+				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				94892C9C1EFBF0C900AEAC25 /* SF-UI-Display-Light.otf in Resources */,
+				941135651F011C8400D33428 /* Localizable.strings in Resources */,
+				94892C9A1EFBF0C900AEAC25 /* SF-UI-Display-Medium.otf in Resources */,
+				94892C9B1EFBF0C900AEAC25 /* SF-UI-Display-Regular.otf in Resources */,
+				94892C9E1EFBF0C900AEAC25 /* SF-UI-Text-Light.otf in Resources */,
+				94892C9D1EFBF0C900AEAC25 /* SF-UI-Text-Medium.otf in Resources */,
+				94892C9F1EFBF0C900AEAC25 /* SF-UI-Text-Regular.otf in Resources */,
+				94892C991EFBF0C900AEAC25 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				943F8B231EF2706F00AFD89F /* MainInterface.storyboard in Resources */,
-				94892C991EFBF0C900AEAC25 /* SF-UI-Text-RegularItalic.otf in Resources */,
-				94892C9D1EFBF0C900AEAC25 /* SF-UI-Text-Medium.otf in Resources */,
-				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
+				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3097,17 +3124,38 @@
 			files = (
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
 				943F8B201EF2705300AFD89F /* ShareViewController.m in Sources */,
+				9411355F1F0100F600D33428 /* MEGAAssetOperation.m in Sources */,
+				941135571F01004300D33428 /* GetLinkActivity.m in Sources */,
 				94892C951EFBF02D00AEAC25 /* SVIndefiniteAnimatedView.m in Sources */,
+				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
 				94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */,
+				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
+				941135511F00FFC700D33428 /* Helper.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
+				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
+				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
+				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
+				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
+				941135621F01015700D33428 /* LocalizationSystem.m in Sources */,
+				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
+				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
 				94892C941EFBF02A00AEAC25 /* SVProgressAnimatedView.m in Sources */,
+				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
+				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
+				941135611F01013F00D33428 /* NodeTableViewCell.m in Sources */,
+				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
+				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
+				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,
+				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
+				941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */,
+				941135531F01000300D33428 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
