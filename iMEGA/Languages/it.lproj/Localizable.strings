@@ -3,11 +3,11 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"upload"="Carica";
-/*  */
 "yes"="Si";
-/*  */
+/* */
 "no"="No";
+/* */
+"upload"="Upload";
 /*  */
 "error"="Errore";
 /*  */
@@ -292,6 +292,10 @@
 "downloading"="Scaricando...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vuoi annullare il download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Seleziona destinazione";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Seleziona file";
 /* Title for the action that allows you to move a file or folder */
 "move"="Sposta";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Controllare le autorizzazioni per questa cartella";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Cartella condivisa";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importa nella cartella";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d cartelle condivise con successo.";
 /* Button title that triggers the importing link action */
 "import"="Importa";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Aggiungi contatto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Email contatto";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Aggiungi";
 /* Success message shown when a contact has been invited */
 "requestSent"="Richiesta inviata";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Sei sicuro di voler rimuovere %d utenti dalla lista dei contatti?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contatti rimossi";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contatto %@ rimosso";
 /* Label shown when a contact request is pending */
 "pending"="In attesa";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Cambia Avatar";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Cambia nome";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Hai aggiornato con successo il tuo profilo.";
 /* Hint text for the first name (Placeholder) */
@@ -1020,19 +1024,31 @@
 "done"="fatto";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Invia files";
+/* */
+"warning"="Avvertimento";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tutti i file salvati in Offline saranno cancellati dal tuo dispositivo. Continuare?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Banda di trasferimento esaurita";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Il tuo download messo in coda supera la banda di trasferimento disponibile per il tuo account e potrebbe interrompersi.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Vedi i piani";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Annulla";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "Nuovo messaggio";
+"newMessage"="Nuovo messaggio";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Richiesta contatto";
+"contactRequest"="Richiesta di contatto";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "Nuova cartella condivisa";
+"newSharedFolder"="Nuova cartella condivisa";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Sei sicuro di voler interrompere la registrazione?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Se hai scritto male il tuo indirizzo email, correggilo e clicca su \"Invia di nuovo\"";
+/* A button to resend the email confirmation. */
+"resend"="Reinvia";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, accedere con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su Visualizza ID Apple. Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
+"autorenewableDescription"="L’abbonamento si rinnova automaticamente, con la stessa durata e prezzo rispetto a quanto originariamente scelto. È possibile disattivare il rinnovo automatico dell'abbonamento MEGA PRO fino a 24 ore prima del rinnovo programmato nella pagina delle impostazioni di iTunes. Per gestire l’abbonamento, basta andare sull’App Store, ACCEDERE con il tuo ID Apple  in fondo alla pagina (se non lo hai già fatto) e fare clic su \"Visualizza ID Apple.\" Vedrai la pagina con i dettagli dell'account e potrai gestire il tuo abbonamento. Da qui, è possibile abbonarsi a MEGA PRO e vedere quando si rinnova, cambiare il tipo di abbonamento o disattivare l'opzione di rinnovo automatico per poter poi annullare l'abbonamento.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Apri MEGA e accedi per continuare";

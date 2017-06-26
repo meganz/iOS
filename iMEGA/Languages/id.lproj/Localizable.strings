@@ -292,6 +292,10 @@
 "downloading"="Men-download...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Apakah anda ingin membatalkan download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Pilih file";
 /* Title for the action that allows you to move a file or folder */
 "move"="Pindahkan";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Cek permission anda untuk folder ini";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder dibagikan";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Impor ke";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d folder berhasil dibagikan.";
 /* Button title that triggers the importing link action */
 "import"="Impor";
 /* Message shown when a file has been imported */
@@ -457,10 +461,10 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Tambah dari kontak";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Tambah kontak";
+"addContact"="Tambah kontak ";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kontak email";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Tambah";
 /* Success message shown when a contact has been invited */
 "requestSent"="Request terkirim";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Anda yakin ingin menghapus %d pengguna dari daftar kontak anda?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontak telah terhapus";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontak %@ telah terhapus!";
 /* Label shown when a contact request is pending */
 "pending"="Tertunda";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Ganti Avatar";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Ganti Nama";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Anda telah berhasil mengganti profil anda.";
 /* Hint text for the first name (Placeholder) */
@@ -1020,19 +1024,31 @@
 "done"="selesai";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Kirim file";
+/* */
+"warning"="Peringatan";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Semua file yang disimpan untuk Offline akan dihapus dari perangkat Anda. Lanjutkan keluar?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Kuota transfer habis";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Download anda melebihi transfer quota tersedia untuk akun anda dan mungkin dapat terhambat.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Hilangkan";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Apakah anda yakin ingin membatalkan pendaftaran?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, benarkan dan klik 'Kirim Ulang'.";
+/* A button to resend the email confirmation. */
+"resend"="Kirim lagi";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

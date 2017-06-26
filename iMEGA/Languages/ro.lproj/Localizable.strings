@@ -93,13 +93,13 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Parolă";
 /* Text shown on a button that if clicked shows the MEGA Terms of Service */
-"termsOfServiceButton"="Sunt de acord cu termenii serviciului MEGA";
+"termsOfServiceButton"="Sunt de acord cu termenii de utilizare a serviciului MEGA";
 /* Error text shown when you have not entered a correct name  */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Trebuie să fii de-acord cu termenii serviciului pentru a înregistra un cont pe MEGA.";
+"termsCheckboxUnselected"="Trebuie să fii de-acord cu termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -292,6 +292,10 @@
 "downloading"="Se descarcă...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Doreşti să anulezi descărcarea?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Selectează destinaţia";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Selectează fişiere";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mută";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Verifică permisiunile pentru acest folder";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Folder partajat";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importă în";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d foldere partajate cu succes.";
 /* Button title that triggers the importing link action */
 "import"="Importă";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Adaugă contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail de contact";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adaugă";
 /* Success message shown when a contact has been invited */
 "requestSent"="Cerere trimisă";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Sigur doreşti să elimini %d utilizatori din lista de contacte?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacte eliminate";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contactul %@ a fost eliminat";
 /* Label shown when a contact request is pending */
 "pending"="În curs";
@@ -543,7 +547,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politica de confidenţialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Termenii serviciului";
+"termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Dezactivat";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -683,7 +687,7 @@
 /* First paragraph of the screen when the password has been forgotten */
 "forgotPassword_firstParagraph"="Dacă ai un backup al cheii tale de recuperare, îţi poţi reseta parola selectând DA. Niciuna dintre date nu va fi pierdută.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
+"forgotPassword_secondParagraph"="Poţi exporta în continuare cheia de recuperare acum dacă ai o sesiune MEGA activă în orice alt browser sau acesta sau orice alt calculator. Dacă nu ai, nu mai poţi decripta contul existent, însă poţi începe unul nou sub aceeaşi adresă de e-mail prin selectarea NU.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey"="Ai un backup al cheii tale de recuperare?";
 /* Headline when the user chose YES */
@@ -695,11 +699,11 @@
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Ups!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
+"noMasterKey_firstParagraph"="Datorită paradigmei noastre de criptare capăt-la-capăt, nu vei putea să îţi accesezi datele fără, fie parola ta, fie un backup al cheii tale de recuperare.";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
+"noMasterKey_secondParagraph"="Poţi parca contul existent şi să începi unul proaspăt sub aceeaşi adresă de e-mail. Datele tale vor fi păstrate pentru cel puţin 60 de zile. În cazul în care îţi aminteşti parola contului parcat, te rugăm să contactezi support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Please enter you e-mail address below. You will receive a recovery link that will allow you to park your account.";
+"recoveryLinkToParkYourAccount"="Te rugăm să introduci adresa de e-mail mai jos. Vei primi un link de recuperare care îţi va permite să parchezi contul.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Cont parcat";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -1020,19 +1024,31 @@
 "done"="gata";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Trimite fişiere";
+/* */
+"warning"="Avertisment";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Descărcarea în coadă depăşeşte cota de transfer actuală disponibilă pentru contul tău şi, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Îndepărtează";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Mesaj nou";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Cerere de contact";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Sigur doreşti să abandonezi înregistrarea?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Dacă ţi-ai scris greşit adresa de e-mail, corecteaz-o şi dă clic pe 'Retrimite'.";
+/* A button to resend the email confirmation. */
+"resend"="Retrimite";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe iconiţa App Store de pe telefon, conectează-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derula în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

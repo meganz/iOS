@@ -292,6 +292,10 @@
 "downloading"="Ladataan...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Keskeytä lataus?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Valitse tiedostot";
 /* Title for the action that allows you to move a file or folder */
 "move"="Siirrä";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Tarkista käyttöoikeutesi tässä kansiossa";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Kansio jaettu";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Tuo kohteeseen";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d kansiota jaettu.";
 /* Button title that triggers the importing link action */
 "import"="Tuo";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Lisää kontakti";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kontaktin sähköposti";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Lisää";
 /* Success message shown when a contact has been invited */
 "requestSent"="Pyyntö lähetetty";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Haluatko varmasti poistaa %d käyttäjää kontakteistasi?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontaktia poistettu";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontakti %@ poistettu";
 /* Label shown when a contact request is pending */
 "pending"="Odottaa";
@@ -665,7 +669,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Unohtuiko salasana?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Saat palautuslinkin, jonka avulla voit nollata salasanasi. Ole hyvä ja tarkista sähköpostisi jatkaaksesi.";
+"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Tämä palautuslinkki on vanhentunut, yritä uudelleen.";
 /* Headline of the password reset recovery procedure */
@@ -1020,6 +1024,10 @@
 "done"="valmis";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Lähetä tiedostoja";
+/* */
+"warning"="Varoitus";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1035,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Hylkää";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Haluatko varmasti keskeyttää rekisteröinnin?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Jos olet kirjoittanut sähköpostiosoitteesi väärin, korjaa se ja klikkaa \"Lähetä uudelleen\".";
+/* A button to resend the email confirmation. */
+"resend"="Lähetä uudelleen";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Tilaukset uusitaan automaattisesti perätteisesti saman pituisina tilauksina ja valitun alkuperäisen tilauksen hintaan. Voit kytkeä automaattisen MEGA PRO-tilauksen uusiutumisen 24 tuntia ennen seuraavan tilauksen maksun erääntymistä iTunes-tilisi asetussivulta. Hallitaksesi tilauksiasi napauta App Store-kuvaketta laitteessasi, kirjaudu Apple ID:lläsi sivun alareunassa (ellet ole jo niin tehnyt) ja sitten paina Näytä ID. Sinut ohjataan tilisivullesi, jossa voit vierittää alaspäin hallinnoidaksesi sovellustilauksia. Sieltä voit valita MEGA PRO-tilauksesi ja tarkastaa uusimispäivän, valita eri tilauspaketin tai muuttaa automaattisen tilauksen uusiutumisen päälle tai pois.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

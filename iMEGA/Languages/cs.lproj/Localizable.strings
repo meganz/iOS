@@ -292,6 +292,10 @@
 "downloading"="Stahování...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Chcete zrušit stahování?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Vybrat soubory";
 /* Title for the action that allows you to move a file or folder */
 "move"="Přesunout";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Zkontrolujte svá oprávnění u této složky";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Složka sdílena!";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importovat do";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d složek úspěšně sdíleno.";
 /* Button title that triggers the importing link action */
 "import"="Importovat";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Přidat kontakt";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail kontaktu";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Přidat";
 /* Success message shown when a contact has been invited */
 "requestSent"="Požadavek odeslán";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Opravdu chcete odebrat %d uživatelů z vašeho seznamu kontaktů?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontaktů odebráno";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontakt %@ odebrán!";
 /* Label shown when a contact request is pending */
 "pending"="Čekající";
@@ -1020,19 +1024,31 @@
 "done"="hotovo";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Odeslat soubory";
+/* */
+"warning"="Upozornění";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Vaše stahování ve frontě překračuje aktuální kvótu přenosu dostupnou pro váš účet a může být proto přerušeno.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Zrušit";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Opravdu chcete přerušit registraci?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Pokud jste zadali chybně svou e-mailovou adresu, opravte ji a klikněte na 'Odeslat znovu'.";
+/* A button to resend the email confirmation. */
+"resend"="Odeslat znovu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Předplatné je automaticky obnovováno PRO následující období automaticky a to za stejných podmínek, jako bylo prvotní období. Automatické obnovení předplatného MEGA PRO můžete vypnout nejpozději 24 hodin před zaúčtováním dalšího období. Automatickou obnovu předplatného můžete vypnout nastavení účtu iTunes. PRO správu předplatných, otevřete Nastavení -> App Store, přihlaste se svým Apple ID vespod obrazovky (pokud již přihlášení nejste) a zvolte možnost Zobrazit ID. Budete přesměrování na stránku správy vašeho účtu, zde zvolte položku Spravovat. V seznamu Odběrů zvolte MEGA PRO předplatné. Nyní vidíte stav vašeho předplatného a datum dalšího zúčtovacího období. Zde můžete změnit druh vašeho předplatného nebo jej úplně vypnout pomocí přepínače vyp/zap.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

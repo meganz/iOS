@@ -292,6 +292,10 @@
 "downloading"="Преузимање у току...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Да ли желите да прекинете преузимање ";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Изабери документе";
 /* Title for the action that allows you to move a file or folder */
 "move"="Премести";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Проверите своје дозволе над овим директоријумом";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Директоријум подељен";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Унесите у";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d директоријума успешно подељена.";
 /* Button title that triggers the importing link action */
 "import"="Увоз";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Додај контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Контакт email";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Додај";
 /* Success message shown when a contact has been invited */
 "requestSent"="Захтев послат";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Да ли сте сигурно да желите да уклоните %d особа из ваше контакт листе?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d контакта уклоњено";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контакт %@ уклоњен";
 /* Label shown when a contact request is pending */
 "pending"="На чекању";
@@ -665,7 +669,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Заборављена лозинка?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Добићете линк за повраћај који Вам омогућава ресетовање лозинке. Молимо проверите свој е-маил за наставак.";
+"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Ваш линк за рековери је истекао, молимо Вас да покушате поново.";
 /* Headline of the password reset recovery procedure */
@@ -1020,6 +1024,10 @@
 "done"="готово";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Пошаљи фајлове";
+/* */
+"warning"="Упозорење";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1035,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Откажи";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Да ли сте сигурни да желите да прекинете регистрацију?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Ако сте лоше уписали своју е-маил адресу, исправите је и кликните 'Пошаљи поново'.";
+/* A button to resend the email confirmation. */
+"resend"="Понови слање";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Претплате се обнављају аутоматски за узастопне претплатне периоде истог трајања и исте цене као и почетни изабрани период. Можете угасити аутоматску обнову Ваше MEGA PRO претплате не касније од 24 часа пре наплате следећег претплатног периода преко Ваше iTunes странице подешавања налога. Да бисте управљали својим претплатама, једноставно кликните на Продавницу Апликације иконицу на свом уређају пријавите се са својим Apple ID на дну странице (ако већ нисте) и након тога кликните на Погледај ID. Бићете пребачени на страницу Вашег налога где можете да скролујете доле до Управљај Претплатама Апликација. Одатле, можете изабрати своју MEGA PRO претплатз и видети Ваш заказан датум обнове, изабрати другачији претплатнички пакет или пребацити on-off прекидач на off да онемогућите аутоматско-обнављање Ваше претплате.    ";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

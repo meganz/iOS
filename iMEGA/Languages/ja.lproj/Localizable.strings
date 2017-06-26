@@ -292,6 +292,10 @@
 "downloading"="ダウンロード中...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="ダウンロードをキャンセルしますか？";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="ファイルを選択";
 /* Title for the action that allows you to move a file or folder */
 "move"="移動";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="このフォルダに関する許可を確認して下さい。";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="フォルダ共有完了";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="インポートする";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d フォルダ共有成功";
 /* Button title that triggers the importing link action */
 "import"="インポート";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="知り合いの追加";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="知り合いのメールアドレス";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="追加";
 /* Success message shown when a contact has been invited */
 "requestSent"="リクエスト送信済み";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="知り合い%d人除外";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="知り合い%@ 除外";
 /* Label shown when a contact request is pending */
 "pending"="ペンディング";
@@ -613,7 +617,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to Cancel your account.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Please enter your password to confirm that you want to close your account.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="アカウントを閉じる";
 /* Title for the action that allows to remove a file or folder */
@@ -1020,6 +1024,10 @@
 "done"="できました。";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ファイルを送る";
+/* */
+"warning"="警告";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1035,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="終了する";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="登録を中止しますか？";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click 'Resend'.";
+/* A button to resend the email confirmation. */
+"resend"="再送";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
