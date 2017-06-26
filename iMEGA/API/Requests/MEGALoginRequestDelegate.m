@@ -19,7 +19,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _session = [[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"] boolValue];
+        _session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"] ? YES : NO;
     }
     
     return self;
