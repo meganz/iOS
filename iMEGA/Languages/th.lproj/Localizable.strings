@@ -292,6 +292,10 @@
 "downloading"="กำลังดาวน์โหลด...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="คุณต้องการที่จะยกเลิกการดาวน์โหลดหรือไม่";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="เลือกไฟล์";
 /* Title for the action that allows you to move a file or folder */
 "move"="ย้าย";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="ตรวจสอบสิทธิ์ของคุณบนโฟลเดอร์นี้";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="โฟลเดอร์ที่แชร์";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="นำเข้าจาก";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d โฟลเดอร์ถูกแชร์เรียบร้อยแล้ว";
 /* Button title that triggers the importing link action */
 "import"="นำเข้า";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="เพิ่มรายการติดต่อ";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="อีเมลรายการติดต่อ";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="เพิ่ม";
 /* Success message shown when a contact has been invited */
 "requestSent"="ส่งคำขอ";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="คุณแน่ใจหรือไม่ว่าจะลบผู้ใช้ %d ออกจากรายการผู้ติดต่อ";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d ผู้ติดต่อถูกลบออก";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="ผู้ติดต่อ %@ ถูกลบออกแล้ว";
 /* Label shown when a contact request is pending */
 "pending"="ที่ค้างอยู่";
@@ -1020,6 +1024,10 @@
 "done"="เสร็จแล้ว";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ส่งไฟล์";
+/* */
+"warning"="คำเตือน";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1035,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="ละทิ้ง";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="คุณแน่ใจว่าต้องการที่จะยกเลิกการลงทะเบียนนี้";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="If you have misspelled your email address, correct it and click 'Resend'.";
+/* A button to resend the email confirmation. */
+"resend"="ส่งใหม่";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA แบบโปร ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอพได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA แบบโปรและสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
+"autorenewableDescription"="การสมัครใช้งานแบบต่ออายุอัตโนมัติอย่างต่อเนื่องนั้น จะถูกกำหนดค่าไม่ว่าจะเป็นระยะเวลาการสมัครใช้งานหรือราคา จะเป็นไปในทิศทางเดียวกันและเป็นค่าแรกเริ่มให้โดยอัตโนมัติ คุณสามารถปิดการใช้งานดังกล่าว แพคเกจ MEGA PRO ได้ไม่เกิน 24 ชั่วโมงก่อนการชำระเงินในรอบถัดไป เนื่องจากเป็นการตั้งค่าผ่านหน้าบัญชี iTunes ของคุณ และเพื่อจัดการกับการสมัครใช้งานของคุณ เพียงแค่แตะที่ไอคอน App Store บนโทรศัพท์ของคุณ ลงชื่อเข้าด้วย Apple ID ของคุณที่ด้านล่างของหน้า (ถ้าคุณยังไม่ได้ดำเนินการ) แล้วคลิกดูรหัส คุณจะถูกนำไปยังหน้าบัญชีของคุณ สามารถเลื่อนลงไปจัดการ การสมัครใช้งานแอปได้ จากนั้น คุณสามารถเลือกการสมัครใช้งาน MEGA PRO และสามารถดูกำหนดการต่ออายุ เลือกแพคเกจสมัครใช้งานต่างๆ หรือสลับสวิทช์เปิด-ปิด เพื่อปิดใช้งาน การสมัครใช้งานแบบต่ออายุอัตโนมัติของคุณได้เช่นเดียวกัน";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

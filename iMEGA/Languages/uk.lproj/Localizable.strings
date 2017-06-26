@@ -292,6 +292,10 @@
 "downloading"="Завантаження...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Ви хочете скасувати завантаження?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Обрати місце призначення";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Виберіть файли";
 /* Title for the action that allows you to move a file or folder */
 "move"="Перемістити";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Перевірте дозволи цієї теки";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Спільну теку створено";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Імпортувати до";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d теки успішно використовують спільний доступ";
 /* Button title that triggers the importing link action */
 "import"="Імпорт";
 /* Message shown when a file has been imported */
@@ -395,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Пропустити";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Автоматичне резервне копіювання ваших фотографій на Хмарний диск";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Увімкнути відвантаження з камери";
 /* Success message shown when Camera Uploads has been enabled */
@@ -460,7 +464,7 @@
 "addContact"="Додати контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Е-пошта контакту";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Додати";
 /* Success message shown when a contact has been invited */
 "requestSent"="Запит надіслано";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Ви впевнені, що хочете видалити %d користувачів зі списку контактів?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d контакти видалено";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контакт %@ видалено";
 /* Label shown when a contact request is pending */
 "pending"="Протягом";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Змінити аватар";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Змінити ім'я";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Ви успішно змінили свій профіль.";
 /* Hint text for the first name (Placeholder) */
@@ -813,7 +817,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Оновити обліковий запис";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Ви можете оновитися пізніше через Мій обліковий запис";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Сховище";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -915,11 +919,11 @@
 /* */
 "xMinutes"="[X] хвилин(и)";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+"showMeAwayAfterXMinutesOfInactivity"="Відібражати відхід після [X] хвилин бездіяльності";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status Persistence";
+"statusPersistence"="Сталий статус";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+"maintainMyChosenStatusAppearance"="Підтримувати вибраний статус, навіть за відсутності підключених пристроїв.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(змінено)";
 /*  */
@@ -1015,24 +1019,36 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Надіслати контакт";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Додати з вашого Хмарного диску";
+"addFromMyCloudDrive"="Додати з Хмарного диску";
 /* */
 "done"="зроблено";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Надіслати файли";
+/* */
+"warning"="Попередження";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Усі файли, збережені локально будуть видалені з вашого пристрою. Продовжити вихід?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Дивитись плани";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Відхилити";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Нове повідомлення";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Запит контакту";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Нова спільна тека";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Ви впевнені, що хочете припинити реєстрацію?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Якщо ви невірно ввели адресу е-пошти, виправте її на натисніть 'Надіслати ще раз'.";
+/* A button to resend the email confirmation. */
+"resend"="Надіслати ще раз";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Підписки автоматично продовжуються на той само термін і в ту само ціну, що ви вибрали початково. Ви можете відключити автоматичне оновлення вашої підписки не пізніше ніж за 24 години до вашої наступної абонентської плати через сторінку налаштувань облікового запису iTunes. Для того щоб управляти підписками, просто натисніть на іконку App Store на вашому телефоні, увійдіть у свій Apple ID, в нижній частині сторінки (якщо ви цього не робили) і натисніть Переглянути Apple ID. Ви потрапите на сторінку облікового запису, де зможете прокрутити до керування підписками. Звідти ви можете вибрати підписку MEGA PRO і переглянути дату оновлення підписки, вибрати інший пакет підписки або перемикачем вимкнути автооновлення підписки.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

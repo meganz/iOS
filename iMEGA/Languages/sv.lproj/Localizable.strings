@@ -292,6 +292,10 @@
 "downloading"="Laddar ner...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Vill du avbryta nedladdningen?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Välj filer";
 /* Title for the action that allows you to move a file or folder */
 "move"="Flytta";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Kontrollera dina rättigheter på den här mappen";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Mapp delad";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importera till";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d mappar delade. ";
 /* Button title that triggers the importing link action */
 "import"="Importera";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Lägg till kontakt";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kontakt e-post";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Lägg till";
 /* Success message shown when a contact has been invited */
 "requestSent"="Förfrågan skickad";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Är du säker på att du vill ta bort %d dessa användare från din kontaktlista?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontakter borttagna";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontakt %@ borttagen";
 /* Label shown when a contact request is pending */
 "pending"="i avvaktan på";
@@ -1020,6 +1024,10 @@
 "done"="klart";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Skicka filer";
+/* */
+"warning"="Varning";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1035,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Stäng";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Är du säker på att du vill avbryta registreringen?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Om du har angett fel e-mail adress var vänlig ange korrekt och klicka på skicka igen. ";
+/* A button to resend the email confirmation. */
+"resend"="Skicka igen";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnemang förnyas automatiskt för efterföljande perioder av samma längd och till samma pris som den inledande perioden som valts. Du kan stänga av automatisk förlängning av din MEGA PRO abonnemang senast 24 timmar innan din nästa prenumeration, betalning sker via din iTunes-sidas kontoinställningar. För att hantera dina prenumerationer, klickar du bara på ikonen App Store på din telefon, logga in med ditt Apple-ID längst ner på sidan (om du inte redan har gjort det) och sedan klicka på Visa ID. Du kommer att tas till ditt konto där du kan bläddra ner till Hantera App prenumerationer. Därifrån kan du välja MEGA PRO abonnemang och visa ditt planerade förnyelsedatum, välja en annan abonnemangspaket eller växla på strömbrytaren till off för att inaktivera automatisk förnyelse av din prenumeration.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

@@ -292,10 +292,14 @@
 "downloading"="Idinadownload...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Gusto mo bang kanselahin ang pagda-download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Piliin ang destinasyon";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Pumili ng files";
 /* Title for the action that allows you to move a file or folder */
 "move"="Ilipat";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="Isang file ang nailipat!";
+"moveFileMessage"="Isang file ang nailipat";
 /* Success message shown when you have moved {1+} files */
 "moveFilesMessage"="%2 files ang nailipat";
 /* Success message shown when you have moved 1 folder */
@@ -371,13 +375,13 @@
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Tingnan ang inyong permiso sa folder na ito";
 /* Message shown when a folder have been shared */
-"sharedFolder_success"="Naibahagi na ang folder!";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Iangkat sa";
+"sharedFolder_success"="Naibahagi na ang folder";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d na folders ang matagumpay na naibahagi.";
 /* Button title that triggers the importing link action */
 "import"="Import";
 /* Message shown when a file has been imported */
-"fileImported"="Na-import na ang file!";
+"fileImported"="Na-import na ang file";
 /* Message shown when some files have been imported */
 "filesImported"="Na-import na ang files";
 /* Error message shown when you have used more MEGA storage than you can */
@@ -399,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Gamitin ang Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Pinagana ang Camera Uploads!";
+"cameraUploadsEnabled"="Pinagana ang Camera Uploads";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu ang item na pinili";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -460,7 +464,7 @@
 "addContact"="Magdagdag ng koneksyon";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Email ng contact";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Magdagdag";
 /* Success message shown when a contact has been invited */
 "requestSent"="Naipadala na ang request";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Gusto mo bang tanggalin ang %d na users sa inyong listahan ng contact?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d tinaggal ang contacts";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Tinanggal si %@";
 /* Label shown when a contact request is pending */
 "pending"="Pending";
@@ -495,7 +499,7 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Gusto mo bang iwan ang mga binahaging ito sa'yo?";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Iniwan ang folder!";
+"shareFolderLeaved"="Iniwan ang folder";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Ibahagi";
 /* Select all items/elements on the list */
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Baguhin ang Avatar";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Baguhin ang Pangalan";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Matagumpay mong nabago ang iyong profile.";
 /* Hint text for the first name (Placeholder) */
@@ -1020,19 +1024,31 @@
 "done"="tapos na";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Magpadala ng files";
+/* */
+"warning"="Babala";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Mabubura sa iyong device ang lahat ng files na naka-save sa Offline. Gusto mo bang magpatuloy sa logout?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Depleted na ang transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Tingnan ang plano";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Alisin";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Bagong mensahe";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Bagong shared folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Gusto mo bang itigil na ang registration?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Kung mali ang nailagay na email address, itama ito at i-click ang 'Ipadala muli'.";
+/* A button to resend the email confirmation. */
+"resend"="Ipadala muli";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Ang subscriptions ay kaagad na nirereview sa magkakasunod na subscription periods sa parehas na haba ng panahon at sa parehas na presyo sa napiling panahon. Pupuwede ng patayin ang automatic renewal ng iyong MEGA PRO subscription sa loob ng 24 oras bago ang iyong susunod na bayad sa subscription papunta sa iyong iTunes account settings page. Para ayusin ang iyong subscription, i-click ang AppStore icon sa iyong handset, mag-sign in gamit ang iyong Apple ID sa ilalim ng page (kung hindi pa nagagawa ito) at i-click ang View ID. Dadalhin ka nito sa iyong account page, mag-scroll down ka at pumunta sa Manage App Subscriptions. Pamula dito, pupwede mong piliin ang iyong MEGA PRO subscription at tingnan ang iyong nakatakdang petsa ng renewal, pumili ng ibang subscription package at mag-toggle sa on-off switch para patayin ang auto-renewal ng iyong subscription.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

@@ -289,9 +289,13 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Bağlantılar kaldırıldı";
 /* Title show when a file is being downloaded */
-"downloading"="İndiriliyor: %[X]";
+"downloading"="İndiriliyor...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="İndirme işlemi iptal edilsin mi?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Hedef noktasını seçiniz";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Dosyaları seçin";
 /* Title for the action that allows you to move a file or folder */
 "move"="Taşı";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Bu klasördeki izinlerinizi denetleyin";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Klasör paylaşıldı";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="İçe aktar";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d klasör başarıyla paylaşıldı.";
 /* Button title that triggers the importing link action */
 "import"="Hesaba Ekle";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Kişi ekle";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Kişi epostası";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Ekle";
 /* Success message shown when a contact has been invited */
 "requestSent"="İstek gönderildi";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Kişi listenizden %d kullanıcı kaldırmak istediğinizden emin misiniz?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kişi kaldırıldı";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="%@ kişisi kaldırıldı";
 /* Label shown when a contact request is pending */
 "pending"="Bekleyen";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Profil Resmini Değiştir";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Adını Değiştir";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Profil bilgilerinizi başarıyla değiştirdiniz.";
 /* Hint text for the first name (Placeholder) */
@@ -1020,19 +1024,31 @@
 "done"="tamam";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dosyaları gönder";
+/* */
+"warning"="Uyarı";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Çevrimdışı için kaydedilen tüm dosyalar cihazınızdan silinecektir. Çıkış yap?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Aktarma kotası tükenmiş";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Kuyruktaki indirmeleriniz hesabınız için bulunmakta olan aktarma kotasını geçmektedir ve bu nedenle aksatılabilir.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Paketleri görüntüleyin";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Son ver";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Yeni Mesaj";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Kişi isteği";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Yeni Paylaşılan Klasör";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Kaydı iptal etmek istediğinizden emin misiniz?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Eğer e-postanızı yanlış girdiyseniz, düzeltin ve 'Tekrar Gönder' tuşuna basın.";
+/* A button to resend the email confirmation. */
+"resend"="Tekrar gönder";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Devam etmek için MEGA'ya giriş yapın";

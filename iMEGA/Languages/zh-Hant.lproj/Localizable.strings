@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="取消";
 /* Button title to accept something */
-"ok"="好";
+"ok"="OK";
 /* */
 "yes"="是的";
 /* */
@@ -292,6 +292,10 @@
 "downloading"="正在下載...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="您確定取消下載嗎?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="選擇目的地";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="選擇檔案";
 /* Title for the action that allows you to move a file or folder */
 "move"="移動";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="請檢查您被授予的權限";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="已分享該資料夾";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="匯入至";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="已成功分享 %d 資料夾.";
 /* Button title that triggers the importing link action */
 "import"="匯入";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="新增聯絡人";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="聯絡人郵箱";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="新增";
 /* Success message shown when a contact has been invited */
 "requestSent"="已寄出聯絡人邀請";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="您確定要從聯絡簿刪除 %d 個聯絡人嗎？";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="已移除 %d 聯繫人";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="聯繫人 %@ 已移除";
 /* Label shown when a contact request is pending */
 "pending"="處理中";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="變更頭像";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="更改名稱";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人檔案";
 /* Hint text for the first name (Placeholder) */
@@ -1020,19 +1024,31 @@
 "done"="完成";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="寄送檔案";
+/* */
+"warning"="警告";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您儲存之所有離線檔案將會被從您的設備中刪除。確定要登出嗎？";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="傳輸配額不足";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="您所排程的下載已超出您帳戶目前可用的傳輸配額，因此有可能會被中斷。";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="參看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="新訊息";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="聯絡人邀請";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="新共享資料夾";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="您確定要中止註冊嗎?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="如果您寫錯了您的電子郵件地址，請於修正後點擊\"重新發送\"。";
+/* A button to resend the email confirmation. */
+"resend"="重新發送";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
