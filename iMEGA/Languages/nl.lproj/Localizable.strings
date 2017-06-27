@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Er wordt een logboek gemaakt in het Offline gedeelte (MEGAiOS.log).";
+"enableDebugMode_message"="Een logboek wordt gemaakt in het Offline gedeelte (MEGAiOS.log). Logboeken kunnen informatie bevatten die verwant zijn aan uw account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="DEBUG modus uitgeschakeld";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -918,8 +918,12 @@
 "autoAway"="Automatisch op afwezig";
 /* */
 "xMinutes"="[X] minutes";
+/* */
+"1Minute"="1 minuut";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Zet mijn status op afwezig na [X] minuten van inactiviteit";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Volharding";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */

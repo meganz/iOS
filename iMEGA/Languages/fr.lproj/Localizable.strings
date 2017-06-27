@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log).";
+"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des informations associées à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Désactiver le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -918,8 +918,12 @@
 "autoAway"="Absence automatique";
 /* */
 "xMinutes"="[X] minutes";
+/* */
+"1Minute"="1 minute";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="M'afficher absent après [X] minutes d'inactivité";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistance de l'état";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
