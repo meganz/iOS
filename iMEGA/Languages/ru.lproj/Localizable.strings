@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Журнал будет создан в локальном разделе (MEGAiOS.log).";
+"enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашей учётной записи.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Отключить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -918,8 +918,12 @@
 "autoAway"="Отсутствие";
 /* */
 "xMinutes"="[X] минут(ы)";
+/* */
+"1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1051,4 +1055,4 @@
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+"openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";

@@ -918,8 +918,12 @@
 "autoAway"="Автоматичний статус відсутності";
 /* */
 "xMinutes"="[X] хвилин(и)";
+/* */
+"1Minute"="1 хвилина";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Відібражати відхід після [X] хвилин бездіяльності";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сталий статус";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
