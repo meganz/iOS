@@ -205,6 +205,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        if (![sharedUserDefaults boolForKey:@"extensions"]) {
+            [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+            [sharedUserDefaults setBool:YES forKey:@"extensions"];
+        }
         [self registerForNotifications];
         isAccountFirstLogin = NO;
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
