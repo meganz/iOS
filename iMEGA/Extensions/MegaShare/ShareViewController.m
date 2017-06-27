@@ -24,6 +24,7 @@
 @property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) unsigned long pendingAssets;
 @property (nonatomic) unsigned long totalAssets;
+@property (nonatomic) unsigned long unsupportedAssets;
 @property (nonatomic) float progress;
 
 @end
@@ -135,28 +136,39 @@
         NSExtensionItem *content = self.extensionContext.inputItems[0];
         self.totalAssets = self.pendingAssets = content.attachments.count;
         self.progress = 0;
+        self.unsupportedAssets = 0;
         for (NSItemProvider *attachment in content.attachments) {
-            NSString *typeId;
-            
-            typeId = (NSString *)kUTTypeImage;
-            if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
-                [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
+            if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error){
                     NSLog(@"Image > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
-            }
-            
-            typeId = (NSString *)kUTTypeMovie;
-            if ([attachment hasItemConformingToTypeIdentifier:typeId]) {
-                [attachment loadItemForTypeIdentifier:typeId options:nil completionHandler:^(id data, NSError *error){
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error){
                     NSLog(@"Movie > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
+                // This type includes kUTTypeText, so kUTTypeText it's omitted
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
+                    NSLog(@"File > %@", (NSURL *)data);
+                    [self uploadData:(NSURL *)data toParentNode:parentNode];
+                }];
+            } else {
+                self.unsupportedAssets++;
             }
+        }
+        // If there is no supported asset to process, then the extension is done:
+        if (self.pendingAssets == self.unsupportedAssets) {
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
         }
     } else {
         // The user tapped "Cancel":
-        [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+        [self dismissWithCompletionHandler:^{
+            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+        }];
     }
 }
 
@@ -172,7 +184,7 @@
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     [[NSFileManager defaultManager] removeItemAtPath:transfer.path error:nil];
-    if (--self.pendingAssets == 0) {
+    if (--self.pendingAssets == self.unsupportedAssets) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD dismiss];
         [self dismissWithCompletionHandler:^{
