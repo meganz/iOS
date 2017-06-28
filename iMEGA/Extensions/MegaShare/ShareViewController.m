@@ -97,7 +97,22 @@
                      }];
 }
 
-- (void)uploadData:(NSURL *)url toParentNode:parentNode {
+- (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
+    NSURL *urlToDownload = url;
+    NSString *urlString = [url absoluteString];
+    if ([urlString hasPrefix:@"https://www.dropbox.com"]) {
+        // Fix for Dropbox:
+        urlString = [urlString stringByReplacingOccurrencesOfString:@"dl=0" withString:@"dl=1"];
+        urlToDownload = [NSURL URLWithString:urlString];
+    }
+    NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlToDownload
+                                                                             completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                                                                         [self uploadData:location toParentNode:parentNode withFileName:response.suggestedFilename];
+                                                                     }];
+    [downloadTask resume];
+}
+
+- (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
     if (![fileManager fileExistsAtPath:storagePath]) {
@@ -107,7 +122,19 @@
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
     [fileManager copyItemAtPath:path toPath:tempPath error:nil];
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode delegate:self];
+}
 
+- (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode withFileName:(NSString *)filename {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    if (![fileManager fileExistsAtPath:storagePath]) {
+        [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    NSString *path = [url path];
+    NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
+    // The file needs to be moved in this case because it is downloaded with a temporal filename
+    [fileManager moveItemAtPath:path toPath:tempPath error:nil];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode delegate:self];
 }
 
 - (void)configureProgressHUD {
@@ -153,6 +180,11 @@
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
                     NSLog(@"File > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
+                }];
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
+                    NSLog(@"URL > %@", (NSURL *)data);
+                    [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
                 }];
             } else {
                 self.unsupportedAssets++;
