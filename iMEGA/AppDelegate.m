@@ -325,6 +325,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
