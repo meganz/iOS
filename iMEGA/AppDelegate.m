@@ -92,11 +92,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    _signalActivityRequired = NO;
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
+    
+    _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -109,12 +116,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-    
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
