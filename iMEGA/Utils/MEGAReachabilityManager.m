@@ -129,10 +129,7 @@
     return address;
 }
 
-
-#pragma mark - Reachability Changes
-
-- (void)reachabilityDidChange:(NSNotification *)notification {
+- (void)reconnectIfIPHasChanged {
     if ([MEGAReachabilityManager isReachable]) {
         NSString *currentIP = [self getIpAddress];
         if (![self.IpAddress isEqualToString:currentIP]) {
@@ -140,6 +137,13 @@
             self.IpAddress = currentIP;
         }
     }
+}
+
+
+#pragma mark - Reachability Changes
+
+- (void)reachabilityDidChange:(NSNotification *)notification {
+    [self reconnectIfIPHasChanged];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
