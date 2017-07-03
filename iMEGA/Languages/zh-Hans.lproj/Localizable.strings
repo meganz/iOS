@@ -918,8 +918,12 @@
 "autoAway"="自动离线";
 /* */
 "xMinutes"="[X] 分钟";
+/* */
+"1Minute"="1 分钟";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="在[X]分钟不活动之后让我离开";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="状态持续";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
