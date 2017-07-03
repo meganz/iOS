@@ -253,7 +253,6 @@
 		942ED2AD1EDEE50900C9908D /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		942ED2AE1EDEE50900C9908D /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
-		942ED2B11EDEE5B700C9908D /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229211EDD8430007DB542 /* libKarere.a */; };
 		942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
 		942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
@@ -273,7 +272,6 @@
 		9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229191EDD83B0007DB542 /* AVFoundation.framework */; };
 		9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		9432291E1EDD83FF007DB542 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
-		943229221EDD8430007DB542 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229211EDD8430007DB542 /* libKarere.a */; };
 		943229231EDD845E007DB542 /* MEGAStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2D31B4EE9BA00A37044 /* MEGAStore.m */; };
 		943229251EDD8479007DB542 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229241EDD8479007DB542 /* CoreData.framework */; };
 		943229261EDD8495007DB542 /* MEGAAssetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */; };
@@ -350,7 +348,51 @@
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
-		A838B23A1E968DE200875D96 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A838B2391E968DE200875D96 /* libKarere.a */; };
+		A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
+		A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
+		A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
+		A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
+		A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
+		A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */; };
+		A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
+		A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
+		A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */; };
+		A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
+		A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
+		A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */; };
+		A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
+		A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
+		A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB01F0A52CD0081BCE3 /* libevent.a */; };
+		A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
+		A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
+		A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFB11F0A52CD0081BCE3 /* libws.a */; };
+		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
+		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
+		A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
+		A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
+		A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
+		A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC91F0A52E90081BCE3 /* libcrypto.a */; };
+		A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
+		A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
+		A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */; };
+		A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
+		A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
+		A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCB1F0A52E90081BCE3 /* libcurl.a */; };
+		A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
+		A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
+		A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCC1F0A52E90081BCE3 /* libssl.a */; };
+		A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
+		A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
+		A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCD1F0A52E90081BCE3 /* libuv.a */; };
+		A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
+		A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
+		A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFCE1F0A52E90081BCE3 /* libsodium.a */; };
+		A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
+		A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
+		A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */; };
+		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
+		A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
+		A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
 		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
 		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
@@ -912,12 +954,9 @@
 		9432290C1EDD829F007DB542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9432290E1EDD82CF007DB542 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		943229101EDD82E2007DB542 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		943229121EDD832E007DB542 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		943229191EDD83B0007DB542 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9432291B1EDD83E9007DB542 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		9432291F1EDD840E007DB542 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-acyhkzwsqxezpocxgbnzctxspiip/Build/Products/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
-		943229211EDD8430007DB542 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-acyhkzwsqxezpocxgbnzctxspiip/Build/Products/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		943229241EDD8479007DB542 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		943229281EDD84D9007DB542 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -928,7 +967,6 @@
 		944B205B1EE5551C003C967B /* UIAlertAction+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAlertAction+MNZCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAlertAction+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
-		945605541EDD7EDF0094EF0F /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
@@ -940,7 +978,21 @@
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
-		A838B2391E968DE200875D96 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
+		A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_core.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_core.a; sourceTree = "<group>"; };
+		A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_extra.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_extra.a; sourceTree = "<group>"; };
+		A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_openssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_openssl.a; sourceTree = "<group>"; };
+		A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent_pthreads.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent_pthreads.a; sourceTree = "<group>"; };
+		A88BFFB01F0A52CD0081BCE3 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libevent.a; sourceTree = "<group>"; };
+		A88BFFB11F0A52CD0081BCE3 /* libws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libws.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libws.a; sourceTree = "<group>"; };
+		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
+		A88BFFC91F0A52E90081BCE3 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcrypto.a; sourceTree = "<group>"; };
+		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
+		A88BFFCB1F0A52E90081BCE3 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcurl.a; sourceTree = "<group>"; };
+		A88BFFCC1F0A52E90081BCE3 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libssl.a; sourceTree = "<group>"; };
+		A88BFFCD1F0A52E90081BCE3 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libuv.a; sourceTree = "<group>"; };
+		A88BFFCE1F0A52E90081BCE3 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
+		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-bkcumhpxojccqgcecezcgurbavov/Build/Products/Debug-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
+		A88BFFEC1F0A56B80081BCE3 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "../../../Library/Developer/Xcode/DerivedData/iMEGA-bkcumhpxojccqgcecezcgurbavov/Build/Products/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
 		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
 		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
@@ -1097,11 +1149,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
+				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
+				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
+				A88BFFC21F0A52CD0081BCE3 /* libws.a in Frameworks */,
+				A88BFFB61F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */,
+				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
+				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
+				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
+				A88BFFD21F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
-				A838B23A1E968DE200875D96 /* libKarere.a in Frameworks */,
+				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
+				A88BFFDB1F0A52E90081BCE3 /* libssl.a in Frameworks */,
+				A88BFFB91F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
+				A88BFFBF1F0A52CD0081BCE3 /* libevent.a in Frameworks */,
+				A88BFFBC1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
+				A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,25 +1175,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */,
+				A88BFFEA1F0A56280081BCE3 /* libMEGASDK.a in Frameworks */,
+				A88BFFDC1F0A52E90081BCE3 /* libssl.a in Frameworks */,
+				A88BFFB71F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
 				9432293B1EDD88E3007DB542 /* MediaPlayer.framework in Frameworks */,
+				A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */,
+				A88BFFC01F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				943229331EDD86C3007DB542 /* SystemConfiguration.framework in Frameworks */,
+				A88BFFD91F0A52E90081BCE3 /* libcurl.a in Frameworks */,
+				A88BFFD61F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
+				A88BFFC31F0A52CD0081BCE3 /* libws.a in Frameworks */,
+				A88BFFD31F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
 				943229301EDD862F007DB542 /* LocalAuthentication.framework in Frameworks */,
+				A88BFFB41F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
 				9432292E1EDD85CE007DB542 /* Photos.framework in Frameworks */,
 				9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */,
+				A88BFFE21F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				943229291EDD84D9007DB542 /* CoreMedia.framework in Frameworks */,
 				943229251EDD8479007DB542 /* CoreData.framework in Frameworks */,
-				943229221EDD8430007DB542 /* libKarere.a in Frameworks */,
 				9432291E1EDD83FF007DB542 /* MobileCoreServices.framework in Frameworks */,
 				9432291C1EDD83E9007DB542 /* ImageIO.framework in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
 				943229141EDD8363007DB542 /* libstdc++.tbd in Frameworks */,
 				943229151EDD836A007DB542 /* libsqlite3.tbd in Frameworks */,
 				943229171EDD837D007DB542 /* libresolv.tbd in Frameworks */,
+				A88BFFDF1F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				943229161EDD836F007DB542 /* libz.tbd in Frameworks */,
 				943229111EDD82E2007DB542 /* UIKit.framework in Frameworks */,
 				9432290F1EDD82CF007DB542 /* Security.framework in Frameworks */,
 				9432290D1EDD829F007DB542 /* CoreGraphics.framework in Frameworks */,
+				A88BFFBD1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
 				9432290B1EDD8271007DB542 /* QuartzCore.framework in Frameworks */,
+				A88BFFBA1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,14 +1215,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */,
+				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
 				942ED2BA1EDEE6A900C9908D /* MobileCoreServices.framework in Frameworks */,
 				942ED2B91EDEE68D00C9908D /* ImageIO.framework in Frameworks */,
+				A88BFFDD1F0A52E90081BCE3 /* libssl.a in Frameworks */,
+				A88BFFC11F0A52CD0081BCE3 /* libevent.a in Frameworks */,
 				942ED2B81EDEE62800C9908D /* CoreMedia.framework in Frameworks */,
+				A88BFFB51F0A52CD0081BCE3 /* libevent_core.a in Frameworks */,
+				A88BFFDA1F0A52E90081BCE3 /* libcurl.a in Frameworks */,
+				A88BFFBE1F0A52CD0081BCE3 /* libevent_pthreads.a in Frameworks */,
+				A88BFFE31F0A52E90081BCE3 /* libsodium.a in Frameworks */,
+				A88BFFD11F0A52E90081BCE3 /* libcares.a in Frameworks */,
 				942ED2B61EDEE60800C9908D /* AVFoundation.framework in Frameworks */,
-				942ED2B11EDEE5B700C9908D /* libKarere.a in Frameworks */,
+				A88BFFD41F0A52E90081BCE3 /* libcrypto.a in Frameworks */,
+				A88BFFBB1F0A52CD0081BCE3 /* libevent_openssl.a in Frameworks */,
+				A88BFFB81F0A52CD0081BCE3 /* libevent_extra.a in Frameworks */,
+				A88BFFC41F0A52CD0081BCE3 /* libws.a in Frameworks */,
 				942ED2B21EDEE5C900C9908D /* libstdc++.tbd in Frameworks */,
 				942ED2B31EDEE5D800C9908D /* libsqlite3.tbd in Frameworks */,
 				942ED2B41EDEE5EC00C9908D /* libresolv.tbd in Frameworks */,
+				A88BFFD71F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
+				A88BFFE01F0A52E90081BCE3 /* libuv.a in Frameworks */,
 				942ED2B51EDEE5F500C9908D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1686,6 +1780,25 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A88BFFEC1F0A56B80081BCE3 /* libKarere.a */,
+				A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */,
+				A88BFFC81F0A52E90081BCE3 /* libcares.a */,
+				A88BFFC91F0A52E90081BCE3 /* libcrypto.a */,
+				A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */,
+				A88BFFCB1F0A52E90081BCE3 /* libcurl.a */,
+				A88BFFCC1F0A52E90081BCE3 /* libssl.a */,
+				A88BFFCD1F0A52E90081BCE3 /* libuv.a */,
+				A88BFFCE1F0A52E90081BCE3 /* libsodium.a */,
+				A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */,
+				A88BFFAD1F0A52CD0081BCE3 /* libevent_extra.a */,
+				A88BFFAE1F0A52CD0081BCE3 /* libevent_openssl.a */,
+				A88BFFAF1F0A52CD0081BCE3 /* libevent_pthreads.a */,
+				A88BFFB01F0A52CD0081BCE3 /* libevent.a */,
+				A88BFFB11F0A52CD0081BCE3 /* libws.a */,
+				A82751151E97AB88007CD9E2 /* libstdc++.tbd */,
+				A82751131E97AB79007CD9E2 /* libsqlite3.tbd */,
+				A82751111E97AB73007CD9E2 /* libresolv.tbd */,
+				A827510F1E97AB6E007CD9E2 /* libz.tbd */,
 				9432293A1EDD88E3007DB542 /* MediaPlayer.framework */,
 				943229321EDD86C3007DB542 /* SystemConfiguration.framework */,
 				9432292F1EDD862F007DB542 /* LocalAuthentication.framework */,
@@ -1693,22 +1806,13 @@
 				9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */,
 				943229281EDD84D9007DB542 /* CoreMedia.framework */,
 				943229241EDD8479007DB542 /* CoreData.framework */,
-				943229211EDD8430007DB542 /* libKarere.a */,
-				9432291F1EDD840E007DB542 /* libMEGASDK.a */,
 				9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */,
 				9432291B1EDD83E9007DB542 /* ImageIO.framework */,
 				943229191EDD83B0007DB542 /* AVFoundation.framework */,
-				943229121EDD832E007DB542 /* libKarere.a */,
 				943229101EDD82E2007DB542 /* UIKit.framework */,
 				9432290E1EDD82CF007DB542 /* Security.framework */,
 				9432290C1EDD829F007DB542 /* CoreGraphics.framework */,
 				9432290A1EDD8271007DB542 /* QuartzCore.framework */,
-				945605541EDD7EDF0094EF0F /* libKarere.a */,
-				A82751151E97AB88007CD9E2 /* libstdc++.tbd */,
-				A82751131E97AB79007CD9E2 /* libsqlite3.tbd */,
-				A82751111E97AB73007CD9E2 /* libresolv.tbd */,
-				A827510F1E97AB6E007CD9E2 /* libz.tbd */,
-				A838B2391E968DE200875D96 /* libKarere.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3189,6 +3293,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
@@ -3239,6 +3344,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
@@ -3275,6 +3381,11 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3308,6 +3419,11 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3354,6 +3470,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
@@ -3397,6 +3515,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
