@@ -3,6 +3,7 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "ChatAttachedContactsViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
@@ -928,7 +929,9 @@
                 [self.navigationController pushViewController:contactDetailsVC animated:YES];
             }
         } else {
-            //TODO: If there are several contacts attached, open custom view.
+            ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
+            chatAttachedContactsVC.message = message;
+            [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
         }
     }
 }

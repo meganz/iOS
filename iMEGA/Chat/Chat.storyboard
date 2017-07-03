@@ -196,6 +196,106 @@
             </objects>
             <point key="canvasLocation" x="2545" y="450"/>
         </scene>
+        <!--Chat Attached Contacts View Controller-->
+        <scene sceneID="CPH-wX-UXf">
+            <objects>
+                <viewController storyboardIdentifier="ChatAttachedContactsViewControllerID" id="WZ5-hi-K8Q" customClass="ChatAttachedContactsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gcu-rg-0MN"/>
+                        <viewControllerLayoutGuide type="bottom" id="ULA-La-PnO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BOD-hY-6gJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="49" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="jPW-wm-bpm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="49" id="ssu-Hh-eA3" customClass="ContactTableViewCell">
+                                        <rect key="frame" x="0.0" y="1" width="375" height="49"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ssu-Hh-eA3" id="KkO-VC-6gp">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MSE-iA-SRP">
+                                                    <rect key="frame" x="9" y="5" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vq-gO-h5T">
+                                                    <rect key="frame" x="58" y="8" width="309" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhP-sF-uyB">
+                                                    <rect key="frame" x="58" y="26" width="309" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="avatarImageView" destination="MSE-iA-SRP" id="lXu-9C-Ttu"/>
+                                            <outlet property="nameLabel" destination="1Vq-gO-h5T" id="hgq-ir-KXn"/>
+                                            <outlet property="shareLabel" destination="JhP-sF-uyB" id="8zE-AT-ey1"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="WZ5-hi-K8Q" id="lN8-RR-UFO"/>
+                                    <outlet property="delegate" destination="WZ5-hi-K8Q" id="Eop-DN-UNN"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="addBarButtonItem" destination="9dW-w2-E5Y" id="uoV-RW-oN8"/>
+                        <outlet property="backBarButtonItem" destination="CJq-tW-TEW" id="ocW-XD-uAH"/>
+                        <outlet property="editBarButtonItem" destination="nd2-Ms-Law" id="hmO-gF-KMV"/>
+                        <outlet property="selectAllBarButtonItem" destination="ZlW-K7-1lS" id="SS5-Mb-6LX"/>
+                        <outlet property="tableView" destination="jPW-wm-bpm" id="KZZ-xV-NIt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xx9-OH-o2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="backArrow" style="plain" id="CJq-tW-TEW" userLabel="Back Bar Button Item">
+                    <connections>
+                        <action selector="backAction:" destination="WZ5-hi-K8Q" id="4eA-JE-5Jw"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="edit" width="22" style="plain" id="nd2-Ms-Law" userLabel="Edit Bar Button Item">
+                    <connections>
+                        <action selector="editTapped:" destination="WZ5-hi-K8Q" id="5rD-hQ-inZ"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="check_mark" id="ZlW-K7-1lS" userLabel="Check Mark Bar Button Item">
+                    <connections>
+                        <action selector="selectAllAction:" destination="WZ5-hi-K8Q" id="T07-Bt-RBc"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Item" id="9dW-w2-E5Y" userLabel="Add Bar Button Item">
+                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="addContacts:" destination="WZ5-hi-K8Q" id="3FI-xc-Jkb"/>
+                    </connections>
+                </barButtonItem>
+            </objects>
+            <point key="canvasLocation" x="2229.5999999999999" y="1143.7781109445277"/>
+        </scene>
         <!--Group Chat Details View Controller-->
         <scene sceneID="wXg-ow-5pc">
             <objects>
