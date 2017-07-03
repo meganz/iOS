@@ -292,6 +292,10 @@
 "downloading"="מוריד";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="האם ברצונך לבטל את ההורדה?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="בחר יעד";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="בחר קבצים";
 /* Title for the action that allows you to move a file or folder */
 "move"="העבר";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="בדוק את ההרשאות שלך בתיקייה זו";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="התיקייה שותפה";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="ייבא אל";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d תיקיות שותפו בהצלחה.";
 /* Button title that triggers the importing link action */
 "import"="ייבוא";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="הוסף איש קשר";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="מייל איש קשר";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="הוסף";
 /* Success message shown when a contact has been invited */
 "requestSent"="בקשה נשלחה";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="האם אתה בטוח שאתה רוצה למחוק את %d מרשימת אנשי קשר שלך?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="נמחקו %d אנשי קשר";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="איש הקשר %@ נמחק! ";
 /* Label shown when a contact request is pending */
 "pending"="ממתין";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="החלף תמונת פרופיל";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="שנה שם";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="הפרופיל שלך עודכן בהצלחה.";
 /* Hint text for the first name (Placeholder) */
@@ -914,8 +918,12 @@
 "autoAway"="הפוך ללא זמין באופן אוטומטי";
 /* */
 "xMinutes"="[X] דקות";
+/* */
+"1Minute"="דקה אחת";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="הצג אותי כלא נמצא לאחר [X] דקות בלי שימוש";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="סטאטוס קבוע";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,19 +1028,31 @@
 "done"="הסתיים";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="שלח קבצים";
+/* */
+"warning"="אזהרה";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="כל הקבצים שנשמרו לשימוש לא מקוון יימחקו. להמשיך?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="מכסת תעבורה נמוכה";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="כמות ההורדות שלך חרגה מהכמות המתאפשרת כרגע ותיתכן והיא תופסק.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="צפה בתכניות";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="בטל";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="הודעה חדשה";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="בקשה לאיש קשר";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="תיקייה משותפת חדשה";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="האם הינך בטוח שברצונך לבטל את ההרשמה?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="אם מצאת שגיאת כתיב בכתובת המיי שלך, תקן אותה ולחץ על \"שלח מחדש\".";
+/* A button to resend the email confirmation. */
+"resend"="שלח מחדש";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="המנויים מחודשים באופן אוטומטי לתקופות צמודות. כל חידוש הוא לאותה תקופה כמו התקופה ההתחלתית ובאותו הסכום. ניתן לכבות את החידוש האוטומטי של חשבון ה-MEGA PRO שלך לא יאוחר מ-24 שעות לפני החידוש הבא דרך עמוד האפשרויות של החשבון שלך ב-iTunes. ניתן לנהל בקלות את המנויים שלך, לחץ על האייקון של חנות האפליקציות של אפל, ה-App Store, היכנס עם החשבון של באפל בתחתית העמוד (אם לא עשית זאת כבר) ולחץ על \"הצג חשבון\"  (View ID). תילקח לדף החשבון שלך ושם תוכל לגלול למטה אל \"נהל מנויים מאפליקציות\" (Manage App Subscriptions). משם תוכל לבחור את החשבון שלך ב-MEGA PRO ולראות את התאריך לחידוש, לבחור מבין אפשרויות המנויים שלנו וגם לשנות את הגדרת החידוש האוטומטי.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

@@ -292,6 +292,10 @@
 "downloading"="Скачивание...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Отменить скачивание?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Выбрать целевую папку";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Выбрать файлы";
 /* Title for the action that allows you to move a file or folder */
 "move"="Переместить";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Проверьте права доступа на эту папку";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Доступ к папке открыт";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Импортировать в";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="Вы поделились %d папками.";
 /* Button title that triggers the importing link action */
 "import"="Импортировать";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Добавить контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Эл. почта контакта";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Добавить";
 /* Success message shown when a contact has been invited */
 "requestSent"="Запрос отправлен";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Вы действительно хотите удалить %d пользователей из списка контактов?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d контактов удалено";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контакт %@ удалён";
 /* Label shown when a contact request is pending */
 "pending"="В ожидании";
@@ -495,7 +499,7 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Действительно покинуть?";
 /* Success message shown when a shared folder have been left */
-"shareFolderLeaved"="Папка оставлена!";
+"shareFolderLeaved"="Папка покинута";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Общий доступ";
 /* Select all items/elements on the list */
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Изменить аватар";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Сменить имя";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Профиль успешно изменён.";
 /* Hint text for the first name (Placeholder) */
@@ -865,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Журнал будет создан в локальном разделе (MEGAiOS.log).";
+"enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашей учётной записи.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Отключить режим ОТЛАДКИ";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -914,8 +918,12 @@
 "autoAway"="Отсутствие";
 /* */
 "xMinutes"="[X] минут(ы)";
+/* */
+"1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,19 +1028,31 @@
 "done"="готово";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Послать файлы";
+/* */
+"warning"="Предупреждение";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Все сохранённые локально файлы будут удалены с устройства. Продолжить?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Квота передач исчерпана";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Загрузка в очереди превышает текущую квоту передачи, доступную для вашей учетной записи, и поэтому может быть прервана.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Подписки";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Отклонить";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Новое сообщение";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Новый контакт";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Новая общая папка";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Вы уверены, что хотите прервать регистрацию?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Если вы ввели неправильный адрес электронной почты, исправьте его и нажмите «Отправить повторно».";
+/* A button to resend the email confirmation. */
+"resend"="Выслать повторно";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Откройте MEGA и войдите, чтобы продолжить";

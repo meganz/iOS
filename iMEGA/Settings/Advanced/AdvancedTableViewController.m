@@ -86,7 +86,7 @@
         self.offlineSizeString = [byteCountFormatter stringFromByteCount:offlineSize];
         self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
         
-        long long thumbnailsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"]];
+        long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
         long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
         long long cacheSize = thumbnailsSize + previewsSize;
         
@@ -241,7 +241,7 @@
         }
             
         case 1: { //Cache
-            NSString *thumbnailsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+            NSString *thumbnailsPathString = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
             NSString *previewsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];

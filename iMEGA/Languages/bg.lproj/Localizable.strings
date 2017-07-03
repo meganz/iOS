@@ -292,6 +292,10 @@
 "downloading"="Изтегляне...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Искате ли да отмените изтеглянето?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Избери файлове";
 /* Title for the action that allows you to move a file or folder */
 "move"="Премести";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Проверете правата си за тази папка";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Папката беше споделена";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Импортирай в";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d папки бяха споделени успешно.";
 /* Button title that triggers the importing link action */
 "import"="Импортирай";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Добави контакт";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Имейл на контакта";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Добави";
 /* Success message shown when a contact has been invited */
 "requestSent"="Заявката е изпратена";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Сигурни ли сте, че искате да изтриете %d потребители от вашия списък с контакти?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d контакта бяха премахнати";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контактът %@ беше изтрит";
 /* Label shown when a contact request is pending */
 "pending"="Изчакващ";
@@ -914,8 +918,12 @@
 "autoAway"="Auto-away";
 /* */
 "xMinutes"="[X] минути";
+/* */
+"1Minute"="1 минута";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,6 +1028,10 @@
 "done"="готово";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Изпрати файлове";
+/* */
+"warning"="Внимание";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1039,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Отхвърляне";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Сигурни ли сте, че искате да прекратите регистрацията?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Ако сте изписали неправилно вашия имейл адрес, поправете го и натиснете 'Изпрати отново'.";
+/* A button to resend the email confirmation. */
+"resend"="Изпрати отново";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Абонаментите се подновяват автоматично за последователни абонаментни периоди със същия срок и на същата цена като на първоначално избрания период. Можете да изключите автоматичното подновяване на вашия MEGA PRO абонамент не по-късно от 24 часа преди следващата абонаментна дата за плащане, от страницата за настройки на вашия iTunes профил. За да управлявате вашите абонаменти, просто кликнете върху иконата на App Store на вашия телефон, влезте с вашия Apple ID в долната част на страницата (ако вече не сте го направили) и след това щракнете върху View ID. Ще бъдете пренасочени към страницата на профила си, където по-надолу на страницата се намира Настройка на Абонаментите за Приложения. От там можете да изберете вашия MEGA PRO абонамент и видите насрочената дата за подновяване, да изберете друг абонаментен пакет или превключване ключа за включване/изключване на изключено положение, за да забраните автоматичното подновяване на абонамента си.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

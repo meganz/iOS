@@ -1,47 +1,44 @@
 #import "BrowserViewController.h"
 
-#import "UIScrollView+EmptyDataSet.h"
 #import "SVProgressHUD.h"
-
-#import "NSFileManager+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <UIActionSheetDelegate, UIAlertViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
-    UIAlertView *folderAlertView;
-    NSUInteger remainingOperations;
-}
+@interface BrowserViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
+
+@property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) MEGAShareList *shares;
 
 @property (nonatomic) MEGAShareType parentShareType;
 
+@property (nonatomic) NSUInteger remainingOperations;
+
 @property (weak, nonatomic) IBOutlet UIView *browserSegmentedControlView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *browserSegmentedControl;
+
+@property (weak, nonatomic) IBOutlet UIView *extendedNavigationBar_view;
 @property (weak, nonatomic) IBOutlet UIButton *extendedNavigationBar_backButton;
 @property (weak, nonatomic) IBOutlet UILabel *extendedNavigationBar_label;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *browserSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarMoveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarCopyBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarShareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarSaveInMegaBarButtonItem;
-
-@property (nonatomic, strong) NSMutableDictionary *foldersToImportMutableDictionary;
-@property (nonatomic, strong) NSMutableDictionary *folderPathsMutableDictionary;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarSendBarButtonItem;
 
 @end
 
@@ -85,236 +82,214 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (self.isChildBrowser && (self.parentShareType != MEGAShareTypeAccessOwner)) {
-            [self setNavigationBarTitleLabel];
-        }
-        
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
 
 - (void)setupBrowser {
+    self.parentBrowser = !self.isChildBrowser;
+    
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
     [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
     
-    if (self.browserAction != BrowserActionSendFromCloudDrive ) {
-        if (self.isChildBrowser || self.browserAction == BrowserActionSelectFolderToShare) {
-            self.browserSegmentedControlView.hidden = YES;
-            self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
-        } else {
-            [self.browserSegmentedControl setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forSegmentAtIndex:0];
-            [self.browserSegmentedControl setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forSegmentAtIndex:1];
-        }
-        
-        self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"New Folder");
-        [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redD90007]} forState:UIControlStateNormal];
-    }
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     switch (self.browserAction) {
         case BrowserActionCopy: {
-            [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"copy", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setupDefaultElements];
             
-            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-            [toolbarButtons addObject:_toolBarCopyBarButtonItem];
-            [self.toolbar setItems:toolbarButtons];
+            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
             
         case BrowserActionMove: {
-            [_toolBarMoveBarButtonItem setTitle:AMLocalizedString(@"move", nil)];
-            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setupDefaultElements];
             
-            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-            [toolbarButtons addObject:_toolBarMoveBarButtonItem];
-            [self.toolbar setItems:toolbarButtons];
+            self.toolBarMoveBarButtonItem.title = AMLocalizedString(@"move", @"Title for the action that allows you to move a file or folder");
+            [self.toolBarMoveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarMoveBarButtonItem]];
             break;
         }
             
         case BrowserActionImport:
         case BrowserActionImportFromFolderLink: {
-            [_toolBarCopyBarButtonItem setTitle:AMLocalizedString(@"import", nil)];
-            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]}  forState:UIControlStateNormal];
+            [self setupDefaultElements];
             
-            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-            [toolbarButtons addObject:_toolBarCopyBarButtonItem];
-            [self.toolbar setItems:toolbarButtons];
-            
-            if (self.browserAction == BrowserActionImportFromFolderLink) {
-                _foldersToImportMutableDictionary = [[NSMutableDictionary alloc] init];
-                _folderPathsMutableDictionary = [[NSMutableDictionary alloc] init];
-            }
-            break;
-        }
-            
-        case BrowserActionSelectFolderToShare: {
-            [_toolBarShareFolderBarButtonItem setTitle:AMLocalizedString(@"shareFolder", nil)];
-            [self.toolBarShareFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-            
-            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-            [toolbarButtons addObject:_toolBarShareFolderBarButtonItem];
-            [self.toolbar setItems:toolbarButtons];
+            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]}  forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
             
         case BrowserActionOpenIn: {
-            [_toolBarSaveInMegaBarButtonItem setTitle:AMLocalizedString(@"upload", nil)];
-            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setupDefaultElements];
             
-            NSMutableArray *toolbarButtons = [self.toolbar.items mutableCopy];
-            [toolbarButtons addObject:_toolBarSaveInMegaBarButtonItem];
-            [self.toolbar setItems:toolbarButtons];
+            self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
             break;
         }
 
         case BrowserActionSendFromCloudDrive: {
-            if (self.isChildBrowser) {
-                self.extendedNavigationBar_backButton.hidden = NO;
-                self.extendedNavigationBar_backButton.enabled = YES;
-            } else {
+            [self setupDefaultElements];
+            
+            self.browserSegmentedControlView.hidden = YES;
+            self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
+            
+            self.toolbarSendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
+            [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+             [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
+            
+            if (self.isParentBrowser) {
                 self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
             }
-
-            self.doneBarButtonItem.title = AMLocalizedString(@"done", nil);
-            self.navigationItem.title = AMLocalizedString(@"sendFiles", @"Button label for sending file attachments through the chat to another user.");
-            self.extendedNavigationBar_label.text = self.parentNode.name;
+            break;
+        }
+            
+        case BrowserActionDocumentProvider: {
+            if (self.isChildBrowser) {
+                [self.browserSegmentedControlView addSubview:self.extendedNavigationBar_view];
+            }
+            
+            self.navigationController.toolbarHidden = YES;
             break;
         }
     }
 }
 
+- (void)setupDefaultElements {
+    if (self.parentBrowser) {
+        [self.browserSegmentedControl setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forSegmentAtIndex:0];
+        [self.browserSegmentedControl setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forSegmentAtIndex:1];
+    } else {
+        self.browserSegmentedControlView.hidden = YES;
+        self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
+    }
+    
+    self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
+    [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
+}
+
 - (void)reloadUI {
     switch (self.browserSegmentedControl.selectedSegmentIndex) {
         case 0: { //Cloud Drive
-            if (!self.isChildBrowser) {
-                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            }
-            
-            if ([self.parentNode.name isEqualToString:[[[MEGASdkManager sharedMEGASdk] rootNode] name]]) {
-                [self.navigationItem setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section")];
-                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-            } else {
-                [self.navigationItem setTitle:[self.parentNode name]];
-                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-            }
+            [self setParentNodeForBrowserAction];
             
             self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-            if (self.parentShareType == MEGAShareTypeAccessOwner) {
-                [self setToolbarItemsEnabled:YES];
-            } else {
-                [self setNavigationBarTitleLabel];
-                (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
-            }
+            (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
+            
+            [self setNavigationBarTitle];
             break;
         }
             
         case 1: { //Incoming
-            [self.navigationItem setTitle:AMLocalizedString(@"sharedItems", @"Title of Shared Items section")];
-            self.parentNode = nil;
-            self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
-            self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
+            [self setParentNodeForBrowserAction];
+            
+            [self setNavigationBarTitle];
             
             [self setToolbarItemsEnabled:NO];
             break;
         }
     }
     
-    if ((self.browserAction == BrowserActionImport) || (self.browserAction == BrowserActionImportFromFolderLink)) {
-        NSString *importTitle = AMLocalizedString(@"importTitle", nil);
-        importTitle = [NSString stringWithFormat:@"%@ %@", importTitle, [self.navigationItem title]];
-        [self.navigationItem setTitle:importTitle];
-    }
-    
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
-        self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-    }
-    
     [self.tableView reloadData];
 }
 
-- (void)internetConnectionChanged {
-    [self reloadUI];
-}
-
-- (void)importFolderFromLink:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
-    [self setFolderToImport:nodeToImport inParent:parentNode];
-    [[MEGASdkManager sharedMEGASdk] createFolderWithName:nodeToImport.name parent:parentNode];
-}
-
-- (void)setFolderToImport:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
-    id folderNodeToImport = [_foldersToImportMutableDictionary objectForKey:parentNode.base64Handle];
-    if (folderNodeToImport == nil) {
-        [_foldersToImportMutableDictionary setObject:nodeToImport forKey:parentNode.base64Handle];
-    } else {
-        NSMutableArray *folderNodesToImportMutableArray;
-        if ([folderNodeToImport isKindOfClass:[MEGANode class]]) {
-            MEGANode *previousNodeToImport = folderNodeToImport;
-            folderNodesToImportMutableArray = [[NSMutableArray alloc] initWithObjects:previousNodeToImport, nodeToImport, nil];
-        } else if ([folderNodeToImport isKindOfClass:[NSMutableArray class]]) {
-            folderNodesToImportMutableArray = folderNodeToImport;
-            [folderNodesToImportMutableArray addObject:nodeToImport];
+- (void)setParentNodeForBrowserAction {
+    switch (self.browserSegmentedControl.selectedSegmentIndex) {
+        case 0: { //Cloud Drive
+            if (self.isParentBrowser) {
+                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
+            } else {
+                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            }
+            break;
         }
-        [_foldersToImportMutableDictionary setObject:folderNodesToImportMutableArray forKey:parentNode.base64Handle];
+            
+        case 1: { //Incoming
+            if (self.isParentBrowser) {
+                self.parentNode = nil;
+                self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
+                self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
+            } else {
+                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            }
+            break;
+        }
     }
-    
-    NSString *nodePathOnFolderLink = [[MEGASdkManager sharedMEGASdkFolder] nodePathForNode:nodeToImport];
-    [_folderPathsMutableDictionary setObject:nodePathOnFolderLink forKey:nodeToImport.base64Handle];
 }
 
-- (void)importRelatedNodeToNewFolder:(MEGANode *)newFolderNode inParent:(MEGANode *)parentNode {
-    id folderNodeToImport = [_foldersToImportMutableDictionary objectForKey:parentNode.base64Handle];
-    if (folderNodeToImport != nil) {
-        if ([folderNodeToImport isKindOfClass:[MEGANode class]]) {
-            MEGANode *nodeToImport = folderNodeToImport;
-            [self importNodeContents:nodeToImport inParent:newFolderNode];
+- (void)setNavigationBarTitle {
+    [self updatePromptTitle];
+    
+    if (self.isParentBrowser) {
+        if (self.browserAction == BrowserActionDocumentProvider) {
+            self.navigationItem.title = @"MEGA";
+            self.extendedNavigationBar_label.text = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+        } else {
+            self.navigationItem.title = (self.browserSegmentedControl.selectedSegmentIndex == 0) ? AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") : AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+        }
+    } else {
+        if (self.isChildBrowserFromIncoming) {
+            NSString *accessTypeString;
+            switch (self.parentShareType) {
+                case MEGAShareTypeAccessRead:
+                    accessTypeString = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
+                    break;
+                    
+                case MEGAShareTypeAccessReadWrite:
+                    accessTypeString = AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with");
+                    break;
+                    
+                case MEGAShareTypeAccessFull:
+                    accessTypeString = AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with");
+                    break;
+                    
+                default:
+                    accessTypeString = @"";
+                    break;
+            }
             
-            [_foldersToImportMutableDictionary removeObjectForKey:parentNode.base64Handle];
-            [_folderPathsMutableDictionary removeObjectForKey:nodeToImport.base64Handle];
-        } else if ([folderNodeToImport isKindOfClass:[NSMutableArray class]]) {
-            NSMutableArray *folderNodesToImportMutableArray = folderNodeToImport;
-            MEGANode *nodeToImport;
-            for (MEGANode *node in folderNodesToImportMutableArray) {
-                NSString *pathOfNode = [_folderPathsMutableDictionary objectForKey:node.base64Handle];
-                if (pathOfNode != nil) {
-                    if ([newFolderNode.name isEqualToString:[pathOfNode lastPathComponent]]) {
-                        nodeToImport = node;
-                        [self importNodeContents:node inParent:newFolderNode];
-                        
-                        NSMutableArray *tempArray = [folderNodesToImportMutableArray copy];
-                        for (MEGANode *tempNode in tempArray) {
-                            if (nodeToImport.handle == tempNode.handle) {
-                                [folderNodesToImportMutableArray removeObject:tempNode];
-                                break;
-                            }
-                        }
-                        if (folderNodesToImportMutableArray.count == 0) {
-                            [_foldersToImportMutableDictionary removeObjectForKey:parentNode.base64Handle];
-                        }
-                        [_folderPathsMutableDictionary removeObjectForKey:nodeToImport.base64Handle];
-                        break;
-                    }
-                }
+            if ([self.parentNode name] != nil) {
+                UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString];
+                label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+                self.navigationItem.titleView = label;
+            } else {
+                self.navigationItem.title = [NSString stringWithFormat:@"(%@)", accessTypeString];
+            }
+        } else {
+            if (self.browserAction == BrowserActionDocumentProvider) {
+                self.navigationItem.title = @"MEGA";
+                self.extendedNavigationBar_label.text = self.parentNode.name;
+            } else {
+                self.navigationItem.title = self.parentNode.name;
             }
         }
     }
 }
 
-- (void)importNodeContents:(MEGANode *)nodeToImport inParent:(MEGANode *)parentNode {
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:nodeToImport];
-    NSUInteger count = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < count; i++) {
-        MEGANode *node = [nodeList nodeAtIndex:i];
-        if ([node isFolder]) {
-            [self importFolderFromLink:node inParent:parentNode];
+- (void)updatePromptTitle {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        NSString *promptString;
+        NSUInteger selectedNodesCount = self.selectedNodesMutableDictionary.count;
+        if (selectedNodesCount == 0) {
+            promptString = AMLocalizedString(@"selectFiles", @"Text of the button for user to select files in MEGA.");
         } else {
-            remainingOperations++;
-            [[MEGASdkManager sharedMEGASdk] copyNode:[[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] newParent:parentNode];
+            promptString = (selectedNodesCount <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount];
         }
+        self.navigationItem.prompt = promptString;
+    } else if (self.browserAction != BrowserActionDocumentProvider) {
+        self.navigationItem.prompt = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     }
+}
+
+- (void)internetConnectionChanged {
+    [self reloadUI];
 }
 
 - (NSString *)successMessageForCopyAction {
@@ -365,8 +340,8 @@
     
     self.toolBarMoveBarButtonItem.enabled = boolValue;
     self.toolBarCopyBarButtonItem.enabled = boolValue;
-    self.toolBarShareFolderBarButtonItem.enabled = boolValue;
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
+    self.toolbarSendBarButtonItem.enabled = boolValue;
 }
 
 - (void)setNodeTableViewCell:(NodeTableViewCell *)cell enabled:(BOOL)boolValue {
@@ -381,59 +356,32 @@
     cell.backgroundColor = boolValue ? [UIColor mnz_grayF9F9F9] : nil;
 }
 
-- (void)setNavigationBarTitleLabel {
-    NSString *accessTypeString;
-    switch (self.parentShareType) {
-        case MEGAShareTypeAccessRead:
-            accessTypeString = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            accessTypeString = AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with");
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            accessTypeString = AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with");
-            break;
-            
-        default:
-            accessTypeString = @"";
-            break;
-    }
-    
-    if ([self.parentNode name] != nil) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString];
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        [self.navigationItem setTitleView:label];
-    } else {
-        [self.navigationItem setTitle:[NSString stringWithFormat:@"(%@)", accessTypeString]];
-    }
-}
-
-- (BrowserViewController *)instantiateBrowserWithIdentifier:(NSString *)identifier {
-    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
-    
-    if (self.selectedNodesArray) {
-        browserVC.selectedNodesArray = self.selectedNodesArray;
-    }
-    
-    if (self.selectedUsersArray) {
-        browserVC.selectedUsersArray = self.selectedUsersArray;
-    }
-    
-    if (self.localpath) {
-        browserVC.localpath = self.localpath;
-    }
-    
+- (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
+    BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
     browserVC.browserAction = self.browserAction;
     browserVC.childBrowser = YES;
-    
-    return browserVC;
+    browserVC.childBrowserFromIncoming = ((self.browserSegmentedControl.selectedSegmentIndex == 1) || self.isChildBrowserFromIncoming) ? YES : NO;
+    browserVC.localpath = self.localpath;
+    browserVC.parentNode = parentNode;
+    browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
+    browserVC.selectedNodesArray = self.selectedNodesArray;
+    browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
+
+    [self.navigationController pushViewController:browserVC animated:YES];
 }
 
 - (void)attachNodes {
     self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)alertControllerShouldEnableDefaultButtonForTextField:(UITextField *)sender {
+    UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
+    if (addContactFromEmailAlertController) {
+        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
+        rightButtonAction.enabled = (textField.text.length > 0);
+    }
 }
 
 #pragma mark - IBActions
@@ -444,7 +392,7 @@
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        remainingOperations = self.selectedNodesArray.count;
+        self.remainingOperations = self.selectedNodesArray.count;
         
         for (MEGANode *n in self.selectedNodesArray) {
             [[MEGASdkManager sharedMEGASdk] moveNode:n newParent:self.parentNode];
@@ -457,25 +405,36 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
         [SVProgressHUD show];
         for (MEGANode *node in self.selectedNodesArray) {
-            if ([node isFolder] && (self.browserAction == BrowserActionImportFromFolderLink)) {
-                [self importFolderFromLink:node inParent:self.parentNode];
-            } else {
-                remainingOperations++;
-                MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
-                [[MEGASdkManager sharedMEGASdk] copyNode:tempNode newParent:self.parentNode];
-            }
+            self.remainingOperations++;
+            MEGANode *tempNode = (self.browserAction == BrowserActionImportFromFolderLink) ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
+            [[MEGASdkManager sharedMEGASdk] copyNode:tempNode newParent:self.parentNode];
         }
     }
 }
 
 - (IBAction)newFolder:(UIBarButtonItem *)sender {
-    folderAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"newFolder", @"New Folder") message:nil delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"createFolderButton", @"Create"), nil];
-    [folderAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [folderAlertView textFieldAtIndex:0].placeholder = AMLocalizedString(@"newFolderMessage", nil);
-    [folderAlertView show];
-    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillResignActiveNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
-        [folderAlertView dismissWithClickedButtonIndex:0 animated:NO];
+    UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
+        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForTextField:) forControlEvents:UIControlEventEditingChanged];
     }];
+    
+    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [newFolderAlertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            UITextField *textField = [[newFolderAlertController textFields] firstObject];
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode];
+            [newFolderAlertController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    createFolderAlertAction.enabled = NO;
+    [newFolderAlertController addAction:createFolderAlertAction];
+    
+    [self presentViewController:newFolderAlertController animated:YES completion:nil];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
@@ -491,21 +450,6 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)shareFolder:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:AMLocalizedString(@"permissions", nil)
-                                                                 delegate:self
-                                                        cancelButtonTitle:AMLocalizedString(@"cancel", nil)
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:AMLocalizedString(@"readOnly", nil), AMLocalizedString(@"readAndWrite", nil), AMLocalizedString(@"fullAccess", nil), nil];
-        if ([[UIDevice currentDevice] iPadDevice]) {
-            [actionSheet showInView:self.view];
-        } else {
-            [actionSheet showFromTabBar:self.tabBarController.tabBar];
-        }
-    }
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
@@ -530,62 +474,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)doneToSendFiles:(UIBarButtonItem *)sender {
+- (IBAction)sendNodes:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (self.selectedNodesMutableDictionary.count > 0) {
-            if (self.isChildBrowser) {
+            if (self.isParentBrowser) {
+                [self attachNodes];
+            } else {
                 BrowserViewController *browserVC = self.navigationController.viewControllers.firstObject;
                 [browserVC attachNodes];
-            } else {
-                [self attachNodes];
             }
         }
     }
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSInteger level;
-    switch (buttonIndex) {
-        case 0:
-            level = 0;
-            break;
-            
-        case 1:
-            level = 1;
-            break;
-            
-        case 2:
-            level = 2;
-            break;
-            
-        default:
-            return;
-    }
-    
-    remainingOperations = self.selectedUsersArray.count;
-    
-    for (MEGAUser *u in self.selectedUsersArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.parentNode withUser:u level:level];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            [[MEGASdkManager sharedMEGASdk] createFolderWithName:[[folderAlertView textFieldAtIndex:0] text] parent:self.parentNode];
-        }
-    }
-}
-
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
@@ -627,6 +529,8 @@
         } else {
             ([self.selectedNodesMutableDictionary objectForKey:node.base64Handle] != nil) ? [self setNodeTableViewCell:cell selected:YES] : [self setNodeTableViewCell:cell selected:NO];
         }
+    } else if (self.browserAction == BrowserActionDocumentProvider) {
+        //TODO: Document Provider
     } else {
         if (node.isFile) {
             [self setNodeTableViewCell:cell enabled:NO];
@@ -667,33 +571,40 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *newParent = [self.nodes nodeAtIndex:indexPath.row];
+    MEGANode *selectedNode = [self.nodes nodeAtIndex:indexPath.row];
     
-    if (self.browserAction == BrowserActionSendFromCloudDrive) {
-        if (newParent.isFolder) {
-            BrowserViewController *browserVC = [self instantiateBrowserWithIdentifier:@"SelectableBrowserViewControllerID"];
-            browserVC.parentNode = newParent;
-            browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
-            
-            [self.navigationController pushViewController:browserVC animated:YES];
-        } else {
-            NodeTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            if (cell.checkImageView.hidden) {
-                [self.selectedNodesMutableDictionary setObject:newParent forKey:newParent.base64Handle];
-                [self setNodeTableViewCell:cell selected:YES];
-            } else {
-                [self.selectedNodesMutableDictionary removeObjectForKey:newParent.base64Handle];
-                [self setNodeTableViewCell:cell selected:NO];
-            }
-            
-            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        }
+    if (selectedNode.isFolder) {
+        [self pushBrowserWithParentNode:selectedNode];
     } else {
-        BrowserViewController *browserVC = [self instantiateBrowserWithIdentifier:@"BrowserViewControllerID"];
-        browserVC.parentNode = newParent;
-        
-        [self.navigationController pushViewController:browserVC animated:YES];
+        switch (self.browserAction) {
+            case BrowserActionSendFromCloudDrive: {
+                NodeTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                if (cell.checkImageView.hidden) {
+                    [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
+                    [self setNodeTableViewCell:cell selected:YES];
+                } else {
+                    [self.selectedNodesMutableDictionary removeObjectForKey:selectedNode.base64Handle];
+                    [self setNodeTableViewCell:cell selected:NO];
+                }
+                
+                [self updatePromptTitle];
+                break;
+            }
+                
+            case BrowserActionDocumentProvider: {
+                [SVProgressHUD setViewForExtension:self.view];
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+                [SVProgressHUD show];
+                [self.browserViewControllerDelegate didSelectNode:selectedNode];
+                break;
+            }
+                
+            default:
+                break;
+        }
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -701,7 +612,7 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && !self.isChildBrowser) {
+        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && self.isParentBrowser) {
             text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", @"Title shown when there's no incoming Shared Items");
         } else {
             text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
@@ -718,7 +629,7 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
-        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && !self.isChildBrowser) {
+        if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && self.isParentBrowser) {
             image = [UIImage imageNamed:@"emptySharedItemsIncoming"];
         } else {
             image = [UIImage imageNamed:@"emptyFolder"];
@@ -769,9 +680,9 @@
     
     switch ([request type]) {
         case MEGARequestTypeMove: {
-            remainingOperations--;
+            self.remainingOperations--;
             
-            if (remainingOperations == 0) {
+            if (self.remainingOperations == 0) {
                 NSInteger files = 0;
                 NSInteger folders = 0;
                 for (MEGANode *n in self.selectedNodesArray) {
@@ -818,9 +729,9 @@
         }
         
         case MEGARequestTypeCopy: {
-            remainingOperations--;
+            self.remainingOperations--;
             
-            if (remainingOperations == 0) {
+            if (self.remainingOperations == 0) {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                 
                 if (self.browserAction == BrowserActionCopy) {
@@ -835,9 +746,6 @@
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"filesImported", @"Message shown when some files have been imported")];
                     }
                     
-                    [_foldersToImportMutableDictionary removeAllObjects];
-                    [_folderPathsMutableDictionary removeAllObjects];
-                    
                     [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
@@ -846,22 +754,9 @@
             break;
         }
             
-        case MEGARequestTypeShare: {
-            remainingOperations--;
-            
-            if (remainingOperations == 0) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:AMLocalizedString(@"sharedFolder_success", nil)];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-            break;
-        }
-            
         case MEGARequestTypeCreateFolder: {
-            if (self.browserAction == BrowserActionImportFromFolderLink) {
-                MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.parentHandle];
-                [self importRelatedNodeToNewFolder:newFolderNode inParent:parentNode];
-            }
+            MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            [self pushBrowserWithParentNode:newFolderNode];
             break;
         }
             

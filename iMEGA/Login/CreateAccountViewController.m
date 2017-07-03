@@ -1,9 +1,14 @@
 #import "CreateAccountViewController.h"
 
-#import "Helper.h"
+#import "NSString+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGACreateAccountRequestDelegate.h"
+
+#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "SVModalWebViewController.h"
+
+#import "CheckEmailAndFollowTheLinkViewController.h"
 
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
@@ -17,11 +22,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
-@property (weak, nonatomic) IBOutlet UIView *accountCreatedView;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *accountCreatedLabel;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
 
 @end
 
@@ -51,10 +53,6 @@
     self.createAccountButton.backgroundColor = [UIColor mnz_grayCCCCCC];
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Create Account") forState:UIControlStateNormal];
     
-    [self.accountCreatedView.layer setMasksToBounds:YES];
-    [self.accountCreatedTitleLabel setText:AMLocalizedString(@"awaitingEmailConfirmation", nil)];
-    self.accountCreatedLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess.");
-    
     [self.loginButton setTitle:AMLocalizedString(@"login", nil) forState:UIControlStateNormal];
 }
 
@@ -79,7 +77,7 @@
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.nameTextField becomeFirstResponder];
         return NO;
-    } else if (![Helper validateEmail:self.emailTextField.text]) {
+    } else if (![self.emailTextField.text mnz_isValidEmail]) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
         [self.emailTextField becomeFirstResponder];
         return NO;
@@ -180,7 +178,21 @@
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:[self.emailTextField text] password:[self.passwordTextField text] firstname:[self.nameTextField text] lastname:NULL delegate:self];
+            
+            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^(MEGAError *error) {
+                [SVProgressHUD dismiss];
+                if (error.type == MEGAErrorTypeApiOk) {
+                    CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                    [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }];
+                } else {
+                    [self.emailTextField becomeFirstResponder];
+                    [self.createAccountButton setEnabled:YES];
+                }
+            }];
+            createAccountRequestDelegate.resumeCreateAccount = NO;
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailTextField.text password:self.passwordTextField.text firstname:self.nameTextField.text lastname:NULL delegate:createAccountRequestDelegate];
             [self.createAccountButton setEnabled:NO];
         }
     }
@@ -191,7 +203,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     BOOL shoulBeCreateAccountButtonGray = NO;
-    if ([text isEqualToString:@""] || (![Helper validateEmail:self.emailTextField.text])) {
+    if ([text isEqualToString:@""] || (![self.emailTextField.text mnz_isValidEmail])) {
         shoulBeCreateAccountButtonGray = YES;
     } else {
         shoulBeCreateAccountButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
@@ -231,54 +243,6 @@
     }
     
     return YES;
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [SVProgressHUD dismiss];
-    
-    if ([error type]) {
-        NSString *alertMessage;
-        switch ([error type]) {
-                
-            case MEGAErrorTypeApiEExist:
-                alertMessage = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
-                [self.emailTextField becomeFirstResponder];
-                [self.createAccountButton setEnabled:YES];
-                break;
-                
-            default:
-                alertMessage = error.name;
-                break;
-        }
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"error", nil)
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeCreateAccount: {
-            
-            [self.nameTextField setEnabled:NO];
-            [self.emailTextField setEnabled:NO];
-            [self.passwordTextField setEnabled:NO];
-            [self.retypePasswordTextField setEnabled:NO];
-            [self.termsCheckboxButton setUserInteractionEnabled:NO];
-            [self.createAccountButton setEnabled:NO];
-            
-            self.view = self.accountCreatedView;
-        }
-            
-        default:
-            break;
-    }
 }
 
 @end

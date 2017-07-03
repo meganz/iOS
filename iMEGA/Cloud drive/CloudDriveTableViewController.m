@@ -12,6 +12,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAAssetOperation.h"
@@ -121,7 +122,7 @@
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     [self toolbarActionsForShareType:shareType];
 
-    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+    NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -595,7 +596,7 @@
         }
         
         if (self.searchController.isActive) {
-            text = AMLocalizedString(@"noResults", nil);
+            text = AMLocalizedString(@"misspelledEmailAddress", nil);
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
@@ -662,7 +663,7 @@
             }
         }
     } else {
-         image = [UIImage imageNamed:@"noInternetConnection"];
+        image = [UIImage imageNamed:@"noInternetConnection"];
     }
     
     return image;
@@ -1106,7 +1107,7 @@
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [fromPhotosAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1134,7 +1135,7 @@
             }];
         }
     }];
-    [captureAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:captureAlertAction];
     
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1144,7 +1145,7 @@
         
         [self presentViewController:documentMenuViewController animated:YES completion:nil];
     }];
-    [importFromAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [importFromAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:importFromAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
@@ -1234,7 +1235,7 @@
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
     }];
-    [uploadAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [uploadAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:uploadAlertAction];
     
     UIAlertAction *newFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1259,20 +1260,20 @@
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];
-    [newFolderAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [newFolderAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:newFolderAlertAction];
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
-    [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-        [self setEditing:value animated:YES];
+        BOOL enableEditing = !self.tableView.isEditing;
+        [self setEditing:enableEditing animated:YES];
     }];
-    [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:selectAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1282,15 +1283,15 @@
         cloudDriveTVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [self.navigationController pushViewController:cloudDriveTVC animated:YES];
     }];
-    [rubbishBinAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [rubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:rubbishBinAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -1358,7 +1359,6 @@
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
     if (lowShareType == MEGAShareTypeAccessOwner) {
         [browserVC setBrowserAction:BrowserActionMove];
@@ -1449,7 +1449,6 @@
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = self.selectedNodesArray;
         [browserVC setBrowserAction:BrowserActionCopy];
     }

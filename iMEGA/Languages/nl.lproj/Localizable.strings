@@ -35,11 +35,11 @@
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Uw account is reeds geactiveerd. Log a.u.b. in. ";
 /* Message shown when the user clicks on an link that is not valid */
-"linkNotValid"="Ongeldige link";
+"linkNotValid"="Ongeldige koppeling";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map / bestand heeft u de decoderingssleutel nodig. Als u de sleutel niet heeft, neem contact op met de maker van de link.";
+"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map / bestand heeft u de decoderingssleutel nodig. Als u de sleutel niet heeft, neem contact op met de maker van de koppeling.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
@@ -67,11 +67,11 @@
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
 "megaSpaceText"="Registreer nu en ontvang 50 GB gratis opslagruimte.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Uploads zijn snel.Deel snel bestanden met iedereen.";
+"megaSpeedText"="Uploads zijn snel. Deel snel bestanden met iedereen.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Bewaar al uw bestanden veilig met MEGA's eind-naar-eind versleuteling.";
+"megaPrivacyText"="Bewaar al uw bestanden veilig met MEGA's eind-tot-eind codering.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Krijg overal en altijd volledig versleutelde toegang.";
+"megaAccessText"="Krijg overal en altijd volledig gecodeerde toegang.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
@@ -81,7 +81,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="U hebt te vaak geprobeerd om in te loggen. Wacht alstublieft tot %@ en probeer het opnieuw.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Check aub uw email and klik op de link om uw account te bevestigen.";
+"accountNotConfirmed"="Check a.u.b. uw email en klik op de koppeling om uw account te bevestigen.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -115,9 +115,9 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Als u akkoord gaat, zal het huidige account worden uitgelogd en alle offline data zal worden verwijderd. Wilt u doorgaan?";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="U moet ruimte vrij maken op uw device";
+"nodeTooBig"="U moet ruimte vrij maken op uw apparaat";
 /* Title for the file link view */
-"fileLink"="Link van bestand";
+"fileLink"="Bestandskoppeling";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Openen";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -125,13 +125,13 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Het bestand dat u probeert te openen is groter dan het beschikbare geheugen.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Link niet beschikbaar";
+"linkUnavailable"="Koppeling niet beschikbaar";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- Het bestand is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de link die u probeert te bezoeken bestaat niet.- Het bestand is verwijderd door de gebruiker.";
+"fileLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- Het bestand is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de koppeling die u probeert te bezoeken bestaat niet.- Het bestand is verwijderd door de gebruiker.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
 /* Title for the folder link view */
-"folderLink"="Map Link";
+"folderLink"="Map Koppeling";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -139,7 +139,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="De map '%@' kan niet gecreëerd worden";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- De folder link is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de link die u probeert te bezoeken bestaat niet.- De folder link is verwijderd door de gebruiker.";
+"folderLinkUnavailableText"="Dat kan te maken hebben met de volgende redenen:- De mapkoppeling is verwijderd omdat de algemene voorwaarden geschonden zijn.- Ongeldige URL - de koppeling die u probeert te bezoeken bestaat niet.- De mapkoppeling is verwijderd door de gebruiker.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Geen Internet connectie";
 /* Title shown when a folder doesn't have any files */
@@ -267,31 +267,35 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Afbeeldingen opslaan";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Bekijk link";
+"getLink"="Haal de koppeling op";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Links verkrijgen";
+"getLinks"="Koppelingen verkrijgen";
 /* Message shown when a link to a file or folder is being generated */
-"generatingLink"="Link creëren";
+"generatingLink"="Koppeling creëren";
 /* Message shown when some links to files and/or folders are being generated */
-"generatingLinks"="Genereren van links...";
+"generatingLinks"="Genereren van koppelingen...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Link is gekopieerd";
+"linkCopied"="Koppeling is gekopieerd";
 /* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Links gekopieerd";
+"linksCopied"="Koppelingen gekopieerd";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Openen in...";
 /* Message shown when there is an active link that can be removed or disabled */
-"removeLink"="Verwijder link";
+"removeLink"="Verwijder koppeling";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="Verwijder links";
+"removeLinks"="Verwijder koppelingen";
 /* Message shown when the link to a file or folder has been removed */
-"linkRemoved"="Link verwijderd";
+"linkRemoved"="Koppeling verwijderd";
 /* Message shown when the links to files and/or folders have been removed */
-"linksRemoved"="Links verwijderd";
+"linksRemoved"="Koppelingen verwijderd";
 /* Title show when a file is being downloaded */
 "downloading"="Aan het downloaden...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Wilt u de download afbreken?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Selecteer bestemming";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Selecteer bestanden";
 /* Title for the action that allows you to move a file or folder */
 "move"="Verplaatsen";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Bekijk uw rechten voor deze map";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Map gedeeld";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importeren naar";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d mappen met succes gedeeld.";
 /* Button title that triggers the importing link action */
 "import"="Importeren";
 /* Message shown when a file has been imported */
@@ -395,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Overslaan";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Maak een automatische back-up van uw foto's naar de Cloud Schijf";
+"automaticallyBackupYourPhotos"="Maak een automatische reservekopie van uw foto's naar de Cloud Schijf";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Schakel Camera Uploads in";
 /* Success message shown when Camera Uploads has been enabled */
@@ -460,7 +464,7 @@
 "addContact"="Voeg contact toe";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Voeg toe";
 /* Success message shown when a contact has been invited */
 "requestSent"="Aanvraag verzonden";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Weet u zeker dat u %d gebruikers uit uw contactenlijst wilt verwijderen?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contacten verwijderd";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ verwijderd";
 /* Label shown when a contact request is pending */
 "pending"="In afwachting van";
@@ -569,7 +573,7 @@
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Waarom heb ik een Herstel Sleutel nodig?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Uw gegevens zijn alleen leesbaar door een reeks van decoderingsoperaties te beginnen met uw coderingssleutel, die we versleuteld opslaan met uw wachtwoord. Dit betekent dat als u uw wachtwoord vergeet, uw coderingssleutel niet langer gedecodeerd kan worden en u uw gegevens niet langer kan ontsleutelen.";
+"masterKey_firstParagraph"="Uw gegevens zijn alleen leesbaar door een reeks van decoderingsoperaties te beginnen met uw coderingssleutel, die we gecodeerd opslaan met uw wachtwoord. Dit betekent dat als u uw wachtwoord vergeet, uw coderingssleutel niet langer gedecodeerd kan worden en u uw gegevens niet langer kan decoderen.";
 /* Advising the user to keep the user's recovery key safe. */
 "masterKey_secondParagraph"="Exporteer de coderingssleutel en bewaar het op een veilige plaats, zodat u een nieuw wachtwoord kan instellen zonder verlies van gegevens.";
 /*  */
@@ -611,7 +615,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Als u geen toegang heeft tot uw e-mailaccount, neem dan alstublieft contact op met support@mega.nz.";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Annulering link is verstreken.";
+"cancellationLinkHasExpired"="Annuleringskoppeling is verstreken.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
 "enterYourPasswordToConfirmThatYouWanToClose"="Vul alstublieft uw wachtwoord in om te bevestigen dat u uw account wilt verwijderen.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -665,13 +669,13 @@
 /* An option to reset the password. */
 "forgotPassword"="Wachtwoord vergeten?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="U kunt uw wachtwoord wijzigen door op de herstel link te klikken die naar uw email verzonden is.";
+"youCanResetYourPasswordByFollowing"="U kunt uw wachtwoord wijzigen door op de herstel koppeling te klikken die naar uw email verzonden is.";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="Deze herstellink is verlopen, probeer aub opnieuw.";
+"recoveryLinkHasExpired"="Deze herstelkoppeling is verlopen, probeer a.u.b. opnieuw.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Wijzig wachtwoord";
 /* Message shown to explain that you have to write your recovery key to continue with the reset password process. */
-"pleaseWriteYourRecoveryKey"="Voer alsjeblieft je herstelcode in";
+"pleaseWriteYourRecoveryKey"="Voer a.u.b. uw herstelcode in";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
 "recoveryKey"="Herstel Sleutel";
 /* An alert title where the user provided the incorrect Recovery Key. */
@@ -681,25 +685,25 @@
 /*  */
 "yourPasswordHasBeenReset"="Uw wachtwoord is succesvol gewijzigd. Log nu aub in met uw account.";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="Als u een back-up heeft van uw Herstel Sleutel, kunt u uw wachtwoord opnieuw instellen door het selecteren van JA. Er zullen geen gegevens verloren gaan.";
+"forgotPassword_firstParagraph"="Als u een reservekopie heeft van uw Herstel Sleutel, kunt u uw wachtwoord opnieuw instellen door het selecteren van JA. Er zullen geen gegevens verloren gaan.";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="U kunt uw Herstel Sleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer ontsleutelen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
+"forgotPassword_secondParagraph"="U kunt uw Herstel Sleutel nog steeds exporteren als u een actieve MEGA sessie heeft in een andere browser op deze of een andere computer. Als u dat niet doet, dan kan u uw bestaande account niet langer decoderen, maar kunt u wel een nieuwe starten onder hetzelfde e-mailadres door NEE te selecteren.";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
-"doYouHaveABackupOfYourRecoveryKey"="Heeft u een back-up van uw coderingssleutel?";
+"doYouHaveABackupOfYourRecoveryKey"="Heeft u een reservekopie van uw coderingssleutel?";
 /* Headline when the user chose YES */
 "great"="Geweldig!";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="Vul alstublieft hieronder uw e-mailadres in. U ontvangt een herstel link die u de mogelijkheid biedt uw coderingssleutel in te dienen en uw wachtwoord te resetten.";
+"recoveryLinkToResetYourPassword"="Vul alstublieft hieronder uw e-mailadres in. U ontvangt een herstelkoppeling die u de mogelijkheid biedt uw coderingssleutel in te dienen en uw wachtwoord te resetten.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Versturen";
 /* The title of the screen to park an account. */
 "noMasterKey_title"="Oeps!";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Door onze end-to-end versleutelingsparadigma, zult u niet in staat zijn om toegang tot uw gegevens te verkrijgen zonder uw wachtwoord of een back-up van uw coderingssleutel.";
+"noMasterKey_firstParagraph"="Door onze eind-tot-eind coderingsparadigma, zult u niet in staat zijn om toegang tot uw gegevens te verkrijgen zonder uw wachtwoord of een reservekopie van uw coderingssleutel.";
 /* Second paragraph of the screen to park an account */
 "noMasterKey_secondParagraph"="U kunt uw bestaande account parkeren en een nieuwe starten onder hetzelfde e-mailadres. Uw gegevens zullen worden bewaard voor tenminste 60 dagen. Wanneer u het wachtwoord van uw geparkeerde account herinnert, neem dan alstublieft contact op met support@mega.nz";
 /* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Vul alstublieft hieronder uw e-mail adres in. U ontvangt een herstel link die u de mogelijkheid biedt om uw account te parkeren.";
+"recoveryLinkToParkYourAccount"="Vul alstublieft hieronder uw e-mail adres in. U ontvangt een herstel koppeling die u de mogelijkheid biedt om uw account te parkeren.";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Parkeer account";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
@@ -721,9 +725,9 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="E-mailadressen komen niet overeen";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="U heeft al een bevestigingslink voor dat e-mailadres gevraagd.";
+"emailAddressChangeAlreadyRequested"="U heeft al een bevestigingskoppeling voor dat e-mailadres gevraagd.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Ga alstublieft naar uw inbox en klik op de link om uw nieuwe e-mailadres te bevestigen.";
+"emailIsChanging_description"="Ga alstublieft naar uw inbox en klik op de koppeling om uw nieuwe e-mailadres te bevestigen.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Vul alstublieft uw wachtwoord in om uw e-mailadres te controleren";
 /* The [X] will be replaced with the e-mail address. */
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Profielfoto Wijzigen";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Wijzig Naam";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="U heeft uw profiel met succes veranderd.";
 /* Hint text for the first name (Placeholder) */
@@ -865,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="DEBUG modus ingeschakeld";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Er wordt een logboek gemaakt in het Offline gedeelte (MEGAiOS.log).";
+"enableDebugMode_message"="Een logboek wordt gemaakt in het Offline gedeelte (MEGAiOS.log). Logboeken kunnen informatie bevatten die verwant zijn aan uw account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="DEBUG modus uitgeschakeld";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -914,8 +918,12 @@
 "autoAway"="Automatisch op afwezig";
 /* */
 "xMinutes"="[X] minutes";
+/* */
+"1Minute"="1 minuut";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Zet mijn status op afwezig na [X] minuten van inactiviteit";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Volharding";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -995,7 +1003,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Gesprek met %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA beschermt uw chat met end-to-end codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
+"chatIntroductionMessage"="MEGA beschermt uw chat met eind-tot-eind codering (gebruiker bestuurd) door het verstrekken van essentiële veiligheidswaarborgen:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S] Vertrouwelijk.[/ S] Alleen de auteur en de beoogde ontvangers zijn in staat om te ontcijferen en de inhoud te lezen.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1020,19 +1028,31 @@
 "done"="klaar";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Verzend bestanden";
+/* */
+"warning"="Waarschuwing";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle bestanden opgeslagen voor Offline worden verwijderd van uw apparaat. Wilt u verder gaan om uit te loggen?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Uitgeputte overdracht tegoed";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Uw wachtende download overschrijdt de huidige bandbreedte beschikbaar op uw account en kan daardoor onderbroken worden.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Zie abonnementen";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Sluiten";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Nieuw Bericht";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Contact Verzoek";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Nieuw Gedeelde Map";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Weet u zeker dat u de registratie wilt afbreken?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Als u uw e-mailadres verkeerd hebt gespeld, corrigeer deze en klik op 'Opnieuw verzenden'.";
+/* A button to resend the email confirmation. */
+"resend"="Opnieuw verzenden";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en voor dezelfde prijs als de gekozen beginperiode.U kunt de automatische verlenging van uw MEGA PRO abonnement uitschakelen uiterlijk 24 uur voordat uw volgende abonnementsbetaling via uw pagina accountinstellingen van uw iTunes-account verschuldigd bent. Om uw abonnementen te beheren, klikt u op het pictogram AppStore op uw toestel, meld u aan met een Apple ID aan de onderkant van de pagina (als u dat nog niet hebt gedaan) en klik vervolgens op Bekijk ID. U komt daarmee op uw accountpagina, waar u naar beneden kunt scrollen naar Beheer App Abonnementen. Van daaruit kunt u uw MEGA PRO abonnement  kiezen en uw geplande verlengingsdatum, u kunt een ander abonnement kiezen of de aan-uit schakelaar uitschakelen op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA en login om door te gaan";

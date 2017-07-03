@@ -93,6 +93,21 @@ static NSString *kisDirectory = @"kisDirectory";
     [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    
+    // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
+    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        if ([fileManager fileExistsAtPath:logsPath]) {
+            NSString *documentProviderLog = @"MEGAiOS.docExt.log";
+            NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
+            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
+            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
+            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+        }
+    }
+    
     [self reloadUI];
 }
 
@@ -445,15 +460,10 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         
-        NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
             
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            NSString *thumbnailFilePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:@"thumbnailsV3"];
-            thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
-            
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage != nil) {
                 [cell.thumbnailImageView setImage:thumbnailImage];
@@ -673,8 +683,8 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {

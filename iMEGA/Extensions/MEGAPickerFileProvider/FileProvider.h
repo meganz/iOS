@@ -1,0 +1,4 @@
+
+@interface FileProvider : NSFileProviderExtension
+
+@end

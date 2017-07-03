@@ -89,7 +89,7 @@
     isLoginDone = NO;
     isFetchNodesDone = NO;
     
-    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+    NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:thumbsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -310,8 +310,8 @@
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -426,7 +426,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             if ([_tableView isEditing]) {
                 browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
