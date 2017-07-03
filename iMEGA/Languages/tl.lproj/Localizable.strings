@@ -651,7 +651,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %@ folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
