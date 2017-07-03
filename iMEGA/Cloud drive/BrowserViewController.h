@@ -7,23 +7,30 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionMove,
     BrowserActionImport,
     BrowserActionImportFromFolderLink,
-    BrowserActionSelectFolderToShare,
     BrowserActionOpenIn,
-    BrowserActionSendFromCloudDrive
+    BrowserActionSendFromCloudDrive,
+    BrowserActionDocumentProvider
 };
+
+@protocol BrowserViewControllerDelegate <NSObject>
+- (void)didSelectNode:(MEGANode *)node;
+@end
 
 @interface BrowserViewController : UIViewController
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray *selectedNodesArray;
-@property (nonatomic, strong) NSArray *selectedUsersArray;
 
 @property (nonatomic) BrowserAction browserAction;
 @property (nonatomic, getter=isChildBrowser) BOOL childBrowser;
+@property (nonatomic, getter=isChildBrowserFromIncoming) BOOL childBrowserFromIncoming;
 
 @property (nonatomic, strong) NSString *localpath;
 
 @property (nonatomic, copy) void(^selectedNodes)(NSArray *);
 @property (nonatomic, strong) NSMutableDictionary *selectedNodesMutableDictionary;
 
+@property (nonatomic, weak) id <BrowserViewControllerDelegate> browserViewControllerDelegate;
+
 @end
+

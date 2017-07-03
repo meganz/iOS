@@ -295,15 +295,6 @@ static BOOL copyToPasteboard;
     return folderImage;
 }
 
-+ (UIImage *)folderSharedImage {
-    static UIImage *folderSharedImage = nil;
-    
-    if (folderSharedImage == nil) {
-        folderSharedImage = [UIImage imageNamed:@"folder_outgoing"];
-    }
-    return folderSharedImage;
-}
-
 + (UIImage *)incomingFolderImage {
     static UIImage *incomingFolderImage = nil;
     
@@ -347,8 +338,10 @@ static BOOL copyToPasteboard;
             if ([node.name isEqualToString:@"Camera Uploads"]) {
                 return [self folderCameraUploadsImage];
             } else {
-                if ([[MEGASdkManager sharedMEGASdk] isSharedNode:node]) {
-                    return [self folderSharedImage];
+                if (node.isInShare) {
+                    return [self incomingFolderImage];
+                } else if (node.isOutShare) {
+                    return [self outgoingFolderImage];
                 } else {
                     return [self folderImage];
                 }
@@ -539,15 +532,36 @@ static BOOL copyToPasteboard;
     return [self pathForNode:node searchPath:path directory:@""];
 }
 
++ (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory {
+    NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
+    return [destinationPath stringByAppendingPathComponent:[node base64Handle]];
+}
+
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory {
     
     NSString *destinationPath = [NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fileName = [[user email] stringByAppendingString:@""];
+    NSString *fileName = [user email];
     NSString *destinationFilePath = nil;
     destinationFilePath = [directory isEqualToString:@""] ? [destinationPath stringByAppendingPathComponent:fileName]
     :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
     
     return destinationFilePath;
+}
+
++ (NSString *)pathForUser:(MEGAUser *)user inSharedSandboxCacheDirectory:(NSString *)directory {
+    NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
+    return [destinationPath stringByAppendingPathComponent:[user email]];
+}
+
++ (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
+    NSString *cacheDirectory = @"Library/Cache/";
+    NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *destinationPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:targetDirectory] path];
+    if (![fileManager fileExistsAtPath:destinationPath]) {
+        [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return destinationPath;
 }
 
 #pragma mark - Utils for links when you are not logged
@@ -736,26 +750,10 @@ static BOOL copyToPasteboard;
     return totalFreeSpace;
 }
 
-+ (BOOL)validateEmail:(NSString *)email {
-    NSString *emailRegex =
-    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
-    BOOL validEmail = [emailTest evaluateWithObject:email];
-    
-    return validEmail;
-}
-
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
         [Helper setThumbnailForNode:node api:api cell:cell];
     } else {
@@ -771,19 +769,15 @@ static BOOL copyToPasteboard;
 }
 
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
-    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        if (isVideo(node.name.pathExtension)) {
-            [nodeTableViewCell.thumbnailPlayImageView setHidden:NO];
-        }
+        nodeTableViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        if (isVideo(node.name.pathExtension)) {
-            [photoCollectionViewCell.thumbnailPlayImageView setHidden:NO];
-        }
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
     }
 }
 
@@ -1068,7 +1062,7 @@ static BOOL copyToPasteboard;
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
     NSError *error = nil;
     
-    NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+    NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
@@ -1123,6 +1117,14 @@ static BOOL copyToPasteboard;
     NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    // Delete files saved by extensions
+    NSString *extensionsDirectory = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:extensionsDirectory]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:extensionsDirectory error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }

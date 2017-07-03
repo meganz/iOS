@@ -14,6 +14,7 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
+#import "MEGAInviteContactRequestDelegate.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
@@ -41,9 +42,6 @@
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
-
-@property (nonatomic) NSUInteger remainingOperations;
-@property (nonatomic) BOOL addingMoreThanOneContact;
 
 @end
 
@@ -457,18 +455,20 @@
      */
     
     // [JSQSystemSoundPlayer jsq_playMessageSentSound];
-
+    MEGAChatMessage *message;
     if (!self.editMessage) {
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
+        message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
         message.chatRoom = self.chatRoom;
         [self.messages addObject:message];
     } else {
-        MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
+        message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:self.editMessage.messageId message:text];
         message.chatRoom = self.chatRoom;
         NSUInteger index = [self.messages indexOfObject:self.editMessage];
         [self.messages replaceObjectAtIndex:index withObject:message];
         self.editMessage = nil;
     }
+    
+    MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
 }
@@ -484,11 +484,10 @@
     }]];
     
     UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SelectableBrowserNavigationControllerID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.browserAction = BrowserActionSendFromCloudDrive;
         browserVC.selectedNodes = ^void(NSArray *selectedNodes) {            
             [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:selectedNodes delegate:self];
@@ -830,7 +829,6 @@
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:navigationController animated:YES completion:nil];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
     browserVC.selectedNodesArray = nodesArray;
     browserVC.browserAction = BrowserActionImport;
 }
@@ -845,11 +843,10 @@
 
 - (void)addContact:(id)sender message:(MEGAChatMessage *)message {
     NSUInteger usersCount = message.usersCount;
-    self.remainingOperations = usersCount;
-    self.addingMoreThanOneContact = (usersCount > 1) ? YES : NO;
+    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (NSUInteger i = 0; i < usersCount; i++) {
         NSString *email = [message userEmailAtIndex:i];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:self];
+        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
 
@@ -1089,23 +1086,25 @@
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
-            self.showTypingIndicator = YES;
-            NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-            if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
-                [self scrollToBottomAnimated:YES];
+            if (chat.userTypingHandle != api.myUserHandle) {
+                self.showTypingIndicator = YES;
+                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                    [self scrollToBottomAnimated:YES];
+                }
+                
+                if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
+                    self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
+                }
+                self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
+                
+                [self.receiveTypingTimer invalidate];
+                self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                                           target:self
+                                                                         selector:@selector(hideTypingIndicator)
+                                                                         userInfo:nil
+                                                                          repeats:YES];
             }
-            
-            if (![self.peerTyping isEqualToString:[chat peerFullnameByHandle:chat.userTypingHandle]]) {
-                self.peerTyping = [chat peerFullnameByHandle:chat.userTypingHandle];
-            }
-            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", nil), self.peerTyping];
-            
-            [self.receiveTypingTimer invalidate];
-            self.receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                                       target:self
-                                                                     selector:@selector(hideTypingIndicator)
-                                                                     userInfo:nil
-                                                                      repeats:YES];
             
             break;
         }
@@ -1159,55 +1158,6 @@
             request.chatMessage.chatRoom = self.chatRoom;
             [self.messages addObject:request.chatMessage];
             [self finishSendingMessageAnimated:YES];
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeInviteContact: {
-            self.remainingOperations--;
-            
-            if ([error type]) {
-                switch (error.type) {
-                    case MEGAErrorTypeApiEArgs:
-                        if ([request.email isEqualToString:[[MEGASdkManager sharedMEGASdk] myEmail]]) {
-                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
-                        }
-                        break;
-                        
-                    case MEGAErrorTypeApiEExist: {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
-                        break;
-                    }
-                        
-                    default:
-                        [SVProgressHUD showErrorWithStatus:error.name];
-                        break;
-                }
-                
-                return;
-            }
-            
-            if (self.remainingOperations == 0) {
-                NSString *alertTitle;
-                if (self.addingMoreThanOneContact) {
-                    alertTitle = AMLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
-                } else {
-                    alertTitle = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
-                    alertTitle = [alertTitle stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
-                }
-                
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }
             break;
         }
             

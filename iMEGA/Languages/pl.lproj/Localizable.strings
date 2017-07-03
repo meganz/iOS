@@ -292,6 +292,10 @@
 "downloading"="Pobieranie...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Czy chcesz przerwać pobieranie?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Wybierz miejsce na dysku";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Wybierz pliki";
 /* Title for the action that allows you to move a file or folder */
 "move"="Przenieś";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Sprawdź swoje uprawnienia do tego katalogu";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Katalog został zapisany";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importuj do";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d katalogów zostało udostępnionych";
 /* Button title that triggers the importing link action */
 "import"="Importuj";
 /* Message shown when a file has been imported */
@@ -395,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Pomiń";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Archiwizuj swoje zdjęcia do Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Odblokuj wgrywnie zdjęć";
 /* Success message shown when Camera Uploads has been enabled */
@@ -460,7 +464,7 @@
 "addContact"="Dodaj kontakt";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Dodaj";
 /* Success message shown when a contact has been invited */
 "requestSent"="Zgłoszenie wysłane";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Czy na pewno chcesz usunąć %d użytkowników z Twoich kontatków?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d kontakt usunięty";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontakt %@ usunięty";
 /* Label shown when a contact request is pending */
 "pending"="Oczekujące";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Zmień zdjęcie";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Zmień imię";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Twój profil został zmieniony.";
 /* Hint text for the first name (Placeholder) */
@@ -813,7 +817,7 @@
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Zmień konto";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Możesz zmienić rodzaj konto w ustawieniach";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Pojemność";
 /* Bandwich related with the MEGA PRO account level you can subscribe */
@@ -879,7 +883,7 @@
 /* Empty Conversations section */
 "noConversations"="Brak rozmów";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
+"chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Odblokuj";
 /* Conversations section */
@@ -891,35 +895,39 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Ja";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+"wasRemovedFromTheGroupChatBy"="[A] został usunięty z czatu przez [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] left the group chat.";
+"leftTheGroupChat"="[A] opuścił czat.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] dołączył do czatu przez zaproszenie od [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] cleared the chat history.";
+"clearedTheChatHistory"="[A] wyczyścił historię czatu.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] was changed to [B] by [C].";
+"wasChangedToBy"="[A] został zamieniony na [B] przez [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed group chat name to '[B]'.";
+"changedGroupChatNameTo"="[A] zmienił nazwę czatu na '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Dodaj uczestnika...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Voice and Video Calls";
+"voiceAndVideoCalls"="Rozmowy i Video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Use Mobile Data";
+"useMobileData"="Używaj transferu z telefonu";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="Auto-away";
+"autoAway"="Auto-drzemka";
 /* */
 "xMinutes"="[X] minut";
+/* */
+"1Minute"="1 minuta";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+"showMeAwayAfterXMinutesOfInactivity"="Pokaż, że jestem niedostępny po [X] minutach nieaktywności";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status Persistence";
+"statusPersistence"="Zapisanie statusu";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Maintain my chosen status appearance even when I have no connected devices.";
+"maintainMyChosenStatusAppearance"="Zachowaj wybrany status nawet gdy nie mam podłączonych urządzeń.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(edytowany)";
 /*  */
@@ -933,9 +941,9 @@
 /*  */
 "notifications"="Powiadomienia";
 /* Title to perform the action of sending a message to a contact. */
-"sendMessage"="Send Message";
+"sendMessage"="Wyślij wiadomość";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verify Credentials";
+"verifyCredentials"="Zweryfikuj uprawnienia";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Wyczyść historię czatu.";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -943,49 +951,49 @@
 /* 'Next' button in a dialog */
 "continue"="Kontynuuj";
 /* Button title that allows the user to close a chat. */
-"closeChat"="Close Chat";
+"closeChat"="Zamknij Czat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Udostępnione katalogi";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Contact Credentials";
+"contactCredentials"="Uprawnienia kontaktu";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Najlepiej to zrobić w prawdziwym życiu spotykając się twarzą w twarz. Jeśli masz inny już sprawdzony kanał takich jak weryfikować OTR lub PGP, możesz także użyć.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Your Credentials";
+"yourCredentials"="Twoje uprawnienia";
 /* Button to reset the password */
 "reset"="Zresetuj";
 /* Button title */
 "approve"="Zatwierdź";
 /* start a chat/conversation */
-"startConversation"="Start Conversation";
+"startConversation"="Rozpocznij rozmowę";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Group";
+"group"="Grupa";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Group Info";
+"groupInfo"="Info o grupie";
 /* Label title for a group chat */
-"groupChat"="Group Chat";
+"groupChat"="Czat grupowy";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Zmień nazwę";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Change Group Avatar";
+"changeGroupAvatar"="Zmień avatar grupy";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Anuluj";
 /* Top menu option which opens more menu options in a context menu. */
 "more"="Więcej";
 /* A button label. The button allows the user to mute a conversation. */
-"mute"="Mute";
+"mute"="Wycisz";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
 "close"="Zamknij";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+"youWillNoLongerHaveAccessToThisConversation"="Nie masz już dostępu do tej rozmowy";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Opuść czat";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Leave Group";
+"leaveGroup"="Opuść grupę";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="Participants";
+"participants"="Uczestnicy";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
@@ -993,7 +1001,7 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Usuń uczestników";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversation with %@";
+"conversationWith"="Rozmowa z %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA zabezpiecza Twoje rozmowy poprzez szyfrowanie danych po storonie użytkownika.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1001,9 +1009,9 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "authenticityExplanation"="[S]Autentyczność.[/S] System zapewnia, że dostarczone dane do odbiorcy nie zostały zmienione w trakcie przesyłania.";
 /* Alert message shown when a chat does not exist */
-"chatNotFound"="Chat not found";
+"chatNotFound"="Czat nie znaleniony";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ is typing ...";
+"isTyping"="%@ pisze ...";
 /* Message box label which shows that user can type message text in this textview */
 "writeAMessage"="Napisz wiadomość...";
 /* Information if there are no history messages in current chat conversation */
@@ -1020,19 +1028,31 @@
 "done"="zakończone";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Wyślij pliki";
+/* */
+"warning"="Ostrzeżenie";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Wszystkie dane offline zostaną usunięte. Czy chcesz kontynuować?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Wykorzystany limit transferu";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Twoje zakolejkowane pobrania przekraczają dostępny limit transferu przypisany do Twojego konta. Proces pobierania może zostać przerwany.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Zobacz abonamenty";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Anuluj";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="Nowa wiadomość";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="Nowy kontakt";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="Nowy udostępniony katalog";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Czy na pewno chcesz przerwać proces rejestracji?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Jeżeli wprowadzony adres email jest błędny, popraw go i naciśnij 'Wyślij ponownie'.";
+/* A button to resend the email confirmation. */
+"resend"="Wyślin ponownie";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

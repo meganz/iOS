@@ -43,7 +43,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (UIImage *)genericImage;
 + (UIImage *)folderImage;
-+ (UIImage *)folderSharedImage;
 + (UIImage *)incomingFolderImage;
 + (UIImage *)outgoingFolderImage;
 + (UIImage *)defaultPhotoImage;
@@ -67,7 +66,13 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path;
 
++ (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
+
 + (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
+
++ (NSString *)pathForUser:(MEGAUser *)user inSharedSandboxCacheDirectory:(NSString *)directory;
+
++ (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
 #pragma mark - Utils for links when you are not logged
 
@@ -90,8 +95,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)changeToViewController:(Class)classOfViewController onTabBarController:(UITabBarController *)tabBarController;
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
-
-+ (BOOL)validateEmail:(NSString *)email;
 
 #pragma mark - Utils for nodes
 

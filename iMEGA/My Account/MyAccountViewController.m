@@ -3,14 +3,14 @@
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
-#import "UIImageView+MNZCategory.h"
-#import "MEGAUser+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "UsageViewController.h"
 #import "SettingsTableViewController.h"
@@ -82,9 +82,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.userAvatarImageView.layer.cornerRadius = self.userAvatarImageView.frame.size.width/2;
-    self.userAvatarImageView.layer.masksToBounds = YES;
-    
     [self.navigationItem setTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details")];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
@@ -125,7 +122,7 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     
-    long long thumbsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"]];
+    long long thumbsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
     long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
     long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
     
@@ -213,18 +210,18 @@
         MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
         [self presentViewController:changeNameNavigationController animated:YES completion:nil];
     }];
-    [changeNameAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [editAlertController addAction:changeNameAlertAction];
     
     //TODO: Change Avatar
     
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
-    NSString *myAvatarFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
+    NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
     if ([[NSFileManager defaultManager] fileExistsAtPath:myAvatarFilePath]) {
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction setValue:[UIColor mnz_redD90007] forKey:@"titleTextColor"];
+        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redD90007]];
         [editAlertController addAction:removeAvatarAlertAction];
     }
     
@@ -237,7 +234,23 @@
 
 - (IBAction)logoutTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        NSError *error;
+        NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+        if (error) {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+        
+        if (directoryContent.count > 0) {            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            }]];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [[MEGASdkManager sharedMEGASdk] logout];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] logout];
+        }
     }
 }
 
@@ -262,7 +275,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeSetAttrFile) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@: %@", [error nameWithErrorCode:error.type], error.name]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
         }
         
         return;
@@ -281,7 +294,7 @@
                 self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
             } else if (request.file == nil) {
                 NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
-                NSString *myAvatarFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
+                NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
                 NSError *removeError = nil;
                 [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError] ? [self setUserAvatar] : MEGALogError(@"Remove item at path failed with error: %@", removeError);
             }

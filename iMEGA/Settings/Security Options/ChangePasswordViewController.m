@@ -2,7 +2,7 @@
 
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "Helper.h"
+#import "NSString+MNZCategory.h"
 
 #import "SVProgressHUD.h"
 
@@ -129,7 +129,7 @@
 
 - (BOOL)validateEmail {
     NSString *newEmail = self.theNewPasswordTextField.text;
-    BOOL validEmail = [Helper validateEmail:newEmail];
+    BOOL validEmail = [newEmail mnz_isValidEmail];
     
     if (newEmail.length == 0 || !validEmail) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];

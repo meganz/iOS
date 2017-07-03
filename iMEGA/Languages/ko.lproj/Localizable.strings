@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="취소";
 /* Button title to accept something */
-"ok"="확인";
+"ok"="OK";
 /* */
 "yes"="예";
 /* */
@@ -292,6 +292,10 @@
 "downloading"="다운로드중...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="다운로드를 취소하시겠습니까?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="목적지 선택";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="파일 선택";
 /* Title for the action that allows you to move a file or folder */
 "move"="이동";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="이 폴더에 대한 권한을 확인하세요";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="폴더 공유됨";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="들여올 곳";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d개의 폴더가 성공적으로 공유되었습니다.";
 /* Button title that triggers the importing link action */
 "import"="들여오기";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="연락처 추가";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="연락처 이메일";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="추가";
 /* Success message shown when a contact has been invited */
 "requestSent"="요청 발송됨";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="이용자 %d명을 연락처 목록에서 삭제하시겠습니까?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d 연락처 삭제됨";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="연락처 %@ 삭제됨";
 /* Label shown when a contact request is pending */
 "pending"="대기중";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="아바타 변경";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="이름 변경";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="성공적으로 프로필을 변경하였습니다.";
 /* Hint text for the first name (Placeholder) */
@@ -914,8 +918,12 @@
 "autoAway"="자동 부재중";
 /* */
 "xMinutes"="[X]분";
+/* */
+"1Minute"="1분";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X]분 이상 활동이 없으면 부재중으로 표시";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="상태 유지";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,19 +1028,31 @@
 "done"="완료";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="파일 보내기";
+/* */
+"warning"="경고";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="오프라인용으로 저장된 모든 파일이 기기에서 삭제됩니다. 로그아웃 하시겠습니까?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="고갈된 전송 할당량";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="대기 중인 다운로드가 계정의 이용 가능 전송 할당량을 초과하여 중단될 수 있습니다.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="요금제 보기";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="해제";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="새 메시지";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="연락처 요청";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="새 공유된 폴더";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="가입을 취소하시겠습니까?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="이메일 주소를 잘못 적었다면, 수정하고 '재발송'을 클릭하세요.";
+/* A button to resend the email confirmation. */
+"resend"="재발송";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="구독은 처음 선택했던 기간과 동일한 가격과 동일한 기간으로 자동으로 연장됩니다. 다음 구독 결제 24시간 전에 당신의 iTunes 계정 설정 페이지에서 자동 결제를 제거할 수 있습니다. 구독을 관라허려면, 휴대전화에서 앱 스토어를 클릭하여 페이지 하단에서 애플 ID로 로그인하세요 (만약 하지 않았다면) 그리고 ID 보기를 클릭하세요. 앱 구독 관리 페이지로 내려갈 수 있는 계정 페이지가 보이게 됩니다. 거기서, MEGA PRO 구독을 선택할 수 있고, 예정된 갱신일을 보고, 다른 구독 패키지 선택 또는 구독의 자동 갱신을 해제할 수 있는 스위치를 끌 수 있습니다.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="계속하려면 MEGA를 열고 로그인하세요";

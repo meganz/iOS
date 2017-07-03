@@ -9,6 +9,8 @@
     "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : 9223372036854775807,
     "7070BA961BCA286ED2393408B1E3D78393C99B33" : 9223372036854775807,
     "08C1DA4DCD3A676FACD29A3E823E30C353DAC834" : 9223372036854775807,
+    "90530B99EB0008E7A50951FDFBE02169118FA649" : 9223372036854775807,
+    "B581AC17A2775FC6A45FCBAAF61C20743E649A6A" : 9223372036854775807,
     "3E02169055262138F7D692446C25677927AC13EE" : 9223372036854775807,
     "C16576B571172538D95183F9515DC5DB064EAF7F" : 9223372036854775807,
     "2ACD55DC2C09557CD027EC23DA3FA73537703B13" : 9223372036854775807,
@@ -23,22 +25,24 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "90D22726-558B-45A2-90EE-F171BACF478D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "E762C42BC8C71A1AD1A00E2FC726C42A9BF54268" : "ios3\/iMEGA\/Vendor\/CTAssetsPickerController\/",
-    "9F9B14DA276794D9192F387F0CC62561009373D0" : "ios3\/iMEGA\/Vendor\/MWPhotoBrowser\/",
-    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "ios3\/iMEGA\/Vendor\/SVProgressHUD\/",
-    "7070BA961BCA286ED2393408B1E3D78393C99B33" : "ios3\/iMEGA\/Vendor\/Reachability\/",
-    "08C1DA4DCD3A676FACD29A3E823E30C353DAC834" : "ios3\/iMEGA\/Vendor\/AMLocalizedString\/",
-    "3E02169055262138F7D692446C25677927AC13EE" : "ios3\/iMEGA\/Vendor\/LTHPasscodeViewController\/",
-    "C16576B571172538D95183F9515DC5DB064EAF7F" : "ios3\/iMEGA\/Vendor\/SAMKeychain\/",
-    "2ACD55DC2C09557CD027EC23DA3FA73537703B13" : "ios3\/iMEGA\/Vendor\/PieChartView\/",
-    "E6248D77DBBC6B1D6F6059D14C6A0B9ED1677585" : "ios3\/iMEGA\/Vendor\/PureLayout\/",
-    "BDFA195447E23E7077125556D5DE624222871CE5" : "ios3\/iMEGA\/Vendor\/UIBarButtonItem-Badge\/",
-    "F8622BA04EBD09F8BA8DC9C0C199149407552BFA" : "ios3\/iMEGA\/Vendor\/DateTools\/",
-    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : "ios3\/iMEGA\/Vendor\/SVWebViewController\/",
-    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : "ios3\/iMEGA\/Vendor\/DZNEmptyDataSet\/",
-    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : "ios3\/iMEGA\/Vendor\/SDK\/",
-    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : "ios3\/iMEGA\/Vendor\/GKContactImage\/",
-    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : "ios3\/"
+    "E762C42BC8C71A1AD1A00E2FC726C42A9BF54268" : "iOS_dev\/iMEGA\/Vendor\/CTAssetsPickerController\/",
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : "iOS_dev\/iMEGA\/Vendor\/MWPhotoBrowser\/",
+    "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5" : "iOS_dev\/iMEGA\/Vendor\/SVProgressHUD\/",
+    "7070BA961BCA286ED2393408B1E3D78393C99B33" : "iOS_dev\/iMEGA\/Vendor\/Reachability\/",
+    "08C1DA4DCD3A676FACD29A3E823E30C353DAC834" : "iOS_dev\/iMEGA\/Vendor\/AMLocalizedString\/",
+    "90530B99EB0008E7A50951FDFBE02169118FA649" : "iOS_dev\/iMEGA\/Vendor\/JSQMessagesViewController\/",
+    "B581AC17A2775FC6A45FCBAAF61C20743E649A6A" : "iOS_dev\/iMEGA\/Vendor\/Karere\/",
+    "3E02169055262138F7D692446C25677927AC13EE" : "iOS_dev\/iMEGA\/Vendor\/LTHPasscodeViewController\/",
+    "C16576B571172538D95183F9515DC5DB064EAF7F" : "iOS_dev\/iMEGA\/Vendor\/SAMKeychain\/",
+    "2ACD55DC2C09557CD027EC23DA3FA73537703B13" : "iOS_dev\/iMEGA\/Vendor\/PieChartView\/",
+    "E6248D77DBBC6B1D6F6059D14C6A0B9ED1677585" : "iOS_dev\/iMEGA\/Vendor\/PureLayout\/",
+    "BDFA195447E23E7077125556D5DE624222871CE5" : "iOS_dev\/iMEGA\/Vendor\/UIBarButtonItem-Badge\/",
+    "F8622BA04EBD09F8BA8DC9C0C199149407552BFA" : "iOS_dev\/iMEGA\/Vendor\/DateTools\/",
+    "00DEE37500E6C7998F4D113C875F3996AE26D5BE" : "iOS_dev\/iMEGA\/Vendor\/SVWebViewController\/",
+    "DD091C5D03D23C2F1EC054BC9C018DF9A9125FD6" : "iOS_dev\/iMEGA\/Vendor\/DZNEmptyDataSet\/",
+    "2AADEAED908340583C88E195E0B330D50D5EFB2E" : "iOS_dev\/iMEGA\/Vendor\/SDK\/",
+    "FFD45562D681BCF3154B3744FD74B029E1BBF63E" : "iOS_dev\/iMEGA\/Vendor\/GKContactImage\/",
+    "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5" : "iOS_dev\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "iMEGA",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -75,6 +79,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7070BA961BCA286ED2393408B1E3D78393C99B33"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/JSQMessagesViewController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "90530B99EB0008E7A50951FDFBE02169118FA649"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SVProgressHUD\/SVProgressHUD.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9E1ECC80773D1F4F22D03CB4DEA298B3CB57FAF5"
@@ -88,6 +97,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/ios3.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B29DB52C58D4DBF94A2D8B6DF807BA0284E98CA5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/code.developers.mega.co.nz\/messenger\/karere-native.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B581AC17A2775FC6A45FCBAAF61C20743E649A6A"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/meganz\/UIBarButtonItem-Badge.git",

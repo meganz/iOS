@@ -79,9 +79,9 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail inválido e / ou senha. Por favor, tente novamente";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até%@ e tente novamente.";
+"tooManyAttemptsLogin"="Você tentou entrar muitas vezes. Por favor, espere até %@ e tente novamente.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Verifique seu e-mail e siga o link para confirmar sua conta.";
+"accountNotConfirmed"="Verifique o seu e-mail e clique no link para confirmar a sua conta.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field  */
@@ -292,6 +292,10 @@
 "downloading"="Baixando...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Você quer cancelar o download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Selecione o destino";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Selecione os arquivos";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mover";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Verifique suas permissões nesta pasta";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Pasta compartilhada";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importar para";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d pastas compartilhadas com sucesso.";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
@@ -395,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Avançar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Faça backup automático de suas fotos para o Cloud Drive";
+"automaticallyBackupYourPhotos"="Faça backup automático das suas fotos para a Nuvem de Arquivos";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Habilitar uploads da câmera";
 /* Success message shown when Camera Uploads has been enabled */
@@ -460,7 +464,7 @@
 "addContact"="Adicionar novo contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail do contato";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adicionar";
 /* Success message shown when a contact has been invited */
 "requestSent"="pedido enviado";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contatos removidos ";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contato %@ removido";
 /* Label shown when a contact request is pending */
 "pending"="Pendente";
@@ -491,9 +495,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Sair";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Tem a certeza que quer sair desta partilha?";
+"leaveShareAlertMessage"="Você tem certeza de que quer sair deste compartilhamento?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Tem a certeza que quer sair destas partilhas?";
+"leaveSharesAlertMessage"="Você tem certeza de que quer sair destes compartilhamentos?";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="Esta pasta já não se encontra partilhada";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
@@ -565,7 +569,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Mudar senha";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exportando a chave de recuperação e mantê-lo em um local seguro permite-lhe recuperar a sua conta no caso de uma senha perdida sem perda de dados.";
+"exportMasterKeyFooter"="Exportar a chave de recuperação e mantê-la em um local seguro permitirá recuperar a sua conta no caso de esquecer a senha, sem perda de dados.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Por que eu preciso de uma chave de recuperação?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -577,9 +581,9 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="A chave de recuperação foi copiada para o clipboard";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="Recuperação das exportações Key";
+"masterKeyExported"="A chave de recuperação foi exportada";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="A chave de recuperação foi exportada para a seção off-line como Recovery KEY.txt. Nota: serão apagados se você sair, por favor, guarde-o em um lugar seguro.";
+"masterKeyExported_alertMessage"="A chave de recuperação foi exportada para a seção offline como RecoveryKey.txt. Aviso: ela será apagada se você fizer logout. Por favor, guarde-a em um lugar seguro.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="No seu aparelho";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -609,11 +613,11 @@
 /*  */
 "pleaseCheckYourEmail"="Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Se você não pode acessar seu e-mail, entre em contato support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Se você não pode acessar o seu e-mail, entre em contato support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link de cancelamento expirou.";
 /* Account closure, message shown when you click on the link in the email to confirm the closure of your account. */
-"enterYourPasswordToConfirmThatYouWanToClose"="Digite sua senha para confirmar que deseja encerrar a sua conta.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Digite a sua senha para confirmar que deseja cancelar a sua conta.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Encerrar conta";
 /* Title for the action that allows to remove a file or folder */
@@ -665,7 +669,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Esqueceu sua senha?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Você pode redefinir sua senha seguindo o link de recuperação que será enviado para o seu e-mail.";
+"youCanResetYourPasswordByFollowing"="Você pode resetar a sua senha clicando no link de recuperação que será enviado para o seu e-mail.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="O link de recuperação expirou, por favor tente novamente.";
 /* Headline of the password reset recovery procedure */
@@ -719,7 +723,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O e-mail novo e o e-mail antigo não podem ser o mesmo";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="E-mails não são iguais";
+"emailsDoNotMatch"="Os e-mails não coincidem";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Você já solicitou um link de confirmação para esse endereço de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -731,7 +735,7 @@
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Fechar as outras sessões";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="Sessões encerradas";
+"sessionsClosed"="Sessões finalizadas";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="Mudar código de acesso";
 /* Title to describe a simple (four digit) passcode */
@@ -739,7 +743,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Sair e apagar dados local após 10 tentativas fracassadas de senha";
+"failedAttempstSectionTitle"="Fazer logout e apagar os dados locais após 10 tentativas fracassadas de senha";
 /* Title header for the bottom menu with various menu sections that suit the category support. */
 "support"="Suporte";
 /* Title of the section to access MEGA's help centre */
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="Mudar avatar";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="Mudar de nome";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Você mudou com sucesso seu perfil.";
 /* Hint text for the first name (Placeholder) */
@@ -865,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Ativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Um log será criado na seção off-line (MEGAiOS.log).";
+"enableDebugMode_message"="Um log será criado na seção off-line (MEGAiOS.log). Os logs podem conter informações relacionadas à sua conta.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Desativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -879,7 +883,7 @@
 /* Empty Conversations section */
 "noConversations"="Sem conversações";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat desativado";
+"chatIsDisabled"="O chat está desativado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Habilitar";
 /* Conversations section */
@@ -891,17 +895,17 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Eu";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] Foi removido do grupo de bate-papo por [B].";
+"wasRemovedFromTheGroupChatBy"="[A] foi eliminado do grupo de chat por [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
-"leftTheGroupChat"="[A] Deixou o bate-papo do grupo.";
+"leftTheGroupChat"="[A] saiu do grupo de chat.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] Juntou-se ao grupo de bate-papo por convite de [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] juntou-se ao grupo de chat por convite de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
-"clearedTheChatHistory"="[A] Apagou o histórico de bate-papo.";
+"clearedTheChatHistory"="[A] apagou o histórico do chat.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] Foi alterado para [B] por [C].";
+"wasChangedToBy"="[A] foi alterado para [B] por [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] Nome do bate-papo de grupo alterado para '[B]'.";
+"changedGroupChatNameTo"="[A] mudou o nome do grupo de chat para '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adicionar participante...";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -914,8 +918,12 @@
 "autoAway"="Ausente automático";
 /* */
 "xMinutes"="[X] minutos";
+/* */
+"1Minute"="1 minuto";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Aparecer como ausente depois de [X] minutos de inatividade";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Continuidade de status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -943,11 +951,11 @@
 /* 'Next' button in a dialog */
 "continue"="Continuar";
 /* Button title that allows the user to close a chat. */
-"closeChat"="Fechar o Chat";
+"closeChat"="Fechar o chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Pastas compartilhadas";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Credenciais de contato";
+"contactCredentials"="Credenciais do contato";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="O melhor jeito de fazer isso, é se conhecendo pessoalmente, na vida real. Se você tem um outro canal já verificada como OTR ou PGP, você também pode usar estes canais.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
@@ -957,7 +965,7 @@
 /* Button title */
 "approve"="Aprovar";
 /* start a chat/conversation */
-"startConversation"="Iniciar conversação";
+"startConversation"="Iniciar conversa";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Grupo";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
@@ -967,13 +975,13 @@
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Renomear Grupo";
 /* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Alterar avatar do grupo";
+"changeGroupAvatar"="Alterar o avatar do grupo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Sair";
 /* Top menu option which opens more menu options in a context menu. */
 "more"="Mais";
 /* A button label. The button allows the user to mute a conversation. */
-"mute"="Mudo";
+"mute"="Silenciar";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
@@ -1020,19 +1028,31 @@
 "done"="feito";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar arquivos";
+/* */
+"warning"="Atenção";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todos os arquivos salvos offline serão excluídos do seu dispositivo. Deseja continuar?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Cota de transferência esgotada";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Seu download excede a cota de transferência disponível para o seu endereço IP e, portanto, pode ser interrompido.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="Veja os planos";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Fechar";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "Nova Mensagem";
+"newMessage"="Nova mensagem";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Pedido de Contacto";
+"contactRequest"="Solicitação de contato";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "Nova Pasta Compartilhada";
+"newSharedFolder"="Nova pasta compartilhada";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Tem certeza que deseja cancelar o cadastro?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Se você digitou incorretamente seu endereço de e-mail, corrija-o e clique em \" Reenviar \".";
+/* A button to resend the email confirmation. */
+"resend"="Reenviar";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes do próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
+"autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Abra o MEGA e faça o login para continuar";

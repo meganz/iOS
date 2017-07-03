@@ -11,6 +11,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGALogger.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -35,6 +36,8 @@
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
+#import "CheckEmailAndFollowTheLinkViewController.h"
+#import "MEGACreateAccountRequestDelegate.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -52,7 +55,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     URLTypeIncomingPendingContactsLink,
     URLTypeChangeEmailLink,
     URLTypeCancelAccountLink,
-    URLTypeRecoverLink
+    URLTypeRecoverLink,
+    URLTypeLoginRequiredLink
 };
 
 @interface AppDelegate () <UIAlertViewDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate> {
@@ -88,11 +92,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    _signalActivityRequired = NO;
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+#ifdef DEBUG
+    [MEGASdk setLogLevel:MEGALogLevelMax];
+#else
+    [MEGASdk setLogLevel:MEGALogLevelFatal];
+#endif
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
+    
+    _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -105,12 +116,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-    
-#ifdef DEBUG
-    [MEGASdk setLogLevel:MEGALogLevelMax];
-#else
-    [MEGASdk setLogLevel:MEGALogLevelFatal];
-#endif
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -164,7 +169,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     // Rename attributes (thumbnails and previews)- handle to base64Handle
     NSString *v2ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:v2ThumbsPath]) {
-        NSString *v3ThumbsPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *v3ThumbsPath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:v3ThumbsPath]) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createDirectoryAtPath:v3ThumbsPath withIntermediateDirectories:NO attributes:nil error:&error]) {
@@ -201,6 +206,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
     isFetchNodesDone = NO;
     
     if (sessionV3) {
+        NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        if (![sharedUserDefaults boolForKey:@"extensions"]) {
+            [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+            [sharedUserDefaults setBool:YES forKey:@"extensions"];
+        }
         [self registerForNotifications];
         isAccountFirstLogin = NO;
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
@@ -215,6 +226,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
             
+            [[MEGALogger sharedLogger] enableChatlogs];
+            
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
             if (chatInit == MEGAChatInitNoCache) {
                 [[MEGASdkManager sharedMEGASdk] invalidateCache];
@@ -227,9 +240,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
+        } else {
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3];
+        MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
@@ -252,6 +268,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self.window setRootViewController:_mainTBC];
                 [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
+        }
+    } else {
+        // Resume ephemeral account
+        NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
+        if (sessionId) {
+            MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
+                CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                [self.window.rootViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+            }];
+            createAccountRequestDelegate.resumeCreateAccount = YES;
+            [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         }
     }
     
@@ -299,6 +326,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [[CameraUploads syncManager] isCameraUploadsEnabled]) {        
@@ -480,7 +508,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window.rootViewController.presentedViewController presentViewController:navigationController animated:YES completion:nil];
             
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             browserVC.selectedNodesArray = [NSArray arrayWithObject:node];
             [browserVC setBrowserAction:BrowserActionImport];
             break;
@@ -500,7 +527,6 @@ typedef NS_ENUM(NSUInteger, URLType) {
         case 3: { //Import folder or nodes from link
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             browserVC.selectedNodesArray = [NSArray arrayWithArray:[Helper nodesFromLinkMutableArray]];
             [self presentLinkViewController:navigationController];
@@ -589,6 +615,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if ([self isRecoverLink:afterSlashesString]) {
         self.urlType = URLTypeRecoverLink;
+        return;
+    }
+    
+    if ([self isLoginRequiredLink:afterSlashesString]) {
+        self.urlType = URLTypeLoginRequiredLink;
         return;
     }
     
@@ -797,11 +828,30 @@ typedef NS_ENUM(NSUInteger, URLType) {
     return NO;
 }
 
+- (BOOL)isLoginRequiredLink:(NSString *)afterSlashesString {
+    if (afterSlashesString.length < 13) {
+        return NO;
+    }
+    
+    BOOL isLoginRequiredLink = [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]; //mega://"#loginrequired"
+    if (isLoginRequiredLink) {
+        NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+        if (session) {
+            // The user logged in with a previous version of the MEGA app, so the session is stored in the standard
+            // keychain. The session must be stored again so that it will be available for the shared keychain.
+            [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
+        } else {
+            // The user is not logged in, so the standard login will be presented (there is nothing to do in this case)
+        }
+    }
+    return isLoginRequiredLink;
+}
+
 - (void)openIn {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         MEGANavigationController *browserNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
         BrowserViewController *browserVC = browserNavigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         [browserVC setLocalpath:[self.link path]]; // "file://" = 7 characters
         [browserVC setBrowserAction:BrowserActionOpenIn];
         
@@ -1227,7 +1277,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
             if (user.isOwnChange == 0) { //If the change is external
                 if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                    NSString *avatarFilePath = [Helper pathForUser:user searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    NSString *avatarFilePath = [Helper pathForUser:user inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {
                         [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
@@ -1452,7 +1502,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             case MEGAErrorTypeApiEAccess: {
                 if ([request type] == MEGARequestTypeSetAttrFile) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+                    NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                     BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
                     if (thumbnailExists) {
                         [[NSFileManager defaultManager] removeItemAtPath:thumbnailFilePath error:nil];
@@ -1534,7 +1584,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] connect];
                 if (isAccountFirstLogin) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];                    
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             [self showMainTabBar];
@@ -1746,7 +1796,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     
     if (request.type == MEGAChatRequestTypeLogout) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] useSDKLogger];
+            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         [MEGASdkManager destroySharedMEGAChatSdk];
     }
@@ -1820,7 +1870,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     if ([transfer type] == MEGATransferTypeUpload && isImage([transfer fileName].pathExtension)) {
-        NSString *thumbsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbnailsV3"];
+        NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
         if ([error type] == MEGAErrorTypeApiOk) {
             MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
@@ -1891,7 +1941,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
         
         if (isImage([transfer fileName].pathExtension)) {
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
             if (!thumbnailExists) {
@@ -1921,7 +1971,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             CGImageRelease(imgRef);
             
-            NSString *thumbnailFilePath = [Helper pathForNode:node searchPath:NSCachesDirectory directory:@"thumbnailsV3"];
+            NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             [api createThumbnail:tmpImagePath destinatioPath:thumbnailFilePath];
             [api setThumbnailNode:node sourceFilePath:thumbnailFilePath];
             

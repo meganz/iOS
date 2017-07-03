@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAShareRequestDelegate.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -126,9 +127,7 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -272,9 +271,14 @@
 }
 
 - (void)removeSelectedOutgoingShares {
-    for (MEGAShare *share in _selectedSharesMutableArray) {
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedSharesMutableArray.count completion:^{
+        [self setEditing:NO animated:YES];
+        [self reloadUI];
+    }];
+    
+    for (MEGAShare *share in self.selectedSharesMutableArray) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
-        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:[share user] level:MEGAShareTypeAccessUnkown delegate:self];
+        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
     }
     
     [self setEditing:NO animated:YES];
@@ -305,10 +309,10 @@
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL value = [self.editBarButtonItem.image isEqual:[UIImage imageNamed:@"edit"]];
-    [self setEditing:value animated:YES];
+    BOOL enableEditing = !self.tableView.isEditing;
+    [self setEditing:enableEditing animated:YES];
     
-    if (value) {
+    if (enableEditing) {
         _selectedNodesMutableArray = [[NSMutableArray alloc] init];
         _selectedSharesMutableArray = [[NSMutableArray alloc] init];
         
@@ -504,7 +508,6 @@
         [self presentViewController:navigationController animated:YES completion:nil];
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
         browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesMutableArray];
         [browserVC setBrowserAction:BrowserActionCopy];
         
@@ -949,33 +952,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeShare: {
-            
-            _remainingOperations--;
-            
-            if (_remainingOperations == 0) {
-                switch ([request access]) {
-                    case MEGAShareTypeAccessUnkown:
-                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"shareRemoved", nil)];
-                        [self setEditing:NO animated:YES];
-                        break;
-                        
-                    case MEGAShareTypeAccessRead:
-                    case MEGAShareTypeAccessReadWrite:
-                    case MEGANodeAccessLevelFull:
-                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"permissionsChanged", nil)];
-                        break;
-                        
-                    default:
-                        break;
-                }
-                
-                [self reloadUI];
-            }
-            
-            break;
-        }
-            
         case MEGARequestTypeRemove: {
             
             _remainingOperations--;
