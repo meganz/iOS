@@ -1055,6 +1055,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="avatarImageView" destination="zaL-ex-F72" id="aNV-nw-hXz"/>
+                        <outlet property="backBarButtonItem" destination="k2i-2F-hvZ" id="QWP-06-lig"/>
                         <outlet property="emailLabel" destination="wgN-dK-iZJ" id="GaO-1o-0VL"/>
                         <outlet property="nameLabel" destination="XHC-l2-3NH" id="pQa-Ks-sFl"/>
                         <outlet property="participantsHeaderView" destination="Wl6-z3-anl" id="JgS-zo-ycV"/>
@@ -1064,6 +1065,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1F-mI-Kwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="backArrow" style="plain" id="k2i-2F-hvZ" userLabel="Back Bar Button Item">
+                    <connections>
+                        <action selector="backAction:" destination="GvV-J1-s0U" id="0eg-lZ-7wh"/>
+                    </connections>
+                </barButtonItem>
                 <view contentMode="scaleToFill" id="Wl6-z3-anl" userLabel="SHARED FOLDERS Header View">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
