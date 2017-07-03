@@ -648,6 +648,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="avatarImageView" destination="FtX-jr-o0q" id="r6r-Vt-Cew"/>
+                        <outlet property="backBarButtonItem" destination="CSv-Uo-hDf" id="Asp-PZ-yZR"/>
                         <outlet property="emailLabel" destination="8ah-6H-5dD" id="6tY-F9-Doq"/>
                         <outlet property="nameLabel" destination="W71-dB-C1l" id="yNj-4o-SH9"/>
                         <outlet property="participantsHeaderView" destination="M2W-OS-RGa" id="WXY-k0-DR5"/>
@@ -656,6 +657,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yz7-u1-qhO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem image="backArrow" style="plain" id="CSv-Uo-hDf" userLabel="Back Bar Button Item">
+                    <connections>
+                        <action selector="backAction:" destination="0sZ-aU-4Bm" id="1QU-bJ-Xkg"/>
+                    </connections>
+                </barButtonItem>
                 <view contentMode="scaleToFill" id="M2W-OS-RGa">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
