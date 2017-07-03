@@ -1,6 +1,6 @@
 
 @interface MEGANodeList (MNZCategory)
 
-- (NSArray *)nodesArrayFromNodeList;
+- (NSArray *)mnz_nodesArrayFromNodeList;
 
 @end
