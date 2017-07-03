@@ -14,6 +14,8 @@
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 
@@ -910,7 +912,13 @@
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
-            //TODO: Open nodes like in the Cloud Drive.
+            NSArray *nodesArray = [message.nodeList mnz_nodesArrayFromNodeList];
+            MEGANode *node = [message.nodeList nodeAtIndex:0];
+            if (node.mnz_isImage) {
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2];
+            } else {
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            }
         } else {
             ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
             chatAttachedNodesVC.message = message;

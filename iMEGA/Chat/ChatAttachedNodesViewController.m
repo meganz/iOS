@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -187,7 +188,7 @@
     if (self.message.nodeList.size.unsignedIntegerValue != selectedNodesCount) {
         [self.selectedNodesMutableArray removeAllObjects];
         
-        NSArray *nodesArray = [self.message.nodeList nodesArrayFromNodeList];
+        NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
         self.selectedNodesMutableArray = nodesArray.mutableCopy;
     } else {
         [self.selectedNodesMutableArray removeAllObjects];
@@ -227,7 +228,7 @@
     if (self.tableView.isEditing) {
         browserVC.selectedNodesArray = self.selectedNodesMutableArray.copy;
     } else {
-        NSArray *nodesArray = [self.message.nodeList nodesArrayFromNodeList];
+        NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
         browserVC.selectedNodesArray = nodesArray.mutableCopy;
     }
     
@@ -295,7 +296,12 @@
         
         return;
     } else {
-        //TODO: Open node
+        if (nodeSelected.mnz_isImage) {
+            NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
+            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2];
+        } else {
+            [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

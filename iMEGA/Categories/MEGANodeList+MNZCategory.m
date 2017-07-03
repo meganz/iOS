@@ -3,7 +3,7 @@
 
 @implementation MEGANodeList (MNZCategory)
 
-- (NSArray *)nodesArrayFromNodeList {
+- (NSArray *)mnz_nodesArrayFromNodeList {
     NSUInteger nodeListCount = self.size.unsignedIntegerValue;
     NSMutableArray *nodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
