@@ -918,8 +918,12 @@
 "autoAway"="تشغيل \"بعيد\" تلقائيا ";
 /* */
 "xMinutes"="[X] دقائق";
+/* */
+"1Minute"="دقيقة واحدة";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="غير الحالة إلى بعيد بعد [X] دقيقة/دقائق من عدم النشاط";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="استمرار الحالة";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
