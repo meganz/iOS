@@ -3,18 +3,18 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
 
-#import "NSString+MNZCategory.h"
-#import "MEGAChatMessage+MNZCategory.h"
-
 #import "Helper.h"
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
 #import "MEGAInviteContactRequestDelegate.h"
+#import "NSString+MNZCategory.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
@@ -906,7 +906,18 @@
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Tapped message bubble!");
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if (message.type == MEGAChatMessageTypeAttachment) {
+        if (message.nodeList.size.unsignedIntegerValue == 1) {
+            //TODO: Open nodes like in the Cloud Drive.
+        } else {
+            ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
+            chatAttachedNodesVC.message = message;
+            [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
+        }
+    } else if (message.type == MEGAChatMessageTypeContact) {
+        //TODO: If contact, open 'Contact Info'. If there are several contacts attached, open custom view.
+    }
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
