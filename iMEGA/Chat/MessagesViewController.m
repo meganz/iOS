@@ -916,7 +916,20 @@
             [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
         }
     } else if (message.type == MEGAChatMessageTypeContact) {
-        //TODO: If contact, open 'Contact Info'. If there are several contacts attached, open custom view.
+        if (message.usersCount == 1) {
+            NSString *userEmail = [message userEmailAtIndex:0];
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
+            if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
+                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+                contactDetailsVC.userEmail          = userEmail;
+                contactDetailsVC.userName           = [message userNameAtIndex:0];
+                contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
+                [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            }
+        } else {
+            //TODO: If there are several contacts attached, open custom view.
+        }
     }
 }
 
