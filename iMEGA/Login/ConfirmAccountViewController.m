@@ -182,6 +182,11 @@
             if (![api isLoggedIn] || [api isLoggedIn] <= 1) {
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 [api loginWithEmail:[self.emailTextField text] password:[self.passwordTextField text] delegate:loginRequestDelegate];
+                
+                [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
+                [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
+                [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
+                [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
             }
             break;
         }

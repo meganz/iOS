@@ -13,4 +13,6 @@
 
 + (BOOL)isReachableHUDIfNot;
 
+- (void)reconnectIfIPHasChanged;
+
 @end
