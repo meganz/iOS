@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="HIBAKERESŐ mód engedéylezése";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log).";
+"enableDebugMode_message"="A log will be created in the Offline section (MEGAiOS.log). Logs can contain information related to your account.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="HIBAKERESŐ mód letitlása";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -918,8 +918,12 @@
 "autoAway"="Auto-away";
 /* */
 "xMinutes"="[X] perc";
+/* */
+"1Minute"="1 perc";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */

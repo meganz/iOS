@@ -651,7 +651,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %@ folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -918,8 +918,12 @@
 "autoAway"="Auto-away";
 /* */
 "xMinutes"="[X] minuto";
+/* */
+"1Minute"="1 minuto";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Alisin mo ako pagkatapos ng [X] na minuto ng walang aktibidad";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */

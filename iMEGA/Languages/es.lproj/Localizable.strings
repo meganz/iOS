@@ -918,8 +918,12 @@
 "autoAway"="Ausente tras...";
 /* */
 "xMinutes"="[X] minutos";
+/* */
+"1Minute"="1 minuto";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Cambiar estado a ausente después de [X] minutos de inactividad";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Cambiar estado a ausente después de 1 minuto de inactividad";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bloquear estado";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1024,6 +1028,10 @@
 "done"="Aceptar";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
+/* */
+"warning"="Advertencia";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todo los archivos disponibles sin conexión serán eliminados de tu dispositivo. ¿Seguro que quieres continuar?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cuota de transferencia agotada";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1048,6 +1056,12 @@
 "attachedFile"="Adjunto: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s archivos adjuntos";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="¿Seguro que quieres cancelar el proceso de registro?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Si has escrito mal tu dirección de correo electrónico, corrígela y pulsa 'Reenviar'.";
+/* A button to resend the email confirmation. */
+"resend"="Reenviar";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Las subscripciones se renuevan automáticamente en periodos de tiempo sucesivos, con la misma duración y precio que el elegido inicialmente. Puedes desactivar la renovación automática de la subscripción a MEGA PRO hasta 24 horas antes de que tu periodo de cobro esté programado en la página de ajustes de iTunes. Para gestionar tus subscripciones, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las subscripciones que has contratado. Desde aquí, puedes seleccionar la subscripción a MEGA PRO y ver cuando será renovada, cambiar el tipo de subscripción o desactivar la opción de renovación automática para cancelar tu subscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

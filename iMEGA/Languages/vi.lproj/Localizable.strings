@@ -918,8 +918,12 @@
 "autoAway"="Tự động vắng mặt";
 /* */
 "xMinutes"="[X] phút";
+/* */
+"1Minute"="1 phút";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Tự chuyển trạng thái thành \"Vắng mặt\" sau [X] phút không hoạt động";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Bảo Toàn Trạng Thái";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */

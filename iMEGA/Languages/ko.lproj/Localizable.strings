@@ -918,8 +918,12 @@
 "autoAway"="자동 부재중";
 /* */
 "xMinutes"="[X]분";
+/* */
+"1Minute"="1분";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X]분 이상 활동이 없으면 부재중으로 표시";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="상태 유지";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
