@@ -330,13 +330,51 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forChatListItem:(MEGAChatListItem *)item {
-    if (item.lastMessageType == MEGAChatMessageTypeInvalid) {
-        cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
-        cell.chatLastTime.hidden = YES;
-    } else {
-        cell.chatLastMessage.text = item.lastMessage;
-        cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
-        cell.chatLastTime.hidden = NO;
+    switch (item.lastMessageType) {
+        case MEGAChatMessageTypeInvalid: {
+            cell.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+            cell.chatLastTime.hidden = YES;
+            break;
+        }
+            
+        case MEGAChatMessageTypeAttachment: {
+            NSString *lastMessageString = item.lastMessage;
+            NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
+            if (componentsArray.count == 1) {
+                NSString *attachedFileString = AMLocalizedString(@"attachedFile", @"A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file.");
+                lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
+            } else {
+                lastMessageString = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+            }
+            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
+            cell.chatLastTime.hidden = NO;
+            break;
+        }
+            
+        case MEGAChatMessageTypeContact: {
+            NSString *lastMessageString = item.lastMessage;
+            NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
+            if (componentsArray.count == 1) {
+                NSString *sentContactString = AMLocalizedString(@"sentContact", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
+                lastMessageString = [sentContactString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
+            } else {
+                lastMessageString = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+            }
+            cell.chatLastMessage.text = lastMessageString;
+            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
+            cell.chatLastTime.hidden = NO;
+            break;
+        }
+            
+        default: {
+            cell.chatLastMessage.text = item.lastMessage;
+            cell.chatLastTime.text = item.lastMessageDate.shortTimeAgoSinceNow;
+            cell.chatLastTime.hidden = NO;
+            break;
+        }
     }
 }
 
