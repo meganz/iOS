@@ -735,7 +735,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isBackupLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 6) {
+    if (afterSlashesString.length < 7) {
         return NO;
     }
     
@@ -756,7 +756,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isIncomingPendingContactsLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 6) {
+    if (afterSlashesString.length < 7) {
         return NO;
     }
     
@@ -776,7 +776,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isChangeEmailLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 6) {
+    if (afterSlashesString.length < 7) {
         return NO;
     }
     
@@ -795,7 +795,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isCancelAccountLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 6) {
+    if (afterSlashesString.length < 7) {
         return NO;
     }
     
@@ -814,7 +814,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isRecoverLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 7) {
+    if (afterSlashesString.length < 8) {
         return NO;
     }
     
@@ -829,7 +829,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (BOOL)isLoginRequiredLink:(NSString *)afterSlashesString {
-    if (afterSlashesString.length < 13) {
+    if (afterSlashesString.length < 14) {
         return NO;
     }
     
