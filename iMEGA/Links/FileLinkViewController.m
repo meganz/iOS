@@ -91,9 +91,7 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self setNavigationBarTitleLabel];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
