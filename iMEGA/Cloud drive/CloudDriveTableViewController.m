@@ -341,7 +341,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.mnz_isImage) {
+            if (node.name.mnz_isImageUTI) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
             } else {
@@ -696,7 +696,7 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        if (isImage(imagePath.pathExtension)) {
+        if (imagePath.mnz_isImagePathExtension) {
             [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
             [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
         }
@@ -1385,7 +1385,7 @@
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            if (isImage(localFilePath.pathExtension)) {
+            if (localFilePath.mnz_isImagePathExtension) {
                 [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_thumbnail"]];
                 [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_preview"]];
             }

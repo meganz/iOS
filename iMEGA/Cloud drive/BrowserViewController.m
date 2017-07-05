@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
@@ -461,7 +462,7 @@
         }
         
         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-        if (isImage(self.localpath.pathExtension)) {
+        if (self.localpath.mnz_isImagePathExtension) {
             [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_thumbnail"]];
             [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[self.localpath stringByAppendingString:@"_preview"]];
         }
