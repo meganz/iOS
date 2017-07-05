@@ -1,8 +1,6 @@
 
 #import "MEGANode+MNZCategory.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
-
 #import "MWPhotoBrowser.h"
 
 #import "Helper.h"
@@ -10,32 +8,11 @@
 #import "MEGANode.h"
 #import "MEGAQLPreviewController.h"
 #import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 
 #import "PreviewDocumentViewController.h"
 
 @implementation MEGANode (MNZCategory)
-
-- (BOOL)mnz_isImage {
-    BOOL isImage = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.name.pathExtension), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        isImage = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isImage;
-}
-
-- (BOOL)mnz_isAudiovisualContent {
-    BOOL isAudiovisualContent = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.name.pathExtension), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-        isAudiovisualContent = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isAudiovisualContent;
-}
 
 - (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
     int offsetIndex = 0;
@@ -44,7 +21,7 @@
     NSUInteger nodesCount = nodesArray.count;
     for (NSUInteger i = 0; i < nodesCount; i++) {
         MEGANode *node = [nodesArray objectAtIndex:i];
-        if (node.mnz_isImage && (node.type == MEGANodeTypeFile)) {
+        if (node.name.mnz_isImagePathExtension && node.isFile) {
             MWPhoto *photo = [[MWPhoto alloc] initWithNode:node];
             photo.isFromFolderLink = isFolderLink;
             [imagesMutableArray addObject:photo];
@@ -88,7 +65,7 @@
     }
     
     if (previewDocumentPath) {
-        if (isMultimedia(self.name.pathExtension)) {
+        if (self.name.mnz_isMultimediaPathExtension) {
             NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
             [navigationController presentViewController:megaAVViewController animated:YES completion:nil];
@@ -97,7 +74,7 @@
             MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
             [navigationController presentViewController:previewController animated:YES completion:nil];
         }
-    } else if (self.mnz_isAudiovisualContent && [api httpServerStart:YES port:4443]) {
+    } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
         [navigationController presentViewController:megaAVViewController animated:YES completion:nil];
     } else {

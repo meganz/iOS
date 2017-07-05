@@ -1,12 +1,54 @@
 
 #import "NSString+MNZCategory.h"
 
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import "MEGAChatSdk.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
+
+- (BOOL)mnz_isImageUTI {
+    BOOL isImageUTI = NO;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
+    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+        isImageUTI = YES;
+    }
+    if (fileUTI) CFRelease(fileUTI);
+    
+    return isImageUTI;
+}
+
+- (BOOL)mnz_isAudiovisualContentUTI {
+    BOOL isAudiovisualContentUTI = NO;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
+    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
+        isAudiovisualContentUTI = YES;
+    }
+    if (fileUTI) CFRelease(fileUTI);
+    
+    return isAudiovisualContentUTI;
+}
+
+- (BOOL)mnz_isImagePathExtension {
+    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", nil];
+    
+    return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isVideoPathExtension {
+    NSSet *videosExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", nil];
+    
+    return [videosExtensionsSet containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isMultimediaPathExtension {
+    NSSet *multimediaExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil];
+    
+    return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
+}
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
     NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];

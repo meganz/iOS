@@ -10,6 +10,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "NodeTableViewCell.h"
@@ -296,7 +297,7 @@
         
         return;
     } else {
-        if (nodeSelected.mnz_isImage) {
+        if (nodeSelected.name.mnz_isImageUTI) {
             NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
             [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2];
         } else {

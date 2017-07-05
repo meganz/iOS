@@ -677,7 +677,7 @@ static BOOL copyToPasteboard;
                 }
             } else {
                 NSString *appData = nil;
-                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
@@ -773,11 +773,11 @@ static BOOL copyToPasteboard;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        nodeTableViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
+        nodeTableViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
 }
 

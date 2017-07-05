@@ -1,7 +1,5 @@
-#import "OfflineTableViewController.h"
 
-#import <QuickLook/QuickLook.h>
-#import <MobileCoreServices/MobileCoreServices.h>
+#import "OfflineTableViewController.h"
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -179,7 +177,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!isMultimedia(fileName.pathExtension)) {
+                if (!fileName.mnz_isMultimediaPathExtension) {
                     offsetIndex++;
                 }
             }
@@ -224,7 +222,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineSortedItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (isMultimedia(fileName.pathExtension)) {
+                if (fileName.mnz_isMultimediaPathExtension) {
                     [self.offlineMultimediaFiles addObject:[fileURL path]];
                 } else {
                     offsetIndex++;
@@ -467,24 +465,19 @@ static NSString *kisDirectory = @"kisDirectory";
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
             if (thumbnailImage != nil) {
                 [cell.thumbnailImageView setImage:thumbnailImage];
-                if (isVideo(nameString.pathExtension)) {
+                if (nameString.mnz_isVideoPathExtension) {
                     [cell.thumbnailPlayImageView setHidden:NO];
                 }
             }
             
         } else {
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([nameString pathExtension]), NULL);
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
+            if (nameString.mnz_isImageUTI) {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
                 }
             } else {
                 UIImage *iconImage = [UIImage imageNamed:fileTypeIconString];
                 [cell.thumbnailImageView setImage:iconImage];
-            }
-            
-            if (fileUTI) {
-                CFRelease(fileUTI);
             }
         }
         
@@ -595,7 +588,7 @@ static NSString *kisDirectory = @"kisDirectory";
         OfflineTableViewController *offlineTVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableViewControllerID"];
         [offlineTVC setFolderPathFromOffline:folderPathFromOffline];
         [self.navigationController pushViewController:offlineTVC animated:YES];
-    } else if (isMultimedia(previewDocumentPath.pathExtension)) {
+    } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
         MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
         [self presentViewController:megaAVViewController animated:YES completion:nil];
     } else {

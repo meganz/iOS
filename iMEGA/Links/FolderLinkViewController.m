@@ -10,6 +10,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
@@ -589,7 +590,7 @@
         }
 
         case MEGANodeTypeFile: {
-            if (node.mnz_isImage) {
+            if (node.name.mnz_isImageUTI) {
                 NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
             } else {
