@@ -2,11 +2,14 @@
 #import "ShareViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "Helper.h"
 #import "LaunchViewController.h"
+#import "LoginRequiredViewController.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
 #import "MEGARequestDelegate.h"
@@ -19,7 +22,7 @@
 
 #define MNZ_ANIMATION_TIME 0.35
 
-@interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate>
+@interface ShareViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
 @property (nonatomic) UIViewController *browserVC;
 @property (nonatomic) unsigned long pendingAssets;
@@ -27,13 +30,25 @@
 @property (nonatomic) unsigned long unsupportedAssets;
 @property (nonatomic) float progress;
 
+@property (nonatomic) UINavigationController *loginRequiredNC;
+@property (nonatomic) LaunchViewController *launchVC;
+@property (nonatomic, getter=isFirstFetchNodesRequestUpdate) BOOL firstFetchNodesRequestUpdate;
+@property (nonatomic, getter=isFirstAPI_EAGAIN) BOOL firstAPI_EAGAIN;
+@property (nonatomic) NSTimer *timerAPI_EAGAIN;
+
+@property (nonatomic) NSString *session;
+@property (nonatomic) UIView *privacyView;
+
+@property (nonatomic) BOOL fetchNodesDone;
+@property (nonatomic) BOOL passcodePresented;
+
 @end
 
 @implementation ShareViewController
 
 #pragma mark - Lifecycle
 
-- (instancetype)init {
+- (void)viewDidLoad {
     if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] enableSDKlogs];
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -43,6 +58,9 @@
         }
         [[MEGALogger sharedLogger] startLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     }
+    
+    self.fetchNodesDone = NO;
+    self.passcodePresented = NO;
     
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -55,15 +73,129 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    if(session) {
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:session delegate:self];
+    // Add a observer to get notified when the extension come back to the foreground:
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"8.2"]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
+                                                     name:NSExtensionHostWillResignActiveNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                     name:NSExtensionHostDidBecomeActiveNotification
+                                                   object:nil];
     }
-
-    return [super init];
+    
+    [self configureProgressHUD];
+    [SVProgressHUD setViewForExtension:self.view];
+    
+    [self presentDocumentPicker];
+    
+    self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    if (self.session) {
+        // Common scenario, present the browser after passcode.
+        [[LTHPasscodeViewController sharedUser] setDelegate:self];
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+            }
+            [self presentPasscode];
+        } else {
+            [self loginToMEGA];
+        }
+    } else {
+        [self requireLogin];
+    }
 }
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self fakeModalPresentation];
+}
+
+- (void)willResignActive {
+    if (self.session) {
+        UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.privacyView = privacyVC.view;
+        [self.view addSubview:self.privacyView];
+    }
+}
+
+- (void)didBecomeActive {
+    if (self.privacyView) {
+        [self.privacyView removeFromSuperview];
+        self.privacyView = nil;
+    }
+    
+    self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    if (self.session) {
+        if (self.loginRequiredNC) {
+            [self.loginRequiredNC dismissViewControllerAnimated:YES completion:nil];
+        }
+        if ([LTHPasscodeViewController doesPasscodeExist]) {
+            [self presentPasscode];
+        } else {
+            if (!self.fetchNodesDone) {
+                [self loginToMEGA];
+            }
+        }
+    } else {
+        [self requireLogin];
+    }
+}
+
+#pragma mark - Login and Setup
+
+- (void)requireLogin {
+    // The user either needs to login or logged in before the current version of the MEGA app, so there is
+    // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
+    if (!self.loginRequiredNC) {
+        self.loginRequiredNC = [[UIStoryboard storyboardWithName:@"LoginRequired"
+                                                          bundle:[NSBundle bundleForClass:[LoginRequiredViewController class]]] instantiateViewControllerWithIdentifier:@"LoginRequiredNavigationControllerID"];
+        
+        LoginRequiredViewController *loginRequiredVC = self.loginRequiredNC.childViewControllers.firstObject;
+        loginRequiredVC.navigationItem.title = @"MEGA";
+        loginRequiredVC.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
+        loginRequiredVC.cancelCompletion = ^{
+            [self.loginRequiredNC dismissViewControllerAnimated:YES completion:^{
+                [self dismissWithCompletionHandler:^{
+                    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+                }];
+            }];
+        };
+        
+        [self presentViewController:self.loginRequiredNC animated:YES completion:nil];
+    }
+}
+
+- (void)configureProgressHUD {
+    [SVProgressHUD setViewForExtension:self.view];
+    
+    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
+    [SVProgressHUD setRingThickness:2.0];
+    [SVProgressHUD setRingNoTextRadius:18.0];
+    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    
+    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
+    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
+}
+
+- (IBAction)openMegaTouchUpInside:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+}
+
+- (void)loginToMEGA {
+    self.navigationItem.title = @"MEGA";
+    
+    LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+    launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    self.launchVC = launchVC;
+    [self presentViewController:self.launchVC animated:YES completion:nil];
+    
+    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
+}
+
+- (void)presentDocumentPicker {
     UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
     MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
@@ -75,15 +207,34 @@
     [self.view addSubview:navigationController.view];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)presentPasscode {
+    if (!self.passcodePresented) {
+        LTHPasscodeViewController *passcodeVC = [LTHPasscodeViewController sharedUser];
+        [passcodeVC showLockScreenOver:self.view.superview
+                         withAnimation:YES
+                            withLogout:YES
+                        andLogoutTitle:AMLocalizedString(@"logoutLabel", nil)];
+        
+        [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+        [self presentViewController:passcodeVC animated:NO completion:nil];
+        self.passcodePresented = YES;
+    }
+}
+
+- (void)startTimerAPI_EAGAIN {
+    self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
+}
+
+- (void)showServersTooBusy {
+    [self.launchVC.label setText:AMLocalizedString(@"serversTooBusy", @"Message shown when you launch the app and it gets frozen because the servers are too busy so it may take a while until you get response and log in")];
+}
+
+- (void)fakeModalPresentation {
     self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     [UIView animateWithDuration:MNZ_ANIMATION_TIME animations:^{
         self.view.transform = CGAffineTransformIdentity;
     }];
 }
-
-#pragma mark - Private
 
 - (void)dismissWithCompletionHandler:(void (^)(void))completion {
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
@@ -96,6 +247,8 @@
                          }
                      }];
 }
+
+#pragma mark - Share Extension Code
 
 - (void)downloadData:(NSURL *)url andUploadToParentNode:(MEGANode *)parentNode {
     NSURL *urlToDownload = url;
@@ -137,20 +290,6 @@
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode delegate:self];
 }
 
-- (void)configureProgressHUD {
-    [SVProgressHUD setViewForExtension:self.view];
-
-    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
-    [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    
-    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
-    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
-}
-
 #pragma mark - BrowserViewControllerDelegate
 
 - (void)uploadToParentNode:(MEGANode *)parentNode {
@@ -167,23 +306,19 @@
         for (NSItemProvider *attachment in content.attachments) {
             if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeImage]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeImage options:nil completionHandler:^(id data, NSError *error){
-                    NSLog(@"Image > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeMovie]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeMovie options:nil completionHandler:^(id data, NSError *error){
-                    NSLog(@"Movie > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeFileURL]) {
                 // This type includes kUTTypeText, so kUTTypeText it's omitted
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeFileURL options:nil completionHandler:^(id data, NSError *error){
-                    NSLog(@"File > %@", (NSURL *)data);
                     [self uploadData:(NSURL *)data toParentNode:parentNode];
                 }];
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
-                    NSLog(@"URL > %@", (NSURL *)data);
                     [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
                 }];
             } else {
@@ -201,6 +336,77 @@
         [self dismissWithCompletionHandler:^{
             [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
         }];
+    }
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
+    switch ([request type]) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            self.launchVC.activityIndicatorView.hidden = NO;
+            [self.launchVC.activityIndicatorView startAnimating];
+            
+            self.firstAPI_EAGAIN = YES;
+            self.firstFetchNodesRequestUpdate = YES;
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
+    if (request.type == MEGARequestTypeFetchNodes) {
+        float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
+        
+        if (self.isFirstFetchNodesRequestUpdate) {
+            [self.launchVC.activityIndicatorView stopAnimating];
+            self.launchVC.activityIndicatorView.hidden = YES;
+            
+            [self.launchVC.logoImageView.layer addSublayer:self.launchVC.circularShapeLayer];
+            self.launchVC.circularShapeLayer.strokeStart = 0.0f;
+        }
+        
+        if (progress > 0 && progress <= 1.0) {
+            self.launchVC.circularShapeLayer.strokeEnd = progress;
+        }
+    }
+}
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch ([request type]) {
+        case MEGARequestTypeLogin: {
+            [api fetchNodesWithDelegate:self];
+            break;
+        }
+            
+        case MEGARequestTypeFetchNodes: {
+            self.fetchNodesDone = YES;
+            [self.launchVC dismissViewControllerAnimated:YES completion:nil];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeLogin:
+        case MEGARequestTypeFetchNodes: {
+            if (self.isFirstAPI_EAGAIN) {
+                [self startTimerAPI_EAGAIN];
+                self.firstAPI_EAGAIN = NO;
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -225,22 +431,25 @@
     }
 }
 
-#pragma mark - MEGARequestDelegate
+#pragma mark - LTHPasscodeViewControllerDelegate
 
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch ([request type]) {
-        case MEGARequestTypeLogin: {
-            [api fetchNodesWithDelegate:self];
-            break;
+- (void)passcodeWasEnteredSuccessfully {
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.passcodePresented = NO;
+        if (!self.fetchNodesDone) {
+            [self loginToMEGA];
         }
-            
-        case MEGARequestTypeFetchNodes: {
-            break;
-        }
-            
-        default:
-            break;
+    }];
+}
+
+- (void)maxNumberOfFailedAttemptsReached {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        [[MEGASdkManager sharedMEGASdk] logout];
     }
+}
+
+- (void)logoutButtonWasPressed {
+    [[MEGASdkManager sharedMEGASdk] logout];
 }
 
 @end
