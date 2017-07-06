@@ -11,6 +11,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 
 #import "BrowserViewController.h"
 #import "NodeTableViewCell.h"
@@ -257,7 +258,6 @@
     
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
     
-    cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
     cell.nameLabel.text = currentNode.name;
     cell.infoLabel.text = [Helper sizeAndDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
     
@@ -271,6 +271,21 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+    }
+    
+    if (currentNode.hasThumbnail) {
+        NSString *thumbnailFilePath = [Helper pathForNode:currentNode inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+        } else {
+            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
+                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+            }];
+            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+        }
+    } else {
+        cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
     }
     
     UIView *view = [[UIView alloc] init];

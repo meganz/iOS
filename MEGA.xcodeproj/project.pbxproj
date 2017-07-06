@@ -347,6 +347,7 @@
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
+		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
@@ -986,6 +987,8 @@
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WarningTransferQuotaViewController.m; path = ViewControllers/WarningTransferQuotaViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WarningTransferQuotaViewController.xib; path = ViewControllers/WarningTransferQuotaViewController.xib; sourceTree = "<group>"; };
+		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
+		A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetThumbnailRequestDelegate.m; path = API/Requests/MEGAGetThumbnailRequestDelegate.m; sourceTree = "<group>"; };
 		A827510F1E97AB6E007CD9E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -1006,8 +1009,8 @@
 		A88BFFCC1F0A52E90081BCE3 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libssl.a; sourceTree = "<group>"; };
 		A88BFFCD1F0A52E90081BCE3 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libuv.a; sourceTree = "<group>"; };
 		A88BFFCE1F0A52E90081BCE3 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
-		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; sourceTree = "<group>"; };
-		A88BFFEC1F0A56B80081BCE3 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; sourceTree = "<group>"; };
+		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMEGASDK.a; sourceTree = "<group>"; };
+		A88BFFEC1F0A56B80081BCE3 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKarere.a; sourceTree = "<group>"; };
 		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
 		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
 		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
@@ -2339,6 +2342,8 @@
 				A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */,
 				A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */,
 				A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */,
+				A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */,
+				A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -2993,6 +2998,7 @@
 				41EAAE4C1D06B49400622FAF /* PHImageManager+CTAssetsPickerController.m in Sources */,
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
+				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */,
