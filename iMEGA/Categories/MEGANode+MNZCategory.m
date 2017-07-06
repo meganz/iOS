@@ -15,7 +15,12 @@
 @implementation MEGANode (MNZCategory)
 
 - (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode {
-    int offsetIndex = 0;
+    [self mnz_openImageInNavigationController:navigationController withNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:YES];
+}
+
+- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(NSUInteger)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
+    
+    NSInteger offsetIndex = 0;
     NSMutableArray *imagesMutableArray = [[NSMutableArray alloc] init];
     
     NSUInteger nodesCount = nodesArray.count;
@@ -26,7 +31,7 @@
             photo.isFromFolderLink = isFolderLink;
             [imagesMutableArray addObject:photo];
             if (node.handle == self.handle) {
-                offsetIndex = (int)imagesMutableArray.count - 1;
+                offsetIndex = imagesMutableArray.count - 1;
             }
         }
     }
@@ -37,9 +42,10 @@
     photoBrowser.displaySelectionButtons = NO;
     photoBrowser.zoomPhotosToFill = YES;
     photoBrowser.alwaysShowControls = NO;
-    photoBrowser.enableGrid = YES;
+    photoBrowser.enableGrid = (imagesMutableArray.count > 1);
     photoBrowser.startOnGrid = NO;
     photoBrowser.displayMode = displayMode;
+    photoBrowser.enableMoveToRubbishBin = enableMoveToRubbishBin;
     
     [navigationController pushViewController:photoBrowser animated:YES];
     

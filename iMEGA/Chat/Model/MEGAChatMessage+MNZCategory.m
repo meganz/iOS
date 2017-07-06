@@ -4,6 +4,9 @@
 #import "MEGAStore.h"
 #import "MEGAAttachmentMediaItem.h"
 
+#import "MEGAPhotoMediaItem.h"
+#import "NSString+MNZCategory.h"
+
 #import <objc/runtime.h>
 
 static const void *chatRoomTagKey = &chatRoomTagKey;
@@ -202,7 +205,20 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    return [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+    if (self.type == MEGAChatMessageTypeContact) {
+        MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+        return attachmentMediaItem;
+    } else if (self.type == MEGAChatMessageTypeAttachment) {
+        MEGANode *node = [self.nodeList nodeAtIndex:0];
+        if (self.nodeList.size.integerValue > 1 || !node.name.mnz_imagePathExtension ) {
+            MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            return attachmentMediaItem;
+        } else {
+            MEGAPhotoMediaItem *photoItem = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
+            return photoItem;
+        }
+    }
+    return nil;
 }
 
 - (NSUInteger)messageHash {
@@ -242,7 +258,6 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 - (id)debugQuickLookObject {
     return [self.media mediaView] ?: [self.media mediaPlaceholderView];
 }
-
 
 #pragma mark - Properties
 
