@@ -128,7 +128,7 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = [[NSString alloc] init];
+    NSString *text;
     if (self.searchController.isActive ) {
         if (self.searchController.searchBar.text.length > 0) {
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");

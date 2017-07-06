@@ -596,7 +596,7 @@
         }
         
         if (self.searchController.isActive) {
-            text = AMLocalizedString(@"noResults", nil);
+            text = AMLocalizedString(@"misspelledEmailAddress", nil);
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {

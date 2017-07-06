@@ -175,14 +175,12 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
             case MEGAChatMessageTypeChatTitle: {
                 NSString *changedGroupChatNameTo = AMLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
                 changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameDidAction];
-                if (self.content) {
-                    changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:self.content];
-                }
+                changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(self.content ? self.content : @" ")];
                 text = changedGroupChatNameTo;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:changedGroupChatNameTo attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:11.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:11.0f] range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:11.0f] range:[changedGroupChatNameTo rangeOfString:self.content]];
+                if (self.content) [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:11.0f] range:[changedGroupChatNameTo rangeOfString:self.content]];
                 self.attributedText = mutableAttributedString;
                 break;
             }

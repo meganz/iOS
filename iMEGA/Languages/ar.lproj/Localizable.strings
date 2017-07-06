@@ -289,9 +289,13 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="الروابط محذوفة";
 /* Title show when a file is being downloaded */
-"downloading"="التحميل: [X]٪";
+"downloading"="التحميل";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="هل تريد إلغاء التحميل؟";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="اختر الوجهة";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="حدد الملفات";
 /* Title for the action that allows you to move a file or folder */
 "move"="نقل";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="راجع أذوناتك لهذا المجلد";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="تم مشاركة المجلد";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="استيراد الي";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d مجلدات تم مشاركتها بنجاح";
 /* Button title that triggers the importing link action */
 "import"="استيراد";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="إضافة جهة اتصال";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="عنوان البريد الإلكتروني";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="إضافة";
 /* Success message shown when a contact has been invited */
 "requestSent"="تم إرسال الطلب";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d جهات الاتصال المحذوفة";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="جهة اتصال %@ مزالة";
 /* Label shown when a contact request is pending */
 "pending"="معلق";
@@ -779,7 +783,7 @@
 /* button that allows the user the change his avatar */
 "changeAvatar"="تغيير الصورة الرمزية";
 /* Button title that allows the user change his name */
-"changeName"="Change Name";
+"changeName"="غير الاسم";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="لقد غيرت بنجاح ملفك الشخصي.";
 /* Hint text for the first name (Placeholder) */
@@ -914,8 +918,12 @@
 "autoAway"="تشغيل \"بعيد\" تلقائيا ";
 /* */
 "xMinutes"="[X] دقائق";
+/* */
+"1Minute"="دقيقة واحدة";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="غير الحالة إلى بعيد بعد [X] دقيقة/دقائق من عدم النشاط";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="استمرار الحالة";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,19 +1028,31 @@
 "done"="تمت العملية";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="ارسال ملفات";
+/* */
+"warning"="تحذير";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="حصص النقل المستنفدة";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="See plans";
+"seePlans"="مشاهدة الباقات";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="رفض";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "New Message";
+"newMessage"="رسالة جديدة ";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Contact Request";
+"contactRequest"="طلب جهة اتصال ";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "New Shared Folder";
+"newSharedFolder"="مجلد مشاركة جديد";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="هل أنت متأكد أنك تريد إلغاء التسجيل؟";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="إذا كنت قد أخطأت في كتابة عنوان البريد الإلكتروني الخاص بك، صححها وانقر فوق \"إعادة إرسال\".";
+/* A button to resend the email confirmation. */
+"resend"="إعادة إرسال";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="يتم تجديد الاشتراكات تلقائيا لفترات اشتراك المتتالية لنفس المدة وبنفس سعر الباقة الأولى التي تم اختيارها. يمكنك إيقاف التجديد التلقائي من اشتراكك MEGA برو في موعد أقصاه 24 ساعة قبل دفع اشتراكك المقبل ومن خلال صفحة إعدادات الحساب الخاصة بك في اي تيونز. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة المتجر على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك) ثم انقر فوق عرض ID. سوف يتم نقلك إلى صفحة الحساب الخاص بك حيث يمكنك النزل لأسفل الى إدارة التطبيقات والاشتراكات. من هناك، يمكنك تحديد اشتراكك MEGA برو وعرض تاريخ التجديد المقرر، واختيار حزمة الاشتراك مختلفة أو تعطيل أو تشغيل التجديد التلقائي لاشتراكك.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

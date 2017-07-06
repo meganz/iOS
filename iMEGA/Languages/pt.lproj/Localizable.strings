@@ -292,6 +292,10 @@
 "downloading"="Transferindo...";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Pretende cancelar o download?";
+/* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
+"selectDestination"="Select destination";
+/* Text of the button for user to select files in MEGA. */
+"selectFiles"="Seleccionar ficheiros";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mover";
 /* Success message shown when you have moved 1 file */
@@ -372,8 +376,8 @@
 "permissionMessage"="Verifique as suas permissões nesta pasta";
 /* Message shown when a folder have been shared */
 "sharedFolder_success"="Pasta partilhada";
-/* Title shown on the main bar when you are importing a link to your Cloud Drive */
-"importTitle"="Importar para";
+/* Success message for sharing multiple folders. */
+"sharedFolders_success"="%d pastas partilhadas com sucesso.";
 /* Button title that triggers the importing link action */
 "import"="Importar";
 /* Message shown when a file has been imported */
@@ -460,7 +464,7 @@
 "addContact"="Adicionar contacto";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Email do contacto";
-/* Button title to "Add" the contact to your contacts list */
+/* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adicionar";
 /* Success message shown when a contact has been invited */
 "requestSent"="Pedido enviado";
@@ -482,7 +486,7 @@
 "removeMultipleUsersMessage"="Tem a certeza que deseja remover %d utilizadores da sua lista de contatos?";
 /* Success message shown when the selected contacts have been removed */
 "removedContacts"="%d contatos removidos ";
-/* Success message shown when the selected contact has been removed. "Contact {Name of contact} removed" */
+/* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contato %@ removido";
 /* Label shown when a contact request is pending */
 "pending"="Pendente";
@@ -607,7 +611,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Você irá perder todos os dados associados a esta conta. Tem a certeza de que deseja prosseguir?";
 /*  */
-"pleaseCheckYourEmail"="Please check your email.";
+"pleaseCheckYourEmail" = "Please check your email.";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Se não consegue aceder ao seu email, por favor contacte support@mega.nz.";
 /* During account cancellation (deletion) */
@@ -665,7 +669,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Esqueceu-se da palavra-passe?";
 /* Text of the alert dialog to inform the user that have to check the email after clicking the option forgot password */
-"youCanResetYourPasswordByFollowing"="Você receberá uma ligação de recuperação que lhe permitirá redefinir a sua palavra-passe. Por favor verifique o seu email para prosseguir.";
+"youCanResetYourPasswordByFollowing"="You can reset your password by following the recovery link that will be sent to your email.";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Este link de recuperação expirou, tenta novamente.";
 /* Headline of the password reset recovery procedure */
@@ -879,7 +883,7 @@
 /* Empty Conversations section */
 "noConversations"="Sem Conversas";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Chat desativado";
+"chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Enable";
 /* Conversations section */
@@ -914,8 +918,12 @@
 "autoAway"="Auto-away";
 /* */
 "xMinutes"="[X] minutos";
+/* */
+"1Minute"="1 minuto";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
+/* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
+"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1020,6 +1028,10 @@
 "done"="feito";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar ficheiros";
+/* */
+"warning"="Aviso";
+/* Alert message shown when the user perform logout and has files in the Offline directory */
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1027,12 +1039,20 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="See plans";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Dismiss";
+"dismiss"="Fechar";
 /* Notification text body shown when you have received a new chat message */
-"newMessage" = "Nova Mensagem";
+"newMessage"="New Message";
 /* Notification text body shown when you have received a contact request */
-"contactRequest" = "Pedido de Contacto";
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder" = "Nova Pasta Partilhada";
+"newSharedFolder"="New Shared Folder";
+/* Asking whether the user really wants to abort/stop the registration process or continue on. */
+"areYouSureYouWantToAbortTheRegistration"="Tem a certeza que pretende cancelar o registro?";
+/* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
+"misspelledEmailAddress"="Se escreveu incorretamente o seu endereço de e-mail, corrija-o e clique em \" Reenviar \".";
+/* A button to resend the email confirmation. */
+"resend"="Reenviar";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="As subscrições são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Pode anular a renovação automática da sua subscrição MEGA  PRO até 24 horas antes do próximo pagamento da subscrição fazendo-o através da página de configurações da sua conta iTunes. Para gerir as suas subscrições basta clicar no ícone da App Store no seu dispositivo, entrar com seu ID da Apple na parte inferior da página (se ainda não o tiver feito) e, em seguida, clicar em Ver ID. Aí será direccionado à página da sua conta onde pode rolar para baixo para gerir as suas subscrições. A partir daqui, pode seleccionar a sua subscrição MEGA Pro e ver a sua data de renovação programada, escolher um pacote de subscrição diferente ou puxar o botão on-off para fora para desactivar a renovação automática da sua subscrição.";
+"autorenewableDescription"="As subscrições são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido.Pode anular a renovação automática da SUA subscrição MEGA  PRO até 24 horas antes do próximo pagamento da subscrição através da página de configurações da SUA conta iTunes.Para gerir as suas subscrições basta clicar no ícone da App Store no seu dispositivo, entrar com seu ID da Apple na parte inferior da página (se ainda não o tiver feito) e, em seguida, clicar em Ver ID. Aí será direcionado para a página da SUA conta, e na parte inferior da mesma, gerir as suas subscrições. A partir daqui, pode selecionar a SUA subscrição MEGA Pro e ver a SUA data de renovação programada, escolher um pacote de subscrição diferente ou puxar o botão on-off para fora para desactivar a renovação automática da SUA subscrição.";
+/* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
+"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
