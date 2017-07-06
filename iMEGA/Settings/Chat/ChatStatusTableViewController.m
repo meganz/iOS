@@ -139,8 +139,14 @@
 }
 
 - (void)updateAutoAwayTimeLabel {
-    NSString *xMinutes = AMLocalizedString(@"xMinutes", nil);
-    self.autoAwayTimeTextField.text = [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+    NSString *xMinutes;
+    if ((self.presenceConfig.autoAwayTimeout / 60) < 2) {
+        xMinutes = AMLocalizedString(@"1Minute", nil);
+        self.autoAwayTimeTextField.text = xMinutes;
+    } else {
+        xMinutes = AMLocalizedString(@"xMinutes", nil);
+        self.autoAwayTimeTextField.text = [xMinutes stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+    }
     
     self.autoAwayTimeSaveButton.hidden = YES;
 }
@@ -202,8 +208,12 @@
             break;
             
         case 2:
-            titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-            titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+            if (self.presenceConfig.autoAwayTimeout < 2) {
+                titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+            } else {
+                titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+            }
             break;
     }
     
