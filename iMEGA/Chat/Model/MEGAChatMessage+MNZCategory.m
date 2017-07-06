@@ -210,7 +210,7 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
         return attachmentMediaItem;
     } else if (self.type == MEGAChatMessageTypeAttachment) {
         MEGANode *node = [self.nodeList nodeAtIndex:0];
-        if (self.nodeList.size.integerValue > 1 || !node.name.mnz_imagePathExtension ) {
+        if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
             MEGAAttachmentMediaItem *attachmentMediaItem = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
             return attachmentMediaItem;
         } else {
