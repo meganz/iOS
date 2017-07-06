@@ -20,16 +20,16 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-    <key>UIAppFonts</key>
-    <array>
-        <string>SF-UI-Display-Medium.otf</string>
-        <string>SF-UI-Display-Light.otf</string>
-        <string>SF-UI-Display-Regular.otf</string>
-        <string>SF-UI-Text-Medium.otf</string>
-        <string>SF-UI-Text-Light.otf</string>
-        <string>SF-UI-Text-Regular.otf</string>
-        <string>SF-UI-Text-RegularItalic.otf</string>
-    </array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-UI-Display-Medium.otf</string>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Text-Medium.otf</string>
+		<string>SF-UI-Text-Light.otf</string>
+		<string>SF-UI-Text-Regular.otf</string>
+		<string>SF-UI-Text-RegularItalic.otf</string>
+	</array>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -43,8 +43,6 @@
 				<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
 				<integer>2147483647</integer>
 				<key>NSExtensionActivationSupportsText</key>
-				<integer>2147483647</integer>
-				<key>NSExtensionActivationSupportsWebPageWithMaxCount</key>
 				<integer>2147483647</integer>
 				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
 				<integer>2147483647</integer>

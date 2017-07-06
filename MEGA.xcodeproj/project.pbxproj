@@ -337,7 +337,6 @@
 		943229511EDD9D02007DB542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		943F8B201EF2705300AFD89F /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F8B1F1EF2705300AFD89F /* ShareViewController.m */; };
-		943F8B231EF2706F00AFD89F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 943F8B211EF2706F00AFD89F /* MainInterface.storyboard */; };
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		943F8B2A1EF2859100AFD89F /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 943229211EDD8430007DB542 /* libKarere.a */; };
@@ -392,6 +391,7 @@
 		945605511EDD7DF70094EF0F /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F791751BC5754A00C58676 /* GetLinkActivity.m */; };
 		945605531EDD7E0C0094EF0F /* CameraUploads.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A602991A8A5D11001AE538 /* CameraUploads.m */; };
+		94598D751F0CD53A00B57144 /* LoginRequired.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* LoginRequired.storyboard */; };
 		94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250101D79E9D400499A6C /* SAMKeychain.m */; };
 		94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E250121D79E9D400499A6C /* SAMKeychainQuery.m */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -410,6 +410,7 @@
 		94892C9F1EFBF0C900AEAC25 /* SF-UI-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C289F61BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf */; };
 		94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E88E6D7F1CF355FA00C9AD9E /* UIColor+MNZCategory.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
+		949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
@@ -1005,13 +1006,15 @@
 		943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		943F8B1E1EF2704900AFD89F /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = iMEGA/Extensions/MegaShare/ShareViewController.h; sourceTree = SOURCE_ROOT; };
 		943F8B1F1EF2705300AFD89F /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = iMEGA/Extensions/MegaShare/ShareViewController.m; sourceTree = SOURCE_ROOT; };
-		943F8B221EF2706F00AFD89F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iMEGA/Extensions/MegaShare/Base.lproj/MainInterface.storyboard; sourceTree = SOURCE_ROOT; };
 		943F8B241EF2708E00AFD89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = iMEGA/Extensions/MegaShare/Info.plist; sourceTree = SOURCE_ROOT; };
 		943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAShare-PrefixHeader.pch"; path = "iMEGA/Extensions/MegaShare/MEGAShare-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
 		944B205B1EE5551C003C967B /* UIAlertAction+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "UIAlertAction+MNZCategory.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		944B205C1EE55533003C967B /* UIAlertAction+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "UIAlertAction+MNZCategory.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		945605431EDD66350094EF0F /* MEGAPicker-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-PrefixHeader.pch"; path = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch"; sourceTree = SOURCE_ROOT; };
 		945605541EDD7EDF0094EF0F /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Debug-iphoneos/libKarere.a"; sourceTree = "<group>"; };
+		94598D741F0CD53A00B57144 /* LoginRequired.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LoginRequired.storyboard; path = iMEGA/Extensions/MEGAShare/LoginRequired.storyboard; sourceTree = SOURCE_ROOT; };
+		949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.h; sourceTree = SOURCE_ROOT; };
+		949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/LoginRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
 		A819B33D1EAFA7E2004592F9 /* WarningTransferQuotaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarningTransferQuotaViewController.h; path = ViewControllers/WarningTransferQuotaViewController.h; sourceTree = "<group>"; };
@@ -2296,9 +2299,11 @@
 		943F8B101EF26E9C00AFD89F /* MEGAShare */ = {
 			isa = PBXGroup;
 			children = (
+				949CEACD1F05121D00A3A580 /* LoginRequiredViewController.h */,
+				949CEACE1F05121D00A3A580 /* LoginRequiredViewController.m */,
+				94598D741F0CD53A00B57144 /* LoginRequired.storyboard */,
 				943F8B1E1EF2704900AFD89F /* ShareViewController.h */,
 				943F8B1F1EF2705300AFD89F /* ShareViewController.m */,
-				943F8B211EF2706F00AFD89F /* MainInterface.storyboard */,
 				943F8B241EF2708E00AFD89F /* Info.plist */,
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 				943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */,
@@ -2800,11 +2805,11 @@
 				94892C9A1EFBF0C900AEAC25 /* SF-UI-Display-Medium.otf in Resources */,
 				94892C9B1EFBF0C900AEAC25 /* SF-UI-Display-Regular.otf in Resources */,
 				94892C9E1EFBF0C900AEAC25 /* SF-UI-Text-Light.otf in Resources */,
+				94598D751F0CD53A00B57144 /* LoginRequired.storyboard in Resources */,
 				94892C9D1EFBF0C900AEAC25 /* SF-UI-Text-Medium.otf in Resources */,
 				94892C9F1EFBF0C900AEAC25 /* SF-UI-Text-Regular.otf in Resources */,
 				94892C991EFBF0C900AEAC25 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
-				943F8B231EF2706F00AFD89F /* MainInterface.storyboard in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
@@ -3154,6 +3159,7 @@
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				94892C961EFBF03000AEAC25 /* SVRadialGradientLayer.m in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
+				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,
 				941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */,
 				941135531F01000300D33428 /* Reachability.m in Sources */,
 			);
@@ -3242,14 +3248,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				9422550B1EDC04DC0074C51A /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
-		943F8B211EF2706F00AFD89F /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				943F8B221EF2706F00AFD89F /* Base */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -3576,7 +3574,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"SV_APP_EXTENSIONS=1",
-					"LTH_APP_EXTENSIONS=1",
+					"LTH_IS_APP_EXTENSION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3621,6 +3619,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPicker/MEGAPicker-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SV_APP_EXTENSIONS=1",
+					"LTH_IS_APP_EXTENSION=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -3665,7 +3667,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"SV_APP_EXTENSIONS=1",
-					"LTH_APP_EXTENSIONS=1",
+					"LTH_IS_APP_EXTENSION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3708,6 +3710,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAShare/MEGAShare-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"SV_APP_EXTENSIONS=1",
+					"LTH_IS_APP_EXTENSION=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
