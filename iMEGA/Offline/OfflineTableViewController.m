@@ -471,7 +471,7 @@ static NSString *kisDirectory = @"kisDirectory";
             }
             
         } else {
-            if (nameString.mnz_isImageUTI) {
+            if (nameString.mnz_isImagePathExtension) {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
                     [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
                 }
