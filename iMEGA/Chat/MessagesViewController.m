@@ -140,11 +140,13 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [super viewWillDisappear:animated];
+    
+    self.automaticallyScrollsToMostRecentMessage = NO;
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -474,6 +476,7 @@
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
+    [self scrollToBottomAnimated:YES];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
