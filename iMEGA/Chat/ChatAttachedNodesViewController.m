@@ -312,7 +312,7 @@
         
         return;
     } else {
-        if (nodeSelected.name.mnz_isImageUTI) {
+        if (nodeSelected.name.mnz_isImagePathExtension) {
             NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
             [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
         } else {
