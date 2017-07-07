@@ -917,7 +917,7 @@
         if (message.nodeList.size.unsignedIntegerValue == 1) {
             NSArray *nodesArray = [message.nodeList mnz_nodesArrayFromNodeList];
             MEGANode *node = [message.nodeList nodeAtIndex:0];
-            if (node.name.mnz_isImageUTI) {
+            if (node.name.mnz_isImagePathExtension) {
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
