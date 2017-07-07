@@ -341,7 +341,7 @@
         }
             
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isImageUTI) {
+            if (node.name.mnz_isImagePathExtension) {
                 NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
                 [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
             } else {
