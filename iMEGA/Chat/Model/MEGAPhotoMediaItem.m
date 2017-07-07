@@ -7,6 +7,7 @@
 
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UIScreen+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 
 #import <MobileCoreServices/UTCoreTypes.h>
@@ -72,14 +73,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGSize size;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        size = CGSizeMake(315.0f, 315.0f);
-    } else {
-        size = CGSizeMake(210.0f, 210.0f);
-    }
-    
-    return size;
+    return CGSizeMake([[UIScreen mainScreen] mnz_screenWidth] *2/3, [[UIScreen mainScreen] mnz_screenWidth] *2/3);
 }
 
 - (UIView *)mediaPlaceholderView {
