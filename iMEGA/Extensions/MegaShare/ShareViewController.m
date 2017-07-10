@@ -11,7 +11,6 @@
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
 #import "MEGALogger.h"
-#import "MEGANavigationController.h"
 #import "MEGARequestDelegate.h"
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
@@ -197,7 +196,7 @@
 
 - (void)presentDocumentPicker {
     UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
-    MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    UINavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
     browserVC.browserAction = BrowserActionShareExtension;
     browserVC.browserViewControllerDelegate = self;
