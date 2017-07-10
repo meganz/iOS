@@ -266,10 +266,7 @@
 
 - (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
-    if (![fileManager fileExistsAtPath:storagePath]) {
-        [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
-    }
+    NSString *storagePath = [self shareExtensionStorage];
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
     [fileManager copyItemAtPath:path toPath:tempPath error:nil];
@@ -278,15 +275,21 @@
 
 - (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode withFileName:(NSString *)filename {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
-    if (![fileManager fileExistsAtPath:storagePath]) {
-        [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
-    }
+    NSString *storagePath = [self shareExtensionStorage];
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
     // The file needs to be moved in this case because it is downloaded with a temporal filename
     [fileManager moveItemAtPath:path toPath:tempPath error:nil];
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode delegate:self];
+}
+
+- (NSString *)shareExtensionStorage {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    if (![fileManager fileExistsAtPath:storagePath]) {
+        [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    return storagePath;
 }
 
 #pragma mark - BrowserViewControllerDelegate
