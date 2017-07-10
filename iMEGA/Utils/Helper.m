@@ -661,11 +661,7 @@ static BOOL copyToPasteboard;
     
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
-            MOOfflineNode *offlineNodeExist = nil;
-            NSString *fingerprint = [api fingerprintForNode:node];
-            if (fingerprint) {
-                offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
-            }
+            MOOfflineNode *offlineNodeExist =  [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
             
             if (offlineNodeExist) {
                 NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
@@ -926,7 +922,7 @@ static BOOL copyToPasteboard;
 + (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
     NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
     for (MEGANode *node in nodesArray) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
         if (offlineNodeExist) {
             [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
         } else {

@@ -1930,7 +1930,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
             return;
         }
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[api fingerprintForNode:node]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        
         if (!offlineNodeExist) {
             MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];

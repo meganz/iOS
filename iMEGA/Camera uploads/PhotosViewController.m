@@ -516,7 +516,7 @@
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
         } else {
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
             
             if (offlineNodeExist) {
                 NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
