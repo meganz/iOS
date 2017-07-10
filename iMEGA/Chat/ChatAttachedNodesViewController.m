@@ -283,6 +283,7 @@
                 cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+            cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
         }
     } else {
         cell.thumbnailImageView.image = [Helper imageForNode:currentNode];
