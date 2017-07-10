@@ -27,7 +27,9 @@
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
-    self.cancelCompletion();
+    if (self.cancelCompletion) {
+        self.cancelCompletion();
+    }
 }
 
 @end
