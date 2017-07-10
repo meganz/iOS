@@ -17,19 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>3.6</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-UI-Display-Medium.otf</string>
-		<string>SF-UI-Display-Light.otf</string>
-		<string>SF-UI-Display-Regular.otf</string>
-		<string>SF-UI-Text-Medium.otf</string>
-		<string>SF-UI-Text-Light.otf</string>
-		<string>SF-UI-Text-Regular.otf</string>
-		<string>SF-UI-Text-RegularItalic.otf</string>
-	</array>
+	<string>62</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -48,10 +38,20 @@
 				<integer>2147483647</integer>
 			</dict>
 		</dict>
-		<key>NSExtensionPrincipalClass</key>
-		<string>ShareViewController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>ShareViewController</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-UI-Display-Medium.otf</string>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Text-Medium.otf</string>
+		<string>SF-UI-Text-Light.otf</string>
+		<string>SF-UI-Text-Regular.otf</string>
+		<string>SF-UI-Text-RegularItalic.otf</string>
+	</array>
 </dict>
 </plist>
