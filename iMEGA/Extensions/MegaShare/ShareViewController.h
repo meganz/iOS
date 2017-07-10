@@ -4,6 +4,6 @@
 
 #import "BrowserViewController.h"
 
-@interface ShareViewController : UINavigationController
+@interface ShareViewController : UIViewController
 
 @end
