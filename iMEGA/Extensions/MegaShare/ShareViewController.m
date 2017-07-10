@@ -269,8 +269,17 @@
     NSString *storagePath = [self shareExtensionStorage];
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
-    [fileManager copyItemAtPath:path toPath:tempPath error:nil];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+    if ([fileManager copyItemAtPath:path toPath:tempPath error:nil]) {
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+    } else {
+        if (--self.pendingAssets == self.unsupportedAssets) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD dismiss];
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        }
+    }
 }
 
 - (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode withFileName:(NSString *)filename {
@@ -279,8 +288,17 @@
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
     // The file needs to be moved in this case because it is downloaded with a temporal filename
-    [fileManager moveItemAtPath:path toPath:tempPath error:nil];
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+    if ([fileManager moveItemAtPath:path toPath:tempPath error:nil]) {
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+    } else {
+        if (--self.pendingAssets == self.unsupportedAssets) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD dismiss];
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        }
+    }
 }
 
 - (NSString *)shareExtensionStorage {
