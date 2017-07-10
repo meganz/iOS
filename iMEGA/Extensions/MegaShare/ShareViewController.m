@@ -270,15 +270,9 @@
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
     if ([fileManager copyItemAtPath:path toPath:tempPath error:nil]) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+        [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
-        if (--self.pendingAssets == self.unsupportedAssets) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
-        }
+        [self oneLess];
     }
 }
 
@@ -289,15 +283,9 @@
     NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
     // The file needs to be moved in this case because it is downloaded with a temporal filename
     if ([fileManager moveItemAtPath:path toPath:tempPath error:nil]) {
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:tempPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+        [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
-        if (--self.pendingAssets == self.unsupportedAssets) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD dismiss];
-            [self dismissWithCompletionHandler:^{
-                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-            }];
-        }
+        [self oneLess];
     }
 }
 
@@ -308,6 +296,39 @@
         [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
     }
     return storagePath;
+}
+
+- (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode {
+    NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:localPath];
+    MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:parentNode];
+    if (remoteNode) {
+        if (remoteNode.parentHandle == parentNode.handle) {
+            // The file is already in the folder, nothing to do.
+            [self oneLess];
+        } else {
+            if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
+                // The file is already in MEGA, in other folder, has to be copied to this folder.
+                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode delegate:self];
+            } else {
+                // The file is already in MEGA, in other folder with different name, has to be copied to this folder and renamed.
+                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:localPath.lastPathComponent delegate:self];
+            }
+        }
+        [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
+    } else {
+        // The file is not in MEGA.
+        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localPath parent:parentNode appData:nil isSourceTemporary:YES delegate:self];
+    }
+}
+
+- (void)oneLess {
+    if (--self.pendingAssets == self.unsupportedAssets) {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD dismiss];
+        [self dismissWithCompletionHandler:^{
+            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+        }];
+    }
 }
 
 #pragma mark - BrowserViewControllerDelegate
@@ -409,6 +430,11 @@
             break;
         }
             
+        case MEGARequestTypeCopy: {
+            [self oneLess];
+            break;
+        }
+            
         default:
             break;
     }
@@ -441,13 +467,7 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (--self.pendingAssets == self.unsupportedAssets) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD dismiss];
-        [self dismissWithCompletionHandler:^{
-            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-        }];
-    }
+    [self oneLess];
 }
 
 #pragma mark - LTHPasscodeViewControllerDelegate
