@@ -509,7 +509,7 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
     if (self.progress >= 0.01) {
-        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", self.progress * 100];
+        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
         [SVProgressHUD showProgress:self.progress status:progressCompleted];
     }
 }
