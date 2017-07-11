@@ -441,7 +441,7 @@
     } else {
         // The user tapped "Cancel":
         [self dismissWithCompletionHandler:^{
-            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
         }];
     }
 }
