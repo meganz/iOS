@@ -19,7 +19,7 @@
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *megaLogoImageView;
-@property (weak, nonatomic) IBOutlet UITextView *loginTextView;
+@property (weak, nonatomic) IBOutlet UILabel *loginLabel;
 @property (weak, nonatomic) IBOutlet UIButton *openButton;
 
 @property (nonatomic) LaunchViewController *launchVC;
@@ -128,10 +128,10 @@
     } else {
         // The user either needs to login or logged in before the current version of the MEGA app, so there is
         // no session stored in the shared keychain. In both scenarios, a ViewController from MEGA app is to be pushed.
-        self.loginTextView.text = AMLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
+        self.loginLabel.text = AMLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
         [self.openButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
         self.megaLogoImageView.hidden = NO;
-        self.loginTextView.hidden = NO;
+        self.loginLabel.hidden = NO;
         self.openButton.hidden = NO;
     }
 }
