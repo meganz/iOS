@@ -11,7 +11,7 @@
         [nodesMutableArray addObject:node];
     }
     
-    return nodesMutableArray.copy;
+    return nodesMutableArray;
 }
 
 @end
