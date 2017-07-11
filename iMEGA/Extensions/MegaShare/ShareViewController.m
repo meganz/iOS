@@ -86,8 +86,6 @@
     [self configureProgressHUD];
     [SVProgressHUD setViewForExtension:self.view];
     
-    [self presentDocumentPicker];
-    
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
         // Common scenario, present the browser after passcode.
@@ -237,7 +235,7 @@
     LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
     launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     self.launchVC = launchVC;
-    [self presentViewController:self.launchVC animated:YES completion:nil];
+    [self.view addSubview:self.launchVC.view];
     
     [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
 }
@@ -474,7 +472,8 @@
             
         case MEGARequestTypeFetchNodes: {
             self.fetchNodesDone = YES;
-            [self.launchVC dismissViewControllerAnimated:YES completion:nil];
+            [self.launchVC.view removeFromSuperview];
+            [self presentDocumentPicker];
             break;
         }
             
