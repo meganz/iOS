@@ -631,8 +631,7 @@
                 [cell.nameLabel setText:AMLocalizedString(@"queued", @"Queued")];
                 return cell;
             } else {
-                
-                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+                MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
                 
                 if (offlineNode != nil) {
                     [cell.thumbnailImageView setImage:[UIImage imageNamed:@"downloaded"]];
@@ -813,7 +812,7 @@
                     [cancelDownloadAlertView setTag:2];
                     [cancelDownloadAlertView show];
                 } else {
-                    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+                    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
                     if (!offlineNodeExist) {
                         [self download];
                     }
@@ -1062,7 +1061,8 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithBase64Handle:self.node.base64Handle];
+        MOOfflineNode *offlineNode =  [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:api];
+        
         if ((offlineNode != nil) && ([self.node.base64Handle isEqualToString:base64Handle])) {
             if (cancelDownloadAlertView.visible) {
                 [cancelDownloadAlertView dismissWithClickedButtonIndex:0 animated:YES];

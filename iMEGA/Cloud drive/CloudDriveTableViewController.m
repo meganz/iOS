@@ -4,7 +4,6 @@
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 
-#import "MWPhotoBrowser.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "CTAssetsPickerController.h"
@@ -16,9 +15,9 @@
 
 #import "Helper.h"
 #import "MEGAAssetOperation.h"
-#import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MEGAQLPreviewController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 
@@ -26,7 +25,6 @@
 #import "DetailsNodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 
 @interface CloudDriveTableViewController () <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
@@ -234,12 +232,12 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
         
-        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:node];
-        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
-        
-        // Check fingerprint, if we download a file with NULL fingerprint, all folders are marked as downloaded because the fingerprinf for folders are NULL
-        if (offlineNode && fingerprint) {
-            isDownloaded = YES;
+        if (node.type == MEGANodeTypeFile) {
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            
+            if (offlineNode) {
+                isDownloaded = YES;
+            }
         }
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
@@ -343,135 +341,11 @@
         }
             
         case MEGANodeTypeFile: {
-            
-            NSString *name = [node name];
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([name pathExtension]), NULL);
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                
-                int offsetIndex = 0;
-                self.cloudImages = [NSMutableArray new];
-                
-                if (self.searchController.isActive) {
-                    for (NSInteger i = 0; i < self.searchNodesArray.count; i++) {
-                        MEGANode *n = [self.searchNodesArray objectAtIndex:i];
-                        
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        
-                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
-                        
-                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
-                            [self.cloudImages addObject:photo];
-                            if ([n handle] == [node handle]) {
-                                offsetIndex = (int)[self.cloudImages count] - 1;
-                            }
-                        }
-                    }
-                } else {
-                    for (NSInteger i = 0; i < [[self.nodes size] integerValue]; i++) {
-                        MEGANode *n = [self.nodes nodeAtIndex:i];
-                        
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        
-                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
-                        
-                        if (UTTypeConformsTo(fileUTI, kUTTypeImage) && [n type] == MEGANodeTypeFile) {
-                            MWPhoto *photo = [[MWPhoto alloc] initWithNode:n];
-                            [self.cloudImages addObject:photo];
-                            if ([n handle] == [node handle]) {
-                                offsetIndex = (int)[self.cloudImages count] - 1;
-                            }
-                        }
-                    }
-                }
-                
-                MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];
-                browser.displayActionButton = YES;
-                browser.displayNavArrows = YES;
-                browser.displaySelectionButtons = NO;
-                browser.zoomPhotosToFill = YES;
-                browser.alwaysShowControls = NO;
-                browser.enableGrid = YES;
-                browser.startOnGrid = NO;
-                browser.displayMode = self.displayMode;
-                
-                // Optionally set the current visible photo before displaying
-                //    [browser setCurrentPhotoIndex:1];
-                
-                [self.navigationController pushViewController:browser animated:YES];
-                
-                [browser showNextPhotoAnimated:YES];
-                [browser showPreviousPhotoAnimated:YES];
-                [browser setCurrentPhotoIndex:offsetIndex];
+            if (node.name.mnz_isImagePathExtension) {
+                NSArray *nodesArray = (self.searchController.isActive ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList]);
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:self.displayMode];
             } else {
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
-                
-                NSString *previewDocumentPath = nil;
-                if (offlineNodeExist) {
-                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                } else {
-                    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];                    
-                    NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
-                        previewDocumentPath = tmpFilePath;
-                    }
-                }
-
-                if (previewDocumentPath) {
-                    if (!isMultimedia(node.name.pathExtension)) {
-                        MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];                       
-                        [self presentViewController:previewController animated:YES completion:nil];
-                    } else {
-                        NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
-                        MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
-                        [self presentViewController:megaAVViewController animated:YES completion:nil];
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        return;
-                    }
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443]) {
-                    MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:NO];
-                    [self presentViewController:megaAVViewController animated:YES completion:nil];
-                    
-                    if (fileUTI) {
-                        CFRelease(fileUTI);
-                    }
-                    return;
-                } else {
-                    if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] > 0) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
-                                                                            message:AMLocalizedString(@"documentOpening_alertMessage", nil)
-                                                                           delegate:nil
-                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                  otherButtonTitles:nil, nil];
-                        [alertView show];
-                    } else {
-                        // There isn't enough space in the device for preview the document
-                        if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                            if (fileUTI) {
-                                CFRelease(fileUTI);
-                            }
-                            return;
-                        }
-                        
-                        PreviewDocumentViewController *previewDocumentVC = [self.storyboard instantiateViewControllerWithIdentifier:@"previewDocumentID"];
-                        [previewDocumentVC setNode:node];
-                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdk]];
-                        
-                        [self.navigationController pushViewController:previewDocumentVC animated:YES];
-                        
-                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    }
-                } 
-            }
-            
-            if (fileUTI) {
-                CFRelease(fileUTI);
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
             }
             break;
         }
@@ -822,7 +696,7 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
-        if (isImage(imagePath.pathExtension)) {
+        if (imagePath.mnz_isImagePathExtension) {
             [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
             [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
         }
@@ -1511,7 +1385,7 @@
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
-            if (isImage(localFilePath.pathExtension)) {
+            if (localFilePath.mnz_isImagePathExtension) {
                 [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_thumbnail"]];
                 [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_preview"]];
             }
