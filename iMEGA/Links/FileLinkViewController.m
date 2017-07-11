@@ -281,8 +281,7 @@
 
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self.node api:[MEGASdkManager sharedMEGASdk]];
         
         NSString *previewDocumentPath = nil;
         if (offlineNodeExist) {

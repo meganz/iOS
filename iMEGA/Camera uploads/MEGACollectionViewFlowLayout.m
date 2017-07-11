@@ -3,6 +3,12 @@
 
 @implementation MEGACollectionViewFlowLayout
 
+- (void)prepareLayout {
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"10.0"]) {
+        self.collectionView.prefetchingEnabled = false;
+    }
+}
+
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
