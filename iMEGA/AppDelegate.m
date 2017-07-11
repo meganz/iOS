@@ -17,6 +17,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -1133,7 +1134,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *attributePath = [v2Path stringByAppendingPathComponent:attributeFilename];
         
         if ([base64Filename isEqualToString:@"AAAAAAAA"]) {
-            if (isImage(attributePath.pathExtension)) {
+            if (attributePath.mnz_isImagePathExtension) {
                 if ([[NSFileManager defaultManager] fileExistsAtPath:attributePath]) {
                     [[NSFileManager defaultManager] removeItemAtPath:attributePath error:nil];
                 }
@@ -1869,7 +1870,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         }
     }
     
-    if ([transfer type] == MEGATransferTypeUpload && isImage([transfer fileName].pathExtension)) {
+    if (transfer.type == MEGATransferTypeUpload && transfer.fileName.mnz_isImagePathExtension) {
         NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
         if ([error type] == MEGAErrorTypeApiOk) {
@@ -1909,11 +1910,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
         // Don't add to the database files saved in others applications
         if ([transfer.appData isEqualToString:@"SaveInPhotosApp"]) {
 
-            if (isVideo(node.name.pathExtension) && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
+            if (node.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path])) {
                 UISaveVideoAtPathToSavedPhotosAlbum([NSHomeDirectory() stringByAppendingPathComponent:transfer.path], self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
             }
             
-            if (isImage([transfer fileName].pathExtension)) {
+            if (transfer.fileName.mnz_isImagePathExtension) {
                 NSURL *imageURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
                 
                 [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
@@ -1941,7 +1942,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
         
-        if (isImage([transfer fileName].pathExtension)) {
+        if (transfer.fileName.mnz_isImagePathExtension) {
             NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
@@ -1957,7 +1958,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
         
-        if (isVideo(transfer.fileName.pathExtension) && ![node hasThumbnail]) {
+        if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
             NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
             AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
             AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
