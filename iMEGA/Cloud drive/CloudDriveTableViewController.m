@@ -232,12 +232,12 @@
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
         
-        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:node];
-        MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
-        
-        // Check fingerprint, if we download a file with NULL fingerprint, all folders are marked as downloaded because the fingerprinf for folders are NULL
-        if (offlineNode && fingerprint) {
-            isDownloaded = YES;
+        if (node.type == MEGANodeTypeFile) {
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            
+            if (offlineNode) {
+                isDownloaded = YES;
+            }
         }
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];

@@ -48,9 +48,6 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"AdvancedCell"];
     
-    self.offlineSizeString = [[NSString alloc] init];
-    self.cacheSizeString = [[NSString alloc] init];
-    
     self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
 }
 
@@ -82,13 +79,13 @@
 
 - (void)reloadUI {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+        unsigned long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
         self.offlineSizeString = [byteCountFormatter stringFromByteCount:offlineSize];
         self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
         
-        long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-        long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-        long long cacheSize = thumbnailsSize + previewsSize;
+        unsigned long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
+        unsigned long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
+        unsigned long long cacheSize = thumbnailsSize + previewsSize;
         
         self.cacheSizeString = [byteCountFormatter stringFromByteCount:cacheSize];
         self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
@@ -206,7 +203,7 @@
             
         case 2: { //Rubbish Bin
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-            NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[rubbishBinSizeNumber longLongValue]];
+            NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
             titleFooter = [NSString stringWithFormat:AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped"), stringFromByteCount];
             break;

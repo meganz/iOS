@@ -238,8 +238,8 @@
         }
     } else if (indexPath.section == 1) {
         uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
-        NSString *peerFullname = [[NSString alloc] init];
-        NSString *peerEmail = [[NSString alloc] init];
+        NSString *peerFullname;
+        NSString *peerEmail;
         MEGAChatRoomPrivilege privilege;
         if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
