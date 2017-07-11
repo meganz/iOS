@@ -58,7 +58,8 @@
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
-    
+    [self languageCompatibility];
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [[MEGALogger sharedLogger] enableSDKlogs];
@@ -106,6 +107,53 @@
     } else {
         [self configureUI];
     }
+}
+
+#pragma mark - Language
+
+- (void)languageCompatibility {
+    
+    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
+    
+    if ([Helper isLanguageSupported:currentLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:currentLanguageID];
+    } else {
+        [self setLanguage:currentLanguageID];
+    }
+}
+
+- (void)setLanguage:(NSString *)languageID {
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setSystemLanguage];
+    }
+}
+
+- (void)setSystemLanguage {
+    NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
+    NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
+    NSString *systemLanguageID = [languages objectAtIndex:0];
+    
+    if ([Helper isLanguageSupported:systemLanguageID]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
+        return;
+    }
+    
+    NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:systemLanguageID];
+    NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
+    if ([Helper isLanguageSupported:languageDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    } else {
+        [self setDefaultLanguage];
+    }
+}
+
+- (void)setDefaultLanguage {
+    [[MEGASdkManager sharedMEGASdk] setLanguageCode:@"en"];
+    [[LocalizationSystem sharedLocalSystem] setLanguage:@"en"];
 }
 
 #pragma mark - Private
