@@ -99,10 +99,13 @@ static NSString *kisDirectory = @"kisDirectory";
         if ([fileManager fileExistsAtPath:logsPath]) {
             NSString *documentProviderLog = @"MEGAiOS.docExt.log";
             NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
+            NSString *shareExtensionLog = @"MEGAiOS.shareExt.log";
             [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
             [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
+            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
         }
     }
     
