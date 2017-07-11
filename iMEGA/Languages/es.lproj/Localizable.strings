@@ -1046,6 +1046,16 @@
 "contactRequest" = "Solicitud de contacto";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder" = "Nueva carpeta compartida";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s ya es un contacto.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Contacto enviado: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Enviados %s contactos";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Adjunto: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="%s archivos adjuntos";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="¿Seguro que quieres cancelar el proceso de registro?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */

@@ -360,13 +360,13 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:filePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            if (isImage(name.pathExtension)) {
+            if (name.mnz_isImagePathExtension) {
                 [[MEGASdkManager sharedMEGASdk] createThumbnail:newFilePath destinatioPath:[newFilePath stringByAppendingString:@"_thumbnail"]];
                 [[MEGASdkManager sharedMEGASdk] createPreview:newFilePath destinatioPath:[newFilePath stringByAppendingString:@"_preview"]];
             }
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:_cameraUploadNode appData:appData isSourceTemporary:YES delegate:self];
         } else {
-            if (isImage(name.pathExtension)) {
+            if (name.pathExtension.mnz_isImagePathExtension) {
                 [[MEGASdkManager sharedMEGASdk] createThumbnail:filePath destinatioPath:[filePath stringByAppendingString:@"_thumbnail"]];
                 [[MEGASdkManager sharedMEGASdk] createPreview:filePath destinatioPath:[filePath stringByAppendingString:@"_preview"]];
             }

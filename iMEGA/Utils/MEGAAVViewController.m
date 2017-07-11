@@ -2,8 +2,9 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 
-#import "MEGAQLPreviewControllerTransitionAnimator.h"
 #import "Helper.h"
+#import "MEGAQLPreviewControllerTransitionAnimator.h"
+#import "NSString+MNZCategory.h"
 
 @interface MEGAAVViewController () <UIViewControllerTransitioningDelegate>
 
@@ -63,7 +64,7 @@
         
         [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerViewController name:UIApplicationDidEnterBackgroundNotification object:nil];
         
-        if (_node && ![_node hasThumbnail] && ![self isFolderLink] && isVideo(_node.name.pathExtension)) {
+        if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(handleThumbnailImageRequestFinishNotification:)
                                                          name:MPMoviePlayerThumbnailImageRequestDidFinishNotification

@@ -3,14 +3,6 @@
 
 #import "MEGASdk.h"
 
-#define imagesSet       [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png",@"nef", nil]
-#define videoSet        [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", /*@"mkv", @"avi", @"mpg", @"mpeg",@"aaf",*/ nil]
-#define multimediaSet   [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil]
-
-#define isImage(n)        [imagesSet containsObject:n.lowercaseString]
-#define isVideo(n)        [videoSet containsObject:n.lowercaseString]
-#define isMultimedia(n)   [multimediaSet containsObject:n.lowercaseString]
-
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
