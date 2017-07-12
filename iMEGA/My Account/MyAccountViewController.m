@@ -305,11 +305,16 @@
         case MEGARequestTypeSetAttrUser: {
             if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
                 self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
-            } else if (request.file == nil) {
+            } else if (request.paramType  == MEGAUserAttributeAvatar) {
                 NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
                 NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
-                NSError *removeError = nil;
-                [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError] ? [self setUserAvatar] : MEGALogError(@"Remove item at path failed with error: %@", removeError);
+                if (request.file == nil) {
+                    NSError *removeError = nil;
+                    [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError];
+                    if (removeError) MEGALogError(@"Remove item at path failed with error: %@", removeError);
+                }
+                
+                [self setUserAvatar];
             }
             break;
         }
