@@ -1118,9 +1118,16 @@ static BOOL copyToPasteboard;
     }
     
     // Delete files saved by extensions
-    NSString *extensionsDirectory = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:extensionsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:extensionsDirectory error:&error]) {
+    NSString *fileProviderStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fileProviderStorage]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:fileProviderStorage error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    NSString *shareExtensionStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:shareExtensionStorage]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:shareExtensionStorage error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }

@@ -9,11 +9,14 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionImportFromFolderLink,
     BrowserActionOpenIn,
     BrowserActionSendFromCloudDrive,
-    BrowserActionDocumentProvider
+    BrowserActionDocumentProvider,
+    BrowserActionShareExtension
 };
 
 @protocol BrowserViewControllerDelegate <NSObject>
+@optional
 - (void)didSelectNode:(MEGANode *)node;
+- (void)uploadToParentNode:(MEGANode *)parentNode;
 @end
 
 @interface BrowserViewController : UIViewController
