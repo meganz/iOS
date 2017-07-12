@@ -1,0 +1,4 @@
+
+@interface ShareViewController : UIViewController
+
+@end
