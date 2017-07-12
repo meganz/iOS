@@ -1,9 +1,13 @@
 #import "MyAccountViewController.h"
 
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
+
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -198,6 +202,65 @@
     return firstPartMutableAttributedString;
 }
 
+- (void)presentChangeAvatarAlertController {
+    UIAlertController *changeAvatarAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [changeAvatarAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [changeAvatarAlertController addAction:fromPhotosAlertAction];
+    
+    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
+                if (permissionGranted) {
+                    // Permission has been granted. Use dispatch_async for any UI updating code because this block may be executed in a thread.
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController *cameraPermissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        }]];
+                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            //Check Camera permissions
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                        }]];
+                        
+                        [self presentViewController:cameraPermissionsAlertController animated:YES completion:nil];
+                    });
+                }
+            }];
+        }
+    }];
+    [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [changeAvatarAlertController addAction:captureAlertAction];
+    
+    changeAvatarAlertController.modalPresentationStyle = UIModalPresentationPopover;
+    changeAvatarAlertController.popoverPresentationController.barButtonItem = self.editBarButtonItem;
+    changeAvatarAlertController.popoverPresentationController.sourceView = self.view;
+    
+    [self presentViewController:changeAvatarAlertController animated:YES completion:nil];
+}
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToChangeAvatarWithSourceType:sourceType];
+    if ([[UIDevice currentDevice] iPadDevice] && (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [popoverController presentPopoverFromBarButtonItem:self.editBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }];
+    } else {
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTouchUpInside:(UIBarButtonItem *)sender {
@@ -213,7 +276,11 @@
     [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [editAlertController addAction:changeNameAlertAction];
     
-    //TODO: Change Avatar
+    UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentChangeAvatarAlertController];
+    }];
+    [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [editAlertController addAction:changeAvatarAlertAction];
     
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
     NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
