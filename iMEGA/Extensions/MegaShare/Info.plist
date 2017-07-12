@@ -32,8 +32,6 @@
 				<integer>2147483647</integer>
 				<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
 				<integer>2147483647</integer>
-				<key>NSExtensionActivationSupportsText</key>
-				<integer>2147483647</integer>
 				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
 				<integer>2147483647</integer>
 			</dict>
