@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="[X] dakika işlem yapılmadığında beni 'Dışarıda' olarak göster.";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="1 dakika boyunca işlem yapılmadığında beni uzakta olarak göster";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Tekrarlayan Durum";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Eğer e-postanızı yanlış girdiyseniz, düzeltin ve 'Tekrar Gönder' tuşuna basın.";
 /* A button to resend the email confirmation. */
 "resend"="Tekrar gönder";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s kişilerinizde zaten var";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Gönderilen Kişi: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Gönderilen %s Kişi.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Ekli: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Ekli %s dosya.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

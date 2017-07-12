@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="אפשר מצב דיבאג";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="לוג יווצר בחלק הלא מקוון (MEGAiOS.log).";
+"enableDebugMode_message"="קובץ לוג ייווצר בחלק הלא מקוון (MEGAiOS.log). קבצי לוג עלולים להכיל מידע על החשבון שלך.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="בטל מצב דיבאג";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="הצג אותי כלא נמצא לאחר [X] דקות בלי שימוש";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="הצג אותי כ-\"לא נמצא\" לאחר דקה בלי שימוש";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="סטאטוס קבוע";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,7 +1052,17 @@
 "misspelledEmailAddress"="אם מצאת שגיאת כתיב בכתובת המיי שלך, תקן אותה ולחץ על \"שלח מחדש\".";
 /* A button to resend the email confirmation. */
 "resend"="שלח מחדש";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s כבר איש קשר.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="נשלח איש קשר: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="נשלחו %s אנשי קשר.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="מצורף: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="צורפו %s קבצים.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="המנויים מחודשים באופן אוטומטי לתקופות צמודות. כל חידוש הוא לאותה תקופה כמו התקופה ההתחלתית ובאותו הסכום. ניתן לכבות את החידוש האוטומטי של חשבון ה-MEGA PRO שלך לא יאוחר מ-24 שעות לפני החידוש הבא דרך עמוד האפשרויות של החשבון שלך ב-iTunes. ניתן לנהל בקלות את המנויים שלך, לחץ על האייקון של חנות האפליקציות של אפל, ה-App Store, היכנס עם החשבון של באפל בתחתית העמוד (אם לא עשית זאת כבר) ולחץ על \"הצג חשבון\"  (View ID). תילקח לדף החשבון שלך ושם תוכל לגלול למטה אל \"נהל מנויים מאפליקציות\" (Manage App Subscriptions). משם תוכל לבחור את החשבון שלך ב-MEGA PRO ולראות את התאריך לחידוש, לבחור מבין אפשרויות המנויים שלנו וגם לשנות את הגדרת החידוש האוטומטי.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+"openMEGAAndSignInToContinue"="פתח MEGA והתחבר על מנת להמשיך";

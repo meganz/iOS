@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Dacă ţi-ai scris greşit adresa de e-mail, corecteaz-o şi dă clic pe 'Retrimite'.";
 /* A button to resend the email confirmation. */
 "resend"="Retrimite";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s este deja un contact.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Trimite contactul: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="%s contacte trimise.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Ataşat: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="%s fişiere ataşate.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe iconiţa App Store de pe telefon, conectează-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derula în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

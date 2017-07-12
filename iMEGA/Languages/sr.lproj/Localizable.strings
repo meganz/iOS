@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Ако сте лоше уписали своју е-маил адресу, исправите је и кликните 'Пошаљи поново'.";
 /* A button to resend the email confirmation. */
 "resend"="Понови слање";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s је већ Ваш контакт.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Послат контакт: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Послато %s контакта.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Закачено: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Окачено %s докумената.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Претплате се обнављају аутоматски за узастопне претплатне периоде истог трајања и исте цене као и почетни изабрани период. Можете угасити аутоматску обнову Ваше MEGA PRO претплате не касније од 24 часа пре наплате следећег претплатног периода преко Ваше iTunes странице подешавања налога. Да бисте управљали својим претплатама, једноставно кликните на Продавницу Апликације иконицу на свом уређају пријавите се са својим Apple ID на дну странице (ако већ нисте) и након тога кликните на Погледај ID. Бићете пребачени на страницу Вашег налога где можете да скролујете доле до Управљај Претплатама Апликација. Одатле, можете изабрати своју MEGA PRO претплатз и видети Ваш заказан датум обнове, изабрати другачији претплатнички пакет или пребацити on-off прекидач на off да онемогућите аутоматско-обнављање Ваше претплате.    ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
