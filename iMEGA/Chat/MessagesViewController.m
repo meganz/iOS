@@ -45,6 +45,7 @@
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
+@property (strong, nonatomic) NSMutableArray *nodesLoaded;
 
 @end
 
@@ -129,6 +130,8 @@
     self.stopInvitingContacts = NO;
     
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    
+    _nodesLoaded = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,7 +167,7 @@
 #pragma mark - Private methods
 
 - (void)loadMessages {
-    NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:16];
+    NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:32];
     switch (loadMessage) {
         case 0:
             MEGALogDebug(@"There's no more history available");
@@ -433,6 +436,15 @@
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
     menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem];
+}
+
+- (void)loadNodesFromMessage:(MEGAChatMessage *)message {
+    if (message.type == MEGAChatMessageTypeAttachment) {
+        for (NSUInteger i = 0; i < message.nodeList.size.integerValue; i++) {
+            MEGANode *node = [message.nodeList nodeAtIndex:i];
+            [self.nodesLoaded addObject:node];
+        }
+    }
 }
 
 #pragma mark - Custom menu actions for cells
@@ -915,16 +927,18 @@
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     if (message.type == MEGAChatMessageTypeAttachment) {
         if (message.nodeList.size.unsignedIntegerValue == 1) {
-            NSArray *nodesArray = [message.nodeList mnz_nodesArrayFromNodeList];
             MEGANode *node = [message.nodeList nodeAtIndex:0];
             if (node.name.mnz_isImagePathExtension) {
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
+                NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
             }
         } else {
+            NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
             ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
             chatAttachedNodesVC.message = message;
+            chatAttachedNodesVC.nodesLoadedInChatroom = reverseArray;
             [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
         }
     } else if (message.type == MEGAChatMessageTypeContact) {
@@ -1017,6 +1031,8 @@
     [self.messages addObject:message];
     [self finishReceivingMessage];
     [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            
+    [self loadNodesFromMessage:message];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -1027,6 +1043,8 @@
         if (message.type != MEGAChatMessageTypeRevokeAttachment) {
             [self.messages insertObject:message atIndex:0];
         }
+        
+        [self loadNodesFromMessage:message];
     
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {

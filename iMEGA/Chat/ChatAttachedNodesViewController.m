@@ -314,8 +314,7 @@
         return;
     } else {
         if (nodeSelected.name.mnz_isImagePathExtension) {
-            NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
-            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
+            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
         } else {
             [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }
