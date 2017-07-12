@@ -537,22 +537,6 @@ static BOOL copyToPasteboard;
     return [destinationPath stringByAppendingPathComponent:[node base64Handle]];
 }
 
-+ (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory {
-    
-    NSString *destinationPath = [NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *fileName = [user email];
-    NSString *destinationFilePath = nil;
-    destinationFilePath = [directory isEqualToString:@""] ? [destinationPath stringByAppendingPathComponent:fileName]
-    :[[destinationPath stringByAppendingPathComponent:directory] stringByAppendingPathComponent:fileName];
-    
-    return destinationFilePath;
-}
-
-+ (NSString *)pathForUser:(MEGAUser *)user inSharedSandboxCacheDirectory:(NSString *)directory {
-    NSString *destinationPath = [Helper pathForSharedSandboxCacheDirectory:directory];
-    return [destinationPath stringByAppendingPathComponent:[user email]];
-}
-
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
     NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
