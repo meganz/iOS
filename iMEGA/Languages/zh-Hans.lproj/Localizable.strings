@@ -1052,7 +1052,17 @@
 "misspelledEmailAddress"="如果输错你的邮箱地址，输入正确的，然后点击重新发送";
 /* A button to resend the email confirmation. */
 "resend"="重新发送";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s 已经是您的联系人。";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="已传给联系人：%s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="已传给%s 位联系人。";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="附加文件：%s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="已附加%s 个文件。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="对于具有相同持续时间和与所选择的初始周期相同的价格的连续订阅周期，订阅被自动续订。您可以在您的下一次订阅付款到期前24小时通过您的iTunes帐户设置页面关闭MEGA PRO订阅的自动续订。要管理您的订阅，只需点击手机上的App Store图标，使用页面底部的Apple ID登录（如果您尚未登录），然后点击查看ID。您将转到您的帐户页面，您可以向下滚动到管理应用订阅。 从那里，您可以选择您的MEGA PRO订阅并查看您的预定续订日期，选择不同的订阅套餐或将开关切换到关闭以禁用订阅的自动续订。";
+"autorenewableDescription"="此订阅到期将会自动续订，续订内容与您一开始选择的订阅时间与价格一致。您可以在您的iTunes帐户设定页面关闭MEGA PRO的订阅自动更新续订，必须于您的下一个订阅缴款期限的24小时之前执行此操作。欲管理您的订阅内容，只需点击您手机上的App Store图标，可以在页面下方以您的Apple帐号登入（如果您尚未登入），然后点击查看帐号。您会被转到您的Apple帐户页面，然后向下滚动到管理应用程序订阅。接下来选择你的MEGA PRO订阅并查看您预定的续约日期，切换开关来关闭您的自动续订。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+"openMEGAAndSignInToContinue"="打开MEGA并登入账户";
