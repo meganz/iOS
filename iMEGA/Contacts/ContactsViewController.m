@@ -360,7 +360,8 @@
     BOOL userHasChanged = NO;
     
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
-        NSString *avatarFilePath = [Helper pathForUser:user inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+        NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
         if (fileExists) {
             NSError *error = nil;

@@ -60,10 +60,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
 
-+ (NSString *)pathForUser:(MEGAUser *)user searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory;
-
-+ (NSString *)pathForUser:(MEGAUser *)user inSharedSandboxCacheDirectory:(NSString *)directory;
-
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
 #pragma mark - Utils for links when you are not logged

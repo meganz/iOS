@@ -15,6 +15,7 @@
 
 #import "Helper.h"
 #import "MEGAAssetOperation.h"
+#import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -27,7 +28,7 @@
 #import "PhotosViewController.h"
 #import "SortByTableViewController.h"
 
-@interface CloudDriveTableViewController () <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
     
     UIAlertView *removeAlertView;
     
@@ -665,53 +666,6 @@
     }];
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [formatter setLocale:locale];
-    
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
-        NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[videoUrl path] error:nil];
-        NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
-        NSString *videoName = [[formatter stringFromDate:modificationDate] stringByAppendingPathExtension:@"mov"];
-        NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] moveItemAtPath:[videoUrl path] toPath:localFilePath error:&error]) {
-            MEGALogError(@"Move item at path failed with error: %@", error);
-        }
-        
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
-        
-    } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSString *filename = [NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date]]];
-        
-        NSString *uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
-        NSString *imagePath = [uploadsDirectory stringByAppendingPathComponent:filename];
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        NSData *imageData = UIImageJPEGRepresentation(image, 1);
-        [imageData writeToFile:imagePath atomically:YES];
-        
-        if (imagePath.mnz_isImagePathExtension) {
-            [[MEGASdkManager sharedMEGASdk] createThumbnail:imagePath destinatioPath:[imagePath stringByAppendingString:@"_thumbnail"]];
-            [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:[imagePath stringByAppendingString:@"_preview"]];
-        }
-        [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
-    }
-    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -770,28 +724,10 @@
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    
-    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudNoCamera"] status:AMLocalizedString(@"noCamera", nil)];
-        }
-        return;
-    }
-    
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        imagePickerController.sourceType = sourceType;
-        imagePickerController.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
-        imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
-        imagePickerController.delegate = self;
-        
+        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
         if ([[UIDevice currentDevice] iPadDevice] && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
             UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
-            
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [popoverController presentPopoverFromBarButtonItem:self.moreBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
             }];
