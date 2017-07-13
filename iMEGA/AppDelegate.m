@@ -1278,7 +1278,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle])) {
             if (user.isOwnChange == 0) { //If the change is external
                 if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
-                    NSString *avatarFilePath = [Helper pathForUser:user inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                    NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
                     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
                     if (fileExists) {
                         [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
