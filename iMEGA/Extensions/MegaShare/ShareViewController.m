@@ -1,6 +1,7 @@
 
 #import "ShareViewController.h"
 
+#import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
@@ -427,6 +428,31 @@
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
                     [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
+                }];
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
+                    NSString *contactFullName;
+                    NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
+                    for (CNContact *contact in contacts) {
+                        contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
+                        if (contactFullName.length == 0) {
+                            contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
+                            if (contactFullName.length == 0) {
+                                self.unsupportedAssets++;
+                            }
+                        }
+                    }
+                    
+                    if (contactFullName.length != 0) {
+                        contactFullName = [contactFullName stringByAppendingString:@".vcf"];
+                        NSString *storagePath = [self shareExtensionStorage];
+                        storagePath = [storagePath stringByAppendingPathComponent:contactFullName];
+                        if ([vCardData writeToFile:storagePath atomically:YES]) {
+                            [self smartUploadLocalPath:storagePath parent:parentNode];
+                        } else {
+                            MEGALogInfo(@".vcf writeToFile failed:\n- Storage path:%@\n", storagePath);
+                        }
+                    }
                 }];
             } else {
                 self.unsupportedAssets++;
