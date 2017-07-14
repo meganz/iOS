@@ -1,6 +1,8 @@
 
 #import "ShareViewController.h"
 
+#import <AddressBook/AddressBook.h>
+#import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
@@ -335,9 +337,11 @@
     NSString *storagePath = [self shareExtensionStorage];
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
-    if ([fileManager copyItemAtPath:path toPath:tempPath error:nil]) {
+    NSError *error = nil;
+    if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
         [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
+        MEGALogError(@"Copy item failed:\n- At path: %@\n- With error: %@", tempPath, error);
         [self oneLess];
     }
 }
@@ -427,6 +431,53 @@
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(id data, NSError *error){
                     [self downloadData:(NSURL *)data andUploadToParentNode:parentNode];
+                }];
+            } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
+                [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
+                    NSString *contactFullName;
+                    if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
+                        CFDataRef vCardDataRef = CFDataCreate(NULL, vCardData.bytes, vCardData.length);
+                        ABAddressBookRef book = ABAddressBookCreate();
+                        ABRecordRef defaultSource = ABAddressBookCopyDefaultSource(book);
+                        CFArrayRef vCardPeople = ABPersonCreatePeopleInSourceWithVCardRepresentation(defaultSource, vCardDataRef);
+                        for (CFIndex index = 0; index < CFArrayGetCount(vCardPeople); index++) {
+                            ABRecordRef person = CFArrayGetValueAtIndex(vCardPeople, index);
+                            ABMultiValueRef firstNameMultiValue = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+                            NSString *firstName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(firstNameMultiValue, 0));
+                            ABMultiValueRef lastNameMultiValue = ABRecordCopyValue(person, kABPersonLastNameProperty);
+                            NSString *lastName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(lastNameMultiValue, 0));
+                            contactFullName = [[firstName stringByAppendingString:@""] stringByAppendingString:lastName];
+                            if (contactFullName.length == 0) {
+                                ABMultiValueRef emailMultiValue = ABRecordCopyValue(person, kABPersonEmailProperty);
+                                contactFullName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emailMultiValue, 0));
+                                if (contactFullName.length == 0) {
+                                    self.unsupportedAssets++;
+                                }
+                            }
+                        }
+                    } else {
+                        NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
+                        for (CNContact *contact in contacts) {
+                            contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
+                            if (contactFullName.length == 0) {
+                                contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
+                                if (contactFullName.length == 0) {
+                                    self.unsupportedAssets++;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (contactFullName.length != 0) {
+                        contactFullName = [contactFullName stringByAppendingString:@".vcf"];
+                        NSString *storagePath = [self shareExtensionStorage];
+                        storagePath = [storagePath stringByAppendingPathComponent:contactFullName];
+                        if ([vCardData writeToFile:storagePath atomically:YES]) {
+                            [self smartUploadLocalPath:storagePath parent:parentNode];
+                        } else {
+                            MEGALogInfo(@".vcf writeToFile failed:\n- Storage path:%@\n", storagePath);
+                        }
+                    }
                 }];
             } else {
                 self.unsupportedAssets++;
@@ -527,7 +578,7 @@
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
-    if (self.progress >= 0.01) {
+    if (self.progress >= 0.01 && self.progress < 1.0) {
         NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
         [SVProgressHUD showProgress:self.progress status:progressCompleted];
     }
