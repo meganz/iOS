@@ -1,6 +1,7 @@
 
 #import "ShareViewController.h"
 
+#import <AddressBook/AddressBook.h>
 #import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LTHPasscodeViewController.h"
@@ -432,13 +433,35 @@
             } else if ([attachment hasItemConformingToTypeIdentifier:(NSString *)kUTTypeVCard]) {
                 [attachment loadItemForTypeIdentifier:(NSString *)kUTTypeVCard options:nil completionHandler:^(NSData *vCardData, NSError *error) {
                     NSString *contactFullName;
-                    NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
-                    for (CNContact *contact in contacts) {
-                        contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
-                        if (contactFullName.length == 0) {
-                            contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
+                    if ([[UIDevice currentDevice] systemVersionLessThanVersion:@"9.0"]) {
+                        CFDataRef vCardDataRef = CFDataCreate(NULL, vCardData.bytes, vCardData.length);
+                        ABAddressBookRef book = ABAddressBookCreate();
+                        ABRecordRef defaultSource = ABAddressBookCopyDefaultSource(book);
+                        CFArrayRef vCardPeople = ABPersonCreatePeopleInSourceWithVCardRepresentation(defaultSource, vCardDataRef);
+                        for (CFIndex index = 0; index < CFArrayGetCount(vCardPeople); index++) {
+                            ABRecordRef person = CFArrayGetValueAtIndex(vCardPeople, index);
+                            ABMultiValueRef firstNameMultiValue = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+                            NSString *firstName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(firstNameMultiValue, 0));
+                            ABMultiValueRef lastNameMultiValue = ABRecordCopyValue(person, kABPersonLastNameProperty);
+                            NSString *lastName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(lastNameMultiValue, 0));
+                            contactFullName = [[firstName stringByAppendingString:@""] stringByAppendingString:lastName];
                             if (contactFullName.length == 0) {
-                                self.unsupportedAssets++;
+                                ABMultiValueRef emailMultiValue = ABRecordCopyValue(person, kABPersonEmailProperty);
+                                contactFullName = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emailMultiValue, 0));
+                                if (contactFullName.length == 0) {
+                                    self.unsupportedAssets++;
+                                }
+                            }
+                        }
+                    } else {
+                        NSArray *contacts = [CNContactVCardSerialization contactsWithData:vCardData error:nil];
+                        for (CNContact *contact in contacts) {
+                            contactFullName = [CNContactFormatter stringFromContact:contact style:CNContactFormatterStyleFullName];
+                            if (contactFullName.length == 0) {
+                                contactFullName = [[contact.emailAddresses objectAtIndex:0] value];
+                                if (contactFullName.length == 0) {
+                                    self.unsupportedAssets++;
+                                }
                             }
                         }
                     }
