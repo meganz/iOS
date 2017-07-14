@@ -3,6 +3,7 @@
 #import <Photos/Photos.h>
 
 #import "MEGAReachabilityManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "CameraUploads.h"
 #import "Helper.h"
@@ -172,7 +173,7 @@
         if (transferList.size.integerValue > 0) {
             for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
                 MEGATransfer *transfer = [transferList transferAtIndex:i];
-                if (transfer.appData && isVideo(transfer.fileName.pathExtension)) {
+                if (transfer.appData && transfer.fileName.mnz_isVideoPathExtension) {
                     [[MEGASdkManager sharedMEGASdk] cancelTransfer:transfer];
                 }
             }

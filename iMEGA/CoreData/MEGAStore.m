@@ -97,34 +97,27 @@ static MEGAStore *_megaStore = nil;
     return [array firstObject];
 }
 
-- (MOOfflineNode *)fetchOfflineNodeWithBase64Handle:(NSString *)base64Handle {
+- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node api:(MEGASdk *)api {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64Handle == %@", base64Handle];
-    [request setPredicate:predicate];
-    
-    NSError *error;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
-    return [array firstObject];
-}
 
-- (MOOfflineNode *)fetchOfflineNodeWithFingerprint:(NSString *)fingerprint {
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
+    NSPredicate *predicate;
+    NSString *fingerprint = [api fingerprintForNode:node];
+    if(fingerprint) {
+        predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"base64Handle == %@", node.base64Handle];
+    }
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
     [request setPredicate:predicate];
     
     NSError *error;
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return [array firstObject];
+
 }
 
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode {

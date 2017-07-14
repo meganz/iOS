@@ -18,6 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
+
 @property (strong, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
@@ -33,6 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     
     self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group");
     
@@ -137,6 +141,10 @@
 
 #pragma mark - IBActions
 
+- (IBAction)backAction:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
     //TODO: Enable/disable notifications
 }
@@ -230,8 +238,8 @@
         }
     } else if (indexPath.section == 1) {
         uint64_t handle = [[self.participantsMutableArray objectAtIndex:indexPath.row] unsignedLongLongValue];
-        NSString *peerFullname = [[NSString alloc] init];
-        NSString *peerEmail = [[NSString alloc] init];
+        NSString *peerFullname;
+        NSString *peerEmail;
         MEGAChatRoomPrivilege privilege;
         if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];

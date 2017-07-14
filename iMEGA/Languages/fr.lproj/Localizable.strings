@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="M'afficher absent après [X] minutes d'inactivité";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="M'afficher comme absent après une minute d'inactivité";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistance de l'état";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Si vous avez mal orthographié votre adresse courriel, corrigez-la et cliquez sur « Renvoyer ».";
 /* A button to resend the email confirmation. */
 "resend"="Renvoyer";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s est déjà un contact.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Contact envoyé : %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="%s contacts envoyés.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Pièce jointe : %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="%s fichiers joints.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement lors des périodes d'abonnement successives de même durée et au même tarif que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO au plus tard 24 heures avant l'échéance de votre prochain paiement dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l'icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n'est pas déjà fait), et cliquez sur Afficher l'identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d'abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

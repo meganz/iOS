@@ -58,6 +58,17 @@ Copyright (c) 2014 Georg Kitz
 The MIT License (MIT)
 
 https://github.com/gekitz/GKContactImage/blob/master/LICENSE
+--------------------------------------------------------------------
+
+#### JSQMessagesViewController
+https://github.com/jessesquires/JSQMessagesViewController
+
+Copyright (c) 2013-present Jesse Squires
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/jessesquires/JSQMessagesViewController/blob/develop/LICENSE
 
 --------------------------------------------------------------------
 

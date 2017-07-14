@@ -3,18 +3,21 @@
 #import "SVProgressHUD.h"
 
 #import "BrowserViewController.h"
+#import "ChatAttachedContactsViewController.h"
+#import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupChatDetailsViewController.h"
 
-#import "NSString+MNZCategory.h"
-#import "MEGAChatMessage+MNZCategory.h"
-
 #import "Helper.h"
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAInviteContactRequestDelegate.h"
+#import "NSString+MNZCategory.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
@@ -42,6 +45,7 @@
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
+@property (strong, nonatomic) NSMutableArray *nodesLoaded;
 
 @end
 
@@ -126,6 +130,8 @@
     self.stopInvitingContacts = NO;
     
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    
+    _nodesLoaded = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -137,11 +143,13 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [super viewWillDisappear:animated];
+    
+    self.automaticallyScrollsToMostRecentMessage = NO;
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -159,7 +167,7 @@
 #pragma mark - Private methods
 
 - (void)loadMessages {
-    NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:16];
+    NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:32];
     switch (loadMessage) {
         case 0:
             MEGALogDebug(@"There's no more history available");
@@ -430,6 +438,15 @@
     menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem];
 }
 
+- (void)loadNodesFromMessage:(MEGAChatMessage *)message {
+    if (message.type == MEGAChatMessageTypeAttachment) {
+        for (NSUInteger i = 0; i < message.nodeList.size.integerValue; i++) {
+            MEGANode *node = [message.nodeList nodeAtIndex:i];
+            [self.nodesLoaded addObject:node];
+        }
+    }
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -471,6 +488,7 @@
     MEGALogInfo(@"didPressSendButton %@", message);
     
     [self finishSendingMessageAnimated:YES];
+    [self scrollToBottomAnimated:YES];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
@@ -906,7 +924,41 @@
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Tapped message bubble!");
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    if (message.type == MEGAChatMessageTypeAttachment) {
+        if (message.nodeList.size.unsignedIntegerValue == 1) {
+            MEGANode *node = [message.nodeList nodeAtIndex:0];
+            if (node.name.mnz_isImagePathExtension) {
+                NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:reverseArray folderLink:NO displayMode:2 enableMoveToRubbishBin:NO];
+            } else {
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            }
+        } else {
+            NSArray *reverseArray = [[[self.nodesLoaded reverseObjectEnumerator] allObjects] mutableCopy];
+            ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
+            chatAttachedNodesVC.message = message;
+            chatAttachedNodesVC.nodesLoadedInChatroom = reverseArray;
+            [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
+        }
+    } else if (message.type == MEGAChatMessageTypeContact) {
+        if (message.usersCount == 1) {
+            NSString *userEmail = [message userEmailAtIndex:0];
+            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
+            if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
+                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+                contactDetailsVC.userEmail          = userEmail;
+                contactDetailsVC.userName           = [message userNameAtIndex:0];
+                contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
+                [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            }
+        } else {
+            ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
+            chatAttachedContactsVC.message = message;
+            [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
+        }
+    }
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
@@ -979,6 +1031,8 @@
     [self.messages addObject:message];
     [self finishReceivingMessage];
     [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            
+    [self loadNodesFromMessage:message];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -989,6 +1043,8 @@
         if (message.type != MEGAChatMessageTypeRevokeAttachment) {
             [self.messages insertObject:message atIndex:0];
         }
+        
+        [self loadNodesFromMessage:message];
     
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {

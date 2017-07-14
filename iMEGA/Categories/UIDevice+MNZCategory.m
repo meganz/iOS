@@ -28,6 +28,7 @@ static NSString *deviceName;
                               @"iPhone2,1":@"iPhone 3GS",         //iPhone 3GS
                               @"iPhone2,1*":@"iPhone 3GS",        //iPhone 3GS (China/No Wi-Fi)
                               @"iPhone3,1":@"iPhone 4",           //iPhone 4 (GSM)
+                              @"iPhone3,2":@"iPhone 4",           //iPhone 4 (GSM)
                               @"iPhone3,3":@"iPhone 4",           //iPhone 4 (CDMA/Verizon/Sprint)
                               @"iPhone4,1":@"iPhone 4S",          //iPhone 4S
                               @"iPhone4,1*":@"iPhone 4S",         //iPhone 4S (GSM China/WAPI)
@@ -42,6 +43,10 @@ static NSString *deviceName;
                               @"iPhone8,1":@"iPhone 6S",          //iPhone 6S (AT&T/SIM Free/A1633) (Global/A1688) (Mainland China/A1700)
                               @"iPhone8,2":@"iPhone 6S Plus",     //iPhone 6S Plus (AT&T/SIM Free/A1634) (Global/A1687) (Mainland China/A1699)
                               @"iPhone8,4":@"iPhone SE",          //iPhone SE (United States/A1662) (Global/Sprint/A1723) (China Mobile/A1724)
+                              @"iPhone9,1":@"iPhone 7",           //iPhone 7
+                              @"iPhone9,2":@"iPhone 7 Plus",      //iPhone 7 Plus
+                              @"iPhone9,3":@"iPhone 7",           //iPhone 7
+                              @"iPhone9,4":@"iPhone 7 Plus",      //iPhone 7 Plus
                               @"iPad1,1":@"iPad",                 //iPad (Original/1st Gen) (Wi-Fi/3G/GPS)
                               @"iPad2,1":@"iPad",                 //iPad 2 (Wi-Fi Only)
                               @"iPad2,2":@"iPad",                 //iPad 2 (Wi-Fi/GSM/GPS)
@@ -53,6 +58,8 @@ static NSString *deviceName;
                               @"iPad3,4":@"iPad",                 //iPad (4th Generation)
                               @"iPad3,5":@"iPad",                 //iPad (4th Generation) (Wi-Fi/AT&T/GPS)
                               @"iPad3,6":@"iPad",                 //iPad (4th Generation) (Wi-Fi/Verizon & Sprint/GPS)
+                              @"iPad6,11":@"iPad",                //iPad (5th Generation) (Wi-Fi)
+                              @"iPad6,12":@"iPad",                //iPad (5th Generation) (Cellular)
                               @"iPad4,1":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi)
                               @"iPad4,2":@"iPad Air",             //iPad Air (5th Generation) (Cellular)
                               @"iPad4,3":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi/TD-LTE - China)
@@ -72,7 +79,11 @@ static NSString *deviceName;
                               @"iPad6,7":@"iPad Pro (12.9-inch)", //iPad Pro 12.9-inch (Wi-Fi Only)
                               @"iPad6,8":@"iPad Pro (12.9-inch)", //iPad Pro 12.9-inch (Wi-Fi/Cellular)
                               @"iPad6,3":@"iPad Pro (9.7-inch)",  //iPad Pro 9.7-inch (Wi-Fi Only)
-                              @"iPad6,4":@"iPad Pro (9.7-inch)"}; //iPad Pro 9.7-inch (Wi-Fi/Cellular)
+                              @"iPad6,4":@"iPad Pro (9.7-inch)",  //iPad Pro 9.7-inch (Wi-Fi/Cellular)
+                              @"iPad7,1":@"iPad Pro (12.9-inch)", //iPad Pro 12.9-inch (Wi-Fi)
+                              @"iPad7,2":@"iPad Pro (12.9-inch)", //iPad Pro 12.9-inch (Wi-Fi/Cellular)
+                              @"iPad7,3":@"iPad Pro (10.5-inch)", //iPad Pro 10.5-inch (Wi-Fi)
+                              @"iPad7,4":@"iPad Pro (10.5-inch)"};//iPad Pro 10.5-inch (Wi-Fi/Cellular)
     }
     
     return devicesDictionary;

@@ -651,7 +651,7 @@
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="isang file at folder ang tinanggal sa MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="isang file at %s folders ang tinanggal sa MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="isang file at %@ folders ang tinanggal sa MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Alisin mo ako pagkatapos ng [X] na minuto ng walang aktibidad";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="Alisin mo ako pagkatapos ng 1 minutong walang aktibidad";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Kung mali ang nailagay na email address, itama ito at i-click ang 'Ipadala muli'.";
 /* A button to resend the email confirmation. */
 "resend"="Ipadala muli";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="Contact mo na si %s.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Ipadala ang Contact na si: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Naipadalang mga % Contacts.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Nakalakip: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Mga nakalakip na %s files.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Ang subscriptions ay kaagad na nirereview sa magkakasunod na subscription periods sa parehas na haba ng panahon at sa parehas na presyo sa napiling panahon. Pupuwede ng patayin ang automatic renewal ng iyong MEGA PRO subscription sa loob ng 24 oras bago ang iyong susunod na bayad sa subscription papunta sa iyong iTunes account settings page. Para ayusin ang iyong subscription, i-click ang AppStore icon sa iyong handset, mag-sign in gamit ang iyong Apple ID sa ilalim ng page (kung hindi pa nagagawa ito) at i-click ang View ID. Dadalhin ka nito sa iyong account page, mag-scroll down ka at pumunta sa Manage App Subscriptions. Pamula dito, pupwede mong piliin ang iyong MEGA PRO subscription at tingnan ang iyong nakatakdang petsa ng renewal, pumili ng ibang subscription package at mag-toggle sa on-off switch para patayin ang auto-renewal ng iyong subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

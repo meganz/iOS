@@ -1,18 +1,16 @@
 #import "FolderLinkViewController.h"
 
-#import <QuickLook/QuickLook.h>
-#import <MobileCoreServices/MobileCoreServices.h>
-
 #import "SVProgressHUD.h"
 #import "SAMKeychain.h"
-#import "MWPhotoBrowser.h"
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "MEGASdkManager.h"
-#import "MEGAStore.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGAQLPreviewController.h"
 #import "Helper.h"
+#import "MEGANavigationController.h"
+#import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "FileLinkViewController.h"
 #import "NodeTableViewCell.h"
@@ -21,9 +19,6 @@
 #import "UnavailableLinkView.h"
 #import "LoginViewController.h"
 #import "OfflineTableViewController.h"
-#import "PreviewDocumentViewController.h"
-#import "MEGAAVViewController.h"
-#import "MEGANavigationController.h"
 #import "BrowserViewController.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate> {
@@ -165,9 +160,7 @@
         }
         
         [self.tableView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -595,127 +588,11 @@
         }
 
         case MEGANodeTypeFile: {
-            NSString *name = [node name];
-            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([name pathExtension]), NULL);
-            if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                
-                int offsetIndex = 0;
-                self.cloudImages = [NSMutableArray new];
-                
-                if (self.searchController.isActive) {
-                    for (NSInteger i = 0; i < self.searchNodesArray.count; i++) {
-                        MEGANode *n = [self.searchNodesArray objectAtIndex:i];
-                        
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        
-                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
-                        
-                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
-                            megaPreview.isFromFolderLink = YES;
-                            [self.cloudImages addObject:megaPreview];
-                            if ([n handle] == [node handle]) {
-                                offsetIndex = (int)[self.cloudImages count] - 1;
-                            }
-                        }
-                    }
-                } else {
-                    NSUInteger nodeListSize = [[self.nodeList size] integerValue];
-                    for (NSInteger i = 0; i < nodeListSize; i++) {
-                        MEGANode *n = [self.nodeList nodeAtIndex:i];
-                        
-                        if (fileUTI) {
-                            CFRelease(fileUTI);
-                        }
-                        
-                        fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)([n.name pathExtension]), NULL);
-                        
-                        if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-                            MWPhoto *megaPreview = [[MWPhoto alloc] initWithNode:n];
-                            megaPreview.isFromFolderLink = YES;
-                            [self.cloudImages addObject:megaPreview];
-                            if ([n handle] == [node handle]) {
-                                offsetIndex = (int)[self.cloudImages count] - 1;
-                            }
-                        }
-                    }
-                }
-                
-                MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.cloudImages];                
-                photoBrowser.displayActionButton = YES;
-                photoBrowser.displayNavArrows = YES;
-                photoBrowser.displaySelectionButtons = NO;
-                photoBrowser.zoomPhotosToFill = YES;
-                photoBrowser.alwaysShowControls = NO;
-                photoBrowser.enableGrid = YES;
-                photoBrowser.startOnGrid = NO;
-                
-                // Optionally set the current visible photo before displaying
-                //    [browser setCurrentPhotoIndex:1];
-                
-                [self.navigationController pushViewController:photoBrowser animated:YES];
-                
-                [photoBrowser showNextPhotoAnimated:YES];
-                [photoBrowser showPreviousPhotoAnimated:YES];
-                [photoBrowser setCurrentPhotoIndex:offsetIndex];
+            if (node.name.mnz_isImagePathExtension) {
+                NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:2];
             } else {
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
-                
-                
-                NSString *previewDocumentPath = nil;
-                if (offlineNodeExist) {
-                    previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
-                } else {
-                    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
-                    NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
-                        previewDocumentPath = tmpFilePath;
-                    }
-                }
-                
-                if (previewDocumentPath) {
-                    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
-                    [self presentViewController:previewController animated:YES completion:nil];
-                } else if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent) && [[MEGASdkManager sharedMEGASdkFolder] httpServerStart:YES port:4443]) {
-                    MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:node folderLink:YES];
-                    [self presentViewController:megaAVViewController animated:YES completion:nil];
-
-                    if (fileUTI) {
-                        CFRelease(fileUTI);
-                    }                    
-                    return;
-                } else {
-                    if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"documentOpening_alertTitle", nil)
-                                                                            message:AMLocalizedString(@"documentOpening_alertMessage", nil)
-                                                                           delegate:nil
-                                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                                  otherButtonTitles:nil, nil];
-                        [alertView show];
-                    } else {
-                        // There isn't enough space in the device for preview the document
-                        if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                            if (fileUTI) {
-                                CFRelease(fileUTI);
-                            }
-                            return;
-                        }
-                        
-                        PreviewDocumentViewController *previewDocumentVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentID"];
-                        [previewDocumentVC setNode:node];
-                        [previewDocumentVC setApi:[MEGASdkManager sharedMEGASdkFolder]];
-                        
-                        [self.navigationController pushViewController:previewDocumentVC animated:YES];
-                        
-                        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    }
-                }
-            }
-            
-            if (fileUTI) {
-                CFRelease(fileUTI);
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }
             break;
         }
