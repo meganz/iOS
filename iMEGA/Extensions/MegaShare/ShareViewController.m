@@ -337,9 +337,11 @@
     NSString *storagePath = [self shareExtensionStorage];
     NSString *path = [url path];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
-    if ([fileManager copyItemAtPath:path toPath:tempPath error:nil]) {
+    NSError *error = nil;
+    if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
         [self smartUploadLocalPath:tempPath parent:parentNode];
     } else {
+        MEGALogError(@"Copy item failed:\n- At path: %@\n- With error: %@", tempPath, error);
         [self oneLess];
     }
 }
@@ -576,7 +578,7 @@
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
-    if (self.progress >= 0.01) {
+    if (self.progress >= 0.01 && self.progress < 1.0) {
         NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
         [SVProgressHUD showProgress:self.progress status:progressCompleted];
     }
