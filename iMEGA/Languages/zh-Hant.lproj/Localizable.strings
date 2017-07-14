@@ -241,7 +241,7 @@
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
 "fileAlreadyExistMessage"="這個檔案已用%@名上傳";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d 選取的檔案已被上傳到這個資料夾";
+"filesAlreadyExistMessage"="%d個檔案已被上傳到這個資料夾";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="已開始上傳";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
@@ -253,9 +253,9 @@
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
 "folderMoved_alertTitle"="這個資料夾已移動";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="您已不再擁該檔案權限";
+"youNoLongerHaveAccessToThisFile_alertTitle"="您沒有訪問該檔案的權限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="您已不再擁該資料夾權限";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="您沒有訪問該資料夾的權限";
 /* List option shown on the details of a file or folder */
 "saveForOffline"="離線儲存";
 /* List option shown on the details of a file or folder */
@@ -495,9 +495,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="離開";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="您確定要保留此分享嗎？";
+"leaveShareAlertMessage"="您確定要離開此分享嗎？";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="您確定要保留這些分享嗎？";
+"leaveSharesAlertMessage"="您確定要離開這些分享嗎？";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="已離開該資料夾";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
@@ -639,7 +639,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="您即將永久刪除 %d 個檔案和 1 個資料夾。您要繼續嗎？（您不能撤銷該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="您將永久刪除 [A] 檔案和 [B] 資料夾。您要繼續嗎？(注意！此操作不可回復。)";
+"removeFilesFoldersToRubbishBinMessage"="您將永久刪除 [A] 個檔案和 [B] 個資料夾。您要繼續嗎？(注意！此操作不可恢復。)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 檔案由MEGA移除";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -833,9 +833,9 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="省下17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="錯誤選購 %@ (%ld)";
+"wrongPurchase"="選購出錯 %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="App購物功能尚未啟用，請於iOS的設定中啟用此功能";
+"appPurchaseDisabled"="應用內購買功能尚未啟用，請於iOS的設定中啟用此功能";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="未找到產品%@，請連繫ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -859,7 +859,7 @@
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="亦是您取消需求或是Apple回報傳輸錯誤。請晚點再試一次或聯繫ios@mega.nz";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="復原問題";
+"incompleteRestore_title"="復原出錯";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="先前的購買未能找到。請選擇先前的購買產品以便復原。您將不會被二次收費。";
 /* Alert title shown when the restoring process has stopped for some reason */
@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="開啟調試模式";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="離線部分將有一系統日誌檔被創建 (MEGAiOS.log)。";
+"enableDebugMode_message"="將在離線頁面（MEGAiOS.log）中創建一個日誌。日誌可包含與您的帳戶相關的資訊。";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉調試模式";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="閒置[X]分鐘後，將我顯示為離開";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="在閒置1分鐘後，將我的狀態改為離開。";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="狀態持續設置";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="如果您寫錯了您的電子郵件地址，請於修正後點擊\"重新發送\"。";
 /* A button to resend the email confirmation. */
 "resend"="重新發送";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s 已經是您的聯絡人。";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="已傳給聯絡人：%s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="已傳給 %s 位聯絡人。";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="附加檔案：%s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="已附加 %s 個檔案。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="此訂閱將會自動更新續訂，續訂內容與您一開始選擇的訂閱時間與價格一致。您可以於您的iTunes帳戶設定頁面關閉MEGA PRO的訂閱自動更新續訂，必須於您的下一個訂閱繳款期限的24小時之前執行此操作。欲管理您的訂閱內容，只需點擊您手機上的App Store圖標，可以在頁面下方以您的Apple帳號登入（如果您還沒有這樣做），然後點擊查看帳號。您會被帶到您的帳戶頁面，就可以向下滾動到管理應用程序訂閱。在那裡，您可以選擇你的MEGA PRO訂閱和查看您預定的續約日期，選擇不同的訂閱專案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

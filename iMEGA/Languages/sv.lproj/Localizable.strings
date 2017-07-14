@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Om du har angett fel e-mail adress var vänlig ange korrekt och klicka på skicka igen. ";
 /* A button to resend the email confirmation. */
 "resend"="Skicka igen";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s är redan din kontakt";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Skickat kontakt %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Skickat %s kontakter";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Bifogad: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Bifogat %s filer.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnemang förnyas automatiskt för efterföljande perioder av samma längd och till samma pris som den inledande perioden som valts. Du kan stänga av automatisk förlängning av din MEGA PRO abonnemang senast 24 timmar innan din nästa prenumeration, betalning sker via din iTunes-sidas kontoinställningar. För att hantera dina prenumerationer, klickar du bara på ikonen App Store på din telefon, logga in med ditt Apple-ID längst ner på sidan (om du inte redan har gjort det) och sedan klicka på Visa ID. Du kommer att tas till ditt konto där du kan bläddra ner till Hantera App prenumerationer. Därifrån kan du välja MEGA PRO abonnemang och visa ditt planerade förnyelsedatum, välja en annan abonnemangspaket eller växla på strömbrytaren till off för att inaktivera automatisk förnyelse av din prenumeration.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

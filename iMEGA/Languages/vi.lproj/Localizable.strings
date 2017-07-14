@@ -995,11 +995,11 @@
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Các Thành Viên";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
-"moderator"="Người quản lý";
+"moderator"="Người điều hành";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
-"standard"="Cơ bản";
+"standard"="Thành viên";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="Xóa người này khỏi nhóm";
+"removeParticipant"="Loại Bỏ Thành Viên";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Cuộc trò chuyện với %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa lại rồi click nút 'Gửi lại'.";
 /* A button to resend the email confirmation. */
 "resend"="Gửi lại";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="Tên %s đã có mặt trong danh bạ.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Gửi đến: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Gửi đến %s tên liên lạc.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Gửi kèm: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Gửi kèm %s tệp tin.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói cước đăng ký sẽ được tự động gia hạn chu kỳ thuê bao kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói cước được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA PRO ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó bấm Xem ID (View ID). Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA PRO của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi on-off (bật-tắt) để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

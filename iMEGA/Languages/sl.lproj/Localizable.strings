@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Če ste se zatipkali pri vnosu e-poštnega naslova, popravite in kliknite 'Pošlji ponovno'.";
 /* A button to resend the email confirmation. */
 "resend"="Pošlji ponovno";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s je že med stiki.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Poslani stik: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Poslano %s stikov";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Pripeto: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Pripeto %s datotek.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Naročnine se avtomatsko obnavljajo za sledeča obdobja naročnine za enako trajanje in isto ceno, kot je bilo izbrano prvotno obdobje. Avtomatsko obnavljanje vaše MEGA PRO naročnine lahko ugasnete ne kasneje kot 24 ur, preden je čas za plačilo naslednjega obdobja, preko iTunes nastavitev računa. Za upravljanje z naročninami, preprosto kliknite na App Store ikono na vaši napravi, se prijavite svojim Apple ID na dnu strani (če tega še niste storili) in kliknite na View ID. Preusmerjeni boste na stran vašega računa, kjer se lahko premaknete do Manage App Subscriptions. Od tam lahko izberete svojo MEGA PRO naročnino in pogledate predvideni dan obnove, izberete drug paket naročnine ali pa premaknete stikalo na off za onemogočenje avtomatske obnove vaše naročnine.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

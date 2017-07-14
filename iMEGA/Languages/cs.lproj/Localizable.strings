@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Pokud jste zadali chybně svou e-mailovou adresu, opravte ji a klikněte na 'Odeslat znovu'.";
 /* A button to resend the email confirmation. */
 "resend"="Odeslat znovu";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s již je kontaktem.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Odeslán kontakt: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Odesláno %s kontaktů.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Přloženo: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Přiloženo %s souborů.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Předplatné je automaticky obnovováno PRO následující období automaticky a to za stejných podmínek, jako bylo prvotní období. Automatické obnovení předplatného MEGA PRO můžete vypnout nejpozději 24 hodin před zaúčtováním dalšího období. Automatickou obnovu předplatného můžete vypnout nastavení účtu iTunes. PRO správu předplatných, otevřete Nastavení -> App Store, přihlaste se svým Apple ID vespod obrazovky (pokud již přihlášení nejste) a zvolte možnost Zobrazit ID. Budete přesměrování na stránku správy vašeho účtu, zde zvolte položku Spravovat. V seznamu Odběrů zvolte MEGA PRO předplatné. Nyní vidíte stav vašeho předplatného a datum dalšího zúčtovacího období. Zde můžete změnit druh vašeho předplatného nebo jej úplně vypnout pomocí přepínače vyp/zap.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

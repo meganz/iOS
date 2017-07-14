@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Якщо ви невірно ввели адресу е-пошти, виправте її на натисніть 'Надіслати ще раз'.";
 /* A button to resend the email confirmation. */
 "resend"="Надіслати ще раз";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s вже знаходиться в контактах.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Надіслано контакт: %s ";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Надіслано %s контактам.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Приєднано: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Приєднано %s файлів.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Підписки автоматично продовжуються на той само термін і в ту само ціну, що ви вибрали початково. Ви можете відключити автоматичне оновлення вашої підписки не пізніше ніж за 24 години до вашої наступної абонентської плати через сторінку налаштувань облікового запису iTunes. Для того щоб управляти підписками, просто натисніть на іконку App Store на вашому телефоні, увійдіть у свій Apple ID, в нижній частині сторінки (якщо ви цього не робили) і натисніть Переглянути Apple ID. Ви потрапите на сторінку облікового запису, де зможете прокрутити до керування підписками. Звідти ви можете вибрати підписку MEGA PRO і переглянути дату оновлення підписки, вибрати інший пакет підписки або перемикачем вимкнути автооновлення підписки.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

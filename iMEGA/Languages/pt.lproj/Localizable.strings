@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Se escreveu incorretamente o seu endereço de e-mail, corrija-o e clique em \" Reenviar \".";
 /* A button to resend the email confirmation. */
 "resend"="Reenviar";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s já é um contacto.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Enviou Contacto: %s ";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Enviou %s Contactos.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Anexado: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Anexou %s ficheiros.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As subscrições são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido.Pode anular a renovação automática da SUA subscrição MEGA  PRO até 24 horas antes do próximo pagamento da subscrição através da página de configurações da SUA conta iTunes.Para gerir as suas subscrições basta clicar no ícone da App Store no seu dispositivo, entrar com seu ID da Apple na parte inferior da página (se ainda não o tiver feito) e, em seguida, clicar em Ver ID. Aí será direcionado para a página da SUA conta, e na parte inferior da mesma, gerir as suas subscrições. A partir daqui, pode selecionar a SUA subscrição MEGA Pro e ver a SUA data de renovação programada, escolher um pacote de subscrição diferente ou puxar o botão on-off para fora para desactivar a renovação automática da SUA subscrição.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
