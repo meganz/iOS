@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Jika anda salah mengeja alamat email anda, benarkan dan klik 'Kirim Ulang'.";
 /* A button to resend the email confirmation. */
 "resend"="Kirim lagi";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s sudah menjadi kontak.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Kontak Terkirim: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="%s Kontak Terkirim.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Attached: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Melampirkan %s file.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subskripsi diperbaharui secara otomatis untuk periode subskripsi yang berkelanjutan dengan durasi dan harga yang sama dengan pilihan awal. Anda dapat mematikan pembaharuan otomatis subskripsi MEGA PRO anda selambatnya 24 jam sebelum pembayaran subskripsi berikutnya jatuh tempo di halaman settings akun iTunes anda. Untuk mengatur subskripsi anda, klik pada ikon App Store pada handset anda, masuk dengan Apple ID pada bagian bawah halaman (Jika anda belum masuk) dan klik Lihat ID. Anda akan dibawa ke halaman akun anda dimana anda dapat men-skroll ke bawah untuk Mengatur Subskripsi App. Dari sana, anda dapat memilih subskripsi MEGA PRO anda dan melihat tanggal pembaharuan anda yang telah dijadwalkan, pilih paket subskripsi yang berbeda atau tekan on-off switch untuk mematikan pembaharuan otomatis subskripsi anda.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

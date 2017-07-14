@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Переходить в «отошёл» после [X] минут неактивности";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="Менять статус на «отошёл» после 1 минуты неактивности.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Сохранение статуса";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Если вы ввели неправильный адрес электронной почты, исправьте его и нажмите «Отправить повторно».";
 /* A button to resend the email confirmation. */
 "resend"="Выслать повторно";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s уже в списке контактов.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Отправлено контакту: %s ";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Отправлено %s контактам.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Прикреплено: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Прикреплено файлов: %s.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA PRO не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA PRO и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
