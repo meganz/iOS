@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Jos olet kirjoittanut sähköpostiosoitteesi väärin, korjaa se ja klikkaa \"Lähetä uudelleen\".";
 /* A button to resend the email confirmation. */
 "resend"="Lähetä uudelleen";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s on jo lisätty kontaktiksi.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Lähetetty kontaktille %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Lähetetty %s kontaktille.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Liitetty: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Liitetty %s tiedostoa.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Tilaukset uusitaan automaattisesti perätteisesti saman pituisina tilauksina ja valitun alkuperäisen tilauksen hintaan. Voit kytkeä automaattisen MEGA PRO-tilauksen uusiutumisen 24 tuntia ennen seuraavan tilauksen maksun erääntymistä iTunes-tilisi asetussivulta. Hallitaksesi tilauksiasi napauta App Store-kuvaketta laitteessasi, kirjaudu Apple ID:lläsi sivun alareunassa (ellet ole jo niin tehnyt) ja sitten paina Näytä ID. Sinut ohjataan tilisivullesi, jossa voit vierittää alaspäin hallinnoidaksesi sovellustilauksia. Sieltä voit valita MEGA PRO-tilauksesi ja tarkastaa uusimispäivän, valita eri tilauspaketin tai muuttaa automaattisen tilauksen uusiutumisen päälle tai pois.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

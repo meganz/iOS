@@ -661,11 +661,7 @@ static BOOL copyToPasteboard;
     
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]]) {
-            MOOfflineNode *offlineNodeExist = nil;
-            NSString *fingerprint = [api fingerprintForNode:node];
-            if (fingerprint) {
-                offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:fingerprint];
-            }
+            MOOfflineNode *offlineNodeExist =  [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
             
             if (offlineNodeExist) {
                 NSRange replaceRange = [relativeFilePath rangeOfString:@"Documents/"];
@@ -677,7 +673,7 @@ static BOOL copyToPasteboard;
                 }
             } else {
                 NSString *appData = nil;
-                if ((isImage(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (isVideo(node.name.pathExtension) && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
                     downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
@@ -773,11 +769,11 @@ static BOOL copyToPasteboard;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        nodeTableViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
+        nodeTableViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = isVideo(node.name.pathExtension) ? NO : YES;
+        photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
 }
 
@@ -926,7 +922,7 @@ static BOOL copyToPasteboard;
 + (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
     NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
     for (MEGANode *node in nodesArray) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
         if (offlineNodeExist) {
             [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
         } else {
@@ -1122,9 +1118,16 @@ static BOOL copyToPasteboard;
     }
     
     // Delete files saved by extensions
-    NSString *extensionsDirectory = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:extensionsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:extensionsDirectory error:&error]) {
+    NSString *fileProviderStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fileProviderStorage]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:fileProviderStorage error:&error]) {
+            MEGALogError(@"Remove item at path failed with error: %@", error);
+        }
+    }
+    
+    NSString *shareExtensionStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:shareExtensionStorage]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:shareExtensionStorage error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }

@@ -39,7 +39,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="復号化鍵を入力してください。";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="このフォルダ/ファイルにアクセスするには、その復号キーが必要です。そのキーをお持ちではない場合、リンクの作成者に尋ねてください。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="復号化鍵";
 /* Button title to try to decrypt the link */
@@ -79,7 +79,7 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="アドレス、又はパスワード無効。再度トライして下さい。";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
+"tooManyAttemptsLogin"="あなたは何度もログインしようとしました。%@まで待ってからもう一度お試しください。";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="アカウントを確認するためにMEGAからのメール内のリンクをアクセスしてください。";
 /* Error message when trying to login and the account is blocked */
@@ -153,7 +153,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="ごみ箱を空にします";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="No files Saved for Offline";
+"offlineEmptyState_title"="オフライン用に保存されたファイルはありません";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="知り合いなし";
 /* Title shown when there's no incoming Shared Items */
@@ -353,7 +353,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
 "moveFilesFolderToRubbishBinMessage"="ファイル %d こ、フォルダ１こ、ゴミ箱に移しますね？";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
+"moveFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダをごみ箱に移動してもよろしいですか？　";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -445,9 +445,9 @@
 /* Alert title shown on the Shared Items section when you want to remove 1 share */
 "removeSharing"="共有を削除";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareOneContactMessage"="Are you sure you want to remove this share? (Shared with 1 contact)";
+"removeOneShareOneContactMessage"="この共有を削除してもよろしいですか？（1件の連絡先と共有済み）";
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
-"removeOneShareMultipleContactsMessage"="Are you sure you want to remove this share? (Shared with %d contacts)";
+"removeOneShareMultipleContactsMessage"="この共有を削除してもよろしいですか？（%d件の連絡先と共有済み）";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
 "removeMultipleSharesMultipleContactsMessage"="この共有を削除してもよろしいですか。（共有相手は%d人）";
 /* Message shown when a share have been removed */
@@ -495,9 +495,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="出る";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this share?";
+"leaveShareAlertMessage"="この共有を解除してもよろしいですか？　";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these shares?";
+"leaveSharesAlertMessage"="これらの共有を解除してもよろしいですか？　";
 /* Success message shown when a shared folder have been left */
 "shareFolderLeaved"="フォルダは残っています。";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
@@ -569,13 +569,13 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="パスワードを変更する";
 /* Footer shown on the Settings / Security Options section that explains what means to export the Recovery Key */
-"exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.";
+"exportMasterKeyFooter"="回復キーをエクスポートして安全な場所に保管すると、パスワードを紛失した場合にデータを失うことなくアカウントを回復できます。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="どうしてリカバリーキーがいりますか";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="あなたのデータは、あなたの持つ親鍵が複合することによって読み取り可能となり、その親鍵はあなたのパスワードにより暗号化されて、保存されています。ですからあなたのパスワードがないと、親鍵は暗号化されたまま、すなわちデータも暗号化されたままということになります。";
+"masterKey_firstParagraph"="あなたのデータは、マスター暗号化キー（回復キー）で始まる一連の復号操作でしか読み取れません。復元キーはあなたのパスワードで暗号化して保存しております。これは、パスワードを紛失した場合、あなたの回復キーを復号できなくなり、あなたのデータを復号できなくなることを意味します。";
 /* Advising the user to keep the user's recovery key safe. */
-"masterKey_secondParagraph"="親鍵をエクスポートして安全な場所に保存しておけば、データを失くさずに新しいパスワードを設定することができます。";
+"masterKey_secondParagraph"="回復キーをエクスポートして安全な場所に保管すると、データを失うことなく新しいパスワードを設定できます。";
 /*  */
 "masterKey_thirdParagraph"="外部攻撃者があなたの鍵を手に入れてもあなたのアカウントにはアクセスできません。パスワードをリセットするには親鍵とあなたのメールへのアクセスとの両方が必要です。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
@@ -583,7 +583,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="リカバリーキーがエクスポート完了";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="The Recovery Key has been exported into the Offline section as RecoveryKey.txt. Note: It will be deleted if you log out, please store it in a safe place.";
+"masterKeyExported_alertMessage"="回復キーは、RecoveryKey.txtとしてオフラインセクションにエクスポートされました。注意：ログアウトすると削除されますので、安全な場所に保管してください。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="ご自分のデバイス";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -595,15 +595,15 @@
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
 "emptyRubbishBin"="ゴミ箱を空にする";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="ごみ箱の項目はすべて削除されます";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
 "imageAndVideoDownloadsHeader"="イメージとビデオダウンロード";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Save images in gallery";
+"saveImagesInGallery"="ギャラリーに画像を保存する";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Save videos in gallery";
+"saveVideosInGallery"="ギャラリーに動画を保存する";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Save iOS compatible images and videos in your device's gallery (Note: images and videos won't be saved in Offline).";
+"imageAndVideoDownloadsFooter"="iOS対応の画像と動画をあなたの端末のギャラリーに保存します（注意：画像と動画はオフラインで保存されません）。";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="利用している領域 %@";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -639,7 +639,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="ファイル%d こ、フォルダ１こ、永久に除去しようとしています。このまま続けますか？（取り戻すことはできません。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="You are about to permanently remove [A] files and [B] folders. Would you like to proceed? (You cannot undo this action.)";
+"removeFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダを完全に削除しようとしています。続行しますか？（この操作は元に戻すことはできません）。";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="MEGAからファイル１こ除去しました";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -681,33 +681,33 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="リカバリーキー無効";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+"youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。新しいパスワードを入力してください。";
 /*  */
 "yourPasswordHasBeenReset"="パスワードはリセットされています。新しいアカウントにログインして下さい。";
 /* First paragraph of the screen when the password has been forgotten */
-"forgotPassword_firstParagraph"="If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.";
+"forgotPassword_firstParagraph"="あなたの回復キーのバックアップがある場合は、「はい」を選択してパスワードをリセットできます。データは失われません。";
 /* Second paragraph of the screen when the password has been forgotten */
-"forgotPassword_secondParagraph"="You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.";
+"forgotPassword_secondParagraph"="このコンピューターまたは他のコンピュータ上の他のブラウザでアクティブなMEGAセッションがある場合でも、回復キーをエクスポートできます。そうしないと、既存のアカウントを復号することはできなくなりますが、［いいえ］を選択して同じメールアドレスで新しいアカウントを開始することができます。";
 /* A question asking if the user has made a copy of their master encryption key (now renamed "Recovery Key") */
 "doYouHaveABackupOfYourRecoveryKey"="リカバリーキーバックアップがおありですか";
 /* Headline when the user chose YES */
 "great"="了解。では…";
 /* Text of the alert message to ask for the link to reset the pass with the MK */
-"recoveryLinkToResetYourPassword"="あなたのメールアドレスを入力して下さい。回収リンクが送られてくるので、そこで親鍵を提示しパスワードをリセットして下さい。";
+"recoveryLinkToResetYourPassword"="以下にあなたのメールアドレスを入力してください。回復キーを送信してパスワードをリセットできる、回復リンクをあなたは受信します。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送信";
 /* The title of the screen to park an account. */
 "noMasterKey_title"="おっと";
 /* First paragraph of the screen to park an account */
-"noMasterKey_firstParagraph"="Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key.";
+"noMasterKey_firstParagraph"="エンドツーエンド暗号化パラダイムにより、パスワードまたは回復キーのバックアップのいずれかがなければ、データにアクセスすることはできません。";
 /* Second paragraph of the screen to park an account */
-"noMasterKey_secondParagraph"="You can park your existing account and start a fresh one under the same e-mail address. Your data will be retained for at least 60 days. In case that you recall your parked account's password, please contact support@mega.nz";
+"noMasterKey_secondParagraph"="既存のアカウントをそのままにしておいて、同じメールアドレスで新しいアカウントを開始することができます。あなたのデータは少なくとも60日間は保持されます。そのままにしておいたアカウントのパスワードを思い出した場合は、support@mega.nzまでご連絡ください。";
 /* Text of the dialog message to ask for the link to park the account */
-"recoveryLinkToParkYourAccount"="Please enter you e-mail address below. You will receive a recovery link that will allow you to park your account.";
+"recoveryLinkToParkYourAccount"="以下にあなたのメールアドレスを入力してください。あなたはアカウントをそのままにしておける回復リンクを受信します。";
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="古いアカウントを放っておく";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="私は、新しいアカウントを開こうとしており、古いパスワードを思い出すか、以前エクスポートした親鍵を見つけない限り、既存のアカウントにあるデータは全て失われてしまうことを了承します。";
+"startingFreshAccount"="私は新しい、空のアカウントを開設しようとしており、私のパスワードを思い出したり、エクスポートされた回復キーを見つけたりしなければ、私の現在のアカウントにあるデータをすべて失うことを認めます。";
 /* Caption of the button to proceed */
 "startNewAccount"="新しいアカウントを開く";
 /*  */
@@ -725,13 +725,13 @@
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="メールアドレスが一致していません";
 /* Error message when a use wants to validate the same email twice */
-"emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
+"emailAddressChangeAlreadyRequested"="あなたはすでにそのメールアドレス用の確認リンクを要求しています。";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new e-mail address.";
+"emailIsChanging_description"="あなたの受信トレイに移動し、新しいメールアドレスを確認するためにリンクをクリックしてください。";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="メールアドレスを確認するためにパスワードを入力してください";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Congratulations, your new e-mail address for this MEGA account is: [X]";
+"congratulationsNewEmailAddress"="おめでとうございます。このMEGAアカウント用のあなたの新しいメールアドレスは次のとおりです：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="他のセッションを閉じる";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -743,7 +743,7 @@
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを削除";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Logout and erase local data after 10 failed passcode attempts";
+"failedAttempstSectionTitle"="10回のパスコード試行が失敗した後にログアウトし、ローカルデータを消去する";
 /* Title header for the bottom menu with various menu sections that suit the category support. */
 "support"="サポート";
 /* Title of the section to access MEGA's help centre */
@@ -873,7 +873,7 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="デバッグモードを無効にする";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="The log (MEGAiOS.log) will be deleted from the Offline section.";
+"disableDebugMode_message"="ログ（MEGAiOS.log）は、オフラインセクションから削除されます。";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="オフラインからこのアイテムを削除してもよろしいですか";
 /* Alert message shown when the user remove various items from the Offline section */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Show me away after [X] minutes of inactivity";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="非アクティブ状態が1分続いたら退席中と表示します";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Status Persistence";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -947,7 +947,7 @@
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="チャット履歴をクリア";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Are you sure you want to clear the full message history of this conversation?";
+"clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
 /* 'Next' button in a dialog */
 "continue"="続ける";
 /* Button title that allows the user to close a chat. */
@@ -1003,11 +1003,11 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversation with %@";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances:";
+"chatIntroductionMessage"="MEGAは、必須の安全保証をご提供するエンドツーエンド（ユーザー制御の）暗号化を使用してチャットを保護いたします：";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. ";
+"confidentialityExplanation"="[S]機密性。[/S]作者と意図された受信者のみがコンテンツを解読して読むことができます。";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.";
+"authenticityExplanation"="[S]真正性。[/S]このシステムは、受信したデータは表示されている送信者からのものであり、そのコンテンツが転送中に操作されていないことを保証します。";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1023,7 +1023,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="クラウド・ドライブから追加する";
+"addFromMyCloudDrive"="私のクラウドドライブから追加する";
 /* */
 "done"="できました。";
 /* Button label for sending file attachments through the chat to another user. */
@@ -1049,10 +1049,20 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="登録を中止しますか？";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and click 'Resend'.";
+"misspelledEmailAddress"="メールアドレスのスペルを間違った場合、それを修正して「再送信」をクリックしてください。";
 /* A button to resend the email confirmation. */
 "resend"="再送";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%sさんはすでに連絡先に入っています。";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="知り合いを送信：%s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="%s人の知り合いを送信しました。";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="添付された:";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="%s個のファイルを添付しました。";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA PRO subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply click on the App Store icon on your handset, sign in with your Apple ID at the bottom of the page (if you haven't already done so) and then click View ID. You'll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA PRO subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
+"autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA PROサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをクリックし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をクリックします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理]まで下にスクロールします。そこから、MEGA PROのサブスクリプションを選択したり、あなたの予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";

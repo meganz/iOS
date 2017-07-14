@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Ако сте изписали неправилно вашия имейл адрес, поправете го и натиснете 'Изпрати отново'.";
 /* A button to resend the email confirmation. */
 "resend"="Изпрати отново";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s вече е контакт.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Изпратен Контакт: %s ";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Изпратени %s Контакта.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Прикачени: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Прикачени %s файла.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Абонаментите се подновяват автоматично за последователни абонаментни периоди със същия срок и на същата цена като на първоначално избрания период. Можете да изключите автоматичното подновяване на вашия MEGA PRO абонамент не по-късно от 24 часа преди следващата абонаментна дата за плащане, от страницата за настройки на вашия iTunes профил. За да управлявате вашите абонаменти, просто кликнете върху иконата на App Store на вашия телефон, влезте с вашия Apple ID в долната част на страницата (ако вече не сте го направили) и след това щракнете върху View ID. Ще бъдете пренасочени към страницата на профила си, където по-надолу на страницата се намира Настройка на Абонаментите за Приложения. От там можете да изберете вашия MEGA PRO абонамент и видите насрочената дата за подновяване, да изберете друг абонаментен пакет или превключване ключа за включване/изключване на изключено положение, за да забраните автоматичното подновяване на абонамента си.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

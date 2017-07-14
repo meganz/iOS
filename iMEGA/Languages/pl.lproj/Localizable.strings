@@ -869,7 +869,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Odblokuj tryb DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Plik zostanie utworzony w trybie Offline (MEGAiOS.log)";
+"enableDebugMode_message"="Dziennik zdarzeń zostanie utworzony w trybie Offlice (MEGAiOS.log). Dziennik może posiadać dane powiązane z Twoim kontem.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Zablokuj tryb DEBUG";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Pokaż, że jestem niedostępny po [X] minutach nieaktywności";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="Ustaw \"Z dala od komputera\"  po 1 minucie nieaktywności";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Zapisanie statusu";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1052,7 +1052,17 @@
 "misspelledEmailAddress"="Jeżeli wprowadzony adres email jest błędny, popraw go i naciśnij 'Wyślij ponownie'.";
 /* A button to resend the email confirmation. */
 "resend"="Wyślin ponownie";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s jest już Twoim kontaktem.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Wysłano kontakt: %s";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Wysłano %s kontaktów.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Załączone: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Załączono %s plików.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Sukskrypcja odnawiania jest automatycznie po upływie terminu ważności konta, z zachowaniem identycznego okresu trwania oraz ceny. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA PRO nie poźniej niż 24 godziny przed terminem wygaśnięcia konta. Datę wygaśnięcia możesz znaleźć na stronach iTunes. Aby zmienić ustawienia subskrypcji, kliknij w App Store a następnie na dole ekranu kliknij \"Zobacz ID\". Zostaniesz przekierowany do strony gdzie na dole znajdziesz link \"Zarządzaj subskrypcjami\". Na tej stronie wybierz MEGA PRO a następnie zmień ustawienia.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
+"openMEGAAndSignInToContinue"="Otwórz MEGA i zapisz się aby kontynuować";

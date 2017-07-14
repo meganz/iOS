@@ -153,7 +153,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Limpar lixeira";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Nenhum arquivo salvo Offline";
+"offlineEmptyState_title"="Nenhum arquivo salvo para uso offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Sem contatos";
 /* Title shown when there's no incoming Shared Items */
@@ -259,7 +259,7 @@
 /* List option shown on the details of a file or folder */
 "saveForOffline"="Salvo para off-line";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="Salvo offline";
+"savedForOffline"="Offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="A etiqueda desta caixa de entrada é de uso reservado pela Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -923,7 +923,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "showMeAwayAfterXMinutesOfInactivity"="Aparecer como ausente depois de [X] minutos de inatividade";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Show me away after 1 minute of inactivity";
+"showMeAwayAfter1MinuteOfInactivity"="Mostre-me como ausente depois de 1 minuto de inatividade";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Continuidade de status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1031,7 +1031,7 @@
 /* */
 "warning"="Atenção";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todos os arquivos salvos offline serão excluídos do seu dispositivo. Deseja continuar?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todos os arquivos salvos para uso offline serão excluídos do seu dispositivo. Deseja continuar?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cota de transferência esgotada";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1052,6 +1052,16 @@
 "misspelledEmailAddress"="Se você digitou incorretamente seu endereço de e-mail, corrija-o e clique em \" Reenviar \".";
 /* A button to resend the email confirmation. */
 "resend"="Reenviar";
+/* Error message displayed when trying to invite a contact who is already added. */
+"alreadyAContact"="%s já é um contato.";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Contato enviado: %s ";
+/* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
+"sentXContacts"="Enviado %s Contatos.";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Em anexo: %s";
+/* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
+"attachedXFiles"="Em anexo %s arquivos.";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são automaticamente renovadas por períodos iguais, de igual duração e ao mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura MEGA até 24 horas antes DO próximo pagamento da assinatura fazendo-o através da página de configurações da sua conta iTunes. Para gerenciar suas assinaturas basta clicar no ícone da App Store no seu aparelho, entrar com seu ID da Apple na parte inferior da página (se você ainda não o tiver feito) e, em seguida, clicar em Ver ID. Você será levado à página da sua conta onde rolando para baixo pode gerenciar as suas assinaturas. A partir daqui, você pode selecionar sua assinatura MEGA Pro e ver a sua data de renovação programada, escolher um pacote de assinatura diferente ou puxar o botão on-off para fora para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */

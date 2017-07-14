@@ -8,6 +8,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
@@ -161,7 +162,7 @@
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
         
-        if (!isImage([node name].lowercaseString.pathExtension) && !isVideo([node name].lowercaseString.pathExtension)) {
+        if (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension) {
             continue;
         }
         
@@ -471,7 +472,7 @@
     
     for (NSInteger i = 0; i < [[self.nodeList size] integerValue]; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (isImage([n name].pathExtension)) {
+        if (n.name.mnz_isImagePathExtension) {
             MWPhoto *preview = [[MWPhoto alloc] initWithNode:n];
             [self.previewsArray addObject:preview];
         }
@@ -489,7 +490,7 @@
     NSInteger videosCount = 0;
     for (NSInteger i = 0; i < index + indexPath.row; i++) {
         MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (!isImage([n name].pathExtension)) {
+        if (!n.name.mnz_isImagePathExtension) {
             videosCount++;
         }
     }
@@ -500,7 +501,7 @@
     
     
     if (![self.photosCollectionView allowsMultipleSelection]) {
-        if (isImage([node name].pathExtension)) {
+        if (node.name.mnz_isImagePathExtension) {
             MWPhotoBrowser *photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:self.previewsArray];            
             photoBrowser.displayActionButton = YES;
             photoBrowser.displayNavArrows = YES;
@@ -516,7 +517,7 @@
             [photoBrowser showPreviousPhotoAnimated:YES];
             [photoBrowser setCurrentPhotoIndex:index];
         } else {
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] fetchOfflineNodeWithFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
             
             if (offlineNodeExist) {
                 NSURL *path = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingString:offlineNodeExist.localPath]];
