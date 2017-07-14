@@ -438,11 +438,15 @@
     menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem];
 }
 
-- (void)loadNodesFromMessage:(MEGAChatMessage *)message {
+- (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
     if (message.type == MEGAChatMessageTypeAttachment) {
         for (NSUInteger i = 0; i < message.nodeList.size.integerValue; i++) {
             MEGANode *node = [message.nodeList nodeAtIndex:i];
-            [self.nodesLoaded addObject:node];
+            if (atTheBeginning) {
+                [self.nodesLoaded insertObject:node atIndex:0];
+            } else {
+                [self.nodesLoaded addObject:node];
+            }
         }
     }
 }
@@ -1032,7 +1036,7 @@
     [self finishReceivingMessage];
     [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
             
-    [self loadNodesFromMessage:message];
+    [self loadNodesFromMessage:message atTheBeginning:YES];
 }
 
 - (void)onMessageLoaded:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -1044,7 +1048,7 @@
             [self.messages insertObject:message atIndex:0];
         }
         
-        [self loadNodesFromMessage:message];
+        [self loadNodesFromMessage:message atTheBeginning:NO];
     
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
@@ -1092,6 +1096,7 @@
                 [self.messages replaceObjectAtIndex:index withObject:message];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                [self loadNodesFromMessage:message atTheBeginning:YES];
                 break;
             }
             case MEGAChatMessageStatusServerRejected:
@@ -1122,6 +1127,7 @@
             [self.messages removeAllObjects];
             [self.messages addObject:message];
             [self.collectionView reloadData];
+            [self.nodesLoaded removeAllObjects];
         }
     }
 }
