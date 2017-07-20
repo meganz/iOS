@@ -1002,6 +1002,46 @@
     self.navigationItem.title = navigationTitle;
 }
 
+-(void)presentNodeFromSpotlight:(MEGANode *)node {
+    NSMutableArray *nodes = [[NSMutableArray alloc] init];
+    uint64_t rootHandle = [[[MEGASdkManager sharedMEGASdk] rootNode] handle];
+    uint64_t tempHandle = [node parentHandle];
+    while (tempHandle != rootHandle) {
+        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+        [nodes insertObject:tempNode atIndex:0];
+        tempHandle = [tempNode parentHandle];
+    }
+    
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    
+    for (MEGANode *n in nodes) {
+        CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        [cdvc setParentNode:n];
+        [self.navigationController pushViewController:cdvc animated:NO];
+    }
+    
+    switch ([node type]) {
+        case MEGANodeTypeFolder: {
+            CloudDriveTableViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            [cdvc setParentNode:node];
+            [self.navigationController pushViewController:cdvc animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (node.name.mnz_isImagePathExtension) {
+                [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:NO displayMode:DisplayModeCloudDrive];
+            } else {
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
