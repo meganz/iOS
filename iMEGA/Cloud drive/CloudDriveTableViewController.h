@@ -13,4 +13,6 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic) DisplayMode displayMode;
 
+-(void)presentNodeFromSpotlight:(MEGANode *)node;
+
 @end

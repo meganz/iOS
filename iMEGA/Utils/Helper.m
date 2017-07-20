@@ -1,5 +1,6 @@
 #import "Helper.h"
 
+#import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -1115,6 +1116,18 @@ static BOOL copyToPasteboard;
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
+    
+    // Delete Spotlight index
+    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
+    [sharedUserDefaults removeObjectForKey:@"base64HandlesToIndex"];
+    [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"Error deleting spotligth index");
+        } else {
+            MEGALogInfo(@"Spotlight index deleted");
+        }
+    }];
 }
 
 + (void)deleteMasterKey {

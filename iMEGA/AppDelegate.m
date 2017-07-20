@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <CoreSpotlight/CoreSpotlight.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -10,6 +11,7 @@
 
 #import "CameraUploads.h"
 #import "Helper.h"
+#import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -23,6 +25,7 @@
 #import "BrowserViewController.h"
 #import "CameraUploadsPopUpViewController.h"
 #import "ChangePasswordViewController.h"
+#import "CloudDriveTableViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CreateAccountViewController.h"
@@ -87,6 +90,9 @@ typedef NS_ENUM(NSUInteger, URLType) {
 @property (strong, nonatomic) NSString *exportedLinks;
 
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
+
+@property (nonatomic) MEGAIndexer *indexer;
+@property (nonatomic) NSString *spotlightNodeBase64Handle;
 
 @end
 
@@ -294,6 +300,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    self.indexer = [[MEGAIndexer alloc] init];
+    
     return YES;
 }
 
@@ -436,6 +444,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     MEGALogError(@"Failed to register for remote notifications %@", error);
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+        self.spotlightNodeBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+        if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+            [self presentNodeFromSpotlight];
+        }
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Private
@@ -1000,6 +1020,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [self.window setRootViewController:_mainTBC];
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
+            if (self.spotlightNodeBase64Handle) {
+                [self presentNodeFromSpotlight];
+            }
+            
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
@@ -1056,6 +1080,17 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[UIApplication sharedApplication] registerForRemoteNotifications];
         }
     }];
+}
+
+- (void)presentNodeFromSpotlight {
+    uint64_t handle = [MEGASdk handleForBase64Handle:self.spotlightNodeBase64Handle];
+    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+    if (node) {
+        CloudDriveTableViewController *cloudDriveVC = self.mainTBC.childViewControllers[0].childViewControllers[0];
+        [Helper changeToViewController:cloudDriveVC.class onTabBarController:self.mainTBC];
+        [cloudDriveVC presentNodeFromSpotlight:node];
+    }
+    self.spotlightNodeBase64Handle = nil;
 }
 
 #pragma mark - Battery changed
@@ -1590,6 +1625,15 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
             }
             [self showMainTabBar];
+
+            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
+                    [self.indexer generateAndSaveTree];
+                }
+                [self.indexer indexTree];
+            });
+            
             break;
         }
             
