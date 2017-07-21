@@ -1020,6 +1020,8 @@
 "retry"="Retry";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Delete message";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Send contact";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/

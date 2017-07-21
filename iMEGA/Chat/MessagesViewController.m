@@ -11,12 +11,15 @@
 
 #import "Helper.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGAOpenMessageHeaderView.h"
+#import "MEGACopyRequestDelegate.h"
+#import "MEGAImagePickerController.h"
+#import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGAInviteContactRequestDelegate.h"
+#import "MEGAOpenMessageHeaderView.h"
+#import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
@@ -46,6 +49,8 @@
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (strong, nonatomic) NSMutableArray *nodesLoaded;
+
+@property (strong, nonatomic) UIProgressView *navigationBarProgressView;
 
 @end
 
@@ -451,6 +456,120 @@
     }
 }
 
+- (void)presentSendMediaAlertController {
+    UIAlertController *sendMediaAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [sendMediaAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [sendMediaAlertController addAction:fromPhotosAlertAction];
+    
+    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
+                if (permissionGranted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        }]];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                        }]];
+                        
+                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    });
+                }
+            }];
+        }
+    }];
+    [sendMediaAlertController addAction:captureAlertAction];
+    
+    sendMediaAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    sendMediaAlertController.popoverPresentationController.sourceView = self.view;
+    sendMediaAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    
+    [self presentViewController:sendMediaAlertController animated:YES completion:nil];
+}
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
+        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+        } else {
+            [self smartUploadWithPath:filePath parentNode:parentNode];
+        }
+    }];
+    
+    if ([[UIDevice currentDevice] iPadDevice] && (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)) {
+        imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
+        imagePickerController.popoverPresentationController.sourceView = self.view;
+        imagePickerController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    }
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
+    [self showProgressViewUnderNavigationBar];
+    
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTransferProgress:^(float progress) {
+        [self.navigationBarProgressView setProgress:progress animated:YES];
+    } completion:^(uint64_t handle) {
+        [self.navigationBarProgressView removeFromSuperview];
+        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[node] delegate:self];
+    }];
+    
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:nil isSourceTemporary:YES delegate:startUploadTransferDelegate];
+}
+
+- (void)smartUploadWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
+    NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:path];
+    MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:parentNode];
+    if (remoteNode) {
+        if (remoteNode.parentHandle == parentNode.handle) {
+            // The file is already in the folder, attach node.
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[remoteNode] delegate:self];
+        } else {
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initToAttachToChatWithCompletion:^{
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[remoteNode] delegate:self];
+            }];
+            if ([remoteNode.name isEqualToString:path.lastPathComponent]) {
+                // The file is already in MEGA, in other folder, has to be copied to this folder.
+                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode delegate:copyRequestDelegate];
+            } else {
+                // The file is already in MEGA, in other folder with different name, has to be copied to this folder and renamed.
+                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:path.lastPathComponent delegate:copyRequestDelegate];
+            }
+        }
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    } else {
+        // The file is not in MEGA.
+        [self startUploadAndAttachWithPath:path parentNode:parentNode];
+    }
+}
+
+- (void)showProgressViewUnderNavigationBar {
+    self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+    self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+    self.navigationBarProgressView.progress = 0.01f;
+    self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
+    self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+    
+    [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -504,6 +623,11 @@
         
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }]];
+    
+    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendMedia", @"A button label. The button allows to capture or upload pictures or videos directly to chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentSendMediaAlertController];
+    }];
+    [selectOptionAlertController addAction:sendMediaAlertAction];
     
     UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
