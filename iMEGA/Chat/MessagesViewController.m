@@ -1344,6 +1344,7 @@
             request.chatMessage.chatRoom = self.chatRoom;
             [self.messages addObject:request.chatMessage];
             [self finishSendingMessageAnimated:YES];
+            [self scrollToBottomAnimated:YES];
             break;
         }
             
