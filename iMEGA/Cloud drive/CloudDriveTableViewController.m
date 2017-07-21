@@ -726,14 +726,7 @@
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
-        if ([[UIDevice currentDevice] iPadDevice] && ([imagePickerController sourceType] == UIImagePickerControllerSourceTypePhotoLibrary)) {
-            UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [popoverController presentPopoverFromBarButtonItem:self.moreBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-            }];
-        } else {
-            [self.tabBarController presentViewController:imagePickerController animated:YES completion:nil];
-        }
+        [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             dispatch_async(dispatch_get_main_queue(), ^{
