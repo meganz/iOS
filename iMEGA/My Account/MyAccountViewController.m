@@ -251,14 +251,11 @@
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToChangeAvatarWithSourceType:sourceType];
-    if ([[UIDevice currentDevice] iPadDevice] && (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)) {
-        UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [popoverController presentPopoverFromBarButtonItem:self.editBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        }];
-    } else {
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }
+    imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
+    imagePickerController.popoverPresentationController.sourceView = self.view;
+    imagePickerController.popoverPresentationController.barButtonItem = self.editBarButtonItem;
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
