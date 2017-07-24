@@ -15,6 +15,7 @@
 #import "MEGALogger.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
@@ -1373,6 +1374,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 }
             }
         }
+    } else {
+        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+        MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+        for (MEGANode *node in nodesToIndex) {
+            [self.indexer index:node];
+        }
     }
 }
 
@@ -1631,7 +1638,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
                     [self.indexer generateAndSaveTree];
                 }
-                [self.indexer indexTree];
+                @try {
+                    [self.indexer indexTree];
+                } @catch (NSException *exception) {
+                    MEGALogError(@"Exception during spotlight indexing: %@", exception);
+                }
             });
             
             break;
