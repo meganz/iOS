@@ -6,5 +6,6 @@
 - (void)generateAndSaveTree;
 - (void)saveTree;
 - (void)indexTree;
+- (BOOL)index:(MEGANode *)node;
 
 @end
