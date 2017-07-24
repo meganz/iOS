@@ -459,6 +459,11 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    MEGALogWarning(@"Memory warning, stopping spotlight indexing");
+    [self.indexer stopIndexing];
+}
+
 #pragma mark - Private
 
 - (void)setupAppearance {    
