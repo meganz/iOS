@@ -24,6 +24,8 @@
 @property (nonatomic) NSByteCountFormatter *byteCountFormatter;
 @property (nonatomic) NSUserDefaults *sharedUserDefaults;
 
+@property (nonatomic) BOOL shouldStop;
+
 @end
 
 @implementation MEGAIndexer
@@ -31,6 +33,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _shouldStop = NO;
         _searchableIndex = [CSSearchableIndex defaultSearchableIndex];
         _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"spotlight-generic" ofType:@"png"]];
         _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"spotlight-folder" ofType:@"png"]];
@@ -38,7 +41,7 @@
         [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
         _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
-            _base64HandlesToIndex = [_sharedUserDefaults objectForKey:@"base64HandlesToIndex"];
+            _base64HandlesToIndex = [_sharedUserDefaults mutableArrayValueForKey:@"base64HandlesToIndex"];
             _base64HandlesIndexed = [[NSMutableArray alloc] init];
         }
     }
@@ -69,6 +72,7 @@
     NSMutableArray *toIndex = [[NSMutableArray alloc] initWithArray:self.base64HandlesToIndex copyItems:YES];
     [toIndex removeObjectsInArray:self.base64HandlesIndexed];
     [self.sharedUserDefaults setObject:toIndex forKey:@"base64HandlesToIndex"];
+    MEGALogDebug(@"%lu nodes pending", toIndex.count);
 }
 
 - (void)indexTree {
@@ -85,6 +89,9 @@
                 [self.base64HandlesIndexed addObject:base64Handle];
             }
         }
+        if (self.shouldStop) {
+            break;
+        }
         if (self.base64HandlesIndexed.count%MNZ_PERSIST_EACH == 0) {
             [self saveTree];
         }
@@ -94,6 +101,10 @@
     // self is still needed, but the arrays are not any more:
     [self.base64HandlesToIndex removeAllObjects];
     [self.base64HandlesIndexed removeAllObjects];
+}
+
+- (void)stopIndexing {
+    self.shouldStop = YES;
 }
 
 #pragma mark - Spotlight

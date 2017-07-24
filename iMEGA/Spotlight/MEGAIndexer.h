@@ -4,8 +4,8 @@
 @interface MEGAIndexer : NSObject
 
 - (void)generateAndSaveTree;
-- (void)saveTree;
 - (void)indexTree;
 - (BOOL)index:(MEGANode *)node;
+- (void)stopIndexing;
 
 @end
