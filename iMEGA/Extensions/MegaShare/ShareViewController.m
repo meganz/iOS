@@ -327,35 +327,53 @@
     }
     NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlToDownload
                                                                              completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                                                         [self uploadData:location toParentNode:parentNode withFileName:response.suggestedFilename];
+                                                                                 if (error) {
+                                                                                     MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
+                                                                                     [self oneUnsupportedMore];
+                                                                                 } else {
+                                                                                     [self uploadData:location toParentNode:parentNode withFileName:response.suggestedFilename];
+                                                                                 }
+                                                                         
                                                                      }];
     [downloadTask resume];
 }
 
 - (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [self shareExtensionStorage];
-    NSString *path = [url path];
-    NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
-    NSError *error = nil;
-    if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
-        [self smartUploadLocalPath:tempPath parent:parentNode];
+    if (url.class == NSURL.class) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *storagePath = [self shareExtensionStorage];
+        NSString *path = [url path];
+        NSString *tempPath = [storagePath stringByAppendingPathComponent:[path lastPathComponent]];
+        NSError *error = nil;
+        if ([fileManager copyItemAtPath:path toPath:tempPath error:&error]) {
+            [self smartUploadLocalPath:tempPath parent:parentNode];
+        } else {
+            MEGALogError(@"Copy item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            [self oneUnsupportedMore];
+        }
     } else {
-        MEGALogError(@"Copy item failed:\n- At path: %@\n- With error: %@", tempPath, error);
-        [self oneLess];
+        MEGALogError(@"Share extension error, %@ object received instead of NSURL", url.class);
+        [self oneUnsupportedMore];
     }
 }
 
 - (void)uploadData:(NSURL *)url toParentNode:(MEGANode *)parentNode withFileName:(NSString *)filename {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [self shareExtensionStorage];
-    NSString *path = [url path];
-    NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
-    // The file needs to be moved in this case because it is downloaded with a temporal filename
-    if ([fileManager moveItemAtPath:path toPath:tempPath error:nil]) {
-        [self smartUploadLocalPath:tempPath parent:parentNode];
+    if (url.class == NSURL.class) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *storagePath = [self shareExtensionStorage];
+        NSString *path = [url path];
+        NSString *tempPath = [storagePath stringByAppendingPathComponent:filename];
+        NSError *error = nil;
+        // The file needs to be moved in this case because it is downloaded with a temporal filename
+        if ([fileManager moveItemAtPath:path toPath:tempPath error:&error]) {
+            [self smartUploadLocalPath:tempPath parent:parentNode];
+        } else {
+            MEGALogError(@"Move item failed:\n- At path: %@\n- With error: %@", tempPath, error);
+            [self oneUnsupportedMore];
+        }
     } else {
-        [self oneLess];
+        MEGALogError(@"Share extension error, %@ object received instead of NSURL", url.class);
+        [self oneUnsupportedMore];
     }
 }
 
@@ -374,7 +392,7 @@
     if (remoteNode) {
         if (remoteNode.parentHandle == parentNode.handle) {
             // The file is already in the folder, nothing to do.
-            [self oneLess];
+            [self onePendingLess];
         } else {
             if ([remoteNode.name isEqualToString:localPath.lastPathComponent]) {
                 // The file is already in MEGA, in other folder, has to be copied to this folder.
@@ -391,10 +409,31 @@
     }
 }
 
-- (void)oneLess {
+- (void)onePendingLess {
     if (--self.pendingAssets == self.unsupportedAssets) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD dismiss];
+        [self alertIfNeededAndDismiss];
+    }
+}
+
+- (void)oneUnsupportedMore {
+    if (self.pendingAssets == ++self.unsupportedAssets) {
+        [self alertIfNeededAndDismiss];
+    }
+}
+
+- (void)alertIfNeededAndDismiss {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD dismiss];
+    if (self.unsupportedAssets > 0) {
+        NSString *message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
         [self dismissWithCompletionHandler:^{
             [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
         }];
@@ -549,7 +588,7 @@
         }
             
         case MEGARequestTypeCopy: {
-            [self oneLess];
+            [self onePendingLess];
             break;
         }
             
@@ -585,7 +624,7 @@
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    [self oneLess];
+    [self onePendingLess];
 }
 
 #pragma mark - LTHPasscodeViewControllerDelegate
