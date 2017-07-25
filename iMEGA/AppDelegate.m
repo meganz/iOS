@@ -96,6 +96,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setCatchException:false];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
