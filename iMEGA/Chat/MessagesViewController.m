@@ -511,8 +511,10 @@
         
         BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
         browserVC.browserAction = BrowserActionSendFromCloudDrive;
-        browserVC.selectedNodes = ^void(NSArray *selectedNodes) {            
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:selectedNodes delegate:self];
+        browserVC.selectedNodes = ^void(NSArray *selectedNodes) {
+            for (MEGANode *node in selectedNodes) {
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+            }
         };
     }];
     [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
