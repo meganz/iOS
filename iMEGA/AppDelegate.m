@@ -1098,6 +1098,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
             [Helper changeToViewController:SharedItemsViewController.class onTabBarController:self.mainTBC];
             tabPosition = [self.mainTBC tabPositionForTag:3];
+            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[tabPosition].childViewControllers[0];
+            [sharedItemsVC selectSegment:0]; // Incoming
         } else {
             [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
             tabPosition = [self.mainTBC tabPositionForTag:0];
