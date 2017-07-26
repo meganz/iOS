@@ -250,6 +250,7 @@
 		5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
 		5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */; };
+		5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */; };
 		5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
@@ -1051,6 +1052,8 @@
 		5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableTableViewCell.h; sourceTree = "<group>"; };
 		5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectableTableViewCell.m; sourceTree = "<group>"; };
 		5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectableTableViewCell.xib; sourceTree = "<group>"; };
+		5B8499071F13DBCE0034A36E /* MEGAAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAssetsPickerController.h; sourceTree = "<group>"; };
+		5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAssetsPickerController.m; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
 		5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateFolderRequestDelegate.h; path = API/Requests/MEGACreateFolderRequestDelegate.h; sourceTree = "<group>"; };
@@ -1747,24 +1750,26 @@
 			children = (
 				E8C8D7821B219BBA00BCDBA4 /* Animators */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
+				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
-				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
-				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
-				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
-				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
-				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
-				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
+				5B8499071F13DBCE0034A36E /* MEGAAssetsPickerController.h */,
+				5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */,
 				410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */,
 				410AD3C01C883AA900BF939E /* MEGAAVViewController.m */,
 				5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */,
 				5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */,
+				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
+				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
-				410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */,
-				410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */,
 				41A4204D1C4EA02C002E192E /* MEGALogger.h */,
 				41A4204E1C4EA02C002E192E /* MEGALogger.m */,
-				A819B3401EAFA7E7004592F9 /* ViewControllers */,
+				410B42431D9D375E00B540DE /* MEGAQLPreviewController.h */,
+				410B42441D9D375E00B540DE /* MEGAQLPreviewController.m */,
+				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
+				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
+				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
+				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3164,6 +3169,7 @@
 				41E88F0B1CF451B000BD3B79 /* MWCaptionView.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
+				5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
