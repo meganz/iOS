@@ -2,4 +2,6 @@
 
 @interface MainTabBarController : UITabBarController
 
+- (NSInteger)tabPositionForTag:(NSInteger)tag;
+
 @end
