@@ -1094,12 +1094,20 @@
             case MEGAChatMessageStatusSendingManual:
                 break;
             case MEGAChatMessageStatusServerReceived: {
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
-                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-                [self.messages replaceObjectAtIndex:index withObject:message];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                if (message.type == MEGAChatMessageTypeAttachment) {
+                    message.chatRoom = self.chatRoom;
+                    [self.messages addObject:message];
+                    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+                    [self finishSendingMessageAnimated:YES];
+                    [self scrollToBottomAnimated:YES];
+                } else {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
+                    NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    [self.messages replaceObjectAtIndex:index withObject:message];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                }
                 [self loadNodesFromMessage:message atTheBeginning:YES];
                 break;
             }
@@ -1220,10 +1228,6 @@
                 [SVProgressHUD showErrorWithStatus:error.name];
                 return;
             }
-            
-            request.chatMessage.chatRoom = self.chatRoom;
-            [self.messages addObject:request.chatMessage];
-            [self finishSendingMessageAnimated:YES];
             break;
         }
             
