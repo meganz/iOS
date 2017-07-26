@@ -1060,7 +1060,7 @@
     
     if (message) {
         message.chatRoom = self.chatRoom;
-        if (message.type != MEGAChatMessageTypeRevokeAttachment) {
+        if (message.type != MEGAChatMessageTypeRevokeAttachment && !message.isDeleted) {
             [self.messages insertObject:message atIndex:0];
         }
         
@@ -1142,9 +1142,15 @@
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
             NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
             NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-            [self.messages replaceObjectAtIndex:index withObject:message];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            if (message.isEdited) {
+                [self.messages replaceObjectAtIndex:index withObject:message];
+                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            }
+            if (message.isDeleted) {
+                [self.messages removeObjectAtIndex:index];
+                [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            }
         }
         
         if (message.type == MEGAChatMessageTypeTruncate) {
