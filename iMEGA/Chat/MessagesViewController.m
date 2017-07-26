@@ -89,6 +89,7 @@
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
 
     [self setupMenuController:[UIMenuController sharedMenuController]];
     
@@ -435,7 +436,8 @@
     UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
-    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem];
+    UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"revoke", @"A button title to revoke the access to an attachment in a chat.") action:@selector(revoke:message:indexPath:)];
+    menuController.menuItems = @[importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem];
 }
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
@@ -781,7 +783,8 @@
             if (action == @selector(download:message:)) return YES;
             
             if ([message.senderId isEqualToString:self.senderId]) {
-                //TODO: Revoke attachments
+                // TODO: show revoke menu item if the message is deletable
+                if (action == @selector(revoke:message:indexPath:)) return YES;                
             } else {
                 if (action == @selector(import:message:)) return YES;
             }
@@ -824,6 +827,10 @@
     }
     if (action == @selector(addContact:message:)) {
         [self addContact:sender message:message];
+        return;
+    }
+    if (action == @selector(revoke:message:indexPath:)) {
+        [self revoke:sender message:message indexPath:indexPath];
         return;
     }
     
@@ -872,6 +879,12 @@
         NSString *email = [message userEmailAtIndex:i];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
+}
+        
+- (void)revoke:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
+    MEGAChatMessage *revokedMessage = [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+    [self.messages removeObjectAtIndex:indexPath.row];
+    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
@@ -1204,6 +1217,8 @@
 #pragma mark - MEGAChatRequest
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    if (error.type) return;
+    
     switch (request.type) {
         case MEGAChatRequestTypeInviteToChatRoom: {
             switch (error.type) {
