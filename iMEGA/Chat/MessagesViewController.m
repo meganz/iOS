@@ -526,11 +526,10 @@
         [self.navigationBarProgressView setProgress:progress animated:YES];
     } completion:^(uint64_t handle) {
         [self.navigationBarProgressView removeFromSuperview];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
-        [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[node] delegate:self];
     }];
     
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:nil isSourceTemporary:YES delegate:startUploadTransferDelegate];
+    NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
 - (void)smartUploadWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
@@ -1216,13 +1215,23 @@
             case MEGAChatMessageStatusSendingManual:
                 break;
             case MEGAChatMessageStatusServerReceived: {
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
-                NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
-                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
-                [self.messages replaceObjectAtIndex:index withObject:message];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-                [self loadNodesFromMessage:message atTheBeginning:YES];
+                if (message.type == MEGAChatMessageTypeAttachment) {
+                    message.chatRoom = self.chatRoom;
+                    [self.messages addObject:message];
+                    [self finishReceivingMessage];
+                    [self loadNodesFromMessage:message atTheBeginning:YES];
+                    if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
+                        [self scrollToBottomAnimated:YES];
+                    }
+                } else {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
+                    NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
+                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    [self.messages replaceObjectAtIndex:index withObject:message];
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    [self loadNodesFromMessage:message atTheBeginning:YES];
+                }
                 break;
             }
             case MEGAChatMessageStatusServerRejected:
@@ -1342,11 +1351,6 @@
                 [SVProgressHUD showErrorWithStatus:error.name];
                 return;
             }
-            
-            request.chatMessage.chatRoom = self.chatRoom;
-            [self.messages addObject:request.chatMessage];
-            [self finishSendingMessageAnimated:YES];
-            [self scrollToBottomAnimated:YES];
             break;
         }
             

@@ -347,10 +347,7 @@
         
         NSString *appData = nil;
         if (_automatically) {
-            appData = [NSString stringWithFormat:@"%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
-            if (!appData) {
-                appData = @"CU";
-            }
+            appData = [NSString stringWithFormat:@"CU=%ld", [[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
         
         if (![name isEqualToString:newName]) {
