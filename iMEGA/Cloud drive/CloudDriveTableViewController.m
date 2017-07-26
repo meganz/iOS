@@ -6,7 +6,6 @@
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
-#import "CTAssetsPickerController.h"
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSMutableAttributedString+MNZCategory.h"
@@ -15,6 +14,7 @@
 
 #import "Helper.h"
 #import "MEGAAssetOperation.h"
+#import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -28,7 +28,7 @@
 #import "PhotosViewController.h"
 #import "SortByTableViewController.h"
 
-@interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, CTAssetsPickerControllerDelegate> {
+@interface CloudDriveTableViewController () <UIAlertViewDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate> {
     
     UIAlertView *removeAlertView;
     
@@ -641,31 +641,6 @@
     }
 }
 
-#pragma mark - CTAssetsPickerControllerDelegate
-
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    if (assets.count==0) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        return;
-    }
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [formatter setLocale:locale];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-        operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-        operationQueue.maxConcurrentOperationCount = 1;
-        
-        for (PHAsset *asset in assets) {
-            MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
-            [operationQueue addOperation:assetOperation];
-        }
-    }];
-}
-
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -730,13 +705,11 @@
     } else {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                CTAssetsPickerController *assetsPickerController = [[CTAssetsPickerController alloc] init];
-                assetsPickerController.delegate = self;
-                
+                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
                 if ([[UIDevice currentDevice] iPadDevice]) {
-                    assetsPickerController.modalPresentationStyle = UIModalPresentationFormSheet;
+                    pickerViewController.modalPresentationStyle = UIModalPresentationFormSheet;
                 }
-                [self presentViewController:assetsPickerController animated:YES completion:nil];
+                [self presentViewController:pickerViewController animated:YES completion:nil];
             });
         }];
     }
