@@ -1156,7 +1156,9 @@
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
     message.chatRoom = self.chatRoom;
-    [self.messages addObject:message];
+    if (message.type != MEGAChatMessageTypeRevokeAttachment) {        
+        [self.messages addObject:message];
+    }
     [self finishReceivingMessage];
     [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
             
