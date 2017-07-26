@@ -38,6 +38,7 @@
 #import "OfflineTableViewController.h"
 #import "SecurityOptionsTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 #import "WarningTransferQuotaViewController.h"
@@ -1091,10 +1092,18 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)presentNodeFromSpotlight {
     uint64_t handle = [MEGASdk handleForBase64Handle:self.spotlightNodeBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+    UINavigationController *navigationController;
+    NSUInteger tabPosition;
     if (node) {
-        CloudDriveTableViewController *cloudDriveVC = self.mainTBC.childViewControllers[0].childViewControllers[0];
-        [Helper changeToViewController:cloudDriveVC.class onTabBarController:self.mainTBC];
-        [cloudDriveVC presentNodeFromSpotlight:node];
+        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
+            [Helper changeToViewController:SharedItemsViewController.class onTabBarController:self.mainTBC];
+            tabPosition = [self.mainTBC tabPositionForTag:3];
+        } else {
+            [Helper changeToViewController:CloudDriveTableViewController.class onTabBarController:self.mainTBC];
+            tabPosition = [self.mainTBC tabPositionForTag:0];
+        }
+        navigationController = self.mainTBC.childViewControllers[tabPosition];
+        [self.indexer presentNodeFromSpotlight:node inNavigationController:navigationController];
     }
     self.spotlightNodeBase64Handle = nil;
 }
