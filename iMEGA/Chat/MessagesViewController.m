@@ -783,8 +783,7 @@
             if (action == @selector(download:message:)) return YES;
             
             if ([message.senderId isEqualToString:self.senderId]) {
-                // TODO: show revoke menu item if the message is deletable
-                if (action == @selector(revoke:message:indexPath:)) return YES;                
+                if (action == @selector(revoke:message:indexPath:) && message.isDeletable) return YES;
             } else {
                 if (action == @selector(import:message:)) return YES;
             }
