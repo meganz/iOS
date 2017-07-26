@@ -1068,3 +1068,5 @@
 "openMEGAAndSignInToContinue"="Open MEGA and sign in to continue";
 /* A button title to revoke the access to an attachment in a chat. */
 "revoke"="Revoke";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";

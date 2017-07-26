@@ -1066,3 +1066,5 @@
 "autorenewableDescription"="Las subscripciones se renuevan automáticamente en periodos de tiempo sucesivos, con la misma duración y precio que el elegido inicialmente. Puedes desactivar la renovación automática de la subscripción a MEGA PRO hasta 24 horas antes de que tu periodo de cobro esté programado en la página de ajustes de iTunes. Para gestionar tus subscripciones, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si no has hecho esto todavía) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las subscripciones que has contratado. Desde aquí, puedes seleccionar la subscripción a MEGA PRO y ver cuando será renovada, cambiar el tipo de subscripción o desactivar la opción de renovación automática para cancelar tu subscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Algunos elementos no pudieron ser compartidos con MEGA";
