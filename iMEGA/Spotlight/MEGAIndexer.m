@@ -120,7 +120,7 @@
         return [self removeFromIndex:[node base64Handle]];
     }
     
-    [self.searchableIndex indexSearchableItems:@[[self spotlightSearchableItemForNode:node]] completionHandler:^(NSError *error){
+    [self.searchableIndex indexSearchableItems:@[[self spotlightSearchableItemForNode:node downloadThumbnail:NO]] completionHandler:^(NSError *error){
         if (error) {
             MEGALogError(@"Spotlight error %@", error);
         } else {
@@ -152,7 +152,7 @@
     return success;
 }
 
-- (CSSearchableItem *)spotlightSearchableItemForNode:(MEGANode *)node {
+- (CSSearchableItem *)spotlightSearchableItemForNode:(MEGANode *)node downloadThumbnail:(BOOL)downloadThumbnail {
     NSString *path = [[MEGASdkManager sharedMEGASdk] nodePathForNode:node];
     
     CSSearchableItemAttributeSet *attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeData];
@@ -168,11 +168,16 @@
     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([node hasThumbnail] && [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
         attributeSet.thumbnailURL = [NSURL fileURLWithPath:thumbnailFilePath];
-    } else { // TODO: Generate thumbnails for every node?
-        if ([node isFile]) {
-            attributeSet.thumbnailURL = self.thumbnailGeneric;
+    } else {
+        if ([node hasThumbnail] && downloadThumbnail) {
+            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
+            attributeSet.thumbnailURL = [NSURL fileURLWithPath:thumbnailFilePath];
         } else {
-            attributeSet.thumbnailURL = self.thumbnailFolder;
+            if ([node isFile]) {
+                attributeSet.thumbnailURL = self.thumbnailGeneric;
+            } else {
+                attributeSet.thumbnailURL = self.thumbnailFolder;
+            }
         }
     }
     
