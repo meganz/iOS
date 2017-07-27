@@ -18,6 +18,9 @@
 @property (nonatomic, assign) NSInteger retries;
 @property (nonatomic, copy) NSString *uploadsDirectory; // Local directory
 
+@property (nonatomic, assign) BOOL uploadToChat;
+@property (nonatomic, copy) void (^filePathCompletion)(NSString *filePath);
+
 @end
 
 @implementation MEGAAssetOperation
@@ -34,6 +37,18 @@
     return self;
 }
 
+- (instancetype)initToUploadToChatWithPHAsset:(PHAsset *)asset completion:(void (^)(NSString *filePath))completion {
+    if (self = [super init]) {
+        _uploadToChat = YES;
+        _phasset = asset;
+        _automatically = NO;
+        _retries = 0;
+        _filePathCompletion = completion;
+    }
+    
+    return self;
+}
+
 - (BOOL)isExecuting {
     return executing;
 }
@@ -43,47 +58,55 @@
 }
 
 - (BOOL)isAsynchronous {
+    if (self.uploadToChat) {
+        return NO;
+    }
+    
     return YES;
 }
 
 - (void)start {
-    if (_automatically) {
-        if (![CameraUploads syncManager].isCameraUploadsEnabled) {
-            [[CameraUploads syncManager] resetOperationQueue];
-            return;
-        }
-        
-        if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
-            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    self.dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    self.dateFormatter.locale = locale;
+    
+    self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    
+    if (self.uploadToChat) {
+        [self main];
+    } else {
+        if (self.automatically) {
+            if (![CameraUploads syncManager].isCameraUploadsEnabled) {
+                [[CameraUploads syncManager] resetOperationQueue];
+                return;
+            }
+            
+            if (![CameraUploads syncManager].isUseCellularConnectionEnabled) {
+                if ([MEGAReachabilityManager isReachableViaWWAN]) {
+                    [[CameraUploads syncManager] resetOperationQueue];
+                    return;
+                }
+            }
+            
+            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
                 [[CameraUploads syncManager] resetOperationQueue];
                 return;
             }
         }
         
-        if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] == 0) {
-            [[CameraUploads syncManager] resetOperationQueue];
+        if ([self isCancelled]) {
+            [self willChangeValueForKey:@"isFinished"];
+            finished = YES;
+            [self didChangeValueForKey:@"isFinished"];
             return;
         }
+        
+        [self willChangeValueForKey:@"isExecuting"];
+        [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
+        executing = YES;
+        [self didChangeValueForKey:@"isExecuting"];
     }
-    
-    if ([self isCancelled]) {
-        [self willChangeValueForKey:@"isFinished"];
-        finished = YES;
-        [self didChangeValueForKey:@"isFinished"];
-        return;
-    }
-    
-    _dateFormatter = [[NSDateFormatter alloc] init];
-    [_dateFormatter setDateFormat:@"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [_dateFormatter setLocale:locale];
-    
-    _uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
-    
-    [self willChangeValueForKey:@"isExecuting"];
-    [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
-    executing = YES;
-    [self didChangeValueForKey:@"isExecuting"];
 }
 
 - (void)main {
@@ -100,15 +123,28 @@
          requestImageDataForAsset:_phasset
          options:options
          resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-             if (!imageData) {
+             if (imageData) {
+                 NSString *filePath = [self filePathWithInfo:info];
+                 if (self.uploadToChat) {
+                     long long imageSize = imageData.length;
+                     if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
+                         if ([imageData writeToFile:filePath atomically:YES]) {
+                             if (self.filePathCompletion) {
+                                 self.filePathCompletion(filePath);
+                             }
+                         } else {
+                             MEGALogError(@"Copying image to path failed.");
+                         }
+                     }
+                 } else {
+                     NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.phasset.creationDate];
+                     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.cameraUploadNode];
+                     
+                     [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:imageData];
+                 }
+             } else {
                  [self manageErrorWithPHAssetInfo:info];
-                 return;
              }
-             NSString *filePath = [self filePathWithInfo:info];
-             NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:_phasset.creationDate];
-             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
-             
-             [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:imageData];
          }];
     } else if ((_phasset.mediaType == PHAssetMediaTypeVideo)) {
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
@@ -118,49 +154,50 @@
         [[PHImageManager defaultManager]
          requestAVAssetForVideo:_phasset
          options:options resultHandler:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-             if (!asset) {
+             if (asset) {
+                 if ([asset isKindOfClass:[AVURLAsset class]]) {
+                     NSURL *avassetUrl = [(AVURLAsset *)asset URL];
+                     NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
+                     long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
+                     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
+                         NSString *filePath = [self filePathWithInfo:info];
+                         NSError *error = nil;
+                         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+                         if (fileExists) {
+                             if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
+                                 MEGALogError(@"Remove item at path failed with error: %@", error);
+                             }
+                         }
+                         if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
+                             if (self.uploadToChat) {
+                                 if (self.filePathCompletion) {
+                                     self.filePathCompletion(filePath);
+                                 }
+                             } else {
+                                 error = nil;
+                                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
+                                 if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                                     MEGALogError(@"Set attributes failed with error: %@", error);
+                                 }
+                                 
+                                 NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
+                                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
+                                 
+                                 [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:nil];
+                             }
+                         } else {
+                             MEGALogError(@"Copy item at path failed with error: %@", error);
+                             if (!self.uploadToChat && self.automatically) {
+                                 [self disableCameraUploadWithError:error];
+                             }
+                         }
+                     }
+                 }
+             } else {
                  [self manageErrorWithPHAssetInfo:info];
-                 return;
-             }
-             if ([asset isKindOfClass:[AVURLAsset class]]) {
-                 NSURL *avassetUrl = [(AVURLAsset *)asset URL];
-                 NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-                 long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
-                 
-                 if (![self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
-                     return;
-                 }
-                 
-                 NSString *filePath = [self filePathWithInfo:info];
-                 NSError *error = nil;
-                 BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-                 if (fileExists) {
-                     if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                         MEGALogError(@"Remove item at path failed with error: %@", error);
-                     }
-                 }
-                 if (![[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
-                     if (error) {
-                         MEGALogError(@"Copy item at path failed with error: %@", error);
-                         [self disableCameraUploadWithError:error];
-                         return;
-                     }
-                 }
-                 
-                 error = nil;
-                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
-                 if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                     MEGALogError(@"Set attributes failed with error: %@", error);
-                 }
-                 
-                 NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
-                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
-                 
-                 [self actionForNode:node fingerPrint:fingerprint filePath:filePath imageData:nil];
              }
          }];
     }
-    
 }
 
 #pragma mark - Private

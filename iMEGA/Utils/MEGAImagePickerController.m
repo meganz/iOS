@@ -65,6 +65,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (self.toShareThroughChat) {
+        [self createMyChatFilesFolderWithCompletion:nil];
+    }
+    
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
     }
@@ -112,10 +116,9 @@
     if (parentNode) {
         [self triggerPathCompletion];
     } else {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^{
+        [self createMyChatFilesFolderWithCompletion:^{
             [self triggerPathCompletion];
         }];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
     }
 }
 
@@ -124,6 +127,14 @@
     
     if (self.filePathCompletion) {
         self.filePathCompletion(self.filePath, self.sourceType);
+    }
+}
+
+- (void)createMyChatFilesFolderWithCompletion:(void (^)(void))completion {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+    if (!parentNode) {
+        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:completion];
+        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
     }
 }
 
@@ -155,6 +166,8 @@
             [self prepareUploadDestination];
             return;
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];

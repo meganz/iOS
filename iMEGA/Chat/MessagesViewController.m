@@ -10,6 +10,7 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
+#import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAImagePickerController.h"
@@ -503,22 +504,32 @@
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
-    MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
-        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
-        } else {
-            [self smartUploadWithPath:filePath parentNode:parentNode];
-        }
-    }];
-    
-    if ([[UIDevice currentDevice] iPadDevice] && (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)) {
-        imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
-        imagePickerController.popoverPresentationController.sourceView = self.view;
-        imagePickerController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
+            MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+            if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+                [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+            } else {
+                [self smartUploadWithPath:filePath parentNode:parentNode];
+            }
+        }];
+        
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    } else {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithFilePathCompletion:^(NSString *filePath) {
+                    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+                    [self smartUploadWithPath:filePath parentNode:parentNode];
+                }];
+                if ([[UIDevice currentDevice] iPadDevice]) {
+                    pickerViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                }
+                
+                [self presentViewController:pickerViewController animated:YES completion:nil];
+            });
+        }];
     }
-    
-    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 - (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
@@ -564,7 +575,6 @@
     self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
     self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-    self.navigationBarProgressView.progress = 0.01f;
     self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
     self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
     
