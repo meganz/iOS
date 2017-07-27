@@ -7,4 +7,6 @@
 
 - (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode automatically:(BOOL)automatically;
 
+- (instancetype)initToUploadToChatWithPHAsset:(PHAsset *)asset completion:(void (^)(NSString *filePath))completion;
+
 @end

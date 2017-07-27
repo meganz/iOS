@@ -7,4 +7,6 @@
 
 - (instancetype)initToUploadToCloudDriveWithParentNode:(MEGANode *)parentNode;
 
+- (instancetype)initToUploadToChatWithFilePathCompletion:(void (^)(NSString *filePath))filePathCompletion;
+
 @end
