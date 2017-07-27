@@ -214,6 +214,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
             [sharedUserDefaults setBool:YES forKey:@"extensions"];
         }
+        if (![sharedUserDefaults boolForKey:@"extensions-passcode"]) {
+            [[LTHPasscodeViewController sharedUser] resetPasscode];
+            [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
+        }
         [self registerForNotifications];
         isAccountFirstLogin = NO;
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
