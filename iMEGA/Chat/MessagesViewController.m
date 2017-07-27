@@ -881,9 +881,7 @@
 }
         
 - (void)revoke:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
-    MEGAChatMessage *revokedMessage = [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
-    [self.messages removeObjectAtIndex:indexPath.row];
-    [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
 }
 
 #pragma mark - JSQMessages collection view flow layout delegate
