@@ -104,6 +104,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
+    [MEGAChatSdk setCatchException:false];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
@@ -220,6 +221,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
             [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
             [sharedUserDefaults setBool:YES forKey:@"extensions"];
+        }
+        if (![sharedUserDefaults boolForKey:@"extensions-passcode"]) {
+            [[LTHPasscodeViewController sharedUser] resetPasscode];
+            [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
         [self registerForNotifications];
         isAccountFirstLogin = NO;
@@ -2012,18 +2017,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
             return;
         }
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
-        
-        if (!offlineNodeExist) {
-            MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
-            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
-            if (replaceRange.location != NSNotFound) {
-                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
-                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
-            }
-        }
-        
-        if (transfer.fileName.mnz_isImagePathExtension) {
+        if ([transfer.appData isEqualToString:@"generate_fa"]) {
             NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
             BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
             
@@ -2036,6 +2030,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
             
             if (!previewExists) {
                 [api createPreview:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] destinatioPath:previewFilePath];
+            }
+            
+            return;
+        }
+        
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        
+        if (!offlineNodeExist) {
+            MEGALogDebug(@"Transfer finish: insert node to DB: base64 handle: %@ - local path: %@", node.base64Handle, transfer.path);
+            NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
+            if (replaceRange.location != NSNotFound) {
+                NSString *result = [transfer.path stringByReplacingCharactersInRange:replaceRange withString:@""];
+                [[MEGAStore shareInstance] insertOfflineNode:node api:api path:[result decomposedStringWithCanonicalMapping]];
             }
         }
         
