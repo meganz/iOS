@@ -471,7 +471,7 @@
         }
         
         if (self.searchController.isActive) {
-            text = AMLocalizedString(@"misspelledEmailAddress", nil);
+            text = AMLocalizedString(@"noResults", nil);
         } else {
             switch (self.displayMode) {
                 case DisplayModeCloudDrive: {
@@ -1309,6 +1309,10 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
