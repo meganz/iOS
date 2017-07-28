@@ -101,6 +101,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    [self migrateLocalCachesLocation];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
@@ -1061,6 +1063,36 @@ typedef NS_ENUM(NSUInteger, URLType) {
             [[UIApplication sharedApplication] registerForRemoteNotifications];
         }
     }];
+}
+
+- (void)migrateLocalCachesLocation {
+    NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *applicationSupportPath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject;
+    
+    NSError *error;
+    NSArray *applicationSupportContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportPath error:&error];
+    if (applicationSupportContent) {
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                return;
+            }
+        }
+        
+        NSArray *cacheContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cachesPath error:&error];
+        if (cacheContents) {
+            for (NSString *filename in cacheContents) {
+                if ([filename containsString:@"karere"] || [filename containsString:@"megaclient"]) {
+                    if (![[NSFileManager defaultManager] moveItemAtPath:[cachesPath stringByAppendingPathComponent:filename] toPath:[applicationSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+                        MEGALogError(@"Move item at path failed with error: %@", error);
+                    }
+                }
+            }
+        } else {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+    } else {
+        MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
 }
 
 #pragma mark - Battery changed
