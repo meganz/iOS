@@ -302,8 +302,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    self.indexer = [[MEGAIndexer alloc] init];
-    [Helper setIndexer:self.indexer];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        self.indexer = [[MEGAIndexer alloc] init];
+        [Helper setIndexer:self.indexer];
+    }
     
     return YES;
 }
@@ -462,8 +464,10 @@ typedef NS_ENUM(NSUInteger, URLType) {
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    MEGALogWarning(@"Memory warning, stopping spotlight indexing");
-    [self.indexer stopIndexing];
+    if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+        MEGALogWarning(@"Memory warning, stopping spotlight indexing");
+        [self.indexer stopIndexing];
+    }
 }
 
 #pragma mark - Private
@@ -1392,10 +1396,12 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
         }
     } else {
-        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-        MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
-        for (MEGANode *node in nodesToIndex) {
-            [self.indexer index:node];
+        if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+            MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+            for (MEGANode *node in nodesToIndex) {
+                [self.indexer index:node];
+            }
         }
     }
 }
@@ -1650,17 +1656,19 @@ typedef NS_ENUM(NSUInteger, URLType) {
             }
             [self showMainTabBar];
 
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
-                    [self.indexer generateAndSaveTree];
-                }
-                @try {
-                    [self.indexer indexTree];
-                } @catch (NSException *exception) {
-                    MEGALogError(@"Exception during spotlight indexing: %@", exception);
-                }
-            });
+            if ([[UIDevice currentDevice] systemVersionGreaterThanOrEqualVersion:@"9.0"]) {
+                NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
+                        [self.indexer generateAndSaveTree];
+                    }
+                    @try {
+                        [self.indexer indexTree];
+                    } @catch (NSException *exception) {
+                        MEGALogError(@"Exception during spotlight indexing: %@", exception);
+                    }
+                });
+            }
             
             break;
         }
