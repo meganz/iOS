@@ -27,6 +27,8 @@
 @property (nonatomic) NSByteCountFormatter *byteCountFormatter;
 @property (nonatomic) NSUserDefaults *sharedUserDefaults;
 
+@property (nonatomic) NSString *pListPath;
+
 @property (nonatomic) BOOL shouldStop;
 
 @end
@@ -43,8 +45,10 @@
         _byteCountFormatter = [[NSByteCountFormatter alloc] init];
         [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
         _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
-            _base64HandlesToIndex = [_sharedUserDefaults mutableArrayValueForKey:@"base64HandlesToIndex"];
+            _base64HandlesToIndex = [NSMutableArray arrayWithContentsOfFile:self.pListPath];
+            MEGALogDebug(@"%lu nodes pending after loading from pList", _base64HandlesToIndex.count);
             _base64HandlesIndexed = [[NSMutableArray alloc] init];
         }
     }
@@ -74,7 +78,7 @@
 - (void)saveTree {
     NSMutableArray *toIndex = [[NSMutableArray alloc] initWithArray:self.base64HandlesToIndex copyItems:YES];
     [toIndex removeObjectsInArray:self.base64HandlesIndexed];
-    [self.sharedUserDefaults setObject:toIndex forKey:@"base64HandlesToIndex"];
+    [toIndex writeToFile:self.pListPath atomically:YES];
     MEGALogDebug(@"%lu nodes pending", toIndex.count);
 }
 
