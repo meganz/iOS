@@ -13,10 +13,10 @@
 #import "MEGAStore.h"
 
 #import "CameraUploads.h"
-#import "NodeTableViewCell.h"
-#import "PhotoCollectionViewCell.h"
 #import "GetLinkActivity.h"
+#import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
+#import "PhotoCollectionViewCell.h"
 #import "RemoveLinkActivity.h"
 #import "ShareFolderActivity.h"
 
@@ -26,6 +26,8 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static NSUInteger totalOperations;
 static BOOL copyToPasteboard;
+
+static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -760,6 +762,7 @@ static BOOL copyToPasteboard;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
         photoCollectionViewCell.thumbnailPlayImageView.hidden = node.name.mnz_videoPathExtension ? NO : YES;
     }
+    [indexer index:node];
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -917,6 +920,10 @@ static BOOL copyToPasteboard;
     }
     
     return [filesURLMutableArray copy];
+}
+
++ (void)setIndexer:(MEGAIndexer* )megaIndexer {
+    indexer = megaIndexer;
 }
 
 #pragma mark - Utils for empty states

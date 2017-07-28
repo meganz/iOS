@@ -3,6 +3,8 @@
 
 #import "MEGASdk.h"
 
+#import "MEGAIndexer.h"
+
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
 #define kLastUploadPhotoDate @"LastUploadPhotoDate"
@@ -97,6 +99,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSUInteger)totalOperations;
 + (void)setCopyToPasteboard:(BOOL)boolValue;
 + (BOOL)copyToPasteboard;
+
++ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for empty states
 

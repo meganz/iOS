@@ -303,6 +303,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     }
     
     self.indexer = [[MEGAIndexer alloc] init];
+    [Helper setIndexer:self.indexer];
     
     return YES;
 }
