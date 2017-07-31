@@ -336,11 +336,11 @@
 "rename"="Rename";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Enter the new name";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Move to the Rubbish Bin";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";

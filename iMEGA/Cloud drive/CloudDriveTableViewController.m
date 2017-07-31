@@ -1235,6 +1235,10 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];;
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     

@@ -24,8 +24,8 @@ MEGAChatSdk *_MEGAChatSdk = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSAssert(_appKey != nil, @"setAppKey: should be called first");
-        NSAssert(_userAgent != nil, @"setUserAgent: should be called first");
-        NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSAssert(_userAgent != nil, @"setUserAgent: should be called first");        
+        NSString *basePath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject;
         _megaSDK = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
     });
     return _megaSDK;
