@@ -136,6 +136,13 @@
                              MEGALogError(@"Copying image to path failed.");
                          }
                      }
+                     
+                     NSError *error = nil;
+                     NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
+                     
+                     if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
+                         MEGALogError(@"Set attributes failed with error: %@", error);
+                     }
                  } else {
                      NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.phasset.creationDate];
                      MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.cameraUploadNode];
