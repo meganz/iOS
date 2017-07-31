@@ -551,10 +551,10 @@
     if (remoteNode) {
         if (remoteNode.parentHandle == parentNode.handle) {
             // The file is already in the folder, attach node.
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[remoteNode] delegate:self];
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:remoteNode.handle delegate:self];
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initToAttachToChatWithCompletion:^{
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodesToChat:self.chatRoom.chatId nodes:@[remoteNode] delegate:self];
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:remoteNode.handle delegate:self];
             }];
             if ([remoteNode.name isEqualToString:path.lastPathComponent]) {
                 // The file is already in MEGA, in other folder, has to be copied to this folder.
