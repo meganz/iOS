@@ -13,24 +13,16 @@
 
 @interface CameraUploadsPopUpViewController () <UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidthLayoutConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadVideosLabelTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uploadVideosSwitchTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *skipButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *enableButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *enableButtonTopLayoutConstraint;
 
 @end
 
@@ -44,20 +36,6 @@
     if (![MEGAReachabilityManager hasCellularConnection]) {
         [_useCellularConnectionLabel setHidden:YES];
         [_useCellularConnectionSwitch setHidden:YES];
-    }
-    
-    if ([[UIDevice currentDevice] iPhone5X]) {
-        self.imageWidthLayoutConstraint.constant = 190.0f;
-        self.imageHeightLayoutConstraint.constant = 208.0f;
-    } else if ([[UIDevice currentDevice] iPhone4X]) {
-        self.topLabelTopLayoutConstraint.constant = 12.0f;
-        self.imageTopLayoutConstraint.constant = 12.0f;
-        self.imageWidthLayoutConstraint.constant = 150.0f;
-        self.imageHeightLayoutConstraint.constant = 165.0f;
-        self.uploadVideosLabelTopLayoutConstraint.constant = 10.0f;
-        self.uploadVideosSwitchTopLayoutConstraint.constant = 10.0f;
-        self.enableButtonTopLayoutConstraint.constant = 10.0f;
-        self.skipButtonTopLayoutConstraint.constant = 8.0f;
     }
 }
 

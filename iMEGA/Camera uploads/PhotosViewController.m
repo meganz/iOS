@@ -16,7 +16,7 @@
 #import "CameraUploadsTableViewController.h"
 #import "BrowserViewController.h"
 
-@interface PhotosViewController () <UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate> {
     BOOL allNodesSelected;
 
     NSUInteger remainingOperations;
@@ -358,11 +358,26 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", nil)];
+    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files'"), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'")];
+    UIAlertController *moveToTheRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertView *removeAlertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"moveToTheRubbishBin", nil) message:message delegate:self cancelButtonTitle:AMLocalizedString(@"cancel", nil) otherButtonTitles:AMLocalizedString(@"ok", nil), nil];
-    removeAlertView.tag = 1;
-    [removeAlertView show];
+    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        remainingOperations = self.selectedItemsDictionary.count;
+        NSUInteger count = self.selectedItemsDictionary.count;
+        NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
+        MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+        for (NSUInteger i = 0; i < count; i++) {
+            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:self];
+        }
+        
+        [self setEditing:NO animated:YES];
+    }]];
+    
+    [self presentViewController:moveToTheRubbishBinAlertController animated:YES completion:nil];
 }
 
 #pragma mark - UICollectioViewDataSource
@@ -652,24 +667,6 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     [self enableCameraUploadsAndShowItsSettings];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // Move to rubbish bin
-    if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            remainingOperations = self.selectedItemsDictionary.count;
-            for (NSInteger i = 0; i < self.selectedItemsDictionary.count; i++) {
-                    [[MEGASdkManager sharedMEGASdk] moveNode:[[self.selectedItemsDictionary allValues] objectAtIndex:i] newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:self];
-            }
-        }
-    } else {
-        if (buttonIndex == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }
-    }
 }
 
 #pragma mark - MEGARequestDelegate

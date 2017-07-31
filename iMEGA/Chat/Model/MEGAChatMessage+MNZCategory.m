@@ -227,29 +227,6 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 
 #pragma mark - NSObject
 
-- (BOOL)isEqual:(id)object {
-    if (self == object) {
-        return YES;
-    }
-    
-    if (![object isKindOfClass:[self class]]) {
-        return NO;
-    }
-    
-    MEGAChatMessage *aMessage = (MEGAChatMessage *)object;
-    
-    if (self.isMediaMessage != aMessage.isMediaMessage) {
-        return NO;
-    }
-    
-    BOOL hasEqualContent = self.isMediaMessage ? [self.media isEqual:aMessage.media] : [self.text isEqualToString:aMessage.text];
-    
-    return [self.senderId isEqualToString:aMessage.senderId]
-    && [self.senderDisplayName isEqualToString:aMessage.senderDisplayName]
-    && ([self.date compare:aMessage.date] == NSOrderedSame)
-    && hasEqualContent;
-}
-
 - (NSUInteger)hash {
     NSUInteger contentHash = self.isMediaMessage ? [self.media mediaHash] : self.text.hash;
     return self.senderId.hash ^ self.date.hash ^ contentHash;
