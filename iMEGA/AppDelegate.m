@@ -1947,11 +1947,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
         NSString *appDataFirstComponentString = [appDataComponentsArray objectAtIndex:0];
         if ([appDataFirstComponentString isEqualToString:@"attachToChatID"]) {
             NSString *chatID = [appDataComponentsArray objectAtIndex:1];
-            MEGANode *node = [api nodeForHandle:transfer.nodeHandle];
-            if (node) {
-                unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:node.handle];
-            }
+            unsigned long long chatIdUll = strtoull([chatID UTF8String], NULL, 0);
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:transfer.nodeHandle];
         }
     }
     

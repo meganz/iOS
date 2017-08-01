@@ -129,19 +129,15 @@
                      long long imageSize = imageData.length;
                      if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
                          if ([imageData writeToFile:filePath atomically:YES]) {
+                             [self changePHAssetModificationDateOnPath:filePath];
+                             
                              if (self.filePathCompletion) {
                                  self.filePathCompletion(filePath);
+                                 [self completeOperation];
                              }
                          } else {
                              MEGALogError(@"Copying image to path failed.");
                          }
-                     }
-                     
-                     NSError *error = nil;
-                     NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
-                     
-                     if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                         MEGALogError(@"Set attributes failed with error: %@", error);
                      }
                  } else {
                      NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.phasset.creationDate];
@@ -179,13 +175,10 @@
                              if (self.uploadToChat) {
                                  if (self.filePathCompletion) {
                                      self.filePathCompletion(filePath);
+                                     [self completeOperation];
                                  }
                              } else {
-                                 error = nil;
-                                 NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
-                                 if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-                                     MEGALogError(@"Set attributes failed with error: %@", error);
-                                 }
+                                 [self changePHAssetModificationDateOnPath:filePath];
                                  
                                  NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                                  MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
@@ -194,8 +187,8 @@
                              }
                          } else {
                              MEGALogError(@"Copy item at path failed with error: %@", error);
-                             if (!self.uploadToChat && self.automatically) {
-                                 [self disableCameraUploadWithError:error];
+                             if (self.automatically) {
+                                 [self disableCameraUploadsWithError:error];
                              }
                          }
                      }
@@ -301,20 +294,18 @@
     return YES;
 }
 
-- (void)disableCameraUploadWithError:(NSError *)error {
+- (void)disableCameraUploadsWithError:(NSError *)error {
     NSString *message = [NSString stringWithFormat:@"%@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, (long)error.code];
     MEGALogDebug(@"Disable Camera Uploads: %@", message);
-    if (_automatically) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:AMLocalizedString(@"ok", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil)
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:AMLocalizedString(@"ok", nil)
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+    });
 }
 
 - (void)manageErrorWithPHAssetInfo:(NSDictionary *)info {
@@ -346,9 +337,12 @@
             [self completeOperation];
             break;
             
-        case 640:
-            [self disableCameraUploadWithError:error];
+        case 640: {
+            if (self.automatically) {
+                [self disableCameraUploadsWithError:error];
+            }
             break;
+        }
             
         default: {
             if (_retries < 20) {
@@ -357,7 +351,9 @@
                 [self start];
             } else {
                 MEGALogDebug(@"Max attempts reached");
-                [self disableCameraUploadWithError:error];
+                if (self.automatically) {
+                    [self disableCameraUploadsWithError:error];
+                }
             }
             break;
         }
@@ -380,12 +376,7 @@
             [imageData writeToFile:filePath atomically:YES];
         }
         
-        NSError *error = nil;
-        NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:_phasset.creationDate forKey:NSFileModificationDate];
-        
-        if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:filePath error:&error]) {
-            MEGALogError(@"Set attributes failed with error: %@", error);
-        }
+        [self changePHAssetModificationDateOnPath:filePath];
         
         NSString *newName = [self newNameForName:name];
         
@@ -445,6 +436,14 @@
                 }
             }
         }
+    }
+}
+
+- (void)changePHAssetModificationDateOnPath:(NSString *)path {
+    NSError *error = nil;
+    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObject:self.phasset.creationDate forKey:NSFileModificationDate];
+    if (![[NSFileManager defaultManager] setAttributes:attributesDictionary ofItemAtPath:path error:&error]) {
+        MEGALogError(@"Set attributes failed with error: %@", error);
     }
 }
 
