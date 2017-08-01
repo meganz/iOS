@@ -178,8 +178,6 @@
                                      [self completeOperation];
                                  }
                              } else {
-                                 [self changePHAssetModificationDateOnPath:filePath];
-                                 
                                  NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                                  MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:_cameraUploadNode];
                                  
