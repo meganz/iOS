@@ -20,8 +20,6 @@
     BOOL allNodesSelected;
 
     NSUInteger remainingOperations;
-    
-    NSUInteger itemsPerRow;
 }
 
 @property (nonatomic, strong) MEGANode *parentNode;
@@ -30,6 +28,10 @@
 @property (nonatomic, strong) NSMutableArray *previewsArray;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
+
+@property (nonatomic) CGSize sizeForItem;
+@property (nonatomic) CGFloat portraitThumbnailSize;
+@property (nonatomic) CGFloat landscapeThumbnailSize;
 
 @property (weak, nonatomic) IBOutlet UIView *uploadProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *photoNameLabel;
@@ -78,15 +80,7 @@
     [self.navigationItem setRightBarButtonItems:@[negativeSpaceBarButtonItem, self.editButtonItem]];
     [self.editButtonItem setImage:[UIImage imageNamed:@"edit"]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        itemsPerRow = 7;
-    } else {
-        if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-            itemsPerRow = 3;
-        } else {
-            itemsPerRow = 4;
-        }
-    }
+    [self calculateSizeForItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -118,11 +112,6 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
@@ -135,10 +124,13 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.photosCollectionView reloadEmptyDataSet];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
-    }];
+        if (self.photosByMonthYearArray.count == 0) {
+            [self.photosCollectionView reloadEmptyDataSet];
+        } else {
+            [self calculateSizeForItem];
+            [self.photosCollectionView reloadData];
+        }
+    } completion:nil];
 }
 
 #pragma mark - Private
@@ -252,6 +244,56 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
+}
+
+- (void)calculateSizeForItem {
+    UIInterfaceOrientation interfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        if (self.portraitThumbnailSize) {
+            self.sizeForItem = CGSizeMake(self.portraitThumbnailSize, self.portraitThumbnailSize);
+        } else {
+            [self calculateMinimumThumbnailSizeForInterfaceOrientation:interfaceOrientation];
+        }
+    } else {
+        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+            if (self.landscapeThumbnailSize) {
+                self.sizeForItem = CGSizeMake(self.landscapeThumbnailSize, self.landscapeThumbnailSize);
+            } else {
+                [self calculateMinimumThumbnailSizeForInterfaceOrientation:interfaceOrientation];
+            }
+        }
+    }
+}
+
+- (void)calculateMinimumThumbnailSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    CGFloat screenWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
+    CGFloat minimumThumbnailSize = [[UIDevice currentDevice] iPadDevice] ? 100.0f : 93.0f;
+    NSUInteger minimumNumberOfItemsPerRow = (screenWidth / minimumThumbnailSize);
+    CGFloat sizeNeededToFitMinimums = (((minimumThumbnailSize + 1) * minimumNumberOfItemsPerRow) - 1);
+    CGFloat incrementForThumbnailSize = 0.1f;
+    while (screenWidth > sizeNeededToFitMinimums) {
+        minimumThumbnailSize += incrementForThumbnailSize;
+        NSUInteger minimumItemsPerRowWithCurrentMinimum = (screenWidth / minimumThumbnailSize);
+        if (minimumItemsPerRowWithCurrentMinimum < minimumNumberOfItemsPerRow) {
+            minimumThumbnailSize -= incrementForThumbnailSize;
+            break;
+        }
+        sizeNeededToFitMinimums = (((minimumThumbnailSize + 1) * minimumNumberOfItemsPerRow) - 1);
+        if (sizeNeededToFitMinimums >= screenWidth) {
+            minimumThumbnailSize -= incrementForThumbnailSize;
+            break;
+        }
+    }
+    
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        self.portraitThumbnailSize = minimumThumbnailSize;
+    } else {
+        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+            self.landscapeThumbnailSize = minimumThumbnailSize;
+        }
+    }
+    
+    self.sizeForItem = CGSizeMake(minimumThumbnailSize, minimumThumbnailSize);
 }
 
 #pragma mark - IBAction
@@ -578,13 +620,12 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(([UIScreen mainScreen].bounds.size.width-itemsPerRow-1)/itemsPerRow,([UIScreen mainScreen].bounds.size.width-itemsPerRow-1)/itemsPerRow);
+    return self.sizeForItem;
 }
 
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
