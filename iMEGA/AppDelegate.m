@@ -1067,10 +1067,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
 
 - (void)migrateLocalCachesLocation {
     NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *applicationSupportPath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject;
-    
     NSError *error;
-    NSArray *applicationSupportContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportPath error:&error];
+    NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.absoluteString;
+    NSArray *applicationSupportContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     if (applicationSupportContent) {
         for (NSString *filename in applicationSupportContent) {
             if ([filename containsString:@"megaclient"]) {
@@ -1082,7 +1085,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
         if (cacheContents) {
             for (NSString *filename in cacheContents) {
                 if ([filename containsString:@"karere"] || [filename containsString:@"megaclient"]) {
-                    if (![[NSFileManager defaultManager] moveItemAtPath:[cachesPath stringByAppendingPathComponent:filename] toPath:[applicationSupportPath stringByAppendingPathComponent:filename] error:&error]) {
+                    if (![[NSFileManager defaultManager] moveItemAtPath:[cachesPath stringByAppendingPathComponent:filename] toPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] error:&error]) {
                         MEGALogError(@"Move item at path failed with error: %@", error);
                     }
                 }

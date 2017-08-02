@@ -1087,16 +1087,11 @@ static BOOL copyToPasteboard;
         }
     }
     
-    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:downloadsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-    
-    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:uploadsDirectory error:&error]) {
+    // Delete application support directory content
+    NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
+        error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
@@ -1134,8 +1129,6 @@ static BOOL copyToPasteboard;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
-    [[MEGAStore shareInstance] removeAllOfflineNodes];
-    [[MEGAStore shareInstance] removeAllUsers];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
