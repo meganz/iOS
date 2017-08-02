@@ -1072,7 +1072,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
     if (error) {
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
-    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.absoluteString;
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
     NSArray *applicationSupportContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
     if (applicationSupportContent) {
         for (NSString *filename in applicationSupportContent) {
@@ -1856,7 +1856,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
     if (newState == MEGAChatInitError) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"The status of the initialization has changed to error." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];

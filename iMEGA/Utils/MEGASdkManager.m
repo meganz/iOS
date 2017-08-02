@@ -30,7 +30,7 @@ MEGAChatSdk *_MEGAChatSdk = nil;
         if (error) {
             MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
         }
-        NSString *basePath = applicationSupportDirectoryURL.absoluteString;
+        NSString *basePath = applicationSupportDirectoryURL.path;
         _megaSDK = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
     });
     return _megaSDK;
