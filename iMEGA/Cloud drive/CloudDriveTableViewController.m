@@ -1289,11 +1289,6 @@
         // If file doesn't exist in MEGA then upload it
         if (node == nil) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
-            
-            if (localFilePath.mnz_isImagePathExtension) {
-                [[MEGASdkManager sharedMEGASdk] createThumbnail:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_thumbnail"]];
-                [[MEGASdkManager sharedMEGASdk] createPreview:localFilePath destinatioPath:[localFilePath stringByAppendingString:@"_preview"]];
-            }
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {

@@ -106,11 +106,6 @@
     }
 }
 
-- (void)createThumbnailAndPreviewOnPath:(NSString *)path {
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:path destinatioPath:[path stringByAppendingString:@"_thumbnail"]];
-    [[MEGASdkManager sharedMEGASdk] createPreview:path destinatioPath:[path stringByAppendingString:@"_preview"]];
-}
-
 - (void)prepareUploadDestination {
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     if (parentNode) {
@@ -156,13 +151,11 @@
         
         self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         if (self.toUploadSomething) {
-            [self createThumbnailAndPreviewOnPath:imagePath];
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         } else if (self.toChangeAvatar) {
             NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
         } else if (self.toShareThroughChat) {
-            [self createThumbnailAndPreviewOnPath:imagePath];
             [self prepareUploadDestination];
             return;
         }
