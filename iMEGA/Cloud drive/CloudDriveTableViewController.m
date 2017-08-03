@@ -13,7 +13,6 @@
 #import "UIAlertAction+MNZCategory.h"
 
 #import "Helper.h"
-#import "MEGAAssetOperation.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
