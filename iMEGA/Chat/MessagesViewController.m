@@ -518,10 +518,10 @@
                 MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithAssetsCompletion:^(NSArray *assets) {
                     for (PHAsset *asset in assets) {
                         MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset filePath:^(NSString *filePath) {
+                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
                             [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
                         } node:^(MEGANode *node) {
-                            [self attachOrCopyNode:node toParentNode:parentNode];
+                            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
                         } error:^(NSError *error) {
                             NSString *message;
                             NSString *title;
@@ -574,7 +574,7 @@
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
-- (void)attachOrCopyNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
+- (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
     if (node) {
         if (node.parentHandle == parentNode.handle) {
             // The file is already in the folder, attach node.

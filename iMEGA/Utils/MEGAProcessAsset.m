@@ -3,14 +3,13 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGASdkManager.h"
 
-static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
-
 @interface MEGAProcessAsset ()
 
 @property (nonatomic, copy) PHAsset *asset;
 @property (nonatomic, copy) void (^filePath)(NSString *filePath);
 @property (nonatomic, copy) void (^node)(MEGANode *node);
 @property (nonatomic, copy) void (^error)(NSError *error);
+@property (nonatomic, strong) MEGANode *parentNode;
 
 @property (nonatomic, assign) NSUInteger retries;
 
@@ -18,7 +17,7 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
 
 @implementation MEGAProcessAsset
 
-- (instancetype)initWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
+- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
@@ -27,6 +26,7 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
         _node = node;
         _error = error;
         _retries = 0;
+        _parentNode = parentNode;
     }
     
     return self;
@@ -62,7 +62,7 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
      resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
          if (imageData) {
              NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.creationDate];
-             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint];
+             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
              if (node) {
                  if (self.node) {
                      self.node(node);
@@ -95,13 +95,14 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
                  }
              }
          } else {
+             NSError *error = [info objectForKey:@"PHImageErrorKey"];
+             MEGALogError(@"Request image data for asset failed with error: %@", error);
              if (self.retries < 20) {
                  self.retries++;
                  [self requestImageAsset];
              } else {
                  if (self.error) {
-                     NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                     MEGALogError(@"Request image data for asset failed with error: %@", error);
+                     MEGALogDebug(@"Max attempts reached");
                      self.error(error);
                  }
              }
@@ -127,7 +128,7 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
                      NSError *error;
                      if ([[NSFileManager defaultManager] copyItemAtPath:avassetUrl.path toPath:filePath error:&error]) {
                          NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
-                         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint];
+                         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
                          if (node) {
                              if (self.node) {
                                  self.node(node);
@@ -147,13 +148,14 @@ static NSString *MEGAProcessAssetErrorDomain = @"MEGAProcessAssetErrorDomain";
                  }
              }
          } else {
+             NSError *error = [info objectForKey:@"PHImageErrorKey"];
+             MEGALogError(@"Request AVAsset failed with error: %@", error);
              if (self.retries < 10) {
                  self.retries++;
                  [self requestVideoAsset];
              } else {
                  if (self.error) {
-                     NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                     MEGALogError(@"Request AVAsset failed with error: %@", error);
+                     MEGALogDebug(@"Max attempts reached");
                      self.error(error);
                  }
              }
