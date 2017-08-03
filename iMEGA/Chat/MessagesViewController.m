@@ -536,6 +536,9 @@
     [self showProgressViewUnderNavigationBar];
     
     MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTransferProgress:^(float progress) {
+        if (self.navigationBarProgressView.progress > progress) {
+            return;
+        }
         [self.navigationBarProgressView setProgress:progress animated:YES];
     } completion:^(uint64_t handle) {
         [self.navigationBarProgressView removeFromSuperview];
