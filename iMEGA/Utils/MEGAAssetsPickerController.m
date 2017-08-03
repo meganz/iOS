@@ -12,8 +12,8 @@
 @property (nonatomic, getter=toUploadToCloudDrive) BOOL uploadToCloudDrive;
 @property (nonatomic, getter=toUploadToChat) BOOL uploadToChat;
 
-@property (nonatomic, copy) void (^filePathCompletion)(NSString *filePath);
-@property (nonatomic) NSString *filePath;
+@property (nonatomic, copy) void (^assetsCompletion)(NSArray *assets);
+@property (nonatomic, copy) NSArray *assets;
 
 @end
 
@@ -32,12 +32,12 @@
     return self;
 }
 
-- (instancetype)initToUploadToChatWithFilePathCompletion:(void (^)(NSString *filePath))filePathCompletion {
+- (instancetype)initToUploadToChatWithAssetsCompletion:(void (^)(NSArray *))assetsCompletion {
     self = [super init];
     
     if (self) {
         _uploadToChat = YES;
-        _filePathCompletion = filePathCompletion;
+        _assetsCompletion = assetsCompletion;
         
         self.delegate = self;
     }
@@ -64,17 +64,17 @@
 - (void)prepareUploadDestination {
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     if (parentNode) {
-        [self triggerPathCompletion];
+        [self triggerAssetsCompletion];
     } else {
         [self createMyChatFilesFolderWithCompletion:^{
-            [self triggerPathCompletion];
+            [self triggerAssetsCompletion];
         }];
     }
 }
 
-- (void)triggerPathCompletion {
-    if (self.filePathCompletion) {
-        self.filePathCompletion(self.filePath);
+- (void)triggerAssetsCompletion {
+    if (self.assetsCompletion) {
+        self.assetsCompletion(self.assets);
     }
 }
 
@@ -95,24 +95,18 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
-        NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-        operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-        operationQueue.maxConcurrentOperationCount = 1;
         if (self.toUploadToCloudDrive) {
+            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+            operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
+            operationQueue.maxConcurrentOperationCount = 1;
             for (PHAsset *asset in assets) {
                 MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode automatically:NO];
                 [operationQueue addOperation:assetOperation];
             }
         } else if (self.toUploadToChat) {
             [self createMyChatFilesFolderWithCompletion:nil];
-            
-            for (PHAsset *phAsset in assets) {
-                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initToUploadToChatWithPHAsset:phAsset completion:^(NSString *filePath) {
-                    self.filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
-                    [self prepareUploadDestination];
-                }];
-                [operationQueue addOperation:assetOperation];
-            }
+            self.assets = assets;
+            [self prepareUploadDestination];
         }
     }];
 }

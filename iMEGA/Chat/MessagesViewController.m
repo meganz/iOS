@@ -20,6 +20,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAOpenMessageHeaderView.h"
+#import "MEGAProcessAsset.h"
 #import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
@@ -507,20 +508,45 @@
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-                [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
-            } else {
-                [self smartUploadWithPath:filePath parentNode:parentNode];
-            }
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
         }];
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithFilePathCompletion:^(NSString *filePath) {
-                    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-                    [self smartUploadWithPath:filePath parentNode:parentNode];
+                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithAssetsCompletion:^(NSArray *assets) {
+                    for (PHAsset *asset in assets) {
+                        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset filePath:^(NSString *filePath) {
+                            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+                        } node:^(MEGANode *node) {
+                            [self attachOrCopyNode:node toParentNode:parentNode];
+                        } error:^(NSError *error) {
+                            NSString *message;
+                            NSString *title;
+                            switch (error.code) {
+                                case -1:
+                                    title = error.localizedDescription;
+                                    message = error.localizedFailureReason;
+                                    break;
+                                    
+                                case -2:
+                                    title = AMLocalizedString(@"error", nil);
+                                    message = error.localizedDescription;
+                                    break;
+                                    
+                                default:
+                                    title = AMLocalizedString(@"error", nil);
+                                    message = error.localizedDescription;
+                                    break;
+                            }
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                            [self presentViewController:alertController animated:YES completion:nil];
+                        }];
+                        [processAsset prepare];
+                    }
                 }];
                 if ([[UIDevice currentDevice] iPadDevice]) {
                     pickerViewController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -548,29 +574,18 @@
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
 
-- (void)smartUploadWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
-    NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:path];
-    MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:localFingerprint parent:parentNode];
-    if (remoteNode) {
-        if (remoteNode.parentHandle == parentNode.handle) {
+- (void)attachOrCopyNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
+    if (node) {
+        if (node.parentHandle == parentNode.handle) {
             // The file is already in the folder, attach node.
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:remoteNode.handle delegate:self];
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initToAttachToChatWithCompletion:^{
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:remoteNode.handle delegate:self];
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
             }];
-            if ([remoteNode.name isEqualToString:path.lastPathComponent]) {
-                // The file is already in MEGA, in other folder, has to be copied to this folder.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode delegate:copyRequestDelegate];
-            } else {
-                // The file is already in MEGA, in other folder with different name, has to be copied to this folder and renamed.
-                [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:path.lastPathComponent delegate:copyRequestDelegate];
-            }
+            // The file is already in MEGA, in other folder, has to be copied to this folder.
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode delegate:copyRequestDelegate];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-    } else {
-        // The file is not in MEGA.
-        [self startUploadAndAttachWithPath:path parentNode:parentNode];
     }
 }
 
