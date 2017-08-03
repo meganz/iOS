@@ -436,6 +436,7 @@
 		A819B33F1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* WarningTransferQuotaViewController.m */; };
 		A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */; };
 		A81A852B1F0F6F5100702353 /* UIScreen+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */; };
+		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
@@ -1119,6 +1120,8 @@
 		A819B3411EAFA844004592F9 /* WarningTransferQuotaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WarningTransferQuotaViewController.xib; path = ViewControllers/WarningTransferQuotaViewController.xib; sourceTree = "<group>"; };
 		A81A85291F0F6F5100702353 /* UIScreen+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+MNZCategory.h"; sourceTree = "<group>"; };
 		A81A852A1F0F6F5100702353 /* UIScreen+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+MNZCategory.m"; sourceTree = "<group>"; };
+		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
+		A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAProcessAsset.m; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
 		A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetThumbnailRequestDelegate.m; path = API/Requests/MEGAGetThumbnailRequestDelegate.m; sourceTree = "<group>"; };
 		A827510F1E97AB6E007CD9E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1770,6 +1773,8 @@
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
 				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
 				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
+				A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */,
+				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3276,6 +3281,7 @@
 				41E88F0E1CF451B000BD3B79 /* MWPhoto.m in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
+				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */,
 				4152268C1A692ECC00EC7BB6 /* CloudDriveTableViewController.m in Sources */,
