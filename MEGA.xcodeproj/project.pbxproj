@@ -275,8 +275,6 @@
 		941135651F011C8400D33428 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
-		9419B6C31F20D25400FEBE31 /* spotlight-folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419B6C11F20D25400FEBE31 /* spotlight-folder.png */; };
-		9419B6C41F20D25400FEBE31 /* spotlight-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419B6C21F20D25400FEBE31 /* spotlight-generic.png */; };
 		9419B6C61F20DC5700FEBE31 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */; };
 		942254F51EDC03150074C51A /* MEGAPickerFileProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		942254F81EDC03150074C51A /* MEGAPicker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 942254DC1EDC03130074C51A /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -441,6 +439,12 @@
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
 		A82751161E97AB88007CD9E2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751151E97AB88007CD9E2 /* libstdc++.tbd */; };
+		A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
+		A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
+		A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
+		A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
+		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
+		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFB31F0A52CD0081BCE3 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFAC1F0A52CD0081BCE3 /* libevent_core.a */; };
@@ -1054,8 +1058,6 @@
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
-		9419B6C11F20D25400FEBE31 /* spotlight-folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "spotlight-folder.png"; path = "Spotlight/spotlight-folder.png"; sourceTree = "<group>"; };
-		9419B6C21F20D25400FEBE31 /* spotlight-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "spotlight-generic.png"; path = "Spotlight/spotlight-generic.png"; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		942254DC1EDC03130074C51A /* MEGAPicker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPicker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1122,6 +1124,12 @@
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
+		A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@3x.png"; path = "Spotlight/Spotlight_file@3x.png"; sourceTree = "<group>"; };
+		A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@2x.png"; path = "Spotlight/Spotlight_folder@2x.png"; sourceTree = "<group>"; };
+		A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@3x.png"; path = "Spotlight/Spotlight_folder@3x.png"; sourceTree = "<group>"; };
+		A82E5BF21F3470B5003C149C /* Spotlight_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_file.png; path = Spotlight/Spotlight_file.png; sourceTree = "<group>"; };
+		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
@@ -2449,10 +2457,14 @@
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
+				A82E5BF21F3470B5003C149C /* Spotlight_file.png */,
+				A82E5BF31F3470B5003C149C /* Spotlight_folder.png */,
+				A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */,
+				A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */,
+				A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */,
+				A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */,
 				9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */,
 				9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */,
-				9419B6C11F20D25400FEBE31 /* spotlight-folder.png */,
-				9419B6C21F20D25400FEBE31 /* spotlight-generic.png */,
 			);
 			name = Spotlight;
 			sourceTree = "<group>";
@@ -2905,7 +2917,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
+				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
 				E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */,
 				5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
@@ -2914,9 +2928,9 @@
 				4115043E1CEB07C700BF38E3 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				41ADAA171ADE8B8800641BB4 /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
-				9419B6C31F20D25400FEBE31 /* spotlight-folder.png in Resources */,
 				411504391CEB07C700BF38E3 /* ImageSelectedSmallOn@3x.png in Resources */,
 				41ADAA151ADE8B8800641BB4 /* SVWebViewController.bundle in Resources */,
+				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				411504351CEB07C700BF38E3 /* ImageSelectedSmallOff@2x.png in Resources */,
 				4115044B1CEB07C700BF38E3 /* VideoOverlay@3x.png in Resources */,
@@ -2952,8 +2966,10 @@
 				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
 				411504481CEB07C700BF38E3 /* UIBarButtonItemGrid@3x.png in Resources */,
 				41ADAA1B1ADE8B8800641BB4 /* SVWebViewControllerActivitySafari-iPad.png in Resources */,
+				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				4115042B1CEB07C700BF38E3 /* ImageError.png in Resources */,
 				411504451CEB07C700BF38E3 /* UIBarButtonItemArrowRight@3x.png in Resources */,
+				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
@@ -2961,11 +2977,11 @@
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				411504461CEB07C700BF38E3 /* UIBarButtonItemGrid.png in Resources */,
+				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* WarningTransferQuotaViewController.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				411504401CEB07C700BF38E3 /* UIBarButtonItemArrowLeft.png in Resources */,
 				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
-				9419B6C41F20D25400FEBE31 /* spotlight-generic.png in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				4115043C1CEB07C700BF38E3 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				41ADAA131ADE8B8800641BB4 /* SVWebViewController.strings in Resources */,
