@@ -1966,10 +1966,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 [self showOverquotaAlert];
                 break;
             }
-                
-            default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", transfer.transferString, error.name]];
+            default:{
+                if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
+                    NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(error.name, nil)]];
+                }
                 break;
+            }
         }
         return;
     }
