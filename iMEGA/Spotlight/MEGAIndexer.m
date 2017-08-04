@@ -40,8 +40,16 @@
     if (self) {
         _shouldStop = NO;
         _searchableIndex = [CSSearchableIndex defaultSearchableIndex];
-        _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"spotlight-generic" ofType:@"png"]];
-        _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"spotlight-folder" ofType:@"png"]];
+        if ([[UIScreen mainScreen] scale] == 1) {
+            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file" ofType:@"png"]];
+            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder" ofType:@"png"]];
+        } else if ([[UIScreen mainScreen] scale] == 2) {
+            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@2x" ofType:@"png"]];
+            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@2x" ofType:@"png"]];
+        } else if ([[UIScreen mainScreen] scale] == 3) {
+            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@3x" ofType:@"png"]];
+            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@3x" ofType:@"png"]];
+        }
         _byteCountFormatter = [[NSByteCountFormatter alloc] init];
         [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
         _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
