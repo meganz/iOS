@@ -145,7 +145,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Carpeta vacía";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="No hay archivos en tu Disco";
+"cloudDriveEmptyState_title"="No hay archivos en tu nube";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Añadir archivos";
 /* Title shown when you make a search and there is 'No Results' */
@@ -185,7 +185,7 @@
 /* Title shown when the there's no transfers, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="No hay subidas";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Disco";
+"cloudDrive"="Mi nube";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d archivo";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -399,7 +399,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Guarda automáticamente tus fotos en tu Disco";
+"automaticallyBackupYourPhotos"="Guarda automáticamente tus fotos en tu nube";
 /* Button title that enables the functionality "Camera Uploads", which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -425,7 +425,7 @@
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Introducir un email";
 /* Title of Shared Items section */
-"sharedItems"="Elementos compartidos";
+"sharedItems"="Carpetas compartidas";
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Compartido";
 /* Title of the "Incoming" Shared Items. */
@@ -1025,7 +1025,7 @@
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"= "Enviar contacto";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
-"addFromMyCloudDrive"="Enviar desde mi Disco";
+"addFromMyCloudDrive"="Enviar desde mi nube";
 /* */
 "done"="Aceptar";
 /* Button label for sending file attachments through the chat to another user. */
