@@ -5,9 +5,9 @@
 
 @property (nonatomic, getter=toUploadToChat) BOOL uploadToChat;
 
-@property (nonatomic, copy) void (^transferProgress)(float transferProgress);
-
-@property (nonatomic, copy) void (^completion)(uint64_t handle);
+@property (nonatomic, copy) void (^totalBytes)(long long totalBytes);
+@property (nonatomic, copy) void (^progress)(float transferredBytes, float totalBytes);
+@property (nonatomic, copy) void (^completion)(long long transferTotalBytes);
 
 @end
 
@@ -15,11 +15,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initToUploadToChatWithTransferProgress:(void (^)(float transferProgress))transferProgress completion:(void (^)(uint64_t handle))completion {
+- (instancetype)initToUploadToChatWithTotalBytes:(void (^)(long long totalBytes))totalBytes progress:(void (^)(float transferredBytes, float totalBytes))progress completion:(void (^)(long long totalBytes))completion {
     self = [super init];
     if (self) {
         _uploadToChat = YES;
-        _transferProgress = transferProgress;
+        _totalBytes = totalBytes;
+        _progress = progress;
         _completion = completion;
     }
     
@@ -30,14 +31,15 @@
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    if (self.totalBytes) {
+        self.totalBytes(transfer.totalBytes.longLongValue);
+    }
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (self.transferProgress) {
-        float progress = transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue;
-        if (progress > 0 && progress <= 1.0) {
-            self.transferProgress(progress);
-        }
+    if (self.progress) {
+         self.progress(transfer.transferredBytes.floatValue, transfer.totalBytes.floatValue);
     }
 }
 
@@ -47,7 +49,7 @@
     if (error.type) return;
     
     if (self.completion) {
-        self.completion(transfer.nodeHandle);
+        self.completion(transfer.totalBytes.longLongValue);
     }
 }
 

@@ -54,6 +54,10 @@
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
 
+@property (nonatomic) long long totalBytesToUpload;
+@property (nonatomic) long long remainingBytesToUpload;
+@property (nonatomic) float totalProgressOfTransfersCompleted;
+
 @end
 
 @implementation MessagesViewController
@@ -561,13 +565,31 @@
 - (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
     [self showProgressViewUnderNavigationBar];
     
-    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTransferProgress:^(float progress) {
-        if (self.navigationBarProgressView.progress > progress) {
-            return;
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
+        self.totalBytesToUpload += totalBytes;
+        self.remainingBytesToUpload += totalBytes;
+    } progress:^(float transferredBytes, float totalBytes) {
+        float asignableProgresRegardWithTotal = (totalBytes / self.totalBytesToUpload);
+        float transferProgress = (transferredBytes / totalBytes);
+        float currentAsignableProgressForThisTransfer = (transferProgress * asignableProgresRegardWithTotal);
+        
+        if (currentAsignableProgressForThisTransfer < asignableProgresRegardWithTotal) {
+            if (self.totalProgressOfTransfersCompleted != 0) {
+                currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted;
+            }
+            
+            if (currentAsignableProgressForThisTransfer > self.navigationBarProgressView.progress) {
+                [self.navigationBarProgressView setProgress:currentAsignableProgressForThisTransfer animated:YES];
+            }
         }
-        [self.navigationBarProgressView setProgress:progress animated:YES];
-    } completion:^(uint64_t handle) {
-        [self.navigationBarProgressView removeFromSuperview];
+    } completion:^(long long totalBytes) {
+        float progressCompletedRegardWithTotal = ((float)totalBytes / self.totalBytesToUpload);
+        self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal;
+        self.remainingBytesToUpload -= totalBytes;
+        
+        if (self.remainingBytesToUpload == 0) {
+            [self resetAndHideProgressView];
+        }
     }];
     
     NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
@@ -590,15 +612,26 @@
 }
 
 - (void)showProgressViewUnderNavigationBar {
-    self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-    self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-    self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
-    self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
-    });
+    if (self.navigationBarProgressView) {
+        self.navigationBarProgressView.hidden = NO;
+    } else {
+        self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+        self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+        self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
+        self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
+        });
+    }
+}
+
+- (void)resetAndHideProgressView {
+    self.totalBytesToUpload = 0.0;
+    self.totalProgressOfTransfersCompleted = 0.0f;
+    self.navigationBarProgressView.progress = 0.0f;
+    self.navigationBarProgressView.hidden = YES;
 }
 
 #pragma mark - Custom menu actions for cells
