@@ -109,6 +109,8 @@ typedef NS_ENUM(NSUInteger, URLType) {
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    [self migrateLocalCachesLocation];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
         [[MEGALogger sharedLogger] startLogging];
     }
@@ -1120,6 +1122,39 @@ typedef NS_ENUM(NSUInteger, URLType) {
     self.spotlightNodeBase64Handle = nil;
 }
 
+- (void)migrateLocalCachesLocation {
+    NSString *cachesPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    NSError *error;
+    NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    if (error) {
+        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+    }
+    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
+    NSArray *applicationSupportContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+    if (applicationSupportContent) {
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient"]) {
+                return;
+            }
+        }
+        
+        NSArray *cacheContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cachesPath error:&error];
+        if (cacheContents) {
+            for (NSString *filename in cacheContents) {
+                if ([filename containsString:@"karere"] || [filename containsString:@"megaclient"]) {
+                    if (![[NSFileManager defaultManager] moveItemAtPath:[cachesPath stringByAppendingPathComponent:filename] toPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] error:&error]) {
+                        MEGALogError(@"Move item at path failed with error: %@", error);
+                    }
+                }
+            }
+        } else {
+            MEGALogError(@"Contents of directory at path failed with error: %@", error);
+        }
+    } else {
+        MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
+}
+
 #pragma mark - Battery changed
 
 - (void)batteryChanged:(NSNotification *)notification {
@@ -1896,7 +1931,7 @@ typedef NS_ENUM(NSUInteger, URLType) {
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
     if (newState == MEGAChatInitError) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"The status of the initialization has changed to error." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         }]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
@@ -1986,8 +2021,13 @@ typedef NS_ENUM(NSUInteger, URLType) {
                 break;
             }
                 
-            default:
+            default:{
+                if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
+                    NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(error.name, nil)]];
+                }
                 break;
+            }
         }
         return;
     }

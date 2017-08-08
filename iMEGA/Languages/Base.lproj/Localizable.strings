@@ -336,11 +336,11 @@
 "rename"="Rename";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Enter the new name";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Move to the Rubbish Bin";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";
@@ -1070,3 +1070,54 @@
 "revoke"="Revoke";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Transfer failed:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="No error";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Internal error";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Invalid argument";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Request failed, retrying";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Rate limit exceeded";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Failed permanently";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Too many concurrent connections or transfers";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Out of range";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Expired";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Not found";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Circular linkage detected";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Access denied";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Already exists";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Incomplete";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Invalid key/Decryption error";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Bad session ID";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Blocked";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Over quota";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Temporarily not available";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Connection overflow";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Write error";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Read error";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Invalid application key";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Unknown error";
