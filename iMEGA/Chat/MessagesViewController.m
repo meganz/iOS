@@ -1271,7 +1271,6 @@
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                 }
-                [self loadNodesFromMessage:message atTheBeginning:YES];
                 break;
             }
             case MEGAChatMessageStatusServerRejected:
