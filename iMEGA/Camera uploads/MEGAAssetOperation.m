@@ -196,6 +196,7 @@
     } else {
         switch (error.code) {
             case 0:
+            case 1:
             case 27:
             case 28:
             case 80:
