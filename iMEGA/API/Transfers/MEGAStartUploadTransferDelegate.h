@@ -5,6 +5,6 @@
 
 - (id)init NS_UNAVAILABLE;
 
-- (instancetype)initToUploadToChatWithTransferProgress:(void (^)(float transferProgress))transferProgress completion:(void (^)(uint64_t handle))completion;
+- (instancetype)initToUploadToChatWithTotalBytes:(void (^)(long long totalBytes))totalBytes progress:(void (^)(float transferredBytes, float totalBytes))progress completion:(void (^)(long long totalBytes))completion;
 
 @end
