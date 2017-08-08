@@ -596,7 +596,9 @@
     self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
     self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
     
-    [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
+    });
 }
 
 #pragma mark - Custom menu actions for cells
