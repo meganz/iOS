@@ -46,11 +46,11 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    if (error.type) return;
-    
     if (self.completion) {
         self.completion(transfer.totalBytes.longLongValue);
     }
+    
+    if (error.type) return;
 }
 
 @end
