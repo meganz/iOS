@@ -1070,3 +1070,54 @@
 "openMEGAAndSignInToContinue"="Abre MEGA e inicia sesión para continuar";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Algunos elementos no pudieron ser compartidos con MEGA";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Error en la transferencia:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Ningún error";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="Error interno";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Argumento no válido ";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="Petición fallida, reintentando";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Se ha superado el límite";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Archivo no disponible temporalmente";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Demasiadas conexiones o transferencias simultáneas";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Fuera de alcance";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Caducado";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="No encontrado";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Enlace circular detectado";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Acceso denegado";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Ya existe";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Incompleto";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Clave incorrecta / Error de descifrado";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Identificador de sesión erróneo";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Bloqueado";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Límite de cuenta excedido";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="No disponible temporalmente";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Demasiadas conexiones";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Error de escritura";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Error de lectura";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Clave de aplicación no válida";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Error desconocido";
