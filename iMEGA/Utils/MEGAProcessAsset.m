@@ -208,27 +208,33 @@
     dateFormatter.locale = locale;
     
     MEGALogDebug(@"Asset %@\n%@", self.asset, info);
+    NSString *name;
     NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-    if (!url) {
-        url = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
+    if (url) {
+        name = url.path.lastPathComponent;
+    } else {
+        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
+        name = imageFileSandbox.lastPathComponent;
     }
     
-    NSString *extension = url.pathExtension.lowercaseString;
-    if (!extension) {
-        switch (self.asset.mediaType) {
-            case PHAssetMediaTypeImage:
-                extension = @"jpg";
-                break;
-                
-            case PHAssetMediaTypeVideo:
-                extension = @"mov";
-                break;
-                
-            default:
-                break;
+    if (!self.originalName) {
+        NSString *extension = name.pathExtension.lowercaseString;
+        if (!extension) {
+            switch (self.asset.mediaType) {
+                case PHAssetMediaTypeImage:
+                    extension = @"jpg";
+                    break;
+                    
+                case PHAssetMediaTypeVideo:
+                    extension = @"mov";
+                    break;
+                    
+                default:
+                    break;
+            }
         }
+        name = [[dateFormatter stringFromDate:self.asset.creationDate] stringByAppendingPathExtension:extension];
     }
-    NSString *name = [[dateFormatter stringFromDate:self.asset.creationDate] stringByAppendingPathExtension:extension];
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
     return filePath;
 }
