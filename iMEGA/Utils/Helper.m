@@ -716,9 +716,9 @@ static BOOL copyToPasteboard;
 
 + (uint64_t)freeDiskSpace {
     uint64_t totalFreeSpace = 0;
-    NSError *error = nil;
+    NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
     
     if (dictionary) {
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
@@ -1040,7 +1040,7 @@ static BOOL copyToPasteboard;
 
 + (void)deleteUserData {
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    NSError *error = nil;
+    NSError *error;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
@@ -1059,14 +1059,12 @@ static BOOL copyToPasteboard;
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
     }
     
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        error = nil;
         if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
@@ -1090,13 +1088,12 @@ static BOOL copyToPasteboard;
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
-        error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
+        if ([file containsString:@"MEGACD"]) {
+            if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
+                MEGALogError(@"Remove item at path failed with error: %@", error);
+            }
         }
     }
-    
-    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete files saved by extensions
     NSString *fileProviderStorage = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
@@ -1115,14 +1112,12 @@ static BOOL copyToPasteboard;
 }
 
 + (void)deleteMasterKey {
-    NSError *error = nil;
+    NSError *error;
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    BOOL existMasterKey = [[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]];
-    
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
-    if (existMasterKey) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]]) {
         if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
             MEGALogError(@"Remove item at path failed with error: %@", error);
         }
