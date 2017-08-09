@@ -549,6 +549,7 @@
                             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                             [self presentViewController:alertController animated:YES completion:nil];
                         }];
+                        processAsset.originalName = YES;
                         [processAsset prepare];
                     }
                 }];
