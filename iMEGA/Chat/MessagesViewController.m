@@ -10,13 +10,18 @@
 #import "GroupChatDetailsViewController.h"
 
 #import "Helper.h"
+#import "MEGAAssetsPickerController.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGAOpenMessageHeaderView.h"
+#import "MEGACopyRequestDelegate.h"
+#import "MEGAImagePickerController.h"
+#import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGAInviteContactRequestDelegate.h"
+#import "MEGAOpenMessageHeaderView.h"
+#import "MEGAProcessAsset.h"
+#import "MEGAStartUploadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
@@ -46,6 +51,12 @@
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 @property (strong, nonatomic) NSMutableArray *nodesLoaded;
+
+@property (strong, nonatomic) UIProgressView *navigationBarProgressView;
+
+@property (nonatomic) long long totalBytesToUpload;
+@property (nonatomic) long long remainingBytesToUpload;
+@property (nonatomic) float totalProgressOfTransfersCompleted;
 
 @end
 
@@ -453,6 +464,177 @@
     }
 }
 
+- (void)presentSendMediaAlertController {
+    UIAlertController *sendMediaAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [sendMediaAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [sendMediaAlertController addAction:fromPhotosAlertAction];
+    
+    UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
+                if (permissionGranted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        }]];
+                        
+                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                        }]];
+                        
+                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    });
+                }
+            }];
+        }
+    }];
+    [sendMediaAlertController addAction:captureAlertAction];
+    
+    sendMediaAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    sendMediaAlertController.popoverPresentationController.sourceView = self.view;
+    sendMediaAlertController.popoverPresentationController.sourceRect = CGRectMake(self.inputToolbar.contentView.leftBarButtonItem.frame.size.width, self.view.frame.size.height, 0.0f, 0.0f);
+    
+    [self presentViewController:sendMediaAlertController animated:YES completion:nil];
+}
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
+            MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+        }];
+        
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+    } else {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToChatWithAssetsCompletion:^(NSArray *assets) {
+                    for (PHAsset *asset in assets) {
+                        MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+                        MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode filePath:^(NSString *filePath) {
+                            [self startUploadAndAttachWithPath:filePath parentNode:parentNode];
+                        } node:^(MEGANode *node) {
+                            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
+                        } error:^(NSError *error) {
+                            NSString *message;
+                            NSString *title;
+                            switch (error.code) {
+                                case -1:
+                                    title = error.localizedDescription;
+                                    message = error.localizedFailureReason;
+                                    break;
+                                    
+                                case -2:
+                                    title = AMLocalizedString(@"error", nil);
+                                    message = error.localizedDescription;
+                                    break;
+                                    
+                                default:
+                                    title = AMLocalizedString(@"error", nil);
+                                    message = error.localizedDescription;
+                                    break;
+                            }
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                            [self presentViewController:alertController animated:YES completion:nil];
+                        }];
+                        processAsset.originalName = YES;
+                        [processAsset prepare];
+                    }
+                }];
+                if ([[UIDevice currentDevice] iPadDevice]) {
+                    pickerViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+                }
+                
+                [self presentViewController:pickerViewController animated:YES completion:nil];
+            });
+        }];
+    }
+}
+
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode {
+    [self showProgressViewUnderNavigationBar];
+    
+    MEGAStartUploadTransferDelegate *startUploadTransferDelegate = [[MEGAStartUploadTransferDelegate alloc] initToUploadToChatWithTotalBytes:^(long long totalBytes) {
+        self.totalBytesToUpload += totalBytes;
+        self.remainingBytesToUpload += totalBytes;
+    } progress:^(float transferredBytes, float totalBytes) {
+        float asignableProgresRegardWithTotal = (totalBytes / self.totalBytesToUpload);
+        float transferProgress = (transferredBytes / totalBytes);
+        float currentAsignableProgressForThisTransfer = (transferProgress * asignableProgresRegardWithTotal);
+        
+        if (currentAsignableProgressForThisTransfer < asignableProgresRegardWithTotal) {
+            if (self.totalProgressOfTransfersCompleted != 0) {
+                currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted;
+            }
+            
+            if (currentAsignableProgressForThisTransfer > self.navigationBarProgressView.progress) {
+                [self.navigationBarProgressView setProgress:currentAsignableProgressForThisTransfer animated:YES];
+            }
+        }
+    } completion:^(long long totalBytes) {
+        float progressCompletedRegardWithTotal = ((float)totalBytes / self.totalBytesToUpload);
+        self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal;
+        self.remainingBytesToUpload -= totalBytes;
+        
+        if (self.remainingBytesToUpload == 0) {
+            [self resetAndHideProgressView];
+        }
+    }];
+    
+    NSString *appData = [NSString stringWithFormat:@"attachToChatID=%llu", self.chatRoom.chatId];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
+}
+
+- (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
+    if (node) {
+        if (node.parentHandle == parentNode.handle) {
+            // The file is already in the folder, attach node.
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+        } else {
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initToAttachToChatWithCompletion:^{
+                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+            }];
+            // The file is already in MEGA, in other folder, has to be copied to this folder.
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode delegate:copyRequestDelegate];
+        }
+    }
+}
+
+- (void)showProgressViewUnderNavigationBar {
+    if (self.navigationBarProgressView) {
+        self.navigationBarProgressView.hidden = NO;
+    } else {
+        self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+        self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
+        self.navigationBarProgressView.progressTintColor = [UIColor mnz_redD90007];
+        self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
+        });
+    }
+}
+
+- (void)resetAndHideProgressView {
+    self.totalBytesToUpload = 0.0;
+    self.totalProgressOfTransfersCompleted = 0.0f;
+    self.navigationBarProgressView.progress = 0.0f;
+    self.navigationBarProgressView.hidden = YES;
+}
+
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
@@ -506,6 +688,11 @@
         
         [self.inputToolbar.contentView.textView becomeFirstResponder];
     }]];
+    
+    UIAlertAction *sendMediaAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sendMedia", @"A button label. The button allows to capture or upload pictures or videos directly to chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentSendMediaAlertController];
+    }];
+    [selectOptionAlertController addAction:sendMediaAlertAction];
     
     UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromMyCloudDrive", @"Button label. Allows to share files(from my Cloud Drive) in chat conversation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -1107,9 +1294,11 @@
                 if (message.type == MEGAChatMessageTypeAttachment) {
                     message.chatRoom = self.chatRoom;
                     [self.messages addObject:message];
-                    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
-                    [self finishSendingMessageAnimated:YES];
-                    [self scrollToBottomAnimated:YES];
+                    [self finishReceivingMessage];
+                    [self loadNodesFromMessage:message atTheBeginning:YES];
+                    if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
+                        [self scrollToBottomAnimated:YES];
+                    }
                 } else {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"temporalId == %" PRIu64, message.temporalId];
                     NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
@@ -1118,7 +1307,6 @@
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                 }
-                [self loadNodesFromMessage:message atTheBeginning:YES];
                 break;
             }
             case MEGAChatMessageStatusServerRejected:
