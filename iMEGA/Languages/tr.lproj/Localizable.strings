@@ -7,7 +7,7 @@
 /* */
 "no"="Hayır";
 /* */
-"upload"="Yükle";
+"upload"="Karşıya yükle";
 /*  */
 "error"="Hata";
 /*  */
@@ -127,7 +127,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Mevcut olmayan bağlantı";
 /* Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n" */
-"fileLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Dosya hizmet kullanım şartları/kabul edilebilir kullanım politikaları ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Dosya kullanıcı tarafından silindi.";
+"fileLinkUnavailableText"="Bunun nedeni aşağıdakilerden biri olabilir:- Dosya Hizmet Koşullarını ihlal ettiği için kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız link yok- Dosya kullanıcı tarafından kaldırıldı.";
 /* Message shown when a download starts */
 "downloadStarted"="İndirme başladı";
 /* Title for the folder link view */
@@ -139,7 +139,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="'%@' klasörü oluşturulamadı";
 /* Error message shown when a folder link doesn't exist. Keep "\n"*/
-"folderLinkUnavailableText"="Bu aşağıdaki nedenlerden dolayı olabilir:- Klasör bağlantısı ToS/AUP ihlali nedeniyle kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız bağlantı yok.- Klasör bağlantısı kullanıcı tarafından silindi.";
+"folderLinkUnavailableText"="Bunun nedeni aşağıdakilerden biri olabilir:- Klasör linki Hizmet Koşullarını ihlal ettiği için kaldırıldı.- Geçersiz URL – erişmeye çalıştığınız link yok- Klasör linki kullanıcı tarafından kaldırıldı.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
@@ -336,11 +336,11 @@
 "rename"="Yeniden Adlandır";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Yeni adı girin";
-/* Title for the action that allows you to "Move to the Rubbish Bin" files or folders */
+/* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Çöp Kutusuna Taşı";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
 "moveFileToRubbishBinMessage"="1 dosyayı Çöp Kutusuna taşımak istediğinizden emin misiniz?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files" */
+/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
 "moveFilesToRubbishBinMessage"="%d dosyayı Çöp Kutusuna taşımak istediğinizden emin misiniz?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 folder" */
 "moveFolderToRubbishBinMessage"="1 klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz?";
@@ -355,7 +355,7 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="[A] dosya ve [B] klasörü Çöp Kutusuna taşımak istediğinizden emin misiniz? ";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusuna taşındı";
+"fileMovedToRubbishBinMessage"="1 dosya Çöp Kutusu'na taşındı!";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
 "filesMovedToRubbishBinMessage"="%d dosya Çöp Kutusuna taşındı";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
@@ -403,7 +403,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Kamera Yüklemelerini Etkinleştir";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Kamera Yüklemeleri etkinleştirildi";
+"cameraUploadsEnabled"="Kamera Yüklemeleri etkin";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu öğe seçildi";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -517,7 +517,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="İzinler";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Salt okunur";
+"readOnly"="Salt-okunur";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Okuma ve Yazma";
 /* Permissions given to the user you share your folder with */
@@ -593,7 +593,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGA'da";
 /* Section title where you can 'Empty Rubbish Bin' of your MEGA account */
-"emptyRubbishBin"="Çöp Kutusu'nu boşaltın";
+"emptyRubbishBin"="Çöp Kutusunu Boşalt";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Çöp kutusundaki tüm öğeler silinecek";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
@@ -949,7 +949,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bu konuşmanın tüm ileti geçmişini temizlemek istediğinizden emin misiniz?";
 /* 'Next' button in a dialog */
-"continue"="Devam et";
+"continue"="Devam";
 /* Button title that allows the user to close a chat. */
 "closeChat"="Sohbeti kapat";
 /* Title of the incoming shared folders of a user. */
@@ -1020,12 +1020,14 @@
 "retry"="Yeniden Dene";
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Mesajı sil";
+/* A button label. The button allows to capture or upload pictures or videos directly to chat. */
+"sendMedia"="Send Media";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Kişiyi gönder";
 /* Button label. Allows to share files(from my Cloud Drive) in chat conversation*/
 "addFromMyCloudDrive"="Bulut Sürücümden Ekle";
 /* */
-"done"="tamam";
+"done"="Tamam";
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Dosyaları gönder";
 /* */
@@ -1066,3 +1068,58 @@
 "autorenewableDescription"="Abonelikler ardışık abonelik periyotlarında aynı ücret ve süre uzunluğunda otomatik olarak yenilenir. MEGA PRO otomatik abonelik yenilenmesini bir sonraki yenilenme zamanından önce iTunes hesap ayarlarından kapatabilirsiniz. Aboneliklerinizi yönetmek için, App Store ikonuna tıklayın ve Apple ID'niz ile en alttan giriş yapın (önceden yapmadıysanız) ve ID Göster'e basın. Uygulama Aboneliklerini yönetebileceğiniz bir sayfa çıkacaktır. Buradan, MEGA PRO aboneliğinizi seçip yenilenme tarihini görebilirsiniz, veya otomatik yenilenme tarihini kapatabilirsiniz.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Devam etmek için MEGA'ya giriş yapın";
+/* A button title to revoke the access to an attachment in a chat. */
+"revoke"="İptal et";
+/* Inform user that there were unsupported assets in the share extension */
+"shareExtensionUnsupportedAssets"="Bazı öğeler MEGA ile paylaşılamaz";
+/* Notification message shown when a transfer failed. Keep colon. */
+"Transfer failed:"="Aktarma başarısız oldu:";
+/* MEGAError */
+/* Label to show that an SDK operation has been complete successfully. */
+"No error"="Hata yok";
+/* Label to show that an Internal error occurs during a SDK operation. */
+"Internal error"="İç hata";
+/* Label to show that an error of Invalid argument occurs during a SDK operation. */
+"Invalid argument"="Geçersiz argüman";
+/* Label to show that a request error occurs during a SDK operation. */
+"Request failed, retrying"="İstek başarısız oldu, yeniden deneniyor";
+/* Label to show that the rate limit has been reached during a SDK operation. */
+"Rate limit exceeded"="Hız sınırı aşıldı";
+/* Label to show that a SDK operation has failed permanently. */
+"Failed permanently"="Kalıcı olarak başarısız oldu";
+/* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
+"Too many concurrent connections or transfers"="Çok fazla eşzamanlı bağlantı veya aktarma";
+/* Label to show that an error of Out of range occurs during a SDK operation. */
+"Out of range"="Aralık dışında";
+/* Label to show that an error related with expiration occurs during a SDK operation. */
+"Expired"="Süresi doldu";
+/* Label to show that an error related with a resource Not found occurs during a SDK operation. */
+"Not found"="Bulunamadı";
+/* Label to show that an error related with a circular linkage occurs during a SDK operation. */
+"Circular linkage detected"="Döngüsel bağlantı tespit edildi";
+/* Label to show that an error related with an denied access occurs during a SDK operation. */
+"Access denied"="Erişim reddedildi";
+/* Label to show that an error related with an existent resource occurs during a SDK operation. */
+"Already exists"="Zaten var";
+/* Label to show that an error related with an Incomplete SDK operation. */
+"Incomplete"="Eksik";
+/* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
+"Invalid key/Decryption error"="Geçersiz anahtar/şifre çözme hatası";
+/* Label to show that an error related with a bad session ID occurs during a SDK operation. */
+"Bad session ID"="Bozuk oturum kimliği";
+/* Label to show that an error related with a blocked account occurs during a SDK operation. */
+"Blocked"="Engellendi";
+/* Label to show that an error related with an over quota occurs during a SDK operation. */
+"Over quota"="Kota aşımı";
+/* Label to show that an error related with a temporary problem occurs during a SDK operation. */
+"Temporarily not available"="Geçici olarak kullanılamıyor";
+/* Label to show that an error related with too many connections occurs during a SDK operation. */
+"Connection overflow"="Bağlantı aşımı";
+/* Label to show that an error related with an write error occurs during a SDK operation. */
+"Write error"="Yazma hatası";
+/* Label to show that an error related with an read error occurs during a SDK operation. */
+"Read error"="Okuma hatası";
+/* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
+"Invalid application key"="Geçersiz uygulama anahtarı";
+/* Label to show that an error related with an unknown error occurs during a SDK operation. */
+"Unknown error"="Bilinmeyen hata";
